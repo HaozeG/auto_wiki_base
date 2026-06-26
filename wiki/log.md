@@ -160,3 +160,7 @@ pages_updated: [wiki/index.md]
 ## [2026-06-26] research | Roofline CUDA photonic neuromorphic datacenter power TCO
 pages_created: [entity/roofline_model_arithmetic_intensity, entity/cuda_programming_model, entity/photonic_ai_accelerators, entity/neuromorphic_computing, entity/ai_datacenter_power_and_cooling, entity/ai_hardware_tco]
 pages_updated: [wiki/index.md]
+
+## [2026-06-26] research | Vera Rubin MI400 Gaudi3 Ethos TinyML export controls future synthesis
+pages_created: [entity/nvidia_vera_rubin, entity/amd_instinct_mi400, entity/intel_gaudi3, entity/arm_ethos_npu, entity/tinyml_mcu_inference, entity/ai_chip_export_controls, synthesis/future_ai_hardware_trajectories]
+pages_updated: [wiki/index.md]

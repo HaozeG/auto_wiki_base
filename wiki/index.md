@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-06-26 | Pages: 70 | Sources: 19
+Last updated: 2026-06-26 | Pages: 77 | Sources: 19
 
 ## Entity Pages
 
@@ -71,12 +71,19 @@ Last updated: 2026-06-26 | Pages: 70 | Sources: 19
 | [neuromorphic_computing.md](entity/neuromorphic_computing.md) | Neuromorphic: Intel Loihi 2 (1M neurons, 120 mW), IBM NorthPole (25× A100 energy on ResNet-50) | neuromorphic, loihi, northpole, snn, ai-hardware | 3 | 0 |
 | [ai_datacenter_power_and_cooling.md](entity/ai_datacenter_power_and_cooling.md) | AI datacenter power: PUE 1.01–1.80 by cooling type, 9.8 GW nuclear deals, IEA 945 TWh by 2030 | power, cooling, datacenter, ai-infrastructure, pue | 3 | 0 |
 | [ai_hardware_tco.md](entity/ai_hardware_tco.md) | AI hardware TCO: H100 $25–40K, B200 $0.02/M tokens (4.5× vs H100), 1 GW DC $38B CapEx | tco, cost, ai-hardware, gpu-pricing, ai-infrastructure | 3 | 0 |
+| [nvidia_vera_rubin.md](entity/nvidia_vera_rubin.md) | NVIDIA Vera Rubin R100: 336B transistors, 288 GB HBM4 at 22 TB/s, 50 PFLOPS FP4, NVLink 6 3.6 TB/s | nvidia, rubin, r100, ai-accelerator, gpu | 4 | 0 |
+| [amd_instinct_mi400.md](entity/amd_instinct_mi400.md) | AMD MI400 (CDNA5): 320B transistors, 432 GB HBM4 at 19.6 TB/s, 40 PFLOPS FP4, TSMC 2nm | amd, mi400, cdna5, ai-accelerator, gpu | 4 | 0 |
+| [intel_gaudi3.md](entity/intel_gaudi3.md) | Intel Gaudi 3: 1835 TFLOPS BF16, 128 GB HBM2e, 24× 200 Gbps RDMA Ethernet, open-source stack | intel, gaudi3, ai-accelerator, habana | 3 | 0 |
+| [arm_ethos_npu.md](entity/arm_ethos_npu.md) | Arm Ethos NPU: U55–U85 (up to 2048 MACs, 4 TOPS), N78 10 TOPS, Samsung Exynos/MediaTek | arm, ethos, npu, edge-ai, ai-accelerator | 3 | 0 |
+| [tinyml_mcu_inference.md](entity/tinyml_mcu_inference.md) | TinyML: sub-1mW MCU inference, MLPerf Tiny, Syntiant NDP120 35 µJ/inference, CMSIS-NN 3.2× speedup | tinyml, mcu, edge-ai, inference, ai-software | 3 | 0 |
+| [ai_chip_export_controls.md](entity/ai_chip_export_controls.md) | US AI chip export controls: A100/H100 Oct 2022, NVIDIA $5.5B charge, Diffusion Rule Jan 2025, Huawei Ascend 910B | export-controls, geopolitics, ai-hardware, nvidia, china | 3 | 0 |
 ## Synthesis Pages
 
 | Page | Connected Entities | Status | Inbound |
 |------|--------------------|--------|---------|
 | [riscv_ai_accelerator_landscape.md](synthesis/riscv_ai_accelerator_landscape.md) | risc_v_vector_extension, tenstorrent_blackhole, sifive_intelligence_x280, rva23_profile, fpga_riscv_isa_extension_nn_inference, gemmini | draft | 0 |
 | [epic_vliw_ai_accelerator_legacy.md](synthesis/epic_vliw_ai_accelerator_legacy.md) | intel_itanium, risc_v_vector_extension | active | 1 |
+| [future_ai_hardware_trajectories.md](synthesis/future_ai_hardware_trajectories.md) | nvidia_blackwell_b200, tsmc_n3_n2_process_node, photonic_ai_accelerators, neuromorphic_computing, chiplet_architecture_advanced_packaging, hbm_high_bandwidth_memory | draft | 0 |
 | [llm_serving_stack.md](synthesis/llm_serving_stack.md) | kv_cache_llm_inference, flash_attention, mixture_of_experts_moe_llm, int8_fp8_quantization_llm_inference, groq_lpu, sambanova_sn40l, nvidia_hopper_h100, transformer_architecture | draft | 0 |
 | [software_hardware_codesign_ai.md](synthesis/software_hardware_codesign_ai.md) | nvidia_tensor_cores, intel_amx, arm_sme2, groq_lpu, google_tpu, nvidia_2_4_structured_sparsity, int8_fp8_quantization_llm_inference | draft | 0 |
 | [inference_accelerator_startups.md](synthesis/inference_accelerator_startups.md) | groq_lpu, sambanova_sn40l, cerebras_wse, tenstorrent_blackhole, aws_inferentia, nvidia_hopper_h100 | draft | 0 |
@@ -159,3 +166,10 @@ Last updated: 2026-06-26 | Pages: 70 | Sources: 19
 - **Neuromorphic Computing (Loihi/NorthPole)**: → [neuromorphic_computing](entity/neuromorphic_computing.md)
 - **AI Datacenter Power and Cooling**: → [ai_datacenter_power_and_cooling](entity/ai_datacenter_power_and_cooling.md)
 - **AI Hardware TCO**: → [ai_hardware_tco](entity/ai_hardware_tco.md)
+- **NVIDIA Vera Rubin (R100)**: → [nvidia_vera_rubin](entity/nvidia_vera_rubin.md)
+- **AMD MI400 (CDNA5)**: → [amd_instinct_mi400](entity/amd_instinct_mi400.md)
+- **Intel Gaudi 3**: → [intel_gaudi3](entity/intel_gaudi3.md)
+- **Arm Ethos NPU**: → [arm_ethos_npu](entity/arm_ethos_npu.md)
+- **TinyML / MCU Inference**: → [tinyml_mcu_inference](entity/tinyml_mcu_inference.md)
+- **AI Chip Export Controls**: → [ai_chip_export_controls](entity/ai_chip_export_controls.md)
+- **Future AI Hardware Trajectories**: → [future_ai_hardware_trajectories](synthesis/future_ai_hardware_trajectories.md)
