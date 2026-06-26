@@ -144,3 +144,7 @@ pages_updated: [wiki/index.md]
 ## [2026-06-26] research | Graphcore IPU Etched Sohu HBM NVLink CXL inference synthesis
 pages_created: [entity/graphcore_ipu, entity/etched_sohu, entity/hbm_high_bandwidth_memory, entity/nvlink_nvswitch, entity/cxl_compute_express_link, synthesis/inference_accelerator_startups]
 pages_updated: [wiki/index.md]
+
+## [2026-06-26] research | Blackwell B200 quantization sparsity chiplets TSMC N3/N2
+pages_created: [entity/nvidia_blackwell_b200, entity/int8_fp8_quantization_llm_inference, entity/nvidia_2_4_structured_sparsity, entity/chiplet_architecture_advanced_packaging, entity/tsmc_n3_n2_process_node]
+pages_updated: [wiki/index.md]

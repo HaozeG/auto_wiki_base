@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-06-26 | Pages: 48 | Sources: 19
+Last updated: 2026-06-26 | Pages: 53 | Sources: 19
 
 ## Entity Pages
 
@@ -51,6 +51,11 @@ Last updated: 2026-06-26 | Pages: 48 | Sources: 19
 | [hbm_high_bandwidth_memory.md](entity/hbm_high_bandwidth_memory.md) | HBM: 3D-stacked DRAM via TSV, HBM1→HBM3E 128 GB/s→1.2 TB/s per stack, CoWoS packaging | hbm, memory, 3d-stacking, tsv, ai-infrastructure | 3 | 0 |
 | [nvlink_nvswitch.md](entity/nvlink_nvswitch.md) | NVLink/NVSwitch: GPU interconnect 160→900 GB/s, 3.6 TB/s DGX H100 bisection, 7× PCIe Gen5 | nvidia, nvlink, nvswitch, interconnect, ai-infrastructure | 3 | 0 |
 | [cxl_compute_express_link.md](entity/cxl_compute_express_link.md) | CXL: PCIe 5.0-based cache-coherent interconnect for memory pooling; 64→256 GB/s per ×16 slot | cxl, interconnect, memory-disaggregation, ai-infrastructure | 3 | 0 |
+| [nvidia_blackwell_b200.md](entity/nvidia_blackwell_b200.md) | NVIDIA Blackwell B200: 208B transistors, 20 PFLOPS FP4, NVL72 rack at 1.44 exaFLOPS FP8 | nvidia, blackwell, b200, ai-accelerator, gpu | 4 | 0 |
+| [int8_fp8_quantization_llm_inference.md](entity/int8_fp8_quantization_llm_inference.md) | LLM inference quantization: GPTQ/AWQ/SmoothQuant PTQ methods, H100 2× FP8 throughput, AMX 16× | quantization, llm, int8, fp8, inference, ai-software | 3 | 0 |
+| [nvidia_2_4_structured_sparsity.md](entity/nvidia_2_4_structured_sparsity.md) | NVIDIA 2:4 structured sparsity: 2× Tensor Core throughput, BERT-Large -0.2 F1, A100/H100 hardware | nvidia, sparsity, tensor-cores, ampere, ai-software | 3 | 0 |
+| [chiplet_architecture_advanced_packaging.md](entity/chiplet_architecture_advanced_packaging.md) | Chiplet architecture: UCIe 1.3 Tbps/mm, CoWoS interposer, EMIB/Foveros, AMD EPYC Rome 256 GB/s | chiplet, packaging, ucie, cowos, ai-infrastructure | 3 | 0 |
+| [tsmc_n3_n2_process_node.md](entity/tsmc_n3_n2_process_node.md) | TSMC N3/N2: 167 MTr/mm², FinFET→GAA at N2, 2023 CoWoS crisis, Apple/NVIDIA/AMD customers | tsmc, process-node, n3, n2, semiconductor | 3 | 0 |
 ## Synthesis Pages
 
 | Page | Connected Entities | Status | Inbound |
@@ -115,3 +120,8 @@ Last updated: 2026-06-26 | Pages: 48 | Sources: 19
 - **NVLink / NVSwitch**: → [nvlink_nvswitch](entity/nvlink_nvswitch.md)
 - **CXL (Compute Express Link)**: → [cxl_compute_express_link](entity/cxl_compute_express_link.md)
 - **Inference Accelerator Startups**: → [inference_accelerator_startups](synthesis/inference_accelerator_startups.md)
+- **NVIDIA Blackwell (B200/GB200)**: → [nvidia_blackwell_b200](entity/nvidia_blackwell_b200.md)
+- **INT8/FP8 Quantization for LLM Inference**: → [int8_fp8_quantization_llm_inference](entity/int8_fp8_quantization_llm_inference.md)
+- **NVIDIA 2:4 Structured Sparsity**: → [nvidia_2_4_structured_sparsity](entity/nvidia_2_4_structured_sparsity.md)
+- **Chiplet Architecture / Advanced Packaging**: → [chiplet_architecture_advanced_packaging](entity/chiplet_architecture_advanced_packaging.md)
+- **TSMC N3/N2 Process Node**: → [tsmc_n3_n2_process_node](entity/tsmc_n3_n2_process_node.md)
