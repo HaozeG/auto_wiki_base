@@ -1,48 +1,43 @@
 ---
 cold_start: true
-created: '2026-06-30'
-inbound_links: 0
+created: '2026-06-26'
+inbound_links: 1
 scorecard:
-  bridge_score: null
-  claim_density: null
-  hub_potential: null
-  novelty_delta: null
-  self_containedness: null
+  bridge_score: 0.6
+  claim_density: 0.6
+  hub_potential: 0.5
+  novelty_delta: 0.8
+  self_containedness: 0.7
 sources:
-- https://www.emergentmind.com/topics/tensix-architecture
-- 'Tensix Architecture: Hardware & Co-Design (2025)'
+- raw/sources/tt_metalium_lab1_single_core_matmul.md
 tags:
 - tensix
 - tenstorrent
-- risc-v
-- ai-acceleration
-- tensegrity-robotics
-- hardware-co-design
+- matrix-multiplication
+- architecture
 type: entity
-updated: '2026-06-30'
----
+updated: '2026-06-26'
+------
 
 # Tensix Architecture
 
-Tensix Architecture is a dual-context framework developed by Tenstorrent that integrates RISC-V accelerator cores with hardware-software co-design principles to achieve energy-efficient performance for AI workloads, particularly in tensegrity robotics and edge inference. It leverages separate data and computation pipelines with dedicated microarchitectural units to maximize throughput while minimizing power consumption. The architecture serves as the foundation for Tenstorrent's Wormhole and future processors, and incorporates operator fusion strategies to improve data locality for large language model inference on edge devices. This dual-purpose approach combines high-performance RISC-V processing with co-designed control for robotic structures, making it a unique contribution to the field of AI acceleration and neuromorphic computing.
+The Tensix architecture is Tenstorrent's proprietary tile-based processor design optimized for AI and high-performance computing workloads. Each Tensix core integrates a RISC-V control processor, local SRAM memory, and a dedicated matrix multiplication engine, enabling efficient execution of tiled matrix operations. The architecture is programmed through the TT-Metalium software stack, which provides low-level APIs for direct core control and data movement. In a single-core configuration, matrix multiplication proceeds by loading tiles of input matrices (A and B) into the core's local SRAM, performing the multiply-accumulate (MAC) operations in the matrix engine, and writing the resulting partial sums back to DRAM. The design emphasizes data locality and loop tiling to maximize compute efficiency and minimize off-chip memory access, following the classical cache-friendly row-major memory layout. Tensix cores can be combined in a mesh to scale throughput for large neural network layers, making the architecture suitable for both edge and datacenter deployments.
 
 ## Key Claims
 
-- Tensix Architecture is a dual-context framework integrating RISC-V accelerator cores with co-design for tensegrity robotics to enable energy-efficient performance.
-- It leverages separate data and computation pipelines with dedicated microarchitectural units to achieve high throughput and energy efficiency.
-- An operator fusion strategy for LLM inference on the Tensix architecture enhances data locality, reducing memory bottlenecks.
-- The Wormhole processor uses an array of Tensix cores connected by a network on chip (NoC) for scalable machine learning workloads.
-- Tenstorrent is a next-generation computing company building computers for AI, with offices in the U.S. and globally.
-- The architecture is designed for both high-performance computing and low-power edge scenarios, including tensegrity robotics.
+- Each Tensix core contains a RISC-V control processor, local SRAM (on-chip memory), and a matrix engine for high-throughput multiply-accumulate operations.
+- Matrix multiplication on a single core uses a tiled approach: input matrices are divided into tiles, loaded into local SRAM, and processed tile-by-tile to improve data reuse and reduce DRAM bandwidth.
+- The row-major memory layout is used for matrices, enabling cache-friendly sequential access patterns when traversing rows for inner products.
+- Loop tiling is explicitly employed to fit working sets within the core's local SRAM, preventing cache thrashing and improving arithmetic intensity.
+- The TT-Metalium software stack exposes programming interfaces to directly manage core operations, tile loading, and synchronization without an operating system.
+- Single-core performance is limited by the compute capacity of a single matrix engine; multi-core scaling is achieved by distributing tiles across a grid of Tensix cores.
 
 ## Relationships
 
-- [[fpga_riscv_isa_extension_nn_inference]]: Both leverage RISC-V cores for AI acceleration; Tensix is a commercial, integrated architecture while the FPGA approach is a prototyping methodology.
-- [[risc_v_vector_extension]]: Tensix likely uses RISC-V vector extensions or custom instructions; related to the vector ISA design space.
-- [[sifive_intelligence_x280]]: Production RISC-V AI IP; Tensix represents an alternative proprietary design.
+- [[tt_metalium_software_stack]]: TT-Metalium is the primary programming framework for Tensix cores, providing the APIs used to implement matrix multiplication and other kernels.
+- [[risc_v_vector_extension]]: While Tensix uses RISC-V control processors, its matrix engine is a custom accelerator rather than a vector unit; however, both approaches target efficient linear algebra.
+- [[fpga_riscv_isa_extension_nn_inference]]: FPGA-based RISC-V matrix accelerators share the goal of tile-based computation but use reconfigurable logic rather than fixed architecture.
 
 ## Sources
 
-- https://www.emergentmind.com/topics/tensix-architecture
-- Tensix Architecture: Hardware & Co-Design (2025) – search snippets from emergentmind
-- Tenstorrent Wormhole Analysis – scale-out architecture overview
+- tt_metalium_lab1_single_core_matmul.md: Tenstorrent official lab documentation describing single-core matrix multiplication, including algorithm details, row-major layout, loop tiling, and architectural overview of Tensix.

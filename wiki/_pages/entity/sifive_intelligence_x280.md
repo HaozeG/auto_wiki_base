@@ -1,7 +1,7 @@
 ---
 cold_start: false
 created: 2026-06-26
-inbound_links: 6
+inbound_links: 7
 scorecard:
   bridge_score: null
   claim_density: null
@@ -19,7 +19,7 @@ tags:
 - ip-core
 type: entity
 updated: 2026-06-26
-------
+---------
 
 # SiFive Intelligence X280
 

@@ -107,3 +107,10 @@ candidates_evaluated: 12
 pages_written: 5
 pipeline_rejection_rate: 0%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_d31ae6bf_2026-06-26.json
+
+## [2026-06-26] research | Metalium tt-metal Tenstorrent software stack RISC-V AI progr
+session_id: ece444a8
+candidates_evaluated: 12
+pages_written: 3
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_ece444a8_2026-06-26.json
