@@ -128,3 +128,7 @@ pages_updated: [wiki/index.md]
 ## [2026-06-26] research | Intel AMX AVX-512 VNNI Google TPU Apple AMX Neural Engine
 pages_created: [entity/intel_amx, entity/intel_avx512_vnni, entity/google_tpu, entity/google_trillium_tpu_v6e, entity/apple_amx, entity/apple_neural_engine]
 pages_updated: [wiki/index.md]
+
+## [2026-06-26] research | NVIDIA Tensor Cores H100 Qualcomm Hexagon AI Engine taxonomy
+pages_created: [entity/nvidia_tensor_cores, entity/nvidia_hopper_h100, entity/qualcomm_hexagon_dsp, entity/qualcomm_ai_engine, synthesis/ai_accelerator_design_taxonomy]
+pages_updated: [wiki/index.md]

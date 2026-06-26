@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-06-26 | Pages: 26 | Sources: 19
+Last updated: 2026-06-26 | Pages: 32 | Sources: 19
 
 ## Entity Pages
 
@@ -33,12 +33,17 @@ Last updated: 2026-06-26 | Pages: 26 | Sources: 19
 | [google_trillium_tpu_v6e.md](entity/google_trillium_tpu_v6e.md) | Google Trillium (TPU v6e): 256×256 MXU, ~918 TFLOPS BF16, 32 GB HBM, 67%+ energy gain over v5e | google, tpu, ai-accelerator, trillium | 2 | 0 |
 | [apple_amx.md](entity/apple_amx.md) | Apple AMX: undocumented matrix coprocessor in M-series, 32×32 compute grid, ~1.9 TFLOPS on M1 | apple, matrix-coprocessor, arm, ai-acceleration, m-series | 3 | 0 |
 | [apple_neural_engine.md](entity/apple_neural_engine.md) | Apple Neural Engine: 0.6 TOPS (A11, 2017) → 38 TOPS (M4, 2024), 16-core fixed-function fp16 accelerator | apple, neural-engine, ai-accelerator, core-ml, m-series | 3 | 0 |
+| [nvidia_tensor_cores.md](entity/nvidia_tensor_cores.md) | NVIDIA Tensor Cores: Volta→Hopper generational arc, FP16/BF16/TF32/FP8/INT8, 125→3958 TFLOPS | nvidia, tensor-cores, ai-accelerator, gpu, hopper | 4 | 0 |
+| [nvidia_hopper_h100.md](entity/nvidia_hopper_h100.md) | NVIDIA H100: 80B transistors, 3958 TFLOPS FP8 sparse, 80 GB HBM3 at 3.35 TB/s, NVLink 4.0 | nvidia, h100, hopper, ai-accelerator, gpu | 4 | 0 |
+| [qualcomm_hexagon_dsp.md](entity/qualcomm_hexagon_dsp.md) | Qualcomm Hexagon DSP: VLIW+HVX 1024-bit vectors, HTA tensor accelerator, 15 TOPS (SD865) | qualcomm, hexagon, dsp, hvx, ai-acceleration | 3 | 0 |
+| [qualcomm_ai_engine.md](entity/qualcomm_ai_engine.md) | Qualcomm AI Engine: heterogeneous NSP stack 15→75 TOPS on-device; Cloud AI 100 400+ INT8 TOPS | qualcomm, ai-engine, nsp, snapdragon, cloud-ai | 3 | 0 |
 ## Synthesis Pages
 
 | Page | Connected Entities | Status | Inbound |
 |------|--------------------|--------|---------|
 | [riscv_ai_accelerator_landscape.md](synthesis/riscv_ai_accelerator_landscape.md) | risc_v_vector_extension, tenstorrent_blackhole, sifive_intelligence_x280, rva23_profile, fpga_riscv_isa_extension_nn_inference, gemmini | draft | 0 |
 | [epic_vliw_ai_accelerator_legacy.md](synthesis/epic_vliw_ai_accelerator_legacy.md) | intel_itanium, risc_v_vector_extension | active | 1 |
+| [ai_accelerator_design_taxonomy.md](synthesis/ai_accelerator_design_taxonomy.md) | google_tpu, intel_amx, apple_neural_engine, arm_sme, gemmini, tenstorrent_blackhole, fpga_riscv_isa_extension_nn_inference, apple_amx | draft | 0 |
 | [arm_vs_riscv_matrix_isa.md](synthesis/arm_vs_riscv_matrix_isa.md) | arm_sme, arm_sme2, arm_sve2, risc_v_matrix_extensions, risc_v_vector_extension, rva23_profile | draft | 0 |
 
 ## Concept Index
@@ -59,7 +64,7 @@ Last updated: 2026-06-26 | Pages: 26 | Sources: 19
 - **EPIC/VLIW AI Legacy**: → [epic_vliw_ai_accelerator_legacy](synthesis/epic_vliw_ai_accelerator_legacy.md)
 - **Google TPU**: → [google_tpu](entity/google_tpu.md)
 - **Google Trillium (TPU v6e)**: → [google_trillium_tpu_v6e](entity/google_trillium_tpu_v6e.md)
-- **Qualcomm**: mentioned in [tenstorrent](entity/tenstorrent.md) — *no dedicated page*
+- **Qualcomm**: → [qualcomm_ai_engine](entity/qualcomm_ai_engine.md) (see also [[tenstorrent]] for acquisition context)
 - **Arrow Accelerator**: mentioned in [fpga_riscv_isa_extension_nn_inference](entity/fpga_riscv_isa_extension_nn_inference.md) — *no dedicated page*
 - **ARM SVE2**: → [arm_sve2](entity/arm_sve2.md)
 - **ARM SME (Scalable Matrix Extension)**: → [arm_sme](entity/arm_sme.md)
@@ -73,3 +78,8 @@ Last updated: 2026-06-26 | Pages: 26 | Sources: 19
 - **ARM vs RISC-V Matrix ISA Comparison**: → [arm_vs_riscv_matrix_isa](synthesis/arm_vs_riscv_matrix_isa.md)
 - **Intel AMX (Advanced Matrix Extensions)**: → [intel_amx](entity/intel_amx.md)
 - **Intel AVX-512 VNNI**: → [intel_avx512_vnni](entity/intel_avx512_vnni.md)
+- **NVIDIA Tensor Cores**: → [nvidia_tensor_cores](entity/nvidia_tensor_cores.md)
+- **NVIDIA H100 (Hopper)**: → [nvidia_hopper_h100](entity/nvidia_hopper_h100.md)
+- **Qualcomm Hexagon DSP / HVX**: → [qualcomm_hexagon_dsp](entity/qualcomm_hexagon_dsp.md)
+- **Qualcomm AI Engine / Cloud AI 100**: → [qualcomm_ai_engine](entity/qualcomm_ai_engine.md)
+- **AI Accelerator Design Taxonomy**: → [ai_accelerator_design_taxonomy](synthesis/ai_accelerator_design_taxonomy.md)
