@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-06-26 | Pages: 16 | Sources: 9
+Last updated: 2026-06-26 | Pages: 20 | Sources: 13
 
 ## Entity Pages
 
@@ -23,6 +23,9 @@ Last updated: 2026-06-26 | Pages: 16 | Sources: 9
 | [intel_itanium.md](entity/intel_itanium.md) | VLIW/EPIC architecture (2001–2021): predication, speculative loads, register rotation | itanium, epic, vliw, architecture | 1 | 1 |
 | [tenstorrent.md](entity/tenstorrent.md) | Tenstorrent company: Tensix+RISC-V AI chips, Jim Keller, Qualcomm acquisition talks | risc-v, ai-chip, tenstorrent, qualcomm, acquisition | 1 | 2 |
 | [tenstorrent_automotive_ai_accelerator.md](entity/tenstorrent_automotive_ai_accelerator.md) | Tenstorrent automotive-grade RISC-V AI accelerator chiplet (Eagle-N) | risc-v, automotive, ai-accelerator, chiplet, tenstorrent, tensix | 1 | 1 |
+| [arm_sve2.md](entity/arm_sve2.md) | ARM SVE2 VLA vector ISA extension (Armv9): 128–2048-bit registers, mandatory for Armv9-A cores | arm, isa-extension, vector-processing, ai-acceleration, armv9 | 4 | 0 |
+| [arm_sme.md](entity/arm_sme.md) | ARM SME: in-core 2D ZA tile register + outer-product instructions for GEMM acceleration (Armv9-A) | arm, isa-extension, matrix-extension, ai-acceleration, armv9 | 5 | 0 |
+| [arm_sme2.md](entity/arm_sme2.md) | ARM SME2: multi-vector ops and 512-bit ZT0 lookup table for INT8/INT4 inference (Armv9.2-A) | arm, isa-extension, matrix-extension, ai-acceleration, sme2 | 4 | 0 |
 
 ## Synthesis Pages
 
@@ -30,6 +33,7 @@ Last updated: 2026-06-26 | Pages: 16 | Sources: 9
 |------|--------------------|--------|---------|
 | [riscv_ai_accelerator_landscape.md](synthesis/riscv_ai_accelerator_landscape.md) | risc_v_vector_extension, tenstorrent_blackhole, sifive_intelligence_x280, rva23_profile, fpga_riscv_isa_extension_nn_inference, gemmini | draft | 0 |
 | [epic_vliw_ai_accelerator_legacy.md](synthesis/epic_vliw_ai_accelerator_legacy.md) | intel_itanium, risc_v_vector_extension | active | 1 |
+| [arm_vs_riscv_matrix_isa.md](synthesis/arm_vs_riscv_matrix_isa.md) | arm_sme, arm_sme2, arm_sve2, risc_v_matrix_extensions, risc_v_vector_extension, rva23_profile | draft | 0 |
 
 ## Concept Index
 
@@ -50,3 +54,12 @@ Last updated: 2026-06-26 | Pages: 16 | Sources: 9
 - **Google TPU**: mentioned in [intel_itanium](entity/intel_itanium.md), [epic_vliw_ai_accelerator_legacy](synthesis/epic_vliw_ai_accelerator_legacy.md) — *no dedicated page*
 - **Qualcomm**: mentioned in [tenstorrent](entity/tenstorrent.md) — *no dedicated page*
 - **Arrow Accelerator**: mentioned in [fpga_riscv_isa_extension_nn_inference](entity/fpga_riscv_isa_extension_nn_inference.md) — *no dedicated page*
+- **ARM SVE2**: → [arm_sve2](entity/arm_sve2.md)
+- **ARM SME (Scalable Matrix Extension)**: → [arm_sme](entity/arm_sme.md)
+- **ARM SME2**: → [arm_sme2](entity/arm_sme2.md)
+- **AWS Graviton5 / Neoverse V3**: mentioned in [arm_sve2](entity/arm_sve2.md), [arm_sme2](entity/arm_sme2.md) — *no dedicated page*
+- **Apple M4 / Apple Silicon AMX**: mentioned in [arm_sme](entity/arm_sme.md), [arm_sme2](entity/arm_sme2.md) — *no dedicated page*
+- **Neoverse V2**: mentioned in [arm_sve2](entity/arm_sve2.md) — *no dedicated page*
+- **ZA Tile Register**: mentioned in [arm_sme](entity/arm_sme.md), [arm_sme2](entity/arm_sme2.md) — *no dedicated page*
+- **ZT0 Lookup Table**: mentioned in [arm_sme2](entity/arm_sme2.md) — *no dedicated page*
+- **ARM vs RISC-V Matrix ISA Comparison**: → [arm_vs_riscv_matrix_isa](synthesis/arm_vs_riscv_matrix_isa.md)

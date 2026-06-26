@@ -1,5 +1,11 @@
 # Wiki Log
 
+## [2026-06-26] research | ARM SVE2 SME AI ISA extensions
+pages_created: [arm_sve2, arm_sme, arm_sme2, arm_vs_riscv_matrix_isa]
+pages_updated: []
+cold_start: true
+
+
 
 ## [2026-06-26] research | RISC-V AI accelerator
 session_id: 5b20fd13
@@ -114,3 +120,7 @@ candidates_evaluated: 12
 pages_written: 3
 pipeline_rejection_rate: 0%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_ece444a8_2026-06-26.json
+
+## [2026-06-26] research | ARM SVE2 SME AI ISA extensions
+pages_created: [entity/arm_sve2, entity/arm_sme, entity/arm_sme2, synthesis/arm_vs_riscv_matrix_isa]
+pages_updated: [wiki/index.md]
