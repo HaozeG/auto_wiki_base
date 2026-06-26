@@ -9,7 +9,7 @@ sources:
   - https://hc2024.hotchips.org/assets/program/conference/day2/72_HC2024.Cerebras.Sean.v03.final.pdf
 created: 2026-06-26
 updated: 2026-06-26
-cold_start: true
+cold_start: false
 inbound_links: 0
 scorecard:
   novelty_delta: ~

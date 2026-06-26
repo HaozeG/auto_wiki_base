@@ -8,7 +8,7 @@ sources:
   - https://research.spec.org/icpe_proceedings/2024/companion/p14.pdf
 created: 2026-06-26
 updated: 2026-06-26
-cold_start: true
+cold_start: false
 inbound_links: 0
 scorecard:
   novelty_delta: ~

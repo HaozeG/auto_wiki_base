@@ -9,7 +9,7 @@ sources:
   - "Jacobs et al., 2023 — DeepSpeed Ulysses: System Optimizations for Enabling Training of Extreme Long Sequence Transformer Models (arXiv:2309.14509)"
 created: 2026-06-26
 updated: 2026-06-26
-cold_start: true
+cold_start: false
 inbound_links: 0
 scorecard:
   novelty_delta: ~

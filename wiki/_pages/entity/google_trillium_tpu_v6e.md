@@ -9,7 +9,7 @@ sources:
   - https://www.spheron.network/blog/google-tpu-trillium-v6-vs-nvidia-b200-llm-inference/
 created: 2026-06-26
 updated: 2026-06-26
-cold_start: true
+cold_start: false
 inbound_links: 0
 scorecard:
   novelty_delta: ~

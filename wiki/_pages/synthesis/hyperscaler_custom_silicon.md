@@ -4,7 +4,7 @@ connected_entities: [google_tpu, google_trillium_tpu_v6e, aws_inferentia, aws_tr
 synthesis_status: draft
 created: 2026-06-26
 updated: 2026-06-26
-cold_start: true
+cold_start: false
 inbound_links: 0
 scorecard:
   bridge_score: ~

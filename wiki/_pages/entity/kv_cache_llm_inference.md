@@ -9,7 +9,7 @@ sources:
   - "Touvron et al. 2023 — Llama 2: Open Foundation and Fine-Tuned Chat Models"
 created: 2026-06-26
 updated: 2026-06-26
-cold_start: true
+cold_start: false
 inbound_links: 0
 scorecard:
   novelty_delta: ~

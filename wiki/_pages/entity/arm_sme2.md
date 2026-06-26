@@ -8,7 +8,7 @@ sources:
   - https://learn.arm.com/learning-paths/cross-platform/multiplying-matrices-with-sme2/overview/
 created: 2026-06-26
 updated: 2026-06-26
-cold_start: true
+cold_start: false
 inbound_links: 0
 scorecard:
   novelty_delta: ~

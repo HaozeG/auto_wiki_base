@@ -4,7 +4,7 @@ connected_entities: [groq_lpu, sambanova_sn40l, cerebras_wse, tenstorrent_blackh
 synthesis_status: draft
 created: 2026-06-26
 updated: 2026-06-26
-cold_start: true
+cold_start: false
 inbound_links: 0
 scorecard:
   bridge_score: ~

@@ -7,7 +7,7 @@ sources:
   - "Shah et al. (2024). FlashAttention-3: Fast and Accurate Attention for H100 GPUs. https://arxiv.org/abs/2407.08608"
 created: 2026-06-26
 updated: 2026-06-26
-cold_start: true
+cold_start: false
 inbound_links: 0
 scorecard:
   novelty_delta: ~

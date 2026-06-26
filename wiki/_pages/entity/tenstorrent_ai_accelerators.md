@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 created: '2026-07-10'
 inbound_links: 0
 scorecard:

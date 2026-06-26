@@ -9,7 +9,7 @@ sources:
   - https://old.hotchips.org/wp-content/uploads/hc_archives/hc25/HC25.70-Mobility-epub/HC25.27.712-Hot%20Chips%202013%20Final%20Presentation%20--%20Qualcomm_Lucian_Codrescu%20v2.pdf
 created: 2026-06-26
 updated: 2026-06-26
-cold_start: true
+cold_start: false
 inbound_links: 0
 scorecard:
   novelty_delta: ~

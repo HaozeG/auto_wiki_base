@@ -8,7 +8,7 @@ sources:
   - "Xia et al., 2024 — Unlocking Data-free Low-bit Quantization with Matrix Decomposition for KV Cache Compression (SpecBench, arXiv:2405.12532)"
 created: 2026-06-26
 updated: 2026-06-26
-cold_start: true
+cold_start: false
 inbound_links: 0
 scorecard:
   novelty_delta: ~

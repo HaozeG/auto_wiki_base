@@ -7,7 +7,7 @@ sources:
   - https://www.amd.com/en/technologies/cdna
 created: 2026-06-26
 updated: 2026-06-26
-cold_start: true
+cold_start: false
 inbound_links: 0
 scorecard:
   novelty_delta: ~

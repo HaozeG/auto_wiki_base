@@ -8,7 +8,7 @@ sources:
   - https://semianalysis.com/2023/06/07/tsmc-cowos-supply-shortage/
 created: 2026-06-26
 updated: 2026-06-26
-cold_start: true
+cold_start: false
 inbound_links: 0
 scorecard:
   novelty_delta: ~

@@ -7,7 +7,7 @@ sources:
   - "Choquette, J. et al. (2021). NVIDIA A100 Tensor Core GPU: Performance and Innovation. IEEE Micro."
 created: 2026-06-26
 updated: 2026-06-26
-cold_start: true
+cold_start: false
 inbound_links: 0
 scorecard:
   novelty_delta: ~

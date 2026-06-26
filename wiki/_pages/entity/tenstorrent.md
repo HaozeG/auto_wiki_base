@@ -20,7 +20,7 @@ tags:
 - acquisition
 type: entity
 updated: '2026-06-26'
-------
+---
 
 # Tenstorrent
 

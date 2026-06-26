@@ -4,7 +4,7 @@ connected_entities: [nvidia_tensor_cores, intel_amx, arm_sme2, groq_lpu, google_
 synthesis_status: draft
 created: 2026-06-26
 updated: 2026-06-26
-cold_start: true
+cold_start: false
 inbound_links: 0
 scorecard:
   bridge_score: ~

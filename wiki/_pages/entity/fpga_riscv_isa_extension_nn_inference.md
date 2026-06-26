@@ -19,7 +19,7 @@ tags:
 - edge-inference
 type: entity
 updated: 2026-06-26
-------------------------
+---
 
 # FPGA-Based RISC-V ISA Extension for Neural Network Inference
 

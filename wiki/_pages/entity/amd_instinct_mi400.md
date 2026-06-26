@@ -9,7 +9,7 @@ sources:
   - https://tech-insider.org/amd-mi400-series-ai-gpu-data-center-2026/
 created: 2026-06-26
 updated: 2026-06-26
-cold_start: true
+cold_start: false
 inbound_links: 0
 scorecard:
   novelty_delta: ~

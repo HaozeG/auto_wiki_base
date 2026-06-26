@@ -4,7 +4,7 @@ connected_entities: [arm_sme, arm_sme2, arm_sve2, risc_v_matrix_extensions, risc
 synthesis_status: draft
 created: 2026-06-26
 updated: 2026-06-26
-cold_start: true
+cold_start: false
 inbound_links: 0
 scorecard:
   bridge_score: ~

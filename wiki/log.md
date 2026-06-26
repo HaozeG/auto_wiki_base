@@ -164,3 +164,8 @@ pages_updated: [wiki/index.md]
 ## [2026-06-26] research | Vera Rubin MI400 Gaudi3 Ethos TinyML export controls future synthesis
 pages_created: [entity/nvidia_vera_rubin, entity/amd_instinct_mi400, entity/intel_gaudi3, entity/arm_ethos_npu, entity/tinyml_mcu_inference, entity/ai_chip_export_controls, synthesis/future_ai_hardware_trajectories]
 pages_updated: [wiki/index.md]
+
+## [2026-06-27] lint | retrospective
+issues_found: 1
+actions_taken: [fixed dangling_ref in intel_amx.md; set cold_start: false on 77 pages]
+deferred_for_human: []

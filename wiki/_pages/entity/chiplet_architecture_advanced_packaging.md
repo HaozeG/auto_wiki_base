@@ -9,7 +9,7 @@ sources:
   - https://chipsandcheese.com/2023/09/18/amd-epyc-rome-chiplets-and-infinity-fabric/
 created: 2026-06-26
 updated: 2026-06-26
-cold_start: true
+cold_start: false
 inbound_links: 0
 scorecard:
   novelty_delta: ~

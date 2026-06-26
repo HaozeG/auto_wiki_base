@@ -8,7 +8,7 @@ sources:
   - https://www.reuters.com/technology/nvidia-expects-2-billion-quarterly-revenue-loss-new-us-export-curbs-2023-10-17/
 created: 2026-06-26
 updated: 2026-06-26
-cold_start: true
+cold_start: false
 inbound_links: 0
 scorecard:
   novelty_delta: ~

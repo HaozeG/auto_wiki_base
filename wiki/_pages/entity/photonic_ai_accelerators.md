@@ -9,7 +9,7 @@ sources:
   - https://www.reuters.com/technology/lightmatter-raises-400-million-optical-chip-startup-2024-04-02/
 created: 2026-06-26
 updated: 2026-06-26
-cold_start: true
+cold_start: false
 inbound_links: 0
 scorecard:
   novelty_delta: ~

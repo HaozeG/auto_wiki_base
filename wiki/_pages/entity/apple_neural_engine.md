@@ -10,7 +10,7 @@ sources:
   - https://www.tomshardware.com/pc-components/cpus/apple-debuts-m4-processor-in-new-ipad-pros-with-38-trillion-operations-per-second-on-neural-engine
 created: 2026-06-26
 updated: 2026-06-26
-cold_start: true
+cold_start: false
 inbound_links: 0
 scorecard:
   novelty_delta: ~

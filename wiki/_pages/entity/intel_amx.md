@@ -10,7 +10,7 @@ sources:
   - https://docs.cortensor.network/technical-architecture/ai-inference/cpu-instruction-sets-for-llm-inference-avx-amx-sme-vs-gpus
 created: 2026-06-26
 updated: 2026-06-26
-cold_start: true
+cold_start: false
 inbound_links: 0
 scorecard:
   novelty_delta: ~
@@ -22,7 +22,7 @@ scorecard:
 
 # Intel AMX (Advanced Matrix Extensions)
 
-Intel Advanced Matrix Extensions (AMX) is an x86 ISA extension introduced by Intel in the 4th Generation Xeon Scalable processors (Sapphire Rapids, released January 2023) that accelerates matrix multiplication workloads central to deep learning inference and training. AMX introduces a new tile register file — eight 2-D registers named tmm0 through tmm7, each 1 KB in size (16 rows × 64 bytes per row) — that hold sub-matrices resident in the CPU for computation without round-tripping to the cache hierarchy. A dedicated on-chip accelerator called the Tile Matrix Multiply Unit (TMUL) operates on these registers, performing fused multiply-accumulate operations on pairs of tiles and accumulating results into a third tile. Native data types are BF16 (Brain Float 16, with accumulation in FP32) and INT8 (with accumulation in INT32). Compared with the previous best x86 path for matrix multiply — AVX-512 VNNI — AMX can compute 1,024 BF16 multiply-accumulate operations per cycle versus 64 with AVX-512, representing a roughly 16× throughput improvement per core for sustained GEMM kernels. AMX is transparently used by Intel's oneDNN library (the backend for PyTorch and OpenVINO on Intel hardware) when the target ISA level is set to AVX512_CORE_AMX, requiring no changes to user-level neural-network code.
+Intel Advanced Matrix Extensions (AMX) is an x86 ISA extension introduced by Intel in the 4th Generation Xeon Scalable processors (Sapphire Rapids, released January 2023) that accelerates matrix multiplication workloads central to deep learning inference and training. AMX introduces a new tile register file — eight 2-D registers named tmm0 through tmm7, each 1 KB in size (16 rows × 64 bytes per row) — that hold sub-matrices resident in the CPU for computation without round-tripping to the cache hierarchy. A dedicated on-chip accelerator called the Tile Matrix Multiply Unit (TMUL) operates on these registers, performing fused multiply-accumulate operations on pairs of tiles and accumulating results into a third tile. Native data types are BF16 (Brain Float 16, with accumulation in FP32) and INT8 (with accumulation in INT32). Compared with AVX-512 VNNI — the dominant x86 path for matrix multiply before AMX — AMX can compute 1,024 BF16 multiply-accumulate operations per cycle versus 64 with AVX-512, representing a roughly 16× throughput improvement per core for sustained GEMM kernels. AMX is transparently used by Intel's oneDNN library (the backend for PyTorch and OpenVINO on Intel hardware) when the target ISA level is set to AVX512_CORE_AMX, requiring no changes to user-level neural-network code.
 
 ## Key Claims
 

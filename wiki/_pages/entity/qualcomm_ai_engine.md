@@ -10,7 +10,7 @@ sources:
   - https://en.wikipedia.org/wiki/List_of_Qualcomm_Snapdragon_systems_on_chips
 created: 2026-06-26
 updated: 2026-06-26
-cold_start: true
+cold_start: false
 inbound_links: 0
 scorecard:
   novelty_delta: ~
