@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-06-26 | Pages: 20 | Sources: 13
+Last updated: 2026-06-26 | Pages: 26 | Sources: 19
 
 ## Entity Pages
 
@@ -27,6 +27,12 @@ Last updated: 2026-06-26 | Pages: 20 | Sources: 13
 | [arm_sme.md](entity/arm_sme.md) | ARM SME: in-core 2D ZA tile register + outer-product instructions for GEMM acceleration (Armv9-A) | arm, isa-extension, matrix-extension, ai-acceleration, armv9 | 5 | 0 |
 | [arm_sme2.md](entity/arm_sme2.md) | ARM SME2: multi-vector ops and 512-bit ZT0 lookup table for INT8/INT4 inference (Armv9.2-A) | arm, isa-extension, matrix-extension, ai-acceleration, sme2 | 4 | 0 |
 
+| [intel_amx.md](entity/intel_amx.md) | Intel Advanced Matrix Extensions: 8-tile register file, TMUL unit, BF16/INT8, Sapphire Rapids (Jan 2023) | intel, isa-extension, matrix, ai-acceleration, amx | 3 | 0 |
+| [intel_avx512_vnni.md](entity/intel_avx512_vnni.md) | Intel AVX-512 VNNI: INT8 dot-product instructions fusing 3 ops, 64 MACs/cycle, Cascade Lake (2019) | intel, isa-extension, vector, ai-acceleration, avx512 | 2 | 0 |
+| [google_tpu.md](entity/google_tpu.md) | Google TPU v1–v5p: systolic-array AI accelerators, origin of BF16, 15–30× over K80, 8960-chip pods | google, tpu, systolic-array, ai-accelerator, bf16 | 4 | 0 |
+| [google_trillium_tpu_v6e.md](entity/google_trillium_tpu_v6e.md) | Google Trillium (TPU v6e): 256×256 MXU, ~918 TFLOPS BF16, 32 GB HBM, 67%+ energy gain over v5e | google, tpu, ai-accelerator, trillium | 2 | 0 |
+| [apple_amx.md](entity/apple_amx.md) | Apple AMX: undocumented matrix coprocessor in M-series, 32×32 compute grid, ~1.9 TFLOPS on M1 | apple, matrix-coprocessor, arm, ai-acceleration, m-series | 3 | 0 |
+| [apple_neural_engine.md](entity/apple_neural_engine.md) | Apple Neural Engine: 0.6 TOPS (A11, 2017) → 38 TOPS (M4, 2024), 16-core fixed-function fp16 accelerator | apple, neural-engine, ai-accelerator, core-ml, m-series | 3 | 0 |
 ## Synthesis Pages
 
 | Page | Connected Entities | Status | Inbound |
@@ -51,15 +57,19 @@ Last updated: 2026-06-26 | Pages: 20 | Sources: 13
 - **RISC-V Matrix Extensions (IME, VME, AME)**: mentioned in [risc_v_vector_extension](entity/risc_v_vector_extension.md), [rva23_profile](entity/rva23_profile.md), [riscv_ai_accelerator_landscape](synthesis/riscv_ai_accelerator_landscape.md) — *no dedicated page*
 - **VCIX (Vector Coprocessor Interface Extension)**: mentioned in [sifive_intelligence_x280](entity/sifive_intelligence_x280.md) — *no dedicated page*
 - **EPIC/VLIW AI Legacy**: → [epic_vliw_ai_accelerator_legacy](synthesis/epic_vliw_ai_accelerator_legacy.md)
-- **Google TPU**: mentioned in [intel_itanium](entity/intel_itanium.md), [epic_vliw_ai_accelerator_legacy](synthesis/epic_vliw_ai_accelerator_legacy.md) — *no dedicated page*
+- **Google TPU**: → [google_tpu](entity/google_tpu.md)
+- **Google Trillium (TPU v6e)**: → [google_trillium_tpu_v6e](entity/google_trillium_tpu_v6e.md)
 - **Qualcomm**: mentioned in [tenstorrent](entity/tenstorrent.md) — *no dedicated page*
 - **Arrow Accelerator**: mentioned in [fpga_riscv_isa_extension_nn_inference](entity/fpga_riscv_isa_extension_nn_inference.md) — *no dedicated page*
 - **ARM SVE2**: → [arm_sve2](entity/arm_sve2.md)
 - **ARM SME (Scalable Matrix Extension)**: → [arm_sme](entity/arm_sme.md)
 - **ARM SME2**: → [arm_sme2](entity/arm_sme2.md)
 - **AWS Graviton5 / Neoverse V3**: mentioned in [arm_sve2](entity/arm_sve2.md), [arm_sme2](entity/arm_sme2.md) — *no dedicated page*
-- **Apple M4 / Apple Silicon AMX**: mentioned in [arm_sme](entity/arm_sme.md), [arm_sme2](entity/arm_sme2.md) — *no dedicated page*
+- **Apple AMX (Matrix Coprocessor)**: → [apple_amx](entity/apple_amx.md)
+- **Apple Neural Engine (ANE)**: → [apple_neural_engine](entity/apple_neural_engine.md)
 - **Neoverse V2**: mentioned in [arm_sve2](entity/arm_sve2.md) — *no dedicated page*
 - **ZA Tile Register**: mentioned in [arm_sme](entity/arm_sme.md), [arm_sme2](entity/arm_sme2.md) — *no dedicated page*
 - **ZT0 Lookup Table**: mentioned in [arm_sme2](entity/arm_sme2.md) — *no dedicated page*
 - **ARM vs RISC-V Matrix ISA Comparison**: → [arm_vs_riscv_matrix_isa](synthesis/arm_vs_riscv_matrix_isa.md)
+- **Intel AMX (Advanced Matrix Extensions)**: → [intel_amx](entity/intel_amx.md)
+- **Intel AVX-512 VNNI**: → [intel_avx512_vnni](entity/intel_avx512_vnni.md)

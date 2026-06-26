@@ -124,3 +124,7 @@ audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/researc
 ## [2026-06-26] research | ARM SVE2 SME AI ISA extensions
 pages_created: [entity/arm_sve2, entity/arm_sme, entity/arm_sme2, synthesis/arm_vs_riscv_matrix_isa]
 pages_updated: [wiki/index.md]
+
+## [2026-06-26] research | Intel AMX AVX-512 VNNI Google TPU Apple AMX Neural Engine
+pages_created: [entity/intel_amx, entity/intel_avx512_vnni, entity/google_tpu, entity/google_trillium_tpu_v6e, entity/apple_amx, entity/apple_neural_engine]
+pages_updated: [wiki/index.md]
