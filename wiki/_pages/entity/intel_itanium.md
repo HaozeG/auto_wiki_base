@@ -1,12 +1,10 @@
 ---
-cold_start: true
+cold_start: false
 created: '2026-12-03'
-inbound_links: 0
+inbound_links: 1
 scorecard:
   bridge_score: '~'
   claim_density: '~'
-  contradiction_potential: '~'
-  gap_fill_score: '~'
   hub_potential: '~'
   novelty_delta: '~'
   self_containedness: '~'
@@ -17,36 +15,30 @@ tags:
 - epic
 - vliw
 - architecture
-- ai-accelerators
-- nvidia
-- tpu
 type: entity
-updated: '2026-12-03'
+updated: '2026-06-26'
 ---
 
 # Intel Itanium
 
-Intel Itanium is a 64-bit VLIW (Very Long Instruction Word) architecture based on EPIC (Explicitly Parallel Instruction Computing) principles, first released in 2001. It aimed to extract instruction-level parallelism entirely in hardware through compiler orchestration, relying on features such as wide instruction bundles, predicated execution (removing branches), speculative loads (to hide memory latency), register rotation (for software pipelining), and a large register file of 128 integer and 128 floating-point registers. Despite its innovative design, Itanium failed commercially due to poor compiler maturity, high power consumption, backward-compatibility issues with x86, and market dominance of x86 and RISC architectures. Production was discontinued by 2020. However, the article "The Architecture That Was Right About Everything" argues that Itanium's core ideas have been rediscovered and adapted in modern AI accelerator architectures, including NVIDIA's CUDA cores (which use predication, wide warps, and large register files), Google's Tensor Processing Unit (TPU) (which employs VLIW-style instruction bundles and systolic arrays), and emerging RISC-V extensions (such as the V vector extension and matrix extensions like IME/VME/AME). This retrospective positions Itanium not as a failure of ideas but as a case of premature optimization for a workload that did not yet exist.
+Intel Itanium is a 64-bit processor architecture based on EPIC (Explicitly Parallel Instruction Computing), co-developed by Intel and HP and commercially released in 2001. EPIC extracted instruction-level parallelism at compile time rather than at runtime: programs were compiled into 128-bit bundles of three instructions each, with explicit stop bits encoding dependency information between bundles. Key architectural features included predicated execution (conditional execution of both branch paths without a branch predictor), speculative loads (prefetching data before it was needed to hide memory latency), register rotation (enabling software pipelining without explicit register renaming), and a large register file of 128 integer and 128 floating-point registers. Despite these innovations, Itanium failed commercially: compilers could not consistently extract EPIC-level parallelism from real programs, power consumption was high, and x86-64 from AMD offered a simpler path to 64-bit computing. Peak deployment was in high-end HP servers. Intel shipped the final Itanium 9700 series in 2017 and ended sales by 2021.
 
 ## Key Claims
 
-- Itanium used EPIC features: predicated execution, speculative loads, register rotation, and wide instruction bundles of three instructions each.
-- Compiler inability to exploit EPIC parallelism was the primary cause of performance shortfall versus hand-scheduled VLIW or dynamically scheduled superscalar processors.
-- Itanium's register rotation mechanism for software pipelining is conceptually similar to NVIDIA GPU's warp scheduling and register file banking.
-- Predicated execution, which eliminates branch mispredictions, is now used extensively in NVIDIA GPUs to handle diverging warps.
-- Large register files (128 each) anticipated the need for keeping many threads in flight, a key technique in modern GPUs.
-- Google's TPU uses a VLIW-like control paradigm and systolic array execution, echoing Itanium's bundle-based parallelism.
-- RISC-V's vector extension (RVV) and matrix extensions are exploring similar terrain of wide, compiler-managed parallelism.
-- The article claims Itanium was "right about everything" because its architectural choices align with the demands of modern AI workloads (parallel, data-intensive, branch-predictable).
+- Itanium used 128-bit instruction bundles containing three instructions, with explicit stop bits encoding inter-bundle dependencies for compiler-directed scheduling.
+- Predicated execution encoded branch conditions on every instruction, allowing both branch paths to execute and eliminating branch misprediction penalties.
+- Speculative loads prefetched data before it was confirmed needed, with explicit hardware support for tolerating late memory exceptions.
+- Register rotation enabled software pipelining for loops by cycling through a register window automatically, without explicit renaming in compiler-generated code.
+- The register file comprised 128 integer and 128 floating-point registers, designed to keep multiple threads of computation staged simultaneously.
+- Compiler immaturity was the primary cause of Itanium's performance shortfall relative to dynamically scheduled superscalar processors.
+- Intel discontinued Itanium with the 9700 series (2017); sales ended in 2021 after two decades of niche server use.
 
 ## Relationships
 
-- [[risc_v_vector_extension]]: Itanium's register rotation and wide instructions are conceptual precursors to RISC-V's vector length agnostic design.
-- [[fpga_riscv_isa_extension_nn_inference]]: FPGA prototypes of RISC-V AI extensions share the VLIW/EPIC goal of exposing parallelism to the compiler, though implemented on a different substrate.
-- [[nvidia_cuda_architecture]]: NVIDIA GPUs incorporate predication, large register files, and wide warps, which are descendants of EPIC ideas.
-- [[google_tpu]]: TPU's VLIW-style instruction scheduling and systolic array processing reflect the bundle-based parallel execution philosophy of Itanium.
+- [[risc_v_vector_extension]]: RVV's vector length agnostic design and compiler-managed parallelism share conceptual roots with EPIC's approach to exposing parallelism explicitly to the toolchain.
+- [[fpga_riscv_isa_extension_nn_inference]]: FPGA-based RISC-V AI extensions explore compiler-managed custom ISA parallelism, following goals similar to EPIC for domain-specific workloads.
+- [[epic_vliw_ai_accelerator_legacy]]: Synthesis page tracing how Itanium's EPIC design principles — predication, wide parallelism, large register files — were independently rediscovered in NVIDIA GPUs, Google TPU, and RISC-V accelerators.
 
 ## Sources
 
-- the-architecture-that-was-right-about-everything.md: Main source for all claims about Itanium's features, failure, and modern parallels.
-
+- the-architecture-that-was-right-about-everything.md: Source for all claims about Itanium's features, commercial failure, and architectural description.

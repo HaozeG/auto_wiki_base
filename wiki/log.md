@@ -75,3 +75,28 @@ pages_written: 5
 pipeline_rejection_rate: 8%
 new_pages: [gemmini, intel_itanium, tenstorrent, tenstorrent_automotive_ai_accelerator, tenstorrent_blackhole (updated)]
 audit_file: wiki/audit/research_aec1498d_2026-06-26.json
+
+## [2026-06-26] lint | retrospective
+issues_found: 8
+actions_taken:
+  - fixed malformed frontmatter delimiters on 5 entity pages (extra dashes → standard ---)
+  - set cold_start: false on 9 cleared pages (all except intel_itanium)
+deferred_for_human:
+  - intel_itanium.md: RESTRUCTURE candidate — synthetic content typed as entity; awaiting lint apply
+  - 5 orphan pages (inbound_links: 0): gemmini, intel_itanium, tenstorrent, tenstorrent_automotive_ai_accelerator, riscv_ai_accelerator_landscape — cross-link additions needed
+  - 5 pages with null scorecards — spaCy en_core_web_sm not installed; Layer 2 eval skipped
+  - graph_stats/frontmatter inbound_links discrepancy flagged in report
+
+## [2026-06-26] lint | apply
+actions_taken:
+  - restructured intel_itanium.md: trimmed to factual entity stub; moved synthetic "modern parallels" content to new synthesis page
+  - created synthesis/epic_vliw_ai_accelerator_legacy.md: EPIC/VLIW Principles in Modern AI Accelerators
+  - added [[tenstorrent]] to tenstorrent_blackhole.md and tenstorrent_automotive_ai_accelerator.md (orphan fix)
+  - updated tenstorrent.md inbound_links: 0 → 2
+  - added [[gemmini]] to riscv_ai_accelerator_landscape.md connected_entities and Connected Pages
+  - updated gemmini.md inbound_links: 0 → 1
+  - set cold_start: false on intel_itanium.md
+  - updated wiki/index.md: new synthesis page, corrected inbound counts
+  - set retrospective_lint_done: true in CLAUDE.md
+pages_created: [synthesis/epic_vliw_ai_accelerator_legacy]
+pages_restructured: [entity/intel_itanium]

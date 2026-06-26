@@ -13,7 +13,7 @@ You are the maintainer of this wiki. You create pages, update them on ingest, ma
 graph_maturity: true
 cold_start_page_count: 6
 mean_inbound_links: 3.0
-retrospective_lint_done: false
+retrospective_lint_done: true
 ```
 
 ---

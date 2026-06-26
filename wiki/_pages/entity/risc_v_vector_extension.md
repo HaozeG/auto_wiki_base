@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 created: 2026-06-26
 inbound_links: 7
 scorecard:
@@ -20,7 +20,7 @@ tags:
 - ai-acceleration
 type: entity
 updated: 2026-06-26
----------------------
+---
 
 # RISC-V Vector Extension (RVV)
 

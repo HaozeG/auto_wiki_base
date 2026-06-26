@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 created: '2026-06-26'
 inbound_links: 0
 scorecard:
@@ -38,6 +38,7 @@ Tenstorrent, a Canadian AI computing startup, has provided its Tensix NPU core i
 
 ## Relationships
 
+- [[tenstorrent]]: Parent company providing the Tensix NPU core IP used in the Eagle-N chiplet; the automotive accelerator is part of Tenstorrent's commercial product portfolio.
 - [[fpga_riscv_isa_extension_nn_inference]]: Both involve RISC-V-based AI acceleration; the existing page covers FPGA prototyping for edge inference, while Tenstorrent focuses on production chiplet solutions for automotive.
 - [[risc_v_ai_ecosystem]]: Tenstorrent contributes a commercial RISC-V AI accelerator implementation and chiplet ecosystem to the broader RISC-V AI landscape.
 - [[tensix_architecture]]: The Tensix NPU core is Tenstorrent’s proprietary neural processing architecture; future pages may detail its microarchitecture.

@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 created: '2026-06-26'
 inbound_links: 3
 scorecard:
@@ -18,7 +18,7 @@ tags:
 - open-source-hardware
 type: entity
 updated: '2026-06-26'
-------
+---
 
 # Tenstorrent Blackhole
 
@@ -35,6 +35,7 @@ Tenstorrent Blackhole is a RISC-V-based AI accelerator designed for standalone d
 
 ## Relationships
 
+- [[tenstorrent]]: Parent company; the Blackhole is Tenstorrent's flagship commercial AI accelerator product built on the Tensix architecture.
 - [[tensix_architecture]]: The Blackhole is the first production implementation of the Tensix architecture, which combines RISC-V processing elements and dedicated matrix engines.
 - [[riscv_ai_ecosystem]]: As a commercial RISC-V AI accelerator, the Blackhole contributes to the growing ecosystem of RISC-V-based machine learning hardware, bridging the gap between FPGA prototypes and silicon products.
 - [[fpga_riscv_isa_extension_nn_inference]]: While FPGA-based RISC-V accelerators (e.g., PYNQ-Z2, Arrow) target low-power edge inference, the Blackhole targets high-throughput data center and edge AI, representing a scale-up of the same RISC-V AI paradigm.

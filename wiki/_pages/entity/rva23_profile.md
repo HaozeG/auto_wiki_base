@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 created: 2026-06-26
 inbound_links: 3
 scorecard:
@@ -18,7 +18,7 @@ tags:
 - ai-acceleration
 type: entity
 updated: 2026-06-26
-------
+---
 
 # RVA23 Profile
 

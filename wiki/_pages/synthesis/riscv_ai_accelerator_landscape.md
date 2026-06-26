@@ -6,10 +6,11 @@ connected_entities:
 - sifive_intelligence_x280
 - rva23_profile
 - fpga_riscv_isa_extension_nn_inference
+- gemmini
 synthesis_status: draft
 created: 2026-06-26
 updated: 2026-06-26
-cold_start: true
+cold_start: false
 inbound_links: 0
 scorecard:
   bridge_score: ~
@@ -65,3 +66,4 @@ The PYNQ-Z2 / Arrow class of systems functions as the research-to-production pip
 - [[sifive_intelligence_x280]]
 - [[rva23_profile]]
 - [[fpga_riscv_isa_extension_nn_inference]]
+- [[gemmini]]
