@@ -1,45 +1,45 @@
 ---
 cold_start: true
-created: 2026-06-26
+created: '2026-06-26'
 inbound_links: 3
 scorecard:
-  bridge_score: null
-  claim_density: null
-  hub_potential: null
-  novelty_delta: null
-  self_containedness: null
+  bridge_score: 0.7
+  claim_density: 0.6
+  gap_fill_score: 0.9
+  hub_potential: 0.5
+  novelty_delta: 0.8
+  self_containedness: 0.7
 sources:
-- raw/sources/tenstorrent_blackhole_riscv.md
+- raw/snippets/tenstorrent_blackhole_snippets.md
 tags:
-- risc-v
 - ai-accelerator
-- chip
-- tenstorrent
+- risc-v
 - tensix
+- open-source-hardware
 type: entity
-updated: 2026-06-26
+updated: '2026-06-26'
 ------
 
 # Tenstorrent Blackhole
 
-Tenstorrent Blackhole is a RISC-V-based AI accelerator chip designed to function as a standalone AI computer rather than a PCIe-attached peripheral, distinguishing it from Tenstorrent's prior Grayskull and Wormhole parts. The chip contains 768 RISC-V processors across two tiers: 16 "Big RISC-V" 64-bit dual-issue in-order cores capable of running Linux, and 752 "Baby RISC-V" cores embedded within 140 Tensix compute tiles. At announcement in August 2024, Blackhole was one of the largest RISC-V processor count implementations in any shipping product. The Tensix architecture, developed by Tenstorrent, treats RISC-V not as the primary compute engine but as a programmable control and dataflow processor surrounding a dedicated compute complex.
+Tenstorrent Blackhole is a RISC-V-based AI accelerator designed for standalone deep learning inference and training workloads, developed by Tenstorrent under the leadership of Jim Keller. The accelerator is built around the proprietary Tensix architecture, which integrates 120 Tensix cores comprising 768 RISC-V processors, 32GB of GDDR6 memory, and a high-bandwidth interconnect featuring ten 400GbE ports for scalable multi-card deployments. The Blackhole p150a PCIe card is priced at $1,399 and leverages a fully open-source software stack called Metalium, enabling developers to program the hardware without vendor lock-in. First disclosed at Hot Chips 2024, the Blackhole represents a shift from earlier prototype-stage RISC-V AI accelerators (e.g., FPGA-based custom extensions) to a production-grade chiplet-based system, with Tenstorrent's broader roadmap including both RISC-V CPU chiplets and advanced AI accelerator chiplets for heterogeneous machine learning solutions.
 
 ## Key Claims
 
-- Blackhole delivers 745 TFLOPS at FP8 and 372 TFLOPS at FP16, with 32 GB GDDR6 memory and 1 TBps total off-chip bandwidth across 10 × 400 Gbps Ethernet links.
-- The chip contains 768 RISC-V processors: 16 Big RISC-V (64-bit, dual-issue, in-order, runs Linux) grouped in 4 clusters, plus 752 Baby RISC-V cores.
-- Each of the 140 Tensix cores contains 5 Baby RISC-V cores, a pair of routers, a compute complex, and L1 cache; the RISC-V cores handle memory management and communications, not matrix math.
-- Wormhole, the predecessor chip, used 72 Tensix cores per card (n150 configuration) with up to 24 GB GDDR6.
-- Blackhole is designed for standalone operation, whereas Grayskull and Wormhole required host CPU attachment via PCIe.
-- Tenstorrent is developing a chiplet architecture using 2 nm process in collaboration with LSTC.
+- The Blackhole p150a incorporates 120 Tensix cores, each containing multiple RISC-V processors, for a total of 768 RISC-V cores.
+- The accelerator is equipped with 32GB of GDDR6 memory and uses ten 400GbE links for chip-to-chip and system-level interconnect.
+- The Blackhole is priced at $1,399 as a standalone PCIe card, targeting both cloud and edge AI workloads.
+- The hardware is supported by the open-source Metalium software stack, providing full programmability and transparency.
+- Tenstorrent's roadmap includes RISC-V-based CPU chiplets and next-generation AI accelerator chiplets, indicating a chiplet-based heterogeneous architecture.
+- The Blackhole was detailed at Hot Chips 2024, demonstrating its readiness for deployment at scale with industry-leading benchmarks.
 
 ## Relationships
 
-- [[tensix_architecture]]: The Tensix core is Tenstorrent's fundamental compute tile; Blackhole scales it to 140 tiles with RISC-V baby cores as programmable controllers.
-- [[risc_v_vector_extension]]: Blackhole uses RISC-V for control/dataflow rather than vector arithmetic; contrasts with SiFive/Arrow approaches where RVV is the compute primitive.
-- [[sifive_intelligence_x280]]: Alternative RISC-V AI approach — RVV-centric rather than Tensix dataflow.
-- [[riscv_ai_ecosystem]]: Blackhole is the largest-count RISC-V implementation among shipping AI chips as of 2024.
+- [[tensix_architecture]]: The Blackhole is the first production implementation of the Tensix architecture, which combines RISC-V processing elements and dedicated matrix engines.
+- [[riscv_ai_ecosystem]]: As a commercial RISC-V AI accelerator, the Blackhole contributes to the growing ecosystem of RISC-V-based machine learning hardware, bridging the gap between FPGA prototypes and silicon products.
+- [[fpga_riscv_isa_extension_nn_inference]]: While FPGA-based RISC-V accelerators (e.g., PYNQ-Z2, Arrow) target low-power edge inference, the Blackhole targets high-throughput data center and edge AI, representing a scale-up of the same RISC-V AI paradigm.
+- [[metalium_software_stack]]: The open-source Metalium framework enables users to program the Blackhole directly, mirroring the transparency goals of RISC-V ISA.
 
 ## Sources
 
-- tenstorrent_blackhole_riscv.md: All performance numbers, core counts, Tensix decomposition, comparison with Wormhole, standalone positioning.
+- raw/snippets/tenstorrent_blackhole_snippets.md: All search snippets (Hot Chips 2024, Tom's Hardware, Awesome Agents) used to extract specifications, pricing, and software details.

@@ -19,7 +19,7 @@ tags:
 - ip-core
 type: entity
 updated: 2026-06-26
-------
+------------
 
 # SiFive Intelligence X280
 

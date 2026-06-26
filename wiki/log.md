@@ -39,3 +39,39 @@ pages_created: [riscv_ai_accelerator_landscape]
 ## [2026-06-26] transition | cold_start → mature
 pages_at_transition: 6
 mean_inbound_links: 3.00
+
+## [2026-06-26] research | RISC-V AI accelerator Gemmini systolic array
+session_id: 53abb802
+candidates_evaluated: 3
+pages_written: 0
+pipeline_rejection_rate: 33%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_53abb802_2026-06-26.json
+
+## [2026-06-26] research | RISC-V AI accelerator Gemmini systolic array
+session_id: bb14cfe8
+candidates_evaluated: 3
+pages_written: 0
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_bb14cfe8_2026-06-26.json
+
+## [2026-06-26] research | RISC-V AI accelerator Gemmini systolic array
+session_id: c4f62b5a
+candidates_evaluated: 3
+pages_written: 1
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_c4f62b5a_2026-06-26.json
+
+## [2026-06-26] research | RISC-V AI accelerator Tensix Gemmini matrix extensions archi
+session_id: aec1498d
+candidates_evaluated: 12
+pages_written: 5
+pipeline_rejection_rate: 8%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_aec1498d_2026-06-26.json
+
+## [2026-06-26] research | RISC-V AI accelerator Tensix Gemmini matrix extensions
+session_id: aec1498d
+candidates_evaluated: 12
+pages_written: 5
+pipeline_rejection_rate: 8%
+new_pages: [gemmini, intel_itanium, tenstorrent, tenstorrent_automotive_ai_accelerator, tenstorrent_blackhole (updated)]
+audit_file: wiki/audit/research_aec1498d_2026-06-26.json

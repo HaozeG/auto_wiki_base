@@ -1,7 +1,7 @@
 ---
 cold_start: true
 created: 2026-06-26
-inbound_links: 2
+inbound_links: 7
 scorecard:
   bridge_score: null
   claim_density: null
@@ -19,7 +19,7 @@ tags:
 - edge-inference
 type: entity
 updated: 2026-06-26
-------
+---------------------------
 
 # FPGA-Based RISC-V ISA Extension for Neural Network Inference
 
