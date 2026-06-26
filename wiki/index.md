@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-06-26 | Pages: 38 | Sources: 19
+Last updated: 2026-06-26 | Pages: 42 | Sources: 19
 
 ## Entity Pages
 
@@ -43,12 +43,16 @@ Last updated: 2026-06-26 | Pages: 38 | Sources: 19
 | [aws_trainium.md](entity/aws_trainium.md) | AWS Trainium: NeuronCore-v2 training chip, Trn2 UltraServer 64-chip / 6 TB HBM / 1.3 PFLOPS FP8 | aws, trainium, ai-accelerator, training, neuroncore | 4 | 0 |
 | [microsoft_azure_maia_100.md](entity/microsoft_azure_maia_100.md) | Microsoft Azure Maia 100: 105B transistors, 64 GB HBM2E, ~0.8 PFLOPS BF16, deployed for OpenAI/Copilot | microsoft, maia, ai-accelerator, azure, asic | 3 | 0 |
 | [microsoft_cobalt_100.md](entity/microsoft_cobalt_100.md) | Microsoft Cobalt 100: 128-core Arm Neoverse N2, 40% IPC gain, host CPU for Maia 100 | microsoft, cobalt, arm, neoverse-n2, azure | 2 | 0 |
+| [cerebras_wse.md](entity/cerebras_wse.md) | Cerebras WSE-3: 4T transistors, 900K cores, 44 GB SRAM, 125 PFLOPS, Llama-70B at 2100 tok/s | cerebras, wse, ai-accelerator, wafer-scale, sram | 3 | 0 |
+| [groq_lpu.md](entity/groq_lpu.md) | Groq LPU: TSP deterministic scheduler, 80 TB/s SRAM bandwidth, 1300+ tok/s Llama 3 8B | groq, lpu, tsp, ai-accelerator, inference | 3 | 0 |
+| [sambanova_sn40l.md](entity/sambanova_sn40l.md) | SambaNova SN40L: RDU 3-tier memory, 520 MB SRAM + 64 GB HBM3 + 1.5 TB DDR5, CoE 1T-param inference | sambanova, rdu, ai-accelerator, composition-of-experts | 3 | 0 |
 ## Synthesis Pages
 
 | Page | Connected Entities | Status | Inbound |
 |------|--------------------|--------|---------|
 | [riscv_ai_accelerator_landscape.md](synthesis/riscv_ai_accelerator_landscape.md) | risc_v_vector_extension, tenstorrent_blackhole, sifive_intelligence_x280, rva23_profile, fpga_riscv_isa_extension_nn_inference, gemmini | draft | 0 |
 | [epic_vliw_ai_accelerator_legacy.md](synthesis/epic_vliw_ai_accelerator_legacy.md) | intel_itanium, risc_v_vector_extension | active | 1 |
+| [hyperscaler_custom_silicon.md](synthesis/hyperscaler_custom_silicon.md) | google_tpu, google_trillium_tpu_v6e, aws_inferentia, aws_trainium, microsoft_azure_maia_100, microsoft_cobalt_100, apple_neural_engine | draft | 0 |
 | [ai_accelerator_design_taxonomy.md](synthesis/ai_accelerator_design_taxonomy.md) | google_tpu, intel_amx, apple_neural_engine, arm_sme, gemmini, tenstorrent_blackhole, fpga_riscv_isa_extension_nn_inference, apple_amx | draft | 0 |
 | [arm_vs_riscv_matrix_isa.md](synthesis/arm_vs_riscv_matrix_isa.md) | arm_sme, arm_sme2, arm_sve2, risc_v_matrix_extensions, risc_v_vector_extension, rva23_profile | draft | 0 |
 
@@ -95,3 +99,7 @@ Last updated: 2026-06-26 | Pages: 38 | Sources: 19
 - **AWS Trainium**: → [aws_trainium](entity/aws_trainium.md)
 - **Microsoft Azure Maia 100**: → [microsoft_azure_maia_100](entity/microsoft_azure_maia_100.md)
 - **Microsoft Cobalt 100 (Neoverse N2)**: → [microsoft_cobalt_100](entity/microsoft_cobalt_100.md)
+- **Cerebras WSE-3**: → [cerebras_wse](entity/cerebras_wse.md)
+- **Groq LPU (Language Processing Unit)**: → [groq_lpu](entity/groq_lpu.md)
+- **SambaNova SN40L / RDU**: → [sambanova_sn40l](entity/sambanova_sn40l.md)
+- **Hyperscaler Custom Silicon**: → [hyperscaler_custom_silicon](synthesis/hyperscaler_custom_silicon.md)

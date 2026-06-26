@@ -136,3 +136,7 @@ pages_updated: [wiki/index.md]
 ## [2026-06-26] research | AMD CDNA MI300X AWS Inferentia Trainium Microsoft Maia Cobalt
 pages_created: [entity/amd_cdna_architecture, entity/amd_mi300x, entity/aws_inferentia, entity/aws_trainium, entity/microsoft_azure_maia_100, entity/microsoft_cobalt_100]
 pages_updated: [wiki/index.md]
+
+## [2026-06-26] research | Cerebras WSE Groq LPU SambaNova RDU hyperscaler synthesis
+pages_created: [entity/cerebras_wse, entity/groq_lpu, entity/sambanova_sn40l, synthesis/hyperscaler_custom_silicon]
+pages_updated: [wiki/index.md]
