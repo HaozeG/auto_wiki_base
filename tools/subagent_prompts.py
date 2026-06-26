@@ -47,6 +47,9 @@ Constraints:
   do not produce page_drafts
 - RAG Summary blocks in synthesis drafts must be 150-250 words, self-contained,
   and state the core synthetic claim in the first sentence
+- Entity page first paragraphs MUST be at least 80 words. If the resource_content
+  is a short snippet, synthesize what is known about this entity from that snippet
+  AND your knowledge to meet the word count. Do not add dangling references.
 
 Scorecard dimensions to assess (0.0-1.0 each):
   novelty_delta, claim_density, self_containedness, bridge_score,

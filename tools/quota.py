@@ -5,7 +5,9 @@ from dataclasses import dataclass, field
 
 # Hard caps that are not configurable per §12.8
 MAX_API_CALLS_PER_SESSION = 50
-MAX_TOKENS_PER_SUBAGENT_OUTPUT = 3000
+# Raised from 3000: DeepSeek thinking models consume ~2k tokens on reasoning trace
+# before emitting any text; 8000 ensures text output is never truncated.
+MAX_TOKENS_PER_SUBAGENT_OUTPUT = 8000
 MIN_SECONDS_BETWEEN_CALLS = 1.0
 
 

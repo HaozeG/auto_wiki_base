@@ -386,8 +386,8 @@ spacy_model: en_core_web_sm
 [research_config]
 max_candidates_per_session: 20
 max_new_pages_per_session: 10
-max_eval_subagent_tokens: 2000
-max_discovery_subagent_tokens: 1000
+max_eval_subagent_tokens: 6000
+max_discovery_subagent_tokens: 3000
 max_retries_on_fetch_failure: 2
 discovery_search_queries_limit: 5
 ```

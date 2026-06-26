@@ -145,25 +145,45 @@ def _call_subagent(subagent_type: str, manifest: dict, research_config: dict) ->
 
     client = anthropic.Anthropic()
 
+    # Prefer env-var model so the harness works with any compatible API endpoint
+    # (e.g. DeepSeek via ANTHROPIC_BASE_URL). Fall back to a known Anthropic model.
+    import os as _os
+    model = (
+        _os.environ.get("ANTHROPIC_DEFAULT_HAIKU_MODEL")
+        or _os.environ.get("CLAUDE_CODE_SUBAGENT_MODEL")
+        or "claude-haiku-4-5-20251001"
+    )
+    # Strip any stray ANSI-code artifacts that may appear in env values (e.g. [1m])
+    model = re.sub(r"\[[\d;]*m\]?", "", model).strip()
+
     if subagent_type == "discovery":
         system = DISCOVERY_SYSTEM_PROMPT
-        max_tokens = research_config.get("max_discovery_subagent_tokens", 1000)
+        max_tokens = research_config.get("max_discovery_subagent_tokens", 3000)
     else:
         system = EVALUATION_SYSTEM_PROMPT
-        max_tokens = research_config.get("max_eval_subagent_tokens", 2000)
+        max_tokens = research_config.get("max_eval_subagent_tokens", 6000)
 
     max_tokens = min(max_tokens, MAX_TOKENS_PER_SUBAGENT_OUTPUT)
 
     message = client.messages.create(
-        model="claude-haiku-4-5-20251001",
+        model=model,
         max_tokens=max_tokens,
         system=system,
         messages=[{"role": "user", "content": json.dumps(manifest)}],
     )
+    if message.stop_reason == "max_tokens":
+        logger.warning(
+            "_call_subagent: hit max_tokens (%d) before text output — "
+            "thinking model exhausted budget. Increase max_tokens.",
+            max_tokens,
+        )
     for block in message.content:
         if hasattr(block, "text"):
             return block.text
-    raise RuntimeError("No text block in subagent response")
+    raise RuntimeError(
+        f"No text block in subagent response (stop={message.stop_reason}, "
+        f"blocks={[type(b).__name__ for b in message.content]})"
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -417,6 +437,98 @@ scorecard:
 
 
 # ---------------------------------------------------------------------------
+# DDG-based discovery (replaces LLM URL hallucination)
+# ---------------------------------------------------------------------------
+
+def _ddg_discover(query: str, max_candidates: int, already_processed: set[str],
+                  research_config: dict, depth: str) -> list[dict]:
+    """
+    Search DuckDuckGo for real URLs + snippets.  Returns candidate dicts
+    compatible with the rest of the pipeline:
+      {"url": ..., "title": ..., "snippet": ..., "estimated_type": "entity"}
+    """
+    try:
+        from ddgs import DDGS  # noqa: PLC0415
+    except ImportError:
+        logger.warning("ddgs not installed; falling back to empty candidate list. "
+                       "Run: pip install ddgs")
+        return []
+
+    limit = research_config.get("discovery_search_queries_limit", 5)
+    # depth=deep → use more search queries / results per query
+    results_per_query = 10 if depth == "deep" else 6
+
+    # Generate search query variants from the base query
+    concept_gaps = _get_concept_gaps()
+    queries = [query]
+    if concept_gaps:
+        for gap in concept_gaps[:min(limit - 1, len(concept_gaps))]:
+            queries.append(f"{query} {gap}")
+    # Pad with topic refinements
+    refinements = ["architecture survey", "chip specifications performance", "ISA extension benchmark"]
+    for ref in refinements:
+        if len(queries) >= limit:
+            break
+        queries.append(f"{query} {ref}")
+
+    seen_urls: set[str] = set(already_processed)
+    candidates: list[dict] = []
+
+    with DDGS() as ddgs:
+        for q in queries:
+            if len(candidates) >= max_candidates:
+                break
+            try:
+                for r in ddgs.text(q, max_results=results_per_query):
+                    url = r.get("href", "")
+                    if not url or url in seen_urls:
+                        continue
+                    seen_urls.add(url)
+                    candidates.append({
+                        "url": url,
+                        "title": r.get("title", ""),
+                        "snippet": r.get("body", ""),
+                        "estimated_type": "entity",
+                    })
+                    if len(candidates) >= max_candidates:
+                        break
+            except Exception as e:
+                logger.warning("DDG search failed for %r: %s", q, e)
+
+    return candidates
+
+
+def _enrich_snippet(title: str, base_snippet: str) -> str:
+    """
+    Run a focused DDG search for `title` and concatenate snippets into a
+    single resource_content block, giving the eval agent enough text to
+    write a 80+ word first paragraph.
+    """
+    if not title:
+        return base_snippet
+
+    try:
+        from ddgs import DDGS  # noqa: PLC0415
+    except ImportError:
+        return base_snippet
+
+    snippets = [f"[Search snippets for: {title}]"]
+    if base_snippet:
+        snippets.append(base_snippet)
+
+    try:
+        with DDGS() as ddgs:
+            for r in ddgs.text(title, max_results=5):
+                body = r.get("body", "").strip()
+                if body and body not in "\n".join(snippets):
+                    snippets.append(f"- {r.get('title','')}: {body}")
+    except Exception as e:
+        logger.warning("_enrich_snippet DDG failed for %r: %s", title, e)
+
+    return "\n".join(snippets)
+
+
+# ---------------------------------------------------------------------------
 # Main research session
 # ---------------------------------------------------------------------------
 
@@ -430,41 +542,11 @@ def run_research_session(query: str, max_candidates: int, max_new_pages: int,
 
     print(f"[{session_id}] Starting research session: {query!r}")
 
-    # --- Step 1: Discovery ---
-    already_processed = list(_load_processed_urls())
-    discovery_manifest = {
-        "query": query,
-        "scope": {"max_candidates": max_candidates, "depth": depth},
-        "already_processed_urls": already_processed,
-        "wiki_topic_summary": _get_wiki_topic_summary(),
-        "existing_concept_gaps": _get_concept_gaps(),
-    }
-
-    inv_idx = audit.record_invocation("discovery", discovery_manifest)
-    try:
-        time.sleep(MIN_SECONDS_BETWEEN_CALLS)
-        quota.record_api_call()
-        raw_discovery = _call_subagent("discovery", discovery_manifest, research_config)
-    except Exception as e:
-        logger.error("Discovery API call failed: %s", e)
-        audit.record_response(inv_idx, str(e), schema_valid=False)
-        return {"status": "discovery_failed", "session_id": session_id}
-
-    audit.record_response(inv_idx, raw_discovery, schema_valid=False)
-    candidate_list = validate_and_parse(raw_discovery, "CandidateList")
-    if candidate_list is None:
-        audit.record_skip(inv_idx, "schema_validation_failure")
-        return {"status": "discovery_failed", "session_id": session_id}
-
-    audit.record_response(inv_idx, raw_discovery, schema_valid=True)
-    candidates = candidate_list.get("candidates", [])
+    # --- Step 1: Discovery via DuckDuckGo (real URLs, no hallucination) ---
+    already_processed = _load_processed_urls()
+    candidates = _ddg_discover(query, max_candidates, already_processed, research_config, depth)
     audit.set_candidates_found(len(candidates))
-    print(f"[{session_id}] Discovery found {len(candidates)} candidates")
-
-    # --- Step 2: Dedup + cap ---
-    processed_urls = _load_processed_urls()
-    candidates = [c for c in candidates if c["url"] not in processed_urls]
-    candidates = candidates[:max_candidates]
+    print(f"[{session_id}] DDG discovery found {len(candidates)} candidates")
 
     # --- Step 3: Evaluate each candidate ---
     approved_pages: list[tuple[dict, str]] = []
@@ -481,9 +563,24 @@ def run_research_session(query: str, max_candidates: int, max_new_pages: int,
         content = fetch_resource(
             url, retries=research_config.get("max_retries_on_fetch_failure", 2)
         )
+        # Fall back to DDG snippet when fetch fails or returns only JS boilerplate
+        # (heuristic: <500 non-whitespace chars of body text → treat as empty)
+        snippet = candidate.get("snippet", "")
         if content is None:
-            logger.warning("fetch failed for %s", url)
-            continue
+            # Fetch failed — enrich snippet by running a focused DDG search for the title
+            enriched = _enrich_snippet(candidate.get("title", ""), snippet)
+            if not enriched:
+                logger.warning("fetch failed and no enriched snippet for %s — skipping", url)
+                continue
+            logger.info("fetch failed for %s — using enriched DDG snippet (%d chars)", url, len(enriched))
+            content = enriched
+        else:
+            # Strip obvious JS-heavy shells: if <body text> is mostly whitespace/tags
+            text_chars = len(re.sub(r"<[^>]+>|\s", "", content))
+            if text_chars < 500:
+                enriched = _enrich_snippet(candidate.get("title", ""), snippet)
+                logger.info("thin page (%d text chars) for %s — using enriched snippet", text_chars, url)
+                content = enriched or content[:2000]
 
         injected_pages = select_context_pages(content[:6000])
         is_cold_start = not _wiki_is_mature()
@@ -573,7 +670,7 @@ def run_research_session(query: str, max_candidates: int, max_new_pages: int,
         session_id=session_id,
         pages_written=written_filenames,
         audit_path=audit.path,
-        candidates_found=len(candidate_list.get("candidates", [])),
+        candidates_found=len(candidates),
         candidates_evaluated=quota._candidates_evaluated,
         query=query,
         rejected_by_pipeline=pipeline_rejections,
@@ -581,7 +678,7 @@ def run_research_session(query: str, max_candidates: int, max_new_pages: int,
 
     summary = {
         "session_id": session_id,
-        "candidates_found": len(candidate_list.get("candidates", [])),
+        "candidates_found": len(candidates),
         "candidates_evaluated": quota._candidates_evaluated,
         "pages_written": len(written_filenames),
         "pipeline_rejection_rate": f"{(pipeline_rejections / max(quota._candidates_evaluated, 1) * 100):.0f}%",
