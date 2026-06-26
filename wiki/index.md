@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-06-26 | Pages: 32 | Sources: 19
+Last updated: 2026-06-26 | Pages: 38 | Sources: 19
 
 ## Entity Pages
 
@@ -37,6 +37,12 @@ Last updated: 2026-06-26 | Pages: 32 | Sources: 19
 | [nvidia_hopper_h100.md](entity/nvidia_hopper_h100.md) | NVIDIA H100: 80B transistors, 3958 TFLOPS FP8 sparse, 80 GB HBM3 at 3.35 TB/s, NVLink 4.0 | nvidia, h100, hopper, ai-accelerator, gpu | 4 | 0 |
 | [qualcomm_hexagon_dsp.md](entity/qualcomm_hexagon_dsp.md) | Qualcomm Hexagon DSP: VLIW+HVX 1024-bit vectors, HTA tensor accelerator, 15 TOPS (SD865) | qualcomm, hexagon, dsp, hvx, ai-acceleration | 3 | 0 |
 | [qualcomm_ai_engine.md](entity/qualcomm_ai_engine.md) | Qualcomm AI Engine: heterogeneous NSP stack 15→75 TOPS on-device; Cloud AI 100 400+ INT8 TOPS | qualcomm, ai-engine, nsp, snapdragon, cloud-ai | 3 | 0 |
+| [amd_cdna_architecture.md](entity/amd_cdna_architecture.md) | AMD CDNA: MFMA matrix instructions, CDNA1→CDNA3 arc, 896 GB/s Infinity Fabric, ROCm stack | amd, cdna, mfma, ai-accelerator, gpu | 3 | 0 |
+| [amd_mi300x.md](entity/amd_mi300x.md) | AMD Instinct MI300X: 192 GB HBM3, 5.3 TB/s, 1307 TFLOPS FP16, 8-chiplet 3D stack | amd, mi300x, ai-accelerator, hbm3, gpu | 4 | 0 |
+| [aws_inferentia.md](entity/aws_inferentia.md) | AWS Inferentia: NeuronCore systolic array, 384 GB pooled HBM, 70% lower cost vs GPU | aws, inferentia, ai-accelerator, systolic-array, neuroncore | 3 | 0 |
+| [aws_trainium.md](entity/aws_trainium.md) | AWS Trainium: NeuronCore-v2 training chip, Trn2 UltraServer 64-chip / 6 TB HBM / 1.3 PFLOPS FP8 | aws, trainium, ai-accelerator, training, neuroncore | 4 | 0 |
+| [microsoft_azure_maia_100.md](entity/microsoft_azure_maia_100.md) | Microsoft Azure Maia 100: 105B transistors, 64 GB HBM2E, ~0.8 PFLOPS BF16, deployed for OpenAI/Copilot | microsoft, maia, ai-accelerator, azure, asic | 3 | 0 |
+| [microsoft_cobalt_100.md](entity/microsoft_cobalt_100.md) | Microsoft Cobalt 100: 128-core Arm Neoverse N2, 40% IPC gain, host CPU for Maia 100 | microsoft, cobalt, arm, neoverse-n2, azure | 2 | 0 |
 ## Synthesis Pages
 
 | Page | Connected Entities | Status | Inbound |
@@ -83,3 +89,9 @@ Last updated: 2026-06-26 | Pages: 32 | Sources: 19
 - **Qualcomm Hexagon DSP / HVX**: → [qualcomm_hexagon_dsp](entity/qualcomm_hexagon_dsp.md)
 - **Qualcomm AI Engine / Cloud AI 100**: → [qualcomm_ai_engine](entity/qualcomm_ai_engine.md)
 - **AI Accelerator Design Taxonomy**: → [ai_accelerator_design_taxonomy](synthesis/ai_accelerator_design_taxonomy.md)
+- **AMD CDNA Architecture**: → [amd_cdna_architecture](entity/amd_cdna_architecture.md)
+- **AMD MI300X**: → [amd_mi300x](entity/amd_mi300x.md)
+- **AWS Inferentia**: → [aws_inferentia](entity/aws_inferentia.md)
+- **AWS Trainium**: → [aws_trainium](entity/aws_trainium.md)
+- **Microsoft Azure Maia 100**: → [microsoft_azure_maia_100](entity/microsoft_azure_maia_100.md)
+- **Microsoft Cobalt 100 (Neoverse N2)**: → [microsoft_cobalt_100](entity/microsoft_cobalt_100.md)

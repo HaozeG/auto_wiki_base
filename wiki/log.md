@@ -132,3 +132,7 @@ pages_updated: [wiki/index.md]
 ## [2026-06-26] research | NVIDIA Tensor Cores H100 Qualcomm Hexagon AI Engine taxonomy
 pages_created: [entity/nvidia_tensor_cores, entity/nvidia_hopper_h100, entity/qualcomm_hexagon_dsp, entity/qualcomm_ai_engine, synthesis/ai_accelerator_design_taxonomy]
 pages_updated: [wiki/index.md]
+
+## [2026-06-26] research | AMD CDNA MI300X AWS Inferentia Trainium Microsoft Maia Cobalt
+pages_created: [entity/amd_cdna_architecture, entity/amd_mi300x, entity/aws_inferentia, entity/aws_trainium, entity/microsoft_azure_maia_100, entity/microsoft_cobalt_100]
+pages_updated: [wiki/index.md]
