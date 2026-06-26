@@ -160,7 +160,10 @@ def _call_subagent(subagent_type: str, manifest: dict, research_config: dict) ->
         system=system,
         messages=[{"role": "user", "content": json.dumps(manifest)}],
     )
-    return message.content[0].text
+    for block in message.content:
+        if hasattr(block, "text"):
+            return block.text
+    raise RuntimeError("No text block in subagent response")
 
 
 # ---------------------------------------------------------------------------
