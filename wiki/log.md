@@ -100,3 +100,10 @@ actions_taken:
   - set retrospective_lint_done: true in CLAUDE.md
 pages_created: [synthesis/epic_vliw_ai_accelerator_legacy]
 pages_restructured: [entity/intel_itanium]
+
+## [2026-06-26] research | Tensix architecture Metalium RISC-V matrix extensions IME VM
+session_id: d31ae6bf
+candidates_evaluated: 12
+pages_written: 5
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_d31ae6bf_2026-06-26.json

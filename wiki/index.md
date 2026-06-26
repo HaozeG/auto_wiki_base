@@ -1,11 +1,16 @@
 # Wiki Index
 
-Last updated: 2026-06-26 | Pages: 11 | Sources: 9
+Last updated: 2026-06-26 | Pages: 16 | Sources: 9
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [tensix_architecture.md](entity/tensix_architecture.md) | Tensix Architecture | tensix, tenstorrent, risc-v, ai-acceleration, tensegrity-robotics, hardware-co-design | 2 | 0 |
+| [risc_v_vme.md](entity/risc_v_vme.md) | RISC-V Vector Matrix Extension (VME) | risc-v, matrix-extension, specification | 1 | 0 |
+| [riscv_matrix_extensions_proposal.md](entity/riscv_matrix_extensions_proposal.md) | RISC-V Matrix Extensions Proposal | risc-v, matrix-extension, isa, proposal | 3 | 0 |
+| [riscv_matrix_extensions.md](entity/riscv_matrix_extensions.md) | RISC-V Matrix Extensions (IME, VME, AME) | risc-v, isa-extension, matrix, ai-acceleration | 1 | 0 |
+| [risc_v_matrix_extensions.md](entity/risc_v_matrix_extensions.md) | RISC-V Matrix Extensions | risc-v, matrix-extension, isa-extension | 1 | 0 |
 | [risc_v_vector_extension.md](entity/risc_v_vector_extension.md) | Scalable SIMD ISA extension for RISC-V enabling AI/ML vector compute | risc-v, isa, vector-processing, ai-acceleration | 4 | 7 |
 | [tenstorrent_blackhole.md](entity/tenstorrent_blackhole.md) | 120 Tensix-core RISC-V AI accelerator with 768 RISC-V cores, 32 GB GDDR6, $1,399 | ai-accelerator, risc-v, tensix, open-source-hardware | 1 | 3 |
 | [sifive_intelligence_x280.md](entity/sifive_intelligence_x280.md) | Licensable 512-bit RISC-V vector processor IP for AI/ML SoC integration | risc-v, ai-accelerator, sifive, vector-processor, ip-core | 2 | 5 |
