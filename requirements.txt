@@ -1,0 +1,15 @@
+# Core (required)
+pyyaml>=6.0
+
+# Layer 2 density metrics (optional — eval_summary.py degrades gracefully without)
+spacy>=3.7
+
+# Testing
+pytest>=7.0
+
+# Phase 6 harness
+anthropic>=0.30
+
+# qmd: install separately via npm
+# npm install -g @tobilu/qmd
+# Then: qmd collection add wiki/_pages --name llm-wiki && qmd embed
