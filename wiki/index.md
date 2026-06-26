@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-06-26 | Pages: 64 | Sources: 19
+Last updated: 2026-06-26 | Pages: 70 | Sources: 19
 
 ## Entity Pages
 
@@ -65,6 +65,12 @@ Last updated: 2026-06-26 | Pages: 64 | Sources: 19
 | [openai_triton.md](entity/openai_triton.md) | OpenAI Triton: tile-based Python GPU compiler, PyTorch 2.0 TorchInductor backend, Flash Attention in ~50 lines | triton, gpu-compiler, ai-software, pytorch | 3 | 0 |
 | [mlir_llvm_ai.md](entity/mlir_llvm_ai.md) | MLIR: multi-level IR solving N×M compiler problem, XLA HLO lowering, IREE for edge, vendor dialects | mlir, llvm, compiler, ai-software, xla | 3 | 0 |
 | [onnx_tensorrt.md](entity/onnx_tensorrt.md) | ONNX/TensorRT: interop format, INT8 calibration, 3–8× latency vs PyTorch eager, fused MHA kernel | onnx, tensorrt, compiler, inference, ai-software | 3 | 0 |
+| [roofline_model_arithmetic_intensity.md](entity/roofline_model_arithmetic_intensity.md) | Roofline model: arithmetic intensity (FLOP/byte), H100 ridge point ~295 FLOP/byte, LLM decode <10 memory-bound | roofline, arithmetic-intensity, performance-analysis, ai-hardware | 3 | 0 |
+| [cuda_programming_model.md](entity/cuda_programming_model.md) | CUDA: thread/block/warp/SM hierarchy, H100 132 SMs / 228 KB shared mem, WMMA Tensor Core API | cuda, gpu, programming-model, nvidia, ai-software | 3 | 0 |
+| [photonic_ai_accelerators.md](entity/photonic_ai_accelerators.md) | Photonic AI: MZI-mesh matrix multiply, 10–100× energy advantage, 4–6 bit precision limit, Lightmatter $400M | photonic, optical-compute, ai-accelerator, lightmatter | 3 | 0 |
+| [neuromorphic_computing.md](entity/neuromorphic_computing.md) | Neuromorphic: Intel Loihi 2 (1M neurons, 120 mW), IBM NorthPole (25× A100 energy on ResNet-50) | neuromorphic, loihi, northpole, snn, ai-hardware | 3 | 0 |
+| [ai_datacenter_power_and_cooling.md](entity/ai_datacenter_power_and_cooling.md) | AI datacenter power: PUE 1.01–1.80 by cooling type, 9.8 GW nuclear deals, IEA 945 TWh by 2030 | power, cooling, datacenter, ai-infrastructure, pue | 3 | 0 |
+| [ai_hardware_tco.md](entity/ai_hardware_tco.md) | AI hardware TCO: H100 $25–40K, B200 $0.02/M tokens (4.5× vs H100), 1 GW DC $38B CapEx | tco, cost, ai-hardware, gpu-pricing, ai-infrastructure | 3 | 0 |
 ## Synthesis Pages
 
 | Page | Connected Entities | Status | Inbound |
@@ -147,3 +153,9 @@ Last updated: 2026-06-26 | Pages: 64 | Sources: 19
 - **MLIR / LLVM for AI**: → [mlir_llvm_ai](entity/mlir_llvm_ai.md)
 - **ONNX / TensorRT**: → [onnx_tensorrt](entity/onnx_tensorrt.md)
 - **LLM Serving Stack**: → [llm_serving_stack](synthesis/llm_serving_stack.md)
+- **Roofline Model / Arithmetic Intensity**: → [roofline_model_arithmetic_intensity](entity/roofline_model_arithmetic_intensity.md)
+- **CUDA Programming Model**: → [cuda_programming_model](entity/cuda_programming_model.md)
+- **Photonic AI Accelerators**: → [photonic_ai_accelerators](entity/photonic_ai_accelerators.md)
+- **Neuromorphic Computing (Loihi/NorthPole)**: → [neuromorphic_computing](entity/neuromorphic_computing.md)
+- **AI Datacenter Power and Cooling**: → [ai_datacenter_power_and_cooling](entity/ai_datacenter_power_and_cooling.md)
+- **AI Hardware TCO**: → [ai_hardware_tco](entity/ai_hardware_tco.md)

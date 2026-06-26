@@ -156,3 +156,7 @@ pages_updated: [wiki/index.md]
 ## [2026-06-26] research | Speculative decoding model parallelism Triton MLIR TensorRT LLM serving
 pages_created: [entity/speculative_decoding_llm_inference, entity/model_parallelism_llm_training_inference, entity/openai_triton, entity/mlir_llvm_ai, entity/onnx_tensorrt, synthesis/llm_serving_stack]
 pages_updated: [wiki/index.md]
+
+## [2026-06-26] research | Roofline CUDA photonic neuromorphic datacenter power TCO
+pages_created: [entity/roofline_model_arithmetic_intensity, entity/cuda_programming_model, entity/photonic_ai_accelerators, entity/neuromorphic_computing, entity/ai_datacenter_power_and_cooling, entity/ai_hardware_tco]
+pages_updated: [wiki/index.md]
