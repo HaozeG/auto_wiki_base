@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-06-26 | Pages: 53 | Sources: 19
+Last updated: 2026-06-26 | Pages: 58 | Sources: 19
 
 ## Entity Pages
 
@@ -56,12 +56,17 @@ Last updated: 2026-06-26 | Pages: 53 | Sources: 19
 | [nvidia_2_4_structured_sparsity.md](entity/nvidia_2_4_structured_sparsity.md) | NVIDIA 2:4 structured sparsity: 2× Tensor Core throughput, BERT-Large -0.2 F1, A100/H100 hardware | nvidia, sparsity, tensor-cores, ampere, ai-software | 3 | 0 |
 | [chiplet_architecture_advanced_packaging.md](entity/chiplet_architecture_advanced_packaging.md) | Chiplet architecture: UCIe 1.3 Tbps/mm, CoWoS interposer, EMIB/Foveros, AMD EPYC Rome 256 GB/s | chiplet, packaging, ucie, cowos, ai-infrastructure | 3 | 0 |
 | [tsmc_n3_n2_process_node.md](entity/tsmc_n3_n2_process_node.md) | TSMC N3/N2: 167 MTr/mm², FinFET→GAA at N2, 2023 CoWoS crisis, Apple/NVIDIA/AMD customers | tsmc, process-node, n3, n2, semiconductor | 3 | 0 |
+| [transformer_architecture.md](entity/transformer_architecture.md) | Transformer: self-attention O(n²), MHA, GPT-3 175B/96L, LLaMA-2 70B GQA, GPT-4 ~1.8T MoE est. | transformer, attention, llm, architecture, ai-software | 3 | 0 |
+| [flash_attention.md](entity/flash_attention.md) | Flash Attention: SRAM tiling for IO-aware attention, 2–4× A100 speedup, O(n) HBM memory, FA-3 75% peak H100 | flash-attention, attention, sram, ai-software, llm | 3 | 0 |
+| [mixture_of_experts_moe_llm.md](entity/mixture_of_experts_moe_llm.md) | Mixture-of-Experts: sparse k-of-N routing, Mixtral 8×7B 46.7B/12.9B active, DeepSeek-V2 MLA | moe, sparse-activation, llm, ai-software | 3 | 0 |
+| [kv_cache_llm_inference.md](entity/kv_cache_llm_inference.md) | KV Cache: O(n·d·L) memory cost, GQA 8× reduction, PagedAttention 55% waste cut, H100 <10 FLOP/byte | kv-cache, inference, llm, memory, ai-software | 3 | 0 |
 ## Synthesis Pages
 
 | Page | Connected Entities | Status | Inbound |
 |------|--------------------|--------|---------|
 | [riscv_ai_accelerator_landscape.md](synthesis/riscv_ai_accelerator_landscape.md) | risc_v_vector_extension, tenstorrent_blackhole, sifive_intelligence_x280, rva23_profile, fpga_riscv_isa_extension_nn_inference, gemmini | draft | 0 |
 | [epic_vliw_ai_accelerator_legacy.md](synthesis/epic_vliw_ai_accelerator_legacy.md) | intel_itanium, risc_v_vector_extension | active | 1 |
+| [software_hardware_codesign_ai.md](synthesis/software_hardware_codesign_ai.md) | nvidia_tensor_cores, intel_amx, arm_sme2, groq_lpu, google_tpu, nvidia_2_4_structured_sparsity, int8_fp8_quantization_llm_inference | draft | 0 |
 | [inference_accelerator_startups.md](synthesis/inference_accelerator_startups.md) | groq_lpu, sambanova_sn40l, cerebras_wse, tenstorrent_blackhole, aws_inferentia, nvidia_hopper_h100 | draft | 0 |
 | [hyperscaler_custom_silicon.md](synthesis/hyperscaler_custom_silicon.md) | google_tpu, google_trillium_tpu_v6e, aws_inferentia, aws_trainium, microsoft_azure_maia_100, microsoft_cobalt_100, apple_neural_engine | draft | 0 |
 | [ai_accelerator_design_taxonomy.md](synthesis/ai_accelerator_design_taxonomy.md) | google_tpu, intel_amx, apple_neural_engine, arm_sme, gemmini, tenstorrent_blackhole, fpga_riscv_isa_extension_nn_inference, apple_amx | draft | 0 |
@@ -125,3 +130,8 @@ Last updated: 2026-06-26 | Pages: 53 | Sources: 19
 - **NVIDIA 2:4 Structured Sparsity**: → [nvidia_2_4_structured_sparsity](entity/nvidia_2_4_structured_sparsity.md)
 - **Chiplet Architecture / Advanced Packaging**: → [chiplet_architecture_advanced_packaging](entity/chiplet_architecture_advanced_packaging.md)
 - **TSMC N3/N2 Process Node**: → [tsmc_n3_n2_process_node](entity/tsmc_n3_n2_process_node.md)
+- **Transformer Architecture**: → [transformer_architecture](entity/transformer_architecture.md)
+- **Flash Attention**: → [flash_attention](entity/flash_attention.md)
+- **Mixture-of-Experts (MoE)**: → [mixture_of_experts_moe_llm](entity/mixture_of_experts_moe_llm.md)
+- **KV Cache / PagedAttention**: → [kv_cache_llm_inference](entity/kv_cache_llm_inference.md)
+- **Software-Hardware Co-Design in AI**: → [software_hardware_codesign_ai](synthesis/software_hardware_codesign_ai.md)

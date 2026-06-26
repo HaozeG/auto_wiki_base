@@ -148,3 +148,7 @@ pages_updated: [wiki/index.md]
 ## [2026-06-26] research | Blackwell B200 quantization sparsity chiplets TSMC N3/N2
 pages_created: [entity/nvidia_blackwell_b200, entity/int8_fp8_quantization_llm_inference, entity/nvidia_2_4_structured_sparsity, entity/chiplet_architecture_advanced_packaging, entity/tsmc_n3_n2_process_node]
 pages_updated: [wiki/index.md]
+
+## [2026-06-26] research | Transformer FlashAttention MoE KV-cache sw-hw co-design synthesis
+pages_created: [entity/transformer_architecture, entity/flash_attention, entity/mixture_of_experts_moe_llm, entity/kv_cache_llm_inference, synthesis/software_hardware_codesign_ai]
+pages_updated: [wiki/index.md]
