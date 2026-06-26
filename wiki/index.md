@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-06-26 | Pages: 42 | Sources: 19
+Last updated: 2026-06-26 | Pages: 48 | Sources: 19
 
 ## Entity Pages
 
@@ -46,12 +46,18 @@ Last updated: 2026-06-26 | Pages: 42 | Sources: 19
 | [cerebras_wse.md](entity/cerebras_wse.md) | Cerebras WSE-3: 4T transistors, 900K cores, 44 GB SRAM, 125 PFLOPS, Llama-70B at 2100 tok/s | cerebras, wse, ai-accelerator, wafer-scale, sram | 3 | 0 |
 | [groq_lpu.md](entity/groq_lpu.md) | Groq LPU: TSP deterministic scheduler, 80 TB/s SRAM bandwidth, 1300+ tok/s Llama 3 8B | groq, lpu, tsp, ai-accelerator, inference | 3 | 0 |
 | [sambanova_sn40l.md](entity/sambanova_sn40l.md) | SambaNova SN40L: RDU 3-tier memory, 520 MB SRAM + 64 GB HBM3 + 1.5 TB DDR5, CoE 1T-param inference | sambanova, rdu, ai-accelerator, composition-of-experts | 3 | 0 |
+| [graphcore_ipu.md](entity/graphcore_ipu.md) | Graphcore IPU GC200: 1472 tiles, 900 MB SRAM at 47.5 TB/s, BSP execution, 250 TFLOPS FP16 | graphcore, ipu, ai-accelerator, bsp, sram | 3 | 0 |
+| [etched_sohu.md](entity/etched_sohu.md) | Etched Sohu: hardwired transformer ASIC, 144 GB HBM3E, ~4800 GB/s bandwidth, TSMC 4 nm | etched, sohu, asic, transformer, ai-accelerator | 3 | 0 |
+| [hbm_high_bandwidth_memory.md](entity/hbm_high_bandwidth_memory.md) | HBM: 3D-stacked DRAM via TSV, HBM1→HBM3E 128 GB/s→1.2 TB/s per stack, CoWoS packaging | hbm, memory, 3d-stacking, tsv, ai-infrastructure | 3 | 0 |
+| [nvlink_nvswitch.md](entity/nvlink_nvswitch.md) | NVLink/NVSwitch: GPU interconnect 160→900 GB/s, 3.6 TB/s DGX H100 bisection, 7× PCIe Gen5 | nvidia, nvlink, nvswitch, interconnect, ai-infrastructure | 3 | 0 |
+| [cxl_compute_express_link.md](entity/cxl_compute_express_link.md) | CXL: PCIe 5.0-based cache-coherent interconnect for memory pooling; 64→256 GB/s per ×16 slot | cxl, interconnect, memory-disaggregation, ai-infrastructure | 3 | 0 |
 ## Synthesis Pages
 
 | Page | Connected Entities | Status | Inbound |
 |------|--------------------|--------|---------|
 | [riscv_ai_accelerator_landscape.md](synthesis/riscv_ai_accelerator_landscape.md) | risc_v_vector_extension, tenstorrent_blackhole, sifive_intelligence_x280, rva23_profile, fpga_riscv_isa_extension_nn_inference, gemmini | draft | 0 |
 | [epic_vliw_ai_accelerator_legacy.md](synthesis/epic_vliw_ai_accelerator_legacy.md) | intel_itanium, risc_v_vector_extension | active | 1 |
+| [inference_accelerator_startups.md](synthesis/inference_accelerator_startups.md) | groq_lpu, sambanova_sn40l, cerebras_wse, tenstorrent_blackhole, aws_inferentia, nvidia_hopper_h100 | draft | 0 |
 | [hyperscaler_custom_silicon.md](synthesis/hyperscaler_custom_silicon.md) | google_tpu, google_trillium_tpu_v6e, aws_inferentia, aws_trainium, microsoft_azure_maia_100, microsoft_cobalt_100, apple_neural_engine | draft | 0 |
 | [ai_accelerator_design_taxonomy.md](synthesis/ai_accelerator_design_taxonomy.md) | google_tpu, intel_amx, apple_neural_engine, arm_sme, gemmini, tenstorrent_blackhole, fpga_riscv_isa_extension_nn_inference, apple_amx | draft | 0 |
 | [arm_vs_riscv_matrix_isa.md](synthesis/arm_vs_riscv_matrix_isa.md) | arm_sme, arm_sme2, arm_sve2, risc_v_matrix_extensions, risc_v_vector_extension, rva23_profile | draft | 0 |
@@ -103,3 +109,9 @@ Last updated: 2026-06-26 | Pages: 42 | Sources: 19
 - **Groq LPU (Language Processing Unit)**: → [groq_lpu](entity/groq_lpu.md)
 - **SambaNova SN40L / RDU**: → [sambanova_sn40l](entity/sambanova_sn40l.md)
 - **Hyperscaler Custom Silicon**: → [hyperscaler_custom_silicon](synthesis/hyperscaler_custom_silicon.md)
+- **Graphcore IPU (GC200)**: → [graphcore_ipu](entity/graphcore_ipu.md)
+- **Etched Sohu**: → [etched_sohu](entity/etched_sohu.md)
+- **HBM (High Bandwidth Memory)**: → [hbm_high_bandwidth_memory](entity/hbm_high_bandwidth_memory.md)
+- **NVLink / NVSwitch**: → [nvlink_nvswitch](entity/nvlink_nvswitch.md)
+- **CXL (Compute Express Link)**: → [cxl_compute_express_link](entity/cxl_compute_express_link.md)
+- **Inference Accelerator Startups**: → [inference_accelerator_startups](synthesis/inference_accelerator_startups.md)

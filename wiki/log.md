@@ -140,3 +140,7 @@ pages_updated: [wiki/index.md]
 ## [2026-06-26] research | Cerebras WSE Groq LPU SambaNova RDU hyperscaler synthesis
 pages_created: [entity/cerebras_wse, entity/groq_lpu, entity/sambanova_sn40l, synthesis/hyperscaler_custom_silicon]
 pages_updated: [wiki/index.md]
+
+## [2026-06-26] research | Graphcore IPU Etched Sohu HBM NVLink CXL inference synthesis
+pages_created: [entity/graphcore_ipu, entity/etched_sohu, entity/hbm_high_bandwidth_memory, entity/nvlink_nvswitch, entity/cxl_compute_express_link, synthesis/inference_accelerator_startups]
+pages_updated: [wiki/index.md]
