@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-06-26 | Pages: 58 | Sources: 19
+Last updated: 2026-06-26 | Pages: 64 | Sources: 19
 
 ## Entity Pages
 
@@ -60,12 +60,18 @@ Last updated: 2026-06-26 | Pages: 58 | Sources: 19
 | [flash_attention.md](entity/flash_attention.md) | Flash Attention: SRAM tiling for IO-aware attention, 2–4× A100 speedup, O(n) HBM memory, FA-3 75% peak H100 | flash-attention, attention, sram, ai-software, llm | 3 | 0 |
 | [mixture_of_experts_moe_llm.md](entity/mixture_of_experts_moe_llm.md) | Mixture-of-Experts: sparse k-of-N routing, Mixtral 8×7B 46.7B/12.9B active, DeepSeek-V2 MLA | moe, sparse-activation, llm, ai-software | 3 | 0 |
 | [kv_cache_llm_inference.md](entity/kv_cache_llm_inference.md) | KV Cache: O(n·d·L) memory cost, GQA 8× reduction, PagedAttention 55% waste cut, H100 <10 FLOP/byte | kv-cache, inference, llm, memory, ai-software | 3 | 0 |
+| [speculative_decoding_llm_inference.md](entity/speculative_decoding_llm_inference.md) | Speculative decoding: draft-then-verify, speedup 1/(1-α·β), Medusa 2.2–3.6×, no benefit at batch≥32 | speculative-decoding, llm, inference, ai-software | 3 | 0 |
+| [model_parallelism_llm_training_inference.md](entity/model_parallelism_llm_training_inference.md) | Model parallelism: TP 8-way ~76% scaling, PP 1F1B ~5% bubble, ZeRO stages, 3D parallelism 163 TFLOPS/GPU | model-parallelism, distributed-training, llm, ai-software | 3 | 0 |
+| [openai_triton.md](entity/openai_triton.md) | OpenAI Triton: tile-based Python GPU compiler, PyTorch 2.0 TorchInductor backend, Flash Attention in ~50 lines | triton, gpu-compiler, ai-software, pytorch | 3 | 0 |
+| [mlir_llvm_ai.md](entity/mlir_llvm_ai.md) | MLIR: multi-level IR solving N×M compiler problem, XLA HLO lowering, IREE for edge, vendor dialects | mlir, llvm, compiler, ai-software, xla | 3 | 0 |
+| [onnx_tensorrt.md](entity/onnx_tensorrt.md) | ONNX/TensorRT: interop format, INT8 calibration, 3–8× latency vs PyTorch eager, fused MHA kernel | onnx, tensorrt, compiler, inference, ai-software | 3 | 0 |
 ## Synthesis Pages
 
 | Page | Connected Entities | Status | Inbound |
 |------|--------------------|--------|---------|
 | [riscv_ai_accelerator_landscape.md](synthesis/riscv_ai_accelerator_landscape.md) | risc_v_vector_extension, tenstorrent_blackhole, sifive_intelligence_x280, rva23_profile, fpga_riscv_isa_extension_nn_inference, gemmini | draft | 0 |
 | [epic_vliw_ai_accelerator_legacy.md](synthesis/epic_vliw_ai_accelerator_legacy.md) | intel_itanium, risc_v_vector_extension | active | 1 |
+| [llm_serving_stack.md](synthesis/llm_serving_stack.md) | kv_cache_llm_inference, flash_attention, mixture_of_experts_moe_llm, int8_fp8_quantization_llm_inference, groq_lpu, sambanova_sn40l, nvidia_hopper_h100, transformer_architecture | draft | 0 |
 | [software_hardware_codesign_ai.md](synthesis/software_hardware_codesign_ai.md) | nvidia_tensor_cores, intel_amx, arm_sme2, groq_lpu, google_tpu, nvidia_2_4_structured_sparsity, int8_fp8_quantization_llm_inference | draft | 0 |
 | [inference_accelerator_startups.md](synthesis/inference_accelerator_startups.md) | groq_lpu, sambanova_sn40l, cerebras_wse, tenstorrent_blackhole, aws_inferentia, nvidia_hopper_h100 | draft | 0 |
 | [hyperscaler_custom_silicon.md](synthesis/hyperscaler_custom_silicon.md) | google_tpu, google_trillium_tpu_v6e, aws_inferentia, aws_trainium, microsoft_azure_maia_100, microsoft_cobalt_100, apple_neural_engine | draft | 0 |
@@ -135,3 +141,9 @@ Last updated: 2026-06-26 | Pages: 58 | Sources: 19
 - **Mixture-of-Experts (MoE)**: → [mixture_of_experts_moe_llm](entity/mixture_of_experts_moe_llm.md)
 - **KV Cache / PagedAttention**: → [kv_cache_llm_inference](entity/kv_cache_llm_inference.md)
 - **Software-Hardware Co-Design in AI**: → [software_hardware_codesign_ai](synthesis/software_hardware_codesign_ai.md)
+- **Speculative Decoding**: → [speculative_decoding_llm_inference](entity/speculative_decoding_llm_inference.md)
+- **Model Parallelism (TP/PP/ZeRO)**: → [model_parallelism_llm_training_inference](entity/model_parallelism_llm_training_inference.md)
+- **OpenAI Triton**: → [openai_triton](entity/openai_triton.md)
+- **MLIR / LLVM for AI**: → [mlir_llvm_ai](entity/mlir_llvm_ai.md)
+- **ONNX / TensorRT**: → [onnx_tensorrt](entity/onnx_tensorrt.md)
+- **LLM Serving Stack**: → [llm_serving_stack](synthesis/llm_serving_stack.md)

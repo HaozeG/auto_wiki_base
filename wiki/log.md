@@ -152,3 +152,7 @@ pages_updated: [wiki/index.md]
 ## [2026-06-26] research | Transformer FlashAttention MoE KV-cache sw-hw co-design synthesis
 pages_created: [entity/transformer_architecture, entity/flash_attention, entity/mixture_of_experts_moe_llm, entity/kv_cache_llm_inference, synthesis/software_hardware_codesign_ai]
 pages_updated: [wiki/index.md]
+
+## [2026-06-26] research | Speculative decoding model parallelism Triton MLIR TensorRT LLM serving
+pages_created: [entity/speculative_decoding_llm_inference, entity/model_parallelism_llm_training_inference, entity/openai_triton, entity/mlir_llvm_ai, entity/onnx_tensorrt, synthesis/llm_serving_stack]
+pages_updated: [wiki/index.md]
