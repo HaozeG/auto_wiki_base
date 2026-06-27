@@ -39,6 +39,32 @@ pages_deferred:
   - Near-memory computing RISC-V PIM: insufficient verifiable RISC-V-specific claims
 cold_start: true
 
+## [2026-06-27] ingest | web research — RISC-V AI batch 3: Matrix Extension, edge AI SoCs, open-source hardware
+pages_created:
+  - entity/riscv_matrix_extension.md
+  - entity/andes_nx27v_sifive_p870_comparison.md
+  - entity/qualcomm_riscv_ai.md
+  - entity/starfive_jh7110_visionfive2.md
+  - entity/canaan_kendryte_k510_k230.md
+  - entity/riscv_zve_sub_extensions.md
+  - entity/openhw_cva6.md
+  - entity/pulp_platform.md
+  - entity/chips_alliance_governance.md
+pages_updated:
+  - entity/risc_v_vector_extension.md (inbound_links: 6 → 13)
+  - entity/xiangshan_riscv.md (inbound_links: 0 → 2)
+  - entity/alibaba_xuantie_c910_c920.md (inbound_links: 2 → 4)
+  - entity/tenstorrent_tt_ascalon.md (inbound_links: 2 → 5)
+  - entity/andes_ax45mp_nx27v.md (inbound_links: 0 → 1)
+  - entity/sifive_intelligence_x280.md (inbound_links: 2 → 5)
+  - entity/ventana_veyron_v2.md (inbound_links: 2 → 3)
+  - entity/risc_v_p_extension.md (inbound_links: 0 → 1)
+  - entity/gemmini.md (inbound_links: 0 → 1)
+  - entity/boom_riscv.md (inbound_links: 0 → 1)
+  - entity/ara_vector_processor.md (inbound_links: 0 → 1)
+pages_deferred: []
+cold_start: true
+
 ## [2026-06-27] lint | retrospective
 issues_found: 14
 actions_taken:
