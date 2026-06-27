@@ -6,6 +6,12 @@ created: 2026-06-27
 updated: 2026-06-27
 cold_start: true
 inbound_links: 0
+sources:
+  - entity/gemmini.md
+  - entity/ara_vector_processor.md
+  - entity/mlir_riscv_backend.md
+  - entity/iree_riscv.md
+  - entity/tvm_riscv_backend.md
 scorecard:
   bridge_score: ~
   contradiction_potential: ~

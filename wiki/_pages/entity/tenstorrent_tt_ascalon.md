@@ -1,20 +1,26 @@
 ---
-type: entity
-tags: [risc-v, processor, AI-acceleration, out-of-order, server]
-sources:
-  - https://tenstorrent.com/en/newsroom/tenstorrent-announces-availability-of-tt-ascalon
-  - https://www.eetimes.com/tenstorrent-productizes-risc-v-cpu-and-ai-ip/
-  - https://pbxscience.com/tenstorrent-unveils-tt-ascalon-a-high-performance-risc-v-cpu-challenging-the-market/
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
+created: 2026-06-27
 inbound_links: 0
+needs_summary_revision: true
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://tenstorrent.com/en/newsroom/tenstorrent-announces-availability-of-tt-ascalon
+- https://www.eetimes.com/tenstorrent-productizes-risc-v-cpu-and-ai-ip/
+- https://pbxscience.com/tenstorrent-unveils-tt-ascalon-a-high-performance-risc-v-cpu-challenging-the-market/
+tags:
+- risc-v
+- processor
+- AI-acceleration
+- out-of-order
+- server
+type: entity
+updated: 2026-06-27
 ---
 
 # Tenstorrent TT-Ascalon

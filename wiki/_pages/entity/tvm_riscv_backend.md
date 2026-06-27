@@ -1,21 +1,28 @@
 ---
-type: entity
-tags: [compiler, optimization, risc-v, TVM, ML-frameworks, quantization]
-sources:
-  - https://arxiv.org/pdf/2507.01457
-  - https://medium.com/accelr-blog/apache-tvm-on-risc-v-experiment-results-aec86c3e7cf8
-  - https://ieeexplore.ieee.org/document/9196477/
-  - https://arxiv.org/pdf/2508.14899
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
+created: 2026-06-27
 inbound_links: 4
+needs_summary_revision: true
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://arxiv.org/pdf/2507.01457
+- https://medium.com/accelr-blog/apache-tvm-on-risc-v-experiment-results-aec86c3e7cf8
+- https://ieeexplore.ieee.org/document/9196477/
+- https://arxiv.org/pdf/2508.14899
+tags:
+- compiler
+- optimization
+- risc-v
+- TVM
+- ML-frameworks
+- quantization
+type: entity
+updated: 2026-06-27
 ---
 
 # Apache TVM RISC-V Backend

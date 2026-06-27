@@ -38,3 +38,13 @@ pages_deferred:
   - GNU/LLVM auto-vectorization RVV: covered within mlir_riscv_backend.md
   - Near-memory computing RISC-V PIM: insufficient verifiable RISC-V-specific claims
 cold_start: true
+
+## [2026-06-27] lint | retrospective
+issues_found: 14
+actions_taken:
+  - fixed eval_summary.py _set_frontmatter_flag bug (------ → --- delimiter corruption)
+  - fixed 11 entity pages with corrupted ------ frontmatter closers
+  - expanded first paragraph of 5 entity pages to meet 80-word minimum
+  - added sources frontmatter to 2 synthesis pages
+deferred_for_human:
+  - needs_summary_revision flag on multiple pages (non-blocking, Layer 3 coverage low at cold_start)

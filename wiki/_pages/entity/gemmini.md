@@ -1,20 +1,27 @@
 ---
-type: entity
-tags: [risc-v, accelerator, systolic-array, open-source, ml-hardware, uc-berkeley]
-sources:
-  - https://github.com/ucb-bar/gemmini
-  - https://arxiv.org/abs/1911.09925
-  - https://people.eecs.berkeley.edu/~ysshao/assets/papers/beagle_esscirc_2021.pdf
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
+created: 2026-06-27
 inbound_links: 0
+needs_summary_revision: true
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://github.com/ucb-bar/gemmini
+- https://arxiv.org/abs/1911.09925
+- https://people.eecs.berkeley.edu/~ysshao/assets/papers/beagle_esscirc_2021.pdf
+tags:
+- risc-v
+- accelerator
+- systolic-array
+- open-source
+- ml-hardware
+- uc-berkeley
+type: entity
+updated: 2026-06-27
 ---
 
 # Gemmini

@@ -1,21 +1,28 @@
 ---
-type: entity
-tags: [risc-v, dsp, packed-simd, embedded, tinyml, isa-extension]
-sources:
-  - https://github.com/riscv/riscv-p-spec
-  - https://riscv.org/blog/imperas-updates-free-reference-model-riscvovpsimplus-with-new-risc-v-p-simd-dsp-extension-and-architectural-validation-test-suites/
-  - https://ieeexplore.ieee.org/document/11129627/
-  - https://dl.acm.org/doi/full/10.1145/3569939
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
+created: 2026-06-27
 inbound_links: 0
+needs_summary_revision: true
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://github.com/riscv/riscv-p-spec
+- https://riscv.org/blog/imperas-updates-free-reference-model-riscvovpsimplus-with-new-risc-v-p-simd-dsp-extension-and-architectural-validation-test-suites/
+- https://ieeexplore.ieee.org/document/11129627/
+- https://dl.acm.org/doi/full/10.1145/3569939
+tags:
+- risc-v
+- dsp
+- packed-simd
+- embedded
+- tinyml
+- isa-extension
+type: entity
+updated: 2026-06-27
 ---
 
 # RISC-V P-Extension (Packed SIMD)

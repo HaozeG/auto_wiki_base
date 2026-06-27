@@ -1,21 +1,28 @@
 ---
-type: entity
-tags: [risc-v, commercial-ip, china, embedded, aiot, nuclei]
-sources:
-  - https://www.nucleisys.com/product/rvipes/ux900/
-  - https://www.nucleisys.com/product/rvipes/n900/
-  - https://www.riscvschool.com/2023/02/18/nuclei-risc-v-900-series-processors/
-  - https://riscv.org/blog/nuclei-system-technology-releases-ux1030h-with-full-support-for-rva23/
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
+created: 2026-06-27
 inbound_links: 0
+needs_summary_revision: true
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://www.nucleisys.com/product/rvipes/ux900/
+- https://www.nucleisys.com/product/rvipes/n900/
+- https://www.riscvschool.com/2023/02/18/nuclei-risc-v-900-series-processors/
+- https://riscv.org/blog/nuclei-system-technology-releases-ux1030h-with-full-support-for-rva23/
+tags:
+- risc-v
+- commercial-ip
+- china
+- embedded
+- aiot
+- nuclei
+type: entity
+updated: 2026-06-27
 ---
 
 # Nuclei UX900 / N900

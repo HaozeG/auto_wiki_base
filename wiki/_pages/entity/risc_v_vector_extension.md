@@ -1,21 +1,27 @@
 ---
-type: entity
-tags: [risc-v, hardware, AI-acceleration, vector-processing, ISA]
-sources:
-  - https://semiwiki.com/ip/sifive/364948-risc-v-extensions-for-ai-enhancing-performance-in-machine-learning/
-  - https://www.jonpeddie.com/news/the-risc-v-vector-extensions-for-ai/
-  - https://www.electronicdesign.com/technologies/embedded/digital-ics/processors/article/55283485/risc-v-international-more-about-the-risc-v-rva23-profile
-  - https://arxiv.org/pdf/2507.01457
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
+created: 2026-06-27
 inbound_links: 6
+needs_summary_revision: true
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://semiwiki.com/ip/sifive/364948-risc-v-extensions-for-ai-enhancing-performance-in-machine-learning/
+- https://www.jonpeddie.com/news/the-risc-v-vector-extensions-for-ai/
+- https://www.electronicdesign.com/technologies/embedded/digital-ics/processors/article/55283485/risc-v-international-more-about-the-risc-v-rva23-profile
+- https://arxiv.org/pdf/2507.01457
+tags:
+- risc-v
+- hardware
+- AI-acceleration
+- vector-processing
+- ISA
+type: entity
+updated: 2026-06-27
 ---
 
 # RISC-V Vector Extension (RVV)

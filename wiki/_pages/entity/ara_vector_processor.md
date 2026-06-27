@@ -1,21 +1,28 @@
 ---
-type: entity
-tags: [risc-v, vector-processor, open-source, eth-zurich, rvv, high-performance]
-sources:
-  - https://arxiv.org/abs/1906.00478
-  - https://arxiv.org/abs/2210.08882
-  - https://arxiv.org/html/2311.07493v2
-  - https://arxiv.org/pdf/2501.10301
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
+created: 2026-06-27
 inbound_links: 0
+needs_summary_revision: true
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://arxiv.org/abs/1906.00478
+- https://arxiv.org/abs/2210.08882
+- https://arxiv.org/html/2311.07493v2
+- https://arxiv.org/pdf/2501.10301
+tags:
+- risc-v
+- vector-processor
+- open-source
+- eth-zurich
+- rvv
+- high-performance
+type: entity
+updated: 2026-06-27
 ---
 
 # Ara Vector Processor

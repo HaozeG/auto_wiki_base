@@ -1,23 +1,30 @@
 ---
-type: synthesis
-connected_entities:
-  - risc_v_vector_extension
-  - alibaba_xuantie_c950
-  - alibaba_xuantie_c910_c920
-  - esperanto_et_soc1
-  - tenstorrent_tt_ascalon
-  - sifive_intelligence_x280
-  - ventana_veyron_v2
-  - tvm_riscv_backend
-synthesis_status: draft
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
+connected_entities:
+- risc_v_vector_extension
+- alibaba_xuantie_c950
+- alibaba_xuantie_c910_c920
+- esperanto_et_soc1
+- tenstorrent_tt_ascalon
+- sifive_intelligence_x280
+- ventana_veyron_v2
+- tvm_riscv_backend
+created: 2026-06-27
 inbound_links: 0
+needs_summary_revision: true
 scorecard:
-  bridge_score: ~
-  contradiction_potential: ~
-  cross_domain_connection: ~
+  bridge_score: null
+  contradiction_potential: null
+  cross_domain_connection: null
+sources:
+- entity/risc_v_vector_extension.md
+- entity/alibaba_xuantie_c950.md
+- entity/esperanto_et_soc1.md
+- entity/tenstorrent_tt_ascalon.md
+- entity/sifive_intelligence_x280.md
+synthesis_status: draft
+type: synthesis
+updated: 2026-06-27
 ---
 
 # RISC-V as an Open Platform for AI Acceleration

@@ -351,7 +351,7 @@ def _set_frontmatter_flag(path: Path, key: str, value) -> None:
     if end == -1:
         return
     fm_text = text[3:end].strip()
-    body_rest = text[end:]
+    body_rest = text[end + 3:]  # skip the closing --- delimiter
     try:
         fm = yaml.safe_load(fm_text) or {}
     except yaml.YAMLError:

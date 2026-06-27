@@ -1,21 +1,27 @@
 ---
-type: entity
-tags: [risc-v, processor, vector-processing, AI-acceleration, embedded]
-sources:
-  - https://www.sifive.com/blog/introduction-to-the-sifive-intelligence-x280
-  - https://www.cnx-software.com/2021/04/27/sifive-intelligence-x280-64-bit-risc-v-processor-integrates-ai-extensions/
-  - https://www.cnx-software.com/2025/09/08/sifive-introduces-2nd-gen-intelligence-risc-v-ai-cpus-x160-x180-x280-gen-2-x390-gen-2-and-xm-gen-2/
-  - https://www.sifive.com/blog/introducing-the-latest-sifive-intelligence-x280-processor
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
+created: 2026-06-27
 inbound_links: 0
+needs_summary_revision: true
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://www.sifive.com/blog/introduction-to-the-sifive-intelligence-x280
+- https://www.cnx-software.com/2021/04/27/sifive-intelligence-x280-64-bit-risc-v-processor-integrates-ai-extensions/
+- https://www.cnx-software.com/2025/09/08/sifive-introduces-2nd-gen-intelligence-risc-v-ai-cpus-x160-x180-x280-gen-2-x390-gen-2-and-xm-gen-2/
+- https://www.sifive.com/blog/introducing-the-latest-sifive-intelligence-x280-processor
+tags:
+- risc-v
+- processor
+- vector-processing
+- AI-acceleration
+- embedded
+type: entity
+updated: 2026-06-27
 ---
 
 # SiFive Intelligence X280

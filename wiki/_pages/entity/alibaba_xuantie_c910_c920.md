@@ -1,24 +1,30 @@
 ---
-type: entity
-tags: [risc-v, processor, alibaba, out-of-order, open-source]
-sources:
-  - https://chipsandcheese.com/p/alibabat-heads-xuantie-c910
-  - https://riscv.org/blog/alibaba-open-sources-four-risc-v-cores-xuantie-e902-e906-c906-and-c910-jean-luc-aufranc-cnx-software/
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
+created: 2026-06-27
 inbound_links: 2
+needs_summary_revision: true
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://chipsandcheese.com/p/alibabat-heads-xuantie-c910
+- https://riscv.org/blog/alibaba-open-sources-four-risc-v-cores-xuantie-e902-e906-c906-and-c910-jean-luc-aufranc-cnx-software/
+tags:
+- risc-v
+- processor
+- alibaba
+- out-of-order
+- open-source
+type: entity
+updated: 2026-06-27
 ---
 
 # Alibaba XuanTie C910 and C920
 
-The Alibaba XuanTie C910 and C920 are high-performance out-of-order RISC-V cores developed by T-Head, Alibaba's chip design subsidiary, targeting applications in AI inference, edge servers, industrial control, and ADAS. The C910 was open-sourced by Alibaba under a permissive license, making it one of the highest-performance publicly available RISC-V core designs. The C920 is an incremental update that upgrades the vector extension support from RVV 0.7.1 to the ratified RVV 1.0 standard while otherwise preserving the C910 microarchitecture.
+The Alibaba XuanTie C910 and C920 are high-performance out-of-order RISC-V cores developed by T-Head, Alibaba's chip design subsidiary, targeting applications in AI inference, edge servers, industrial control, and ADAS. The C910 was open-sourced by Alibaba under a permissive license, making it one of the highest-performance publicly available RISC-V core designs. The C920 is an incremental update that upgrades the vector extension support from RVV 0.7.1 to the ratified RVV 1.0 standard while otherwise preserving the C910 microarchitecture. Both cores are manufactured on TSMC 12nm FinFET.
 
 ## Key Claims
 

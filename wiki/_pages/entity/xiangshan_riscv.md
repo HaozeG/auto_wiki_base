@@ -1,26 +1,33 @@
 ---
-type: entity
-tags: [risc-v, open-source, high-performance, out-of-order, china, cas]
-sources:
-  - https://github.com/OpenXiangShan/XiangShan
-  - https://www.cnx-software.com/2021/07/05/xiangshan-open-source-64-bit-risc-v-processor-rival-arm-cortex-a76/
-  - https://english.cas.cn/newsroom/cas-in-media/202603/t20260330_1154281.shtml
-  - https://hackaday.com/2025/01/03/high-performance-risc-v/
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
+created: 2026-06-27
 inbound_links: 0
+needs_summary_revision: true
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://github.com/OpenXiangShan/XiangShan
+- https://www.cnx-software.com/2021/07/05/xiangshan-open-source-64-bit-risc-v-processor-rival-arm-cortex-a76/
+- https://english.cas.cn/newsroom/cas-in-media/202603/t20260330_1154281.shtml
+- https://hackaday.com/2025/01/03/high-performance-risc-v/
+tags:
+- risc-v
+- open-source
+- high-performance
+- out-of-order
+- china
+- cas
+type: entity
+updated: 2026-06-27
 ---
 
 # XiangShan (香山)
 
-XiangShan is an open-source, high-performance out-of-order 64-bit RISC-V processor developed by the Institute of Computing Technology, Chinese Academy of Sciences (ICT-CAS) and Peng Cheng Laboratory. Written in the Chisel hardware description language and released under the Mulan PSL v2 license, XiangShan is designed to push the performance frontier of open-source RISC-V to commercial-grade levels, targeting applications in AI inference, cloud computing, and industrial control. It is the highest-performance open-source RISC-V processor publicly benchmarked as of 2025.
+XiangShan is an open-source, high-performance out-of-order 64-bit RISC-V processor developed by the Institute of Computing Technology, Chinese Academy of Sciences (ICT-CAS) and Peng Cheng Laboratory. Written in the Chisel hardware description language and released under the Mulan PSL v2 license, XiangShan is designed to push the performance frontier of open-source RISC-V to commercial-grade levels, targeting applications in AI inference, cloud computing, and industrial control. It is the highest-performance open-source RISC-V processor publicly benchmarked as of 2025, achieving 16.5 SPEC CPU2006 points per GHz on a 28nm first-generation implementation.
 
 ## Key Claims
 

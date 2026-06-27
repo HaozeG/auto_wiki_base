@@ -1,21 +1,27 @@
 ---
-type: entity
-tags: [risc-v, AI-acceleration, processor, LLM-inference, alibaba]
-sources:
-  - https://www.theregister.com/2026/03/25/alibaba_damo_xuantie_c950_chip/
-  - https://www.cnx-software.com/2026/03/25/alibaba-xuantie-c950-a-powerful-rva2364-bit-risc-v-core-for-edge-ai-computing/
-  - https://www.aibase.com/news/26500
-  - https://awesomeagents.ai/news/alibaba-xuantie-c950-risc-v-llm-inference/
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
+created: 2026-06-27
 inbound_links: 0
+needs_summary_revision: true
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://www.theregister.com/2026/03/25/alibaba_damo_xuantie_c950_chip/
+- https://www.cnx-software.com/2026/03/25/alibaba-xuantie-c950-a-powerful-rva2364-bit-risc-v-core-for-edge-ai-computing/
+- https://www.aibase.com/news/26500
+- https://awesomeagents.ai/news/alibaba-xuantie-c950-risc-v-llm-inference/
+tags:
+- risc-v
+- AI-acceleration
+- processor
+- LLM-inference
+- alibaba
+type: entity
+updated: 2026-06-27
 ---
 
 # Alibaba XuanTie C950

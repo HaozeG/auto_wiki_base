@@ -1,25 +1,32 @@
 ---
-type: entity
-tags: [risc-v, commercial-ip, dsp, vector, ai-edge, andes-technology]
-sources:
-  - https://www.andestech.com/en/2021/12/02/andes-risc-v-superscalar-multicore-ax45mp-and-vector-processor-nx27v-upgrade-their-spec-and-performance/
-  - https://www.cnx-software.com/2024/11/06/andes-qilai-quad-core-ax45mp-risc-v-soc-with-nx27v-vector-processor-powers-micro-atx-voyager-development-platform/
-  - https://www.globenewswire.com/en/news-release/2021/12/02/2345341/0/en/Andes-RISC-V-Superscalar-Multicore-A-X-45MP-and-Vector-Processor-NX27V-Upgrade-Their-Spec-and-Performance.html
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
+created: 2026-06-27
 inbound_links: 0
+needs_summary_revision: true
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://www.andestech.com/en/2021/12/02/andes-risc-v-superscalar-multicore-ax45mp-and-vector-processor-nx27v-upgrade-their-spec-and-performance/
+- https://www.cnx-software.com/2024/11/06/andes-qilai-quad-core-ax45mp-risc-v-soc-with-nx27v-vector-processor-powers-micro-atx-voyager-development-platform/
+- https://www.globenewswire.com/en/news-release/2021/12/02/2345341/0/en/Andes-RISC-V-Superscalar-Multicore-A-X-45MP-and-Vector-Processor-NX27V-Upgrade-Their-Spec-and-Performance.html
+tags:
+- risc-v
+- commercial-ip
+- dsp
+- vector
+- ai-edge
+- andes-technology
+type: entity
+updated: 2026-06-27
 ---
 
 # Andes AX45MP and NX27V
 
-The Andes AX45MP and NX27V form a paired RISC-V processor IP solution from Andes Technology Corporation targeting AI-edge and embedded Linux SoC designs. The AX45MP is a 64-bit superscalar multicore application processor, while the NX27V is a companion vector processing unit (VPU) compliant with RVV 1.0. Together they appear in Andes's QiLai SoC, which powers the Voyager micro-ATX development platform. Andes Technology is a founding RISC-V International member and contributed the P-extension packed-SIMD specification to the RISC-V standard.
+The Andes AX45MP and NX27V form a paired RISC-V processor IP solution from Andes Technology Corporation targeting AI-edge and embedded Linux SoC designs. The AX45MP is a 64-bit superscalar multicore application processor, while the NX27V is a companion vector processing unit (VPU) compliant with RVV 1.0. Together they appear in Andes's QiLai SoC, which powers the Voyager micro-ATX development platform. Andes Technology is a founding RISC-V International member and contributed the P-extension packed-SIMD specification to the RISC-V standard, making it a key architect of RISC-V's embedded AI ISA.
 
 ## Key Claims
 

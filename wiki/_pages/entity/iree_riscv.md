@@ -1,26 +1,33 @@
 ---
-type: entity
-tags: [risc-v, mlir, compiler-runtime, google, ml-deployment, software-stack]
-sources:
-  - https://arxiv.org/abs/2508.14899
-  - https://arxiv.org/html/2405.15380v1
-  - https://iree.dev/building-from-source/riscv/
-  - https://github.com/iree-org/iree
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
+created: 2026-06-27
 inbound_links: 0
+needs_summary_revision: true
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://arxiv.org/abs/2508.14899
+- https://arxiv.org/html/2405.15380v1
+- https://iree.dev/building-from-source/riscv/
+- https://github.com/iree-org/iree
+tags:
+- risc-v
+- mlir
+- compiler-runtime
+- google
+- ml-deployment
+- software-stack
+type: entity
+updated: 2026-06-27
 ---
 
 # IREE Runtime on RISC-V
 
-IREE (Intermediate Representation Execution Environment) is a retargetable MLIR-based machine learning compiler and runtime toolkit originally developed by Google, now maintained as an open-source project. On RISC-V, IREE compiles ML models (from TensorFlow, JAX, PyTorch via torch-mlir) into hardware-specific executables by lowering through MLIR's Linalg dialect to RVV intrinsics. IREE on RISC-V is significant because it provides the only fully end-to-end open-source ML deployment pipeline from framework-level model to bare-metal or Linux-based RISC-V execution, without requiring proprietary vendor SDKs.
+IREE (Intermediate Representation Execution Environment) is a retargetable MLIR-based machine learning compiler and runtime toolkit originally developed by Google, now maintained as an open-source project. On RISC-V, IREE compiles ML models (from TensorFlow, JAX, PyTorch via torch-mlir) into hardware-specific executables by lowering through MLIR's Linalg dialect to RVV intrinsics. IREE on RISC-V is significant because it provides a fully end-to-end open-source ML deployment pipeline from framework-level model to bare-metal or Linux-based RISC-V execution, without requiring proprietary vendor SDKs or runtime licenses.
 
 ## Key Claims
 

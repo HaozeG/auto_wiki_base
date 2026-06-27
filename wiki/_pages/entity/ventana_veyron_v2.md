@@ -1,20 +1,26 @@
 ---
-type: entity
-tags: [risc-v, server, data-center, AI-acceleration, chiplet]
-sources:
-  - https://www.ventanamicro.com/ventana-introduces-veyron-v2/
-  - https://www.servethehome.com/ventana-veyron-v2-risc-v-cpu-launched-for-the-dsa-future/
-  - https://www.ventanamicro.com/ventana-announces-2025-shipments-of-veyron-v2-platform-with-broad-market-adoption/
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
+created: 2026-06-27
 inbound_links: 0
+needs_summary_revision: true
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://www.ventanamicro.com/ventana-introduces-veyron-v2/
+- https://www.servethehome.com/ventana-veyron-v2-risc-v-cpu-launched-for-the-dsa-future/
+- https://www.ventanamicro.com/ventana-announces-2025-shipments-of-veyron-v2-platform-with-broad-market-adoption/
+tags:
+- risc-v
+- server
+- data-center
+- AI-acceleration
+- chiplet
+type: entity
+updated: 2026-06-27
 ---
 
 # Ventana Veyron V2
