@@ -390,6 +390,9 @@ max_eval_subagent_tokens: 6000
 max_discovery_subagent_tokens: 3000
 max_retries_on_fetch_failure: 2
 discovery_search_queries_limit: 5
+topic_saturation_hit_threshold: 4   # pre-eval skip if qmd returns this many similar pages
+title_overlap_threshold: 0.6        # pre-eval skip if title word-overlap with existing page >= this
+synthesis_gap_min_cluster_size: 3   # log synthesis gap if tag cluster has >= this many entity pages
 ```
 
 ---
@@ -399,5 +402,5 @@ discovery_search_queries_limit: 5
 - **Frontmatter is the source of truth for graph structure.** `inbound_links` in frontmatter is canonical. `graph_stats.py` reads frontmatter, not markdown link syntax.
 - **Obsidian compatibility.** Internal links use `[[page_name]]` syntax. No Obsidian-specific syntax in page body.
 - **Version control.** Commit after each ingest. Use the log entry title as the commit message.
-- **qmd indexing.** Run `qmd index wiki/_pages/` after every ingest or page write so search stays current.
+- **qmd indexing.** Run `qmd update` after every ingest or page write so search stays current. The orchestrator calls this automatically post-session. The old `qmd index` command does not exist — use `qmd update`.
 - **Language handling.** The dangling reference patterns above cover Chinese and English. Extend `[eval_config].dangling_patterns` for other languages.

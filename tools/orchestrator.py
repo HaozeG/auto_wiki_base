@@ -32,7 +32,7 @@ _TOOLS_DIR = Path(__file__).parent
 sys.path.insert(0, str(_TOOLS_DIR))
 
 from audit import AuditLog
-from context_selector import select_context_pages
+from context_selector import get_topic_hit_count, select_context_pages
 from quota import MAX_TOKENS_PER_SUBAGENT_OUTPUT, MIN_SECONDS_BETWEEN_CALLS, QuotaManager
 from subagent_prompts import DISCOVERY_SYSTEM_PROMPT, EVALUATION_SYSTEM_PROMPT
 from validate_output import validate_and_parse
@@ -103,6 +103,122 @@ def _get_concept_gaps() -> list[str]:
         return []
     text = _INDEX_MD.read_text(encoding="utf-8")
     gaps = re.findall(r"\*\*(.+?)\*\*:.*?no dedicated page", text)
+    return gaps
+
+
+_STOP_WORDS = {"the", "a", "an", "of", "for", "in", "and", "on", "with", "by", "to", "is"}
+
+
+def _title_word_overlap(title: str, stem: str) -> float:
+    """
+    Return similarity between a candidate title and a filename stem.
+
+    Combines Jaccard on word sets with a substring check. The substring check
+    handles compound filenames like 'milkv_pioneer' where 'milk' and 'pioneer'
+    are concatenated without separator.
+
+    Title is cleaned by taking the first segment before '|', '—', ' - ' separators
+    (web page titles often append site names or descriptions after these).
+    """
+    # Strip page-title boilerplate (e.g. "Milk-V Pioneer | Make native RISC-V...")
+    clean = re.split(r"\s*[|—]\s*|\s+-\s+", title)[0].strip()
+    t_words = set(re.findall(r"\w+", clean.lower())) - _STOP_WORDS
+    s_words = set(re.findall(r"\w+", stem.replace("_", " ").replace("-", " ").lower())) - _STOP_WORDS
+
+    if not t_words:
+        return 0.0
+
+    # Standard Jaccard on tokenized words
+    union = t_words | s_words
+    jaccard = len(t_words & s_words) / len(union) if union else 0.0
+
+    # Substring check: handles "milk" ⊂ "milkv_pioneer" (concatenated compound words)
+    stem_compact = stem.lower().replace("_", "").replace("-", "")
+    long_t = [w for w in t_words if len(w) > 3]
+    if long_t:
+        contained = sum(1 for w in long_t if w in stem_compact)
+        substr_ratio = contained / len(long_t)
+    else:
+        substr_ratio = 0.0
+
+    return max(jaccard, substr_ratio)
+
+
+def _title_matches_existing(title: str, extra_stems: set[str] | None = None,
+                             overlap_threshold: float = 0.6) -> str | None:
+    """
+    Return matched filename stem if title is too similar to an existing page or
+    a page already written this session (extra_stems).
+    Returns None if no match.
+    """
+    if not title:
+        return None
+
+    # Check pages written this session first (not yet in index)
+    if extra_stems:
+        for stem in extra_stems:
+            if _title_word_overlap(title, stem) >= overlap_threshold:
+                return stem
+
+    # Check existing wiki pages on disk
+    for p in _WIKI_PAGES_DIR.rglob("*.md"):
+        if _title_word_overlap(title, p.stem) >= overlap_threshold:
+            return p.stem
+    return None
+
+
+def _check_synthesis_gaps() -> list[str]:
+    """
+    Find tag clusters with 3+ entity pages that have no synthesis page covering them.
+    Returns a list of human-readable gap descriptions for the log.
+    """
+    tag_to_pages: dict[str, list[str]] = {}
+    for p in _WIKI_PAGES_DIR.rglob("*.md"):
+        try:
+            text = p.read_text(encoding="utf-8")
+        except OSError:
+            continue
+        if not text.startswith("---"):
+            continue
+        end = text.find("---", 3)
+        if end == -1:
+            continue
+        try:
+            fm = yaml.safe_load(text[3:end].strip()) or {}
+        except yaml.YAMLError:
+            continue
+        if fm.get("type") == "entity":
+            for tag in fm.get("tags", []):
+                tag_to_pages.setdefault(tag, []).append(p.stem)
+
+    # Collect all entity pages already named in a synthesis connected_entities list
+    covered: set[str] = set()
+    for p in _WIKI_PAGES_DIR.rglob("*.md"):
+        try:
+            text = p.read_text(encoding="utf-8")
+        except OSError:
+            continue
+        if not text.startswith("---"):
+            continue
+        end = text.find("---", 3)
+        if end == -1:
+            continue
+        try:
+            fm = yaml.safe_load(text[3:end].strip()) or {}
+        except yaml.YAMLError:
+            continue
+        if fm.get("type") == "synthesis":
+            covered.update(fm.get("connected_entities", []))
+
+    gaps = []
+    for tag, pages in sorted(tag_to_pages.items(), key=lambda x: -len(x[1])):
+        uncovered = [pg for pg in pages if pg not in covered]
+        if len(uncovered) >= 3:
+            sample = ", ".join(uncovered[:3])
+            gaps.append(
+                f"tag='{tag}': {len(uncovered)} entity pages without synthesis coverage "
+                f"(e.g. {sample}{'...' if len(uncovered) > 3 else ''})"
+            )
     return gaps
 
 
@@ -403,6 +519,18 @@ def _run_graph_stats() -> None:
         print(result.stdout.strip())
 
 
+def _run_qmd_update() -> None:
+    """Re-index wiki pages so qmd search reflects newly written pages."""
+    result = subprocess.run(
+        ["qmd", "update"],
+        capture_output=True,
+        text=True,
+        cwd=str(_PROJECT_ROOT),
+    )
+    if result.stdout:
+        logger.info("qmd update: %s", result.stdout.strip())
+
+
 def _apply_scorecard_to_draft(draft: dict, eval_scorecard: dict) -> None:
     """
     Copy scorecard scores from the eval agent's top-level scorecard into
@@ -583,9 +711,22 @@ def _ddg_discover(query: str, max_candidates: int, already_processed: set[str],
     # Generate search query variants from the base query
     concept_gaps = _get_concept_gaps()
     queries = [query]
+
+    # Add concept-gap queries as STANDALONE searches (not appended to base query).
+    # Appending gaps to the base query keeps discovery within the same product space;
+    # standalone queries widen to adjacent concepts.
     if concept_gaps:
-        for gap in concept_gaps[:min(limit - 1, len(concept_gaps))]:
-            queries.append(f"{query} {gap}")
+        for gap in concept_gaps[:min(2, len(concept_gaps))]:
+            if len(queries) < limit:
+                queries.append(gap)
+
+    # Add synthesis-oriented queries to pull in comparison/survey sources, which
+    # tend to produce synthesis pages rather than more product entity pages.
+    if len(queries) < limit:
+        queries.append(f"{query} comparison survey architecture overview")
+    if len(queries) < limit:
+        queries.append(f"{query} taxonomy ecosystem landscape")
+
     # Add source-targeted variants for arXiv and GitHub when the query is technical
     # or when depth=deep explicitly requests broader coverage.
     _TECHNICAL_KEYWORDS = ("paper", "arxiv", "repo", "github", "implementation", "code", "algorithm")
@@ -596,7 +737,7 @@ def _ddg_discover(query: str, max_candidates: int, already_processed: set[str],
             queries.append(f"site:github.com {query}")
 
     # Pad with topic refinements
-    refinements = ["architecture survey", "chip specifications performance", "ISA extension benchmark"]
+    refinements = ["chip specifications performance", "ISA extension benchmark"]
     for ref in refinements:
         if len(queries) >= limit:
             break
@@ -708,6 +849,8 @@ def run_research_session(query: str, max_candidates: int, max_new_pages: int,
     # effective_depth may be upgraded to "deep" mid-session (Trigger 2).
     effective_depth = depth
     halfway = max(1, (max_candidates + 1) // 2)
+    # Track filename stems of pages already written this session for within-session dedup.
+    session_written_stems: set[str] = set()
 
     for candidate in candidates:
         if quota.any_exceeded():
@@ -715,6 +858,27 @@ def run_research_session(query: str, max_candidates: int, max_new_pages: int,
             break
 
         url = candidate["url"]
+        title = candidate.get("title", "")
+
+        # Pre-eval gate 1: within-session and on-disk title dedup.
+        # Check before fetching content to avoid wasting API calls on duplicates.
+        existing_match = _title_matches_existing(title, session_written_stems)
+        if existing_match:
+            print(f"[{session_id}] Skipping duplicate: {title!r} overlaps with '{existing_match}'")
+            audit.log_skip_pre_eval(url, f"title_overlap: matches '{existing_match}'")
+            pipeline_rejections += 1
+            continue
+
+        # Pre-eval gate 2: qmd similarity — skip if wiki already has many pages on this topic.
+        # A high hit count means the concept is well-covered; the candidate would be redundant.
+        snippet = candidate.get("snippet", "")
+        topic_hits = get_topic_hit_count(f"{title} {snippet[:200]}")
+        if topic_hits >= 4:
+            print(f"[{session_id}] Skipping over-covered topic: {title!r} ({topic_hits} similar pages)")
+            audit.log_skip_pre_eval(url, f"topic_saturation: {topic_hits} similar pages in wiki")
+            pipeline_rejections += 1
+            continue
+
         print(f"[{session_id}] Evaluating: {url}")
 
         content = _fetch_smart(
@@ -722,7 +886,6 @@ def run_research_session(query: str, max_candidates: int, max_new_pages: int,
         )
         # Fall back to DDG snippet when fetch fails or returns only JS boilerplate
         # (heuristic: <500 non-whitespace chars of body text → treat as empty)
-        snippet = candidate.get("snippet", "")
         if content is None:
             # Fetch failed — enrich snippet by running a focused DDG search for the title
             enriched = _enrich_snippet(candidate.get("title", ""), snippet)
@@ -879,6 +1042,7 @@ def run_research_session(query: str, max_candidates: int, max_new_pages: int,
             _update_index(draft)
             quota.record_page_written()
             written_filenames.append(page_path.name)
+            session_written_stems.add(page_path.stem)
             audit.record_page_written(ev_idx, page_path.name)
             print(f"[{session_id}] Written: {page_path}")
         except Exception as e:
@@ -886,6 +1050,14 @@ def run_research_session(query: str, max_candidates: int, max_new_pages: int,
 
     # --- Step 6: Post-session bookkeeping ---
     _run_graph_stats()
+    _run_qmd_update()
+
+    synthesis_gaps = _check_synthesis_gaps()
+    if synthesis_gaps:
+        print(f"[{session_id}] Synthesis gaps detected ({len(synthesis_gaps)}):")
+        for gap in synthesis_gaps[:5]:
+            print(f"  {gap}")
+
     _append_log(
         session_id=session_id,
         pages_written=written_filenames,

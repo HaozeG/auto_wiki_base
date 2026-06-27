@@ -6,6 +6,8 @@ for a given resource, then greedily selects within a token budget.
 Falls back to inbound_links-based ranking when qmd is unavailable.
 """
 
+import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -45,15 +47,38 @@ def _list_all_pages() -> list[Path]:
     return list(_WIKI_PAGES_DIR.rglob("*.md"))
 
 
-def _qmd_search(query_text: str, top: int = 20) -> list[tuple[str, float]]:
+def _resolve_qmd_path(qmd_file: str) -> Path | None:
     """
-    Run qmd search and return list of (filepath, score) pairs.
+    Convert a qmd:// file path to an actual on-disk Path.
+
+    qmd normalizes filenames to kebab-case internally (e.g. milkv-pioneer.md)
+    while disk files use snake_case (milkv_pioneer.md). Try both.
+    """
+    # Strip the qmd:// prefix and the _pages/ collection prefix
+    # qmd://_pages/entity/milkv-pioneer.md -> entity/milkv-pioneer.md
+    rel = re.sub(r"^qmd://_pages/", "", qmd_file)
+    if not rel:
+        return None
+
+    # Try as-is (hyphens), then with hyphens replaced by underscores
+    for candidate in (rel, rel.replace("-", "_")):
+        resolved = _WIKI_PAGES_DIR / candidate
+        if resolved.exists():
+            return resolved
+    return None
+
+
+def _qmd_search(query_text: str, top: int = 20) -> list[tuple[Path, float]]:
+    """
+    Run qmd search and return list of (page_path, score) pairs.
     Returns empty list if qmd is unavailable or returns no results.
+
+    Uses JSON output format for reliable parsing and real similarity scores.
     """
     try:
         safe_query = query_text[:500].replace("\x00", "")
         result = subprocess.run(
-            ["qmd", "search", safe_query, "--index", str(_WIKI_PAGES_DIR), "--top", str(top)],
+            ["qmd", "search", safe_query, "-c", "_pages", "-n", str(top), "--format", "json"],
             capture_output=True,
             text=True,
             timeout=30,
@@ -61,18 +86,24 @@ def _qmd_search(query_text: str, top: int = 20) -> list[tuple[str, float]]:
     except (FileNotFoundError, subprocess.TimeoutExpired):
         return []
 
-    if result.returncode != 0:
+    if result.returncode != 0 or not result.stdout.strip():
         return []
 
-    ranked: list[tuple[str, float]] = []
-    score = float(top)
-    for line in result.stdout.strip().split("\n"):
-        line = line.strip()
-        if not line:
+    try:
+        records = json.loads(result.stdout)
+    except json.JSONDecodeError:
+        return []
+
+    ranked: list[tuple[Path, float]] = []
+    for rec in records:
+        qmd_file = rec.get("file", "")
+        score = float(rec.get("score", 0.0))
+        if not qmd_file or score <= 0:
             continue
-        # qmd output format varies; treat each non-empty line as a result
-        ranked.append((line, score))
-        score -= 1.0
+        path = _resolve_qmd_path(qmd_file)
+        if path is not None:
+            ranked.append((path, score))
+
     return ranked
 
 
@@ -87,13 +118,22 @@ def _fallback_rank_by_inbound(pages: list[Path]) -> list[tuple[Path, float]]:
     return ranked
 
 
+def get_topic_hit_count(query_text: str, min_score: float = 0.5) -> int:
+    """
+    Return how many wiki pages have meaningful similarity to query_text.
+    Used by orchestrator as a pre-eval duplicate gate.
+    """
+    results = _qmd_search(query_text, top=10)
+    return sum(1 for _, score in results if score >= min_score)
+
+
 def select_context_pages(resource_content: str, max_tokens: int = 4000) -> list[dict]:
     """
     Select wiki pages relevant to resource_content, within max_tokens budget.
 
     Algorithm:
-    1. Shell out: qmd search <resource_content[:500]> --top 20
-    2. Parse ranked results; re-rank ties by inbound_links
+    1. Shell out: qmd search <resource_content[:500]> -c _pages -n 20 --format json
+    2. Parse ranked results with real similarity scores; re-rank ties by inbound_links
     3. Greedily include pages until token budget reached
     4. Return list of {filename, type, content} dicts
 
@@ -106,31 +146,21 @@ def select_context_pages(resource_content: str, max_tokens: int = 4000) -> list[
     qmd_results = _qmd_search(resource_content)
 
     if qmd_results:
-        # Build a map from filename stem → page path
-        page_map = {p.name: p for p in all_pages}
-        ranked_paths: list[tuple[Path, float]] = []
         seen = set()
-        for filepath_str, score in qmd_results:
-            # qmd may return absolute paths or just filenames
-            candidate = Path(filepath_str)
-            # Try to match by name
-            matched = None
-            for pg in all_pages:
-                if pg.name == candidate.name or str(pg) == str(candidate):
-                    matched = pg
-                    break
-            if matched and str(matched) not in seen:
-                fm, _ = _parse_frontmatter(matched)
+        ranked_paths: list[tuple[Path, float]] = []
+        for page, score in qmd_results:
+            if str(page) not in seen:
+                fm, _ = _parse_frontmatter(page)
                 inbound = float(fm.get("inbound_links", 0))
-                # Break score ties with inbound_links
-                ranked_paths.append((matched, score + inbound * 0.001))
-                seen.add(str(matched))
-        # Include any pages not in qmd results (score=0) but sort them after
+                # Break score ties with inbound_links (small nudge)
+                ranked_paths.append((page, score + inbound * 0.001))
+                seen.add(str(page))
+        # Include any pages not returned by qmd (score=0) after the ranked ones
         for pg in all_pages:
             if str(pg) not in seen:
                 ranked_paths.append((pg, 0.0))
     else:
-        # qmd unavailable — rank by inbound_links
+        # qmd unavailable or no results — rank by inbound_links
         ranked_paths = _fallback_rank_by_inbound(all_pages)
 
     ranked_paths.sort(key=lambda x: x[1], reverse=True)

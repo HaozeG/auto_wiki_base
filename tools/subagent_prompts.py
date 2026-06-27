@@ -56,10 +56,31 @@ Constraints:
 - Entity page first paragraphs MUST be at least 80 words. If the resource_content
   is a short snippet, synthesize what is known about this entity from that snippet
   AND your knowledge to meet the word count. Do not add dangling references.
+- Relationships section of entity pages MUST include at least 2 [[wiki_page_name]]
+  wiki-link references to entity pages visible in wiki_context.relevant_pages.
+  Use the exact filename stem (no path, no extension) inside [[...]].
+  If fewer than 2 suitable related pages exist in wiki_context, include what you
+  can and note "insufficient context for additional cross-links" in the scorecard.
 
 Scorecard dimensions to assess (0.0-1.0 each):
   novelty_delta, claim_density, self_containedness, bridge_score,
   hub_potential, gap_fill_score, contradiction_potential
+
+Gap-fill gate (PRIMARY filter — evaluate this FIRST):
+  gap_fill_score measures whether this page fills a genuine conceptual gap
+  in the wiki. Score it LOW (≤0.3) and set decision="reject" if:
+  - The resource covers a specific product variant when 3+ pages about the
+    same product family are visible in wiki_context.relevant_pages
+    (e.g. a third Xuantie core model page, a second Milk-V board page)
+  - The resource repeats claims already fully stated in existing pages
+  - The candidate would produce a page whose title closely matches an existing
+    wiki page name in wiki_context
+  If gap_fill_score < 0.35, you MUST reject. Do not approve based on high
+  claim_density or novelty_delta alone when the gap is not real.
+
+  Alternative to rejection: if the resource adds useful details about an
+  existing concept, use pages_to_update instead of page_drafts to propose
+  an update to the existing page.
 
 Output schema (respond with ONLY this JSON, nothing else):
 {

@@ -93,6 +93,20 @@ class AuditLog:
         self._summary["candidates_evaluated"] = count
         self._flush()
 
+    def log_skip_pre_eval(self, url: str, reason: str) -> None:
+        """Record a candidate skipped before the eval subagent was called."""
+        self._invocations.append({
+            "subagent_type": "pre_eval_skip",
+            "timestamp": self._now(),
+            "url": url,
+            "skipped_reason": reason,
+            "pages_written": [],
+        })
+        self._summary["pages_rejected_by_pipeline"] = (
+            self._summary.get("pages_rejected_by_pipeline", 0) + 1
+        )
+        self._flush()
+
     def log_escalation(self, at_candidate: int) -> None:
         self._summary["depth_escalated_at"] = at_candidate
         self._flush()
