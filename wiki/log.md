@@ -333,3 +333,17 @@ pages_updated: [ai_chip_export_controls]
 pages_deferred: [andes_technology_nx27v (timeout), western_digital_swerv (timeout), zephyr_rtos_riscv_ml (not attempted), iree_riscv (not attempted)]
 cold_start: false
 notes: 4 duplicate pages removed (milk-v-pioneer.md, milk_v_pioneer.md, alibaba_th1520_risc_v_soc.md, riscv_vector_extension.md); index cleaned of stale/duplicate rows; 8 orchestrator sessions across China RISC-V AI, Milk-V/SOPHGO, OpenXiangShan, Esperanto/Ventana, NVIDIA Falcon RISC-V, TVM/LLVM toolchain clusters
+
+## [2026-06-27] research | Zephyr RTOS RISC-V TFLite Micro embedded ML real-time infere
+session_id: cf732447
+candidates_evaluated: 8
+pages_written: 1
+pipeline_rejection_rate: 0%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_cf732447_2026-06-27.json
+
+## [2026-06-27] ingest | RISC-V AI edge research round
+pages_created: [andes_andescore_nx27v, western_digital_swerv_core, marvell_octeon_10_dpu, iree_mlir_compiler, zephyr_rtos_tflite_micro, spacemit_k1_soc, riscv_p_extension_dsp, riscv_zvfh_extension, lowrisc_opentitan, starfive_visionfive2_jh7110, riscv_ai_edge_mcu_to_soc (synthesis), open_source_riscv_ai_silicon (synthesis)]
+pages_updated: []
+pages_deferred: []
+cold_start: false
+notes: All 10 orchestrators timed out (exit 143); Zephyr orchestrator created microchip_edge_ai_platform.md as tangential page; all 10 entity pages and 2 synthesis pages written manually from provided key facts; mean_inbound_links=0.5929 (140 pages total)

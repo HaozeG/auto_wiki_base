@@ -1,11 +1,22 @@
 # Wiki Index
 
-Last updated: 2026-06-27 | Pages: 127 | Sources: 19
+Last updated: 2026-06-27 | Pages: 140 | Sources: 19
 
 ## Entity Pages
 
 | Page                                                                                              | Summary                                                                                                          | Tags                                                                                  | Sources | Inbound |
 | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------- | ------- |
+| [andes_andescore_nx27v.md](entity/andes_andescore_nx27v.md) | Andes Technology AndesCore NX27V RISC-V vector IP core for AI SoC integration, RVV 1.0 up to 512-bit VLEN | risc-v, ip-core, vector, ai-soc, andes-technology | 1 | 0 |
+| [western_digital_swerv_core.md](entity/western_digital_swerv_core.md) | WD SweRV EH1/EH2/EL2 open-source RISC-V cores, Apache 2.0, CHIPS Alliance, 4.9 CoreMark/MHz | risc-v, open-source, cpu, storage, chips-alliance | 1 | 0 |
+| [marvell_octeon_10_dpu.md](entity/marvell_octeon_10_dpu.md) | Marvell OCTEON 10 CN10K DPU with hybrid RISC-V + ARM cores, 400GbE, ML inference accelerator | risc-v, dpu, smartnic, network-ai, marvell | 1 | 0 |
+| [iree_mlir_compiler.md](entity/iree_mlir_compiler.md) | IREE ML compiler/runtime (Google, MLIR-based), RISC-V RVV AOT backend, 2-5× speedup over scalar | mlir, compiler, risc-v, rvv, embedded-ai, google | 1 | 0 |
+| [zephyr_rtos_tflite_micro.md](entity/zephyr_rtos_tflite_micro.md) | Zephyr RTOS + TFLite Micro for RISC-V embedded ML, 20+ RISC-V boards, 32 KB RAM minimum | rtos, risc-v, tflite-micro, embedded-ai, tinyml | 1 | 0 |
+| [spacemit_k1_soc.md](entity/spacemit_k1_soc.md) | SpacemiT K1 (X60) 8-core RISC-V SoC, 2 TOPS NPU, RVV 1.0 + Zvfh, Banana Pi BPI-F3 | risc-v, soc, npu, rvv, spacemit, edge-ai | 1 | 0 |
+| [riscv_p_extension_dsp.md](entity/riscv_p_extension_dsp.md) | RISC-V P extension (packed SIMD), ratified Jan 2024, 4× INT8 MAC per instruction on MCU cores | risc-v, dsp, simd, embedded-ml, p-extension | 1 | 0 |
+| [riscv_zvfh_extension.md](entity/riscv_zvfh_extension.md) | RISC-V Zvfh extension: FP16 vector half-precision for native transformer inference without emulation | risc-v, fp16, vector, ml-inference, zvfh, rvv | 1 | 0 |
+| [lowrisc_opentitan.md](entity/lowrisc_opentitan.md) | OpenTitan open-source silicon RoT, Ibex RISC-V core, TSMC 40nm 2023 tape-out, Google/WD/ETH Zurich | risc-v, security, root-of-trust, open-hardware, lowrisc | 1 | 0 |
+| [starfive_visionfive2_jh7110.md](entity/starfive_visionfive2_jh7110.md) | StarFive JH7110 SoC, quad-core SiFive U74, 1 TOPS NPU, IMG BXE-4-32 GPU, VisionFive 2 SBC, Linux 6.6 | risc-v, sbc, soc, npu, gpu, starfive | 1 | 0 |
+| [microchip_edge_ai_platform.md](entity/microchip_edge_ai_platform.md) | Microchip Edge AI Platform | edge-ai, microchip, embedded-machine-learning, sensor-fusion | 2 | 0 |
 | [risc_v.md](entity/risc_v.md) | RISC-V open ISA: royalty-free, modular, geopolitical importance for sovereign chips | risc-v, open-source, isa, cpu-architecture | 1 | 0 |
 | [risc_v_2026_disruption.md](entity/risc_v_2026_disruption.md) | RISC-V 2026 Disruption | open-chip-architecture, risc-v, arm, intel, semiconductor-sovereignty, data-centers, ai-accelerators, mobile | 1 | 0 |
 | [spacemit_k1_archlinux.md](entity/spacemit_k1_archlinux.md) | SpacemiT K1 Arch Linux | arch-linux, risc-v, banana-pi, spacemit-k1 | 1 | 0 |
@@ -122,6 +133,8 @@ Last updated: 2026-06-27 | Pages: 127 | Sources: 19
 
 | Page | Connected Entities | Status | Inbound |
 |------|--------------------|--------|---------|
+| [riscv_ai_edge_mcu_to_soc.md](synthesis/riscv_ai_edge_mcu_to_soc.md) | spacemit_k1_soc, starfive_visionfive2_jh7110, andes_andescore_nx27v, western_digital_swerv_core, riscv_p_extension_dsp, riscv_zvfh_extension, iree_mlir_compiler, zephyr_rtos_tflite_micro | active | 0 |
+| [open_source_riscv_ai_silicon.md](synthesis/open_source_riscv_ai_silicon.md) | lowrisc_opentitan, western_digital_swerv_core, starfive_visionfive2_jh7110, marvell_octeon_10_dpu, gemmini, risc_v_architecture, iree_mlir_compiler | active | 0 |
 | [china_risc_v_ecosystem_strategy.md](synthesis/china_risc_v_ecosystem_strategy.md) | ai_chip_export_controls, risc_v_isas | draft | 0 |
 | [FSP_SEC2_FALCON_Relationship.md](synthesis/FSP_SEC2_FALCON_Relationship.md) | NVIDIA_GPU_Secure_Boot, NVIDIA_Confidential_Computing | draft | 0 |
 | [RLHF_aligned_open_LLMs_survey.md](synthesis/RLHF_aligned_open_LLMs_survey.md) |  | draft | 0 |
@@ -240,3 +253,15 @@ Last updated: 2026-06-27 | Pages: 127 | Sources: 19
 - **SpacemiT K1 (BananaPi F3)**: → [spacemit_k1_archlinux](entity/spacemit_k1_archlinux.md)
 - **China RISC-V Ecosystem Strategy**: → [china_risc_v_ecosystem_strategy](synthesis/china_risc_v_ecosystem_strategy.md)
 - **NVIDIA FSP/SEC2/Falcon RISC-V**: → [FSP_SEC2_FALCON_Relationship](synthesis/FSP_SEC2_FALCON_Relationship.md)
+- **Andes Technology AndesCore NX27V**: → [andes_andescore_nx27v](entity/andes_andescore_nx27v.md)
+- **Western Digital SweRV EH1/EH2/EL2**: → [western_digital_swerv_core](entity/western_digital_swerv_core.md)
+- **Marvell OCTEON 10 DPU**: → [marvell_octeon_10_dpu](entity/marvell_octeon_10_dpu.md)
+- **IREE ML Compiler (Google)**: → [iree_mlir_compiler](entity/iree_mlir_compiler.md)
+- **Zephyr RTOS + TFLite Micro**: → [zephyr_rtos_tflite_micro](entity/zephyr_rtos_tflite_micro.md)
+- **SpacemiT K1 AI SoC**: → [spacemit_k1_soc](entity/spacemit_k1_soc.md)
+- **RISC-V P Extension (Packed SIMD)**: → [riscv_p_extension_dsp](entity/riscv_p_extension_dsp.md)
+- **RISC-V Zvfh Extension (FP16 Vector)**: → [riscv_zvfh_extension](entity/riscv_zvfh_extension.md)
+- **OpenTitan (lowRISC)**: → [lowrisc_opentitan](entity/lowrisc_opentitan.md)
+- **StarFive VisionFive 2 / JH7110**: → [starfive_visionfive2_jh7110](entity/starfive_visionfive2_jh7110.md)
+- **RISC-V AI Edge (MCU to SoC synthesis)**: → [riscv_ai_edge_mcu_to_soc](synthesis/riscv_ai_edge_mcu_to_soc.md)
+- **Open-Source RISC-V AI Silicon synthesis**: → [open_source_riscv_ai_silicon](synthesis/open_source_riscv_ai_silicon.md)
