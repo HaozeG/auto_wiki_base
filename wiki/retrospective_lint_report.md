@@ -1,25 +1,33 @@
-# Retrospective Lint Report — 2026-06-27
+# Retrospective Lint Report — 2026-06-27 (pass 3)
 
-## Summary
+## Cleared (21 pages)
 
-- **Total pages evaluated**: 78 (69 entity, 9 synthesis)
-- **Cleared**: 77
-- **Restructure**: 0
-- **Merge**: 0
-- **Delete**: 0
-- **Deferred for human decision**: 0
-- **Note**: spaCy not installed; Layer 2 (entity/measurement density) was skipped for all pages. Layer 1 (dangling reference check) ran fully.
+All pages below passed Layer 1 (dangling refs, sources present) and are set to `cold_start: false`.
+Layer 2 (spaCy density) and Layer 3 (QMD coverage) skipped due to per-page timeout — Layer 1 is the hard rejection gate; Layers 2–3 are informational.
 
----
-
-## Cleared (77 pages)
-
-All entity and synthesis pages passed Layer 1 evaluation and have been set to `cold_start: false`.
-
-One page required a pre-clearance fix:
-- `entity/intel_amx.md`: phrase "the previous best x86 path" matched dangling reference pattern `the (aforementioned|previous|above)`. Fixed to "the dominant x86 path for matrix multiply before AMX". Cleared after fix.
-
-All other 76 pages passed without modification.
+| Page | Type | Notes |
+|------|------|-------|
+| `entity/alibaba_xuantie_c950.md` | entity | cleared |
+| `entity/alibaba_th1520_soc.md` | entity | cleared |
+| `entity/et_soc_1.md` | entity | cleared |
+| `entity/microchip_edge_ai_platform.md` | entity | cleared |
+| `entity/lowrisc_riscv_llvm.md` | entity | cleared |
+| `entity/milkv_pioneer.md` | entity | cleared |
+| `entity/risc_v.md` | entity | cleared |
+| `entity/risc_v_summit_europe_2025.md` | entity | cleared |
+| `entity/risc_v_architecture.md` | entity | cleared |
+| `entity/risc_v_2026_disruption.md` | entity | cleared |
+| `entity/risc_v_vector_extension_tvm_optimization.md` | entity | cleared |
+| `entity/spacemit_k1_archlinux.md` | entity | cleared |
+| `entity/sophgo_sg2380.md` | entity | cleared |
+| `entity/tvm_hybrid_op_riscv_p_extension.md` | entity | cleared |
+| `entity/veylon_risc_v_core.md` | entity | cleared |
+| `entity/ventana_veyron_v1.md` | entity | cleared |
+| `entity/ventana_veyron_v2.md` | entity | cleared |
+| `entity/xiangshan_riscv_processor.md` | entity | cleared |
+| `entity/xuantie_c930.md` | entity | cleared |
+| `synthesis/FSP_SEC2_FALCON_Relationship.md` | synthesis | cleared |
+| `synthesis/china_risc_v_ecosystem_strategy.md` | synthesis | cleared |
 
 ---
 
@@ -27,19 +35,13 @@ All other 76 pages passed without modification.
 
 None identified.
 
----
-
 ## Merge Candidates
 
-None identified (Layer 2 spaCy analysis unavailable; overlap detection based on structural review only).
-
----
+None identified.
 
 ## Delete Candidates
 
 None identified.
-
----
 
 ## Deferred for Human Decision
 
@@ -47,7 +49,15 @@ None.
 
 ---
 
-## Notes
+## Summary
 
-- `graph_stats.py` reports `mean_inbound_links: 0.6154` — below the 2.0 graph maturity threshold. The `graph_maturity: true` flag in CLAUDE.md was set manually after retrospective lint was authorized. The low mean_inbound_links reflects that most entity pages reference each other via `[[wikilink]]` syntax but graph_stats counts frontmatter `inbound_links` fields, which have not been kept current with the actual link graph.
-- Recommend a follow-up `lint routine` pass to count actual `[[wikilink]]` occurrences and update `inbound_links` frontmatter fields across all pages.
+| Category | Count |
+|----------|-------|
+| Cleared | 21 |
+| Restructure | 0 |
+| Merge | 0 |
+| Delete | 0 |
+| Deferred | 0 |
+| **Total evaluated** | **21** |
+
+Graph state: 140 pages, mean_inbound_links = 0.5929.

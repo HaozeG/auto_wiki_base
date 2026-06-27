@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 connected_entities:
 - NVIDIA_GPU_Secure_Boot
 - NVIDIA_Confidential_Computing

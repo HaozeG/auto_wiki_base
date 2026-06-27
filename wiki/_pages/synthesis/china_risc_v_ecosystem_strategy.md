@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 connected_entities:
 - ai_chip_export_controls
 - risc_v_isas

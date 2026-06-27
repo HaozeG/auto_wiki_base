@@ -1,7 +1,8 @@
 ---
-cold_start: true
+cold_start: false
 created: '2026-03-25'
 inbound_links: 0
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.8
   claim_density: 0.6
@@ -19,7 +20,7 @@ tags:
 - geopolitics
 type: entity
 updated: '2026-06-27'
----
+------
 
 # Alibaba XuanTie C950
 

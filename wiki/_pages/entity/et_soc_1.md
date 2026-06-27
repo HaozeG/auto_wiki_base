@@ -1,7 +1,8 @@
 ---
-cold_start: true
+cold_start: false
 created: '2026-06-26'
 inbound_links: 0
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.6
   claim_density: 0.8
@@ -19,7 +20,7 @@ tags:
 - ainekko
 type: entity
 updated: '2026-06-27'
----
+------
 
 # ET-SoC-1
 
