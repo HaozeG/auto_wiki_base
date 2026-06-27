@@ -352,3 +352,22 @@ notes: All 10 orchestrators timed out (exit 143); Zephyr orchestrator created mi
 issues_found: 0
 actions_taken: [set cold_start: false on 21 pages; all passed Layer 1 dangling-ref + sources check]
 deferred_for_human: []
+
+## [2026-06-27] research | PULP Platform ETH Zurich ultra-low-power parallel RISC-V clu
+session_id: 91a97462
+candidates_evaluated: 11
+pages_written: 5
+pipeline_rejection_rate: 27%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_91a97462_2026-06-27.json
+
+## [2026-06-27] research | PULP Platform ETH Zurich ultra-low-power RISC-V cluster CV32
+session_id: dbc7d7de
+candidates_evaluated: 6
+pages_written: 3
+pipeline_rejection_rate: 50%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_dbc7d7de_2026-06-27.json
+
+## [2026-06-27] lint | retrospective (pass 4)
+issues_found: 0
+actions_taken: [set cold_start: false on 5 pages from round 3: core_v_cv32e40p, cv32e40p, esp32-p4_soc, cv32e40p_riscv_core, pulp_platform]
+deferred_for_human: []
