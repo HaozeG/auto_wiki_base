@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-06-27 | Pages: 28 | Sources: 63
+Last updated: 2026-06-27 | Pages: 36 | Sources: 95
 
 ## Entity Pages
 
@@ -32,6 +32,14 @@ Last updated: 2026-06-27 | Pages: 28 | Sources: 63
 | [openhw_cva6](entity/openhw_cva6.md) | Open-source 6-stage in-order RV64 Linux-capable core; CV-X-IF accelerator interface; Solderpad license; TRL-5; 1.7 GHz 22nm | risc-v, open-source, processor, application-class, OpenHW | 4 | 2 |
 | [pulp_platform](entity/pulp_platform.md) | ETH Zurich + Bologna parallel ULP RISC-V platform; 50+ chips, Darkside 835 GOPS/W, Occamy 432-core 6.1 TFLOPS | risc-v, ultra-low-power, open-source, eth-zurich, tinyml | 3 | 2 |
 | [chips_alliance_governance](entity/chips_alliance_governance.md) | Linux Foundation-hosted open HW consortium; Verilator, SweRV, AIB chiplet std; three-tier RISC-V governance model | risc-v, governance, open-source, eda, chiplets | 3 | 0 |
+| [shakti_processor](entity/shakti_processor.md) | IIT Madras open-source RISC-V family (6 classes); C-class RV64IMAFD in Intel 22nm; BSV; ISRO aerospace tapeout | risc-v, open-source, processor, India, IIT-Madras | 5 | 0 |
+| [gnu_toolchain_riscv_vector](entity/gnu_toolchain_riscv_vector.md) | GCC 14 RVV auto-vectorization + LLVM codegen; primary compiler stack for RISC-V vector AI inference | risc-v, compiler, GCC, LLVM, toolchain, RVV | 4 | 0 |
+| [onnx_runtime_riscv](entity/onnx_runtime_riscv.md) | ONNX Runtime RISC-V support: RV64 build flags, RVV CPU EP, UCB Gemmini fork, XNNPACK energy efficiency | risc-v, ONNX, ML-runtime, inference, benchmark | 4 | 0 |
+| [muriscv_nn](entity/muriscv_nn.md) | CMSIS-NN drop-in for RISC-V; 3.85× ResNet speedup; 60% improvement over LLVM auto-vec on convolutional layers | risc-v, tinyML, inference-library, RVV, CMSIS-NN | 4 | 0 |
+| [risc_v_profiles_rva](entity/risc_v_profiles_rva.md) | RVA20/22/23 profiles standardize mandatory RISC-V extensions; RVA23 makes RVV 1.0 mandatory; Ubuntu 25.10 requires RVA23 | risc-v, ISA, standardization, profiles, RVA23 | 5 | 0 |
+| [sifive_p870_x390](entity/sifive_p870_x390.md) | SiFive 6-wide OoO RVA23 CPU (18 SPECint2k/MHz) paired with 1024-bit VLEN X390 NPU; up to 32+8 core SoCs | risc-v, processor, AI-acceleration, NPU, SiFive | 4 | 0 |
+| [openxiangshan_difftest_nemu](entity/openxiangshan_difftest_nemu.md) | NEMU ISA emulator + Difftest co-simulation framework for XiangShan RISC-V processor verification | risc-v, verification, co-simulation, NEMU, difftest | 4 | 0 |
+| [canaan_kendryte_k230](entity/canaan_kendryte_k230.md) | K230: dual C908 RISC-V (1.6GHz RVV 1.0 + 800MHz), 6 TOPS KPU; 341 FPS/TOPS YoloV5S | risc-v, AI-accelerator, edge-AI, SoC, canaan | 4 | 0 |
 
 ## Synthesis Pages
 
@@ -39,6 +47,7 @@ Last updated: 2026-06-27 | Pages: 28 | Sources: 63
 |------|--------------------|--------|---------|
 | [riscv_open_ai_acceleration](synthesis/riscv_open_ai_acceleration.md) | risc_v_vector_extension, alibaba_xuantie_c950, alibaba_xuantie_c910_c920, esperanto_et_soc1, tenstorrent_tt_ascalon, sifive_intelligence_x280, ventana_veyron_v2, tvm_riscv_backend | draft | 0 |
 | [riscv_open_source_ai_stack](synthesis/riscv_open_source_ai_stack.md) | gemmini, ara_vector_processor, mlir_riscv_backend, iree_riscv, tvm_riscv_backend, risc_v_vector_extension, risc_v_p_extension, boom_riscv, andes_ax45mp_nx27v, xiangshan_riscv | draft | 0 |
+| [riscv_standardization_software_ecosystem](synthesis/riscv_standardization_software_ecosystem.md) | risc_v_profiles_rva, risc_v_vector_extension, risc_v_matrix_extension, gnu_toolchain_riscv_vector, muriscv_nn, onnx_runtime_riscv, iree_riscv, tvm_riscv_backend, openxiangshan_difftest_nemu | draft | 0 |
 
 ## Concept Index
 
@@ -93,3 +102,14 @@ Last updated: 2026-06-27 | Pages: 28 | Sources: 63
 - **Greenwaves GAP8/GAP9**: mentioned in [pulp_platform](entity/pulp_platform.md) — *no dedicated page*
 - **OpenHW Group**: → [openhw_cva6](entity/openhw_cva6.md)
 - **Eclipse Foundation**: mentioned in [chips_alliance_governance](entity/chips_alliance_governance.md) — *no dedicated page*
+- **Shakti (IIT Madras)**: → [shakti_processor](entity/shakti_processor.md)
+- **Bluespec SystemVerilog (BSV)**: → [shakti_processor](entity/shakti_processor.md)
+- **GCC RVV auto-vectorization**: → [gnu_toolchain_riscv_vector](entity/gnu_toolchain_riscv_vector.md)
+- **ONNX Runtime (ORT) RISC-V**: → [onnx_runtime_riscv](entity/onnx_runtime_riscv.md)
+- **muRISCV-NN**: → [muriscv_nn](entity/muriscv_nn.md)
+- **RVA23 Profile / RVA20 / RVA22**: → [risc_v_profiles_rva](entity/risc_v_profiles_rva.md)
+- **SiFive Performance P870**: → [sifive_p870_x390](entity/sifive_p870_x390.md)
+- **SiFive Intelligence X390**: → [sifive_p870_x390](entity/sifive_p870_x390.md)
+- **NEMU (NJU Emulator)**: → [openxiangshan_difftest_nemu](entity/openxiangshan_difftest_nemu.md)
+- **Difftest co-simulation**: → [openxiangshan_difftest_nemu](entity/openxiangshan_difftest_nemu.md)
+- **Canaan Kendryte K230 (dedicated)**: → [canaan_kendryte_k230](entity/canaan_kendryte_k230.md)

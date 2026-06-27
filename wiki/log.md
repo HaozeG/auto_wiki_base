@@ -74,3 +74,28 @@ actions_taken:
   - added sources frontmatter to 2 synthesis pages
 deferred_for_human:
   - needs_summary_revision flag on multiple pages (non-blocking, Layer 3 coverage low at cold_start)
+
+## [2026-06-27] ingest | web research — RISC-V AI batch 3 (8 new entity pages)
+pages_created:
+  - entity/shakti_processor
+  - entity/gnu_toolchain_riscv_vector
+  - entity/onnx_runtime_riscv
+  - entity/muriscv_nn
+  - entity/risc_v_profiles_rva
+  - entity/sifive_p870_x390
+  - entity/openxiangshan_difftest_nemu
+  - entity/canaan_kendryte_k230
+pages_updated: []
+pages_deferred:
+  - entity/pulp_platform_gap8_gap9: near-duplicate of existing pulp_platform (different GAP8/GAP9 focus; not added to index)
+  - entity/risc_v_zve_embedded_vector: near-duplicate of riscv_zve_sub_extensions; not added to index
+  - entity/risc_v_matrix_extension: near-duplicate of riscv_matrix_extension; not added to index
+  - entity/chips_alliance: near-duplicate of chips_alliance_governance; not added to index
+  - entity/starfive_jh7110: near-duplicate of starfive_jh7110_visionfive2; not added to index
+cold_start: true
+
+## [2026-06-27] ingest | synthesis — RISC-V ISA Standardization and Software Stack Convergence
+pages_created: [synthesis/riscv_standardization_software_ecosystem]
+pages_updated: []
+pages_deferred: []
+cold_start: true
