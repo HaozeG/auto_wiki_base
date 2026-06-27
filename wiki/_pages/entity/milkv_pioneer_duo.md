@@ -1,21 +1,28 @@
 ---
-type: entity
-tags: [risc-v, developer-board, SBC, SG2042, CV1800B, milk-v, sophgo]
-sources:
-  - https://milkv.io/pioneer
-  - https://milkv.io/docs/pioneer/getting-started/processor
-  - https://www.circuitstate.com/tutorials/getting-started-with-milk-v-duo-risc-v-linux-development-board/
-  - https://www.hackster.io/news/milk-v-unveils-its-third-risc-v-board-in-a-month-the-9-dual-core-linux-capable-milk-v-duo-3fb5d9f978d1
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
-inbound_links: 0
+created: 2026-06-27
+inbound_links: 3
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://milkv.io/pioneer
+- https://milkv.io/docs/pioneer/getting-started/processor
+- https://www.circuitstate.com/tutorials/getting-started-with-milk-v-duo-risc-v-linux-development-board/
+- https://www.hackster.io/news/milk-v-unveils-its-third-risc-v-board-in-a-month-the-9-dual-core-linux-capable-milk-v-duo-3fb5d9f978d1
+tags:
+- risc-v
+- developer-board
+- SBC
+- SG2042
+- CV1800B
+- milk-v
+- sophgo
+type: entity
+updated: 2026-06-27
 ---
 
 # Milk-V Pioneer and Milk-V Duo

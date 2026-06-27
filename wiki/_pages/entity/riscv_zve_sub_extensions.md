@@ -1,20 +1,20 @@
 ---
-type: entity
-tags: []
-sources:
-  - https://lkml.org/lkml/2024/5/10/8
-  - https://patchew.org/linux/20240510-zve-detection-v5-0-0711bdd26c12@sifive.com/20240510-zve-detection-v5-6-0711bdd26c12@sifive.com/
-  - http://mirror.iscas.ac.cn/riscv-toolchains/release/riscv/riscv-isa-manual/Release%20riscv-isa-release-7749d5d-2025-05-19/riscv-unprivileged.pdf
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
-inbound_links: 2
+created: 2026-06-27
+inbound_links: 5
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://lkml.org/lkml/2024/5/10/8
+- https://patchew.org/linux/20240510-zve-detection-v5-0-0711bdd26c12@sifive.com/20240510-zve-detection-v5-6-0711bdd26c12@sifive.com/
+- http://mirror.iscas.ac.cn/riscv-toolchains/release/riscv/riscv-isa-manual/Release%20riscv-isa-release-7749d5d-2025-05-19/riscv-unprivileged.pdf
+tags: []
+type: entity
+updated: 2026-06-27
 ---
 
 # RISC-V Zve* Sub-Extensions

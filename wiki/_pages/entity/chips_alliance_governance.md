@@ -1,20 +1,20 @@
 ---
-type: entity
-tags: []
-sources:
-  - https://chipsalliance.org
-  - https://fosdem.org/2025/events/attachments/fosdem-2025-5921-how-to-quickly-build-an-ai-startup-on-open-source-risc-v-cores/slides/238061/2025_02_O_ZrCbM4S.pdf
-  - https://riscv.or.jp/wp-content/uploads/CHIPS_Alliance_Keynote_RISC-V_Tokyo_compressed.pdf
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
-inbound_links: 0
+created: 2026-06-27
+inbound_links: 4
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://chipsalliance.org
+- https://fosdem.org/2025/events/attachments/fosdem-2025-5921-how-to-quickly-build-an-ai-startup-on-open-source-risc-v-cores/slides/238061/2025_02_O_ZrCbM4S.pdf
+- https://riscv.or.jp/wp-content/uploads/CHIPS_Alliance_Keynote_RISC-V_Tokyo_compressed.pdf
+tags: []
+type: entity
+updated: 2026-06-27
 ---
 
 # Chips Alliance and RISC-V Ecosystem Governance

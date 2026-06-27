@@ -1,21 +1,28 @@
 ---
-type: entity
-tags: [risc-v, automotive, ISO-26262, ASIL-D, functional-safety, andes, certified]
-sources:
-  - https://www.globenewswire.com/en/news-release/2022/02/15/2385494/0/en/Andes-Technology-Is-the-First-RISC-V-Vendor-to-Accomplish-ISO-26262-Functional-Safety-ASIL-D-Development-Process-Certification-with-SGS-TU%CC%88V-Saar.html
-  - https://www.andestech.com/en/2025/01/23/andes-technology-d45-se-processor-achieves-iso-26262-asil-d-certification-for-functional-safety/
-  - https://hightec-rt.com/news/blog/item/andes-hightec-risc-v
-  - https://www.edge-ai-vision.com/2025/09/andes-technology-announces-d23-se-a-functional-safety-risc-v-core-with-dcls-and-split-lock-for-asil-b-d-automotive-applications/
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
-inbound_links: 0
+created: 2026-06-27
+inbound_links: 1
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://www.globenewswire.com/en/news-release/2022/02/15/2385494/0/en/Andes-Technology-Is-the-First-RISC-V-Vendor-to-Accomplish-ISO-26262-Functional-Safety-ASIL-D-Development-Process-Certification-with-SGS-TU%CC%88V-Saar.html
+- https://www.andestech.com/en/2025/01/23/andes-technology-d45-se-processor-achieves-iso-26262-asil-d-certification-for-functional-safety/
+- https://hightec-rt.com/news/blog/item/andes-hightec-risc-v
+- https://www.edge-ai-vision.com/2025/09/andes-technology-announces-d23-se-a-functional-safety-risc-v-core-with-dcls-and-split-lock-for-asil-b-d-automotive-applications/
+tags:
+- risc-v
+- automotive
+- ISO-26262
+- ASIL-D
+- functional-safety
+- andes
+- certified
+type: entity
+updated: 2026-06-27
 ---
 
 # RISC-V in Automotive AI (ASIL-D Certification)

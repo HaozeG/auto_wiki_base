@@ -1,21 +1,28 @@
 ---
-type: entity
-tags: [risc-v, verification, co-simulation, NEMU, difftest, XiangShan, open-source]
-sources:
-  - https://github.com/OpenXiangShan/NEMU
-  - https://xiangshan-doc-en.readthedocs.io/en/latest/tools/nemu/
-  - https://github.com/OpenXiangShan/XiangShan
-  - https://arxiv.org/pdf/2601.11838
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
-inbound_links: 0
+created: 2026-06-27
+inbound_links: 1
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://github.com/OpenXiangShan/NEMU
+- https://xiangshan-doc-en.readthedocs.io/en/latest/tools/nemu/
+- https://github.com/OpenXiangShan/XiangShan
+- https://arxiv.org/pdf/2601.11838
+tags:
+- risc-v
+- verification
+- co-simulation
+- NEMU
+- difftest
+- XiangShan
+- open-source
+type: entity
+updated: 2026-06-27
 ---
 
 # OpenXiangShan Ecosystem: Difftest and NEMU

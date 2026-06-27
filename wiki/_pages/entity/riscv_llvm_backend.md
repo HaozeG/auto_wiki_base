@@ -1,21 +1,28 @@
 ---
-type: entity
-tags: [risc-v, LLVM, compiler, clang, RVV, auto-vectorization, toolchain]
-sources:
-  - https://arxiv.org/html/2605.10860
-  - https://arxiv.org/pdf/2309.16509
-  - http://riscv.epcc.ed.ac.uk/issues/compiling-vector/
-  - https://link.springer.com/book/10.1007/979-8-8688-2169-1
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
-inbound_links: 0
+created: 2026-06-27
+inbound_links: 1
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://arxiv.org/html/2605.10860
+- https://arxiv.org/pdf/2309.16509
+- http://riscv.epcc.ed.ac.uk/issues/compiling-vector/
+- https://link.springer.com/book/10.1007/979-8-8688-2169-1
+tags:
+- risc-v
+- LLVM
+- compiler
+- clang
+- RVV
+- auto-vectorization
+- toolchain
+type: entity
+updated: 2026-06-27
 ---
 
 # RISC-V LLVM Backend

@@ -1,20 +1,20 @@
 ---
-type: entity
-tags: []
-sources:
-  - https://forum.rvspace.org/t/visionfive-2-ai-kit-user-guide-update/5173
-  - https://semiiphub.com/news/risc-v-powered-ai-computing
-  - https://github.com/open-riscv-initiative/website/blob/master/content/en/docs/boards/starfive_visionfive_2/_index.md
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
-inbound_links: 1
+created: 2026-06-27
+inbound_links: 3
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://forum.rvspace.org/t/visionfive-2-ai-kit-user-guide-update/5173
+- https://semiiphub.com/news/risc-v-powered-ai-computing
+- https://github.com/open-riscv-initiative/website/blob/master/content/en/docs/boards/starfive_visionfive_2/_index.md
+tags: []
+type: entity
+updated: 2026-06-27
 ---
 
 # StarFive JH7110 / VisionFive 2

@@ -1,21 +1,27 @@
 ---
-type: entity
-tags: [mlir, risc-v, compiler, rvv, llvm, software-stack]
-sources:
-  - https://llvm.org/devmtg/2023-05/slides/StudentTalks-May11/02-Zhang-RISC-V-VectorExtensionSupport-in-MLIR.pdf
-  - https://discourse.llvm.org/t/rfc-add-risc-v-vector-extension-rvv-dialect/4146
-  - https://arxiv.org/html/2603.17800v1
-  - https://llvm.org/docs/RISCV/RISCVVectorExtension.html
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
-inbound_links: 0
+created: 2026-06-27
+inbound_links: 6
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://llvm.org/devmtg/2023-05/slides/StudentTalks-May11/02-Zhang-RISC-V-VectorExtensionSupport-in-MLIR.pdf
+- https://discourse.llvm.org/t/rfc-add-risc-v-vector-extension-rvv-dialect/4146
+- https://arxiv.org/html/2603.17800v1
+- https://llvm.org/docs/RISCV/RISCVVectorExtension.html
+tags:
+- mlir
+- risc-v
+- compiler
+- rvv
+- llvm
+- software-stack
+type: entity
+updated: 2026-06-27
 ---
 
 # MLIR RISC-V Backend

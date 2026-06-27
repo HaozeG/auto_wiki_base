@@ -1,21 +1,27 @@
 ---
-type: entity
-tags: [risc-v, vector-processor, UC-Berkeley, research, accelerator, history]
-sources:
-  - http://hwacha.org/
-  - https://people.eecs.berkeley.edu/~krste/papers/EECS-2015-263.pdf
-  - https://people.eecs.berkeley.edu/~krste/papers/eos18-esscirc2014.pdf
-  - https://arxiv.org/pdf/1906.00478
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
-inbound_links: 0
+created: 2026-06-27
+inbound_links: 1
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- http://hwacha.org/
+- https://people.eecs.berkeley.edu/~krste/papers/EECS-2015-263.pdf
+- https://people.eecs.berkeley.edu/~krste/papers/eos18-esscirc2014.pdf
+- https://arxiv.org/pdf/1906.00478
+tags:
+- risc-v
+- vector-processor
+- UC-Berkeley
+- research
+- accelerator
+- history
+type: entity
+updated: 2026-06-27
 ---
 
 # Hwacha Vector Accelerator

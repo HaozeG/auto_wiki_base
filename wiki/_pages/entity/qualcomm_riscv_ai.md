@@ -1,20 +1,20 @@
 ---
-type: entity
-tags: []
-sources:
-  - https://www.theregister.com/special-features/2025/12/10/qualcomm-takes-risc-on-arm-alternative-with-ventana-buy/2292187
-  - https://www.theregister.com/2025/01/02/riscv_journey_to_mainstream
-  - https://riscv.org/blog/risc-v-announces-ratification-of-the-rva23-profile-standard/
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
-inbound_links: 0
+created: 2026-06-27
+inbound_links: 2
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://www.theregister.com/special-features/2025/12/10/qualcomm-takes-risc-on-arm-alternative-with-ventana-buy/2292187
+- https://www.theregister.com/2025/01/02/riscv_journey_to_mainstream
+- https://riscv.org/blog/risc-v-announces-ratification-of-the-rva23-profile-standard/
+tags: []
+type: entity
+updated: 2026-06-27
 ---
 
 # Qualcomm RISC-V AI

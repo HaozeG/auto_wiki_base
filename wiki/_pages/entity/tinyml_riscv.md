@@ -1,21 +1,27 @@
 ---
-type: entity
-tags: [risc-v, tinyML, TensorFlow-Lite-Micro, embedded, inference, benchmark]
-sources:
-  - https://arxiv.org/abs/2010.08678
-  - https://github.com/AI-Vector-Accelerator/tinymlperf
-  - https://arxiv.org/pdf/2306.08951
-  - https://dl.acm.org/doi/10.1007/978-3-031-78459-0_24
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
-inbound_links: 0
+created: 2026-06-27
+inbound_links: 1
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://arxiv.org/abs/2010.08678
+- https://github.com/AI-Vector-Accelerator/tinymlperf
+- https://arxiv.org/pdf/2306.08951
+- https://dl.acm.org/doi/10.1007/978-3-031-78459-0_24
+tags:
+- risc-v
+- tinyML
+- TensorFlow-Lite-Micro
+- embedded
+- inference
+- benchmark
+type: entity
+updated: 2026-06-27
 ---
 
 # TinyML on RISC-V

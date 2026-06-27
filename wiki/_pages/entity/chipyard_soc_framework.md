@@ -1,21 +1,28 @@
 ---
-type: entity
-tags: [risc-v, SoC-generator, open-source, UC-Berkeley, Chisel, EDA, research]
-sources:
-  - https://github.com/ucb-bar/chipyard
-  - https://slice.eecs.berkeley.edu/projects/chipyard/
-  - https://hc32.hotchips.org/assets/program/posters/HC2020.UCBerkeley.AlonAmid.v01.pdf
-  - https://numfer.com/ucb-bar/chipyard
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
-inbound_links: 0
+created: 2026-06-27
+inbound_links: 4
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://github.com/ucb-bar/chipyard
+- https://slice.eecs.berkeley.edu/projects/chipyard/
+- https://hc32.hotchips.org/assets/program/posters/HC2020.UCBerkeley.AlonAmid.v01.pdf
+- https://numfer.com/ucb-bar/chipyard
+tags:
+- risc-v
+- SoC-generator
+- open-source
+- UC-Berkeley
+- Chisel
+- EDA
+- research
+type: entity
+updated: 2026-06-27
 ---
 
 # Chipyard SoC Framework

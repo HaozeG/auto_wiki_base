@@ -1,20 +1,20 @@
 ---
-type: entity
-tags: []
-sources:
-  - https://pulp-platform.org/projectinfo.html
-  - https://www.eetimes.com/open-source-processor-core-ready-for-iot/
-  - https://www.techpowerup.com/308389/432-core-risc-v-processor-with-chiplets-aims-to-provide-ultra-efficient-floating-point-computation
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
-inbound_links: 2
+created: 2026-06-27
+inbound_links: 6
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://pulp-platform.org/projectinfo.html
+- https://www.eetimes.com/open-source-processor-core-ready-for-iot/
+- https://www.techpowerup.com/308389/432-core-risc-v-processor-with-chiplets-aims-to-provide-ultra-efficient-floating-point-computation
+tags: []
+type: entity
+updated: 2026-06-27
 ---
 
 # PULP Platform

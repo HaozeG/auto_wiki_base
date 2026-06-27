@@ -10,7 +10,7 @@ connected_entities:
 - ventana_veyron_v2
 - tvm_riscv_backend
 created: 2026-06-27
-inbound_links: 0
+inbound_links: 1
 needs_summary_revision: true
 scorecard:
   bridge_score: null

@@ -1,21 +1,28 @@
 ---
-type: entity
-tags: [risc-v, open-source, processor, application-class, OpenHW, Linux-capable]
-sources:
-  - https://docs.openhwgroup.org/projects/cva6-user-manual/
-  - https://github.com/openhwgroup/cva6
-  - https://open-src-soc.org/2022-05/media/slides/4th-RISC-V-Meeting-2022-05-04-14h55-Jerome-Quevremont.pdf
-  - https://arxiv.org/pdf/2202.03749
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
-inbound_links: 2
+created: 2026-06-27
+inbound_links: 3
+needs_summary_revision: true
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://docs.openhwgroup.org/projects/cva6-user-manual/
+- https://github.com/openhwgroup/cva6
+- https://open-src-soc.org/2022-05/media/slides/4th-RISC-V-Meeting-2022-05-04-14h55-Jerome-Quevremont.pdf
+- https://arxiv.org/pdf/2202.03749
+tags:
+- risc-v
+- open-source
+- processor
+- application-class
+- OpenHW
+- Linux-capable
+type: entity
+updated: 2026-06-27
 ---
 
 # OpenHW Group CVA6 (Ariane)

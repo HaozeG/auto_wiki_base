@@ -1,21 +1,27 @@
 ---
-type: entity
-tags: [risc-v, sparsity, RVV, neural-networks, optimization, research]
-sources:
-  - https://arxiv.org/html/2501.10189v1
-  - https://arxiv.org/pdf/2501.10189
-  - https://codasip.com/2024/03/20/a-custom-risc-v-vector-instruction/
-  - https://riscv.org/job/rv-sparse-open-source-risc-v-vector-accelerated-sparse-linear-algebra-library-risc-v-mentorship/
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
-inbound_links: 0
+created: 2026-06-27
+inbound_links: 1
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://arxiv.org/html/2501.10189v1
+- https://arxiv.org/pdf/2501.10189
+- https://codasip.com/2024/03/20/a-custom-risc-v-vector-instruction/
+- https://riscv.org/job/rv-sparse-open-source-risc-v-vector-accelerated-sparse-linear-algebra-library-risc-v-mentorship/
+tags:
+- risc-v
+- sparsity
+- RVV
+- neural-networks
+- optimization
+- research
+type: entity
+updated: 2026-06-27
 ---
 
 # Sparse Computation on RISC-V

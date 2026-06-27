@@ -10,9 +10,9 @@ You are the maintainer of this wiki. You create pages, update them on ingest, ma
 
 ```yaml
 [system_state]
-graph_maturity: false
-cold_start_page_count: 0
-mean_inbound_links: 1.4444
+graph_maturity: true
+cold_start_page_count: 58
+mean_inbound_links: 3.9655
 retrospective_lint_done: false
 ```
 

@@ -191,3 +191,21 @@ pages_created: [synthesis/riscv_edge_ai_llm_inference]
 pages_updated: []
 pages_deferred: []
 cold_start: true
+
+## [2026-06-27] lint | routine
+issues_found: 6
+actions_taken:
+  - reconciled inbound_links frontmatter from actual [[wikilink]] graph (46 pages updated)
+  - mean_inbound_links corrected from 0.90 to 3.97 — graph now MATURE
+  - updated CLAUDE.md system_state: graph_maturity=true, mean_inbound_links=3.9655
+deferred_for_human:
+  - MERGE candidate: gnu_toolchain_riscv_vector ↔ riscv_llvm_backend (6 shared tags; both cover GCC+LLVM RVV support)
+  - MERGE candidate: chipyard_soc_framework ↔ rocket_chip_generator (4 shared tags; Rocket is subcomponent of Chipyard)
+  - MERGE candidate: tinyml_riscv ↔ muriscv_nn (3 shared tags; muriscv_nn is the dominant RISC-V TinyML library)
+  - MERGE candidate: llm_inference_riscv ↔ onnx_runtime_riscv (3 shared tags; partial topic overlap)
+  - ORPHAN review: 8 pages with inbound_links=0 — andes_nx27v_sifive_p870_comparison, microchip_polarfire_soc, nvidia_riscv_falcon_gsp, rocket_chip_generator, shakti_processor, sifive_hifive_boards, sifive_p870_x390, wd_swerv_cores
+  - needs_summary_revision=true on 25 pages (Layer 3 coverage 0.20 across board; caused by qmd returning similar pages for every RISC-V query — topic saturation)
+
+## [2026-06-27] transition | cold_start → mature
+pages_at_transition: 58
+mean_inbound_links: 3.97

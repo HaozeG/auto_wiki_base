@@ -1,21 +1,27 @@
 ---
-type: entity
-tags: [risc-v, ONNX, ML-runtime, inference, software-stack, benchmark]
-sources:
-  - https://github.com/ucb-bar/onnxruntime-riscv
-  - https://arxiv.org/html/2504.03774v1
-  - https://onnxruntime.ai/docs/reference/compatibility.html
-  - https://openbenchmarking.org/test/pts/onnx
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
-inbound_links: 0
+created: 2026-06-27
+inbound_links: 2
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://github.com/ucb-bar/onnxruntime-riscv
+- https://arxiv.org/html/2504.03774v1
+- https://onnxruntime.ai/docs/reference/compatibility.html
+- https://openbenchmarking.org/test/pts/onnx
+tags:
+- risc-v
+- ONNX
+- ML-runtime
+- inference
+- software-stack
+- benchmark
+type: entity
+updated: 2026-06-27
 ---
 
 # ONNX Runtime RISC-V Backend

@@ -1,20 +1,20 @@
 ---
-type: entity
-tags: []
-sources:
-  - https://www.kendryte.com/k230/en/v2.0/K230_brief_datasheet.html
-  - https://riscv.org/blog/canaan-announces-kendryte-k510-edge-ai-chip-as-a-triple-core-risc-v-part-with-3-tops-npu-gareth-halfacree-hackster-io/
-  - https://www.eet-china.com/news/202211307275.html
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
-inbound_links: 2
+created: 2026-06-27
+inbound_links: 5
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://www.kendryte.com/k230/en/v2.0/K230_brief_datasheet.html
+- https://riscv.org/blog/canaan-announces-kendryte-k510-edge-ai-chip-as-a-triple-core-risc-v-part-with-3-tops-npu-gareth-halfacree-hackster-io/
+- https://www.eet-china.com/news/202211307275.html
+tags: []
+type: entity
+updated: 2026-06-27
 ---
 
 # Canaan Kendryte K510 / K230

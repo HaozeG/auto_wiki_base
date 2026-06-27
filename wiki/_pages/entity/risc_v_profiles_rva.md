@@ -1,22 +1,28 @@
 ---
-type: entity
-tags: [risc-v, ISA, standardization, profiles, RVA23, software-portability]
-sources:
-  - https://riscv.org/blog/risc-v-announces-ratification-of-the-rva23-profile-standard/
-  - https://github.com/riscv/riscv-profiles/blob/main/src/rva23-profile.adoc
-  - https://fprox.substack.com/p/risc-v-profiles
-  - https://www.electronicdesign.com/technologies/embedded/digital-ics/processors/article/55283485/risc-v-international-more-about-the-risc-v-rva23-profile
-  - https://www.cnx-software.com/2025/07/08/ubuntu-25-10-release-to-mandate-rva23-profile-obsoleting-most-risc-v-hardware/
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
-inbound_links: 0
+created: 2026-06-27
+inbound_links: 7
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://riscv.org/blog/risc-v-announces-ratification-of-the-rva23-profile-standard/
+- https://github.com/riscv/riscv-profiles/blob/main/src/rva23-profile.adoc
+- https://fprox.substack.com/p/risc-v-profiles
+- https://www.electronicdesign.com/technologies/embedded/digital-ics/processors/article/55283485/risc-v-international-more-about-the-risc-v-rva23-profile
+- https://www.cnx-software.com/2025/07/08/ubuntu-25-10-release-to-mandate-rva23-profile-obsoleting-most-risc-v-hardware/
+tags:
+- risc-v
+- ISA
+- standardization
+- profiles
+- RVA23
+- software-portability
+type: entity
+updated: 2026-06-27
 ---
 
 # RISC-V Application Profiles (RVA20 / RVA22 / RVA23)

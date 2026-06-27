@@ -1,21 +1,29 @@
 ---
-type: entity
-tags: [risc-v, compiler, GCC, LLVM, toolchain, RVV, auto-vectorization, software-stack]
-sources:
-  - https://gcc.gnu.org/onlinedocs/gcc-14.1.0/gcc/RISC-V-Vector-Intrinsics.html
-  - https://www.phoronix.com/news/GCC-RISC-V-Auto-Vectorization
-  - https://llvm.org/docs/RISCVUsage.html
-  - https://lists.riscv.org/g/tech-vector-ext/message/364
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
-inbound_links: 0
+created: 2026-06-27
+inbound_links: 3
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://gcc.gnu.org/onlinedocs/gcc-14.1.0/gcc/RISC-V-Vector-Intrinsics.html
+- https://www.phoronix.com/news/GCC-RISC-V-Auto-Vectorization
+- https://llvm.org/docs/RISCVUsage.html
+- https://lists.riscv.org/g/tech-vector-ext/message/364
+tags:
+- risc-v
+- compiler
+- GCC
+- LLVM
+- toolchain
+- RVV
+- auto-vectorization
+- software-stack
+type: entity
+updated: 2026-06-27
 ---
 
 # GNU Toolchain RISC-V Vector Support

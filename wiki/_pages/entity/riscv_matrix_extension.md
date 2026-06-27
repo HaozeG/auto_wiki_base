@@ -1,20 +1,20 @@
 ---
-type: entity
-tags: []
-sources:
-  - https://github.com/riscv-admin/attached-matrix-extension/blob/main/charter.adoc
-  - https://riscv.org/blog/enhancing-the-future-of-ai-ml-with-attached-matrix-extension/
-  - https://lists.riscv.org/g/tech-attached-matrix-extension/topic/meeting_minutes_attached/105135992
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
-inbound_links: 2
+created: 2026-06-27
+inbound_links: 4
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://github.com/riscv-admin/attached-matrix-extension/blob/main/charter.adoc
+- https://riscv.org/blog/enhancing-the-future-of-ai-ml-with-attached-matrix-extension/
+- https://lists.riscv.org/g/tech-attached-matrix-extension/topic/meeting_minutes_attached/105135992
+tags: []
+type: entity
+updated: 2026-06-27
 ---
 
 # RISC-V Matrix Extension Proposals

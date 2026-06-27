@@ -1,21 +1,28 @@
 ---
-type: entity
-tags: [risc-v, tinyML, inference-library, RVV, embedded, CMSIS-NN, quantization]
-sources:
-  - https://dl.acm.org/doi/10.1145/3637543.3652878
-  - https://mediatum.ub.tum.de/doc/1759366/1759366.pdf
-  - https://www.semanticscholar.org/paper/From-Simulation-to-RVV-Hardware:-Evaluating-the-on-Witteler-Prof/73bf048b066607e3a3ddda5000db4322169aa4c9
-  - https://www.researchgate.net/publication/381895543_muRISCV-NN_Challenging_Zve32x_Autovectorization_with_TinyML_Inference_Library_for_RISC-V_Vector_Extension
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
-inbound_links: 0
+created: 2026-06-27
+inbound_links: 8
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://dl.acm.org/doi/10.1145/3637543.3652878
+- https://mediatum.ub.tum.de/doc/1759366/1759366.pdf
+- https://www.semanticscholar.org/paper/From-Simulation-to-RVV-Hardware:-Evaluating-the-on-Witteler-Prof/73bf048b066607e3a3ddda5000db4322169aa4c9
+- https://www.researchgate.net/publication/381895543_muRISCV-NN_Challenging_Zve32x_Autovectorization_with_TinyML_Inference_Library_for_RISC-V_Vector_Extension
+tags:
+- risc-v
+- tinyML
+- inference-library
+- RVV
+- embedded
+- CMSIS-NN
+- quantization
+type: entity
+updated: 2026-06-27
 ---
 
 # muRISCV-NN

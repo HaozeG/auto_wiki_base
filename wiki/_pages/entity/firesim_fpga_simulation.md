@@ -1,21 +1,28 @@
 ---
-type: entity
-tags: [risc-v, simulation, FPGA, UC-Berkeley, cloud, cycle-accurate, EDA]
-sources:
-  - https://fires.im/
-  - https://github.com/firesim/firesim
-  - https://bar.eecs.berkeley.edu/projects/firesim.html
-  - https://aws.amazon.com/blogs/compute/bringing-datacenter-scale-hardware-software-co-design-to-the-cloud-with-firesim-and-amazon-ec2-f1-instances/
-created: 2026-06-27
-updated: 2026-06-27
 cold_start: true
-inbound_links: 0
+created: 2026-06-27
+inbound_links: 2
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://fires.im/
+- https://github.com/firesim/firesim
+- https://bar.eecs.berkeley.edu/projects/firesim.html
+- https://aws.amazon.com/blogs/compute/bringing-datacenter-scale-hardware-software-co-design-to-the-cloud-with-firesim-and-amazon-ec2-f1-instances/
+tags:
+- risc-v
+- simulation
+- FPGA
+- UC-Berkeley
+- cloud
+- cycle-accurate
+- EDA
+type: entity
+updated: 2026-06-27
 ---
 
 # FireSim FPGA-Accelerated Simulation
