@@ -1,5 +1,25 @@
 # Wiki Log
 
+## [2026-06-27] ingest | web research — RISC-V AI batch 5: hardware/SoCs, compilers, power, automotive
+pages_created:
+  - entity/sophgo_sg2042.md
+  - entity/allwinner_d1.md
+  - entity/bouffalo_lab_bl808_bl616.md
+  - entity/nvidia_riscv_falcon_gsp.md
+  - entity/rocket_chip_generator.md
+  - entity/greenwaves_gap8_gap9.md
+  - entity/tinyml_riscv.md
+  - entity/riscv_automotive_asil.md
+  - entity/riscv_llvm_backend.md
+  - synthesis/riscv_vs_arm_edge_ai.md
+pages_updated: []
+pages_deferred:
+  - ICG GX8010: insufficient verifiable public claims found
+  - OpenCL on RISC-V (POCL): insufficient verifiable benchmark data
+  - Halide on RISC-V: insufficient verifiable deployment data
+  - JAX on RISC-V: insufficient verifiable implementation data
+cold_start: true
+
 ## [2026-06-27] ingest | web research — RISC-V AI accelerator and optimizations
 pages_created:
   - entity/risc_v_vector_extension.md

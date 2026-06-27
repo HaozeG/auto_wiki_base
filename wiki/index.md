@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-06-27 | Pages: 48 | Sources: 139
+Last updated: 2026-06-27 | Pages: 57 | Sources: 175
 
 ## Entity Pages
 
@@ -51,6 +51,15 @@ Last updated: 2026-06-27 | Pages: 48 | Sources: 139
 | [chipyard_soc_framework](entity/chipyard_soc_framework.md) | UC Berkeley open-source agile RISC-V SoC framework: Rocket, BOOM, Gemmini, Ara, FireSim, Hammer in Chisel | risc-v, SoC-generator, open-source, Chisel, UC-Berkeley | 4 | 0 |
 | [firesim_fpga_simulation](entity/firesim_fpga_simulation.md) | UC Berkeley FPGA-accelerated cycle-accurate RISC-V simulation on AWS EC2 F1; SPECInt2017 on Rocket in ~1 day on 10 FPGAs | risc-v, simulation, FPGA, AWS, cycle-accurate | 4 | 0 |
 | [riscv_sparse_computation](entity/riscv_sparse_computation.md) | Sparse inference on RISC-V via RVV mask registers; structured-sparse MatMul 25–33% faster than dense RVV kernels | risc-v, sparsity, RVV, neural-networks, optimization | 4 | 0 |
+| [sophgo_sg2042](entity/sophgo_sg2042.md) | First mass-produced 64-core RISC-V server CPU (C920, 2 GHz, 64 MB L3, 4× DDR4-3200, PCIe Gen4); powers Milk-V Pioneer | risc-v, server, HPC, SoC, sophgo, many-core | 4 | 0 |
+| [allwinner_d1](entity/allwinner_d1.md) | First mass-market Linux-capable RISC-V SoC: single C906 at 1 GHz, 2 GB DDR3, 4K video decode, HiFi4 DSP | risc-v, SoC, linux, embedded, allwinner, mass-market | 4 | 0 |
+| [bouffalo_lab_bl808_bl616](entity/bouffalo_lab_bl808_bl616.md) | RISC-V wireless SoCs: BL808 (RV64+RV32, NPU, WiFi 4/BT5/Zigbee, 64 MB PSRAM) and BL616 (WiFi 6, BT5.2, Matter) | risc-v, wireless, IoT, SoC, embedded, AI-edge, bouffalo-lab | 4 | 0 |
+| [nvidia_riscv_falcon_gsp](entity/nvidia_riscv_falcon_gsp.md) | NVIDIA embeds RISC-V GSP on Turing+ GPUs for initialization/management offload; Falcon microcontroller in all GPU engines | risc-v, NVIDIA, GPU, firmware, embedded-controller, Falcon | 4 | 0 |
+| [rocket_chip_generator](entity/rocket_chip_generator.md) | UC Berkeley open-source RISC-V SoC generator in Chisel: Rocket core, BOOM, TileLink; foundation for Gemmini and FireSim | risc-v, open-source, generator, Chisel, UC-Berkeley, SoC | 4 | 0 |
+| [greenwaves_gap8_gap9](entity/greenwaves_gap8_gap9.md) | GreenWaves RISC-V edge AI MCUs: GAP9 at 330 μW/GOP, 32.2 GMACs, 5× lower power than GAP8, for hearables/nano-drones | risc-v, ultra-low-power, edge-AI, IoT, tinyML, audio, vision | 4 | 0 |
+| [tinyml_riscv](entity/tinyml_riscv.md) | TinyML on RISC-V via TFLM/MLPerf Tiny; muRISCV-NN 3.85× speedup; MLonMCU retargeting; Zve32x for sub-watt inference | risc-v, tinyML, TensorFlow-Lite-Micro, embedded, inference | 4 | 0 |
+| [riscv_automotive_asil](entity/riscv_automotive_asil.md) | Andes D45-SE: first RISC-V CPU with ISO 26262 ASIL-D product cert (2025); DCLS+split-lock for safety-critical automotive AI | risc-v, automotive, ISO-26262, ASIL-D, functional-safety | 4 | 0 |
+| [riscv_llvm_backend](entity/riscv_llvm_backend.md) | LLVM/Clang RISC-V backend: RVV 1.0 intrinsics in Clang 15, VLA auto-vectorization, SIMDe portability; 35% gap vs ARM SVE | risc-v, LLVM, compiler, clang, RVV, auto-vectorization | 4 | 0 |
 
 ## Synthesis Pages
 
@@ -60,6 +69,7 @@ Last updated: 2026-06-27 | Pages: 48 | Sources: 139
 | [riscv_open_source_ai_stack](synthesis/riscv_open_source_ai_stack.md) | gemmini, ara_vector_processor, mlir_riscv_backend, iree_riscv, tvm_riscv_backend, risc_v_vector_extension, risc_v_p_extension, boom_riscv, andes_ax45mp_nx27v, xiangshan_riscv | draft | 0 |
 | [riscv_standardization_software_ecosystem](synthesis/riscv_standardization_software_ecosystem.md) | risc_v_profiles_rva, risc_v_vector_extension, risc_v_matrix_extension, gnu_toolchain_riscv_vector, muriscv_nn, onnx_runtime_riscv, iree_riscv, tvm_riscv_backend, openxiangshan_difftest_nemu | draft | 0 |
 | [riscv_edge_ai_llm_inference](synthesis/riscv_edge_ai_llm_inference.md) | muriscv_nn, riscv_zve_sub_extensions, canaan_kendryte_k510_k230, pulp_platform, onnx_runtime_riscv, llm_inference_riscv, milkv_pioneer_duo, riscv_sparse_computation | draft | 0 |
+| [riscv_vs_arm_edge_ai](synthesis/riscv_vs_arm_edge_ai.md) | greenwaves_gap8_gap9, tinyml_riscv, riscv_automotive_asil, riscv_llvm_backend, allwinner_d1, bouffalo_lab_bl808_bl616, sophgo_sg2042, muriscv_nn, risc_v_vector_extension, pulp_platform | active | 0 |
 
 ## Concept Index
 
