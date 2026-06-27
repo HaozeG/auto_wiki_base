@@ -1,17 +1,57 @@
 # Wiki Index
 
-Last updated: 2026-06-27 | Pages: 79 | Sources: 21
+Last updated: 2026-06-27 | Pages: 127 | Sources: 19
 
 ## Entity Pages
 
 | Page                                                                                              | Summary                                                                                                          | Tags                                                                                  | Sources | Inbound |
 | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------- | ------- |
-| [asml_euv_lithography.md](entity/asml_euv_lithography.md)                                         | ASML EUV Lithography — extreme ultraviolet lithography enabling sub-7nm chip manufacturing         | semiconductor, lithography, euv, asml, manufacturing                                  | 1       | 0       |
-| [pytorch_2x_training_framework.md](entity/pytorch_2x_training_framework.md)                       | PyTorch 2.x Training Framework — torch.compile and dynamo enabling 2× training speedups            | ml-framework, deep-learning, python, distributed-training                             | 1       | 0       |
+| [risc_v.md](entity/risc_v.md) | RISC-V open ISA: royalty-free, modular, geopolitical importance for sovereign chips | risc-v, open-source, isa, cpu-architecture | 1 | 0 |
+| [risc_v_2026_disruption.md](entity/risc_v_2026_disruption.md) | RISC-V 2026 Disruption | open-chip-architecture, risc-v, arm, intel, semiconductor-sovereignty, data-centers, ai-accelerators, mobile | 1 | 0 |
+| [spacemit_k1_archlinux.md](entity/spacemit_k1_archlinux.md) | SpacemiT K1 Arch Linux | arch-linux, risc-v, banana-pi, spacemit-k1 | 1 | 0 |
+| [alibaba_xuantie_c950.md](entity/alibaba_xuantie_c950.md) | Alibaba XuanTie C950 | alibaba, risc-v, semiconductors, china, ai, geopolitics | 1 | 0 |
+| [risc_v_architecture.md](entity/risc_v_architecture.md) | RISC-V Architecture | risc-v, open-source, instruction-set-architecture, chip-architecture, geopolitical, arm, intel | 1 | 0 |
+| [lowrisc_riscv_llvm.md](entity/lowrisc_riscv_llvm.md) | lowRISC riscv-llvm | LLVM, RISC-V, compiler, toolchain, lowRISC | 1 | 0 |
+| [tvm_hybrid_op_riscv_p_extension.md](entity/tvm_hybrid_op_riscv_p_extension.md) | TVM Hybrid-OP Case Study on RISC-V Packed SIMD | deep-learning, risc-v, tvm, simd, optimization | 1 | 0 |
+| [risc_v_vector_extension_tvm_optimization.md](entity/risc_v_vector_extension_tvm_optimization.md) | RISC-V Vector Extension Optimization via Probabilistic Programs | risc-v, tvm, vector-extension, compiler-optimization, machine-learning-compiler | 1 | 0 |
+| [ventana_veyron_v1.md](entity/ventana_veyron_v1.md) | Ventana Veyron V1 | risc-v, data-center, chiplet, ventana, veyron-v1 | 1 | 0 |
+| [veylon_risc_v_core.md](entity/veylon_risc_v_core.md) | Veyron (RISC-V Core) | risc-v, tenstorrent, veylon, apple silicon, performance | 1 | 0 |
+| [ventana_veyron_v2.md](entity/ventana_veyron_v2.md) | Ventana Veyron V2 | risc-v, ventana, server-processor, chiplet | 1 | 0 |
+| [et_soc_1.md](entity/et_soc_1.md) | ET-SoC-1 | ai-chips, risc-v, manycore, open-source-hardware, esperanto, ainekko | 1 | 0 |
+| [xiangshan_riscv_processor.md](entity/xiangshan_riscv_processor.md) | XiangShan: An Open-Source High-Performance RISC-V Processor | risc-v, open-source, processor, research-infrastructure | 1 | 0 |
+| [risc_v_summit_europe_2025.md](entity/risc_v_summit_europe_2025.md) | RISC-V Summit Europe 2025 | risc-v, summit, europe, conference, open-standard | 1 | 0 |
+| [sophgo_sg2380.md](entity/sophgo_sg2380.md) | Sophgo SG2380 | risc-v, sophgo, ai-accelerator, china-semiconductor | 1 | 0 |
+| [milkv_pioneer.md](entity/milkv_pioneer.md) | Milk-V Pioneer | RISC-V, motherboard, SOPHON, SG2042 | 1 | 0 |
+| [xuantie_c930.md](entity/xuantie_c930.md) | XuanTie C930 | risc-v, alibaba, server-cpu, xuantie, ai-chips | 1 | 0 |
+| [alibaba_th1520_soc.md](entity/alibaba_th1520_soc.md) | Alibaba TH1520 SoC | risc-v, soc, alibaba, t-head, edge-ai, china | 1 | 0 |
+| [lora_qlora_fine_tuning.md](entity/lora_qlora_fine_tuning.md) | LoRA & QLoRA Fine-Tuning | LoRA, QLoRA, DoRA, fine-tuning, PEFT, quantization | 1 | 0 |
+| [parameter_efficient_fine_tuning.md](entity/parameter_efficient_fine_tuning.md) | Parameter Efficient Fine Tuning (PEFT) | llm, fine-tuning, peft, lora, qlora | 1 | 0 |
+| [proximal_policy_optimization_llm_alignment.md](entity/proximal_policy_optimization_llm_alignment.md) | Proximal Policy Optimization (PPO) for LLM Alignment | LLM, RLHF, alignment, PPO | 1 | 0 |
+| [direct_preference_optimization.md](entity/direct_preference_optimization.md) | Direct Preference Optimization (DPO) | LLM, RLHF, alignment, preference optimization | 1 | 0 |
+| [reinforcement_learning_from_human_feedback.md](entity/reinforcement_learning_from_human_feedback.md) | Reinforcement Learning from Human Feedback | machine-learning, alignment, training-technique | 2 | 0 |
+| [fineweb2_dataset.md](entity/fineweb2_dataset.md) | FineWeb2 Dataset | nlp, dataset, multilingual, common-crawl, llm-training, fineweb | 1 | 0 |
+| [llm_training_data_curation.md](entity/llm_training_data_curation.md) | Training Data Curation for Large Language Models | llm, training-data, data-curation, deduplication, filtering, pre-training | 1 | 0 |
+| [fineweb_dataset.md](entity/fineweb_dataset.md) | FineWeb | dataset, nlp, hugging_face, web_scraping | 1 | 0 |
+| [llm_data_preparation.md](entity/llm_data_preparation.md) | LLM Data Preparation | llm, data-preparation, training, nebius | 1 | 0 |
+| [intel_falcon_shores.md](entity/intel_falcon_shores.md) | Falcon Shores | intel, gpu, ai-accelerator, datacenter, falcon-shores, canceled | 1 | 0 |
+| [intel_xe_gpu_architecture.md](entity/intel_xe_gpu_architecture.md) | Intel Xe GPU Architecture | intel, gpu, architecture, xe | 2 | 0 |
+| [intel_ponte_vecchio.md](entity/intel_ponte_vecchio.md) | Intel Ponte Vecchio | intel, gpu, hpc, datacenter | 1 | 0 |
+| [samsung_hbm3e.md](entity/samsung_hbm3e.md) | Samsung HBM3E | HBM, DRAM, Samsung, memory, high-bandwidth memory | 1 | 0 |
+| [high_bandwidth_memory_hbm.md](entity/high_bandwidth_memory_hbm.md) | High Bandwidth Memory (HBM) | hbm, high-bandwidth-memory, ai-accelerator-memory, sk-hynix, samsung, micron, hbm3e | 1 | 0 |
+| [hbm_production_scaling_2026.md](entity/hbm_production_scaling_2026.md) | HBM Production Scaling (2026) | hbm, memory, samsung, sk-hynix, ai-demand, semiconductor | 1 | 0 |
+| [state_space_models.md](entity/state_space_models.md) | State Space Models | state-space-models, deep-learning, sequence-modeling | 1 | 0 |
+| [state_space_models_mamba.md](entity/state_space_models_mamba.md) | State Space Models and Mamba | state-space-models, mamba, s4, selective-state-spaces, sequence-modeling | 3 | 0 |
+| [infiniband_vs_ethernet_ai_clusters.md](entity/infiniband_vs_ethernet_ai_clusters.md) | InfiniBand vs Ethernet for AI Clusters | networking, infiniband, ethernet, ai-clusters, gpu-interconnects, roce | 1 | 0 |
+| [high_performance_networking_ai_kubernetes.md](entity/high_performance_networking_ai_kubernetes.md) | High-Performance Networking for AI on Kubernetes | networking, infiniband, ethernet, rdma, roce, kubernetes, ai, gpu | 1 | 0 |
+| [vllm_inference_server.md](entity/vllm_inference_server.md) | vLLM Inference Server | inference-engine, serving, concurrent, open-source, pagedattention | 1 | 0 |
+| [ollama_inference_tool.md](entity/ollama_inference_tool.md) | Ollama Inference Tool | inference-engine, wrapper, local-llm, open-source | 1 | 0 |
+| [llamacpp_inference_engine.md](entity/llamacpp_inference_engine.md) | llama.cpp Inference Engine | inference-engine, cpu, gpu, open-source | 1 | 0 |
+| [vllm_high_throughput_inference_system.md](entity/vllm_high_throughput_inference_system.md) | vLLM: High-Throughput LLM Inference System | vllm, LLM-inference, model-serving, AI-engineering, open-source-AI, large-scale-serving, speculative-decoding | 1 | 0 |
+| [jax_library.md](entity/jax_library.md) | JAX (library) | jax, parallel-computing, google, machine-learning, xla | 1 | 0 |
+| [programming_tpus_in_jax.md](entity/programming_tpus_in_jax.md) | Programming TPUs in JAX | jax, tpu, google, scaling, parallelism, hardware-programming | 1 | 0 |
 | [tt_metal.md](entity/tt_metal.md)                                                                 | TT-Metal                                                                                                         | tenstorrent, ai-hardware, software-stack, tt-nn, tt-metalium                          | 1       | 0       |
-| [tensix_architecture.md](entity/tensix_architecture.md)                                           | Tensix Architecture                                                                                              | tensix, tenstorrent, matrix-multiplication, architecture                              | 1       | 0       |
+| [tensix_architecture.md](entity/tensix_architecture.md)                                           | Tensix Architecture                                                                                              | tensix, tenstorrent, risc-v, ai-acceleration, matrix-multiplication                  | 2       | 0       |
 | [tenstorrent_ai_accelerators.md](entity/tenstorrent_ai_accelerators.md)                           | Tenstorrent AI Accelerators                                                                                      | risc-v, ai-accelerator, open-source, tensix, tenstorrent                              | 5       | 0       |
-| [tensix_architecture.md](entity/tensix_architecture.md)                                           | Tensix Architecture                                                                                              | tensix, tenstorrent, risc-v, ai-acceleration, tensegrity-robotics, hardware-co-design | 2       | 0       |
 | [risc_v_vme.md](entity/risc_v_vme.md)                                                             | RISC-V Vector Matrix Extension (VME)                                                                             | risc-v, matrix-extension, specification                                               | 1       | 0       |
 | [riscv_matrix_extensions_proposal.md](entity/riscv_matrix_extensions_proposal.md)                 | RISC-V Matrix Extensions Proposal                                                                                | risc-v, matrix-extension, isa, proposal                                               | 3       | 0       |
 | [riscv_matrix_extensions.md](entity/riscv_matrix_extensions.md)                                   | RISC-V Matrix Extensions (IME, VME, AME)                                                                         | risc-v, isa-extension, matrix, ai-acceleration                                        | 1       | 0       |
@@ -82,6 +122,12 @@ Last updated: 2026-06-27 | Pages: 79 | Sources: 21
 
 | Page | Connected Entities | Status | Inbound |
 |------|--------------------|--------|---------|
+| [china_risc_v_ecosystem_strategy.md](synthesis/china_risc_v_ecosystem_strategy.md) | ai_chip_export_controls, risc_v_isas | draft | 0 |
+| [FSP_SEC2_FALCON_Relationship.md](synthesis/FSP_SEC2_FALCON_Relationship.md) | NVIDIA_GPU_Secure_Boot, NVIDIA_Confidential_Computing | draft | 0 |
+| [RLHF_aligned_open_LLMs_survey.md](synthesis/RLHF_aligned_open_LLMs_survey.md) |  | draft | 0 |
+| [dpo_vs_ppo_alignment_comparison.md](synthesis/dpo_vs_ppo_alignment_comparison.md) | direct_preference_optimization, proximal_policy_optimization_llm_alignment | draft | 0 |
+| [gpu-accelerated-pretraining-data-curation.md](synthesis/gpu-accelerated-pretraining-data-curation.md) |  | draft | 0 |
+| [llm_inference_batching_and_attention_optimization.md](synthesis/llm_inference_batching_and_attention_optimization.md) |  | draft | 0 |
 | [riscv_ai_accelerator_landscape.md](synthesis/riscv_ai_accelerator_landscape.md) | risc_v_vector_extension, tenstorrent_blackhole, sifive_intelligence_x280, rva23_profile, fpga_riscv_isa_extension_nn_inference, gemmini | draft | 0 |
 | [epic_vliw_ai_accelerator_legacy.md](synthesis/epic_vliw_ai_accelerator_legacy.md) | intel_itanium, risc_v_vector_extension | active | 1 |
 | [future_ai_hardware_trajectories.md](synthesis/future_ai_hardware_trajectories.md) | nvidia_blackwell_b200, tsmc_n3_n2_process_node, photonic_ai_accelerators, neuromorphic_computing, chiplet_architecture_advanced_packaging, hbm_high_bandwidth_memory | draft | 0 |
@@ -174,3 +220,23 @@ Last updated: 2026-06-27 | Pages: 79 | Sources: 21
 - **TinyML / MCU Inference**: → [tinyml_mcu_inference](entity/tinyml_mcu_inference.md)
 - **AI Chip Export Controls**: → [ai_chip_export_controls](entity/ai_chip_export_controls.md)
 - **Future AI Hardware Trajectories**: → [future_ai_hardware_trajectories](synthesis/future_ai_hardware_trajectories.md)
+- **RISC-V (ISA overview)**: → [risc_v](entity/risc_v.md)
+- **RISC-V Architecture**: → [risc_v_architecture](entity/risc_v_architecture.md)
+- **RISC-V 2026 Disruption**: → [risc_v_2026_disruption](entity/risc_v_2026_disruption.md)
+- **Alibaba T-Head TH1520 SoC**: → [alibaba_th1520_soc](entity/alibaba_th1520_soc.md)
+- **Alibaba XuanTie C930**: → [xuantie_c930](entity/xuantie_c930.md)
+- **Alibaba XuanTie C950**: → [alibaba_xuantie_c950](entity/alibaba_xuantie_c950.md)
+- **SOPHGO SG2380 AI Chip**: → [sophgo_sg2380](entity/sophgo_sg2380.md)
+- **Milk-V Pioneer (SG2042 workstation)**: → [milkv_pioneer](entity/milkv_pioneer.md)
+- **OpenXiangShan RISC-V Processor**: → [xiangshan_riscv_processor](entity/xiangshan_riscv_processor.md)
+- **RISC-V Summit Europe 2025**: → [risc_v_summit_europe_2025](entity/risc_v_summit_europe_2025.md)
+- **Esperanto ET-SoC-1**: → [et_soc_1](entity/et_soc_1.md)
+- **Ventana Veyron V1**: → [ventana_veyron_v1](entity/ventana_veyron_v1.md)
+- **Ventana Veyron V2**: → [ventana_veyron_v2](entity/ventana_veyron_v2.md)
+- **Veyron RISC-V Core (Ventana)**: → [veylon_risc_v_core](entity/veylon_risc_v_core.md)
+- **TVM RVV Optimization**: → [risc_v_vector_extension_tvm_optimization](entity/risc_v_vector_extension_tvm_optimization.md)
+- **TVM Hybrid-OP RISC-V P Extension**: → [tvm_hybrid_op_riscv_p_extension](entity/tvm_hybrid_op_riscv_p_extension.md)
+- **lowRISC RISC-V LLVM Backend**: → [lowrisc_riscv_llvm](entity/lowrisc_riscv_llvm.md)
+- **SpacemiT K1 (BananaPi F3)**: → [spacemit_k1_archlinux](entity/spacemit_k1_archlinux.md)
+- **China RISC-V Ecosystem Strategy**: → [china_risc_v_ecosystem_strategy](synthesis/china_risc_v_ecosystem_strategy.md)
+- **NVIDIA FSP/SEC2/Falcon RISC-V**: → [FSP_SEC2_FALCON_Relationship](synthesis/FSP_SEC2_FALCON_Relationship.md)

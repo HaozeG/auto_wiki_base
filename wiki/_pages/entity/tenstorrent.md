@@ -1,7 +1,7 @@
 ---
 cold_start: false
 created: '2026-06-26'
-inbound_links: 3
+inbound_links: 4
 scorecard:
   bridge_score: 0.8
   claim_density: 0.7
@@ -20,7 +20,7 @@ tags:
 - acquisition
 type: entity
 updated: '2026-06-26'
----
+------
 
 # Tenstorrent
 

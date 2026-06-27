@@ -1,22 +1,29 @@
 ---
-type: entity
-tags: [geopolitics, export-controls, nvidia, amd, huawei, china, semiconductor-policy]
-sources:
-  - https://www.bis.doc.gov/index.php/documents/about-bis/newsroom/press-releases/3081-2022-10-07-bis-press-release-advanced-computing-and-semiconductor-manufacturing-controls-final/file
-  - https://www.federalregister.gov/documents/2023/10/25/2023-23052/export-controls-on-advanced-computing-items-supercomputer-and-semiconductor-end-use-end-user-and
-  - https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion
-  - https://www.reuters.com/technology/nvidia-expects-2-billion-quarterly-revenue-loss-new-us-export-curbs-2023-10-17/
-created: 2026-06-26
-updated: 2026-06-26
 cold_start: false
-inbound_links: 0
+created: 2026-06-26
+inbound_links: 24
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
----
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://www.bis.doc.gov/index.php/documents/about-bis/newsroom/press-releases/3081-2022-10-07-bis-press-release-advanced-computing-and-semiconductor-manufacturing-controls-final/file
+- https://www.federalregister.gov/documents/2023/10/25/2023-23052/export-controls-on-advanced-computing-items-supercomputer-and-semiconductor-end-use-end-user-and
+- https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion
+- https://www.reuters.com/technology/nvidia-expects-2-billion-quarterly-revenue-loss-new-us-export-curbs-2023-10-17/
+tags:
+- geopolitics
+- export-controls
+- nvidia
+- amd
+- huawei
+- china
+- semiconductor-policy
+type: entity
+updated: 2026-06-26
+---------------------------------------------
 
 # AI Chip Export Controls
 

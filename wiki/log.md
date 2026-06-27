@@ -169,3 +169,167 @@ pages_updated: [wiki/index.md]
 issues_found: 1
 actions_taken: [fixed dangling_ref in intel_amx.md; set cold_start: false on 77 pages]
 deferred_for_human: []
+
+## [2026-06-26] research | JAX XLA compiler framework Google AI training TPU JIT compil
+session_id: abae4d96
+candidates_evaluated: 0
+pages_written: 0
+pipeline_rejection_rate: 0%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_abae4d96_2026-06-26.json
+
+## [2026-06-26] research | JAX XLA compiler framework Google AI training TPU JIT compil
+session_id: 9944cab6
+candidates_evaluated: 12
+pages_written: 2
+pipeline_rejection_rate: 0%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_9944cab6_2026-06-26.json
+
+## [2026-06-26] research | vLLM PagedAttention LLM inference serving SGLang TGI continu
+session_id: 8b7bf5de
+candidates_evaluated: 12
+pages_written: 5
+pipeline_rejection_rate: 17%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_8b7bf5de_2026-06-26.json
+
+## [2026-06-26] research | InfiniBand RoCE RDMA AI cluster networking 400G 800G etherne
+session_id: 815a25fe
+candidates_evaluated: 10
+pages_written: 2
+pipeline_rejection_rate: 0%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_815a25fe_2026-06-26.json
+
+## [2026-06-26] research | Mamba SSM state space model linear attention RWKV RetNet alt
+session_id: 4725ff04
+candidates_evaluated: 12
+pages_written: 2
+pipeline_rejection_rate: 0%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_4725ff04_2026-06-26.json
+
+## [2026-06-26] research | Samsung SK Hynix HBM3E HBM4 DRAM memory bandwidth AI trainin
+session_id: 1f981612
+candidates_evaluated: 11
+pages_written: 4
+pipeline_rejection_rate: 0%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_1f981612_2026-06-26.json
+
+## [2026-06-26] research | Intel Ponte Vecchio Falcon Shores GPU architecture Xe HPC
+session_id: 1e62638b
+candidates_evaluated: 9
+pages_written: 4
+pipeline_rejection_rate: 0%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_1e62638b_2026-06-26.json
+
+## [2026-06-27] research | AI training data pipeline preprocessing tokenization web cra
+session_id: 4ef3792b
+candidates_evaluated: 12
+pages_written: 5
+pipeline_rejection_rate: 0%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_4ef3792b_2026-06-26.json
+
+## [2026-06-27] research | RLHF RLAIF DPO PPO reward model alignment fine-tuning LLM sa
+session_id: f2a98ec7
+candidates_evaluated: 12
+pages_written: 5
+pipeline_rejection_rate: 0%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_f2a98ec7_2026-06-27.json
+
+## [2026-06-27] research | LoRA QLoRA parameter efficient fine-tuning PEFT adapter LLM 
+session_id: 0e3449fe
+candidates_evaluated: 11
+pages_written: 2
+pipeline_rejection_rate: 0%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_0e3449fe_2026-06-27.json
+
+## [2026-06-27] lint | retrospective
+issues_found: 1
+actions_taken: [fixed dangling_ref in intel_amx.md (second instance); set cold_start: false on 30 pages; backfilled scorecard scores on 13 pages from audit raw_response; normalized scorecard fields on 10 entity pages (removed extra gap_fill_score/contradiction_potential/weighted_total)]
+deferred_for_human: []
+
+## [2026-06-27] lint | routine
+issues_found: 3
+actions_taken: []
+deferred_for_human: [79 entity pages with inbound_links=0 in frontmatter — note: graph_stats.py wikilink-scan shows all 107 pages have inbound wikilinks; frontmatter counter is underreported due to cumulative ingest ordering (pages written before their referrers); | riscv_ai_ecosystem: referenced by 8 entity pages, no dedicated wiki page — root-level risc_v_ai_ecosystem.md confirmed as theme file (empty, intentional); synthesis page or entity page creation deferred to human; | 12 synthesis pages with inbound_links=0 — expected for synthesis pages (they are retrieval targets not link targets); no action needed]
+
+## [2026-06-27] research | Alibaba T-Head Xuantie C910 C920 RISC-V AI SoC TH1520
+session_id: fb042b87
+candidates_evaluated: 12
+pages_written: 3
+pipeline_rejection_rate: 0%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_fb042b87_2026-06-27.json
+
+## [2026-06-27] research | SOPHGO SG2042 64-core RISC-V server chip Milk-V Pioneer SG23
+session_id: ee728e2f
+candidates_evaluated: 11
+pages_written: 4
+pipeline_rejection_rate: 0%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_ee728e2f_2026-06-27.json
+
+## [2026-06-27] research | OpenXiangShan high-performance RISC-V CPU open-source China
+session_id: d4483dbd
+candidates_evaluated: 10
+pages_written: 2
+pipeline_rejection_rate: 0%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_d4483dbd_2026-06-27.json
+
+## [2026-06-27] research | Esperanto ET-SoC-1 RISC-V 1092 minion cores ML inference ASI
+session_id: 6977021d
+candidates_evaluated: 10
+pages_written: 1
+pipeline_rejection_rate: 0%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_6977021d_2026-06-27.json
+
+## [2026-06-27] research | Ventana Veyron V1 V2 server RISC-V datacenter CMC interconne
+session_id: eae8140a
+candidates_evaluated: 10
+pages_written: 3
+pipeline_rejection_rate: 0%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_eae8140a_2026-06-27.json
+
+## [2026-06-27] research | NVIDIA Falcon RISC-V microcontroller GPU security PMU GSP
+session_id: 7b7cb596
+candidates_evaluated: 10
+pages_written: 1
+pipeline_rejection_rate: 0%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_7b7cb596_2026-06-27.json
+
+## [2026-06-27] research | TVM Apache RISC-V RVV vectorization edge deployment BYOC
+session_id: 954844ca
+candidates_evaluated: 10
+pages_written: 2
+pipeline_rejection_rate: 0%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_954844ca_2026-06-27.json
+
+## [2026-06-27] research | LLVM RISC-V backend RVV auto-vectorization codegen compiler
+session_id: 86a982f2
+candidates_evaluated: 10
+pages_written: 2
+pipeline_rejection_rate: 10%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_86a982f2_2026-06-27.json
+
+## [2026-06-27] research | China RISC-V AI sovereign chip strategy export controls SOPH
+session_id: e5573066
+candidates_evaluated: 9
+pages_written: 3
+pipeline_rejection_rate: 0%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_e5573066_2026-06-27.json
+
+## [2026-06-27] research | SpacemiT K1 8-core RVV RISC-V SoC NPU BananaPi F3
+session_id: 91d32686
+candidates_evaluated: 8
+pages_written: 1
+pipeline_rejection_rate: 12%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_91d32686_2026-06-27.json
+
+## [2026-06-27] research | RISC-V open-source silicon sovereign AI chip strategy Wester
+session_id: 12aa5970
+candidates_evaluated: 8
+pages_written: 3
+pipeline_rejection_rate: 0%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_12aa5970_2026-06-27.json
+
+## [2026-06-27] ingest | RISC-V AI multi-cluster research (8 sessions)
+pages_created: [xuantie_c930, alibaba_th1520_soc, alibaba_xuantie_c950, milkv_pioneer, sophgo_sg2380, risc_v_summit_europe_2025, xiangshan_riscv_processor, et_soc_1, ventana_veyron_v1, ventana_veyron_v2, veylon_risc_v_core, risc_v_vector_extension_tvm_optimization, tvm_hybrid_op_riscv_p_extension, lowrisc_riscv_llvm, risc_v_architecture, alibaba_xuantie_c950, spacemit_k1_archlinux, risc_v_2026_disruption, risc_v, FSP_SEC2_FALCON_Relationship (synthesis), china_risc_v_ecosystem_strategy (synthesis)]
+pages_updated: [ai_chip_export_controls]
+pages_deferred: [andes_technology_nx27v (timeout), western_digital_swerv (timeout), zephyr_rtos_riscv_ml (not attempted), iree_riscv (not attempted)]
+cold_start: false
+notes: 4 duplicate pages removed (milk-v-pioneer.md, milk_v_pioneer.md, alibaba_th1520_risc_v_soc.md, riscv_vector_extension.md); index cleaned of stale/duplicate rows; 8 orchestrator sessions across China RISC-V AI, Milk-V/SOPHGO, OpenXiangShan, Esperanto/Ventana, NVIDIA Falcon RISC-V, TVM/LLVM toolchain clusters
