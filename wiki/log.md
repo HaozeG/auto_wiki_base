@@ -99,3 +99,75 @@ pages_created: [synthesis/riscv_standardization_software_ecosystem]
 pages_updated: []
 pages_deferred: []
 cold_start: true
+
+## [2026-06-27] ingest | web research — WD SweRV Cores
+pages_created: [wd_swerv_cores]
+pages_updated: []
+pages_deferred: []
+cold_start: true
+
+## [2026-06-27] ingest | web research — T-Head TH1520 SoC
+pages_created: [thead_th1520]
+pages_updated: []
+pages_deferred: []
+cold_start: true
+
+## [2026-06-27] ingest | web research — Microchip PolarFire SoC
+pages_created: [microchip_polarfire_soc]
+pages_updated: []
+pages_deferred: []
+cold_start: true
+
+## [2026-06-27] ingest | web research — Milk-V Pioneer and Duo
+pages_created: [milkv_pioneer_duo]
+pages_updated: []
+pages_deferred: []
+cold_start: true
+
+## [2026-06-27] ingest | web research — SiFive HiFive Boards
+pages_created: [sifive_hifive_boards]
+pages_updated: []
+pages_deferred: []
+cold_start: true
+
+## [2026-06-27] ingest | web research — BeagleV-Ahead
+pages_created: [beaglev_ahead]
+pages_updated: []
+pages_deferred: []
+cold_start: true
+
+## [2026-06-27] ingest | web research — LLM Inference on RISC-V
+pages_created: [llm_inference_riscv]
+pages_updated: []
+pages_deferred: []
+cold_start: true
+
+## [2026-06-27] ingest | web research — Hwacha Vector Accelerator
+pages_created: [hwacha_vector_accelerator]
+pages_updated: []
+pages_deferred: []
+cold_start: true
+
+## [2026-06-27] ingest | web research — Chipyard SoC Framework
+pages_created: [chipyard_soc_framework]
+pages_updated: []
+pages_deferred: []
+cold_start: true
+
+## [2026-06-27] ingest | web research — FireSim FPGA Simulation
+pages_created: [firesim_fpga_simulation]
+pages_updated: []
+pages_deferred: []
+cold_start: true
+
+## [2026-06-27] ingest | web research — Sparse Computation on RISC-V
+pages_created: [riscv_sparse_computation]
+pages_updated: []
+pages_deferred: []
+cold_start: true
+
+## [2026-06-27] ingest | web research — RISC-V Edge AI to LLM Inference (synthesis)
+pages_created: [synthesis/riscv_edge_ai_llm_inference]
+pages_updated: []
+pages_deferred: []
+cold_start: true

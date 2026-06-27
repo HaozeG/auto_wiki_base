@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-06-27 | Pages: 36 | Sources: 95
+Last updated: 2026-06-27 | Pages: 48 | Sources: 139
 
 ## Entity Pages
 
@@ -40,6 +40,17 @@ Last updated: 2026-06-27 | Pages: 36 | Sources: 95
 | [sifive_p870_x390](entity/sifive_p870_x390.md) | SiFive 6-wide OoO RVA23 CPU (18 SPECint2k/MHz) paired with 1024-bit VLEN X390 NPU; up to 32+8 core SoCs | risc-v, processor, AI-acceleration, NPU, SiFive | 4 | 0 |
 | [openxiangshan_difftest_nemu](entity/openxiangshan_difftest_nemu.md) | NEMU ISA emulator + Difftest co-simulation framework for XiangShan RISC-V processor verification | risc-v, verification, co-simulation, NEMU, difftest | 4 | 0 |
 | [canaan_kendryte_k230](entity/canaan_kendryte_k230.md) | K230: dual C908 RISC-V (1.6GHz RVV 1.0 + 800MHz), 6 TOPS KPU; 341 FPS/TOPS YoloV5S | risc-v, AI-accelerator, edge-AI, SoC, canaan | 4 | 0 |
+| [wd_swerv_cores](entity/wd_swerv_cores.md) | Open-source WD RISC-V cores: EH1 (2-way superscalar), EH2 (dual-thread, 6.3 CM/MHz, 16nm), EL2 (4-stage, 3.6 CM/MHz) | risc-v, open-source, embedded, storage, chips-alliance | 4 | 0 |
+| [thead_th1520](entity/thead_th1520.md) | T-Head TH1520: 4× C910 RISC-V at 2 GHz, 4 TOPS NPU, 50 GFLOPS GPU, TSMC 12nm; powers Lichee Pi 4A and BeagleV-Ahead | risc-v, SoC, AI-acceleration, NPU, alibaba | 4 | 0 |
+| [microchip_polarfire_soc](entity/microchip_polarfire_soc.md) | PolarFire SoC: 5-core RV64GC hard CPU + 460K LE FPGA fabric, 50% lower power, Mi-V AI ecosystem | risc-v, FPGA, SoC, edge-AI, mi-v | 4 | 0 |
+| [milkv_pioneer_duo](entity/milkv_pioneer_duo.md) | Milk-V Pioneer (SG2042: 64-core C920, 128 GB DDR4) and Duo ($9 CV1800B dual C906, 0.5 TOPS) RISC-V boards | risc-v, developer-board, SG2042, CV1800B, sophgo | 4 | 0 |
+| [sifive_hifive_boards](entity/sifive_hifive_boards.md) | SiFive HiFive Unleashed (FU540, first Linux RISC-V board, 2018) and Unmatched (FU740, PCIe, mini-ITX, 2021) | risc-v, developer-board, linux, SiFive, FU540, FU740 | 4 | 0 |
+| [beaglev_ahead](entity/beaglev_ahead.md) | BeagleBoard TH1520-based RISC-V SBC, 4 TOPS NPU, BeagleBone cape compatible, under $150, July 2023 | risc-v, SBC, TH1520, beagleboard, edge-AI | 4 | 0 |
+| [llm_inference_riscv](entity/llm_inference_riscv.md) | LLM inference on RISC-V: llama.cpp RVV support, V-Seek 4.32 token/s Llama 8B on SG2042, 2.9–3× speedup | risc-v, LLM, inference, llama.cpp, SG2042, benchmark | 4 | 0 |
+| [hwacha_vector_accelerator](entity/hwacha_vector_accelerator.md) | UC Berkeley Hwacha: explicitly decoupled RISC-V vector accelerator, 45nm 16.7 DP-GFLOPS/W, RVV predecessor | risc-v, vector-processor, UC-Berkeley, research, history | 4 | 0 |
+| [chipyard_soc_framework](entity/chipyard_soc_framework.md) | UC Berkeley open-source agile RISC-V SoC framework: Rocket, BOOM, Gemmini, Ara, FireSim, Hammer in Chisel | risc-v, SoC-generator, open-source, Chisel, UC-Berkeley | 4 | 0 |
+| [firesim_fpga_simulation](entity/firesim_fpga_simulation.md) | UC Berkeley FPGA-accelerated cycle-accurate RISC-V simulation on AWS EC2 F1; SPECInt2017 on Rocket in ~1 day on 10 FPGAs | risc-v, simulation, FPGA, AWS, cycle-accurate | 4 | 0 |
+| [riscv_sparse_computation](entity/riscv_sparse_computation.md) | Sparse inference on RISC-V via RVV mask registers; structured-sparse MatMul 25–33% faster than dense RVV kernels | risc-v, sparsity, RVV, neural-networks, optimization | 4 | 0 |
 
 ## Synthesis Pages
 
@@ -48,6 +59,7 @@ Last updated: 2026-06-27 | Pages: 36 | Sources: 95
 | [riscv_open_ai_acceleration](synthesis/riscv_open_ai_acceleration.md) | risc_v_vector_extension, alibaba_xuantie_c950, alibaba_xuantie_c910_c920, esperanto_et_soc1, tenstorrent_tt_ascalon, sifive_intelligence_x280, ventana_veyron_v2, tvm_riscv_backend | draft | 0 |
 | [riscv_open_source_ai_stack](synthesis/riscv_open_source_ai_stack.md) | gemmini, ara_vector_processor, mlir_riscv_backend, iree_riscv, tvm_riscv_backend, risc_v_vector_extension, risc_v_p_extension, boom_riscv, andes_ax45mp_nx27v, xiangshan_riscv | draft | 0 |
 | [riscv_standardization_software_ecosystem](synthesis/riscv_standardization_software_ecosystem.md) | risc_v_profiles_rva, risc_v_vector_extension, risc_v_matrix_extension, gnu_toolchain_riscv_vector, muriscv_nn, onnx_runtime_riscv, iree_riscv, tvm_riscv_backend, openxiangshan_difftest_nemu | draft | 0 |
+| [riscv_edge_ai_llm_inference](synthesis/riscv_edge_ai_llm_inference.md) | muriscv_nn, riscv_zve_sub_extensions, canaan_kendryte_k510_k230, pulp_platform, onnx_runtime_riscv, llm_inference_riscv, milkv_pioneer_duo, riscv_sparse_computation | draft | 0 |
 
 ## Concept Index
 
@@ -113,3 +125,18 @@ Last updated: 2026-06-27 | Pages: 36 | Sources: 95
 - **NEMU (NJU Emulator)**: → [openxiangshan_difftest_nemu](entity/openxiangshan_difftest_nemu.md)
 - **Difftest co-simulation**: → [openxiangshan_difftest_nemu](entity/openxiangshan_difftest_nemu.md)
 - **Canaan Kendryte K230 (dedicated)**: → [canaan_kendryte_k230](entity/canaan_kendryte_k230.md)
+- **SweRV EH1 / EH2 / EL2**: → [wd_swerv_cores](entity/wd_swerv_cores.md)
+- **T-Head TH1520**: → [thead_th1520](entity/thead_th1520.md)
+- **Lichee Pi 4A**: → [thead_th1520](entity/thead_th1520.md)
+- **PolarFire SoC / Mi-V**: → [microchip_polarfire_soc](entity/microchip_polarfire_soc.md)
+- **VectorBlox Accelerator SDK**: mentioned in [microchip_polarfire_soc](entity/microchip_polarfire_soc.md) — *no dedicated page*
+- **Milk-V Pioneer / Milk-V Duo**: → [milkv_pioneer_duo](entity/milkv_pioneer_duo.md)
+- **SOPHGO SG2042**: → [milkv_pioneer_duo](entity/milkv_pioneer_duo.md)
+- **HiFive Unleashed / HiFive Unmatched**: → [sifive_hifive_boards](entity/sifive_hifive_boards.md)
+- **SiFive FU540 / FU740**: → [sifive_hifive_boards](entity/sifive_hifive_boards.md)
+- **BeagleV-Ahead**: → [beaglev_ahead](entity/beaglev_ahead.md)
+- **llama.cpp RISC-V / V-Seek**: → [llm_inference_riscv](entity/llm_inference_riscv.md)
+- **Hwacha**: → [hwacha_vector_accelerator](entity/hwacha_vector_accelerator.md)
+- **Chipyard**: → [chipyard_soc_framework](entity/chipyard_soc_framework.md)
+- **FireSim / MIDAS**: → [firesim_fpga_simulation](entity/firesim_fpga_simulation.md)
+- **Sparse RVV / rv-sparse**: → [riscv_sparse_computation](entity/riscv_sparse_computation.md)
