@@ -20,7 +20,7 @@ tags:
 - china
 type: entity
 updated: '2026-06-27'
-------
+---
 
 # Alibaba TH1520 SoC
 

@@ -371,3 +371,74 @@ audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/res
 issues_found: 0
 actions_taken: [set cold_start: false on 5 pages from round 3: core_v_cv32e40p, cv32e40p, esp32-p4_soc, cv32e40p_riscv_core, pulp_platform]
 deferred_for_human: []
+
+## [2026-06-27] research | Nuclei System Technology RISC-V IP N-series U-series cores N
+session_id: 7b25277f
+candidates_evaluated: 12
+pages_written: 4
+pipeline_rejection_rate: 17%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_7b25277f_2026-06-27.json
+
+## [2026-06-27] research | RISC-V GCC LLVM toolchain ecosystem OS distro software matur
+session_id: 921196cc
+candidates_evaluated: 10
+pages_written: 2
+pipeline_rejection_rate: 10%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_921196cc_2026-06-27.json
+
+## [2026-06-27] research | Allwinner D1 RISC-V Linux SoC XuanTie C906 Nezha MangoPi mas
+session_id: 644df6c8
+candidates_evaluated: 12
+pages_written: 2
+pipeline_rejection_rate: 8%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_644df6c8_2026-06-27.json
+
+## [2026-06-27] research | T-Head XuanTie C906 C910 RISC-V core Alibaba Allwinner D1 li
+session_id: be06aca2
+candidates_evaluated: 11
+pages_written: 3
+pipeline_rejection_rate: 9%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_be06aca2_2026-06-27.json
+
+## [2026-06-27] research | Apache TVM BYOC bring-your-own-codegen RISC-V custom acceler
+session_id: 826e5636
+candidates_evaluated: 9
+pages_written: 3
+pipeline_rejection_rate: 11%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_826e5636_2026-06-27.json
+
+## [2026-06-27] research | SOPHGO CV1800B Milk-V Duo RISC-V ARM hybrid SoC TDL SDK edge
+session_id: ad06d773
+candidates_evaluated: 11
+pages_written: 4
+pipeline_rejection_rate: 18%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_ad06d773_2026-06-27.json
+
+## [2026-06-27] research | RISC-V robotics ROS2 real-time ML inference BeagleV SiFive l
+session_id: 22115c36
+candidates_evaluated: 12
+pages_written: 4
+pipeline_rejection_rate: 8%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_22115c36_2026-06-27.json
+
+## [2026-06-27] research | Nuclei System Technology RISC-V IP N200 N300 NSDK Gigadevice
+session_id: e2b83a69
+candidates_evaluated: 12
+pages_written: 4
+pipeline_rejection_rate: 8%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_e2b83a69_2026-06-27.json
+
+## [2026-06-27] ingest | RISC-V AI dev board ecosystem synthesis + index cleanup
+pages_created: [synthesis/riscv_ai_developer_platform_landscape]
+pages_updated: [wiki/index.md]
+pages_deferred: []
+cleanup: removed off-topic pages msys2.md and mingw_w64_prebuilt_toolchains.md (Windows toolchain pages with no RISC-V AI relevance)
+cold_start: false
+notes: |
+  Sessions run in this batch (5 concurrent due to prior invocations):
+  - Nuclei System Technology: nuclei_system_technology, nuclei_processor_ip_portfolio, nuclei_sdk, gigadevice_semiconductor/gd32
+  - SOPHGO CV1800B / Milk-V Duo: milk-v-duo, milkv_duo_development_board, riscv_ros2, sifive_ai_ml_software_stack
+  - Allwinner D1 / XuanTie: allwinner_d1, xuantie_c906, xuantie_risc_v_cores, mangopi_nezha_mq/mq1
+  - RISC-V robotics: riscv_ros2, sifive_xnnpack_riscv_vector_integration, sifive_ai_ml_software_stack, risc_v_vector_extension_rvv_1_0
+  - TVM BYOC / toolchain: compass_apache_tvm, tvm_byoc, generation_of_compiler_backends..., tvm_hybrid_op_riscv_p_extension
+  Synthesis page connects dev board tier ladder: D1/MangoPi → VisionFive2 → SpacemiT K1 → Milk-V Pioneer → SG2380/Veyron → Blackhole

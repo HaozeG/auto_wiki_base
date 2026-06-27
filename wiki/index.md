@@ -1,11 +1,38 @@
 # Wiki Index
 
-Last updated: 2026-06-27 | Pages: 140 | Sources: 19
+Last updated: 2026-06-27 | Pages: 179 | Sources: 19
 
 ## Entity Pages
 
 | Page                                                                                              | Summary                                                                                                          | Tags                                                                                  | Sources | Inbound |
 | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------- | ------- |
+| [gigadevice_semiconductor.md](entity/gigadevice_semiconductor.md) | GigaDevice Semiconductor Inc. | semiconductors, microcontrollers, embedded-systems, gui, partnership, flash-memory | 3 | 0 |
+| [wormhole_tensix_processor.md](entity/wormhole_tensix_processor.md) | Wormhole Tensix Processor | ai-accelerator, tenstorrent, tensix | 1 | 0 |
+| [gigadevice_gd32_mcus.md](entity/gigadevice_gd32_mcus.md) | GigaDevice GD32 Microcontrollers | microcontrollers, gigadevice, arm-cortex-m, risc-v | 1 | 0 |
+| [riscv_ros2.md](entity/riscv_ros2.md) | RISC-V ROS2 Docker Build System | riscv, ros2, slam, docker, cross-compilation, milk-v-meles | 1 | 0 |
+| [sifive_ai_ml_software_stack.md](entity/sifive_ai_ml_software_stack.md) | SiFive AI/ML Software Stack | RISC-V, Machine Learning, SiFive, LLM | 1 | 0 |
+| [risc_v_vector_extension_rvv_1_0.md](entity/risc_v_vector_extension_rvv_1_0.md) | RISC-V Vector Extension (RVV) 1.0 | risc-v, vector-extension, ai, sifive, vlsi, open-source-isa | 1 | 0 |
+| [sifive_xnnpack_riscv_vector_integration.md](entity/sifive_xnnpack_riscv_vector_integration.md) | SiFive XNNPACK RISC-V Vector Integration | risc-v, xnnpack, ai-inference, sifive, machine-learning | 1 | 0 |
+| [milkv_duo_development_board.md](entity/milkv_duo_development_board.md) | Milk-V Duo Development Board | Milk-V Duo, Sophgo, CV1800B, embedded development, RISC-V, AIoT, TPU | 1 | 0 |
+| [generation_of_compiler_backends_from_formal_models_of_hardware.md](entity/generation_of_compiler_backends_from_formal_models_of_hardware.md) | Generation of Compiler Backends from Formal Models of Hardware | compiler, backend, code generation, formal models, hardware, VEGA, BYOC | 1 | 0 |
+| [compass_apache_tvm.md](entity/compass_apache_tvm.md) | Compass Apache TVM | compiler, neural-network, open-source, arm-china, tvm | 3 | 0 |
+| [tvm_byoc.md](entity/tvm_byoc.md) | TVM BYOC | tvm, deep-learning-compiler, code-generation, byoc | 2 | 0 |
+| [xuantie_c906.md](entity/xuantie_c906.md) | XuanTie C906 | risc-v, allwinner, alibaba, t-head | 1 | 0 |
+| [allwinner_d1.md](entity/allwinner_d1.md) | Allwinner D1 | allwinner, risc-v, soc, xuantie-c906 | 1 | 0 |
+| [xuantie_risc_v_cores.md](entity/xuantie_risc_v_cores.md) | XuanTie RISC-V Cores | risc-v, open-source, processor-core, alibaba, t-head | 1 | 0 |
+| [mangopi_nezha_mq.md](entity/mangopi_nezha_mq.md) |  | risc-v, sbc, allwinner, mangopi | 1 | 0 |
+| [mangopi_mq1.md](entity/mangopi_mq1.md) | MangoPi-MQ1 | risc-v, allwinner, single-board-computer, open-hardware | 1 | 0 |
+| [nuclei_system_technology.md](entity/nuclei_system_technology.md) | Nuclei System Technology | RISC-V, China, semiconductor, SoC design, IP core | 1 | 0 |
+| [nuclei_processor_ip_portfolio.md](entity/nuclei_processor_ip_portfolio.md) | Nuclei Processor IP Portfolio | risc-v, processor-ip, nuclei, chinese-semiconductor, cpu-ip | 2 | 0 |
+| [nuclei_sdk.md](entity/nuclei_sdk.md) | Nuclei Software Development Kit (Nuclei SDK) | risc-v, sdk, nuclei, embedded, rtos | 1 | 0 |
+| [core_v_cv32e40p.md](entity/core_v_cv32e40p.md) | CORE-V CV32E40P | risc-v, open-hardware, openhw-group, pulp | 1 | 0 |
+| [pulp_platform.md](entity/pulp_platform.md) | PULP Platform | risc-v, ultra-low-power, iot, open-source, parallel-computing | 1 | 0 |
+| [pulp_platform.md](entity/pulp_platform.md) | PULP Platform | riscv, open-source, pulp, low-power | 1 | 0 |
+| [esp32-p4_soc.md](entity/esp32-p4_soc.md) | ESP32-P4 SoC | espressif, soc, risc-v, embedded, hmi | 1 | 0 |
+| [cv32e40p_riscv_core.md](entity/cv32e40p_riscv_core.md) | CV32E40P RISC-V Core | RISC-V, CORE-V, CV32E40P, OpenHW Group, PULP, processor core | 1 | 0 |
+| [pulp_platform.md](entity/pulp_platform.md) | PULP (Parallel Ultra-Low-Power Processing Platform) | RISC-V, ultra-low-power, open-source hardware, edge AI, ETH Zurich | 2 | 0 |
+| [cv32e40p.md](entity/cv32e40p.md) | CV32E40P | riscv, core-v, open-source-hardware, pulp-platform, openhw-group | 3 | 0 |
+| [pulp_platform.md](entity/pulp_platform.md) | PULP Platform | open-source, risc-v, low-power, iot, eth-zurich, university-of-bologna | 1 | 0 |
 | [andes_andescore_nx27v.md](entity/andes_andescore_nx27v.md) | Andes Technology AndesCore NX27V RISC-V vector IP core for AI SoC integration, RVV 1.0 up to 512-bit VLEN | risc-v, ip-core, vector, ai-soc, andes-technology | 1 | 0 |
 | [western_digital_swerv_core.md](entity/western_digital_swerv_core.md) | WD SweRV EH1/EH2/EL2 open-source RISC-V cores, Apache 2.0, CHIPS Alliance, 4.9 CoreMark/MHz | risc-v, open-source, cpu, storage, chips-alliance | 1 | 0 |
 | [marvell_octeon_10_dpu.md](entity/marvell_octeon_10_dpu.md) | Marvell OCTEON 10 CN10K DPU with hybrid RISC-V + ARM cores, 400GbE, ML inference accelerator | risc-v, dpu, smartnic, network-ai, marvell | 1 | 0 |
@@ -133,6 +160,7 @@ Last updated: 2026-06-27 | Pages: 140 | Sources: 19
 
 | Page | Connected Entities | Status | Inbound |
 |------|--------------------|--------|---------|
+| [riscv_ai_developer_platform_landscape.md](synthesis/riscv_ai_developer_platform_landscape.md) | milkv_pioneer, spacemit_k1_soc, starfive_visionfive2_jh7110, tenstorrent_blackhole, ventana_veyron_v1, sophgo_sg2380, allwinner_d1, mangopi_nezha_mq, nuclei_system_technology, xuantie_c906 | active | 0 |
 | [riscv_ai_edge_mcu_to_soc.md](synthesis/riscv_ai_edge_mcu_to_soc.md) | spacemit_k1_soc, starfive_visionfive2_jh7110, andes_andescore_nx27v, western_digital_swerv_core, riscv_p_extension_dsp, riscv_zvfh_extension, iree_mlir_compiler, zephyr_rtos_tflite_micro | active | 0 |
 | [open_source_riscv_ai_silicon.md](synthesis/open_source_riscv_ai_silicon.md) | lowrisc_opentitan, western_digital_swerv_core, starfive_visionfive2_jh7110, marvell_octeon_10_dpu, gemmini, risc_v_architecture, iree_mlir_compiler | active | 0 |
 | [china_risc_v_ecosystem_strategy.md](synthesis/china_risc_v_ecosystem_strategy.md) | ai_chip_export_controls, risc_v_isas | draft | 0 |
@@ -243,6 +271,18 @@ Last updated: 2026-06-27 | Pages: 140 | Sources: 19
 - **Milk-V Pioneer (SG2042 workstation)**: → [milkv_pioneer](entity/milkv_pioneer.md)
 - **OpenXiangShan RISC-V Processor**: → [xiangshan_riscv_processor](entity/xiangshan_riscv_processor.md)
 - **RISC-V Summit Europe 2025**: → [risc_v_summit_europe_2025](entity/risc_v_summit_europe_2025.md)
+- **Nuclei System Technology**: → [nuclei_system_technology](entity/nuclei_system_technology.md)
+- **Nuclei Processor IP Portfolio (N200/N300/NA900)**: → [nuclei_processor_ip_portfolio](entity/nuclei_processor_ip_portfolio.md)
+- **Nuclei SDK (NSDK)**: → [nuclei_sdk](entity/nuclei_sdk.md)
+- **GigaDevice Semiconductor**: → [gigadevice_semiconductor](entity/gigadevice_semiconductor.md)
+- **GigaDevice GD32 MCUs**: → [gigadevice_gd32_mcus](entity/gigadevice_gd32_mcus.md)
+- **Allwinner D1 (D1-H, XuanTie C906 SoC)**: → [allwinner_d1](entity/allwinner_d1.md)
+- **XuanTie C906 (T-Head RISC-V core)**: → [xuantie_c906](entity/xuantie_c906.md)
+- **XuanTie RISC-V Cores (C906/C910/C920)**: → [xuantie_risc_v_cores](entity/xuantie_risc_v_cores.md)
+- **MangoPi Nezha / MangoPi MQ**: → [mangopi_nezha_mq](entity/mangopi_nezha_mq.md)
+- **MangoPi MQ1**: → [mangopi_mq1](entity/mangopi_mq1.md)
+- **Milk-V Duo (CV1800B)**: → [milk-v-duo](entity/milk-v-duo.md)
+- **RISC-V AI Developer Platform Landscape**: → [riscv_ai_developer_platform_landscape](synthesis/riscv_ai_developer_platform_landscape.md)
 - **Esperanto ET-SoC-1**: → [et_soc_1](entity/et_soc_1.md)
 - **Ventana Veyron V1**: → [ventana_veyron_v1](entity/ventana_veyron_v1.md)
 - **Ventana Veyron V2**: → [ventana_veyron_v2](entity/ventana_veyron_v2.md)

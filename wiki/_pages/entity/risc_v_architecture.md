@@ -20,7 +20,7 @@ tags:
 - intel
 type: entity
 updated: '2026-06-27'
-------
+---
 
 # RISC-V Architecture
 

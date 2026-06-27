@@ -1,7 +1,7 @@
 ---
 cold_start: false
 created: 2026-06-26
-inbound_links: 26
+inbound_links: 40
 scorecard:
   bridge_score: null
   claim_density: null
@@ -23,7 +23,7 @@ tags:
 - semiconductor-policy
 type: entity
 updated: 2026-06-26
----------------------------------------------------
+---------------------------------------------------------------------------------------------
 
 # AI Chip Export Controls
 

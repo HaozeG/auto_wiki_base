@@ -20,7 +20,7 @@ tags:
 - ai-acceleration
 type: entity
 updated: '2026-06-26'
-------
+---
 
 # RISC-V Matrix Extensions (IME, VME, AME)
 

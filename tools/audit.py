@@ -93,6 +93,10 @@ class AuditLog:
         self._summary["candidates_evaluated"] = count
         self._flush()
 
+    def log_escalation(self, at_candidate: int) -> None:
+        self._summary["depth_escalated_at"] = at_candidate
+        self._flush()
+
     def _flush(self) -> None:
         data = {
             "session_id": self._session_id,

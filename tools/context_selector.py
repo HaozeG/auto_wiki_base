@@ -51,8 +51,9 @@ def _qmd_search(query_text: str, top: int = 20) -> list[tuple[str, float]]:
     Returns empty list if qmd is unavailable or returns no results.
     """
     try:
+        safe_query = query_text[:500].replace("\x00", "")
         result = subprocess.run(
-            ["qmd", "search", query_text[:500], "--index", str(_WIKI_PAGES_DIR), "--top", str(top)],
+            ["qmd", "search", safe_query, "--index", str(_WIKI_PAGES_DIR), "--top", str(top)],
             capture_output=True,
             text=True,
             timeout=30,

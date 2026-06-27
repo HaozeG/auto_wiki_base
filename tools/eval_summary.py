@@ -148,6 +148,28 @@ def layer1_check(path: Path, page_type: str, verbose: bool = False) -> dict:
                 f"WORD_COUNT_HIGH: {word_count} words (max {max_words}) in target block"
             )
 
+    # Hard rejection: sources list must be non-empty
+    if not fm.get("sources"):
+        violations.append("EMPTY_SOURCES: frontmatter 'sources' list is empty or missing")
+
+    # Hard rejection: entity pages must have at least 3 independently verifiable claims
+    if page_type == "entity":
+        claims_match = re.search(r"## Key Claims\s*\n(.*?)(?:\n## |\Z)", body, re.DOTALL)
+        if claims_match:
+            claims_text = claims_match.group(1).strip()
+            # Count non-empty bullet/numbered list items as individual claims
+            claim_lines = [
+                l.strip() for l in claims_text.splitlines()
+                if re.match(r"^[-*\d]", l.strip()) and len(l.strip()) > 10
+            ]
+            if len(claim_lines) < 3:
+                violations.append(
+                    f"TOO_FEW_CLAIMS: only {len(claim_lines)} claim(s) found in ## Key Claims "
+                    f"(minimum 3 required)"
+                )
+        else:
+            violations.append("MISSING_KEY_CLAIMS: no '## Key Claims' section found")
+
     result = {"pass": len(violations) == 0, "violations": violations}
     if verbose:
         print(f"[Layer 1] {'PASS' if result['pass'] else 'FAIL'}")

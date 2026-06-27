@@ -129,6 +129,100 @@ def fetch_resource(url: str, retries: int = 2) -> str | None:
 
 
 # ---------------------------------------------------------------------------
+# Source-aware content extraction
+# ---------------------------------------------------------------------------
+
+_ARXIV_ABS_RE = re.compile(r"arxiv\.org/abs/([\w.]+)")
+_GH_REPO_RE   = re.compile(r"github\.com/([^/]+)/([^/?#]+)/?(?:[?#].*)?$")
+_GH_PR_RE     = re.compile(r"github\.com/([^/]+)/([^/]+)/pull/(\d+)")
+
+
+def _fetch_arxiv(url: str) -> str | None:
+    """For arxiv.org/abs/<id>: fetch abstract + attempt full HTML body."""
+    m = _ARXIV_ABS_RE.search(url)
+    if not m:
+        return None
+    arxiv_id = m.group(1)
+    abs_html = fetch_resource(f"https://arxiv.org/abs/{arxiv_id}")
+    abstract = ""
+    if abs_html:
+        bq = re.search(r'class="abstract[^"]*"[^>]*>(.*?)</blockquote>', abs_html, re.DOTALL)
+        if bq:
+            abstract = re.sub(r"<[^>]+>", " ", bq.group(1)).strip()
+    html_content = fetch_resource(f"https://arxiv.org/html/{arxiv_id}")
+    if html_content and len(html_content) > 1000:
+        stripped = re.sub(r"<[^>]+>", " ", html_content)
+        stripped = re.sub(r"\s{2,}", " ", stripped).strip()
+        return f"[arXiv abstract]\n{abstract}\n\n[Paper body excerpt]\n{stripped[:5000]}"
+    return abstract or None
+
+
+def _fetch_github_readme(owner: str, repo: str) -> str | None:
+    """Fetch plain-text README from raw.githubusercontent.com."""
+    for branch in ("HEAD", "main", "master"):
+        raw_url = f"https://raw.githubusercontent.com/{owner}/{repo}/{branch}/README.md"
+        content = fetch_resource(raw_url)
+        if content and len(content.strip()) > 100:
+            return f"[GitHub README: {owner}/{repo}]\n\n{content[:6000]}"
+    return None
+
+
+def _fetch_github_pr(owner: str, repo: str, pr_num: str) -> str | None:
+    """Fetch PR title and description via GitHub REST API."""
+    import json as _json
+    import os as _os
+    api_url = f"https://api.github.com/repos/{owner}/{repo}/pulls/{pr_num}"
+    headers = {
+        "Accept": "application/vnd.github+json",
+        "User-Agent": "LLM-Wiki-Harness/1.0",
+    }
+    token = _os.environ.get("GITHUB_TOKEN")
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    try:
+        req = urllib.request.Request(api_url, headers=headers)
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            data = _json.loads(resp.read().decode())
+        title = data.get("title", "")
+        body  = data.get("body") or "(no description)"
+        base  = data.get("base", {}).get("ref", "")
+        head  = data.get("head", {}).get("ref", "")
+        return (
+            f"[GitHub PR #{pr_num}: {title}]\n"
+            f"Merges {head} → {base}\n\n"
+            f"{body[:4000]}"
+        )
+    except Exception as e:
+        logger.warning("_fetch_github_pr failed for %s/%s#%s: %s", owner, repo, pr_num, e)
+        return None
+
+
+def _fetch_github(url: str) -> str | None:
+    """Dispatch to PR or README fetch based on URL shape."""
+    m = _GH_PR_RE.search(url)
+    if m:
+        return _fetch_github_pr(*m.groups())
+    m = _GH_REPO_RE.search(url)
+    if m:
+        return _fetch_github_readme(*m.groups())
+    return None
+
+
+def _fetch_smart(url: str, retries: int = 2) -> str | None:
+    """Source-aware fetch: special handling for arXiv and GitHub, generic fallback."""
+    lower = url.lower()
+    if "arxiv.org/abs/" in lower:
+        result = _fetch_arxiv(url)
+        if result:
+            return result
+    if "github.com/" in lower:
+        result = _fetch_github(url)
+        if result:
+            return result
+    return fetch_resource(url, retries=retries)
+
+
+# ---------------------------------------------------------------------------
 # Subagent API call
 # ---------------------------------------------------------------------------
 
@@ -212,8 +306,8 @@ def _write_page(draft: dict) -> Path:
     today = _now_date()
     fm.setdefault("type", page_type)
     fm.setdefault("created", today)
-    fm.setdefault("updated", today)
-    fm.setdefault("cold_start", not _wiki_is_mature())
+    fm["updated"] = today          # always reflect write date
+    fm["cold_start"] = True        # new pages always cold until retrospective lint clears them
     fm.setdefault("inbound_links", 0)
 
     fm_yaml = yaml.dump(fm, default_flow_style=False, allow_unicode=True)
@@ -307,6 +401,34 @@ def _run_graph_stats() -> None:
     )
     if result.stdout:
         print(result.stdout.strip())
+
+
+def _apply_scorecard_to_draft(draft: dict, eval_scorecard: dict) -> None:
+    """
+    Copy scorecard scores from the eval agent's top-level scorecard into
+    draft["frontmatter"]["scorecard"], mapping by page type.
+
+    Entity fields:  novelty_delta, claim_density, self_containedness, bridge_score, hub_potential
+    Synthesis fields: bridge_score, contradiction_potential, cross_domain_connection (unmapped → None)
+    """
+    page_type = draft.get("page_type", "entity")
+    fm = draft.setdefault("frontmatter", {})
+    sc = eval_scorecard or {}
+
+    if page_type == "entity":
+        fm["scorecard"] = {
+            "novelty_delta":       sc.get("novelty_delta"),
+            "claim_density":       sc.get("claim_density"),
+            "self_containedness":  sc.get("self_containedness"),
+            "bridge_score":        sc.get("bridge_score"),
+            "hub_potential":       sc.get("hub_potential"),
+        }
+    else:  # synthesis
+        fm["scorecard"] = {
+            "bridge_score":            sc.get("bridge_score"),
+            "contradiction_potential": sc.get("contradiction_potential"),
+            "cross_domain_connection": None,  # not produced by eval agent
+        }
 
 
 def _run_eval_pipeline(draft: dict) -> tuple[bool, dict]:
@@ -464,12 +586,33 @@ def _ddg_discover(query: str, max_candidates: int, already_processed: set[str],
     if concept_gaps:
         for gap in concept_gaps[:min(limit - 1, len(concept_gaps))]:
             queries.append(f"{query} {gap}")
+    # Add source-targeted variants for arXiv and GitHub when the query is technical
+    # or when depth=deep explicitly requests broader coverage.
+    _TECHNICAL_KEYWORDS = ("paper", "arxiv", "repo", "github", "implementation", "code", "algorithm")
+    if depth == "deep" or any(kw in query.lower() for kw in _TECHNICAL_KEYWORDS):
+        if len(queries) < limit:
+            queries.append(f"site:arxiv.org {query}")
+        if len(queries) < limit:
+            queries.append(f"site:github.com {query}")
+
     # Pad with topic refinements
     refinements = ["architecture survey", "chip specifications performance", "ISA extension benchmark"]
     for ref in refinements:
         if len(queries) >= limit:
             break
         queries.append(f"{query} {ref}")
+
+    # Domains and extensions that reliably yield unusable content for the eval agent
+    _URL_BLOCKLIST = (
+        "youtube.com", "youtu.be", "slideshare.net", "reddit.com",
+        "twitter.com", "x.com", "linkedin.com", "facebook.com",
+    )
+
+    def _is_blocked(url: str) -> bool:
+        lower = url.lower()
+        if lower.endswith(".pdf"):
+            return True
+        return any(d in lower for d in _URL_BLOCKLIST)
 
     seen_urls: set[str] = set(already_processed)
     candidates: list[dict] = []
@@ -481,7 +624,7 @@ def _ddg_discover(query: str, max_candidates: int, already_processed: set[str],
             try:
                 for r in ddgs.text(q, max_results=results_per_query):
                     url = r.get("href", "")
-                    if not url or url in seen_urls:
+                    if not url or url in seen_urls or _is_blocked(url):
                         continue
                     seen_urls.add(url)
                     candidates.append({
@@ -545,12 +688,26 @@ def run_research_session(query: str, max_candidates: int, max_new_pages: int,
     # --- Step 1: Discovery via DuckDuckGo (real URLs, no hallucination) ---
     already_processed = _load_processed_urls()
     candidates = _ddg_discover(query, max_candidates, already_processed, research_config, depth)
+
+    # Trigger 1: if shallow discovery yielded < 75% of requested candidates, do a
+    # second deep pass immediately (no API cost — just more DDG queries).
+    if depth == "shallow" and len(candidates) < int(max_candidates * 0.75):
+        seen_so_far = already_processed | {c["url"] for c in candidates}
+        needed = max_candidates - len(candidates)
+        deep_extras = _ddg_discover(query, needed, seen_so_far, research_config, "deep")
+        if deep_extras:
+            candidates.extend(deep_extras)
+            print(f"[{session_id}] Low discovery yield — added {len(deep_extras)} deep candidates")
+
     audit.set_candidates_found(len(candidates))
     print(f"[{session_id}] DDG discovery found {len(candidates)} candidates")
 
     # --- Step 3: Evaluate each candidate ---
     approved_pages: list[tuple[dict, str]] = []
     pipeline_rejections = 0
+    # effective_depth may be upgraded to "deep" mid-session (Trigger 2).
+    effective_depth = depth
+    halfway = max(1, (max_candidates + 1) // 2)
 
     for candidate in candidates:
         if quota.any_exceeded():
@@ -560,7 +717,7 @@ def run_research_session(query: str, max_candidates: int, max_new_pages: int,
         url = candidate["url"]
         print(f"[{session_id}] Evaluating: {url}")
 
-        content = fetch_resource(
+        content = _fetch_smart(
             url, retries=research_config.get("max_retries_on_fetch_failure", 2)
         )
         # Fall back to DDG snippet when fetch fails or returns only JS boilerplate
@@ -575,24 +732,44 @@ def run_research_session(query: str, max_candidates: int, max_new_pages: int,
             logger.info("fetch failed for %s — using enriched DDG snippet (%d chars)", url, len(enriched))
             content = enriched
         else:
-            # Strip obvious JS-heavy shells: if <body text> is mostly whitespace/tags
-            text_chars = len(re.sub(r"<[^>]+>|\s", "", content))
+            # Strip HTML tags to get plain text — removes CSS/nav boilerplate that fills
+            # the first N chars of JS-heavy pages and confuses the eval agent.
+            if "<html" in content[:500].lower() or "<!doctype" in content[:200].lower():
+                content = re.sub(r"<[^>]+>", " ", content)
+                content = re.sub(r"\s{2,}", " ", content).strip()
+            text_chars = len(re.sub(r"\s", "", content))
             if text_chars < 500:
                 enriched = _enrich_snippet(candidate.get("title", ""), snippet)
                 logger.info("thin page (%d text chars) for %s — using enriched snippet", text_chars, url)
                 content = enriched or content[:2000]
 
-        injected_pages = select_context_pages(content[:6000])
+        # Also reject raw binary content (e.g. PDFs that slipped past the URL filter)
+        if content and content[:4] in ("%PDF", b"%PDF"[:4] if isinstance(content, bytes) else ""):
+            logger.info("binary/PDF content for %s — using enriched snippet", url)
+            content = _enrich_snippet(candidate.get("title", ""), snippet) or snippet
+
+        # Trigger 4: in deep mode, proactively supplement primary content with DDG
+        # snippets so the eval agent has multiple perspectives even on good fetches.
+        if effective_depth == "deep" and content:
+            supplement = _enrich_snippet(candidate.get("title", ""), candidate.get("snippet", ""))
+            if supplement:
+                content = content + "\n\n[DDG supplemental context]\n" + supplement
+
+        # Trigger 3: expand content window in deep mode to capture more of long documents.
+        content_limit = 10000 if effective_depth == "deep" else 6000
+
+        injected_pages = select_context_pages(content[:content_limit])
         is_cold_start = not _wiki_is_mature()
         eval_config = _load_claude_md_block("eval_thresholds")
 
         eval_manifest = {
             "candidate": {"url": url, "title": candidate.get("title", "")},
-            "resource_content": content[:6000],
+            "resource_content": content[:content_limit],
             "wiki_context": {
                 "relevant_pages": injected_pages,
                 "concept_gaps": _get_concept_gaps(),
                 "graph_maturity": not is_cold_start,
+                "depth": effective_depth,
             },
             "scorecard_config": {
                 "variant": "cold_start" if is_cold_start else candidate.get("estimated_type", "entity"),
@@ -613,21 +790,65 @@ def run_research_session(query: str, max_candidates: int, max_new_pages: int,
             audit.record_response(ev_idx, str(e), schema_valid=False)
             continue
 
-        audit.record_response(ev_idx, raw_eval, schema_valid=False)
         eval_result = validate_and_parse(raw_eval, "EvalResult")
+        audit.record_response(ev_idx, raw_eval, schema_valid=(eval_result is not None))
         if eval_result is None:
             audit.record_skip(ev_idx, "malformed_eval_output")
             continue
 
-        audit.record_response(ev_idx, raw_eval, schema_valid=True)
         quota.record_candidate_evaluated()
+
+        # Trigger 2: mid-session adaptive depth escalation.
+        # If we're at the halfway point and have written nothing, upgrade to deep
+        # for the remaining candidates to push harder on content quality.
+        if (quota._candidates_evaluated == halfway
+                and quota._pages_written == 0
+                and effective_depth == "shallow"):
+            effective_depth = "deep"
+            print(f"[{session_id}] Adaptive escalation: 0 pages after {halfway} candidates → depth=deep")
+            audit.log_escalation(halfway)
 
         if eval_result.get("decision") == "reject":
             audit.record_skip(ev_idx, f"subagent_reject: {eval_result.get('rejection_reason', '')}")
             continue
 
+        # --- Programmatic score gate ---
+        # Enforce weighted_total threshold regardless of LLM's approve decision.
+        eval_sc = eval_result.get("scorecard", {})
+        weighted_total = eval_sc.get("weighted_total", 0.0) or 0.0
+        acceptance_threshold = (
+            eval_manifest["scorecard_config"].get("acceptance_threshold", 0.4)
+        )
+        hard_rejection_threshold = (
+            eval_manifest["scorecard_config"].get("hard_rejection_threshold", 0.2)
+        )
+        any_hard_fail = any(
+            (v or 0.0) < hard_rejection_threshold
+            for k, v in eval_sc.items()
+            if k not in ("weighted_total", "contradiction_potential")
+            and v is not None
+        )
+        if weighted_total < acceptance_threshold:
+            reason = (
+                f"score_gate_reject: weighted_total={weighted_total:.2f} "
+                f"< acceptance_threshold={acceptance_threshold}"
+            )
+            audit.record_skip(ev_idx, reason)
+            pipeline_rejections += 1
+            continue
+        if any_hard_fail:
+            reason = (
+                f"score_gate_reject: a scorecard dimension is below "
+                f"hard_rejection_threshold={hard_rejection_threshold}"
+            )
+            audit.record_skip(ev_idx, reason)
+            pipeline_rejections += 1
+            continue
+
         # --- Step 4: Deterministic pipeline gate ---
         for draft in eval_result.get("page_drafts", []):
+            # Transfer scorecard scores from eval result into draft frontmatter
+            _apply_scorecard_to_draft(draft, eval_sc)
             passes, pipeline_result = _run_eval_pipeline(draft)
             audit.record_pipeline_result(
                 ev_idx,
@@ -639,33 +860,32 @@ def run_research_session(query: str, max_candidates: int, max_new_pages: int,
                 rejection_detail=pipeline_result.get("rejection_detail"),
             )
             if passes:
-                approved_pages.append((draft, url))
+                approved_pages.append((draft, url, ev_idx))
             else:
                 pipeline_rejections += 1
 
+    # Snapshot evaluated count before writes so a crash in the write loop
+    # still preserves an accurate candidates_evaluated in the audit.
+    audit.set_candidates_evaluated(quota._candidates_evaluated)
+
     # --- Step 5: Write approved pages ---
     written_filenames = []
-    for draft, _source_url in approved_pages:
+    for draft, _source_url, ev_idx in approved_pages:
         if quota.pages_exceeded():
             break
-        page_path = _write_page(draft)
-        _update_inbound_links(draft)
-        _update_index(draft)
-        quota.record_page_written()
-        written_filenames.append(page_path.name)
-        audit.record_page_written(
-            next(
-                i for i, inv in enumerate(audit._invocations)
-                if inv["subagent_type"] == "evaluation"
-                and inv.get("schema_valid")
-            ),
-            page_path.name,
-        )
-        print(f"[{session_id}] Written: {page_path}")
+        try:
+            page_path = _write_page(draft)
+            _update_inbound_links(draft)
+            _update_index(draft)
+            quota.record_page_written()
+            written_filenames.append(page_path.name)
+            audit.record_page_written(ev_idx, page_path.name)
+            print(f"[{session_id}] Written: {page_path}")
+        except Exception as e:
+            logger.error("Failed to write page %s: %s", draft.get("filename"), e)
 
     # --- Step 6: Post-session bookkeeping ---
     _run_graph_stats()
-    audit.set_candidates_evaluated(quota._candidates_evaluated)
     _append_log(
         session_id=session_id,
         pages_written=written_filenames,
