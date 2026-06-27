@@ -1,4 +1,5 @@
 wiki/audit/
+.obsidian/
 __pycache__/
 *.pyc
 .pytest_cache/
