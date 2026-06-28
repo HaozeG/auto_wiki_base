@@ -2,6 +2,8 @@
 
 Auto Wiki Base is a markdown knowledge-base template for maintaining a curated wiki with an LLM agent. Raw sources stay immutable, the wiki pages are generated and maintained, and lightweight Python tools validate pages, compute graph health, and run an optional autonomous research loop.
 
+The repository starts with an empty wiki baseline. The first step for a new wiki is to choose a broad theme and write a theme profile into `CLAUDE.md`; that profile tells the agent what page families, relationships, source preferences, coverage priorities, and lint priorities fit this wiki.
+
 ## Repository Layout
 
 - `raw/` - source material. Treat these files as immutable inputs.
@@ -49,6 +51,45 @@ uv run --no-sync qmd search "example topic" -c _pages -n 5 --format json
 
 Do not use `qmd query`, `qmd vsearch`, or `qmd embed` for the default harness path. Those require embedding/model setup and may trigger large local downloads.
 
+## Start A Fresh Wiki
+
+Use this sequence when starting from the empty baseline on `main`.
+
+1. Choose a broad theme.
+2. Ask the agent to propose organization options for that theme.
+3. Pick one option and persist it to `CLAUDE.md`.
+4. Add source files to `raw/` or run the autonomous research loop.
+5. Review generated wiki pages, patch-queue entries, index changes, and log entries.
+6. Run tests/validation and commit durable artifacts.
+
+For example, list organization options:
+
+```bash
+uv run --no-sync python tools/orchestrator.py setup theme "RISC-V AI accelerator"
+```
+
+This prints 2-4 choices such as architecture-first, workflow-first, or ecosystem-first when the theme is hardware-oriented. Other themes produce different structures, such as character/theme/event options for a book or company/product/market options for competitive analysis.
+
+Persist the selected option:
+
+```bash
+uv run --no-sync python tools/orchestrator.py setup theme "RISC-V AI accelerator" --choice workflow_first
+```
+
+The command writes a `[theme_profile]` block into `CLAUDE.md`. The base harness remains domain-agnostic; specialized page types such as `hardware_target`, `optimization_recipe`, or `benchmark_result` appear only when the selected theme profile enables them.
+
+Useful prompt for an agent-driven setup:
+
+```text
+We are starting a fresh Auto Wiki. Use tools/orchestrator.py setup theme "<theme>" to list organization options, explain the tradeoffs, ask me which option to choose, then persist the selected theme profile to CLAUDE.md.
+```
+
+After setup, update qmd:
+
+```bash
+uv run --no-sync qmd update
+```
+
 ## Local Subagent Environment
 
 For research runs that call the evaluation subagent, source the local environment script:
@@ -63,14 +104,21 @@ The orchestrator reads standard Anthropic-compatible environment variables such 
 
 Use an LLM coding agent with this repository open. The normal workflow is:
 
-1. Add or identify a source in `raw/`.
-2. Ask the agent to ingest it into the wiki.
-3. Review changed pages in `wiki/_pages/`.
-4. Run validation and graph checks.
-5. Update qmd search after accepted writes.
-6. Commit the source, wiki changes, and log entry.
+1. Confirm `CLAUDE.md` has the intended `[theme_profile]`.
+2. Add or identify a source in `raw/`.
+3. Ask the agent to ingest it into the wiki according to the selected theme profile.
+4. Review changed pages in `wiki/_pages/` and any proposed updates in `wiki/patch_queue.md`.
+5. Run validation and graph checks.
+6. Update qmd search after accepted writes.
+7. Commit the source, wiki changes, index, log, and schema/config updates.
 
 For reading and browsing, open `wiki/` in Obsidian or any markdown editor. Internal links use `[[page_name]]` syntax.
+
+Useful prompt for source ingest:
+
+```text
+Ingest raw/sources/<file> into the wiki. Follow CLAUDE.md, use the active theme profile, keep raw/ immutable, write only orchestrator-approved pages/patch-queue entries, update wiki/index.md and wiki/log.md, run validation, and summarize what changed.
+```
 
 ## Query The Wiki
 
@@ -115,7 +163,7 @@ If the output says the graph is mature, update `[system_state].graph_maturity` a
 
 ## Run The Autonomous Research Loop
 
-The research loop discovers URLs, gates near-duplicates with qmd BM25 search, fetches candidate content, calls an evaluation subagent, validates drafts, writes approved pages immediately, and checkpoints progress.
+The research loop discovers URLs, gates near-duplicates with qmd BM25 search, fetches candidate content, calls an evaluation subagent, validates drafts, writes approved pages immediately, and checkpoints progress. It reads the active `[theme_profile]` from `CLAUDE.md` and passes that profile into discovery/evaluation manifests.
 
 Start a small run:
 
@@ -172,6 +220,12 @@ Research session states include `discovered`, `skipped_similarity`, `fetch_faile
 
 If qmd update/search fails, the loop stops as `blocked_qmd` before eval API calls.
 
+Useful prompt for agent-driven research:
+
+```text
+Run a small autonomous research session for "<topic>" using the active theme profile. Keep the run bounded, inspect audit/session output, verify generated pages, and tell me whether coverage gaps remain before we commit.
+```
+
 ## Run Tests
 
 ```bash
@@ -200,19 +254,7 @@ topic_saturation_hit_threshold: 2
 title_overlap_threshold: 0.8
 ```
 
-First-run setup is theme-adaptive. List organization options with:
-
-```bash
-python tools/orchestrator.py setup theme "your broad theme"
-```
-
-Persist one option with:
-
-```bash
-python tools/orchestrator.py setup theme "your broad theme" --choice concept_first
-```
-
-The base harness remains domain-agnostic; specialized page types such as `hardware_target`, `optimization_recipe`, or `benchmark_result` come from the selected `[theme_profile]`.
+First-run setup is theme-adaptive; see [Start A Fresh Wiki](#start-a-fresh-wiki). If `[theme_profile]` is absent, the harness falls back to generic page types: `entity`, `synthesis`, and `source_note`.
 
 ## Git Hygiene
 
