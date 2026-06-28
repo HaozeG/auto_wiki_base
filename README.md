@@ -2,8 +2,6 @@
 
 Auto Wiki Base is a markdown knowledge-base template for maintaining a curated wiki with an LLM agent. Raw sources stay immutable, the wiki pages are generated and maintained, and lightweight Python tools validate pages, compute graph health, and run an optional autonomous research loop.
 
-The current example wiki is focused on RISC-V AI hardware and software.
-
 ## Repository Layout
 
 - `raw/` - source material. Treat these files as immutable inputs.
@@ -46,7 +44,7 @@ The research harness expects a qmd collection named `_pages` and uses BM25 searc
 ```bash
 qmd collection add wiki/_pages --name _pages
 uv run --no-sync qmd update
-uv run --no-sync qmd search "RISC-V AI" -c _pages -n 5 --format json
+uv run --no-sync qmd search "example topic" -c _pages -n 5 --format json
 ```
 
 Do not use `qmd query`, `qmd vsearch`, or `qmd embed` for the default harness path. Those require embedding/model setup and may trigger large local downloads.
@@ -79,7 +77,7 @@ For reading and browsing, open `wiki/` in Obsidian or any markdown editor. Inter
 For quick local search:
 
 ```bash
-uv run --no-sync qmd search "SpacemiT K3 AI SoC" -c _pages -n 10 --format json
+uv run --no-sync qmd search "example topic" -c _pages -n 10 --format json
 ```
 
 Then open the returned markdown files under `wiki/_pages/`.
@@ -91,8 +89,8 @@ For agent-assisted questions, ask the LLM to search qmd first, read the full rel
 Run the three-layer page validation pipeline:
 
 ```bash
-uv run python tools/eval_summary.py wiki/_pages/entity/gemmini.md --type entity --verbose
-uv run python tools/eval_summary.py wiki/_pages/synthesis/riscv_open_ai_acceleration.md --type synthesis --verbose
+uv run python tools/eval_summary.py wiki/_pages/entity/example_entity.md --type entity --verbose
+uv run python tools/eval_summary.py wiki/_pages/synthesis/example_synthesis.md --type synthesis --verbose
 ```
 
 Exit code `0` means approved. Exit code `1` means the page failed a hard validation gate.
@@ -125,7 +123,7 @@ Start a small run:
 source ./subagent_env_setup.sh
 
 uv run python tools/orchestrator.py research \
-  --query "RISC-V AI accelerator software stack" \
+  --query "example research topic" \
   --max-candidates 2 \
   --max-new-pages 1 \
   --depth shallow
@@ -205,13 +203,13 @@ title_overlap_threshold: 0.8
 First-run setup is theme-adaptive. List organization options with:
 
 ```bash
-python tools/orchestrator.py setup theme "RISC-V AI accelerator"
+python tools/orchestrator.py setup theme "your broad theme"
 ```
 
 Persist one option with:
 
 ```bash
-python tools/orchestrator.py setup theme "RISC-V AI accelerator" --choice workflow_first
+python tools/orchestrator.py setup theme "your broad theme" --choice concept_first
 ```
 
 The base harness remains domain-agnostic; specialized page types such as `hardware_target`, `optimization_recipe`, or `benchmark_result` come from the selected `[theme_profile]`.
