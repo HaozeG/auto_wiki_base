@@ -216,3 +216,156 @@ class TestContextSelectorFallback:
         assert len(result) <= 2
         if len(result) == 2:
             assert result[0]["filename"] == "high_inbound.md"
+
+
+# ---------------------------------------------------------------------------
+# _increment_frontmatter_field and _update_inbound_links regression tests
+# ---------------------------------------------------------------------------
+
+_PAGE_BODY = "\n\n# Test Page\n\nSome content here.\n"
+_PAGE_FM = "---\ninbound_links: 0\ntype: entity\n---"
+_PAGE_CONTENT = _PAGE_FM + _PAGE_BODY
+
+
+def _read_fm(path):
+    import yaml
+    text = path.read_text(encoding="utf-8")
+    end = text.find("---", 3)
+    return yaml.safe_load(text[3:end].strip()) or {}, text
+
+
+class TestIncrementFrontmatterField:
+    def setup_method(self):
+        from unittest.mock import patch
+        import orchestrator
+        self._orchestrator = orchestrator
+
+    def test_single_increment_updates_field(self, tmp_path):
+        page = tmp_path / "page.md"
+        page.write_text(_PAGE_CONTENT, encoding="utf-8")
+        self._orchestrator._increment_frontmatter_field(page, "inbound_links")
+        fm, _ = _read_fm(page)
+        assert fm["inbound_links"] == 1
+
+    def test_single_increment_delimiter_stays_three_dashes(self, tmp_path):
+        page = tmp_path / "page.md"
+        page.write_text(_PAGE_CONTENT, encoding="utf-8")
+        self._orchestrator._increment_frontmatter_field(page, "inbound_links")
+        text = page.read_text(encoding="utf-8")
+        # Find the closing delimiter: line after the YAML block must be exactly "---"
+        lines = text.split("\n")
+        # First line is "---" (opening), then yaml lines, then closing "---"
+        # The closing delimiter must be exactly 3 dashes
+        yaml_end_line = next(
+            i for i, ln in enumerate(lines[1:], 1) if ln.startswith("-") and ln == "-" * len(ln) and len(ln) >= 3
+        )
+        assert lines[yaml_end_line] == "---", (
+            f"Expected '---' but got {lines[yaml_end_line]!r} — delimiter accumulated"
+        )
+
+    def test_n_increments_no_dash_accumulation(self, tmp_path):
+        """Calling N times must not grow the closing delimiter (regression for double---- bug)."""
+        import yaml
+        page = tmp_path / "page.md"
+        page.write_text(_PAGE_CONTENT, encoding="utf-8")
+        N = 5
+        for _ in range(N):
+            self._orchestrator._increment_frontmatter_field(page, "inbound_links")
+        text = page.read_text(encoding="utf-8")
+        # The closing delimiter line must still be exactly "---"
+        lines = text.split("\n")
+        yaml_end_line = next(
+            i for i, ln in enumerate(lines[1:], 1) if ln.startswith("-") and len(ln) >= 3 and ln == "-" * len(ln)
+        )
+        assert lines[yaml_end_line] == "---", (
+            f"After {N} increments delimiter is {lines[yaml_end_line]!r} ({len(lines[yaml_end_line])} dashes)"
+        )
+        # Field value must equal N
+        end = text.find("---", 3)
+        fm = yaml.safe_load(text[3:end].strip()) or {}
+        assert fm["inbound_links"] == N
+        # Body must be unchanged
+        body_start = text.find(_PAGE_BODY.lstrip("\n"), end)
+        assert body_start != -1
+
+    def test_frontmatter_parseable_after_increments(self, tmp_path):
+        """yaml.safe_load must not raise after multiple increments."""
+        import yaml
+        page = tmp_path / "page.md"
+        page.write_text(_PAGE_CONTENT, encoding="utf-8")
+        for _ in range(3):
+            self._orchestrator._increment_frontmatter_field(page, "inbound_links")
+        text = page.read_text(encoding="utf-8")
+        end = text.find("---", 3)
+        fm = yaml.safe_load(text[3:end].strip())
+        assert fm is not None
+
+    def test_missing_page_skips_gracefully(self, tmp_path):
+        nonexistent = tmp_path / "does_not_exist.md"
+        # Must not raise
+        self._orchestrator._increment_frontmatter_field(nonexistent, "inbound_links")
+
+    def test_non_frontmatter_file_unchanged(self, tmp_path):
+        page = tmp_path / "plain.md"
+        original = "# Just a markdown file\n\nNo frontmatter here.\n"
+        page.write_text(original, encoding="utf-8")
+        self._orchestrator._increment_frontmatter_field(page, "inbound_links")
+        assert page.read_text(encoding="utf-8") == original
+
+
+class TestUpdateInboundLinks:
+    def setup_method(self):
+        import orchestrator
+        self._orchestrator = orchestrator
+
+    def _make_page(self, tmp_path, name, inbound=0):
+        page = tmp_path / f"{name}.md"
+        page.write_text(
+            f"---\ninbound_links: {inbound}\ntype: entity\n---\n\n# {name}\n",
+            encoding="utf-8",
+        )
+        return page
+
+    def _get_inbound(self, page):
+        import yaml
+        text = page.read_text(encoding="utf-8")
+        end = text.find("---", 3)
+        return (yaml.safe_load(text[3:end].strip()) or {}).get("inbound_links", 0)
+
+    def test_body_wiki_links_increment(self, tmp_path, monkeypatch):
+        monkeypatch.setattr(self._orchestrator, "_WIKI_PAGES_DIR", tmp_path)
+        page_a = self._make_page(tmp_path, "Page_A")
+        draft = {"content": "See [[Page_A]] for details.", "frontmatter": {}}
+        self._orchestrator._update_inbound_links(draft)
+        assert self._get_inbound(page_a) == 1
+
+    def test_connected_entities_increments(self, tmp_path, monkeypatch):
+        monkeypatch.setattr(self._orchestrator, "_WIKI_PAGES_DIR", tmp_path)
+        page_b = self._make_page(tmp_path, "Page_B")
+        draft = {
+            "content": "## RAG Summary\nSome synthesis.",
+            "frontmatter": {"connected_entities": ["Page_B"]},
+        }
+        self._orchestrator._update_inbound_links(draft)
+        assert self._get_inbound(page_b) == 1
+
+    def test_connected_entities_with_md_suffix(self, tmp_path, monkeypatch):
+        monkeypatch.setattr(self._orchestrator, "_WIKI_PAGES_DIR", tmp_path)
+        page_c = self._make_page(tmp_path, "Page_C")
+        draft = {
+            "content": "",
+            "frontmatter": {"connected_entities": ["Page_C.md"]},
+        }
+        self._orchestrator._update_inbound_links(draft)
+        assert self._get_inbound(page_c) == 1
+
+    def test_no_double_count_when_in_both(self, tmp_path, monkeypatch):
+        monkeypatch.setattr(self._orchestrator, "_WIKI_PAGES_DIR", tmp_path)
+        page_x = self._make_page(tmp_path, "Page_X")
+        draft = {
+            "content": "See [[Page_X]] for details.",
+            "frontmatter": {"connected_entities": ["Page_X"]},
+        }
+        self._orchestrator._update_inbound_links(draft)
+        # Must be 1, not 2 — deduplication via set
+        assert self._get_inbound(page_x) == 1
