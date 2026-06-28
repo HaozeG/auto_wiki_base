@@ -4,7 +4,13 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from domain_analysis import build_gap_manifest, extract_evidence, validate_benchmark_claim
+from domain_analysis import (
+    DEFAULT_PAGE_TYPE_TAXONOMY,
+    build_gap_manifest,
+    extract_evidence,
+    propose_theme_profiles,
+    validate_benchmark_claim,
+)
 from qmd_runner import QmdMatch, assess_candidate_similarity
 from validate_output import validate_and_parse
 
@@ -85,7 +91,11 @@ def test_gap_manifest_summarizes_missing_structured_coverage(tmp_path):
         encoding="utf-8",
     )
 
-    manifest = build_gap_manifest(pages, {})
+    workflow_profile = next(
+        profile for profile in propose_theme_profiles("RISC-V AI accelerator")
+        if profile["id"] == "workflow_first"
+    )
+    manifest = build_gap_manifest(pages, {"page_type_taxonomy": workflow_profile["page_types"]})
 
     assert manifest["page_type_counts"]["hardware_target"] == 1
     assert manifest["structured_field_coverage"]["hardware_targets"]["ProjectNimbus X9"] == 2
@@ -93,6 +103,44 @@ def test_gap_manifest_summarizes_missing_structured_coverage(tmp_path):
     assert manifest["benchmark_results_missing_required_fields"] == [
         "nimbus_gemm.md: measurement_context"
     ]
+
+
+def test_default_page_taxonomy_is_domain_agnostic():
+    assert set(DEFAULT_PAGE_TYPE_TAXONOMY) == {"entity", "synthesis", "source_note"}
+
+
+def test_generic_gap_manifest_does_not_expect_optimization_types(tmp_path):
+    pages = tmp_path / "_pages"
+    (pages / "entity").mkdir(parents=True)
+    (pages / "entity" / "nimbus.md").write_text(
+        "---\ntype: entity\nsources: [https://example.com]\ninbound_links: 0\n---\n\n# Nimbus\n",
+        encoding="utf-8",
+    )
+
+    manifest = build_gap_manifest(pages, {})
+
+    assert manifest["optimization_page_type_counts"] == {}
+    assert not any(gap.startswith("missing_page_type:hardware_target") for gap in manifest["gap_types"])
+
+
+def test_riscv_theme_profiles_include_workflow_hardware_benchmark_taxonomy():
+    profiles = propose_theme_profiles("RISC-V AI accelerator")
+    workflow = next(profile for profile in profiles if profile["id"] == "workflow_first")
+
+    assert len(profiles) == 3
+    assert {"hardware_target", "workload_kernel", "optimization_recipe", "benchmark_result"}.issubset(
+        workflow["page_types"]
+    )
+    assert "official documentation" in workflow["source_preferences"]
+    assert "benchmark repository" in workflow["source_preferences"]
+
+
+def test_book_theme_profiles_do_not_leak_optimization_types():
+    profiles = propose_theme_profiles("Victorian novel")
+    all_page_types = set().union(*(set(profile["page_types"]) for profile in profiles))
+
+    assert {"character", "theme", "event"}.issubset(all_page_types)
+    assert "optimization_recipe" not in all_page_types
 
 
 def test_benchmark_claim_validation_requires_measurement_context():

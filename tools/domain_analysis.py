@@ -30,6 +30,10 @@ OPTIMIZATION_PAGE_TYPES = (
 DEFAULT_PAGE_TYPE_TAXONOMY = {
     "entity": {"description": "Specific entity or concept page"},
     "synthesis": {"description": "Cross-page synthesis or comparison"},
+    "source_note": {"description": "Source-grounded note used when a source is useful but not yet page-worthy"},
+}
+
+THEME_PAGE_TYPE_LIBRARY = {
     "hardware_target": {
         "description": "Hardware or ISA target with memory hierarchy, accelerator, and compiler details",
         "structured_fields": ["hardware_targets", "toolchains", "constraints"],
@@ -46,7 +50,152 @@ DEFAULT_PAGE_TYPE_TAXONOMY = {
         "description": "Measured or reported result with hardware/software versions and measurement context",
         "structured_fields": ["hardware_targets", "workloads", "datatypes", "metrics", "toolchains", "evidence_strength"],
     },
+    "character": {"description": "Person or character with traits, relationships, and arc"},
+    "theme": {"description": "Recurring idea, motif, or interpretive thread"},
+    "event": {"description": "Plot, historical, or timeline event"},
+    "company": {"description": "Organization participating in a market or ecosystem"},
+    "product": {"description": "Product, service, or offering with positioning and capabilities"},
+    "market": {"description": "Market segment, customer need, or competitive landscape"},
+    "concept": {"description": "Research concept, method, or term"},
+    "method": {"description": "Procedure, technique, or experimental approach"},
+    "paper": {"description": "Scholarly work with claims, method, evidence, and limitations"},
 }
+
+
+def _profile_page_types(*specialized: str) -> dict[str, dict[str, Any]]:
+    page_types = dict(DEFAULT_PAGE_TYPE_TAXONOMY)
+    for page_type in specialized:
+        page_types[page_type] = THEME_PAGE_TYPE_LIBRARY[page_type]
+    return page_types
+
+
+def propose_theme_profiles(theme: str) -> list[dict[str, Any]]:
+    """Return deterministic first-run organization profiles for a broad wiki theme."""
+    theme_l = theme.lower()
+    base = {
+        "theme": theme,
+        "relationship_rules": [
+            "Prefer explicit bidirectional relationships between specialized pages and their related entity/synthesis pages.",
+            "Use synthesis pages for cross-page comparisons, contradictions, and landscape-level claims.",
+        ],
+        "lint_priorities": [
+            "self-contained opening paragraphs",
+            "grounded sources for major claims",
+            "missing cross-references after enough pages accumulate",
+        ],
+    }
+
+    if any(term in theme_l for term in ("risc-v", "riscv", "accelerator", "hardware", "ai chip", "soc")):
+        return [
+            {
+                **base,
+                "id": "architecture_first",
+                "name": "Architecture-first",
+                "description": "Organize around ISA features, cores, accelerators, memory systems, and toolchains.",
+                "page_types": _profile_page_types("hardware_target", "benchmark_result"),
+                "source_preferences": ["official documentation", "ISA specification", "compiler documentation", "paper"],
+                "coverage_priorities": ["ISA/profile coverage", "core and accelerator pages", "memory and toolchain support"],
+            },
+            {
+                **base,
+                "id": "workflow_first",
+                "name": "Workflow-first",
+                "description": "Organize around hardware targets, workload kernels, optimization recipes, and benchmark results.",
+                "page_types": _profile_page_types(
+                    "hardware_target", "workload_kernel", "optimization_recipe", "benchmark_result"
+                ),
+                "source_preferences": [
+                    "official documentation",
+                    "benchmark repository",
+                    "compiler documentation",
+                    "SDK guide",
+                    "paper",
+                ],
+                "coverage_priorities": [
+                    "hardware/software/workload coverage",
+                    "measurement context for benchmark results",
+                    "optimization prerequisites and failure modes",
+                ],
+                "lint_priorities": base["lint_priorities"] + [
+                    "benchmark measurement context",
+                    "hardware-target/workload/recipe relationship coverage",
+                ],
+            },
+            {
+                **base,
+                "id": "ecosystem_first",
+                "name": "Ecosystem-first",
+                "description": "Organize around vendors, open-source projects, standards, software stacks, and benchmarks.",
+                "page_types": _profile_page_types("company", "product", "hardware_target", "benchmark_result"),
+                "source_preferences": ["official documentation", "standards documents", "project repository", "benchmark repository"],
+                "coverage_priorities": ["vendors and projects", "standards and software stacks", "benchmark families"],
+            },
+        ]
+
+    if any(term in theme_l for term in ("book", "novel", "story", "film", "series", "literature")):
+        return [
+            {
+                **base,
+                "id": "character_first",
+                "name": "Character-first",
+                "description": "Organize around characters, relationships, events, and recurring themes.",
+                "page_types": _profile_page_types("character", "event", "theme"),
+                "source_preferences": ["primary text", "chapter notes", "critical essay"],
+                "coverage_priorities": ["character arcs", "relationship changes", "theme evidence"],
+            },
+            {
+                **base,
+                "id": "theme_first",
+                "name": "Theme-first",
+                "description": "Organize around motifs, claims, passages, and supporting events.",
+                "page_types": _profile_page_types("theme", "event", "character"),
+                "source_preferences": ["primary text", "annotated edition", "critical essay"],
+                "coverage_priorities": ["motifs", "contradictory readings", "passage-level evidence"],
+            },
+        ]
+
+    if any(term in theme_l for term in ("competitive", "competitor", "market", "company", "product")):
+        return [
+            {
+                **base,
+                "id": "market_first",
+                "name": "Market-first",
+                "description": "Organize around markets, companies, products, and competitive claims.",
+                "page_types": _profile_page_types("market", "company", "product"),
+                "source_preferences": ["company documentation", "regulatory filing", "pricing page", "market report"],
+                "coverage_priorities": ["market segments", "product positioning", "evidence strength"],
+            },
+            {
+                **base,
+                "id": "product_first",
+                "name": "Product-first",
+                "description": "Organize around products, capabilities, vendors, and comparisons.",
+                "page_types": _profile_page_types("product", "company", "market"),
+                "source_preferences": ["product documentation", "changelog", "customer case study", "market report"],
+                "coverage_priorities": ["capability coverage", "version/date tracking", "competitive comparisons"],
+            },
+        ]
+
+    return [
+        {
+            **base,
+            "id": "concept_first",
+            "name": "Concept-first",
+            "description": "Organize around concepts, methods, sources, and synthesis pages.",
+            "page_types": _profile_page_types("concept", "method", "paper"),
+            "source_preferences": ["paper", "official documentation", "technical report", "dataset"],
+            "coverage_priorities": ["core concepts", "method comparisons", "source-grounded claims"],
+        },
+        {
+            **base,
+            "id": "source_first",
+            "name": "Source-first",
+            "description": "Organize around source notes first, then promote stable concepts and syntheses.",
+            "page_types": _profile_page_types("paper", "concept", "method"),
+            "source_preferences": ["primary source", "paper", "official documentation", "dataset"],
+            "coverage_priorities": ["source coverage", "claim extraction", "promotion candidates"],
+        },
+    ]
 
 DEFAULT_REQUIRED_MEASUREMENT_FIELDS = (
     "hardware_targets",
@@ -161,9 +310,10 @@ def build_gap_manifest(pages_dir: Path, config: dict | None = None) -> dict[str,
     for page_type, count in optimization_counts.items():
         if count == 0:
             gap_types.append(f"missing_page_type:{page_type}")
-    for field in ("hardware_targets", "workloads", "metrics", "toolchains"):
-        if field in coverage and not coverage[field]:
-            gap_types.append(f"missing_structured_field:{field}")
+    if optimization_counts:
+        for field in ("hardware_targets", "workloads", "metrics", "toolchains"):
+            if field in coverage and not coverage[field]:
+                gap_types.append(f"missing_structured_field:{field}")
 
     benchmark_missing_required: list[str] = []
     for rec in records:

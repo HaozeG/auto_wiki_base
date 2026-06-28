@@ -24,6 +24,7 @@ class AuditLog:
         self._keyword_recommender_model: str | None = None
         self._discovery_queries_used: list[str] = []
         self._suppressed_repeat_urls: list[str] = []
+        self._theme_profile: dict | None = None
 
         audit_dir = Path(__file__).parent.parent / "wiki" / "audit"
         audit_dir.mkdir(parents=True, exist_ok=True)
@@ -38,6 +39,7 @@ class AuditLog:
                 self._keyword_recommender_model = existing.get("keyword_recommender_model")
                 self._discovery_queries_used = existing.get("discovery_queries_used", [])
                 self._suppressed_repeat_urls = existing.get("suppressed_repeat_urls", [])
+                self._theme_profile = existing.get("theme_profile")
             except (OSError, json.JSONDecodeError):
                 pass
 
@@ -118,6 +120,10 @@ class AuditLog:
         self._suppressed_repeat_urls = discovery_metadata.get("suppressed_repeat_urls", [])
         self._flush()
 
+    def set_theme_profile(self, theme_profile: dict | None) -> None:
+        self._theme_profile = theme_profile or None
+        self._flush()
+
     def log_skip_pre_eval(self, url: str, reason: str, qmd_matches: list[dict] | None = None) -> None:
         """Record a candidate skipped before the eval subagent was called."""
         self._invocations.append({
@@ -147,6 +153,7 @@ class AuditLog:
             "keyword_recommender_model": self._keyword_recommender_model,
             "discovery_queries_used": self._discovery_queries_used,
             "suppressed_repeat_urls": self._suppressed_repeat_urls,
+            "theme_profile": self._theme_profile,
             "invocations": self._invocations,
             "session_summary": self._summary,
         }

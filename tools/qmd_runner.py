@@ -182,18 +182,20 @@ def assess_candidate_similarity(candidate: dict, matches: list[QmdMatch], config
     ]
 
     reason = None
+    merge_hint = None
     if high_score_hits and (overlapping_hits or family_hits or high_score_hits[0].rank == 1):
         reason = "near_duplicate_score"
     elif family_hits:
         reason = "same_product_family"
     elif len(scored_hits) >= saturation_threshold:
-        reason = "topic_saturation"
+        merge_hint = "topic_saturation"
     elif rank_only_hits and (overlapping_hits or rank_only_name_hits):
         reason = "rank_only_duplicate_signal"
 
     return {
         "skip": reason is not None,
         "reason": reason,
+        "merge_hint": merge_hint,
         "matches": match_dicts,
     }
 

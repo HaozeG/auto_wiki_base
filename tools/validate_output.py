@@ -42,11 +42,16 @@ _PAGE_DRAFT_REQUIRED = {"page_type", "filename", "frontmatter", "content"}
 _PAGE_TYPES = {
     "entity",
     "synthesis",
+    "source_note",
     "hardware_target",
     "workload_kernel",
     "optimization_recipe",
     "benchmark_result",
 }
+
+
+def _valid_page_type(value: Any) -> bool:
+    return isinstance(value, str) and re.fullmatch(r"[a-z][a-z0-9_]{1,63}", value) is not None
 
 
 def _validate_candidate_list(data: dict) -> None:
@@ -59,7 +64,7 @@ def _validate_candidate_list(data: dict) -> None:
         missing_c = _CANDIDATE_REQUIRED - c.keys()
         if missing_c:
             raise ValueError(f"Candidate {i} missing fields: {missing_c}")
-        if c.get("estimated_type") not in (*_PAGE_TYPES, "unknown"):
+        if c.get("estimated_type") != "unknown" and not _valid_page_type(c.get("estimated_type")):
             raise ValueError(f"Candidate {i} invalid estimated_type: {c.get('estimated_type')}")
 
 
@@ -78,7 +83,7 @@ def _validate_eval_result(data: dict) -> None:
             missing_d = _PAGE_DRAFT_REQUIRED - draft.keys()
             if missing_d:
                 raise ValueError(f"PageDraft missing fields: {missing_d}")
-            if draft.get("page_type") not in _PAGE_TYPES:
+            if not _valid_page_type(draft.get("page_type")):
                 raise ValueError(f"Invalid page_type: {draft.get('page_type')}")
 
 

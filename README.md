@@ -187,6 +187,7 @@ The tests mock qmd and API-sensitive paths, so they do not require a live qmd in
 The main configuration lives in YAML blocks inside `CLAUDE.md`:
 
 - `[system_state]` - current wiki maturity and graph state.
+- `[theme_profile]` - selected first-run organization profile, including theme-derived page families, source preferences, coverage priorities, and lint priorities.
 - `[eval_thresholds]` - page validation thresholds.
 - `[research_config]` - research loop limits, qmd command, state directory, and duplicate-gate thresholds.
 
@@ -200,6 +201,20 @@ near_duplicate_score: 0.90
 topic_saturation_hit_threshold: 2
 title_overlap_threshold: 0.8
 ```
+
+First-run setup is theme-adaptive. List organization options with:
+
+```bash
+python tools/orchestrator.py setup theme "RISC-V AI accelerator"
+```
+
+Persist one option with:
+
+```bash
+python tools/orchestrator.py setup theme "RISC-V AI accelerator" --choice workflow_first
+```
+
+The base harness remains domain-agnostic; specialized page types such as `hardware_target`, `optimization_recipe`, or `benchmark_result` come from the selected `[theme_profile]`.
 
 ## Git Hygiene
 

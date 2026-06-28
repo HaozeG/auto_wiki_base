@@ -104,18 +104,23 @@ Constraints:
 - Entity page first paragraphs MUST be at least 80 words. If the provided
   resource_content is too thin to support that without adding outside knowledge,
   reject the candidate or use pages_to_update for a narrow existing-page update.
-- Optimization-oriented page types are allowed: hardware_target, workload_kernel,
-  optimization_recipe, and benchmark_result. Use the structured frontmatter fields
-  from the templates when evidence exists: hardware_targets, workloads, datatypes,
-  metrics, toolchains, constraints, and evidence_strength.
-- Benchmark_result drafts MUST include hardware target/version context, workload
-  shape or workload name, metric, measurement method/context, source, and
-  evidence_strength classified as measured, reported, derived, or marketing.
-  Reject benchmark claims missing hardware version, workload, metric, or
-  measurement context unless they are only suitable as pages_to_update.
-- For benchmark_result and optimization_recipe pages, ground Key Claims in
-  evidence_extraction and source_grounded_snippets from the manifest so later
-  optimizer agents can cite evidence.
+- Allowed page types are exactly the keys present in domain_config.page_type_taxonomy
+  and page_templates. Do not invent specialized page types that are absent from
+  the selected theme profile.
+- When the selected theme includes structured technical page types such as
+  hardware_target, workload_kernel, optimization_recipe, or benchmark_result,
+  use the structured frontmatter fields from the templates when evidence exists:
+  hardware_targets, workloads, datatypes, metrics, toolchains, constraints, and
+  evidence_strength.
+- Benchmark_result drafts, when that page type is available, MUST include hardware
+  target/version context, workload shape or workload name, metric, measurement
+  method/context, source, and evidence_strength classified as measured, reported,
+  derived, or marketing. Reject benchmark claims missing hardware version,
+  workload, metric, or measurement context unless they are only suitable as a
+  pages_to_update proposal.
+- For benchmark_result and optimization_recipe pages, when those page types are
+  available, ground Key Claims in evidence_extraction and source_grounded_snippets
+  from the manifest so later optimizer agents can cite evidence.
 - Relationships section of entity pages MUST include at least 2 [[wiki_page_name]]
   wiki-link references to entity pages visible in wiki_context.relevant_pages.
   Use the exact filename stem (no path, no extension) inside [[...]].
@@ -129,8 +134,8 @@ Scorecard dimensions to assess (0.0-1.0 each):
 Gap-fill gate (PRIMARY filter — evaluate this FIRST):
   gap_fill_score measures whether this page fills a genuine conceptual gap
   in the wiki. Score it LOW (≤0.3) and set decision="reject" if:
-  - qmd_similarity.matches contains existing pages for the same entity, same
-    product family, or an already saturated topic
+  - qmd_similarity.matches contains existing pages for the same entity or same
+    product family
   - The resource covers a specific product variant when 3+ pages about the
     same product family are visible in wiki_context.relevant_pages
     (e.g. a third Xuantie core model page, a second Milk-V board page)
@@ -140,9 +145,14 @@ Gap-fill gate (PRIMARY filter — evaluate this FIRST):
   If gap_fill_score < 0.35, you MUST reject. Do not approve based on high
   claim_density or novelty_delta alone when the gap is not real.
 
+  BM25 saturation is a merge/update hint, not a rejection by itself. If
+  qmd_similarity.merge_hint is "topic_saturation" and the resource adds useful
+  details about an existing concept, prefer pages_to_update over a new page.
+
   Alternative to rejection: if the resource adds useful details about an
-  existing concept, use pages_to_update instead of page_drafts to propose
-  an update to the existing page.
+  existing concept, use pages_to_update instead of page_drafts. The orchestrator
+  records pages_to_update as reviewable patch-queue entries; write a concrete,
+  source-grounded update_description rather than a vague note.
 
 Output schema (respond with ONLY this JSON, nothing else):
 {
@@ -160,7 +170,7 @@ Output schema (respond with ONLY this JSON, nothing else):
   },
   "page_drafts": [
     {
-      "page_type": "entity | synthesis | hardware_target | workload_kernel | optimization_recipe | benchmark_result",
+      "page_type": "string selected from domain_config.page_type_taxonomy",
       "filename": "string (no path, no extension)",
       "frontmatter": {},
       "content": "string (full markdown body)"

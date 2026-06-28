@@ -41,6 +41,7 @@ from domain_analysis import (
     build_gap_manifest,
     build_structured_query,
     extract_evidence,
+    propose_theme_profiles,
     source_grounded_snippets,
 )
 from qmd_runner import QmdRunner, assess_candidate_similarity, candidate_similarity_query, hard_title_duplicate_score
@@ -86,8 +87,28 @@ def _load_claude_md_block(block_name: str) -> dict:
         return {}
 
 
+def _normalize_page_type_taxonomy(value: dict | None) -> dict:
+    taxonomy = dict(DEFAULT_PAGE_TYPE_TAXONOMY)
+    for key, item in (value or {}).items():
+        if isinstance(item, dict):
+            taxonomy[key] = item
+        else:
+            taxonomy[key] = {"description": str(item)}
+    return taxonomy
+
+
+def _load_theme_profile() -> dict:
+    profile = _load_claude_md_block("theme_profile")
+    if not profile:
+        return {}
+    if "page_types" in profile:
+        profile["page_types"] = _normalize_page_type_taxonomy(profile.get("page_types"))
+    return profile
+
+
 def _load_research_config() -> dict:
     config = _load_claude_md_block("research_config")
+    theme_profile = _load_theme_profile()
     config.setdefault("qmd_command", ["uv", "run", "--no-sync", "qmd"])
     config.setdefault("research_state_dir", "wiki/research_state")
     config.setdefault("topic_similarity_min_score", 0.80)
@@ -102,14 +123,22 @@ def _load_research_config() -> dict:
     config.setdefault("domain_stopwords", [])
     config.setdefault("preferred_source_types", [
         "official documentation",
-        "ISA specification",
-        "compiler documentation",
-        "benchmark repository",
         "paper",
-        "SDK guide",
+        "technical report",
+        "implementation repository",
     ])
     config.setdefault("required_measurement_fields", list(DEFAULT_REQUIRED_MEASUREMENT_FIELDS))
-    config.setdefault("page_type_taxonomy", DEFAULT_PAGE_TYPE_TAXONOMY)
+    config["page_type_taxonomy"] = _normalize_page_type_taxonomy(config.get("page_type_taxonomy"))
+    if theme_profile:
+        config["theme_profile"] = theme_profile
+        if theme_profile.get("source_preferences"):
+            config["preferred_source_types"] = list(theme_profile["source_preferences"])
+        if theme_profile.get("page_types"):
+            config["page_type_taxonomy"] = _normalize_page_type_taxonomy(theme_profile["page_types"])
+        if theme_profile.get("lint_priorities"):
+            config["lint_priorities"] = list(theme_profile["lint_priorities"])
+        if theme_profile.get("coverage_priorities"):
+            config["coverage_priorities"] = list(theme_profile["coverage_priorities"])
     return config
 
 
@@ -118,6 +147,69 @@ def _research_state_dir(research_config: dict) -> Path:
     if not state_dir.is_absolute():
         state_dir = _PROJECT_ROOT / state_dir
     return state_dir
+
+
+def select_theme_profile(theme: str, choice: str | None = None) -> dict:
+    """Select a deterministic setup profile by id/name, defaulting to the first option."""
+    profiles = propose_theme_profiles(theme)
+    if not profiles:
+        raise ValueError(f"No theme profiles available for {theme!r}")
+    if choice:
+        normalized = choice.strip().lower().replace("-", "_").replace(" ", "_")
+        for profile in profiles:
+            candidates = {
+                str(profile.get("id", "")).lower(),
+                str(profile.get("name", "")).lower().replace("-", "_").replace(" ", "_"),
+            }
+            if normalized in candidates:
+                return profile
+        valid = ", ".join(str(profile["id"]) for profile in profiles)
+        raise ValueError(f"Unknown organization choice {choice!r}; valid choices: {valid}")
+    return profiles[0]
+
+
+def _serializable_theme_profile(profile: dict) -> dict:
+    return {
+        "theme": profile.get("theme", ""),
+        "organization_choice": profile.get("id", ""),
+        "organization_name": profile.get("name", ""),
+        "page_types": profile.get("page_types", {}),
+        "relationship_rules": profile.get("relationship_rules", []),
+        "source_preferences": profile.get("source_preferences", []),
+        "coverage_priorities": profile.get("coverage_priorities", []),
+        "lint_priorities": profile.get("lint_priorities", []),
+    }
+
+
+def _replace_or_insert_yaml_block(text: str, block_name: str, data: dict) -> str:
+    block = f"```yaml\n[{block_name}]\n{yaml.dump(data, sort_keys=False, allow_unicode=True)}```"
+    pattern = rf"```yaml\n\[{re.escape(block_name)}\].*?```"
+    if re.search(pattern, text, flags=re.DOTALL):
+        return re.sub(pattern, block, text, count=1, flags=re.DOTALL)
+    insert_before = re.search(r"\n## Research Configuration\n", text)
+    if insert_before:
+        return text[:insert_before.start()] + "\n## Theme Profile\n\n" + block + "\n" + text[insert_before.start():]
+    return text.rstrip() + "\n\n## Theme Profile\n\n" + block + "\n"
+
+
+def write_theme_profile(profile: dict) -> None:
+    """Persist a selected first-run theme profile into CLAUDE.md."""
+    text = _CLAUDE_MD.read_text(encoding="utf-8") if _CLAUDE_MD.exists() else "# LLM Wiki\n"
+    text = _replace_or_insert_yaml_block(text, "theme_profile", _serializable_theme_profile(profile))
+    _CLAUDE_MD.write_text(text, encoding="utf-8")
+
+
+def setup_theme(theme: str, choice: str | None = None, write: bool = True) -> dict:
+    profile = select_theme_profile(theme, choice)
+    if write:
+        write_theme_profile(profile)
+    return _serializable_theme_profile(profile)
+
+
+def _attach_theme_profile(audit: AuditLog, research_config: dict) -> None:
+    setter = getattr(audit, "set_theme_profile", None)
+    if callable(setter):
+        setter(research_config.get("theme_profile") or None)
 
 
 def _load_processed_urls() -> set[str]:
@@ -897,6 +989,10 @@ def _find_page_by_filename(filename: str) -> Path | None:
     return None
 
 
+def _patch_queue_path() -> Path:
+    return _LOG_MD.parent / "patch_queue.md"
+
+
 def _apply_update_once(
     update: dict,
     source_url: str,
@@ -909,31 +1005,34 @@ def _apply_update_once(
         return None
     key = write_key(source_url, f"update:{page_path.name}:{update.get('section', '')}")
     if key in session_state.written_keys:
-        return page_path
+        return _patch_queue_path()
     if quota.pages_exceeded():
         return None
-    text = page_path.read_text(encoding="utf-8")
     description = str(update.get("update_description", "")).strip()
     if not description:
         return None
     section = str(update.get("section", "Research Updates")).strip() or "Research Updates"
-    bullet = f"- {_now_date()}: {description} Source: {source_url}"
-    if bullet in text:
-        session_state.mark_written_key(key)
-        return page_path
-    if f"## {section}" not in text:
-        text = text.rstrip() + f"\n\n## {section}\n\n{bullet}\n"
+    queue_path = _patch_queue_path()
+    queue_path.parent.mkdir(parents=True, exist_ok=True)
+    if queue_path.exists():
+        queue_text = queue_path.read_text(encoding="utf-8")
     else:
-        text = re.sub(
-            rf"(## {re.escape(section)}\n)",
-            rf"\1\n{bullet}\n",
-            text,
-            count=1,
-        )
-    page_path.write_text(text, encoding="utf-8")
+        queue_text = "# Wiki Patch Queue\n\n"
+    entry = (
+        f"## [{_now_date()}] pending | {page_path.name}\n"
+        f"target_page: {page_path.name}\n"
+        f"target_section: {section}\n"
+        f"source: {source_url}\n"
+        f"status: pending_review\n"
+        f"proposed_update: {description}\n"
+    )
+    if entry in queue_text:
+        session_state.mark_written_key(key)
+        return queue_path
+    queue_path.write_text(queue_text.rstrip() + "\n\n" + entry, encoding="utf-8")
     quota.record_page_written()
     session_state.mark_written_key(key)
-    return page_path
+    return queue_path
 
 
 def _update_inbound_links(draft: dict) -> None:
@@ -1112,7 +1211,8 @@ def _run_eval_pipeline(draft: dict) -> tuple[bool, dict]:
 
 def _append_log(session_id: str, pages_written: list[str], audit_path: Path,
                  candidates_found: int, candidates_evaluated: int, query: str,
-                 rejected_by_pipeline: int) -> None:
+                 rejected_by_pipeline: int, theme_profile: dict | None = None,
+                 coverage_gaps: list[str] | None = None) -> None:
     today = _now_date()
     query_trunc = query[:60]
     total = candidates_evaluated
@@ -1126,11 +1226,18 @@ def _append_log(session_id: str, pages_written: list[str], audit_path: Path,
         f"pipeline_rejection_rate: {rate}\n"
         f"audit_file: {audit_path}\n"
     )
+    if theme_profile:
+        entry += (
+            f"theme_profile: {theme_profile.get('theme')} | "
+            f"{theme_profile.get('organization_choice') or theme_profile.get('organization_name')}\n"
+        )
+    if coverage_gaps:
+        entry += "coverage_gaps:\n" + "".join(f"  - {gap}\n" for gap in coverage_gaps[:10])
     with open(_LOG_MD, "a", encoding="utf-8") as f:
         f.write(entry)
 
 
-def _build_page_templates() -> dict:
+def _build_page_templates(page_type_taxonomy: dict | None = None) -> dict:
     """Return generic page templates for eval manifests."""
     entity_template = """\
 ---
@@ -1387,14 +1494,19 @@ scorecard:
 
 <Citations to source URLs or raw files.>
 """
-    return {
+    templates = {
         "entity": entity_template,
         "synthesis": synthesis_template,
+        "source_note": entity_template.replace("type: entity", "type: source_note", 1),
         "hardware_target": hardware_target_template,
         "workload_kernel": workload_kernel_template,
         "optimization_recipe": optimization_recipe_template,
         "benchmark_result": benchmark_result_template,
     }
+    if page_type_taxonomy is None:
+        return templates
+    allowed = set(page_type_taxonomy)
+    return {key: value for key, value in templates.items() if key in allowed}
 
 
 # ---------------------------------------------------------------------------
@@ -1701,6 +1813,7 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
     research_config = _load_research_config()
     qmd_runner = QmdRunner(research_config.get("qmd_command"), cwd=_PROJECT_ROOT)
     audit = AuditLog(session_id, query, scope)
+    _attach_theme_profile(audit, research_config)
     quota = _restore_quota_from_state(session_state)
     pipeline_rejections = sum(
         1 for c in session_state.candidates
@@ -1818,6 +1931,7 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
             "qmd_similarity": {
                 "matches": qmd_matches,
                 "gate_decision": "allow",
+                "merge_hint": similarity.get("merge_hint"),
                 "structured_query": structured_query,
             },
             "wiki_context": {
@@ -1828,9 +1942,12 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
                 "depth": effective_depth,
             },
             "domain_config": {
+                "theme_profile": research_config.get("theme_profile", {}),
                 "preferred_source_types": research_config.get("preferred_source_types", []),
                 "required_measurement_fields": research_config.get("required_measurement_fields", []),
                 "page_type_taxonomy": research_config.get("page_type_taxonomy", {}),
+                "coverage_priorities": research_config.get("coverage_priorities", []),
+                "lint_priorities": research_config.get("lint_priorities", []),
             },
             "scorecard_config": {
                 "variant": "cold_start" if is_cold_start else candidate.get("estimated_type", "entity"),
@@ -1838,7 +1955,7 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
                 "acceptance_threshold": 0.4,
                 "hard_rejection_threshold": 0.2,
             },
-            "page_templates": _build_page_templates(),
+            "page_templates": _build_page_templates(research_config.get("page_type_taxonomy", {})),
         }
 
         ev_idx = audit.record_invocation("evaluation", eval_manifest)
@@ -1881,7 +1998,7 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
         acceptance_threshold = eval_manifest["scorecard_config"].get("acceptance_threshold", 0.4)
         hard_rejection_threshold = eval_manifest["scorecard_config"].get("hard_rejection_threshold", 0.2)
         any_hard_fail = any(
-            (v or 0.0) < hard_rejection_threshold
+            (float(v) or 0.0) < hard_rejection_threshold
             for k, v in eval_sc.items()
             if k not in ("weighted_total", "contradiction_potential") and v is not None
         )
@@ -1967,6 +2084,8 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
         candidates_evaluated=quota._candidates_evaluated,
         query=query,
         rejected_by_pipeline=pipeline_rejections,
+        theme_profile=research_config.get("theme_profile"),
+        coverage_gaps=(gap_manifest.get("gap_types", []) if isinstance(gap_manifest, dict) else []),
     )
 
     summary = {
@@ -1998,9 +2117,11 @@ def run_research_session(query: str, max_candidates: int, max_new_pages: int,
     ok, error = _run_qmd_update(qmd_runner)
     if not ok:
         audit = AuditLog(session_id, query, scope)
+        _attach_theme_profile(audit, research_config)
         return _blocked_qmd_summary(session_state, audit, error, 0, [], 0)
 
     audit = AuditLog(session_id, query, scope)
+    _attach_theme_profile(audit, research_config)
     discovery_history = _load_recent_discovery_history(research_config)
     gap_manifest = build_gap_manifest(_WIKI_PAGES_DIR, research_config)
     keyword_plan = _build_keyword_plan(
@@ -2074,6 +2195,16 @@ def main():
     parser = argparse.ArgumentParser(description="LLM Wiki auto research harness")
     subparsers = parser.add_subparsers(dest="command")
 
+    setup_parser = subparsers.add_parser("setup", help="Configure first-run wiki setup")
+    setup_subparsers = setup_parser.add_subparsers(dest="setup_command")
+    theme_parser = setup_subparsers.add_parser("theme", help="Choose a theme-derived organization profile")
+    theme_parser.add_argument("theme", help="Broad wiki theme, e.g. 'RISC-V AI accelerator'")
+    theme_parser.add_argument(
+        "--choice",
+        help="Organization profile id/name to write. Omit to list options without writing.",
+    )
+    theme_parser.add_argument("--dry-run", action="store_true", help="Show the selected profile without writing")
+
     research_parser = subparsers.add_parser("research", help="Run a research session")
     research_parser.add_argument("--query", help="Research query")
     research_parser.add_argument("--max-candidates", type=int, default=10)
@@ -2083,6 +2214,21 @@ def main():
     research_parser.add_argument("--list-sessions", action="store_true", help="List resumable research sessions")
 
     args = parser.parse_args()
+    if args.command == "setup":
+        if args.setup_command != "theme":
+            setup_parser.print_help()
+            sys.exit(1)
+        if not args.choice:
+            for profile in propose_theme_profiles(args.theme):
+                print(f"{profile['id']}\t{profile['name']}\t{profile['description']}")
+            print("Pass --choice <id> to write the selected profile into CLAUDE.md.")
+            sys.exit(0)
+        try:
+            profile = setup_theme(args.theme, args.choice, write=not args.dry_run)
+        except ValueError as e:
+            theme_parser.error(str(e))
+        print(yaml.dump(profile, sort_keys=False, allow_unicode=True).strip())
+        sys.exit(0)
     if args.command == "research":
         logging.basicConfig(level=logging.WARNING)
         research_config = _load_research_config()

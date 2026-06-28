@@ -162,6 +162,26 @@ def test_similarity_gate_blocks_spacemit_same_family():
     assert decision["reason"] in {"same_product_family", "topic_saturation"}
 
 
+def test_similarity_gate_treats_topic_saturation_as_merge_hint_not_skip():
+    decision = assess_candidate_similarity(
+        {"title": "ProjectNimbus vector optimization guide", "snippet": "compiler recipe"},
+        [
+            QmdMatch(rank=1, file="entity/nimbus_vector.md", score=0.83),
+            QmdMatch(rank=2, file="entity/nimbus_compiler.md", score=0.82),
+            QmdMatch(rank=3, file="entity/nimbus_sdk.md", score=0.81),
+        ],
+        {
+            "topic_similarity_min_score": 0.80,
+            "near_duplicate_score": 0.90,
+            "topic_saturation_hit_threshold": 2,
+        },
+    )
+
+    assert decision["skip"] is False
+    assert decision["merge_hint"] == "topic_saturation"
+    assert decision["reason"] is None
+
+
 def test_qmd_block_stops_before_discovery_or_eval(tmp_path):
     with patch.object(orchestrator, "_generate_session_id", return_value="blocked1"), \
          patch.object(orchestrator, "_load_research_config", return_value={
@@ -380,6 +400,82 @@ def test_keyword_manifest_includes_theme_and_previous_queries(monkeypatch):
     assert captured["previous_search_keywords"] == ["ProjectNimbus docs"]
     assert captured["wiki_topic_summary"] == "Current coverage"
     assert captured["concept_gaps"] == ["Missing API"]
+
+
+def test_load_research_config_merges_selected_theme_profile(tmp_path, monkeypatch):
+    claude = tmp_path / "CLAUDE.md"
+    claude.write_text(
+        "```yaml\n"
+        "[research_config]\n"
+        "topic_saturation_hit_threshold: 2\n"
+        "preferred_source_types:\n"
+        "  - generic source\n"
+        "```\n\n"
+        "```yaml\n"
+        "[theme_profile]\n"
+        "theme: RISC-V AI accelerator\n"
+        "organization_choice: workflow_first\n"
+        "page_types:\n"
+        "  entity: General entity page\n"
+        "  synthesis: Cross-page synthesis\n"
+        "  hardware_target: Hardware or ISA target\n"
+        "  benchmark_result: Measured result\n"
+        "source_preferences:\n"
+        "  - official documentation\n"
+        "  - benchmark repository\n"
+        "coverage_priorities:\n"
+        "  - hardware/software/workload coverage\n"
+        "lint_priorities:\n"
+        "  - benchmark measurement context\n"
+        "```\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(orchestrator, "_CLAUDE_MD", claude)
+
+    config = orchestrator._load_research_config()
+
+    assert config["theme_profile"]["theme"] == "RISC-V AI accelerator"
+    assert "hardware_target" in config["page_type_taxonomy"]
+    assert "benchmark_result" in config["page_type_taxonomy"]
+    assert config["preferred_source_types"] == ["official documentation", "benchmark repository"]
+
+
+def test_write_theme_profile_inserts_selected_profile(tmp_path, monkeypatch):
+    claude = tmp_path / "CLAUDE.md"
+    claude.write_text(
+        "# LLM Wiki\n\n"
+        "```yaml\n"
+        "[research_config]\n"
+        "page_type_taxonomy:\n"
+        "  entity: general concept\n"
+        "  synthesis: cross-page comparison\n"
+        "```\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(orchestrator, "_CLAUDE_MD", claude)
+
+    profile = orchestrator.select_theme_profile("RISC-V AI accelerator", "workflow_first")
+    orchestrator.write_theme_profile(profile)
+
+    text = claude.read_text(encoding="utf-8")
+    assert "[theme_profile]" in text
+    assert "theme: RISC-V AI accelerator" in text
+    assert "organization_choice: workflow_first" in text
+    assert "hardware_target:" in text
+
+
+def test_audit_log_records_theme_profile(tmp_path, monkeypatch):
+    import audit as audit_module
+
+    fake_tools_dir = tmp_path / "tools"
+    fake_tools_dir.mkdir()
+    monkeypatch.setattr(audit_module, "__file__", str(fake_tools_dir / "audit.py"))
+    audit_log = audit_module.AuditLog("sess-theme", "query", {"depth": "shallow"})
+    audit_log.set_theme_profile({"theme": "RISC-V AI accelerator", "organization_choice": "workflow_first"})
+
+    data = json.loads(audit_log.path.read_text(encoding="utf-8"))
+    assert data["theme_profile"]["theme"] == "RISC-V AI accelerator"
+    assert data["theme_profile"]["organization_choice"] == "workflow_first"
 
 
 def test_repo_research_theme_is_clean_and_domain_specific(tmp_path, monkeypatch):
@@ -642,10 +738,12 @@ def test_mocked_research_run_writes_benchmark_and_updates_hardware_page(tmp_path
 
     benchmark_page = pages_dir / "benchmark_result" / "projectnimbus_x9_gemm_benchmark.md"
     hardware_text = (hardware_dir / "projectnimbus_x9.md").read_text(encoding="utf-8")
+    patch_queue_text = (tmp_path / "wiki" / "patch_queue.md").read_text(encoding="utf-8")
 
     assert result["status"] == "complete"
     assert benchmark_page.exists()
-    assert "## Benchmark Evidence" in hardware_text
-    assert "reported GEMM throughput context" in hardware_text
+    assert "## Benchmark Evidence" not in hardware_text
+    assert "target_page: projectnimbus_x9.md" in patch_queue_text
+    assert "reported GEMM throughput context" in patch_queue_text
     assert "evidence_extraction" in audit.invocations[0]["manifest"]
     assert audit.invocations[0]["manifest"]["wiki_context"]["gap_manifest"]["page_count"] >= 1

@@ -405,11 +405,9 @@ synthesis_gap_min_cluster_size: 3   # log synthesis gap if tag cluster has >= th
 domain_stopwords: []                # optional domain terms ignored by duplicate/saturation token overlap
 preferred_source_types:
   - official documentation
-  - ISA specification
-  - compiler documentation
-  - benchmark repository
   - paper
-  - SDK guide
+  - technical report
+  - implementation repository
 required_measurement_fields:
   - hardware_targets
   - workloads
@@ -418,10 +416,7 @@ required_measurement_fields:
 page_type_taxonomy:
   entity: general concept, project, system, chip, or architecture page
   synthesis: cross-page comparison, contradiction, or landscape page
-  hardware_target: ISA/profile, extensions, memory hierarchy, accelerator interfaces, compiler support
-  workload_kernel: operation shape, datatypes, layout, sparsity, model context, baseline implementation
-  optimization_recipe: transformation, prerequisites, expected effect, failure modes, measurements
-  benchmark_result: hardware/software versions, workload, metrics, measurement method, source
+  source_note: source-grounded note used when a source is useful but not yet page-worthy
 ```
 
 ---
@@ -431,6 +426,7 @@ page_type_taxonomy:
 - **Frontmatter is the source of truth for graph structure.** `inbound_links` in frontmatter is canonical. `graph_stats.py` reads frontmatter, not markdown link syntax.
 - **Obsidian compatibility.** Internal links use `[[page_name]]` syntax. No Obsidian-specific syntax in page body.
 - **Version control.** Commit after each ingest. Use the log entry title as the commit message.
-- **qmd BM25 path.** The research harness uses `uv run --no-sync qmd update` before a session and after each successful page write, then gates candidates with `uv run --no-sync qmd search -c _pages --format json`. Do not call `qmd query`, `qmd vsearch`, or `qmd embed` in the default harness path; those paths require embeddings/model setup and may trigger large local downloads. Never use `qmd index` — that command does not exist.
+- **qmd BM25 path.** The research harness uses `uv run --no-sync qmd update` before a session and after each successful page write, then checks candidates with `uv run --no-sync qmd search -c _pages --format json`. Strong duplicate signals may reject a candidate before evaluation; topic saturation is only a merge/update hint. Do not call `qmd query`, `qmd vsearch`, or `qmd embed` in the default harness path; those paths require embeddings/model setup and may trigger large local downloads. Never use `qmd index` — that command does not exist.
+- **Patch queue.** `pages_to_update` proposals are written to `wiki/patch_queue.md` for review instead of being appended directly to target pages.
 - **Research resume state.** Runtime checkpoints live under `wiki/research_state/` and are intentionally ignored by git. Use `research --resume <session_id>` to continue a stopped session and `research --list-sessions` to inspect available checkpoints.
 - **Language handling.** The dangling reference patterns above cover Chinese and English. Extend `[eval_config].dangling_patterns` for other languages.
