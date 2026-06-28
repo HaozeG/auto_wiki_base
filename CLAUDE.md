@@ -380,6 +380,75 @@ spacy_model: en_core_web_sm
 
 ---
 
+## Theme Profile
+
+```yaml
+[theme_profile]
+theme: RISC-V ai accelerator
+organization_choice: workflow_first
+organization_name: Workflow-first
+page_types:
+  entity:
+    description: Specific entity or concept page
+  synthesis:
+    description: Cross-page synthesis or comparison
+  source_note:
+    description: Source-grounded note used when a source is useful but not yet page-worthy
+  hardware_target:
+    description: Hardware or ISA target with memory hierarchy, accelerator, and compiler
+      details
+    structured_fields:
+    - hardware_targets
+    - toolchains
+    - constraints
+  workload_kernel:
+    description: Kernel/workload shape, datatype, layout, sparsity, and baseline implementation
+    structured_fields:
+    - workloads
+    - datatypes
+    - constraints
+  optimization_recipe:
+    description: Transformation, prerequisites, expected effect, failure modes, and
+      measurements
+    structured_fields:
+    - hardware_targets
+    - workloads
+    - datatypes
+    - metrics
+    - toolchains
+  benchmark_result:
+    description: Measured or reported result with hardware/software versions and measurement
+      context
+    structured_fields:
+    - hardware_targets
+    - workloads
+    - datatypes
+    - metrics
+    - toolchains
+    - evidence_strength
+relationship_rules:
+- Prefer explicit bidirectional relationships between specialized pages and their
+  related entity/synthesis pages.
+- Use synthesis pages for cross-page comparisons, contradictions, and landscape-level
+  claims.
+source_preferences:
+- official documentation
+- benchmark repository
+- compiler documentation
+- SDK guide
+- paper
+coverage_priorities:
+- hardware/software/workload coverage
+- measurement context for benchmark results
+- optimization prerequisites and failure modes
+lint_priorities:
+- self-contained opening paragraphs
+- grounded sources for major claims
+- missing cross-references after enough pages accumulate
+- benchmark measurement context
+- hardware-target/workload/recipe relationship coverage
+```
+
 ## Research Configuration
 
 ```yaml
