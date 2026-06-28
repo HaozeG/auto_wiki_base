@@ -14,7 +14,7 @@ constraints:
 created: '2025-03-25'
 hardware_targets:
 - K230
-inbound_links: 0
+inbound_links: 1
 scorecard:
   bridge_score: 0.5
   claim_density: 0.85

@@ -8,7 +8,7 @@ datatypes:
 - double-precision (f64)
 - single-precision (f32)
 - half-precision (f16)
-inbound_links: 20
+inbound_links: 23
 scorecard:
   bridge_score: 0.7
   claim_density: 0.8

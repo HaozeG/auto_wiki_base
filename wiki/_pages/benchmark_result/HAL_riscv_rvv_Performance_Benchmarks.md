@@ -13,6 +13,7 @@ measurement_method: Single-core performance tests using OpenCV's own performance
   1.0.5. Multithreading disabled to isolate RVV 1.0 core capability.
 metrics:
 - performance uplift (mean)
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.7
   claim_density: 0.8

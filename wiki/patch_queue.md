@@ -41,3 +41,17 @@ target_section: Key Claims
 source: https://wiki.sipeed.com/en/
 status: pending_review
 proposed_update: Add claims about the newer MaixCAM and MaixCAM2 models based on the Sipeed Wiki comparison table: MaixCAM2 uses AX630C dual-core ARM A53, 3.2 Tops NPU, 113 FPS YOLO11n 640x640; MaixCAM uses SG2002, 1 Tops NPU, 23 FPS YOLO11n 640x640. Include software support (MaixCDK, MaixPy) and mention the range from MaixCAM2 down to Maix-IV with decreasing capability. Source: https://wiki.sipeed.com/en/
+
+## [2026-06-28] pending | Chiplet_RISC_V_AI_SoC_Benchmark_Results.md
+target_page: Chiplet_RISC_V_AI_SoC_Benchmark_Results.md
+target_section: Sources
+source: https://arxiv.org/html/2306.15552v3
+status: pending_review
+proposed_update: Add reference to survey 'A Survey on Deep Learning Hardware Accelerators for Heterogeneous HPC Platforms' (arXiv:2306.15552) which provides a comprehensive taxonomy including chiplet-based accelerators and RISC-V-based accelerators. This source contextualizes the chiplet architecture within the broader landscape of DL accelerators.
+
+## [2026-06-28] pending | GEMM_with_RISC-V_Vector_Extension.md
+target_page: GEMM_with_RISC-V_Vector_Extension.md
+target_section: Sources
+source: https://arxiv.org/html/2306.15552v3
+status: pending_review
+proposed_update: Add reference to survey 'A Survey on Deep Learning Hardware Accelerators for Heterogeneous HPC Platforms' (arXiv:2306.15552) which covers RISC-V-based accelerators as part of a broader taxonomy of DL hardware accelerators. This provides context for the RISC-V vector GEMM implementation.

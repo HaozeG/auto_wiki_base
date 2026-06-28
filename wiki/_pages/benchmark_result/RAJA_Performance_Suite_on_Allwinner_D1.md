@@ -12,6 +12,7 @@ measurement_method: Benchmarks executed on the Allwinner D1 board using vendor-p
   compiler, comparing vectorised vs. scalar execution to measure speedup.
 metrics:
 - vectorisation speedup
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.6
   claim_density: 0.6

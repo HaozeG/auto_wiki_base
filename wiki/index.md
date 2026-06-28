@@ -4,12 +4,13 @@
 
 **Organization**: Workflow-first — pages are typed as `hardware_target`, `workload_kernel`, `optimization_recipe`, `benchmark_result`, `entity`, or `synthesis`.
 
-Last updated: 2026-06-28 | Pages: 84 | Sources: 0
+Last updated: 2026-06-29 | Pages: 91 | Sources: 0
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [APS_Framework.md](entity/APS_Framework.md) | APS Framework | RISC-V, MLIR, hardware-software co-design, processor specialization, EDA | 1 | 0 |
 | [SpacemiT.md](entity/SpacemiT.md) | SpacemiT | SpacemiT, RISC-V, AI accelerator, K1, K3 | 1 | 0 |
 | [Sipeed.md](entity/Sipeed.md) | Sipeed | Sipeed, RISC-V, AI, FPGA, SBC, development_board | 1 | 0 |
 | [Kendryte_K230.md](entity/Kendryte_K230.md) | Kendryte K230 | RISC-V, AI, SoC, Kendryte, K230, AIoT | 1 | 0 |
@@ -45,6 +46,8 @@ Last updated: 2026-06-28 | Pages: 84 | Sources: 0
 
 | Page | Connected Entities | Status | Inbound |
 |------|--------------------|--------|---------|
+| [RISC-V_ML_Inference_Toolchain_Landscape.md](synthesis/RISC-V_ML_Inference_Toolchain_Landscape.md) | IREE, ncnn, onnxruntime-riscv, ONNX_Runtime_Build_for_Inferencing, llama-cpp-mini, tvmonriscv, GEMM_with_RISC-V_Vector_Extension, QiMeng_TensorOp, XuanTie_GNU_Toolchain, Seal5 | active | 0 |
+| [RISC-V_AI_Hardware_Target_Taxonomy.md](synthesis/RISC-V_AI_Hardware_Target_Taxonomy.md) | XuanTie_C908, XuanTie_C910, SpacemiT_KeyStone_K1, MilkV_Pioneer, SiFive_Intelligence_X390, GAP8_PULP_Processor, Kendryte_K210, Gemmini_Architecture, Sipeed_LicheePi_4A, Kendryte_K230_SoC, SiFive_Performance_P870, Ara_simulator | active | 0 |
 
 ## Concept Index
 
@@ -53,6 +56,10 @@ Last updated: 2026-06-28 | Pages: 84 | Sources: 0
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [FPGA_RISC-V_ISA_Extensions_Optimization_Recipe.md](optimization_recipe/FPGA_RISC-V_ISA_Extensions_Optimization_Recipe.md) | optimization_recipe | FPGA RISC-V ISA Extensions Optimization Recipe | RISC-V, FPGA, PYNQ-Z2, custom ISA, neural network inference, edge AI | 1 | 0 |
+| [FPGA_RISC-V_ISA_Extensions_Benchmark_Results.md](benchmark_result/FPGA_RISC-V_ISA_Extensions_Benchmark_Results.md) | benchmark_result | FPGA RISC-V ISA Extensions Benchmark Results | RISC-V, FPGA, PYNQ-Z2, neural network inference, edge AI | 1 | 0 |
+| [Custom_RISC-V_Core_PYNQ-Z2.md](hardware_target/Custom_RISC-V_Core_PYNQ-Z2.md) | hardware_target | Custom RISC-V Core PYNQ-Z2 | RISC-V, FPGA, PYNQ-Z2, custom ISA, edge AI | 1 | 0 |
+| [Jetson_Orin_Nano_YOLOv8n_INT8_Benchmark.md](benchmark_result/Jetson_Orin_Nano_YOLOv8n_INT8_Benchmark.md) | benchmark_result | Jetson Orin Nano YOLOv8n INT8 vs FP32 Benchmark | yolo, yolov8, tensorrt, ultralytics, jetson orin nano, int8 quantization | 1 | 0 |
 | [SpacemiT_KeyStone_K1.md](hardware_target/SpacemiT_KeyStone_K1.md) | hardware_target | SpacemiT KeyStone K1 | RISC-V, SpacemiT, KeyStone K1, X60 | 1 | 0 |
 | [Kendryte_K230_SoC.md](hardware_target/Kendryte_K230_SoC.md) | hardware_target | Kendryte K230 SoC | RISC-V, AIoT, Kendryte, K230 | 1 | 0 |
 | [BLAS_Band_Matrix_Optimization_for_RISC-V.md](optimization_recipe/BLAS_Band_Matrix_Optimization_for_RISC-V.md) | optimization_recipe | BLAS Band Matrix Optimization for RISC-V | BLAS, band matrix, RISC-V, RVV, vectorization | 1 | 0 |

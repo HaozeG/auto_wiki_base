@@ -14,7 +14,7 @@ constraints:
 created: '2025-03-05'
 hardware_targets:
 - XuanTie C908
-inbound_links: 1
+inbound_links: 2
 scorecard:
   bridge_score: 0.7
   claim_density: 0.9

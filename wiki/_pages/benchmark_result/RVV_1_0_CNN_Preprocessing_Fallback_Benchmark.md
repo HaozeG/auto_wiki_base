@@ -15,6 +15,7 @@ measurement_method: Experimental results reported in paper; specific measurement
   but system-level simulation details are not provided.
 metrics:
 - speedup
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.7
   claim_density: 0.75

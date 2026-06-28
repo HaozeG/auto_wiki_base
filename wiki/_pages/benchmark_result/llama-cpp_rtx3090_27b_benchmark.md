@@ -8,13 +8,14 @@ hardware_targets:
 - NVIDIA RTX 3090
 hardware_versions:
 - RTX 3090
-inbound_links: 0
+inbound_links: 1
 measurement_method: Measured by the author on an RTX 3090 with a 27B model. Load time,
   token generation speed, and prompt processing speed recorded before and after optimizations.
 metrics:
 - load time
 - token generation speed
 - prompt processing speed
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.8
   claim_density: 0.9

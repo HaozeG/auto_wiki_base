@@ -18,6 +18,7 @@ metrics:
 - BRAM utilization
 - DSP utilization
 - worst negative slack
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.9
   claim_density: 0.9

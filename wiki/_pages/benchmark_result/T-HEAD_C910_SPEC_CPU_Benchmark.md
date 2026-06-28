@@ -15,6 +15,7 @@ measurement_method: SPEC CPU benchmark suite run on the board at 2GHz frequency 
 metrics:
 - SPEC score (GEOMEAN)
 - SPEC rate
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.6
   claim_density: 0.9

@@ -17,6 +17,7 @@ metrics:
 - load time
 - prefill speed
 - decode speed
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.5
   claim_density: 0.9

@@ -19,6 +19,7 @@ metrics:
 - energy reduction
 - resource utilization
 - timing slack
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.8
   claim_density: 0.9

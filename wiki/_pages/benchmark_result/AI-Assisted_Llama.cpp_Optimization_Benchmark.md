@@ -23,6 +23,7 @@ metrics:
 - tokens per second (generation)
 - GPU utilization
 - VRAM usage
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.4
   claim_density: 0.9

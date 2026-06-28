@@ -8,7 +8,7 @@ created: '2025-03-04'
 hardware_targets:
 - Ara
 - RISC-V Vector Extension v1.0
-inbound_links: 0
+inbound_links: 1
 scorecard:
   bridge_score: 0.7
   claim_density: 0.8

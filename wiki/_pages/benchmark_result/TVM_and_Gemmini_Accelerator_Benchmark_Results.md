@@ -14,6 +14,7 @@ measurement_method: Peak throughput measured at 100 MHz clock on Xilinx ZCU102 F
   default hand-tuned schedules.
 metrics:
 - throughput (GOPs)
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.6
   claim_density: 0.8

@@ -18,6 +18,7 @@ metrics:
 - perplexity
 - file size
 - bits per weight (BPW)
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.7
   claim_density: 0.8

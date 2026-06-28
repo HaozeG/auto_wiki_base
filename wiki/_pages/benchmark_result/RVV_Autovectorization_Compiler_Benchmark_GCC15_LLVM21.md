@@ -18,6 +18,7 @@ metrics:
 - throughput (instructions/cycle)
 - overhead percentage
 - speedup factor
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.8
   claim_density: 0.8

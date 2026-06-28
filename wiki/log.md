@@ -203,3 +203,44 @@ pages_written: 6
 pipeline_rejection_rate: 0%
 audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_454306a6_2026-06-28.json
 theme_profile: RISC-V ai accelerator | workflow_first
+
+## [2026-06-28] research | RISC-V AI inference benchmark comparison survey 2024 XuanTie
+session_id: 41c1b0d5
+candidates_evaluated: 9
+pages_written: 2
+pipeline_rejection_rate: 0%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_41c1b0d5_2026-06-28.json
+theme_profile: RISC-V ai accelerator | workflow_first
+
+## [2026-06-28] research | RISC-V vector RVV convolution depthwise separable CNN worklo
+session_id: 2dcbe256
+candidates_evaluated: 9
+pages_written: 4
+pipeline_rejection_rate: 0%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_2dcbe256_2026-06-28.json
+theme_profile: RISC-V ai accelerator | workflow_first
+
+## [2026-06-29] ingest | synthesis | RISC-V ML Inference Toolchain Landscape
+pages_created: [synthesis/RISC-V_ML_Inference_Toolchain_Landscape.md]
+pages_updated: []
+pages_deferred: []
+cold_start: true
+connected_entities: [IREE, ncnn, onnxruntime-riscv, ONNX_Runtime_Build_for_Inferencing, llama-cpp-mini, tvmonriscv, GEMM_with_RISC-V_Vector_Extension, QiMeng_TensorOp, XuanTie_GNU_Toolchain, Seal5]
+inbound_links_updated: 10 pages
+
+## [2026-06-29] ingest | synthesis | RISC-V AI Hardware Target Taxonomy
+pages_created: [synthesis/RISC-V_AI_Hardware_Target_Taxonomy.md]
+pages_updated: []
+pages_deferred: []
+cold_start: true
+connected_entities: [XuanTie_C908, XuanTie_C910, SpacemiT_KeyStone_K1, MilkV_Pioneer, SiFive_Intelligence_X390, GAP8_PULP_Processor, Kendryte_K210, Gemmini_Architecture, Sipeed_LicheePi_4A, Kendryte_K230_SoC, SiFive_Performance_P870, Ara_simulator]
+inbound_links_updated: 12 pages
+
+## [2026-06-29] transition | cold_start → mature
+pages_at_transition: 91
+mean_inbound_links: 2.033
+
+## [2026-06-29] lint | retrospective
+issues_found: 60
+actions_taken: [wrote retrospective_lint_report.md, synthesis pages eval-approved]
+deferred_for_human: [42 orphan pages, 17 needs_summary_revision pages, 5 merge candidates, 1 off-topic benchmark, 1 RVV version contradiction]

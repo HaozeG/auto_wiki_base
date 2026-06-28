@@ -12,7 +12,7 @@ hardware_versions:
 - Xilinx Artix-7
 - 28nm ASIC
 - 40nm ASIC
-inbound_links: 8
+inbound_links: 9
 measurement_method: FPGA measurements (speedup, data movement); ASIC synthesis (area,
   power)
 metrics:
@@ -20,6 +20,7 @@ metrics:
 - data movement reduction
 - area
 - power
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.6
   claim_density: 0.9

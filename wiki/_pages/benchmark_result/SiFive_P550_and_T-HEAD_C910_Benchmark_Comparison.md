@@ -18,6 +18,7 @@ metrics:
 - IPC
 - throughput
 - time
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.8
   claim_density: 0.9

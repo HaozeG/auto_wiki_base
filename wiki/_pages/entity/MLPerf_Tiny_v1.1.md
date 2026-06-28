@@ -2,6 +2,7 @@
 cold_start: true
 created: '2025-09-18'
 inbound_links: 0
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.4
   claim_density: 0.3

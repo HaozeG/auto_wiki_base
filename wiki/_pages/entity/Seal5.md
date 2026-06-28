@@ -1,7 +1,7 @@
 ---
 cold_start: true
 created: YYYY-MM-DD
-inbound_links: 0
+inbound_links: 1
 scorecard:
   bridge_score: 0.8
   claim_density: 0.8

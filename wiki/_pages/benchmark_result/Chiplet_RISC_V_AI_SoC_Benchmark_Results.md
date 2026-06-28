@@ -19,6 +19,7 @@ metrics:
 - power
 - energy
 - efficiency
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.8
   claim_density: 0.8
