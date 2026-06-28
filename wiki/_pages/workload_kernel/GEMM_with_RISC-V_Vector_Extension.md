@@ -8,7 +8,7 @@ datatypes:
 - double-precision (f64)
 - single-precision (f32)
 - half-precision (f16)
-inbound_links: 1
+inbound_links: 7
 scorecard:
   bridge_score: 0.7
   claim_density: 0.8
@@ -27,7 +27,7 @@ type: workload_kernel
 updated: '2026-06-28'
 workloads:
 - GEMM
-------
+------------------------
 
 # GEMM with RISC-V Vector Extension
 

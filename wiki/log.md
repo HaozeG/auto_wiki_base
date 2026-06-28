@@ -49,3 +49,29 @@ audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/res
 theme_profile: RISC-V ai accelerator | workflow_first
 coverage_gaps:
   - missing_page_type:benchmark_result
+
+## [2026-06-28] research | RISC-V AI inference compiler LLVM TVM IREE ONNX Runtime tool
+session_id: 16583ce9
+candidates_evaluated: 7
+pages_written: 5
+pipeline_rejection_rate: 14%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_16583ce9_2026-06-28.json
+theme_profile: RISC-V ai accelerator | workflow_first
+coverage_gaps:
+  - missing_page_type:benchmark_result
+
+## [2026-06-28] research | RISC-V transformer attention inference LLM quantization acce
+session_id: 13ec62bc
+candidates_evaluated: 7
+pages_written: 5
+pipeline_rejection_rate: 0%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_13ec62bc_2026-06-28.json
+theme_profile: RISC-V ai accelerator | workflow_first
+
+## [2026-06-28] research | SpacemiT T-Head SiFive RISC-V AI SoC inference performance 2
+session_id: aa54b157
+candidates_evaluated: 10
+pages_written: 5
+pipeline_rejection_rate: 10%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_aa54b157_2026-06-28.json
+theme_profile: RISC-V ai accelerator | workflow_first
