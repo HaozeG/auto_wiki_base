@@ -44,7 +44,7 @@ type: benchmark_result
 updated: '2026-06-28'
 workloads:
 - Depthwise Separable Convolution (DSC)
----------------------
+---
 
 # DSC Fused Dataflow Benchmark Results
 

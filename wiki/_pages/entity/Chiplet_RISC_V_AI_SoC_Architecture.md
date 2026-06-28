@@ -19,7 +19,7 @@ tags:
 - edge AI
 type: entity
 updated: '2026-06-28'
----------
+---
 
 # Chiplet-Based RISC-V SoC with Modular AI Acceleration
 

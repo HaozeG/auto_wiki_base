@@ -38,7 +38,7 @@ type: benchmark_result
 updated: '2026-06-28'
 workloads:
 - GEMM
----------------
+---
 
 # TVM and Gemmini Accelerator Benchmark Results
 

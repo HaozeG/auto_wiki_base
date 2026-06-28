@@ -32,7 +32,7 @@ tags:
 toolchains: []
 type: hardware_target
 updated: '2026-06-28'
-------
+---
 
 # XuanTie C908
 

@@ -36,7 +36,7 @@ toolchains:
 - TVM
 type: hardware_target
 updated: '2026-06-28'
-------
+---
 
 # Gemmini Architecture
 

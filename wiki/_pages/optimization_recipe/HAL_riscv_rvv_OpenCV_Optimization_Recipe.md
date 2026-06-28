@@ -34,7 +34,7 @@ type: optimization_recipe
 updated: '2026-06-28'
 workloads:
 - OpenCV image processing kernels (119 functions)
----------
+---
 
 # HAL riscv-rvv OpenCV Optimization Recipe
 

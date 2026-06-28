@@ -26,7 +26,7 @@ toolchains:
 - Xuantie-900-gcc (vendor-provided)
 type: hardware_target
 updated: '2026-06-28'
----------------
+---
 
 # XuanTie C906
 

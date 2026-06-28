@@ -41,7 +41,7 @@ workloads:
 - MobileNetV2
 - ResNet-50
 - real-time video processing
-------------
+---
 
 # Chiplet-Based RISC-V AI SoC Benchmark Results
 

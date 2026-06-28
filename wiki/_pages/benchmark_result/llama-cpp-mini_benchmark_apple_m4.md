@@ -41,7 +41,7 @@ type: benchmark_result
 updated: '2026-06-28'
 workloads:
 - LLM inference (Llama 3.2 1B)
-------
+---
 
 
 # llama-cpp-mini Benchmark on Apple M4

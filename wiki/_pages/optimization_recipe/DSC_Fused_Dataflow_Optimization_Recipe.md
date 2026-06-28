@@ -34,7 +34,7 @@ type: optimization_recipe
 updated: '2026-06-28'
 workloads:
 - Depthwise Separable Convolution (DSC)
----------------
+---
 
 # Fused Pixel-wise Dataflow for TinyML Depthwise Separable Convolutions (DSC)
 

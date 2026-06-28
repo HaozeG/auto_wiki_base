@@ -28,7 +28,7 @@ tags:
 toolchains: []
 type: hardware_target
 updated: '2026-06-28'
-------
+---
 
 # GAP8 Parallel Ultra-Low Power Platform (PULP)
 

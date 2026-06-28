@@ -42,7 +42,7 @@ workloads:
 - 7-Zip
 - SHA256
 - x264
----------
+---
 
 # SiFive P550 and T-HEAD C910 Benchmark Comparison
 

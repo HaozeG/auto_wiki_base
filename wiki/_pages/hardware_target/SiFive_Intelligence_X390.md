@@ -29,7 +29,7 @@ tags:
 toolchains: []
 type: hardware_target
 updated: '2026-06-28'
-------------------
+---
 
 # SiFive Intelligence X390
 

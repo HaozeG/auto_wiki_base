@@ -37,7 +37,7 @@ type: optimization_recipe
 updated: '2026-06-28'
 workloads:
 - LLM inference (Llama 3.2 1B)
-------
+---
 
 # Q4X Quantization Optimization Recipe
 The Q4X quantization optimization recipe describes the codebook-based quantization technique designed for efficient LLM inference on RISC-V vector CPUs. The technique leverages a 64-element codebook stored in the CPU register file during dequantization, reducing far-memory accesses. It is integrated into the Llama.cpp framework through hardware-friendly data packing and cache-aware vectorized kernels optimized for the RISC-V Vector Extension (RVV). Measurements on a Milk-V Jupiter board with an 8-core RISC-V CPU show that Q4X (4.28 bits per weight) achieves better token throughput and model size compared to the built-in Q40 and Q4K methods, with a prefill throughput of 8.64 tokens/s and decode throughput of 5.29 tokens/s on Llama 3.2 1B.

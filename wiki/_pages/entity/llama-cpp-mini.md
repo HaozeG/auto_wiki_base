@@ -18,7 +18,7 @@ tags:
 - C++
 type: entity
 updated: '2026-06-28'
-------
+---
 
 
 # llama-cpp-mini

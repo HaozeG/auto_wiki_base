@@ -47,7 +47,7 @@ workloads:
 - ResNet-18
 - EfficientNet Lite
 - YOLO Tiny
-------
+---
 
 # PYNQ-Z2 RISC-V CNN ISA Extensions Benchmark
 

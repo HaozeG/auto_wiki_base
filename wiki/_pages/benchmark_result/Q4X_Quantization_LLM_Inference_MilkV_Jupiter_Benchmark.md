@@ -43,7 +43,7 @@ type: benchmark_result
 updated: '2026-06-28'
 workloads:
 - LLM inference (Llama 3.2 1B)
----------------
+---
 
 # Q4X Quantization LLM Inference Milk-V Jupiter Benchmark
 

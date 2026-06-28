@@ -26,7 +26,7 @@ toolchains:
 - Clang (BSC modified)
 type: hardware_target
 updated: '2026-06-28'
-------------------------
+---
 
 # fpga-sdv RISC-V Vector Cluster
 

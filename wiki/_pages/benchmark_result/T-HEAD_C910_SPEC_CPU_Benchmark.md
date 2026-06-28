@@ -41,7 +41,7 @@ updated: '2026-06-28'
 workloads:
 - SPEC CPU 2006 INT
 - SPEC CPU 2017 INT Rate
----------------------------------------------------
+---
 
 # T-HEAD C910 SPEC CPU Benchmark
 

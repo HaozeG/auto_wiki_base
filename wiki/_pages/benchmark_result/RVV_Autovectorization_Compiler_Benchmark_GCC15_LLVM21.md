@@ -46,7 +46,7 @@ workloads:
 - RVV stride/unit-stride load microbenchmarks
 - HPC proxy applications (SGEMM, DGEMM, Qsim)
 - ML proxy applications
-------
+---
 
 # RVV Autovectorization Compiler Benchmark (GCC15 vs LLVM21)
 

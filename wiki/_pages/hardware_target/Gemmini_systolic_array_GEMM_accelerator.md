@@ -33,7 +33,7 @@ toolchains:
 - GNU
 type: hardware_target
 updated: '2026-06-28'
-------------------------
+---
 
 # Gemmini (systolic array GEMM accelerator)
 

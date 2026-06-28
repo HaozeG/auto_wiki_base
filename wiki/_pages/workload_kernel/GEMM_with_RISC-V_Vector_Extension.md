@@ -27,7 +27,7 @@ type: workload_kernel
 updated: '2026-06-28'
 workloads:
 - GEMM
----------------------------------------------------------------
+---
 
 # GEMM with RISC-V Vector Extension
 

@@ -37,7 +37,7 @@ updated: '2026-06-28'
 workloads:
 - HPC proxy applications
 - ML proxy applications
-------------------
+---
 
 # RVV Autovectorization Optimization Insights
 

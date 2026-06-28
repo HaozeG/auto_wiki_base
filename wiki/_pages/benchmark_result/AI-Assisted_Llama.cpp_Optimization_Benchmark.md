@@ -52,7 +52,7 @@ type: benchmark_result
 updated: '2026-06-28'
 workloads:
 - LLM inference (Qwen3-30B-A3B 4-bit quantized)
-------
+---
 
 # AI-Assisted Llama.cpp Optimization Benchmark
 
