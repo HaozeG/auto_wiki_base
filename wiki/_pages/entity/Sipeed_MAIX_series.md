@@ -1,7 +1,7 @@
 ---
 cold_start: true
 created: YYYY-MM-DD
-inbound_links: 20
+inbound_links: 28
 scorecard:
   bridge_score: 0.5
   claim_density: 0.8
@@ -17,7 +17,7 @@ tags:
 - development_board
 type: entity
 updated: '2026-06-28'
----------------------------------------------------------------
+---------------------------------------------------------------------------------------
 
 # Sipeed MAIX series
 

@@ -4,12 +4,24 @@
 
 **Organization**: Workflow-first — pages are typed as `hardware_target`, `workload_kernel`, `optimization_recipe`, `benchmark_result`, `entity`, or `synthesis`.
 
-Last updated: 2026-06-28 | Pages: 27 | Sources: 0
+Last updated: 2026-06-28 | Pages: 62 | Sources: 0
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [RISC-V_Vector_Extension.md](entity/RISC-V_Vector_Extension.md) | RISC-V Vector Extension | RISC-V, vector extension, ISA, RVV 1.0 | 1 | 0 |
+| [RVV_1_0_Programming.md](entity/RVV_1_0_Programming.md) | RISC-V Vector Programming with RVV 1.0 | RVV, vector programming, RISC-V, VLA | 1 | 0 |
+| [T-Head_Open_Chip_Community.md](entity/T-Head_Open_Chip_Community.md) | T-Head Open Chip Community (OCC) | T-HEAD, RISC-V, Open Chip Community, OCC, Alibaba | 1 | 0 |
+| [QiMeng_TensorOp.md](entity/QiMeng_TensorOp.md) | QiMeng-TensorOp | tensor operator, LLM, auto-generation, hardware primitive, GEMM, convolution | 1 | 0 |
+| [MLPerf_Tiny_v1.1.md](entity/MLPerf_Tiny_v1.1.md) | MLPerf Tiny v1.1 | MLPerf, TinyML, benchmark, v1.1 | 2 | 0 |
+| [Chiplet_RISC_V_AI_SoC_Architecture.md](entity/Chiplet_RISC_V_AI_SoC_Architecture.md) | Chiplet-Based RISC-V SoC with Modular AI Acceleration | RISC-V, chiplet, AI accelerator, UCIe, DVFS, edge AI | 1 | 0 |
+| [LLM_Performance_Model_Prefill_Decode_Estimator.md](entity/LLM_Performance_Model_Prefill_Decode_Estimator.md) | LLM Performance Model — Prefill & Decode Estimator | LLM inference, roofline model, prefill, decode, performance estimation | 1 | 0 |
+| [Codasip_Re-targetable_LLVM_Compiler.md](entity/Codasip_Re-targetable_LLVM_Compiler.md) | Codasip Re-targetable LLVM Compiler |  | 1 | 0 |
+| [Seal5.md](entity/Seal5.md) | Seal5 | RISC-V, LLVM, compiler, ISA extension, automation | 2 | 0 |
+| [XuanTie_GNU_Toolchain.md](entity/XuanTie_GNU_Toolchain.md) | XuanTie GNU Toolchain | Xuantie, GNU, toolchain, RISC-V | 1 | 0 |
+| [Gemmini.md](entity/Gemmini.md) | Gemmini | RISC-V, DNN, accelerator, Chipyard, Chisel | 1 | 0 |
+| [KPU_Knowledge_Processing_Unit.md](entity/KPU_Knowledge_Processing_Unit.md) | KPU (Knowledge Processing Unit) | RISC-V, AI, accelerator, K230, Kendryte, edge_computing | 1 | 0 |
 | [XuanTie_C908.md](entity/XuanTie_C908.md) | XuanTie C908 | RISC-V, T-Head, XuanTie, AIoT, processor | 1 | 0 |
 | [Kendryte_K510.md](entity/Kendryte_K510.md) | Kendryte K510 | RISC-V, AI, edge_computing, accelerator, Canaan | 1 | 0 |
 | [RVLLM-Bench.md](entity/RVLLM-Bench.md) | RVLLM-Bench | RISC-V, LLM, benchmark, RVV, inference | 1 | 0 |
@@ -34,6 +46,29 @@ Last updated: 2026-06-28 | Pages: 27 | Sources: 0
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [HAL_riscv_rvv_Performance_Benchmarks.md](benchmark_result/HAL_riscv_rvv_Performance_Benchmarks.md) | benchmark_result | HAL riscv-rvv Performance Benchmarks | OpenCV, HAL, RVV 1.0, RISC-V, benchmark, SpacemiT | 1 | 0 |
+| [HAL_riscv_rvv_OpenCV_Optimization_Recipe.md](optimization_recipe/HAL_riscv_rvv_OpenCV_Optimization_Recipe.md) | optimization_recipe | HAL riscv-rvv OpenCV Optimization Recipe | OpenCV, HAL, RVV 1.0, RISC-V, SpacemiT | 1 | 0 |
+| [Gemmini_Architecture.md](hardware_target/Gemmini_Architecture.md) | hardware_target | Gemmini Architecture | Gemmini, DNN accelerator, full-stack, RISC-V, systolic array, vector array, hardware generator | 1 | 0 |
+| [TVM_and_Gemmini_Accelerator_Benchmark_Results.md](benchmark_result/TVM_and_Gemmini_Accelerator_Benchmark_Results.md) | benchmark_result | TVM and Gemmini Accelerator Benchmark Results | TVM, Gemmini, GEMM, FPGA, Xilinx ZCU102, systolic array, hardware accelerator | 1 | 0 |
+| [Chiplet_RISC_V_AI_SoC_Benchmark_Results.md](benchmark_result/Chiplet_RISC_V_AI_SoC_Benchmark_Results.md) | benchmark_result | Chiplet-Based RISC-V AI SoC Benchmark Results | RISC-V, chiplet, AI accelerator, MobileNetV2, ResNet-50 | 1 | 0 |
+| [FPGA_Accelerated_RISC-V_CNN_ISA_Extensions_Recipe.md](optimization_recipe/FPGA_Accelerated_RISC-V_CNN_ISA_Extensions_Recipe.md) | optimization_recipe | FPGA-Accelerated RISC-V ISA Extensions for CNN Inference | RISC-V, FPGA, PYNQ-Z2, CNN, ISA extension, neural network, edge AI, custom instruction | 1 | 0 |
+| [PYNQ-Z2_RISC-V_CNN_ISA_Extensions_Benchmark.md](benchmark_result/PYNQ-Z2_RISC-V_CNN_ISA_Extensions_Benchmark.md) | benchmark_result | PYNQ-Z2 RISC-V CNN ISA Extensions Benchmark | RISC-V, FPGA, PYNQ-Z2, CNN, ISA extension, neural network, edge AI | 1 | 0 |
+| [DSC_Fused_Dataflow_Benchmark_Results.md](benchmark_result/DSC_Fused_Dataflow_Benchmark_Results.md) | benchmark_result | DSC Fused Dataflow Benchmark Results | TinyML, DSC, fused dataflow, zero-buffer, RISC-V, CFU, FPGA | 1 | 0 |
+| [DSC_Fused_Dataflow_Optimization_Recipe.md](optimization_recipe/DSC_Fused_Dataflow_Optimization_Recipe.md) | optimization_recipe | Fused Pixel-wise Dataflow for TinyML Depthwise Separable Convolutions (DSC) | TinyML, DSC, fused dataflow, zero-buffer, RISC-V, CFU | 1 | 0 |
+| [XuanTie_C910.md](hardware_target/XuanTie_C910.md) | hardware_target | XuanTie C910 | RISC-V, T-HEAD, out-of-order, RVV, Alibaba, XuanTie, C910 | 1 | 0 |
+| [XuanTie_C908_SHL_GEMM_Optimization.md](optimization_recipe/XuanTie_C908_SHL_GEMM_Optimization.md) | optimization_recipe | XuanTie C908 SHL GEMM Optimization | XuanTie, C908, GEMM, SHL, optimization | 1 | 0 |
+| [SiFive_P550_and_T-HEAD_C910_Benchmark_Comparison.md](benchmark_result/SiFive_P550_and_T-HEAD_C910_Benchmark_Comparison.md) | benchmark_result | SiFive P550 and T-HEAD C910 Benchmark Comparison | RISC-V, P550, C910, SPEC, benchmark | 1 | 0 |
+| [XuanTie_C908.md](hardware_target/XuanTie_C908.md) | hardware_target | XuanTie C908 | RISC-V, T-Head, XuanTie, vector, AIoT | 1 | 0 |
+| [IntrinTrans_LLM_Intrinsic_Translator.md](optimization_recipe/IntrinTrans_LLM_Intrinsic_Translator.md) | optimization_recipe | IntrinTrans: LLM-based Intrinsic Code Translator for RISC-V Vector | RISC-V, LLM, intrinsic, translation, vector | 1 | 0 |
+| [RVV_Autovectorization_Optimization_Insights.md](optimization_recipe/RVV_Autovectorization_Optimization_Insights.md) | optimization_recipe | RVV Autovectorization Optimization Insights | RVV, autovectorization, GCC 15, LLVM 21, optimization insight | 1 | 0 |
+| [RVV_Autovectorization_Compiler_Benchmark_GCC15_LLVM21.md](benchmark_result/RVV_Autovectorization_Compiler_Benchmark_GCC15_LLVM21.md) | benchmark_result | RVV Autovectorization Compiler Benchmark (GCC15 vs LLVM21) | RVV, compiler autovectorization, GCC 15, LLVM 21, RISC-V vector | 1 | 0 |
+| [RAJA_Performance_Suite_on_Allwinner_D1.md](benchmark_result/RAJA_Performance_Suite_on_Allwinner_D1.md) | benchmark_result | RAJA Performance Suite on Allwinner D1 | RISC-V, RVV, Allwinner D1, XuanTie C906, RAJA Performance Suite | 1 | 0 |
+| [XuanTie_C906.md](hardware_target/XuanTie_C906.md) | hardware_target | XuanTie C906 | RISC-V, T-Head, vector, RVV, Allwinner D1 | 1 | 0 |
+| [Gemmini_systolic_array_GEMM_accelerator.md](hardware_target/Gemmini_systolic_array_GEMM_accelerator.md) | hardware_target | Gemmini (systolic array GEMM accelerator) | Gemmini, systolic array, GEMM, RoCC, Chipyard, RISC-V accelerator | 1 | 0 |
+| [RISC-V_Predictable_Multicore_Vector_Processor.md](hardware_target/RISC-V_Predictable_Multicore_Vector_Processor.md) | hardware_target | RISC-V Predictable Multicore Vector Processor | RISC-V, vector processor, real-time, neural network, predictable execution, Vicuna | 1 | 0 |
+| [SiFive_Intelligence_X280.md](hardware_target/SiFive_Intelligence_X280.md) | hardware_target | SiFive Intelligence X280 | RISC-V, SiFive, AI, vector, VCIX | 1 | 0 |
+| [SiFive_Intelligence_X280_Gen_2.md](hardware_target/SiFive_Intelligence_X280_Gen_2.md) | hardware_target | SiFive Intelligence X280 Gen 2 | RISC-V, SiFive, AI, vector, edge_computing | 1 | 0 |
+| [Kendryte_K230.md](hardware_target/Kendryte_K230.md) | hardware_target | Kendryte K230 | RISC-V, AIoT, Kendryte, K230, NPU | 1 | 0 |
 | [SiFive_Performance_P870.md](hardware_target/SiFive_Performance_P870.md) | hardware_target | SiFive Performance P870 | RISC-V, SiFive, HPC, data center, out-of-order | 1 | 0 |
 | [SiFive_Intelligence_X390.md](hardware_target/SiFive_Intelligence_X390.md) | hardware_target | SiFive Intelligence X390 | RISC-V, SiFive, AI, machine learning, vector | 1 | 0 |
 | [DC-ROMA_AI_PC_Benchmarks.md](benchmark_result/DC-ROMA_AI_PC_Benchmarks.md) | benchmark_result | DC-ROMA AI PC Benchmarks | RISC-V, SiFive P550, DC-ROMA, benchmark, Geekbench, HPL, iozone, iperf3, glmark2 | 1 | 0 |

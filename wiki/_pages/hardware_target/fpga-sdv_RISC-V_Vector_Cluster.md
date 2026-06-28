@@ -8,7 +8,7 @@ constraints:
 created: '2025-03-04'
 hardware_targets:
 - fpga-sdv cluster
-inbound_links: 6
+inbound_links: 9
 scorecard:
   bridge_score: 0.8
   claim_density: 0.8
@@ -26,7 +26,7 @@ toolchains:
 - Clang (BSC modified)
 type: hardware_target
 updated: '2026-06-28'
----------------
+------------------------
 
 # fpga-sdv RISC-V Vector Cluster
 

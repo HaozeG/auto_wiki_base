@@ -11,7 +11,7 @@ constraints:
 created: YYYY-MM-DD
 hardware_targets:
 - SiFive Intelligence X390
-inbound_links: 1
+inbound_links: 5
 scorecard:
   bridge_score: 0.5
   claim_density: 0.5
@@ -29,7 +29,7 @@ tags:
 toolchains: []
 type: hardware_target
 updated: '2026-06-28'
-------
+------------------
 
 # SiFive Intelligence X390
 
