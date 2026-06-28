@@ -1,24 +1,33 @@
 ---
-type: synthesis
-connected_entities: [muriscv_nn, riscv_zve_sub_extensions, canaan_kendryte_k510_k230, pulp_platform, onnx_runtime_riscv, llm_inference_riscv, milkv_pioneer_duo, riscv_sparse_computation]
-synthesis_status: draft
+cold_start: false
+connected_entities:
+- muriscv_nn
+- riscv_zve_sub_extensions
+- canaan_kendryte_k510_k230
+- pulp_platform
+- onnx_runtime_riscv
+- llm_inference_riscv
+- milkv_pioneer_duo
+- riscv_sparse_computation
 created: 2026-06-27
-updated: 2026-06-27
-cold_start: true
 inbound_links: 0
-sources:
-  - entity/muriscv_nn.md
-  - entity/riscv_zve_sub_extensions.md
-  - entity/canaan_kendryte_k510_k230.md
-  - entity/pulp_platform.md
-  - entity/onnx_runtime_riscv.md
-  - entity/llm_inference_riscv.md
-  - entity/milkv_pioneer_duo.md
-  - entity/riscv_sparse_computation.md
+needs_summary_revision: false
 scorecard:
-  bridge_score: ~
-  contradiction_potential: ~
-  cross_domain_connection: ~
+  bridge_score: null
+  contradiction_potential: null
+  cross_domain_connection: null
+sources:
+- entity/muriscv_nn.md
+- entity/riscv_zve_sub_extensions.md
+- entity/canaan_kendryte_k510_k230.md
+- entity/pulp_platform.md
+- entity/onnx_runtime_riscv.md
+- entity/llm_inference_riscv.md
+- entity/milkv_pioneer_duo.md
+- entity/riscv_sparse_computation.md
+synthesis_status: draft
+type: synthesis
+updated: 2026-06-27
 ---
 
 # RISC-V AI at the Edge: from muRISCV-NN to LLM Inference on Embedded and Server RISC-V

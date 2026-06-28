@@ -209,3 +209,79 @@ deferred_for_human:
 ## [2026-06-27] transition | cold_start → mature
 pages_at_transition: 58
 mean_inbound_links: 3.97
+
+## [2026-06-27] research | RISC-V AI accelerator software stack
+session_id: b2d85c85
+candidates_evaluated: 2
+pages_written: 1
+pipeline_rejection_rate: 0%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_b2d85c85_2026-06-27.json
+
+## [2026-06-27] research | RISC-V AI accelerator kernel optimization
+session_id: 45e63013
+candidates_evaluated: 2
+pages_written: 1
+pipeline_rejection_rate: 0%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_45e63013_2026-06-27.json
+
+## [2026-06-27] research | RISC-V AI accelerator optimization software deploy
+session_id: 9d098879
+candidates_evaluated: 8
+pages_written: 2
+pipeline_rejection_rate: 38%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_9d098879_2026-06-27.json
+
+## [2026-06-28] research | RISC-V AI accelerator optimization software deploy
+session_id: 13ed63de
+candidates_evaluated: 9
+pages_written: 1
+pipeline_rejection_rate: 11%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_13ed63de_2026-06-28.json
+
+## [2026-06-28] research | Tenstorrent optimization software nn
+session_id: 7c38510c
+candidates_evaluated: 7
+pages_written: 3
+pipeline_rejection_rate: 43%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_7c38510c_2026-06-28.json
+
+## [2026-06-28] research | Tenstorrent optimization software nn
+session_id: d9f8f654
+candidates_evaluated: 3
+pages_written: 3
+pipeline_rejection_rate: 0%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_d9f8f654_2026-06-28.json
+
+## [2026-06-28] research | Tenstorrent optimization kernel
+session_id: 9bc681d5
+candidates_evaluated: 8
+pages_written: 4
+pipeline_rejection_rate: 12%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_9bc681d5_2026-06-28.json
+
+## [2026-06-28] research | RISC-V optimization kernel
+session_id: 4a90b4dc
+candidates_evaluated: 3
+pages_written: 3
+pipeline_rejection_rate: 0%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_4a90b4dc_2026-06-28.json
+
+## [2026-06-28] research | RISC-V optimization kernel
+session_id: 8d43da0f
+candidates_evaluated: 9
+pages_written: 6
+pipeline_rejection_rate: 22%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_8d43da0f_2026-06-28.json
+
+## [2026-06-28] lint | retrospective
+issues_found: 50
+actions_taken:
+  - fixed 7 pages with malformed frontmatter closing delimiters (--- + extra dashes)
+  - set cold_start: false on 36 CLEARED pages
+deferred_for_human:
+  - RESTRUCTURE: synthesis/riscv_standardization_software_ecosystem.md — EMPTY_SOURCES Layer 1 fail; needs sources list added to frontmatter
+  - MERGE Cluster A (confirmed): tt_metalium.md + tt_metalium_framework.md → tenstorrent_tt_metalium.md (awaiting lint apply)
+  - MERGE Cluster B (confirmed): sifive_intelligence_x390.md → sifive_p870_x390.md (awaiting lint apply)
+  - MERGE Cluster C (human decision): greenwaves_gap8_gap9.md — combined overview, may overlap with gap8/gap9 pages
+  - SATURATION-ONLY: 45 pages flagged by Layer 3 BM25 saturation; no action proposed (expected in focused domain wiki)
+report: wiki/retrospective_lint_report.md

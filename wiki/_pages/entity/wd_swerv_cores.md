@@ -1,21 +1,28 @@
 ---
-type: entity
-tags: [risc-v, open-source, processor, embedded, storage, chips-alliance]
-sources:
-  - https://riscv.org/blog/what-is-swerv-core-eh2/
-  - https://blog.westerndigital.com/risc-v-data-centric-architectures-swerv-cores/
-  - https://antmicro.com/blog/2020/07/swerv-cores-tools-ecosystem
-  - https://github.com/westerndigitalcorporation/swerv_eh1
+cold_start: false
 created: 2026-06-27
-updated: 2026-06-27
-cold_start: true
 inbound_links: 0
+needs_summary_revision: false
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://riscv.org/blog/what-is-swerv-core-eh2/
+- https://blog.westerndigital.com/risc-v-data-centric-architectures-swerv-cores/
+- https://antmicro.com/blog/2020/07/swerv-cores-tools-ecosystem
+- https://github.com/westerndigitalcorporation/swerv_eh1
+tags:
+- risc-v
+- open-source
+- processor
+- embedded
+- storage
+- chips-alliance
+type: entity
+updated: 2026-06-27
 ---
 
 # Western Digital SweRV Cores (EH1 / EH2 / EL2)

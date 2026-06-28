@@ -1,21 +1,32 @@
 ---
-type: synthesis
-connected_entities: [gemmini, ara_vector_processor, mlir_riscv_backend, iree_riscv, tvm_riscv_backend, risc_v_vector_extension, risc_v_p_extension, boom_riscv, andes_ax45mp_nx27v, xiangshan_riscv]
-synthesis_status: draft
+cold_start: false
+connected_entities:
+- gemmini
+- ara_vector_processor
+- mlir_riscv_backend
+- iree_riscv
+- tvm_riscv_backend
+- risc_v_vector_extension
+- risc_v_p_extension
+- boom_riscv
+- andes_ax45mp_nx27v
+- xiangshan_riscv
 created: 2026-06-27
-updated: 2026-06-27
-cold_start: true
 inbound_links: 0
-sources:
-  - entity/gemmini.md
-  - entity/ara_vector_processor.md
-  - entity/mlir_riscv_backend.md
-  - entity/iree_riscv.md
-  - entity/tvm_riscv_backend.md
+needs_summary_revision: false
 scorecard:
-  bridge_score: ~
-  contradiction_potential: ~
-  cross_domain_connection: ~
+  bridge_score: null
+  contradiction_potential: null
+  cross_domain_connection: null
+sources:
+- entity/gemmini.md
+- entity/ara_vector_processor.md
+- entity/mlir_riscv_backend.md
+- entity/iree_riscv.md
+- entity/tvm_riscv_backend.md
+synthesis_status: draft
+type: synthesis
+updated: 2026-06-27
 ---
 
 # Open-Source RISC-V AI Stack: from ISA to Runtime

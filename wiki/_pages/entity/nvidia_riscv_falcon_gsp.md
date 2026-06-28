@@ -1,21 +1,28 @@
 ---
-type: entity
-tags: [risc-v, NVIDIA, GPU, firmware, embedded-controller, Falcon]
-sources:
-  - https://docs.kernel.org/gpu/nova/core/falcon.html
-  - https://download.nvidia.com/XFree86/Linux-x86_64/560.28.03/README/gsp.html
-  - https://deepwiki.com/NVIDIA/open-gpu-kernel-modules/4.3-gsp-gpu-system-processor
-  - https://www.techpowerup.com/291088/nvidia-unlocks-gpu-system-processor-gsp-for-improved-system-performance
+cold_start: false
 created: 2026-06-27
-updated: 2026-06-27
-cold_start: true
 inbound_links: 0
+needs_summary_revision: false
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://docs.kernel.org/gpu/nova/core/falcon.html
+- https://download.nvidia.com/XFree86/Linux-x86_64/560.28.03/README/gsp.html
+- https://deepwiki.com/NVIDIA/open-gpu-kernel-modules/4.3-gsp-gpu-system-processor
+- https://www.techpowerup.com/291088/nvidia-unlocks-gpu-system-processor-gsp-for-improved-system-performance
+tags:
+- risc-v
+- NVIDIA
+- GPU
+- firmware
+- embedded-controller
+- Falcon
+type: entity
+updated: 2026-06-27
 ---
 
 # NVIDIA RISC-V: Falcon and GPU System Processor (GSP)

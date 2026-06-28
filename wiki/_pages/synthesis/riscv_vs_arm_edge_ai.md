@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 connected_entities:
 - greenwaves_gap8_gap9
 - tinyml_riscv
@@ -14,7 +14,7 @@ connected_entities:
 - pulp_platform
 created: 2026-06-27
 inbound_links: 0
-needs_summary_revision: true
+needs_summary_revision: false
 scorecard:
   bridge_score: null
   contradiction_potential: null

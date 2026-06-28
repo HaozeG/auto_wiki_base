@@ -11,7 +11,7 @@ connected_entities:
 - tvm_riscv_backend
 created: 2026-06-27
 inbound_links: 1
-needs_summary_revision: true
+needs_summary_revision: false
 scorecard:
   bridge_score: null
   contradiction_potential: null

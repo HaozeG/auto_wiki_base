@@ -1,21 +1,29 @@
 ---
-type: entity
-tags: [risc-v, FPGA, SoC, edge-AI, embedded, microchip, mi-v]
-sources:
-  - https://www.microchip.com/en-us/products/fpgas-and-plds/system-on-chip-fpgas/polarfire-soc-fpgas
-  - https://www.eejournal.com/article/microchip-polarfire-and-the-imperative-of-the-intelligent-edge/
-  - https://riscv.org/blog/microchips-polarfire-soc-fpga-meets-beagle-board-high-performance-soc-with-beaglev-fire/
-  - https://www.microchip.com/en-us/about/media-center/blog/2025/polarfire-core-fpgas-and-socs
+cold_start: false
 created: 2026-06-27
-updated: 2026-06-27
-cold_start: true
 inbound_links: 0
+needs_summary_revision: true
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://www.microchip.com/en-us/products/fpgas-and-plds/system-on-chip-fpgas/polarfire-soc-fpgas
+- https://www.eejournal.com/article/microchip-polarfire-and-the-imperative-of-the-intelligent-edge/
+- https://riscv.org/blog/microchips-polarfire-soc-fpga-meets-beagle-board-high-performance-soc-with-beaglev-fire/
+- https://www.microchip.com/en-us/about/media-center/blog/2025/polarfire-core-fpgas-and-socs
+tags:
+- risc-v
+- FPGA
+- SoC
+- edge-AI
+- embedded
+- microchip
+- mi-v
+type: entity
+updated: 2026-06-27
 ---
 
 # Microchip PolarFire SoC (Mi-V RISC-V)

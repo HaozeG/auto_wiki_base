@@ -1,21 +1,28 @@
 ---
-type: entity
-tags: [risc-v, developer-board, linux, sifive, FU540, FU740]
-sources:
-  - https://www.sifive.com/boards/hifive-unleashed
-  - https://www.sifive.com/boards/hifive-unmatched
-  - https://linuxgizmos.com/updated-hifive-unmatched-sbc-showcases-new-fu740-risc-v-soc/
-  - https://www.phoronix.com/review/hifive-unmatched-benchmarks/2
+cold_start: false
 created: 2026-06-27
-updated: 2026-06-27
-cold_start: true
 inbound_links: 0
+needs_summary_revision: false
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://www.sifive.com/boards/hifive-unleashed
+- https://www.sifive.com/boards/hifive-unmatched
+- https://linuxgizmos.com/updated-hifive-unmatched-sbc-showcases-new-fu740-risc-v-soc/
+- https://www.phoronix.com/review/hifive-unmatched-benchmarks/2
+tags:
+- risc-v
+- developer-board
+- linux
+- sifive
+- FU540
+- FU740
+type: entity
+updated: 2026-06-27
 ---
 
 # SiFive HiFive Unleashed and HiFive Unmatched

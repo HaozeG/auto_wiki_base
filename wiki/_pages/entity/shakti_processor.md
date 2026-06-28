@@ -1,22 +1,30 @@
 ---
-type: entity
-tags: [risc-v, open-source, processor, India, IIT-Madras, embedded, BSV]
-sources:
-  - https://shakti.org.in/tapeout.html
-  - https://www.open-electronics.org/shakti-risc-v-based-processor-the-first-open-source-indian-chip/
-  - https://abopen.com/news/an-overview-of-shakti-processor-program/
-  - https://journal.accsindia.org/show.article.php?id=64
-  - https://www.iitm.ac.in/happenings/press-releases-and-coverages/iit-madras-isro-jointly-developed-and-successfully-booted
+cold_start: false
 created: 2026-06-27
-updated: 2026-06-27
-cold_start: true
 inbound_links: 0
+needs_summary_revision: false
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://shakti.org.in/tapeout.html
+- https://www.open-electronics.org/shakti-risc-v-based-processor-the-first-open-source-indian-chip/
+- https://abopen.com/news/an-overview-of-shakti-processor-program/
+- https://journal.accsindia.org/show.article.php?id=64
+- https://www.iitm.ac.in/happenings/press-releases-and-coverages/iit-madras-isro-jointly-developed-and-successfully-booted
+tags:
+- risc-v
+- open-source
+- processor
+- India
+- IIT-Madras
+- embedded
+- BSV
+type: entity
+updated: 2026-06-27
 ---
 
 # Shakti Processor Project

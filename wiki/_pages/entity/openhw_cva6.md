@@ -1,8 +1,8 @@
 ---
-cold_start: true
+cold_start: false
 created: 2026-06-27
 inbound_links: 3
-needs_summary_revision: true
+needs_summary_revision: false
 scorecard:
   bridge_score: null
   claim_density: null

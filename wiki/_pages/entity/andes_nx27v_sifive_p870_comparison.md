@@ -1,20 +1,21 @@
 ---
-type: entity
-tags: []
-sources:
-  - https://www.andestech.com/en/products-solutions/andescore-processors/riscv-nx27v/
-  - https://www.cnx-software.com/2023/10/18/sifive-intelligence-x390-npu-performance-p870-risc-v-core/
-  - https://www.sifive.com/cores/performance-p800
+cold_start: false
 created: 2026-06-27
-updated: 2026-06-27
-cold_start: true
 inbound_links: 0
+needs_summary_revision: false
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- https://www.andestech.com/en/products-solutions/andescore-processors/riscv-nx27v/
+- https://www.cnx-software.com/2023/10/18/sifive-intelligence-x390-npu-performance-p870-risc-v-core/
+- https://www.sifive.com/cores/performance-p800
+tags: []
+type: entity
+updated: 2026-06-27
 ---
 
 # AndesCore NX27V vs SiFive Intelligence P870
