@@ -9,7 +9,7 @@ hardware_targets:
 hardware_versions:
 - T-HEAD C910 in TH1520 SoC
 - Lichee Module 4A
-inbound_links: 16
+inbound_links: 17
 measurement_method: SPEC CPU benchmark suite run on the board at 2GHz frequency with
   specified toolchains.
 metrics:

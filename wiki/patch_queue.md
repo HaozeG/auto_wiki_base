@@ -34,3 +34,10 @@ target_section: Key Claims
 source: https://milkv.io/docs/pioneer/resources/inferllm
 status: pending_review
 proposed_update: Add note that InferLLM documentation specifies RISC-V vector 0.7 for the SG2042 CPU in the Milk-V Pioneer, while the current page states RVV 1.0. Clarify that the SG2042 implements RVV 0.7.1 according to some sources, and update the ISA claim to reflect this discrepancy.
+
+## [2026-06-28] pending | Sipeed_MAIX_series.md
+target_page: Sipeed_MAIX_series.md
+target_section: Key Claims
+source: https://wiki.sipeed.com/en/
+status: pending_review
+proposed_update: Add claims about the newer MaixCAM and MaixCAM2 models based on the Sipeed Wiki comparison table: MaixCAM2 uses AX630C dual-core ARM A53, 3.2 Tops NPU, 113 FPS YOLO11n 640x640; MaixCAM uses SG2002, 1 Tops NPU, 23 FPS YOLO11n 640x640. Include software support (MaixCDK, MaixPy) and mention the range from MaixCAM2 down to Maix-IV with decreasing capability. Source: https://wiki.sipeed.com/en/

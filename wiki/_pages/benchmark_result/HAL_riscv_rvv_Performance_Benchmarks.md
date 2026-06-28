@@ -7,7 +7,7 @@ hardware_targets:
 - SpacemiT KeyStone K1
 hardware_versions:
 - SpacemiT KeyStone K1 (256-bit RVV 1.0) on MUSE Pi board
-inbound_links: 0
+inbound_links: 1
 measurement_method: Single-core performance tests using OpenCV's own performance test
   suite at 1920×1080 image size on SpacemiT MUSE Pi board with SpacemiT toolchain
   1.0.5. Multithreading disabled to isolate RVV 1.0 core capability.

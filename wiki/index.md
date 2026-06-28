@@ -4,12 +4,15 @@
 
 **Organization**: Workflow-first — pages are typed as `hardware_target`, `workload_kernel`, `optimization_recipe`, `benchmark_result`, `entity`, or `synthesis`.
 
-Last updated: 2026-06-28 | Pages: 78 | Sources: 0
+Last updated: 2026-06-28 | Pages: 84 | Sources: 0
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [SpacemiT.md](entity/SpacemiT.md) | SpacemiT | SpacemiT, RISC-V, AI accelerator, K1, K3 | 1 | 0 |
+| [Sipeed.md](entity/Sipeed.md) | Sipeed | Sipeed, RISC-V, AI, FPGA, SBC, development_board | 1 | 0 |
+| [Kendryte_K230.md](entity/Kendryte_K230.md) | Kendryte K230 | RISC-V, AI, SoC, Kendryte, K230, AIoT | 1 | 0 |
 | [llama-cpp-mini.md](entity/llama-cpp-mini.md) |  | LLM, inference, GGUF, Apple_Silicon, C++ | 1 | 0 |
 | [ncnn.md](entity/ncnn.md) | ncnn | neural network, inference framework, Tencent, mobile, edge, RISC-V, Vulkan, pnnx | 1 | 0 |
 | [ONNX_Runtime_Build_for_Inferencing.md](entity/ONNX_Runtime_Build_for_Inferencing.md) | ONNX Runtime (Build for Inferencing) | ONNX Runtime, inference, build, cross-compilation, RISC-V | 1 | 0 |
@@ -50,6 +53,9 @@ Last updated: 2026-06-28 | Pages: 78 | Sources: 0
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [SpacemiT_KeyStone_K1.md](hardware_target/SpacemiT_KeyStone_K1.md) | hardware_target | SpacemiT KeyStone K1 | RISC-V, SpacemiT, KeyStone K1, X60 | 1 | 0 |
+| [Kendryte_K230_SoC.md](hardware_target/Kendryte_K230_SoC.md) | hardware_target | Kendryte K230 SoC | RISC-V, AIoT, Kendryte, K230 | 1 | 0 |
+| [BLAS_Band_Matrix_Optimization_for_RISC-V.md](optimization_recipe/BLAS_Band_Matrix_Optimization_for_RISC-V.md) | optimization_recipe | BLAS Band Matrix Optimization for RISC-V | BLAS, band matrix, RISC-V, RVV, vectorization | 1 | 0 |
 | [llama-cpp_rtx3090_27b_benchmark.md](benchmark_result/llama-cpp_rtx3090_27b_benchmark.md) | benchmark_result | llama.cpp RTX 3090 27B Model Benchmark | llama.cpp, RTX 3090, 27B model, GGUF, benchmark | 1 | 0 |
 | [AI-Assisted_Llama.cpp_Optimization_Recipe.md](optimization_recipe/AI-Assisted_Llama.cpp_Optimization_Recipe.md) | optimization_recipe | AI-Assisted Llama.cpp Optimization Recipe | llama.cpp, LLM inference optimization, AI-assisted tuning, Claude Sonnet 3.7, tensor-split, flash attention, continuous batching, asymmetric GPU, Qwen3 | 1 | 0 |
 | [AI-Assisted_Llama.cpp_Optimization_Benchmark.md](benchmark_result/AI-Assisted_Llama.cpp_Optimization_Benchmark.md) | benchmark_result | AI-Assisted Llama.cpp Optimization Benchmark | llama.cpp, LLM inference, Qwen3, RTX 3090, RTX 2060, AI-assisted optimization, Claude Sonnet 3.7, tensor-split, flash attention | 1 | 0 |

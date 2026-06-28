@@ -195,3 +195,11 @@ pages_written: 6
 pipeline_rejection_rate: 17%
 audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_7609d80e_2026-06-28.json
 theme_profile: RISC-V ai accelerator | workflow_first
+
+## [2026-06-28] research | MobileNet ResNet YOLO workload kernel RISC-V inference bench
+session_id: 454306a6
+candidates_evaluated: 9
+pages_written: 6
+pipeline_rejection_rate: 0%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_454306a6_2026-06-28.json
+theme_profile: RISC-V ai accelerator | workflow_first
