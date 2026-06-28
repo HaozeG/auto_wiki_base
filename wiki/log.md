@@ -171,3 +171,27 @@ pages_written: 4
 pipeline_rejection_rate: 0%
 audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_012c54da_2026-06-28.json
 theme_profile: RISC-V ai accelerator | workflow_first
+
+## [2026-06-28] research | RISC-V NCNN MNN neural network inference framework optimizat
+session_id: d796d2ac
+candidates_evaluated: 12
+pages_written: 6
+pipeline_rejection_rate: 0%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_d796d2ac_2026-06-28.json
+theme_profile: RISC-V ai accelerator | workflow_first
+
+## [2026-06-28] research | deploy TVM IREE ONNX Runtime NCNN Kendryte K210 K230 LicheeP
+session_id: e3536ed7
+candidates_evaluated: 12
+pages_written: 5
+pipeline_rejection_rate: 8%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_e3536ed7_2026-06-28.json
+theme_profile: RISC-V ai accelerator | workflow_first
+
+## [2026-06-28] research | llama.cpp RISC-V RVV benchmark comparison Milk-V Pioneer Lic
+session_id: 7609d80e
+candidates_evaluated: 6
+pages_written: 6
+pipeline_rejection_rate: 17%
+audit_file: /mnt/d/OneDrive - ETH Zurich/ETHz/code/auto_wiki_base/wiki/audit/research_7609d80e_2026-06-28.json
+theme_profile: RISC-V ai accelerator | workflow_first

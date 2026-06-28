@@ -27,3 +27,10 @@ target_section: Key Claims
 source: https://deepwiki.com/kendryte/canmv/5.1-kpu-neural-network-processor
 status: pending_review
 proposed_update: Add detailed claims about the KPU (Knowledge Processing Unit) neural network processor based on the DeepWiki resource: The KPU enables real-time inference on Kendryte K210; supports CNN for computer vision tasks; includes model loading from SD card/flash; implements DMA channels for input image transfer, weight loading, output retrieval, and intermediate activation movement; exposes Python API through maix module with argument parsing for model path, input image, anchor boxes, and threshold; uses pix_ai field in image_t structure for optimized memory access; error handling includes validation for model format, input dimensions, memory allocation, and hardware status using MicroPython exception patterns.
+
+## [2026-06-28] pending | MilkV_Pioneer.md
+target_page: MilkV_Pioneer.md
+target_section: Key Claims
+source: https://milkv.io/docs/pioneer/resources/inferllm
+status: pending_review
+proposed_update: Add note that InferLLM documentation specifies RISC-V vector 0.7 for the SG2042 CPU in the Milk-V Pioneer, while the current page states RVV 1.0. Clarify that the SG2042 implements RVV 0.7.1 according to some sources, and update the ISA claim to reflect this discrepancy.

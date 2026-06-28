@@ -4,12 +4,16 @@
 
 **Organization**: Workflow-first — pages are typed as `hardware_target`, `workload_kernel`, `optimization_recipe`, `benchmark_result`, `entity`, or `synthesis`.
 
-Last updated: 2026-06-28 | Pages: 62 | Sources: 0
+Last updated: 2026-06-28 | Pages: 78 | Sources: 0
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [llama-cpp-mini.md](entity/llama-cpp-mini.md) |  | LLM, inference, GGUF, Apple_Silicon, C++ | 1 | 0 |
+| [ncnn.md](entity/ncnn.md) | ncnn | neural network, inference framework, Tencent, mobile, edge, RISC-V, Vulkan, pnnx | 1 | 0 |
+| [ONNX_Runtime_Build_for_Inferencing.md](entity/ONNX_Runtime_Build_for_Inferencing.md) | ONNX Runtime (Build for Inferencing) | ONNX Runtime, inference, build, cross-compilation, RISC-V | 1 | 0 |
+| [onnxruntime-riscv.md](entity/onnxruntime-riscv.md) | onnxruntime-riscv | ONNX Runtime, RISC-V, Gemmini, inference | 1 | 0 |
 | [RISC-V_Vector_Extension.md](entity/RISC-V_Vector_Extension.md) | RISC-V Vector Extension | RISC-V, vector extension, ISA, RVV 1.0 | 1 | 0 |
 | [RVV_1_0_Programming.md](entity/RVV_1_0_Programming.md) | RISC-V Vector Programming with RVV 1.0 | RVV, vector programming, RISC-V, VLA | 1 | 0 |
 | [T-Head_Open_Chip_Community.md](entity/T-Head_Open_Chip_Community.md) | T-Head Open Chip Community (OCC) | T-HEAD, RISC-V, Open Chip Community, OCC, Alibaba | 1 | 0 |
@@ -46,6 +50,18 @@ Last updated: 2026-06-28 | Pages: 62 | Sources: 0
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [llama-cpp_rtx3090_27b_benchmark.md](benchmark_result/llama-cpp_rtx3090_27b_benchmark.md) | benchmark_result | llama.cpp RTX 3090 27B Model Benchmark | llama.cpp, RTX 3090, 27B model, GGUF, benchmark | 1 | 0 |
+| [AI-Assisted_Llama.cpp_Optimization_Recipe.md](optimization_recipe/AI-Assisted_Llama.cpp_Optimization_Recipe.md) | optimization_recipe | AI-Assisted Llama.cpp Optimization Recipe | llama.cpp, LLM inference optimization, AI-assisted tuning, Claude Sonnet 3.7, tensor-split, flash attention, continuous batching, asymmetric GPU, Qwen3 | 1 | 0 |
+| [AI-Assisted_Llama.cpp_Optimization_Benchmark.md](benchmark_result/AI-Assisted_Llama.cpp_Optimization_Benchmark.md) | benchmark_result | AI-Assisted Llama.cpp Optimization Benchmark | llama.cpp, LLM inference, Qwen3, RTX 3090, RTX 2060, AI-assisted optimization, Claude Sonnet 3.7, tensor-split, flash attention | 1 | 0 |
+| [GGML_CPU_AARCH64_RISCV_Recipe.md](optimization_recipe/GGML_CPU_AARCH64_RISCV_Recipe.md) | optimization_recipe | GGML_CPU_AARCH64 RISC-V Recipe for llama.cpp | llama.cpp, GGML, RISC-V, MilkV Pioneer, LLM inference, build | 1 | 0 |
+| [MilkV_Pioneer.md](hardware_target/MilkV_Pioneer.md) | hardware_target | MilkV Pioneer | RISC-V, workstation, LLM, MilkV, 64-core | 1 | 0 |
+| [llama-cpp-mini_benchmark_apple_m4.md](benchmark_result/llama-cpp-mini_benchmark_apple_m4.md) | benchmark_result |  | LLM, inference, Apple_M4, GGUF, benchmark | 1 | 0 |
+| [FPGA_Accelerated_RISC_V_ISA_Extensions_Benchmark_Results.md](benchmark_result/FPGA_Accelerated_RISC_V_ISA_Extensions_Benchmark_Results.md) | benchmark_result | FPGA-Accelerated RISC-V ISA Extensions Benchmark Results | RISC-V, FPGA, ISA extensions, PYNQ-Z2, edge AI | 1 | 0 |
+| [FPGA_Accelerated_RISC_V_ISA_Extensions_Optimization_Recipe.md](optimization_recipe/FPGA_Accelerated_RISC_V_ISA_Extensions_Optimization_Recipe.md) | optimization_recipe | FPGA-Accelerated RISC-V ISA Extensions Optimization Recipe | RISC-V, FPGA, ISA extensions, edge AI | 1 | 0 |
+| [Parallel_GEMM_Convolution_on_GAP8.md](optimization_recipe/Parallel_GEMM_Convolution_on_GAP8.md) | optimization_recipe | Parallel GEMM-Based Convolution on GAP8 | RISC-V, GAP8, convolution, GEMM, IM2COL, IM2ROW, ultra-low power, edge AI, parallel computing | 1 | 0 |
+| [GAP8_PULP_Processor.md](hardware_target/GAP8_PULP_Processor.md) | hardware_target | GAP8 Parallel Ultra-Low Power Platform (PULP) | RISC-V, PULP, GAP8, IoT, ultra-low power, edge AI | 1 | 0 |
+| [RVV_1_0_CNN_Preprocessing_Fallback_Optimization.md](optimization_recipe/RVV_1_0_CNN_Preprocessing_Fallback_Optimization.md) | optimization_recipe | RVV-1.0 Integration for CNN Pre-processing and Fallback Acceleration | RVV 1.0, CNN, pre-processing, YOLOv3, NVDLA, VecBoost, Chipyard | 1 | 0 |
+| [RVV_1_0_CNN_Preprocessing_Fallback_Benchmark.md](benchmark_result/RVV_1_0_CNN_Preprocessing_Fallback_Benchmark.md) | benchmark_result | RVV-1.0 CNN Pre-processing and Fallback Acceleration Benchmark | RVV 1.0, CNN, pre-processing, YOLOv3, NVDLA, VecBoost, DLA fallback | 1 | 0 |
 | [HAL_riscv_rvv_Performance_Benchmarks.md](benchmark_result/HAL_riscv_rvv_Performance_Benchmarks.md) | benchmark_result | HAL riscv-rvv Performance Benchmarks | OpenCV, HAL, RVV 1.0, RISC-V, benchmark, SpacemiT | 1 | 0 |
 | [HAL_riscv_rvv_OpenCV_Optimization_Recipe.md](optimization_recipe/HAL_riscv_rvv_OpenCV_Optimization_Recipe.md) | optimization_recipe | HAL riscv-rvv OpenCV Optimization Recipe | OpenCV, HAL, RVV 1.0, RISC-V, SpacemiT | 1 | 0 |
 | [Gemmini_Architecture.md](hardware_target/Gemmini_Architecture.md) | hardware_target | Gemmini Architecture | Gemmini, DNN accelerator, full-stack, RISC-V, systolic array, vector array, hardware generator | 1 | 0 |

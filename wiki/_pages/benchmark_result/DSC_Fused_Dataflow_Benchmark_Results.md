@@ -12,7 +12,7 @@ hardware_versions:
 - Xilinx Artix-7
 - 28nm ASIC
 - 40nm ASIC
-inbound_links: 4
+inbound_links: 6
 measurement_method: FPGA measurements (speedup, data movement); ASIC synthesis (area,
   power)
 metrics:
@@ -44,7 +44,7 @@ type: benchmark_result
 updated: '2026-06-28'
 workloads:
 - Depthwise Separable Convolution (DSC)
----------------
+---------------------
 
 # DSC Fused Dataflow Benchmark Results
 

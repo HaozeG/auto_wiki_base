@@ -9,7 +9,7 @@ datatypes: []
 evidence_strength: reported
 hardware_targets:
 - SpacemiT KeyStone K1
-inbound_links: 1
+inbound_links: 2
 metrics:
 - performance uplift (mean)
 scorecard:
@@ -34,7 +34,7 @@ type: optimization_recipe
 updated: '2026-06-28'
 workloads:
 - OpenCV image processing kernels (119 functions)
-------
+---------
 
 # HAL riscv-rvv OpenCV Optimization Recipe
 

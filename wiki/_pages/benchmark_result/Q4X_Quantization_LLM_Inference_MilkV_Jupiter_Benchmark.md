@@ -8,7 +8,7 @@ hardware_targets:
 - Milk-V Jupiter (8-core RISC-V CPU)
 hardware_versions:
 - Milk-V Jupiter board
-inbound_links: 3
+inbound_links: 4
 measurement_method: Benchmark conducted on Milk-V Jupiter board with 8-core RISC-V
   CPU, using Clang compiler. Tokens per second measured for prefill and decode phases.
   Perplexity computed on Wikitext v2 test subset with context length 2048.
@@ -43,7 +43,7 @@ type: benchmark_result
 updated: '2026-06-28'
 workloads:
 - LLM inference (Llama 3.2 1B)
-------------
+---------------
 
 # Q4X Quantization LLM Inference Milk-V Jupiter Benchmark
 

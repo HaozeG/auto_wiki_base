@@ -10,7 +10,7 @@ hardware_targets:
 hardware_versions:
 - 7nm RISC-V CPU chiplet
 - 5nm AI accelerator (15 TOPS INT8)
-inbound_links: 1
+inbound_links: 3
 measurement_method: Experimental results across industry standard benchmarks (MobileNetV2,
   ResNet-50, real-time video) compared to previous basic chiplet implementations.
 metrics:
@@ -41,7 +41,7 @@ workloads:
 - MobileNetV2
 - ResNet-50
 - real-time video processing
-------
+------------
 
 # Chiplet-Based RISC-V AI SoC Benchmark Results
 

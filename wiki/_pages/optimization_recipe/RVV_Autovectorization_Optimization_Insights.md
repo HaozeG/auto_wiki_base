@@ -11,7 +11,7 @@ datatypes:
 evidence_strength: measured
 hardware_targets:
 - RVV 1.0 hardware
-inbound_links: 1
+inbound_links: 5
 metrics:
 - throughput
 - vector utilization
@@ -37,7 +37,7 @@ updated: '2026-06-28'
 workloads:
 - HPC proxy applications
 - ML proxy applications
-------
+------------------
 
 # RVV Autovectorization Optimization Insights
 

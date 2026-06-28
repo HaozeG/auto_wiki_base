@@ -9,7 +9,7 @@ datatypes: []
 evidence_strength: measured (FPGA), reported
 hardware_targets:
 - RISC-V processor with Custom Function Unit (CFU)
-inbound_links: 3
+inbound_links: 4
 metrics:
 - data movement reduction
 - speedup
@@ -34,7 +34,7 @@ type: optimization_recipe
 updated: '2026-06-28'
 workloads:
 - Depthwise Separable Convolution (DSC)
-------------
+---------------
 
 # Fused Pixel-wise Dataflow for TinyML Depthwise Separable Convolutions (DSC)
 

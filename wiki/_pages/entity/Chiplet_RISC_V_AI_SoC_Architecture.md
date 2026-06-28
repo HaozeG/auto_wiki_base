@@ -1,7 +1,7 @@
 ---
 cold_start: true
 created: '2025-03-25'
-inbound_links: 1
+inbound_links: 2
 scorecard:
   bridge_score: 0.8
   claim_density: 0.8
@@ -19,7 +19,7 @@ tags:
 - edge AI
 type: entity
 updated: '2026-06-28'
-------
+---------
 
 # Chiplet-Based RISC-V SoC with Modular AI Acceleration
 
