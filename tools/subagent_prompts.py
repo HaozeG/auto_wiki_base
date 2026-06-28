@@ -126,6 +126,10 @@ Constraints:
   Use the exact filename stem (no path, no extension) inside [[...]].
   If fewer than 2 suitable related pages exist in wiki_context, include what you
   can and note "insufficient context for additional cross-links" in the scorecard.
+- For synthesis pages, connected_entities in frontmatter MUST list the filename
+  stems (no path, no .md extension) of all entity pages this synthesis draws from.
+  This is how the harness counts inbound links — populate it even when body [[...]]
+  links are already present.
 
 Scorecard dimensions to assess (0.0-1.0 each):
   novelty_delta, claim_density, self_containedness, bridge_score,

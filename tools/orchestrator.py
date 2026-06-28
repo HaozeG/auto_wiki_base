@@ -1038,8 +1038,16 @@ def _apply_update_once(
 def _update_inbound_links(draft: dict) -> None:
     """Increment inbound_links on pages referenced from this draft's content."""
     content = draft.get("content", "")
-    refs = re.findall(r"\[\[([^\]]+)\]\]", content)
-    for ref in set(refs):
+    refs = set(re.findall(r"\[\[([^\]]+)\]\]", content))
+
+    # Also count connected_entities from synthesis page frontmatter.
+    # connected_entities holds entity filename stems; body [[links]] may miss them.
+    fm = draft.get("frontmatter", {})
+    for stem in fm.get("connected_entities") or []:
+        if isinstance(stem, str):
+            refs.add(stem.removesuffix(".md"))
+
+    for ref in refs:
         for page in _WIKI_PAGES_DIR.rglob(f"{ref}.md"):
             _increment_frontmatter_field(page, "inbound_links")
 
@@ -1058,8 +1066,8 @@ def _increment_frontmatter_field(path: Path, field: str) -> None:
     except yaml.YAMLError:
         return
     fm[field] = int(fm.get(field, 0)) + 1
-    body = text[end:]
-    path.write_text(f"---\n{yaml.dump(fm, default_flow_style=False, allow_unicode=True)}---{body}",
+    body = text[end:]  # already starts with "---\n..."
+    path.write_text(f"---\n{yaml.dump(fm, default_flow_style=False, allow_unicode=True)}{body}",
                     encoding="utf-8")
 
 
