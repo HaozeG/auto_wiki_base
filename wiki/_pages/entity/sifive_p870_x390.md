@@ -46,9 +46,14 @@ The SiFive Performance P870 and Intelligence X390 NPU are a paired RISC-V CPU+NP
 - [[andes_ax45mp_nx27v]]: Andes NX27V and SiFive X390 are competing RISC-V vector NPU products compared in the andes_nx27v_sifive_p870_comparison page.
 - [[ventana_veyron_v2]]: Both P870 and Veyron V2 target RVA23 server/edge deployments with large core counts.
 
+## LLM Software Stack
+
+SiFive has demonstrated end-to-end LLM inference on the X390 platform using a PyTorch-based workflow via SHARK-Turbine: `stateless_llm.py` compiles Hugging Face models into VMFB format, and `llm_runner.py` invokes the IREE runtime for inference. The full AI/ML software stack includes the SiFive LLVM compiler with micro-architecture-tuned codegen, the SiFive Kernel Library (SKL), SiFive System Software (FSFL and FSFM), and an IREE VCIX MLIR dialect that routes matrix-heavy operations to the X390's custom vector coprocessor interface. Performance profiling of TinyLlama on the X390 during the decode phase shows that matrix multiplication operations (GEMV pattern, M=1) account for over 95% of inference time. Alternative lightweight frameworks supported include customized TFLite with RVV optimizations, XNNPACK with RVV, ONNXRuntime, and llama.cpp with additional RVV patches.
+
 ## Sources
 
 - https://www.cnx-software.com/2023/10/18/sifive-intelligence-x390-npu-performance-p870-risc-v-core/
 - https://www.sifive.com/press/sifive-announces-differentiated-solutions-for-generative
 - https://www.notebookcheck.net/SiFive-launches-Performance-P870-RISC-V-scalable-core-and-Intelligence-X390-NPU.759079.0.html
 - https://www.sifive.com/cores/performance-p800
+- https://www.sifive.com/blog/llm-optimization-and-deployment-on-sifive-intellig

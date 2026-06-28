@@ -17,8 +17,11 @@ Constraints:
 - Avoid: paywalled journals (IEEE Xplore full papers, ACM DL full papers, ScienceDirect),
   JavaScript-heavy sites that return empty HTML, PDF URLs (end in .pdf)
 - Already-processed URLs are listed in the manifest; exclude them from output
-- estimated_type: "entity" if the resource is about a specific system/chip/architecture;
-  "synthesis" if it compares multiple systems or surveys a landscape
+- estimated_type: "entity" for a general concept/system/chip/architecture; "synthesis"
+  for comparisons/surveys; "hardware_target" for ISA/profile/hardware capability
+  sources; "workload_kernel" for operation shapes or baseline kernels;
+  "optimization_recipe" for transformations and prerequisites; "benchmark_result"
+  for measured/reported metrics with hardware and workload context
 
 Output schema (respond with ONLY this JSON, nothing else):
 {
@@ -27,11 +30,56 @@ Output schema (respond with ONLY this JSON, nothing else):
       "url": "string",
       "title": "string",
       "relevance_rationale": "string (max 50 words)",
-      "estimated_type": "entity | synthesis | unknown"
+      "estimated_type": "entity | synthesis | hardware_target | workload_kernel | optimization_recipe | benchmark_result | unknown"
     }
   ],
   "search_queries_used": ["string"]
 }
+"""
+
+KEYWORD_RECOMMENDER_SYSTEM_PROMPT = """\
+You are a research search-strategy planner for an LLM-maintained markdown wiki.
+Your job is to recommend next web search queries that avoid repeated,
+already-saturated results and expose sources on new topics under same theme.
+
+You will receive a JSON object with:
+- base_query: the user's research query
+- repo_research_theme: broad theme and scope of the current wiki/repo
+- concept_gaps: wiki concepts that lack dedicated pages
+- wiki_topic_summary: a compact summary of existing wiki coverage
+- previous_search_keywords: search queries already used in recent runs
+- repeated_results: URLs/titles that appeared in recent research audits
+- rejected_results: URLs/titles and rejection reasons from recent audits
+- depth: shallow or deep
+- max_keywords: maximum number of query recommendations
+- gap_manifest: structured coverage gaps by page type and frontmatter field
+- preferred_source_types: source categories to target, such as official docs,
+  ISA specs, compiler docs, benchmark repositories, papers, or SDK guides
+
+Return ONLY a JSON object with this schema:
+{
+  "recommended_keywords": [
+    {
+      "query": "string",
+      "reason": "string (max 30 words)"
+    }
+  ],
+  "avoid_patterns": ["string"]
+}
+
+Rules:
+- Recommend search query strings only; do not invent URLs.
+- Stay within repo_research_theme, but vary the angle enough to escape repeated
+  search result sets.
+- Do not repeat previous_search_keywords unless narrowing them with clearly new
+  named entities, methods, source types, or missing concepts.
+- Prefer open, technical sources from preferred_source_types; when absent, use
+  arXiv, GitHub, official docs, compiler docs, benchmark reports, and implementation notes.
+- Use concept gaps and rejection reasons to steer away from thin JavaScript-heavy
+  pages, duplicate product pages, and broad marketing posts.
+- Favor concrete domain terms from the manifest: named projects, standards,
+  datasets, methods, products, papers, benchmarks, APIs, SDKs, and tooling. Do
+  not reuse examples from prior sessions unless they are relevant to this query.
 """
 
 EVALUATION_SYSTEM_PROMPT = """\
@@ -45,7 +93,7 @@ Constraints:
 - Do not perform web searches or access external URLs
 - Do not reference information not present in the manifest
 - Evaluate only the resource content provided; do not reason from memory about the topic
-- Page drafts must follow the exact templates in the manifest (entity or synthesis)
+- Page drafts must follow the exact templates in the manifest for their page type
 - Self-containedness rule: drafted pages must not contain dangling references.
   Forbidden phrases include (but are not limited to): "as mentioned", "see above",
   "as established", "building on the previous", "refer to section"
@@ -53,9 +101,21 @@ Constraints:
   do not produce page_drafts
 - RAG Summary blocks in synthesis drafts must be 150-250 words, self-contained,
   and state the core synthetic claim in the first sentence
-- Entity page first paragraphs MUST be at least 80 words. If the resource_content
-  is a short snippet, synthesize what is known about this entity from that snippet
-  AND your knowledge to meet the word count. Do not add dangling references.
+- Entity page first paragraphs MUST be at least 80 words. If the provided
+  resource_content is too thin to support that without adding outside knowledge,
+  reject the candidate or use pages_to_update for a narrow existing-page update.
+- Optimization-oriented page types are allowed: hardware_target, workload_kernel,
+  optimization_recipe, and benchmark_result. Use the structured frontmatter fields
+  from the templates when evidence exists: hardware_targets, workloads, datatypes,
+  metrics, toolchains, constraints, and evidence_strength.
+- Benchmark_result drafts MUST include hardware target/version context, workload
+  shape or workload name, metric, measurement method/context, source, and
+  evidence_strength classified as measured, reported, derived, or marketing.
+  Reject benchmark claims missing hardware version, workload, metric, or
+  measurement context unless they are only suitable as pages_to_update.
+- For benchmark_result and optimization_recipe pages, ground Key Claims in
+  evidence_extraction and source_grounded_snippets from the manifest so later
+  optimizer agents can cite evidence.
 - Relationships section of entity pages MUST include at least 2 [[wiki_page_name]]
   wiki-link references to entity pages visible in wiki_context.relevant_pages.
   Use the exact filename stem (no path, no extension) inside [[...]].
@@ -69,6 +129,8 @@ Scorecard dimensions to assess (0.0-1.0 each):
 Gap-fill gate (PRIMARY filter — evaluate this FIRST):
   gap_fill_score measures whether this page fills a genuine conceptual gap
   in the wiki. Score it LOW (≤0.3) and set decision="reject" if:
+  - qmd_similarity.matches contains existing pages for the same entity, same
+    product family, or an already saturated topic
   - The resource covers a specific product variant when 3+ pages about the
     same product family are visible in wiki_context.relevant_pages
     (e.g. a third Xuantie core model page, a second Milk-V board page)
@@ -98,7 +160,7 @@ Output schema (respond with ONLY this JSON, nothing else):
   },
   "page_drafts": [
     {
-      "page_type": "entity | synthesis",
+      "page_type": "entity | synthesis | hardware_target | workload_kernel | optimization_recipe | benchmark_result",
       "filename": "string (no path, no extension)",
       "frontmatter": {},
       "content": "string (full markdown body)"

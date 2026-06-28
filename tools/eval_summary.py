@@ -24,11 +24,21 @@ from pathlib import Path
 
 import yaml
 
+from domain_analysis import validate_benchmark_claim
+
 # ---------------------------------------------------------------------------
 # Config loading
 # ---------------------------------------------------------------------------
 
 _CLAUDE_MD_PATH = Path(__file__).parent.parent / "CLAUDE.md"
+_PAGE_TYPES = {
+    "entity",
+    "synthesis",
+    "hardware_target",
+    "workload_kernel",
+    "optimization_recipe",
+    "benchmark_result",
+}
 
 
 def _load_claude_md_block(block_name: str) -> dict:
@@ -120,7 +130,7 @@ def layer1_check(path: Path, page_type: str, verbose: bool = False) -> dict:
     violations = []
 
     # Determine the text block to check for dangling references and word count
-    if page_type == "entity":
+    if page_type != "synthesis":
         target_text = _extract_first_paragraph(body)
         wc_config = word_count_bounds.get("entity_first_paragraph", {"min": 80, "max": 300})
     else:  # synthesis
@@ -153,7 +163,7 @@ def layer1_check(path: Path, page_type: str, verbose: bool = False) -> dict:
         violations.append("EMPTY_SOURCES: frontmatter 'sources' list is empty or missing")
 
     # Hard rejection: entity pages must have at least 3 independently verifiable claims
-    if page_type == "entity":
+    if page_type != "synthesis":
         claims_match = re.search(r"## Key Claims\s*\n(.*?)(?:\n## |\Z)", body, re.DOTALL)
         if claims_match:
             claims_text = claims_match.group(1).strip()
@@ -169,6 +179,21 @@ def layer1_check(path: Path, page_type: str, verbose: bool = False) -> dict:
                 )
         else:
             violations.append("MISSING_KEY_CLAIMS: no '## Key Claims' section found")
+
+    if page_type == "benchmark_result":
+        research_config = _load_claude_md_block("research_config")
+        benchmark_result = validate_benchmark_claim(fm, body, research_config)
+        if not benchmark_result["pass"]:
+            if benchmark_result["missing_fields"]:
+                violations.append(
+                    "BENCHMARK_CONTEXT_MISSING: "
+                    + ", ".join(benchmark_result["missing_fields"])
+                )
+            if benchmark_result["invalid_evidence_strength"]:
+                violations.append(
+                    "BENCHMARK_EVIDENCE_STRENGTH_INVALID: "
+                    + ", ".join(benchmark_result["invalid_evidence_strength"])
+                )
 
     result = {"pass": len(violations) == 0, "violations": violations}
     if verbose:
@@ -225,13 +250,13 @@ def layer2_check(path: Path, page_type: str, verbose: bool = False) -> dict:
         return {"entity_density": None, "measurement_density": None, "compression_ratio": None, "pass": True, "skipped": True}
 
     thresholds = _get_eval_thresholds()
-    if page_type == "entity":
+    if page_type != "synthesis":
         th = thresholds.get("entity_page", {})
     else:
         th = thresholds.get("synthesis_rag_summary", {})
 
     fm, body = parse_page(path)
-    if page_type == "entity":
+    if page_type != "synthesis":
         text = _extract_first_paragraph(body)
     else:
         text = _extract_rag_summary(body)
@@ -288,58 +313,97 @@ def _layer2_is_borderline(layer2_result: dict) -> bool:
     return False
 
 
+def _normalize_qmd_file(file_str: str) -> str:
+    """Normalize a qmd result 'file' field to a page slug for comparison."""
+    name = file_str.split("/")[-1]
+    name = re.sub(r":\d+$", "", name)  # strip :line suffix (e.g. foo.md:27)
+    return name.replace(".md", "").replace("-", "_")
+
+
+def _extract_title(body: str) -> str:
+    """Return the H1 title text from a page body, or empty string."""
+    for line in body.split("\n"):
+        stripped = line.strip()
+        if stripped.startswith("# "):
+            return stripped[2:].strip()
+    return ""
+
+
 def layer3_check(path: Path, page_type: str, verbose: bool = False) -> dict:
     """
-    Semantic coverage via qmd CLI.
-    Adds needs_summary_revision: true to frontmatter on fail.
-    Returns {"coverage": float, "pass": bool} or {"skipped": True} if qmd unavailable.
+    Self-retrieval precision check via qmd CLI.
+
+    A page passes if it appears in the top-5 results when queried by its own
+    H1 title (self-retrieval precision). The title is used because qmd BM25
+    silently returns empty results for queries over ~260 characters, making
+    first-paragraph queries unreliable. Saturation (how many competitors appear
+    in the top-5) is reported as an informational merge-candidate signal only;
+    it does not block approval.
+
+    Sets needs_summary_revision in frontmatter: True on fail, False on pass.
+    Returns {"self_retrieved": bool, "saturation": float, "saturated": bool,
+             "competitors": [str], "pass": bool} or {"skipped": True} if qmd unavailable.
     """
-    fm, body = parse_page(path)
-    if page_type == "entity":
-        query_text = _extract_first_paragraph(body)
-    else:
-        query_text = _extract_rag_summary(body)
+    _, body = parse_page(path)
+    query_text = _extract_title(body)
 
     if not query_text:
-        return {"coverage": 1.0, "pass": True}
+        return {"self_retrieved": True, "saturation": 0.0, "saturated": False,
+                "competitors": [], "pass": True}
 
-    wiki_pages_dir = Path(__file__).parent.parent / "wiki" / "_pages"
-    if not wiki_pages_dir.exists():
-        if verbose:
-            print("[Layer 3] SKIPPED (wiki/_pages not found)")
-        return {"skipped": True, "coverage": None, "pass": True}
+    # Default harness path is BM25-only: vector/query paths require embeddings
+    # and local model setup that may not exist in the current qmd environment.
+    def _run_qmd_search() -> list | None:
+        try:
+            r = subprocess.run(
+                ["uv", "run", "--no-sync", "qmd", "search", query_text, "-c", "_pages", "-n", "5", "--format", "json"],
+                capture_output=True, text=True, timeout=30,
+            )
+        except (FileNotFoundError, subprocess.TimeoutExpired):
+            return None  # qmd unavailable
+        if r.returncode != 0 or not r.stdout.strip():
+            return []
+        try:
+            parsed = json.loads(r.stdout)
+            return parsed if isinstance(parsed, list) else parsed.get("results", [])
+        except json.JSONDecodeError:
+            return []
 
-    try:
-        result = subprocess.run(
-            ["qmd", "search", query_text[:500], "--index", str(wiki_pages_dir), "--top", "5"],
-            capture_output=True,
-            text=True,
-            timeout=30,
-        )
-    except (FileNotFoundError, subprocess.TimeoutExpired):
+    results = _run_qmd_search()
+    search_mode = "search(bm25)"
+    if results is None:
         if verbose:
             print("[Layer 3] SKIPPED (qmd not installed or timed out)")
-        return {"skipped": True, "coverage": None, "pass": True}
+        return {"skipped": True, "pass": True}
 
-    if result.returncode != 0 or not result.stdout.strip():
-        if verbose:
-            print("[Layer 3] SKIPPED (qmd returned no results)")
-        return {"skipped": True, "coverage": None, "pass": True}
+    slug = path.stem
+    top_k = [_normalize_qmd_file(r.get("file", "")) for r in results[:5]]
+    self_retrieved = slug in top_k
+    competitors = [f for f in top_k if f != slug]
+    saturation = len(competitors) / max(len(top_k), 1)
 
-    # Simple heuristic: count returned results as coverage proxy
-    # (qmd returns matched snippets; more matches = better semantic coverage)
-    lines = [l for l in result.stdout.strip().split("\n") if l.strip()]
-    coverage = min(len(lines) / 5.0, 1.0)
-    passed = coverage > 0.5
+    research_config = _load_claude_md_block("research_config")
+    sat_threshold = research_config.get("topic_saturation_hit_threshold", 4)
+    saturated = len(competitors) >= sat_threshold
 
-    if not passed:
-        _set_frontmatter_flag(path, "needs_summary_revision", True)
+    passed = self_retrieved
+    _set_frontmatter_flag(path, "needs_summary_revision", not passed)
 
     if verbose:
-        print(f"[Layer 3] {'PASS' if passed else 'FAIL'}")
-        print(f"  coverage: {coverage:.2f} (qmd results: {len(lines)}/5)")
+        print(f"[Layer 3] {'PASS' if passed else 'FAIL'} (mode={search_mode})")
+        print(f"  self_retrieved: {self_retrieved} (slug='{slug}' in top-{len(top_k)})")
+        print(f"  saturation: {saturation:.2f} ({len(competitors)} competitors in top-5)")
+        if saturated:
+            print(f"  WARNING: topic saturated ({len(competitors)}>={sat_threshold}) — merge candidate")
 
-    return {"coverage": round(coverage, 4), "pass": passed}
+    return {
+        "self_retrieved": self_retrieved,
+        "saturation": round(saturation, 4),
+        "saturated": saturated,
+        "competitors": competitors,
+        "search_mode": search_mode,
+        "pass": passed,
+    }
 
 
 def _set_frontmatter_flag(path: Path, key: str, value) -> None:
@@ -375,8 +439,8 @@ def run_pipeline(path: Path, page_type: str, verbose: bool = False) -> dict:
         print(f"ERROR: file not found: {path}", file=sys.stderr)
         sys.exit(1)
 
-    if page_type not in ("entity", "synthesis"):
-        print(f"ERROR: --type must be 'entity' or 'synthesis'", file=sys.stderr)
+    if page_type not in _PAGE_TYPES:
+        print(f"ERROR: --type must be one of {sorted(_PAGE_TYPES)}", file=sys.stderr)
         sys.exit(1)
 
     if verbose:
@@ -394,19 +458,12 @@ def run_pipeline(path: Path, page_type: str, verbose: bool = False) -> dict:
         return result
 
     l2 = layer2_check(path, page_type, verbose=verbose)
-
-    l3_triggered = _layer2_is_borderline(l2) and not l2.get("skipped")
-    l3 = None
-    if l3_triggered:
-        if verbose:
-            print("[Layer 3] Triggered (Layer 2 borderline)")
-        l3 = layer3_check(path, page_type, verbose=verbose)
+    l3 = layer3_check(path, page_type, verbose=verbose)
 
     result = {
         "layer1": l1,
         "layer2": l2,
         "layer3": l3,
-        "layer3_triggered": l3_triggered,
         "final": "approved",
     }
 
@@ -425,7 +482,7 @@ def main():
     parser.add_argument("page_path", help="Path to the markdown page to evaluate")
     parser.add_argument(
         "--type",
-        choices=["entity", "synthesis"],
+        choices=sorted(_PAGE_TYPES),
         default="entity",
         help="Page type (default: entity)",
     )

@@ -1,4 +1,6 @@
 wiki/audit/
+wiki/research_state/
+subagent_env_setup.sh
 .obsidian/
 __pycache__/
 *.pyc

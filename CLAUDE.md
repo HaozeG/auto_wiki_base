@@ -13,7 +13,7 @@ You are the maintainer of this wiki. You create pages, update them on ingest, ma
 graph_maturity: true
 cold_start_page_count: 58
 mean_inbound_links: 3.9655
-retrospective_lint_done: false
+retrospective_lint_done: true
 ```
 
 ---
@@ -194,7 +194,7 @@ After each ingest, if `graph_stats.py` reports `mean_inbound_links > 2.0` and `[
 ## Query Protocol
 
 When asked a question:
-1. Use `qmd` to find relevant pages: `qmd search "<query>" --index wiki/_pages/ --top 10`
+1. Use `qmd` to find relevant pages: `qmd search "<query>" --top 10`
 2. Read the full text of the returned pages
 3. Synthesize an answer with citations to wiki page filenames (not raw source filenames directly)
 4. If the answer constitutes a significant synthesis not already captured in a page: create a new Synthesis page, log as `query_synthesis`:
@@ -210,7 +210,7 @@ For regular queries, log:
 ## [YYYY-MM-DD] query | <question truncated to 80 chars>
 ```
 
-After writing any new synthesis page, re-index: `qmd index wiki/_pages/`
+After writing any new synthesis page, run `uv run --no-sync qmd update` (see qmd notes in Constraints).
 
 ---
 
@@ -386,13 +386,42 @@ spacy_model: en_core_web_sm
 [research_config]
 max_candidates_per_session: 20
 max_new_pages_per_session: 10
-max_eval_subagent_tokens: 6000
+max_eval_subagent_tokens: 16000
 max_discovery_subagent_tokens: 3000
 max_retries_on_fetch_failure: 2
 discovery_search_queries_limit: 5
-topic_saturation_hit_threshold: 4   # pre-eval skip if qmd returns this many similar pages
-title_overlap_threshold: 0.6        # pre-eval skip if title word-overlap with existing page >= this
+keyword_recommendation_limit: 5
+max_keyword_recommender_tokens: 16000
+keyword_recommender_model: null
+recent_audit_sessions_for_discovery: 10
+repeat_url_suppression: true
+qmd_command: ["uv", "run", "--no-sync", "qmd"]
+research_state_dir: "wiki/research_state"
+topic_similarity_min_score: 0.80
+near_duplicate_score: 0.90
+topic_saturation_hit_threshold: 2   # pre-eval skip if qmd returns this many similar pages
+title_overlap_threshold: 0.8        # pre-eval skip for hard title duplicates, not broad shared stack/vendor terms
 synthesis_gap_min_cluster_size: 3   # log synthesis gap if tag cluster has >= this many entity pages
+domain_stopwords: []                # optional domain terms ignored by duplicate/saturation token overlap
+preferred_source_types:
+  - official documentation
+  - ISA specification
+  - compiler documentation
+  - benchmark repository
+  - paper
+  - SDK guide
+required_measurement_fields:
+  - hardware_targets
+  - workloads
+  - metrics
+  - measurement_context
+page_type_taxonomy:
+  entity: general concept, project, system, chip, or architecture page
+  synthesis: cross-page comparison, contradiction, or landscape page
+  hardware_target: ISA/profile, extensions, memory hierarchy, accelerator interfaces, compiler support
+  workload_kernel: operation shape, datatypes, layout, sparsity, model context, baseline implementation
+  optimization_recipe: transformation, prerequisites, expected effect, failure modes, measurements
+  benchmark_result: hardware/software versions, workload, metrics, measurement method, source
 ```
 
 ---
@@ -402,5 +431,6 @@ synthesis_gap_min_cluster_size: 3   # log synthesis gap if tag cluster has >= th
 - **Frontmatter is the source of truth for graph structure.** `inbound_links` in frontmatter is canonical. `graph_stats.py` reads frontmatter, not markdown link syntax.
 - **Obsidian compatibility.** Internal links use `[[page_name]]` syntax. No Obsidian-specific syntax in page body.
 - **Version control.** Commit after each ingest. Use the log entry title as the commit message.
-- **qmd indexing.** Run `qmd update` after every ingest or page write so search stays current. The orchestrator calls this automatically post-session. The old `qmd index` command does not exist — use `qmd update`.
+- **qmd BM25 path.** The research harness uses `uv run --no-sync qmd update` before a session and after each successful page write, then gates candidates with `uv run --no-sync qmd search -c _pages --format json`. Do not call `qmd query`, `qmd vsearch`, or `qmd embed` in the default harness path; those paths require embeddings/model setup and may trigger large local downloads. Never use `qmd index` — that command does not exist.
+- **Research resume state.** Runtime checkpoints live under `wiki/research_state/` and are intentionally ignored by git. Use `research --resume <session_id>` to continue a stopped session and `research --list-sessions` to inspect available checkpoints.
 - **Language handling.** The dangling reference patterns above cover Chinese and English. Extend `[eval_config].dangling_patterns` for other languages.

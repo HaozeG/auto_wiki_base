@@ -3,8 +3,17 @@ type: synthesis
 connected_entities: [risc_v_profiles_rva, risc_v_vector_extension, risc_v_matrix_extension, gnu_toolchain_riscv_vector, muriscv_nn, onnx_runtime_riscv, iree_riscv, tvm_riscv_backend, mlir_riscv_backend, risc_v_zve_embedded_vector, openxiangshan_difftest_nemu]
 synthesis_status: draft
 created: 2026-06-27
-updated: 2026-06-27
-cold_start: true
+updated: 2026-06-28
+cold_start: false
+sources:
+- https://riscv.org/blog/risc-v-announces-ratification-of-the-rva23-profile-standard/
+- https://github.com/riscv/riscv-profiles/blob/main/src/rva23-profile.adoc
+- https://www.cnx-software.com/2025/07/08/ubuntu-25-10-release-to-mandate-rva23-profile-obsoleting-most-risc-v-hardware/
+- https://www.phoronix.com/news/GCC-RISC-V-Auto-Vectorization
+- https://llvm.org/docs/RISCVUsage.html
+- https://medium.com/accelr-blog/apache-tvm-on-risc-v-experiment-results-aec86c3e7cf8
+- https://dl.acm.org/doi/10.1145/3637543.3652878
+- https://www.researchgate.net/publication/381895543_muRISCV-NN_Challenging_Zve32x_Autovectorization_with_TinyML_Inference_Library_for_RISC-V_Vector_Extension
 inbound_links: 0
 scorecard:
   bridge_score: ~

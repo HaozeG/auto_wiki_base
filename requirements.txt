@@ -12,4 +12,4 @@ anthropic>=0.30
 
 # qmd: install separately via npm
 # npm install -g @tobilu/qmd
-# Then: qmd collection add wiki/_pages --name llm-wiki && qmd embed
+# Then: qmd collection add wiki/_pages --name _pages && qmd update

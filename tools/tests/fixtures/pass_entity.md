@@ -1,17 +1,21 @@
 ---
-type: entity
-tags: [machine-learning, transformers]
-sources: [raw/sources/attention_paper.md]
-created: 2026-06-26
-updated: 2026-06-26
 cold_start: true
+created: 2026-06-26
 inbound_links: 0
+needs_summary_revision: true
 scorecard:
-  novelty_delta: ~
-  claim_density: ~
-  self_containedness: ~
-  bridge_score: ~
-  hub_potential: ~
+  bridge_score: null
+  claim_density: null
+  hub_potential: null
+  novelty_delta: null
+  self_containedness: null
+sources:
+- raw/sources/attention_paper.md
+tags:
+- machine-learning
+- transformers
+type: entity
+updated: 2026-06-26
 ---
 
 # Transformer Attention Mechanism

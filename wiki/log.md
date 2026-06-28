@@ -285,3 +285,13 @@ deferred_for_human:
   - MERGE Cluster C (human decision): greenwaves_gap8_gap9.md — combined overview, may overlap with gap8/gap9 pages
   - SATURATION-ONLY: 45 pages flagged by Layer 3 BM25 saturation; no action proposed (expected in focused domain wiki)
 report: wiki/retrospective_lint_report.md
+
+## [2026-06-28] lint | apply
+actions_executed:
+  - MERGE Cluster A: deleted entity/tt_metalium.md + entity/tt_metalium_framework.md; cherry-picked all unique claims (three-stage pipeline, software stack hierarchy, Getting Started examples, debugging tools, multicast/semaphores) into entity/tenstorrent_tt_metalium.md; sources expanded from 1 to 3
+  - MERGE Cluster B: deleted entity/sifive_intelligence_x390.md; merged LLM software stack section (SHARK-Turbine/IREE workflow, SKL, VCIX MLIR dialect, TinyLlama decode profiling, alternative frameworks) into entity/sifive_p870_x390.md; sources expanded from 4 to 5
+  - RESTRUCTURE: synthesis/riscv_standardization_software_ecosystem.md — added sources list (8 URLs from connected entity pages); set cold_start: false
+deferred_executed: none (Cluster C greenwaves_gap8_gap9.md left for human decision)
+pages_deleted: [entity/tt_metalium.md, entity/tt_metalium_framework.md, entity/sifive_intelligence_x390.md]
+wiki_page_count: 82
+retrospective_lint_done: true

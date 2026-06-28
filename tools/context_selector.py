@@ -6,13 +6,13 @@ for a given resource, then greedily selects within a token budget.
 Falls back to inbound_links-based ranking when qmd is unavailable.
 """
 
-import json
 import re
-import subprocess
 import sys
 from pathlib import Path
 
 import yaml
+
+from qmd_runner import QmdRunner
 
 
 _WIKI_PAGES_DIR = Path(__file__).parent.parent / "wiki" / "_pages"
@@ -68,36 +68,22 @@ def _resolve_qmd_path(qmd_file: str) -> Path | None:
     return None
 
 
-def _qmd_search(query_text: str, top: int = 20) -> list[tuple[Path, float]]:
+def _qmd_search(query_text: str, top: int = 20, qmd_runner: QmdRunner | None = None) -> list[tuple[Path, float]]:
     """
     Run qmd search and return list of (page_path, score) pairs.
     Returns empty list if qmd is unavailable or returns no results.
 
     Uses JSON output format for reliable parsing and real similarity scores.
     """
-    try:
-        safe_query = query_text[:500].replace("\x00", "")
-        result = subprocess.run(
-            ["qmd", "search", safe_query, "-c", "_pages", "-n", str(top), "--format", "json"],
-            capture_output=True,
-            text=True,
-            timeout=30,
-        )
-    except (FileNotFoundError, subprocess.TimeoutExpired):
-        return []
-
-    if result.returncode != 0 or not result.stdout.strip():
-        return []
-
-    try:
-        records = json.loads(result.stdout)
-    except json.JSONDecodeError:
+    runner = qmd_runner or QmdRunner()
+    result = runner.search(query_text, top=top, collection="_pages")
+    if not result.ok:
         return []
 
     ranked: list[tuple[Path, float]] = []
-    for rec in records:
-        qmd_file = rec.get("file", "")
-        score = float(rec.get("score", 0.0))
+    for rec in result.matches:
+        qmd_file = rec.file
+        score = float(rec.score or 0.0)
         if not qmd_file or score <= 0:
             continue
         path = _resolve_qmd_path(qmd_file)
@@ -118,16 +104,66 @@ def _fallback_rank_by_inbound(pages: list[Path]) -> list[tuple[Path, float]]:
     return ranked
 
 
-def get_topic_hit_count(query_text: str, min_score: float = 0.5) -> int:
+def _as_terms(value) -> set[str]:
+    if value is None:
+        return set()
+    if isinstance(value, str):
+        raw = re.split(r"[,;]", value)
+    elif isinstance(value, (list, tuple, set)):
+        raw = value
+    else:
+        raw = [value]
+    return {str(item).strip().lower() for item in raw if str(item).strip()}
+
+
+def _structured_rank(
+    pages: list[Path],
+    structured_terms: dict | None,
+) -> list[tuple[Path, float]]:
+    """Rank pages by overlapping structured frontmatter fields."""
+    if not structured_terms:
+        return []
+    fields = (
+        "hardware_targets",
+        "workloads",
+        "datatypes",
+        "metrics",
+        "toolchains",
+        "constraints",
+        "evidence_strength",
+    )
+    query_terms = {field: _as_terms(structured_terms.get(field)) for field in fields}
+    ranked: list[tuple[Path, float]] = []
+    for page in pages:
+        fm, _ = _parse_frontmatter(page)
+        score = 0.0
+        for field, terms in query_terms.items():
+            if not terms:
+                continue
+            page_terms = _as_terms(fm.get(field))
+            overlap = terms & page_terms
+            if overlap:
+                score += len(overlap)
+        if score > 0:
+            inbound = float(fm.get("inbound_links", 0))
+            ranked.append((page, score + inbound * 0.001))
+    ranked.sort(key=lambda x: x[1], reverse=True)
+    return ranked
+
+
+def get_topic_hit_count(query_text: str, min_score: float = 0.5,
+                        qmd_runner: QmdRunner | None = None) -> int:
     """
     Return how many wiki pages have meaningful similarity to query_text.
     Used by orchestrator as a pre-eval duplicate gate.
     """
-    results = _qmd_search(query_text, top=10)
+    results = _qmd_search(query_text, top=10, qmd_runner=qmd_runner)
     return sum(1 for _, score in results if score >= min_score)
 
 
-def select_context_pages(resource_content: str, max_tokens: int = 4000) -> list[dict]:
+def select_context_pages(resource_content: str, max_tokens: int = 4000,
+                         qmd_runner: QmdRunner | None = None,
+                         structured_terms: dict | None = None) -> list[dict]:
     """
     Select wiki pages relevant to resource_content, within max_tokens budget.
 
@@ -143,9 +179,25 @@ def select_context_pages(resource_content: str, max_tokens: int = 4000) -> list[
     if not all_pages:
         return []
 
-    qmd_results = _qmd_search(resource_content)
+    structured_results = _structured_rank(all_pages, structured_terms)
+    qmd_results = _qmd_search(resource_content, qmd_runner=qmd_runner)
 
-    if qmd_results:
+    if structured_results:
+        seen = set()
+        ranked_paths = []
+        for page, score in structured_results:
+            ranked_paths.append((page, score + 100.0))
+            seen.add(str(page))
+        for page, score in qmd_results:
+            if str(page) not in seen:
+                fm, _ = _parse_frontmatter(page)
+                inbound = float(fm.get("inbound_links", 0))
+                ranked_paths.append((page, score + inbound * 0.001))
+                seen.add(str(page))
+        for pg in all_pages:
+            if str(pg) not in seen:
+                ranked_paths.append((pg, 0.0))
+    elif qmd_results:
         seen = set()
         ranked_paths: list[tuple[Path, float]] = []
         for page, score in qmd_results:

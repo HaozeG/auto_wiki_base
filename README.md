@@ -2,7 +2,7 @@
 
 Auto Wiki Base is a markdown knowledge-base template for maintaining a curated wiki with an LLM agent. Raw sources stay immutable, the wiki pages are generated and maintained, and lightweight Python tools validate pages, compute graph health, and run an optional autonomous research loop.
 
-The current example wiki is focused on RISC-V AI hardware and software, but the structure is reusable for other research domains.
+The current example wiki is focused on RISC-V AI hardware and software.
 
 ## Repository Layout
 
@@ -198,7 +198,7 @@ research_state_dir: "wiki/research_state"
 topic_similarity_min_score: 0.80
 near_duplicate_score: 0.90
 topic_saturation_hit_threshold: 2
-title_overlap_threshold: 0.6
+title_overlap_threshold: 0.8
 ```
 
 ## Git Hygiene

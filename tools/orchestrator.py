@@ -13,9 +13,11 @@ Requires: ANTHROPIC_API_KEY environment variable.
 """
 
 import argparse
+import html
 import hashlib
 import json
 import logging
+import os
 import re
 import subprocess
 import sys
@@ -32,10 +34,24 @@ _TOOLS_DIR = Path(__file__).parent
 sys.path.insert(0, str(_TOOLS_DIR))
 
 from audit import AuditLog
-from context_selector import get_topic_hit_count, select_context_pages
+from context_selector import select_context_pages
+from domain_analysis import (
+    DEFAULT_PAGE_TYPE_TAXONOMY,
+    DEFAULT_REQUIRED_MEASUREMENT_FIELDS,
+    build_gap_manifest,
+    build_structured_query,
+    extract_evidence,
+    source_grounded_snippets,
+)
+from qmd_runner import QmdRunner, assess_candidate_similarity, candidate_similarity_query, hard_title_duplicate_score
 from quota import MAX_TOKENS_PER_SUBAGENT_OUTPUT, MIN_SECONDS_BETWEEN_CALLS, QuotaManager
-from subagent_prompts import DISCOVERY_SYSTEM_PROMPT, EVALUATION_SYSTEM_PROMPT
-from validate_output import validate_and_parse
+from research_state import ResearchSessionState, list_sessions, write_key
+from subagent_prompts import (
+    DISCOVERY_SYSTEM_PROMPT,
+    EVALUATION_SYSTEM_PROMPT,
+    KEYWORD_RECOMMENDER_SYSTEM_PROMPT,
+)
+from validate_output import extract_json_block, validate_and_parse
 
 logger = logging.getLogger(__name__)
 
@@ -70,12 +86,123 @@ def _load_claude_md_block(block_name: str) -> dict:
         return {}
 
 
+def _load_research_config() -> dict:
+    config = _load_claude_md_block("research_config")
+    config.setdefault("qmd_command", ["uv", "run", "--no-sync", "qmd"])
+    config.setdefault("research_state_dir", "wiki/research_state")
+    config.setdefault("topic_similarity_min_score", 0.80)
+    config.setdefault("near_duplicate_score", 0.90)
+    config.setdefault("topic_saturation_hit_threshold", 2)
+    config.setdefault("title_overlap_threshold", 0.8)
+    config.setdefault("keyword_recommendation_limit", 5)
+    config.setdefault("max_keyword_recommender_tokens", 6000)
+    config.setdefault("keyword_recommender_model", None)
+    config.setdefault("recent_audit_sessions_for_discovery", 10)
+    config.setdefault("repeat_url_suppression", True)
+    config.setdefault("domain_stopwords", [])
+    config.setdefault("preferred_source_types", [
+        "official documentation",
+        "ISA specification",
+        "compiler documentation",
+        "benchmark repository",
+        "paper",
+        "SDK guide",
+    ])
+    config.setdefault("required_measurement_fields", list(DEFAULT_REQUIRED_MEASUREMENT_FIELDS))
+    config.setdefault("page_type_taxonomy", DEFAULT_PAGE_TYPE_TAXONOMY)
+    return config
+
+
+def _research_state_dir(research_config: dict) -> Path:
+    state_dir = Path(research_config.get("research_state_dir", "wiki/research_state"))
+    if not state_dir.is_absolute():
+        state_dir = _PROJECT_ROOT / state_dir
+    return state_dir
+
+
 def _load_processed_urls() -> set[str]:
     """Extract URLs already processed from wiki/log.md."""
     if not _LOG_MD.exists():
         return set()
     text = _LOG_MD.read_text(encoding="utf-8")
     return set(re.findall(r"https?://\S+", text))
+
+
+def _clean_model_name(model: str | None) -> str | None:
+    if not model:
+        return None
+    return re.sub(r"\x1b\[[\d;]*m", "", model).strip() or None
+
+
+def _audit_dir() -> Path:
+    return _PROJECT_ROOT / "wiki" / "audit"
+
+
+def _recent_audit_files(limit: int) -> list[Path]:
+    audit_dir = _audit_dir()
+    if not audit_dir.exists():
+        return []
+    return sorted(
+        audit_dir.glob("research_*.json"),
+        key=lambda p: p.stat().st_mtime,
+        reverse=True,
+    )[:limit]
+
+
+def _load_recent_discovery_history(research_config: dict) -> dict:
+    """Summarize recent audit URLs/titles for repeat suppression and keyword planning."""
+    limit = int(research_config.get("recent_audit_sessions_for_discovery", 10) or 0)
+    url_counts: dict[str, int] = {}
+    previous_queries: list[str] = []
+    repeated_results: list[dict] = []
+    rejected_results: list[dict] = []
+    seen_repeated: set[str] = set()
+    seen_queries: set[str] = set()
+
+    for path in _recent_audit_files(limit):
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        candidate_queries = [data.get("query")]
+        candidate_queries.extend(data.get("discovery_queries_used", []) or [])
+        candidate_queries.extend(
+            item.get("query")
+            for item in data.get("keyword_recommendations", []) or []
+            if isinstance(item, dict)
+        )
+        for q in candidate_queries:
+            if not q:
+                continue
+            q = str(q).strip()
+            if q and q.lower() not in seen_queries:
+                previous_queries.append(q[:240])
+                seen_queries.add(q.lower())
+        for invocation in data.get("invocations", []):
+            manifest = invocation.get("input_manifest", {})
+            candidate = manifest.get("candidate", {})
+            url = candidate.get("url") or invocation.get("url")
+            if not url:
+                continue
+            title = candidate.get("title", "")
+            url_counts[url] = url_counts.get(url, 0) + 1
+            reason = invocation.get("skipped_reason")
+            if reason:
+                rejected_results.append({
+                    "url": url,
+                    "title": title,
+                    "reason": str(reason)[:300],
+                })
+            if url_counts[url] > 1 and url not in seen_repeated:
+                repeated_results.append({"url": url, "title": title, "count": url_counts[url]})
+                seen_repeated.add(url)
+
+    return {
+        "seen_urls": set(url_counts),
+        "previous_queries": previous_queries[:40],
+        "repeated_results": repeated_results[:20],
+        "rejected_results": rejected_results[:20],
+    }
 
 
 def _wiki_is_mature() -> bool:
@@ -97,6 +224,62 @@ def _get_wiki_topic_summary() -> str:
     return " ".join(summary_lines)[:1000]
 
 
+def _get_repo_research_theme() -> str:
+    """Return a compact, domain-level theme for the current wiki/repo."""
+    parts: list[str] = []
+    readme = _PROJECT_ROOT / "README.md"
+    if readme.exists():
+        text = readme.read_text(encoding="utf-8")
+        match = re.search(r"The current example wiki is focused on ([^.]+)\.", text)
+        if match:
+            focus = re.split(r",\s*but\b", match.group(1).strip(), maxsplit=1)[0]
+            parts.append(f"Current wiki focus: {focus}.")
+
+    if _INDEX_MD.exists():
+        text = _INDEX_MD.read_text(encoding="utf-8")
+        page_count = None
+        source_count = None
+        representative_pages = []
+        tag_counts: dict[str, int] = {}
+        for line in text.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("Last updated:"):
+                pages_match = re.search(r"Pages:\s*(\d+)", stripped)
+                sources_match = re.search(r"Sources:\s*(\d+)", stripped)
+                if pages_match:
+                    page_count = pages_match.group(1)
+                if sources_match:
+                    source_count = sources_match.group(1)
+            if not (stripped.startswith("| [") and "](" in stripped):
+                continue
+            cells = [cell.strip() for cell in stripped.strip("|").split("|")]
+            if len(cells) < 3:
+                continue
+            page_cell, summary, tags_cell = cells[:3]
+            page_match = re.search(r"\[([^\]]+)\]", page_cell)
+            page_name = page_match.group(1) if page_match else page_cell
+            for tag in [t.strip() for t in tags_cell.split(",") if t.strip()]:
+                tag_counts[tag] = tag_counts.get(tag, 0) + 1
+            if len(representative_pages) < 10:
+                representative_pages.append(f"{page_name}: {summary}")
+        if page_count or source_count:
+            stats = []
+            if page_count:
+                stats.append(f"{page_count} pages")
+            if source_count:
+                stats.append(f"{source_count} sources")
+            parts.append("Wiki scale: " + ", ".join(stats) + ".")
+        if tag_counts:
+            top_tags = sorted(tag_counts.items(), key=lambda item: (-item[1], item[0]))[:12]
+            parts.append("Recurring tags: " + ", ".join(tag for tag, _count in top_tags) + ".")
+        if representative_pages:
+            parts.append("Representative pages: " + "; ".join(representative_pages) + ".")
+
+    if not parts:
+        parts.append(_get_wiki_topic_summary())
+    return " ".join(parts)[:1800]
+
+
 def _get_concept_gaps() -> list[str]:
     """Extract concepts with no dedicated page from the Concept Index."""
     if not _INDEX_MD.exists():
@@ -111,41 +294,16 @@ _STOP_WORDS = {"the", "a", "an", "of", "for", "in", "and", "on", "with", "by", "
 
 def _title_word_overlap(title: str, stem: str) -> float:
     """
-    Return similarity between a candidate title and a filename stem.
+    Return hard-duplicate similarity between a candidate title and filename stem.
 
-    Combines Jaccard on word sets with a substring check. The substring check
-    handles compound filenames like 'milkv_pioneer' where 'milk' and 'pioneer'
-    are concatenated without separator.
-
-    Title is cleaned by taking the first segment before '|', '—', ' - ' separators
-    (web page titles often append site names or descriptions after these).
+    This is intentionally stricter than broad topic similarity: one shared
+    vendor/family token should not suppress stack subtopics around that vendor.
     """
-    # Strip page-title boilerplate (e.g. "Milk-V Pioneer | Make native RISC-V...")
-    clean = re.split(r"\s*[|—]\s*|\s+-\s+", title)[0].strip()
-    t_words = set(re.findall(r"\w+", clean.lower())) - _STOP_WORDS
-    s_words = set(re.findall(r"\w+", stem.replace("_", " ").replace("-", " ").lower())) - _STOP_WORDS
-
-    if not t_words:
-        return 0.0
-
-    # Standard Jaccard on tokenized words
-    union = t_words | s_words
-    jaccard = len(t_words & s_words) / len(union) if union else 0.0
-
-    # Substring check: handles "milk" ⊂ "milkv_pioneer" (concatenated compound words)
-    stem_compact = stem.lower().replace("_", "").replace("-", "")
-    long_t = [w for w in t_words if len(w) > 3]
-    if long_t:
-        contained = sum(1 for w in long_t if w in stem_compact)
-        substr_ratio = contained / len(long_t)
-    else:
-        substr_ratio = 0.0
-
-    return max(jaccard, substr_ratio)
+    return hard_title_duplicate_score(title, stem, stopwords=_STOP_WORDS)
 
 
 def _title_matches_existing(title: str, extra_stems: set[str] | None = None,
-                             overlap_threshold: float = 0.6) -> str | None:
+                             overlap_threshold: float = 0.8) -> str | None:
     """
     Return matched filename stem if title is too similar to an existing page or
     a page already written this session (extra_stems).
@@ -251,6 +409,103 @@ def fetch_resource(url: str, retries: int = 2) -> str | None:
 _ARXIV_ABS_RE = re.compile(r"arxiv\.org/abs/([\w.]+)")
 _GH_REPO_RE   = re.compile(r"github\.com/([^/]+)/([^/?#]+)/?(?:[?#].*)?$")
 _GH_PR_RE     = re.compile(r"github\.com/([^/]+)/([^/]+)/pull/(\d+)")
+_GH_BLOB_RE   = re.compile(r"github\.com/([^/]+)/([^/]+)/blob/([^/?#]+)/([^?#]+)")
+
+
+def _looks_like_html(content: str) -> bool:
+    head = content[:1000].lower()
+    return "<html" in head or "<!doctype" in head or ("<body" in head and "</" in head)
+
+
+def _strip_rendered_html(content: str) -> str:
+    """Convert rendered HTML shells into compact visible text."""
+    text = re.sub(r"<!--.*?-->", " ", content, flags=re.DOTALL)
+    text = re.sub(
+        r"<(script|style|noscript|template|svg|canvas)\b[^>]*>.*?</\1>",
+        " ",
+        text,
+        flags=re.DOTALL | re.IGNORECASE,
+    )
+    text = re.sub(
+        r"<(nav|header|footer|aside|form)\b[^>]*>.*?</\1>",
+        " ",
+        text,
+        flags=re.DOTALL | re.IGNORECASE,
+    )
+    text = re.sub(r"<br\s*/?>", "\n", text, flags=re.IGNORECASE)
+    text = re.sub(r"</(p|div|section|article|li|h[1-6]|tr)>", "\n", text, flags=re.IGNORECASE)
+    text = re.sub(r"<[^>]+>", " ", text)
+    text = html.unescape(text)
+    lines = []
+    seen = set()
+    for line in text.splitlines():
+        line = re.sub(r"\s{2,}", " ", line).strip()
+        if not line:
+            continue
+        lower = line.lower()
+        if lower in seen:
+            continue
+        if len(line) <= 20 and lower in {
+            "skip to content", "sign in", "sign up", "pricing", "features", "resources",
+            "navigation menu", "main navigation", "footer",
+        }:
+            continue
+        lines.append(line)
+        seen.add(lower)
+    return "\n".join(lines).strip()
+
+
+def _content_is_boilerplate_or_thin(content: str, *, was_html: bool = False) -> bool:
+    text = content.strip()
+    text_chars = len(re.sub(r"\s", "", text))
+    if text_chars < 500:
+        return True
+
+    lower = text.lower()
+    markers = [
+        "webpack", "__next_data__", "document.", "window.", "addEventListener",
+        "font-family", "background-color", "box-sizing", "display:flex",
+        "display: flex", "var(--", ".css-", "github.com",
+    ]
+    marker_hits = sum(lower.count(marker.lower()) for marker in markers)
+    brace_noise = lower.count("{") + lower.count("}") + lower.count("function(")
+    words = max(1, len(re.findall(r"\w+", lower)))
+    if marker_hits >= 8 and marker_hits / words > 0.02:
+        return True
+    if was_html and brace_noise > text_chars / 25:
+        return True
+    return False
+
+
+def _normalize_source_text(content: str) -> tuple[str, bool]:
+    was_html = _looks_like_html(content)
+    if was_html:
+        return _strip_rendered_html(content), True
+    return content, False
+
+
+def _content_or_enriched_snippet(content: str | None, title: str, snippet: str, url: str) -> str | None:
+    if content is None:
+        enriched = _enrich_snippet(title, snippet)
+        if not enriched:
+            return None
+        logger.info("fetch failed for %s — using enriched DDG snippet (%d chars)", url, len(enriched))
+        return enriched
+
+    if content[:4] in ("%PDF", b"%PDF"[:4] if isinstance(content, bytes) else ""):
+        logger.info("binary/PDF content for %s — using enriched snippet", url)
+        return _enrich_snippet(title, snippet) or snippet
+
+    normalized, was_html = _normalize_source_text(content)
+    if _content_is_boilerplate_or_thin(normalized, was_html=was_html):
+        enriched = _enrich_snippet(title, snippet)
+        text_chars = len(re.sub(r"\s", "", normalized))
+        if enriched:
+            logger.info("boilerplate/thin content (%d text chars) for %s — using enriched snippet", text_chars, url)
+            return enriched
+        logger.info("boilerplate/thin content (%d text chars) for %s — keeping cleaned excerpt", text_chars, url)
+        return normalized[:2000]
+    return normalized
 
 
 def _fetch_arxiv(url: str) -> str | None:
@@ -313,11 +568,23 @@ def _fetch_github_pr(owner: str, repo: str, pr_num: str) -> str | None:
         return None
 
 
+def _fetch_github_blob(owner: str, repo: str, branch: str, path: str) -> str | None:
+    """Fetch a GitHub blob URL as raw source text."""
+    raw_url = f"https://raw.githubusercontent.com/{owner}/{repo}/{branch}/{path}"
+    content = fetch_resource(raw_url)
+    if content and len(content.strip()) > 20:
+        return f"[GitHub file: {owner}/{repo}/{branch}/{path}]\n\n{content[:6000]}"
+    return None
+
+
 def _fetch_github(url: str) -> str | None:
-    """Dispatch to PR or README fetch based on URL shape."""
+    """Dispatch to PR, file, or README fetch based on URL shape."""
     m = _GH_PR_RE.search(url)
     if m:
         return _fetch_github_pr(*m.groups())
+    m = _GH_BLOB_RE.search(url)
+    if m:
+        return _fetch_github_blob(*m.groups())
     m = _GH_REPO_RE.search(url)
     if m:
         return _fetch_github_readme(*m.groups())
@@ -357,14 +624,14 @@ def _call_subagent(subagent_type: str, manifest: dict, research_config: dict) ->
 
     # Prefer env-var model so the harness works with any compatible API endpoint
     # (e.g. DeepSeek via ANTHROPIC_BASE_URL). Fall back to a known Anthropic model.
-    import os as _os
     model = (
-        _os.environ.get("ANTHROPIC_DEFAULT_HAIKU_MODEL")
-        or _os.environ.get("CLAUDE_CODE_SUBAGENT_MODEL")
+        os.environ.get("ANTHROPIC_DEFAULT_HAIKU_MODEL")
+        or os.environ.get("CLAUDE_CODE_SUBAGENT_MODEL")
         or "claude-haiku-4-5-20251001"
     )
-    # Strip any stray ANSI-code artifacts that may appear in env values (e.g. [1m])
-    model = re.sub(r"\[[\d;]*m\]?", "", model).strip()
+    # Strip real terminal ANSI escape bytes, but preserve provider-specific
+    # suffixes such as DeepSeek's literal "[1m]" thinking budget marker.
+    model = _clean_model_name(model) or "claude-haiku-4-5-20251001"
 
     if subagent_type == "discovery":
         system = DISCOVERY_SYSTEM_PROMPT
@@ -383,8 +650,8 @@ def _call_subagent(subagent_type: str, manifest: dict, research_config: dict) ->
     )
     if message.stop_reason == "max_tokens":
         logger.warning(
-            "_call_subagent: hit max_tokens (%d) before text output — "
-            "thinking model exhausted budget. Increase max_tokens.",
+            "_call_subagent: hit max_tokens (%d) — output truncated. "
+            "Increase max_eval_subagent_tokens in research_config.",
             max_tokens,
         )
     for block in message.content:
@@ -396,9 +663,162 @@ def _call_subagent(subagent_type: str, manifest: dict, research_config: dict) ->
     )
 
 
+def _keyword_recommender_model(research_config: dict) -> str:
+    model = (
+        research_config.get("keyword_recommender_model")
+        or os.environ.get("ANTHROPIC_MODEL")
+        or os.environ.get("ANTHROPIC_DEFAULT_OPUS_MODEL")
+        or os.environ.get("ANTHROPIC_DEFAULT_SONNET_MODEL")
+        or "claude-opus-4-5-20251101"
+    )
+    return _clean_model_name(str(model)) or "claude-opus-4-5-20251101"
+
+
+def _normalize_keyword_plan(data: dict, max_keywords: int, model: str, source: str) -> dict:
+    raw_keywords = data.get("recommended_keywords", [])
+    keywords: list[dict] = []
+    seen_queries: set[str] = set()
+    if isinstance(raw_keywords, list):
+        for item in raw_keywords:
+            if not isinstance(item, dict):
+                continue
+            query = str(item.get("query", "")).strip()
+            if not query or query.lower() in seen_queries:
+                continue
+            seen_queries.add(query.lower())
+            keywords.append({
+                "query": query[:240],
+                "reason": str(item.get("reason", ""))[:200],
+            })
+            if len(keywords) >= max_keywords:
+                break
+    avoid_patterns = data.get("avoid_patterns", [])
+    if not isinstance(avoid_patterns, list):
+        avoid_patterns = []
+    return {
+        "recommended_keywords": keywords,
+        "avoid_patterns": [str(p)[:160] for p in avoid_patterns[:20]],
+        "model": model,
+        "source": source,
+    }
+
+
+def _fallback_keyword_plan(query: str, concept_gaps: list[str], max_keywords: int,
+                           model: str, reason: str = "fallback",
+                           preferred_source_types: list[str] | None = None) -> dict:
+    preferred_source_types = preferred_source_types or [
+        "official documentation",
+        "technical report benchmark",
+        "implementation repository",
+    ]
+    seed_queries = [
+        f"site:arxiv.org {query}",
+        f"site:github.com {query}",
+    ]
+    for source_type in preferred_source_types[:4]:
+        seed_queries.insert(0, f'"{query}" {source_type}')
+    for gap in concept_gaps[:3]:
+        seed_queries.append(str(gap))
+    return _normalize_keyword_plan(
+        {
+            "recommended_keywords": [
+                {"query": q, "reason": "deterministic fallback to diversify DDG discovery"}
+                for q in seed_queries
+            ],
+            "avoid_patterns": ["javascript-only blog pages", "broad marketing posts"],
+        },
+        max_keywords=max_keywords,
+        model=model,
+        source=reason,
+    )
+
+
+def _call_keyword_recommender(manifest: dict, research_config: dict) -> dict:
+    model = _keyword_recommender_model(research_config)
+    max_keywords = int(manifest.get("max_keywords", 5) or 5)
+    try:
+        import anthropic  # noqa: PLC0415
+    except ImportError:
+        return _fallback_keyword_plan(
+            manifest.get("base_query", ""),
+            manifest.get("concept_gaps", []),
+            max_keywords,
+            model,
+            reason="fallback_anthropic_missing",
+            preferred_source_types=manifest.get("preferred_source_types"),
+        )
+
+    try:
+        client = anthropic.Anthropic()
+        max_tokens = min(
+            int(research_config.get("max_keyword_recommender_tokens", 6000) or 6000),
+            MAX_TOKENS_PER_SUBAGENT_OUTPUT,
+        )
+        message = client.messages.create(
+            model=model,
+            max_tokens=max_tokens,
+            system=KEYWORD_RECOMMENDER_SYSTEM_PROMPT,
+            messages=[{"role": "user", "content": json.dumps(manifest)}],
+        )
+        if getattr(message, "stop_reason", None) == "max_tokens":
+            logger.warning(
+                "keyword recommender hit max_tokens (%d); thinking may have truncated JSON",
+                max_tokens,
+            )
+        raw = ""
+        for block in message.content:
+            if hasattr(block, "text"):
+                raw = block.text
+                break
+        json_str = extract_json_block(raw)
+        if json_str is None:
+            raise ValueError("keyword recommender returned no JSON")
+        data = json.loads(json_str)
+        plan = _normalize_keyword_plan(data, max_keywords, model, source="llm")
+        if not plan["recommended_keywords"]:
+            raise ValueError("keyword recommender returned no usable queries")
+        return plan
+    except Exception as e:
+        logger.warning("keyword recommender failed; using fallback: %s", e)
+        return _fallback_keyword_plan(
+            manifest.get("base_query", ""),
+            manifest.get("concept_gaps", []),
+            max_keywords,
+            model,
+            reason="fallback_error",
+            preferred_source_types=manifest.get("preferred_source_types"),
+        )
+
+
+def _build_keyword_plan(query: str, research_config: dict, depth: str,
+                        discovery_history: dict, gap_manifest: dict | None = None) -> dict:
+    concept_gaps = _get_concept_gaps()
+    gap_manifest = gap_manifest or build_gap_manifest(_WIKI_PAGES_DIR, research_config)
+    manifest = {
+        "base_query": query,
+        "repo_research_theme": _get_repo_research_theme(),
+        "concept_gaps": concept_gaps[:20],
+        "gap_manifest": gap_manifest,
+        "preferred_source_types": research_config.get("preferred_source_types", []),
+        "wiki_topic_summary": _get_wiki_topic_summary(),
+        "previous_search_keywords": discovery_history.get("previous_queries", []),
+        "repeated_results": discovery_history.get("repeated_results", []),
+        "rejected_results": discovery_history.get("rejected_results", []),
+        "depth": depth,
+        "max_keywords": int(research_config.get("keyword_recommendation_limit", 5) or 5),
+    }
+    return _call_keyword_recommender(manifest, research_config)
+
+
 # ---------------------------------------------------------------------------
 # Wiki write operations
 # ---------------------------------------------------------------------------
+
+def _page_subdir(page_type: str) -> Path:
+    if page_type in ("entity", "synthesis"):
+        return _WIKI_PAGES_DIR / page_type
+    return _WIKI_PAGES_DIR / page_type
+
 
 def _write_page(draft: dict) -> Path:
     """
@@ -411,7 +831,7 @@ def _write_page(draft: dict) -> Path:
     if not filename.endswith(".md"):
         filename += ".md"
 
-    subdir = _WIKI_PAGES_DIR / ("entity" if page_type == "entity" else "synthesis")
+    subdir = _page_subdir(page_type)
     subdir.mkdir(parents=True, exist_ok=True)
     page_path = subdir / filename
 
@@ -428,6 +848,91 @@ def _write_page(draft: dict) -> Path:
 
     fm_yaml = yaml.dump(fm, default_flow_style=False, allow_unicode=True)
     page_path.write_text(f"---\n{fm_yaml}---\n\n{content}\n", encoding="utf-8")
+    return page_path
+
+
+def _draft_filename(draft: dict) -> str:
+    filename = draft["filename"]
+    return filename if filename.endswith(".md") else f"{filename}.md"
+
+
+def _draft_path(draft: dict) -> Path:
+    page_type = draft["page_type"]
+    subdir = _page_subdir(page_type)
+    return subdir / _draft_filename(draft)
+
+
+def _write_draft_once(
+    draft: dict,
+    source_url: str,
+    session_state: ResearchSessionState,
+    quota: QuotaManager,
+    session_written_stems: set[str],
+) -> Path | None:
+    key = write_key(source_url, _draft_filename(draft))
+    page_path = _draft_path(draft)
+    if key in session_state.written_keys or page_path.exists():
+        session_state.mark_written_key(key)
+        session_written_stems.add(page_path.stem)
+        return page_path
+    if quota.pages_exceeded():
+        return None
+    page_path = _write_page(draft)
+    _update_inbound_links(draft)
+    _update_index(draft)
+    quota.record_page_written()
+    session_state.mark_written_key(key)
+    session_written_stems.add(page_path.stem)
+    return page_path
+
+
+def _find_page_by_filename(filename: str) -> Path | None:
+    target = filename if filename.endswith(".md") else f"{filename}.md"
+    for page in _WIKI_PAGES_DIR.rglob(target):
+        return page
+    stem = Path(filename).stem
+    for page in _WIKI_PAGES_DIR.rglob("*.md"):
+        if page.stem == stem:
+            return page
+    return None
+
+
+def _apply_update_once(
+    update: dict,
+    source_url: str,
+    session_state: ResearchSessionState,
+    quota: QuotaManager,
+) -> Path | None:
+    filename = str(update.get("filename", "")).strip()
+    page_path = _find_page_by_filename(filename)
+    if page_path is None:
+        return None
+    key = write_key(source_url, f"update:{page_path.name}:{update.get('section', '')}")
+    if key in session_state.written_keys:
+        return page_path
+    if quota.pages_exceeded():
+        return None
+    text = page_path.read_text(encoding="utf-8")
+    description = str(update.get("update_description", "")).strip()
+    if not description:
+        return None
+    section = str(update.get("section", "Research Updates")).strip() or "Research Updates"
+    bullet = f"- {_now_date()}: {description} Source: {source_url}"
+    if bullet in text:
+        session_state.mark_written_key(key)
+        return page_path
+    if f"## {section}" not in text:
+        text = text.rstrip() + f"\n\n## {section}\n\n{bullet}\n"
+    else:
+        text = re.sub(
+            rf"(## {re.escape(section)}\n)",
+            rf"\1\n{bullet}\n",
+            text,
+            count=1,
+        )
+    page_path.write_text(text, encoding="utf-8")
+    quota.record_page_written()
+    session_state.mark_written_key(key)
     return page_path
 
 
@@ -489,13 +994,29 @@ def _update_index(draft: dict) -> None:
                 text,
                 flags=re.DOTALL,
             )
-    else:
+    elif page_type == "synthesis":
         connected = ", ".join(fm.get("connected_entities", []))
         status = fm.get("synthesis_status", "draft")
         new_row = f"| [{filename}](synthesis/{filename}) | {connected} | {status} | {inbound} |"
         if new_row not in text:
             text = re.sub(
                 r"(## Synthesis Pages\n\n\|.*?\|.*?\n\|.*?\|.*?\n)",
+                rf"\1{new_row}\n",
+                text,
+                flags=re.DOTALL,
+            )
+    else:
+        summary = (draft.get("content", "").split("\n")[0]).lstrip("#").strip()[:80]
+        new_row = f"| [{filename}]({page_type}/{filename}) | {page_type} | {summary} | {tags} | {sources} | {inbound} |"
+        if "## Optimization Pages" not in text:
+            text += (
+                "\n## Optimization Pages\n\n"
+                "| Page | Type | Summary | Tags | Sources | Inbound |\n"
+                "|------|------|---------|------|---------|---------|\n"
+            )
+        if new_row not in text:
+            text = re.sub(
+                r"(## Optimization Pages\n\n\|.*?\|.*?\n\|.*?\|.*?\n)",
                 rf"\1{new_row}\n",
                 text,
                 flags=re.DOTALL,
@@ -519,16 +1040,12 @@ def _run_graph_stats() -> None:
         print(result.stdout.strip())
 
 
-def _run_qmd_update() -> None:
+def _run_qmd_update(qmd_runner: QmdRunner) -> tuple[bool, str | None]:
     """Re-index wiki pages so qmd search reflects newly written pages."""
-    result = subprocess.run(
-        ["qmd", "update"],
-        capture_output=True,
-        text=True,
-        cwd=str(_PROJECT_ROOT),
-    )
-    if result.stdout:
-        logger.info("qmd update: %s", result.stdout.strip())
+    ok, error = qmd_runner.update()
+    if error:
+        logger.warning("qmd update failed: %s", error)
+    return ok, error
 
 
 def _apply_scorecard_to_draft(draft: dict, eval_scorecard: dict) -> None:
@@ -543,7 +1060,7 @@ def _apply_scorecard_to_draft(draft: dict, eval_scorecard: dict) -> None:
     fm = draft.setdefault("frontmatter", {})
     sc = eval_scorecard or {}
 
-    if page_type == "entity":
+    if page_type != "synthesis":
         fm["scorecard"] = {
             "novelty_delta":       sc.get("novelty_delta"),
             "claim_density":       sc.get("claim_density"),
@@ -614,7 +1131,7 @@ def _append_log(session_id: str, pages_written: list[str], audit_path: Path,
 
 
 def _build_page_templates() -> dict:
-    """Return entity and synthesis page templates from CLAUDE.md."""
+    """Return generic page templates for eval manifests."""
     entity_template = """\
 ---
 type: entity
@@ -683,15 +1200,217 @@ scorecard:
 
 <Links to entity pages.>
 """
-    return {"entity": entity_template, "synthesis": synthesis_template}
+    hardware_target_template = """\
+---
+type: hardware_target
+tags: []
+sources: []
+hardware_targets: []
+toolchains: []
+constraints: []
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
+cold_start: true
+inbound_links: 0
+scorecard:
+  novelty_delta: ~
+  claim_density: ~
+  self_containedness: ~
+  bridge_score: ~
+  hub_potential: ~
+---
+
+# <Hardware Target>
+
+<First paragraph: ISA/profile, relevant extensions, memory hierarchy, accelerator interfaces, and compiler support.>
+
+## Key Claims
+
+<Specific source-grounded hardware/software capability claims.>
+
+## Optimization-Relevant Details
+
+- ISA/profile:
+- Vector/matrix/accelerator support:
+- Memory/cache/TLB/DMA:
+- Compiler/toolchain support:
+
+## Relationships
+
+<Links to related workloads, recipes, toolchains, or entity pages.>
+
+## Sources
+
+<Citations to source URLs or raw files.>
+"""
+    workload_kernel_template = """\
+---
+type: workload_kernel
+tags: []
+sources: []
+workloads: []
+datatypes: []
+constraints: []
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
+cold_start: true
+inbound_links: 0
+scorecard:
+  novelty_delta: ~
+  claim_density: ~
+  self_containedness: ~
+  bridge_score: ~
+  hub_potential: ~
+---
+
+# <Workload Kernel>
+
+<First paragraph: operation shape, datatype, layout, sparsity, model context, and baseline implementation.>
+
+## Key Claims
+
+<Specific source-grounded workload claims.>
+
+## Kernel Shape
+
+- Operation:
+- Shapes:
+- Datatypes:
+- Layout:
+- Sparsity:
+- Baseline implementation:
+
+## Relationships
+
+<Links to related hardware targets, recipes, or entity pages.>
+
+## Sources
+
+<Citations to source URLs or raw files.>
+"""
+    optimization_recipe_template = """\
+---
+type: optimization_recipe
+tags: []
+sources: []
+hardware_targets: []
+workloads: []
+datatypes: []
+metrics: []
+toolchains: []
+constraints: []
+evidence_strength: reported
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
+cold_start: true
+inbound_links: 0
+scorecard:
+  novelty_delta: ~
+  claim_density: ~
+  self_containedness: ~
+  bridge_score: ~
+  hub_potential: ~
+---
+
+# <Optimization Recipe>
+
+<First paragraph: transformation, prerequisites, expected effect, failure modes, and measurement status.>
+
+## Key Claims
+
+<Specific source-grounded optimization claims.>
+
+## Transformation
+
+- Prerequisites:
+- Steps:
+- Expected effect:
+- Failure modes:
+- Measurements:
+
+## Relationships
+
+<Links to related hardware targets, workload kernels, benchmarks, or entity pages.>
+
+## Sources
+
+<Citations to source URLs or raw files.>
+"""
+    benchmark_result_template = """\
+---
+type: benchmark_result
+tags: []
+sources: []
+hardware_targets: []
+workloads: []
+datatypes: []
+metrics: []
+toolchains: []
+hardware_versions: []
+software_versions: []
+measurement_method: ""
+evidence_strength: reported
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
+cold_start: true
+inbound_links: 0
+scorecard:
+  novelty_delta: ~
+  claim_density: ~
+  self_containedness: ~
+  bridge_score: ~
+  hub_potential: ~
+---
+
+# <Benchmark Result>
+
+<First paragraph: hardware/software versions, workload shape, metrics, measurement method, and source context.>
+
+## Key Claims
+
+<Specific benchmark claims with metric values and context.>
+
+## Measurement Context
+
+- Hardware version:
+- Software/toolchain version:
+- Workload shape:
+- Metric:
+- Method:
+- Evidence strength: measured | reported | derived | marketing
+
+## Relationships
+
+<Links to related hardware targets, workloads, recipes, or entity pages.>
+
+## Sources
+
+<Citations to source URLs or raw files.>
+"""
+    return {
+        "entity": entity_template,
+        "synthesis": synthesis_template,
+        "hardware_target": hardware_target_template,
+        "workload_kernel": workload_kernel_template,
+        "optimization_recipe": optimization_recipe_template,
+        "benchmark_result": benchmark_result_template,
+    }
 
 
 # ---------------------------------------------------------------------------
 # DDG-based discovery (replaces LLM URL hallucination)
 # ---------------------------------------------------------------------------
 
-def _ddg_discover(query: str, max_candidates: int, already_processed: set[str],
-                  research_config: dict, depth: str) -> list[dict]:
+def _ddg_discover(
+    query: str,
+    max_candidates: int,
+    already_processed: set[str],
+    research_config: dict,
+    depth: str,
+    keyword_plan: dict | None = None,
+    discovery_metadata: dict | None = None,
+    repeat_urls: set[str] | None = None,
+) -> list[dict]:
     """
     Search DuckDuckGo for real URLs + snippets.  Returns candidate dicts
     compatible with the rest of the pipeline:
@@ -708,54 +1427,106 @@ def _ddg_discover(query: str, max_candidates: int, already_processed: set[str],
     # depth=deep → use more search queries / results per query
     results_per_query = 10 if depth == "deep" else 6
 
-    # Generate search query variants from the base query
+    # Generate search query variants. Recommended queries go first because the
+    # base query is exactly what tends to reproduce stale DDG result sets.
     concept_gaps = _get_concept_gaps()
-    queries = [query]
+    queries: list[str] = []
+    seen_query_text: set[str] = set()
+
+    def _append_query(q: str) -> None:
+        cleaned = q.strip()
+        if cleaned and cleaned.lower() not in seen_query_text and len(queries) < limit:
+            queries.append(cleaned)
+            seen_query_text.add(cleaned.lower())
+
+    for item in (keyword_plan or {}).get("recommended_keywords", []):
+        _append_query(str(item.get("query", "")))
+    _append_query(query)
 
     # Add concept-gap queries as STANDALONE searches (not appended to base query).
     # Appending gaps to the base query keeps discovery within the same product space;
     # standalone queries widen to adjacent concepts.
     if concept_gaps:
         for gap in concept_gaps[:min(2, len(concept_gaps))]:
-            if len(queries) < limit:
-                queries.append(gap)
+            _append_query(gap)
 
     # Add synthesis-oriented queries to pull in comparison/survey sources, which
     # tend to produce synthesis pages rather than more product entity pages.
-    if len(queries) < limit:
-        queries.append(f"{query} comparison survey architecture overview")
-    if len(queries) < limit:
-        queries.append(f"{query} taxonomy ecosystem landscape")
+    _append_query(f"{query} comparison survey architecture overview")
+    _append_query(f"{query} taxonomy ecosystem landscape")
 
     # Add source-targeted variants for arXiv and GitHub when the query is technical
     # or when depth=deep explicitly requests broader coverage.
     _TECHNICAL_KEYWORDS = ("paper", "arxiv", "repo", "github", "implementation", "code", "algorithm")
     if depth == "deep" or any(kw in query.lower() for kw in _TECHNICAL_KEYWORDS):
-        if len(queries) < limit:
-            queries.append(f"site:arxiv.org {query}")
-        if len(queries) < limit:
-            queries.append(f"site:github.com {query}")
+        _append_query(f"site:arxiv.org {query}")
+        _append_query(f"site:github.com {query}")
 
-    # Pad with topic refinements
-    refinements = ["chip specifications performance", "ISA extension benchmark"]
+    # Pad with broad source-quality refinements without assuming a specific domain.
+    refinements = research_config.get("preferred_source_types") or [
+        "official documentation",
+        "technical report benchmark",
+    ]
     for ref in refinements:
-        if len(queries) >= limit:
-            break
-        queries.append(f"{query} {ref}")
+        _append_query(f"{query} {ref}")
 
     # Domains and extensions that reliably yield unusable content for the eval agent
     _URL_BLOCKLIST = (
         "youtube.com", "youtu.be", "slideshare.net", "reddit.com",
         "twitter.com", "x.com", "linkedin.com", "facebook.com",
+        "scribd.com", "dl.acm.org", "ieeexplore.ieee.org", "sciencedirect.com",
     )
+    avoid_patterns = [
+        str(p).lower()
+        for p in (keyword_plan or {}).get("avoid_patterns", [])
+        if str(p).strip()
+    ]
+    generic_query_terms = {
+        "about", "after", "against", "analysis", "and", "api", "apis", "article",
+        "benchmark", "blog", "case", "code", "comparison", "dataset", "datasets",
+        "demo", "deploy", "deployment", "docs", "documentation", "example",
+        "examples", "for", "from", "github", "guide", "html", "http", "https",
+        "implementation", "implementations", "introduction", "library", "official",
+        "open", "overview", "paper", "papers", "performance", "project", "report",
+        "research", "review", "runtime", "sdk", "sdks", "site", "source", "stack",
+        "study", "survey", "technical", "the", "tool", "tools", "tutorial", "using",
+        "with",
+    }
 
-    def _is_blocked(url: str) -> bool:
+    def _is_blocked(url: str, title: str = "", snippet: str = "") -> bool:
         lower = url.lower()
-        if lower.endswith(".pdf"):
+        if re.search(r"\.pdf(?:$|[?#])", lower) or "arxiv.org/pdf/" in lower:
             return True
-        return any(d in lower for d in _URL_BLOCKLIST)
+        haystack = f"{lower}\n{title.lower()}\n{snippet.lower()}"
+        return any(d in lower for d in _URL_BLOCKLIST) or any(
+            pattern in haystack for pattern in avoid_patterns
+        )
 
+    def _query_anchor_tokens(q: str) -> set[str]:
+        tokens = {
+            tok.lower()
+            for tok in re.findall(r"[a-zA-Z][a-zA-Z0-9+-]{2,}", q)
+        }
+        return {
+            tok for tok in tokens
+            if tok not in generic_query_terms
+            and not tok.startswith("site")
+        }
+
+    def _matches_query_anchor(q: str, url: str, title: str, snippet: str) -> bool:
+        anchors = _query_anchor_tokens(q)
+        if not anchors:
+            return True
+        haystack = f"{url}\n{title}\n{snippet}".lower()
+        return any(anchor in haystack for anchor in anchors)
+
+    suppress_repeat_urls = research_config.get("repeat_url_suppression", True)
+    repeat_urls = repeat_urls or set()
     seen_urls: set[str] = set(already_processed)
+    if suppress_repeat_urls:
+        seen_urls |= repeat_urls
+    suppressed_repeat_urls: list[str] = []
+    produced_by_query: dict[str, int] = {}
     candidates: list[dict] = []
 
     with DDGS() as ddgs:
@@ -765,20 +1536,33 @@ def _ddg_discover(query: str, max_candidates: int, already_processed: set[str],
             try:
                 for r in ddgs.text(q, max_results=results_per_query):
                     url = r.get("href", "")
-                    if not url or url in seen_urls or _is_blocked(url):
+                    title = r.get("title", "")
+                    snippet = r.get("body", "")
+                    if not url or _is_blocked(url, title, snippet):
+                        continue
+                    if not _matches_query_anchor(q, url, title, snippet):
+                        continue
+                    if url in seen_urls:
+                        if suppress_repeat_urls and url in repeat_urls:
+                            suppressed_repeat_urls.append(url)
                         continue
                     seen_urls.add(url)
                     candidates.append({
                         "url": url,
-                        "title": r.get("title", ""),
-                        "snippet": r.get("body", ""),
+                        "title": title,
+                        "snippet": snippet,
                         "estimated_type": "entity",
                     })
+                    produced_by_query[q] = produced_by_query.get(q, 0) + 1
                     if len(candidates) >= max_candidates:
                         break
             except Exception as e:
                 logger.warning("DDG search failed for %r: %s", q, e)
 
+    if discovery_metadata is not None:
+        discovery_metadata["queries_used"] = queries
+        discovery_metadata["produced_by_query"] = produced_by_query
+        discovery_metadata["suppressed_repeat_urls"] = sorted(set(suppressed_repeat_urls))
     return candidates
 
 
@@ -816,123 +1600,237 @@ def _enrich_snippet(title: str, base_snippet: str) -> str:
 # Main research session
 # ---------------------------------------------------------------------------
 
-def run_research_session(query: str, max_candidates: int, max_new_pages: int,
-                          depth: str) -> dict:
-    session_id = _generate_session_id()
-    scope = {"max_candidates": max_candidates, "max_new_pages": max_new_pages, "depth": depth}
-    research_config = _load_claude_md_block("research_config")
+def _blocked_qmd_summary(session_state: ResearchSessionState, audit: AuditLog,
+                         error: str | None, evaluated: int, written: list[str],
+                         pipeline_rejections: int) -> dict:
+    session_state.status = "blocked_qmd"
+    session_state.save("blocked_qmd", {"error": error})
+    audit.set_candidates_evaluated(evaluated)
+    summary = {
+        "session_id": session_state.session_id,
+        "candidates_found": len(session_state.candidates),
+        "candidates_evaluated": evaluated,
+        "pages_written": len(written),
+        "pipeline_rejection_rate": f"{(pipeline_rejections / max(evaluated, 1) * 100):.0f}%",
+        "audit_log_path": str(audit.path),
+        "status": "blocked_qmd",
+        "error": error,
+    }
+    print(f"[{session_state.session_id}] Blocked by qmd: {error}")
+    return summary
+
+
+def _restore_quota_from_state(session_state: ResearchSessionState) -> QuotaManager:
+    quota = QuotaManager(
+        max_candidates=session_state.scope.get("max_candidates", 20),
+        max_new_pages=session_state.scope.get("max_new_pages", 10),
+    )
+    quota._candidates_evaluated = sum(
+        1 for c in session_state.candidates
+        if c.get("state") in {"eval_rejected", "pipeline_rejected", "approved", "written"}
+    )
+    quota._pages_written = sum(len(c.get("written_files", [])) for c in session_state.candidates)
+    return quota
+
+
+def _candidate_url(entry: dict) -> str:
+    return entry.get("candidate", {}).get("url", "")
+
+
+def _write_approved_entry(
+    entry: dict,
+    session_state: ResearchSessionState,
+    audit: AuditLog,
+    quota: QuotaManager,
+    qmd_runner: QmdRunner,
+    session_written_stems: set[str],
+) -> tuple[str, str | None]:
+    url = _candidate_url(entry)
+    written_files = list(entry.get("written_files", []))
+    for draft in entry.get("drafts", []):
+        page_path = _write_draft_once(draft, url, session_state, quota, session_written_stems)
+        if page_path is None:
+            break
+        if page_path.name not in written_files:
+            written_files.append(page_path.name)
+        ev_idx = entry.get("audit_invocation_idx")
+        if ev_idx is not None:
+            audit.record_page_written(ev_idx, page_path.name)
+        session_state.transition(entry, "written", written_files=written_files)
+        print(f"[{session_state.session_id}] Written: {page_path}")
+        ok, error = _run_qmd_update(qmd_runner)
+        if not ok:
+            return "blocked_qmd", error
+    for update in entry.get("updates", []):
+        page_path = _apply_update_once(update, url, session_state, quota)
+        if page_path is None:
+            continue
+        if page_path.name not in written_files:
+            written_files.append(page_path.name)
+        ev_idx = entry.get("audit_invocation_idx")
+        if ev_idx is not None:
+            audit.record_page_written(ev_idx, page_path.name)
+        session_state.transition(entry, "written", written_files=written_files)
+        print(f"[{session_state.session_id}] Updated: {page_path}")
+        ok, error = _run_qmd_update(qmd_runner)
+        if not ok:
+            return "blocked_qmd", error
+    return "ok", None
+
+
+def _run_research_state(session_state: ResearchSessionState) -> dict:
+    session_id = session_state.session_id
+    query = session_state.query
+    scope = session_state.scope
+    if session_state.status == "complete" and not session_state.pending_candidates():
+        written_filenames = [
+            name for c in session_state.candidates for name in c.get("written_files", [])
+        ]
+        return {
+            "session_id": session_id,
+            "candidates_found": len(session_state.candidates),
+            "candidates_evaluated": sum(
+                1 for c in session_state.candidates
+                if c.get("state") in {"eval_rejected", "pipeline_rejected", "approved", "written"}
+            ),
+            "pages_written": len(written_filenames),
+            "pipeline_rejection_rate": "0%",
+            "audit_log_path": str(AuditLog(session_id, query, scope).path),
+            "status": "complete",
+        }
+    research_config = _load_research_config()
+    qmd_runner = QmdRunner(research_config.get("qmd_command"), cwd=_PROJECT_ROOT)
     audit = AuditLog(session_id, query, scope)
-    quota = QuotaManager(max_candidates=max_candidates, max_new_pages=max_new_pages)
+    quota = _restore_quota_from_state(session_state)
+    pipeline_rejections = sum(
+        1 for c in session_state.candidates
+        if c.get("state") in {"skipped_similarity", "pipeline_rejected"}
+    )
+    written_filenames = [
+        name for c in session_state.candidates for name in c.get("written_files", [])
+    ]
+    session_written_stems = {Path(name).stem for name in written_filenames}
+    effective_depth = session_state.effective_depth or scope.get("depth", "shallow")
+    halfway = max(1, (scope.get("max_candidates", 20) + 1) // 2)
+    gap_manifest = build_gap_manifest(_WIKI_PAGES_DIR, research_config)
 
-    print(f"[{session_id}] Starting research session: {query!r}")
+    ok, error = _run_qmd_update(qmd_runner)
+    if not ok:
+        return _blocked_qmd_summary(
+            session_state, audit, error, quota._candidates_evaluated,
+            written_filenames, pipeline_rejections,
+        )
 
-    # --- Step 1: Discovery via DuckDuckGo (real URLs, no hallucination) ---
-    already_processed = _load_processed_urls()
-    candidates = _ddg_discover(query, max_candidates, already_processed, research_config, depth)
-
-    # Trigger 1: if shallow discovery yielded < 75% of requested candidates, do a
-    # second deep pass immediately (no API cost — just more DDG queries).
-    if depth == "shallow" and len(candidates) < int(max_candidates * 0.75):
-        seen_so_far = already_processed | {c["url"] for c in candidates}
-        needed = max_candidates - len(candidates)
-        deep_extras = _ddg_discover(query, needed, seen_so_far, research_config, "deep")
-        if deep_extras:
-            candidates.extend(deep_extras)
-            print(f"[{session_id}] Low discovery yield — added {len(deep_extras)} deep candidates")
-
-    audit.set_candidates_found(len(candidates))
-    print(f"[{session_id}] DDG discovery found {len(candidates)} candidates")
-
-    # --- Step 3: Evaluate each candidate ---
-    approved_pages: list[tuple[dict, str]] = []
-    pipeline_rejections = 0
-    # effective_depth may be upgraded to "deep" mid-session (Trigger 2).
-    effective_depth = depth
-    halfway = max(1, (max_candidates + 1) // 2)
-    # Track filename stems of pages already written this session for within-session dedup.
-    session_written_stems: set[str] = set()
-
-    for candidate in candidates:
+    for entry in session_state.candidates:
         if quota.any_exceeded():
             print(f"[{session_id}] Quota exceeded, stopping early")
             break
+        if entry.get("state") in {"skipped_similarity", "fetch_failed", "eval_rejected", "pipeline_rejected", "written"}:
+            continue
 
+        candidate = entry["candidate"]
         url = candidate["url"]
         title = candidate.get("title", "")
 
-        # Pre-eval gate 1: within-session and on-disk title dedup.
-        # Check before fetching content to avoid wasting API calls on duplicates.
-        existing_match = _title_matches_existing(title, session_written_stems)
-        if existing_match:
-            print(f"[{session_id}] Skipping duplicate: {title!r} overlaps with '{existing_match}'")
-            audit.log_skip_pre_eval(url, f"title_overlap: matches '{existing_match}'")
-            pipeline_rejections += 1
+        if entry.get("state") == "approved":
+            status, error = _write_approved_entry(
+                entry, session_state, audit, quota, qmd_runner, session_written_stems
+            )
+            if status == "blocked_qmd":
+                return _blocked_qmd_summary(
+                    session_state, audit, error, quota._candidates_evaluated,
+                    written_filenames, pipeline_rejections,
+                )
+            written_filenames = list(set(written_filenames) | set(entry.get("written_files", [])))
             continue
 
-        # Pre-eval gate 2: qmd similarity — skip if wiki already has many pages on this topic.
-        # A high hit count means the concept is well-covered; the candidate would be redundant.
-        snippet = candidate.get("snippet", "")
-        topic_hits = get_topic_hit_count(f"{title} {snippet[:200]}")
-        if topic_hits >= 4:
-            print(f"[{session_id}] Skipping over-covered topic: {title!r} ({topic_hits} similar pages)")
-            audit.log_skip_pre_eval(url, f"topic_saturation: {topic_hits} similar pages in wiki")
+        search_result = qmd_runner.search(candidate_similarity_query(candidate), top=10, collection="_pages")
+        if not search_result.ok:
+            session_state.transition(entry, "discovered", qmd_matches=[], error=search_result.error)
+            return _blocked_qmd_summary(
+                session_state, audit, search_result.error, quota._candidates_evaluated,
+                written_filenames, pipeline_rejections,
+            )
+
+        similarity = assess_candidate_similarity(candidate, search_result.matches, research_config)
+        qmd_matches = similarity["matches"]
+        entry["qmd_matches"] = qmd_matches
+        session_state.save("qmd_similarity", {"id": entry.get("id"), "matches": qmd_matches})
+
+        existing_match = _title_matches_existing(
+            title,
+            session_written_stems,
+            overlap_threshold=research_config.get("title_overlap_threshold", 0.8),
+        )
+        if similarity["skip"] or existing_match:
+            reason = similarity["reason"] or f"title_overlap: matches '{existing_match}'"
+            print(f"[{session_id}] Skipping duplicate/saturated topic: {title!r} ({reason})")
+            audit.log_skip_pre_eval(url, reason, qmd_matches=qmd_matches)
+            session_state.transition(
+                entry,
+                "skipped_similarity",
+                skip_reason=reason,
+                qmd_matches=qmd_matches,
+            )
             pipeline_rejections += 1
             continue
 
         print(f"[{session_id}] Evaluating: {url}")
-
+        snippet = candidate.get("snippet", "")
         content = _fetch_smart(
             url, retries=research_config.get("max_retries_on_fetch_failure", 2)
         )
-        # Fall back to DDG snippet when fetch fails or returns only JS boilerplate
-        # (heuristic: <500 non-whitespace chars of body text → treat as empty)
-        if content is None:
-            # Fetch failed — enrich snippet by running a focused DDG search for the title
-            enriched = _enrich_snippet(candidate.get("title", ""), snippet)
-            if not enriched:
-                logger.warning("fetch failed and no enriched snippet for %s — skipping", url)
-                continue
-            logger.info("fetch failed for %s — using enriched DDG snippet (%d chars)", url, len(enriched))
-            content = enriched
-        else:
-            # Strip HTML tags to get plain text — removes CSS/nav boilerplate that fills
-            # the first N chars of JS-heavy pages and confuses the eval agent.
-            if "<html" in content[:500].lower() or "<!doctype" in content[:200].lower():
-                content = re.sub(r"<[^>]+>", " ", content)
-                content = re.sub(r"\s{2,}", " ", content).strip()
-            text_chars = len(re.sub(r"\s", "", content))
-            if text_chars < 500:
-                enriched = _enrich_snippet(candidate.get("title", ""), snippet)
-                logger.info("thin page (%d text chars) for %s — using enriched snippet", text_chars, url)
-                content = enriched or content[:2000]
+        content = _content_or_enriched_snippet(content, candidate.get("title", ""), snippet, url)
+        if not content:
+            logger.warning("fetch failed and no enriched snippet for %s — skipping", url)
+            session_state.transition(entry, "fetch_failed", error="fetch failed and no snippet")
+            continue
 
-        # Also reject raw binary content (e.g. PDFs that slipped past the URL filter)
-        if content and content[:4] in ("%PDF", b"%PDF"[:4] if isinstance(content, bytes) else ""):
-            logger.info("binary/PDF content for %s — using enriched snippet", url)
-            content = _enrich_snippet(candidate.get("title", ""), snippet) or snippet
-
-        # Trigger 4: in deep mode, proactively supplement primary content with DDG
-        # snippets so the eval agent has multiple perspectives even on good fetches.
         if effective_depth == "deep" and content:
             supplement = _enrich_snippet(candidate.get("title", ""), candidate.get("snippet", ""))
             if supplement:
                 content = content + "\n\n[DDG supplemental context]\n" + supplement
 
-        # Trigger 3: expand content window in deep mode to capture more of long documents.
         content_limit = 10000 if effective_depth == "deep" else 6000
-
-        injected_pages = select_context_pages(content[:content_limit])
+        evidence = extract_evidence(content[:content_limit], candidate, research_config)
+        structured_terms = {
+            "hardware_targets": evidence.get("hardware_names", []),
+            "workloads": evidence.get("workload_names", []),
+            "metrics": evidence.get("metrics", []),
+            "toolchains": evidence.get("toolchain_names", []),
+        }
+        structured_query = build_structured_query(candidate, evidence)
+        injected_pages = select_context_pages(
+            content[:content_limit],
+            qmd_runner=qmd_runner,
+            structured_terms=structured_terms,
+        )
         is_cold_start = not _wiki_is_mature()
         eval_config = _load_claude_md_block("eval_thresholds")
-
         eval_manifest = {
             "candidate": {"url": url, "title": candidate.get("title", "")},
             "resource_content": content[:content_limit],
+            "evidence_extraction": evidence,
+            "source_grounded_snippets": {
+                "benchmark_result": source_grounded_snippets(content[:content_limit], "benchmark_result"),
+                "optimization_recipe": source_grounded_snippets(content[:content_limit], "optimization_recipe"),
+            },
+            "qmd_similarity": {
+                "matches": qmd_matches,
+                "gate_decision": "allow",
+                "structured_query": structured_query,
+            },
             "wiki_context": {
                 "relevant_pages": injected_pages,
                 "concept_gaps": _get_concept_gaps(),
+                "gap_manifest": gap_manifest,
                 "graph_maturity": not is_cold_start,
                 "depth": effective_depth,
+            },
+            "domain_config": {
+                "preferred_source_types": research_config.get("preferred_source_types", []),
+                "required_measurement_fields": research_config.get("required_measurement_fields", []),
+                "page_type_taxonomy": research_config.get("page_type_taxonomy", {}),
             },
             "scorecard_config": {
                 "variant": "cold_start" if is_cold_start else candidate.get("estimated_type", "entity"),
@@ -944,6 +1842,7 @@ def run_research_session(query: str, max_candidates: int, max_new_pages: int,
         }
 
         ev_idx = audit.record_invocation("evaluation", eval_manifest)
+        session_state.transition(entry, "evaluating", audit_invocation_idx=ev_idx, qmd_matches=qmd_matches)
         try:
             time.sleep(MIN_SECONDS_BETWEEN_CALLS)
             quota.record_api_call()
@@ -951,45 +1850,40 @@ def run_research_session(query: str, max_candidates: int, max_new_pages: int,
         except Exception as e:
             logger.error("Evaluation API call failed for %s: %s", url, e)
             audit.record_response(ev_idx, str(e), schema_valid=False)
+            session_state.transition(entry, "eval_rejected", error=str(e))
             continue
 
         eval_result = validate_and_parse(raw_eval, "EvalResult")
         audit.record_response(ev_idx, raw_eval, schema_valid=(eval_result is not None))
+        quota.record_candidate_evaluated()
         if eval_result is None:
             audit.record_skip(ev_idx, "malformed_eval_output")
+            session_state.transition(entry, "eval_rejected", skip_reason="malformed_eval_output")
             continue
 
-        quota.record_candidate_evaluated()
-
-        # Trigger 2: mid-session adaptive depth escalation.
-        # If we're at the halfway point and have written nothing, upgrade to deep
-        # for the remaining candidates to push harder on content quality.
         if (quota._candidates_evaluated == halfway
                 and quota._pages_written == 0
                 and effective_depth == "shallow"):
             effective_depth = "deep"
-            print(f"[{session_id}] Adaptive escalation: 0 pages after {halfway} candidates → depth=deep")
+            session_state.effective_depth = effective_depth
+            session_state.save("depth_escalated", {"at_candidate": halfway})
+            print(f"[{session_id}] Adaptive escalation: 0 pages after {halfway} candidates -> depth=deep")
             audit.log_escalation(halfway)
 
         if eval_result.get("decision") == "reject":
-            audit.record_skip(ev_idx, f"subagent_reject: {eval_result.get('rejection_reason', '')}")
+            reason = f"subagent_reject: {eval_result.get('rejection_reason', '')}"
+            audit.record_skip(ev_idx, reason)
+            session_state.transition(entry, "eval_rejected", skip_reason=reason, eval_result=eval_result)
             continue
 
-        # --- Programmatic score gate ---
-        # Enforce weighted_total threshold regardless of LLM's approve decision.
         eval_sc = eval_result.get("scorecard", {})
         weighted_total = eval_sc.get("weighted_total", 0.0) or 0.0
-        acceptance_threshold = (
-            eval_manifest["scorecard_config"].get("acceptance_threshold", 0.4)
-        )
-        hard_rejection_threshold = (
-            eval_manifest["scorecard_config"].get("hard_rejection_threshold", 0.2)
-        )
+        acceptance_threshold = eval_manifest["scorecard_config"].get("acceptance_threshold", 0.4)
+        hard_rejection_threshold = eval_manifest["scorecard_config"].get("hard_rejection_threshold", 0.2)
         any_hard_fail = any(
             (v or 0.0) < hard_rejection_threshold
             for k, v in eval_sc.items()
-            if k not in ("weighted_total", "contradiction_potential")
-            and v is not None
+            if k not in ("weighted_total", "contradiction_potential") and v is not None
         )
         if weighted_total < acceptance_threshold:
             reason = (
@@ -997,6 +1891,7 @@ def run_research_session(query: str, max_candidates: int, max_new_pages: int,
                 f"< acceptance_threshold={acceptance_threshold}"
             )
             audit.record_skip(ev_idx, reason)
+            session_state.transition(entry, "pipeline_rejected", skip_reason=reason, eval_result=eval_result)
             pipeline_rejections += 1
             continue
         if any_hard_fail:
@@ -1005,12 +1900,12 @@ def run_research_session(query: str, max_candidates: int, max_new_pages: int,
                 f"hard_rejection_threshold={hard_rejection_threshold}"
             )
             audit.record_skip(ev_idx, reason)
+            session_state.transition(entry, "pipeline_rejected", skip_reason=reason, eval_result=eval_result)
             pipeline_rejections += 1
             continue
 
-        # --- Step 4: Deterministic pipeline gate ---
+        approved_drafts = []
         for draft in eval_result.get("page_drafts", []):
-            # Transfer scorecard scores from eval result into draft frontmatter
             _apply_scorecard_to_draft(draft, eval_sc)
             passes, pipeline_result = _run_eval_pipeline(draft)
             audit.record_pipeline_result(
@@ -1023,34 +1918,38 @@ def run_research_session(query: str, max_candidates: int, max_new_pages: int,
                 rejection_detail=pipeline_result.get("rejection_detail"),
             )
             if passes:
-                approved_pages.append((draft, url, ev_idx))
+                approved_drafts.append(draft)
             else:
                 pipeline_rejections += 1
 
-    # Snapshot evaluated count before writes so a crash in the write loop
-    # still preserves an accurate candidates_evaluated in the audit.
+        approved_updates = [
+            update for update in eval_result.get("pages_to_update", [])
+            if isinstance(update, dict) and update.get("filename") and update.get("update_description")
+        ]
+
+        if not approved_drafts and not approved_updates:
+            session_state.transition(entry, "pipeline_rejected", eval_result=eval_result)
+            continue
+
+        session_state.transition(
+            entry,
+            "approved",
+            drafts=approved_drafts,
+            updates=approved_updates,
+            eval_result=eval_result,
+        )
+        status, error = _write_approved_entry(
+            entry, session_state, audit, quota, qmd_runner, session_written_stems
+        )
+        written_filenames = list(set(written_filenames) | set(entry.get("written_files", [])))
+        if status == "blocked_qmd":
+            return _blocked_qmd_summary(
+                session_state, audit, error, quota._candidates_evaluated,
+                written_filenames, pipeline_rejections,
+            )
+
     audit.set_candidates_evaluated(quota._candidates_evaluated)
-
-    # --- Step 5: Write approved pages ---
-    written_filenames = []
-    for draft, _source_url, ev_idx in approved_pages:
-        if quota.pages_exceeded():
-            break
-        try:
-            page_path = _write_page(draft)
-            _update_inbound_links(draft)
-            _update_index(draft)
-            quota.record_page_written()
-            written_filenames.append(page_path.name)
-            session_written_stems.add(page_path.stem)
-            audit.record_page_written(ev_idx, page_path.name)
-            print(f"[{session_id}] Written: {page_path}")
-        except Exception as e:
-            logger.error("Failed to write page %s: %s", draft.get("filename"), e)
-
-    # --- Step 6: Post-session bookkeeping ---
     _run_graph_stats()
-    _run_qmd_update()
 
     synthesis_gaps = _check_synthesis_gaps()
     if synthesis_gaps:
@@ -1058,11 +1957,13 @@ def run_research_session(query: str, max_candidates: int, max_new_pages: int,
         for gap in synthesis_gaps[:5]:
             print(f"  {gap}")
 
+    session_state.status = "complete"
+    session_state.save("session_complete")
     _append_log(
         session_id=session_id,
         pages_written=written_filenames,
         audit_path=audit.path,
-        candidates_found=len(candidates),
+        candidates_found=len(session_state.candidates),
         candidates_evaluated=quota._candidates_evaluated,
         query=query,
         rejected_by_pipeline=pipeline_rejections,
@@ -1070,7 +1971,7 @@ def run_research_session(query: str, max_candidates: int, max_new_pages: int,
 
     summary = {
         "session_id": session_id,
-        "candidates_found": len(candidates),
+        "candidates_found": len(session_state.candidates),
         "candidates_evaluated": quota._candidates_evaluated,
         "pages_written": len(written_filenames),
         "pipeline_rejection_rate": f"{(pipeline_rejections / max(quota._candidates_evaluated, 1) * 100):.0f}%",
@@ -1079,6 +1980,90 @@ def run_research_session(query: str, max_candidates: int, max_new_pages: int,
     }
     print(f"[{session_id}] Session complete: {summary}")
     return summary
+
+
+def run_research_session(query: str, max_candidates: int, max_new_pages: int,
+                          depth: str) -> dict:
+    session_id = _generate_session_id()
+    scope = {"max_candidates": max_candidates, "max_new_pages": max_new_pages, "depth": depth}
+    research_config = _load_research_config()
+    session_state = ResearchSessionState.create(
+        session_id=session_id,
+        query=query,
+        scope=scope,
+        state_dir=_research_state_dir(research_config),
+    )
+    print(f"[{session_id}] Starting research session: {query!r}")
+    qmd_runner = QmdRunner(research_config.get("qmd_command"), cwd=_PROJECT_ROOT)
+    ok, error = _run_qmd_update(qmd_runner)
+    if not ok:
+        audit = AuditLog(session_id, query, scope)
+        return _blocked_qmd_summary(session_state, audit, error, 0, [], 0)
+
+    audit = AuditLog(session_id, query, scope)
+    discovery_history = _load_recent_discovery_history(research_config)
+    gap_manifest = build_gap_manifest(_WIKI_PAGES_DIR, research_config)
+    keyword_plan = _build_keyword_plan(
+        query, research_config, depth, discovery_history, gap_manifest=gap_manifest
+    )
+    session_state.set_keyword_plan(keyword_plan)
+    audit.set_keyword_plan(keyword_plan)
+
+    already_processed = _load_processed_urls()
+    discovery_metadata: dict = {"gap_manifest": gap_manifest}
+    candidates = _ddg_discover(
+        query,
+        max_candidates,
+        already_processed,
+        research_config,
+        depth,
+        keyword_plan=keyword_plan,
+        discovery_metadata=discovery_metadata,
+        repeat_urls=discovery_history.get("seen_urls", set()),
+    )
+    if depth == "shallow" and len(candidates) < int(max_candidates * 0.75):
+        seen_so_far = already_processed | {c["url"] for c in candidates}
+        needed = max_candidates - len(candidates)
+        deep_metadata: dict = {}
+        deep_extras = _ddg_discover(
+            query,
+            needed,
+            seen_so_far,
+            research_config,
+            "deep",
+            keyword_plan=keyword_plan,
+            discovery_metadata=deep_metadata,
+            repeat_urls=discovery_history.get("seen_urls", set()),
+        )
+        if deep_extras:
+            candidates.extend(deep_extras)
+            discovery_metadata["queries_used"] = (
+                discovery_metadata.get("queries_used", [])
+                + deep_metadata.get("queries_used", [])
+            )
+            discovery_metadata["suppressed_repeat_urls"] = sorted(set(
+                discovery_metadata.get("suppressed_repeat_urls", [])
+                + deep_metadata.get("suppressed_repeat_urls", [])
+            ))
+            produced = dict(discovery_metadata.get("produced_by_query", {}))
+            for q, count in deep_metadata.get("produced_by_query", {}).items():
+                produced[q] = produced.get(q, 0) + count
+            discovery_metadata["produced_by_query"] = produced
+            print(f"[{session_id}] Low discovery yield — added {len(deep_extras)} deep candidates")
+
+    session_state.set_candidates(candidates)
+    session_state.set_discovery_metadata(discovery_metadata)
+    audit.set_discovery_metadata(discovery_metadata)
+    audit.set_candidates_found(len(candidates))
+    print(f"[{session_id}] DDG discovery found {len(candidates)} candidates")
+    return _run_research_state(session_state)
+
+
+def resume_research_session(session_id: str) -> dict:
+    research_config = _load_research_config()
+    session_state = ResearchSessionState.load(session_id, _research_state_dir(research_config))
+    print(f"[{session_id}] Resuming research session: {session_state.query!r}")
+    return _run_research_state(session_state)
 
 
 # ---------------------------------------------------------------------------
@@ -1090,20 +2075,35 @@ def main():
     subparsers = parser.add_subparsers(dest="command")
 
     research_parser = subparsers.add_parser("research", help="Run a research session")
-    research_parser.add_argument("--query", required=True, help="Research query")
+    research_parser.add_argument("--query", help="Research query")
     research_parser.add_argument("--max-candidates", type=int, default=10)
     research_parser.add_argument("--max-new-pages", type=int, default=5)
     research_parser.add_argument("--depth", choices=["shallow", "deep"], default="shallow")
+    research_parser.add_argument("--resume", help="Resume a prior session id")
+    research_parser.add_argument("--list-sessions", action="store_true", help="List resumable research sessions")
 
     args = parser.parse_args()
     if args.command == "research":
         logging.basicConfig(level=logging.WARNING)
-        result = run_research_session(
-            query=args.query,
-            max_candidates=args.max_candidates,
-            max_new_pages=args.max_new_pages,
-            depth=args.depth,
-        )
+        research_config = _load_research_config()
+        if args.list_sessions:
+            for session in list_sessions(_research_state_dir(research_config)):
+                print(
+                    f"{session['session_id']}\t{session.get('status')}\t"
+                    f"{session.get('updated_at')}\t{session.get('query')}"
+                )
+            sys.exit(0)
+        if args.resume:
+            result = resume_research_session(args.resume)
+        else:
+            if not args.query:
+                research_parser.error("--query is required unless --resume or --list-sessions is used")
+            result = run_research_session(
+                query=args.query,
+                max_candidates=args.max_candidates,
+                max_new_pages=args.max_new_pages,
+                depth=args.depth,
+            )
         sys.exit(0 if result.get("status") in ("complete", "discovery_failed") else 1)
     else:
         parser.print_help()

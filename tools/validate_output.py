@@ -39,6 +39,14 @@ _SCORECARD_REQUIRED = {"novelty_delta", "claim_density", "self_containedness",
                         "bridge_score", "hub_potential", "gap_fill_score",
                         "contradiction_potential", "weighted_total"}
 _PAGE_DRAFT_REQUIRED = {"page_type", "filename", "frontmatter", "content"}
+_PAGE_TYPES = {
+    "entity",
+    "synthesis",
+    "hardware_target",
+    "workload_kernel",
+    "optimization_recipe",
+    "benchmark_result",
+}
 
 
 def _validate_candidate_list(data: dict) -> None:
@@ -51,7 +59,7 @@ def _validate_candidate_list(data: dict) -> None:
         missing_c = _CANDIDATE_REQUIRED - c.keys()
         if missing_c:
             raise ValueError(f"Candidate {i} missing fields: {missing_c}")
-        if c.get("estimated_type") not in ("entity", "synthesis", "unknown"):
+        if c.get("estimated_type") not in (*_PAGE_TYPES, "unknown"):
             raise ValueError(f"Candidate {i} invalid estimated_type: {c.get('estimated_type')}")
 
 
@@ -70,7 +78,7 @@ def _validate_eval_result(data: dict) -> None:
             missing_d = _PAGE_DRAFT_REQUIRED - draft.keys()
             if missing_d:
                 raise ValueError(f"PageDraft missing fields: {missing_d}")
-            if draft.get("page_type") not in ("entity", "synthesis"):
+            if draft.get("page_type") not in _PAGE_TYPES:
                 raise ValueError(f"Invalid page_type: {draft.get('page_type')}")
 
 

@@ -1,11 +1,27 @@
 # Wiki Index
 
-Last updated: 2026-06-27 | Pages: 57 | Sources: 175
+Last updated: 2026-06-28 | Pages: 82 | Sources: 175
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [hailo_8l.md](entity/hailo_8l.md) | Hailo-8L | ai-accelerator, edge-inference, npu, intel-hailo | 1 | 0 |
+| [hailo_model_zoo.md](entity/hailo_model_zoo.md) | Hailo Model Zoo | computer-vision, deep-learning, quantization, hailo, quantized-neural-networks, edge-ai, ai-accelerators, hailo8, model-zoo | 1 | 0 |
+| [gapuino_gap8.md](entity/gapuino_gap8.md) | GAPuino GAP8 | risc-v, greenwaves, iot, microcontroller, development-board | 1 | 0 |
+| [greenwaves_gap8.md](entity/greenwaves_gap8.md) | Greenwaves GAP8 | risc-v, processor, greenwaves, pulp, iot | 1 | 0 |
+| [building_gap8_applications.md](entity/building_gap8_applications.md) | Building GAP8 Applications | gap8, risc-v, build-system, toolchain, docker, ai-deck, bitcraze, greenwaves | 6 | 0 |
+| [greenwaves_autotiler.md](entity/greenwaves_autotiler.md) | Autotiler | greenwaves, gap-sdk, autotiler, memory-management, neural-network-compilation | 1 | 0 |
+| [tenstorrent_tensix_architecture.md](entity/tenstorrent_tensix_architecture.md) | Tenstorrent Tensix Architecture | tenstorrent, ai-accelerator, tensix, tt-metalium, hardware-architecture | 1 | 0 |
+| [tenstorrent_tt_metalium.md](entity/tenstorrent_tt_metalium.md) | TT-Metalium C++ framework for Tensix — tile-based kernel dispatch, three-stage dataflow, DPRINT/Watcher debug | tenstorrent, tt-metalium, tensix, accelerator, programming-model, c++-api | 3 | 0 |
+| [tenstorrent.md](entity/tenstorrent.md) | Tenstorrent | AI hardware, RISC-V, open-source, accelerator, Jim Keller | 5 | 0 |
+| [greenwaves_gap9.md](entity/greenwaves_gap9.md) | GreenWaves GAP9 | risc-v, ai-accelerator, ultra-low-power, greenwaves, pulp | 1 | 0 |
+| [pybuda.md](entity/pybuda.md) | PyBuda | tenstorrent, compiler, ML-framework, tvm | 1 | 0 |
+| [tenstorrent_tt_metal.md](entity/tenstorrent_tt_metal.md) | tenstorrent/tt-metal | tenstorrent, AI-accelerator, software-stack, TT-NN, TT-Metalium | 1 | 0 |
+| [revyos.md](entity/revyos.md) | RevyOS | risc-v, distribution, debian, xuantie, alibaba, plct-lab, ruyisdk | 1 | 0 |
+| [SimpleEdgeAiSoC.md](entity/SimpleEdgeAiSoC.md) | SimpleEdgeAiSoC | risc-v, ai-accelerator, open-source, bitnet, soc, edge-ai | 1 | 0 |
+| [riscv_dsc_tinyml_accelerator.md](entity/riscv_dsc_tinyml_accelerator.md) | RISC-V Based TinyML Accelerator for Depthwise Separable Convolutions | risc-v, accelerator, tinyML, deep-learning, FPGA, ASIC, custom-function-unit | 1 | 0 |
+| [ztachip.md](entity/ztachip.md) | Ztachip | risc-v, fpga, ai-accelerator, open-source, tensor-processor, edge-ai | 1 | 0 |
 | [risc_v_vector_extension](entity/risc_v_vector_extension.md) | Standardized SIMD-style ISA extension enabling variable-width vector computation across RISC-V implementations | risc-v, hardware, AI-acceleration, vector-processing, ISA | 4 | 13 |
 | [alibaba_xuantie_c950](entity/alibaba_xuantie_c950.md) | First RISC-V CPU architected for native LLM inference; 5nm, 3.2 GHz, 70+ SPECint2006, 8 TOPS/TPE | risc-v, AI-acceleration, processor, LLM-inference, alibaba | 4 | 2 |
 | [alibaba_xuantie_c910_c920](entity/alibaba_xuantie_c910_c920.md) | Open-sourced out-of-order RISC-V cores adopting RVV 0.7.1 (C910) and RVV 1.0 (C920); predecessors to C950 | risc-v, processor, alibaba, out-of-order, open-source | 2 | 4 |
@@ -150,3 +166,12 @@ Last updated: 2026-06-27 | Pages: 57 | Sources: 175
 - **Chipyard**: → [chipyard_soc_framework](entity/chipyard_soc_framework.md)
 - **FireSim / MIDAS**: → [firesim_fpga_simulation](entity/firesim_fpga_simulation.md)
 - **Sparse RVV / rv-sparse**: → [riscv_sparse_computation](entity/riscv_sparse_computation.md)
+
+## Optimization Pages
+
+| Page | Type | Summary | Tags | Sources | Inbound |
+|------|------|---------|------|---------|---------|
+| [tinyissimoyolo_object_detection_on_gap9_smart_glasses.md](benchmark_result/tinyissimoyolo_object_detection_on_gap9_smart_glasses.md) | benchmark_result | TinyissimoYOLO Object Detection Benchmark on GAP9 Smart Glasses | object-detection, yolo, smart-glasses, tinyissimoyolo, gap9, greenwaves | 1 | 0 |
+| [tt_loudbox_quietbox_performance.md](benchmark_result/tt_loudbox_quietbox_performance.md) | benchmark_result | TT-LoudBox/TT-QuietBox Performance | tenstorrent, wormhole, llm, cnn, benchmark | 1 | 0 |
+| [greenwaves_gap9_mobilenet_v1_benchmark.md](benchmark_result/greenwaves_gap9_mobilenet_v1_benchmark.md) | benchmark_result | GreenWaves GAP9 MobileNet V1 Benchmark | greenwaves, gap9, mobilenet-v1, ultra-low-power, benchmark | 1 | 0 |
+| [greenwaves_gap9_hardware.md](hardware_target/greenwaves_gap9_hardware.md) | hardware_target | GreenWaves GAP9 Hardware Target | risc-v, greenwaves, pulp, ne16, ultra-low-power | 1 | 0 |

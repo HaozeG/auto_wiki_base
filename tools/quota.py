@@ -5,9 +5,12 @@ from dataclasses import dataclass, field
 
 # Hard caps that are not configurable per §12.8
 MAX_API_CALLS_PER_SESSION = 50
-# Raised from 3000: DeepSeek thinking models consume ~2k tokens on reasoning trace
-# before emitting any text; 8000 ensures text output is never truncated.
-MAX_TOKENS_PER_SUBAGENT_OUTPUT = 8000
+# Ceiling for any subagent call. Per-model limits are set in research_config:
+#   eval subagent (deepseek-v4-flash via CLAUDE_CODE_SUBAGENT_MODEL) needs ~8–12k for
+#   multi-page draft output; keyword recommender (deepseek-v4-pro[1m] via
+#   ANTHROPIC_DEFAULT_OPUS_MODEL) is a thinking model and needs budget for reasoning
+#   trace before emitting its small JSON output. 16000 gives comfortable headroom for both.
+MAX_TOKENS_PER_SUBAGENT_OUTPUT = 16000
 MIN_SECONDS_BETWEEN_CALLS = 1.0
 
 
