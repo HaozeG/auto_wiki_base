@@ -9,7 +9,7 @@ datatypes: []
 evidence_strength: reported
 hardware_targets:
 - SpacemiT KeyStone K1
-inbound_links: 5
+inbound_links: 6
 metrics:
 - performance uplift (mean)
 needs_summary_revision: true

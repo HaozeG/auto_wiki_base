@@ -25,7 +25,7 @@ hardware_targets:
 - XuanTie C910
 - TH1520
 - LicheePi
-inbound_links: 3
+inbound_links: 4
 needs_summary_revision: true
 scorecard:
   bridge_score: 0.7

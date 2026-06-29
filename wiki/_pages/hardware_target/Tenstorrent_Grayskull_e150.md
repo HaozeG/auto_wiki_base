@@ -20,7 +20,7 @@ constraints:
 created: '2025-04-09'
 hardware_targets:
 - Tenstorrent Grayskull e150
-inbound_links: 8
+inbound_links: 9
 needs_summary_revision: false
 scorecard:
   bridge_score: 0.6

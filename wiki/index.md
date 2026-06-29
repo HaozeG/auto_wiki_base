@@ -4,12 +4,13 @@
 
 **Organization**: Workflow-first — pages are typed as `hardware_target`, `workload_kernel`, `optimization_recipe`, `benchmark_result`, `entity`, or `synthesis`.
 
-Last updated: 2026-06-29 | Pages: 141 | Sources: 0
+Last updated: 2026-06-29 | Pages: 147 | Sources: 0
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [RISC-V_Vector_Tests_Generator.md](entity/RISC-V_Vector_Tests_Generator.md) | RISC-V Vector Tests Generator | RVV, RISC-V, testing, verification, test generator | 1 | 0 |
 | [XuanTie_C908.md](entity/XuanTie_C908.md) | XuanTie C908 | RISC-V, T-Head, XuanTie, C908, AIoT, vector | 1 | 0 |
 | [Xuantie_C920_C907_R910.md](entity/Xuantie_C920_C907_R910.md) | Xuantie C920, C907, R910 Processors | RISC-V, Pingtouge, Xuantie, AI, automotive, vector_extension | 1 | 0 |
 | [XuanTie_C930.md](entity/XuanTie_C930.md) | XuanTie C930 | RISC-V, Alibaba, XuanTie, server, AI-HPC | 1 | 0 |
@@ -79,6 +80,11 @@ Last updated: 2026-06-29 | Pages: 141 | Sources: 0
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [Milk-V_Jupiter2.md](hardware_target/Milk-V_Jupiter2.md) | hardware_target | Milk-V Jupiter2 | RISC-V, Spacemit K3, Milk-V, Jupiter2, development platform | 1 | 0 |
+| [SpacemiT_K1.md](hardware_target/SpacemiT_K1.md) | hardware_target | SpacemiT K1 | RISC-V, SpacemiT K1, AI accelerator, Banana Pi | 1 | 0 |
+| [I-LLM_Integer_Only_LLM_Optimization.md](optimization_recipe/I-LLM_Integer_Only_LLM_Optimization.md) | optimization_recipe | I-LLM: Integer-Only Inference Optimization for LLMs | LLM, integer-only, quantization, PTQ, edge, FPGA, GPU | 1 | 0 |
+| [T-SAR_In_Place_SIMD_ALU_Reorganization.md](optimization_recipe/T-SAR_In_Place_SIMD_ALU_Reorganization.md) | optimization_recipe | T-SAR: In-Place SIMD ALU Reorganization for Ternary LLM Inference | ternary, LLM, SIMD, T-SAR, CPU inference, edge, quantization | 1 | 0 |
+| [T-SAR_Benchmark_Results.md](benchmark_result/T-SAR_Benchmark_Results.md) | benchmark_result | T-SAR Benchmark Results | ternary, LLM, SIMD, T-SAR, CPU inference, edge | 1 | 0 |
 | [XuanTie_C910_ICE_SoC.md](hardware_target/XuanTie_C910_ICE_SoC.md) | hardware_target | XuanTie C910 ICE SoC | RISC-V, XuanTie, C910, GPU, NPU, Alibaba T-Head | 1 | 0 |
 | [TVM_CSINN2_Integration_Optimization_Recipe.md](optimization_recipe/TVM_CSINN2_Integration_Optimization_Recipe.md) | optimization_recipe | TVM CSI-NN2 Integration Optimization Recipe | TVM, CSI-NN2, CSINN2, BYOC, RISC-V, XuanTie C906, vector extension | 1 | 0 |
 | [XuanTie_C930.md](hardware_target/XuanTie_C930.md) | hardware_target | XuanTie C930 | RISC-V, XuanTie, T-Head, Alibaba, C930, AI-HPC, server | 3 | 0 |

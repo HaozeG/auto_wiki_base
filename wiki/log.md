@@ -399,3 +399,11 @@ pages_written: 5
 pipeline_rejection_rate: 15%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_c60775a1_2026-06-29.json
 theme_profile: RISC-V ai accelerator | workflow_first
+
+## [2026-06-29] research | RVV GEMV decode LLM INT4 INT8 dequantize vector load KV cach
+session_id: 23539621
+candidates_evaluated: 19
+pages_written: 8
+pipeline_rejection_rate: 16%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_23539621_2026-06-29.json
+theme_profile: RISC-V ai accelerator | workflow_first
