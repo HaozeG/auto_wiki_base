@@ -407,3 +407,11 @@ pages_written: 8
 pipeline_rejection_rate: 16%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_23539621_2026-06-29.json
 theme_profile: RISC-V ai accelerator | workflow_first
+
+## [2026-06-29] research | RISC-V multi-core vector barrier DMA double buffer scratchpa
+session_id: 648eb276
+candidates_evaluated: 14
+pages_written: 10
+pipeline_rejection_rate: 14%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_648eb276_2026-06-29.json
+theme_profile: RISC-V ai accelerator | workflow_first

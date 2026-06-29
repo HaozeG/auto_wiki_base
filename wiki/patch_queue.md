@@ -76,3 +76,10 @@ target_section: full
 source: https://github.com/pulp-platform/ara
 status: pending_review
 proposed_update: Replace the Ara_simulator.md content with detailed hardware/software dependency information, toolchain build instructions (LLVM, Spike, Verilator), configuration parameters (config folder), simulation modes (including Ideal Dispatcher mode without CVA6), and an overview of supported instructions from the official Ara GitHub README. Update frontmatter: hardware_targets to include Ara and CVA6; toolchains to include LLVM, gcc 7.2.0, Verilator, Bender; constraints to include RISC-V Vector Extension 1.0, CVA6 coprocessor interface, Verilator simulation, and long vector length (default 4096-bit). Add relationships section linking to CVA6 (if page exists) and PULP platform. Retain existing created date and inbound_links count. Update scorecard to reflect new evidence.
+
+## [2026-06-29] pending | Gemmini_systolic_array_GEMM_accelerator.md
+target_page: Gemmini_systolic_array_GEMM_accelerator.md
+target_section: Key Claims
+source: https://github.com/VedantPahariya/BitNet-RISCV-Multicore
+status: pending_review
+proposed_update: Add a note about a custom Gemmini PE variant for ternary weights: the BitNet-RISCV-Multicore project implements a mux-based PE that replaces multiplier MAC paths for ternary weights {-1,0,+1}, reducing area/power while preserving accuracy. This modification was integrated in a Chipyard-based Ara/CVA6+Gemmini flow using Chisel and targets 1-bit LLM inference.

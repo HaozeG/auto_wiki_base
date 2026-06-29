@@ -4,12 +4,15 @@
 
 **Organization**: Workflow-first — pages are typed as `hardware_target`, `workload_kernel`, `optimization_recipe`, `benchmark_result`, `entity`, or `synthesis`.
 
-Last updated: 2026-06-29 | Pages: 147 | Sources: 0
+Last updated: 2026-06-29 | Pages: 156 | Sources: 0
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [BitNet_RISCV_Multicore.md](entity/BitNet_RISCV_Multicore.md) | BitNet-RISCV-Multicore | RISC-V, BitNet, 1-bit LLM, Ara, CVA6, Gemmini, multicore, vector accelerator | 1 | 0 |
+| [FeNN_DMA_RISC_V_SoC.md](entity/FeNN_DMA_RISC_V_SoC.md) | FeNN-DMA: A RISC-V SoC for Spiking Neural Network Acceleration | RISC-V, SNN, FPGA, spiking neural network, SoC, vector processor, DMA | 1 | 0 |
+| [PMU_Roofline_Analysis_RISCV.md](entity/PMU_Roofline_Analysis_RISCV.md) | LLVM Roofline and PMU Tooling on RISC-V | RISC-V, PMU, Roofline, LLVM, performance analysis, SpacemiT X60 | 1 | 0 |
 | [RISC-V_Vector_Tests_Generator.md](entity/RISC-V_Vector_Tests_Generator.md) | RISC-V Vector Tests Generator | RVV, RISC-V, testing, verification, test generator | 1 | 0 |
 | [XuanTie_C908.md](entity/XuanTie_C908.md) | XuanTie C908 | RISC-V, T-Head, XuanTie, C908, AIoT, vector | 1 | 0 |
 | [Xuantie_C920_C907_R910.md](entity/Xuantie_C920_C907_R910.md) | Xuantie C920, C907, R910 Processors | RISC-V, Pingtouge, Xuantie, AI, automotive, vector_extension | 1 | 0 |
@@ -80,6 +83,12 @@ Last updated: 2026-06-29 | Pages: 147 | Sources: 0
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [TeraPool_1024_Core_Cluster.md](hardware_target/TeraPool_1024_Core_Cluster.md) | hardware_target | TeraPool 1024-Core Cluster | RISC-V, many-core, barrier synchronization, TeraPool, shared memory | 1 | 0 |
+| [TeraPool_Barrier_Synchronization_Benchmark_Results.md](benchmark_result/TeraPool_Barrier_Synchronization_Benchmark_Results.md) | benchmark_result | TeraPool Barrier Synchronization Benchmark Results | RISC-V, TeraPool, barrier synchronization, many-core, shared memory | 1 | 0 |
+| [RVV-Lite.md](hardware_target/RVV-Lite.md) | hardware_target | RVV-Lite | RISC-V, RVV, vector, ISA, subset, RVV-Lite | 1 | 0 |
+| [Ara_Microarchitectural_Co_Optimization_Benchmark_Results.md](benchmark_result/Ara_Microarchitectural_Co_Optimization_Benchmark_Results.md) | benchmark_result | Ara Microarchitectural Co-Optimization Benchmark Results | RISC-V, Ara, RVV, vector, microarchitecture, chaining, speedup | 1 | 0 |
+| [Ara_Microarchitectural_Co_Optimization.md](optimization_recipe/Ara_Microarchitectural_Co_Optimization.md) | optimization_recipe | Ara Microarchitectural Co-Optimization for Sustained Throughput | RISC-V, Ara, RVV, vector, microarchitecture, chaining | 1 | 0 |
+| [Ara_Vector_Processor.md](hardware_target/Ara_Vector_Processor.md) | hardware_target | Ara Vector Processor | RISC-V, vector processor, open-source, PULP, Ara, RVV 1.0 | 1 | 0 |
 | [Milk-V_Jupiter2.md](hardware_target/Milk-V_Jupiter2.md) | hardware_target | Milk-V Jupiter2 | RISC-V, Spacemit K3, Milk-V, Jupiter2, development platform | 1 | 0 |
 | [SpacemiT_K1.md](hardware_target/SpacemiT_K1.md) | hardware_target | SpacemiT K1 | RISC-V, SpacemiT K1, AI accelerator, Banana Pi | 1 | 0 |
 | [I-LLM_Integer_Only_LLM_Optimization.md](optimization_recipe/I-LLM_Integer_Only_LLM_Optimization.md) | optimization_recipe | I-LLM: Integer-Only Inference Optimization for LLMs | LLM, integer-only, quantization, PTQ, edge, FPGA, GPU | 1 | 0 |

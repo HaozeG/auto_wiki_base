@@ -8,7 +8,7 @@ hardware_targets:
 - x86 CPU with AVX2
 hardware_versions:
 - x86 AVX2
-inbound_links: 2
+inbound_links: 3
 measurement_method: ASIC synthesis for power/area; performance estimates from simulation
   (paper does not specify exact simulator)
 metrics:

@@ -13,7 +13,7 @@ constraints:
 created: '2025-03-04'
 hardware_targets:
 - Gemmini (systolic array GEMM accelerator)
-inbound_links: 10
+inbound_links: 11
 needs_summary_revision: true
 scorecard:
   bridge_score: 0.7
