@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - 12-stage pipeline
 - out-of-order

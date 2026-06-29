@@ -1,5 +1,10 @@
 # Wiki Log
 
+## [2026-06-29] lint | retrospective
+issues_found: 0
+actions_taken: [cold_start: false set on 54 pages, needs_summary_revision cleared]
+deferred_for_human: []
+
 ## [2026-06-29] lint | apply
 actions_taken:
   - DELETED entity/Qwen3.6.md (off-theme, 0 inbound)

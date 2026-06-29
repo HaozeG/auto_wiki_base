@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - 1024-bit vector length (VLEN)
 - dual vector ALU
@@ -11,6 +11,7 @@ created: '2025-07-09'
 hardware_targets:
 - SiFive Intelligence X300 Series
 inbound_links: 0
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.6
   claim_density: 0.6

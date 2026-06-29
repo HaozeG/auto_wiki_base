@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 created: '2025-10-27'
 inbound_links: 1
 scorecard:

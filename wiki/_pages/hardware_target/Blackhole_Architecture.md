@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - PCI Express Gen 5.0 x16
 - GDDR6 DRAM
@@ -18,6 +18,7 @@ hardware_targets:
 - TT-LoudBox
 - TT-QuietBox
 inbound_links: 2
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.7
   claim_density: 0.8

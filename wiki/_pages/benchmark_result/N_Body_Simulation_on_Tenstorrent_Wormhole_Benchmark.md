@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 created: '2025-09-01'
 datatypes:
 - double-precision (assumed)
@@ -15,6 +15,7 @@ measurement_method: Comparison of accelerated N-body code on Wormhole n300 again
 metrics:
 - speedup
 - energy efficiency
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.7
   claim_density: 0.7

@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - RVV 1.0 frozen ISA
 - 22nm FD-SOI technology

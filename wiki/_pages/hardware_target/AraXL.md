@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - RISC-V V 1.0
 - 64-bit
@@ -13,6 +13,7 @@ created: '2025-07-15'
 hardware_targets:
 - AraXL
 inbound_links: 1
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.6
   claim_density: 0.8

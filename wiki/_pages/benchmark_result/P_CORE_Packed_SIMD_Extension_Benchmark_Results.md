@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 created: '2026-07-02'
 datatypes:
 - int8
@@ -15,6 +15,7 @@ measurement_method: Design Space Exploration (DSE) evaluating SIMD8 (8-bit 4-way
 metrics:
 - speedup
 - power efficiency
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.7
   claim_density: 0.8

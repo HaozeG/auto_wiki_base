@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - 8-wide out-of-order decode
 - 6 integer ALUs
@@ -17,6 +17,7 @@ created: '2025-03-25'
 hardware_targets:
 - Tenstorrent Ascalon
 inbound_links: 0
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.6
   claim_density: 0.85

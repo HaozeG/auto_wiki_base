@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - RVV 1.0
 - 8 cores (2 clusters of 4)
@@ -7,6 +7,7 @@ created: '2025-07-16'
 hardware_targets:
 - SpacemiT Key Stone K1
 inbound_links: 0
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.5
   claim_density: 0.6

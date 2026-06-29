@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - fixed-function accelerator
 - supports convolution, deconvolution, fully connected, activation, pooling, batch
@@ -16,6 +16,7 @@ hardware_targets:
 - NVIDIA Jetson
 - NVIDIA DRIVE
 inbound_links: 0
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.8
   claim_density: 0.8

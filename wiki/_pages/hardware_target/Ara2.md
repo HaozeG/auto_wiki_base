@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - RVV 1.0 frozen ISA
 - 22nm CMOS technology
@@ -9,6 +9,7 @@ created: '2025-03-28'
 hardware_targets:
 - Ara2
 inbound_links: 1
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.7
   claim_density: 0.9

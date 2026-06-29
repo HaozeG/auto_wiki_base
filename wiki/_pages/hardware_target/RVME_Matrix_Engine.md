@@ -1,35 +1,36 @@
 ---
-type: hardware_target
-tags:
-  - RISC-V
-  - matrix extension
-  - coprocessor
-  - OPA
-  - GEMM
-  - AI accelerator
-  - gem5
-sources:
-  - raw/sources/RVME_An_Efficient_Matrix_Engine_Design_Based_on_Matrix_Extension_of_RISC-V.pdf
-created: 2026-06-29
-updated: 2026-06-29
-cold_start: true
-inbound_links: 0
-hardware_targets:
-  - RVME (decoupled coprocessor, 28 nm, 1 GHz)
-  - Host CPU: 64-bit RISC-V OoO (gem5, 2 GHz)
-toolchains:
-  - Extended RISC-V GNU toolchain with RVM custom matrix ISA
-  - gem5 full-system simulator (extended)
+cold_start: false
 constraints:
-  - INT8 source operands only (INT32 accumulation); wider types reserved
-  - OPA bubble-free condition: K dimension must satisfy k >= m
-  - Zmint4 / FP types not included in this work's ISA subset
+- INT8 source operands only (INT32 accumulation); wider types reserved
+- OPA bubble-free condition: K dimension must satisfy k >= m
+- Zmint4 / FP types not included in this work's ISA subset
+created: 2026-06-29
+hardware_targets:
+- RVME (decoupled coprocessor, 28 nm, 1 GHz)
+- Host CPU: 64-bit RISC-V OoO (gem5, 2 GHz)
+inbound_links: 0
+needs_summary_revision: false
 scorecard:
-  novelty_delta: 0.9
-  claim_density: 0.95
-  self_containedness: 0.9
   bridge_score: 0.85
+  claim_density: 0.95
   hub_potential: 0.8
+  novelty_delta: 0.9
+  self_containedness: 0.9
+sources:
+- raw/sources/RVME_An_Efficient_Matrix_Engine_Design_Based_on_Matrix_Extension_of_RISC-V.pdf
+tags:
+- RISC-V
+- matrix extension
+- coprocessor
+- OPA
+- GEMM
+- AI accelerator
+- gem5
+toolchains:
+- Extended RISC-V GNU toolchain with RVM custom matrix ISA
+- gem5 full-system simulator (extended)
+type: hardware_target
+updated: 2026-06-29
 ---
 
 # RVME Matrix Engine

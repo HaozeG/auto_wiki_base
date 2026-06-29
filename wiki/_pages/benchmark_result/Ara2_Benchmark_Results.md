@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 created: '2025-03-28'
 datatypes:
 - double-precision (DP)
@@ -18,6 +18,7 @@ metrics:
 - functional-unit utilization (%)
 - performance speedup (3x)
 - energy efficiency improvement (1.5x)
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.7
   claim_density: 0.9

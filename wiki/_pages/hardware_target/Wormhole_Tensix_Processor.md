@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - PCI Express
 - up to 160W (n150) or 300W (n300)
@@ -16,6 +16,7 @@ hardware_targets:
 - Wormhole n300d
 - Wormhole n300s
 inbound_links: 0
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.5
   claim_density: 0.7

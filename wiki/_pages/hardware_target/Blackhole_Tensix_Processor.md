@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - PCI Express 5.0 x16
 - up to 300W TBP
@@ -15,6 +15,7 @@ hardware_targets:
 - Blackhole P150a
 - Blackhole P150b
 inbound_links: 0
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.5
   claim_density: 0.7

@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - RVV 1.0
 created: '2025-12-30'
@@ -11,6 +11,7 @@ inbound_links: 1
 metrics:
 - area reduction
 - power reduction
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.6
   claim_density: 0.7

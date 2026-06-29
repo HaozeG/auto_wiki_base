@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 created: '2026-12-07'
 datatypes: []
 evidence_strength: reported
@@ -27,6 +27,7 @@ metrics:
 - tok/s (tokens per second)
 - s/img (seconds per image)
 - img/s (images per second)
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.8
   claim_density: 0.9

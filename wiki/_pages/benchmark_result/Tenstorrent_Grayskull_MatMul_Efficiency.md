@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 created: '2025-05-09'
 datatypes:
 - BF16
@@ -15,6 +15,7 @@ metrics:
 - throughput
 - power
 - efficiency
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.6
   claim_density: 0.7

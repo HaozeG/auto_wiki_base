@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - Tensix architecture
 - on-chip SRAM
@@ -13,6 +13,7 @@ inbound_links: 1
 metrics:
 - latency reduction
 - Pearson Correlation Coefficient
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.85
   claim_density: 0.85

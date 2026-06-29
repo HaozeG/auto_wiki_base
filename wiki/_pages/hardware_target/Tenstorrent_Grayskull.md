@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - 32x32 tile operation
 - explicit tile register management
@@ -12,6 +12,7 @@ created: '2025-04-08'
 hardware_targets:
 - Tenstorrent Grayskull
 inbound_links: 1
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.6
   claim_density: 0.8

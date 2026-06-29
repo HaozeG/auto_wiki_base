@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - RoCC interface
 - RISC-V custom instructions
@@ -11,6 +11,7 @@ hardware_targets:
 - Gemmini (systolic array GEMM accelerator)
 inbound_links: 1
 metrics: []
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.8
   claim_density: 0.5

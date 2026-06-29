@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - 64 Tensix cores
 - 12 GB GDDR6 memory via 192-bit bus
@@ -13,6 +13,7 @@ created: '2025-09-01'
 hardware_targets:
 - Tenstorrent Wormhole n300
 inbound_links: 5
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.7
   claim_density: 0.7

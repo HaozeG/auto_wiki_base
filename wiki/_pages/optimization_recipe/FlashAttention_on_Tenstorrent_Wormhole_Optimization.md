@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - Wormhole architecture
 - 120 MB L1 memory (on-chip SRAM)
@@ -14,6 +14,7 @@ hardware_targets:
 inbound_links: 1
 metrics:
 - speedup
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.7
   claim_density: 0.8

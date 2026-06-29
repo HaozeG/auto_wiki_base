@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 created: '2025-04-09'
 datatypes:
 - Bfloat16
@@ -15,6 +15,7 @@ measurement_method: 'Dedicated Softmax kernel benchmark: compared against a CPU 
   Softmax kernel on the same Grayskull e150 hardware.'
 metrics:
 - speedup
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.6
   claim_density: 0.9

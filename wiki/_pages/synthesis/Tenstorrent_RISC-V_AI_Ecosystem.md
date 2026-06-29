@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 connected_entities:
 - Tenstorrent
 - TT_Metalium

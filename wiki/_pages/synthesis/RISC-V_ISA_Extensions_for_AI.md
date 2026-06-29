@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 connected_entities:
 - RISC-V_Vector_Extension
 - RISC-V_Matrix_Extension

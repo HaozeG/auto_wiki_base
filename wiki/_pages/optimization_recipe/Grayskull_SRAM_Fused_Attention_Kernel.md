@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - SRAM-only execution
 - Fused kernel combining matmul, scaling, and Softmax
@@ -13,6 +13,7 @@ hardware_targets:
 inbound_links: 1
 metrics:
 - speedup
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.6
   claim_density: 0.9

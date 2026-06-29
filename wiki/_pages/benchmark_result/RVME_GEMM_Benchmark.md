@@ -12,7 +12,7 @@ sources:
   - raw/sources/RVME_An_Efficient_Matrix_Engine_Design_Based_on_Matrix_Extension_of_RISC-V.pdf
 created: 2026-06-29
 updated: 2026-06-29
-cold_start: true
+cold_start: false
 inbound_links: 0
 hardware_targets:
   - RVME (28 nm, 1 GHz, 4×OPA 8×8, RLEN=256-bit)

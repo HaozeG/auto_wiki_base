@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - 16 big RISC-V cores (run Linux)
 - 752 baby RISC-V cores (programmable with C kernels, no OS)
@@ -15,6 +15,7 @@ created: '2026-06-28'
 hardware_targets:
 - Tenstorrent Blackhole
 inbound_links: 0
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.5
   claim_density: 0.7

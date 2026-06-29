@@ -1,24 +1,24 @@
 ---
-type: entity
-tags:
-  - RISC-V
-  - matrix extension
-  - ISA
-  - GEMM
-  - AI accelerator
-  - RVM
-sources:
-  - raw/sources/riscv_matrix_extension_proposal.pdf
+cold_start: false
 created: 2026-06-29
-updated: 2026-06-29
-cold_start: true
 inbound_links: 3
 scorecard:
-  novelty_delta: 0.95
-  claim_density: 0.9
-  self_containedness: 0.95
   bridge_score: 0.85
+  claim_density: 0.9
   hub_potential: 0.85
+  novelty_delta: 0.95
+  self_containedness: 0.95
+sources:
+- raw/sources/riscv_matrix_extension_proposal.pdf
+tags:
+- RISC-V
+- matrix extension
+- ISA
+- GEMM
+- AI accelerator
+- RVM
+type: entity
+updated: 2026-06-29
 ---
 
 # RISC-V Matrix Extension

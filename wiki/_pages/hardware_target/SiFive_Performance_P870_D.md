@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - RVA23 profile
 - RVV 1.0 vector extension with vector crypto
@@ -12,6 +12,7 @@ created: '2025-03-26'
 hardware_targets:
 - SiFive Performance P870-D
 inbound_links: 0
+needs_summary_revision: false
 scorecard:
   bridge_score: 0.5
   claim_density: 0.7
