@@ -1,5 +1,16 @@
 # Wiki Log
 
+## [2026-06-29] lint | routine
+issues_found: 6 categories
+actions_taken: [none — output for human review]
+deferred_for_human:
+  - 61 orphan pages
+  - 2 off-theme pages (Qwen3.6, Qwen2.5-Coder-1.5B-Instruct-GGUF)
+  - 2 duplicate entity pages (entity/Gemmini.md vs hardware_target/Gemmini_Architecture.md + Gemmini_systolic_array_GEMM_accelerator.md)
+  - 2 duplicate RVME hardware_target pages (RVME_Matrix_Engine.md vs RVME_Model.md)
+  - 80 pages flagged needs_summary_revision: true (Layer 3 BM25 saturation false-positives)
+  - 5 synthesis pages with inbound_links: 0
+
 ## [2026-06-29] query_synthesis | RISC-V ISA Extensions for AI Acceleration
 source_query: synthesis gap — 18 RISC-V-tagged entity pages without synthesis coverage
 pages_created: [synthesis/RISC-V_ISA_Extensions_for_AI.md]
