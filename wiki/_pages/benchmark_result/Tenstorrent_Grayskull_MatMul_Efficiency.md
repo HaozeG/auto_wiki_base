@@ -8,7 +8,7 @@ hardware_targets:
 - Tenstorrent Grayskull e75
 hardware_versions:
 - Grayskull e75 (96 Tensix cores, 1 GHz, 12 nm GF)
-inbound_links: 9
+inbound_links: 10
 measurement_method: Independent assessment analyzing Tenstorrent's MatMul acceleration
   capabilities; specific methodology not detailed in available snippets.
 metrics:

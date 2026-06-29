@@ -4,12 +4,15 @@
 
 **Organization**: Workflow-first — pages are typed as `hardware_target`, `workload_kernel`, `optimization_recipe`, `benchmark_result`, `entity`, or `synthesis`.
 
-Last updated: 2026-06-29 | Pages: 157 | Sources: 0
+Last updated: 2026-06-29 | Pages: 162 | Sources: 0
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [SHL_Library.md](entity/SHL_Library.md) | SHL (Structure of Heterogeneous Library) | SHL, T-HEAD, XuanTie, heterogeneous computing, CSI-NN2, neural network library | 1 | 0 |
+| [XuanTie.md](entity/XuanTie.md) | XuanTie | RISC-V, Alibaba, DAMO Academy, processor, ecosystem | 1 | 0 |
+| [RISC-V_Matrix_Extension_Specification.md](entity/RISC-V_Matrix_Extension_Specification.md) | RISC-V Matrix Extension Specification (XuanTie) | RISC-V, matrix extension, XuanTie, AI, specification | 1 | 0 |
 | [BitNet_RISCV_Multicore.md](entity/BitNet_RISCV_Multicore.md) | BitNet-RISCV-Multicore | RISC-V, BitNet, 1-bit LLM, Ara, CVA6, Gemmini, multicore, vector accelerator | 1 | 0 |
 | [FeNN_DMA_RISC_V_SoC.md](entity/FeNN_DMA_RISC_V_SoC.md) | FeNN-DMA: A RISC-V SoC for Spiking Neural Network Acceleration | RISC-V, SNN, FPGA, spiking neural network, SoC, vector processor, DMA | 1 | 0 |
 | [PMU_Roofline_Analysis_RISCV.md](entity/PMU_Roofline_Analysis_RISCV.md) | LLVM Roofline and PMU Tooling on RISC-V | RISC-V, PMU, Roofline, LLVM, performance analysis, SpacemiT X60 | 1 | 0 |
@@ -84,6 +87,8 @@ Last updated: 2026-06-29 | Pages: 157 | Sources: 0
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [XuanTie_C950.md](hardware_target/XuanTie_C950.md) | hardware_target | XuanTie C950 | RISC-V, Alibaba, Xuantie, AI, data_center, CPU, 5nm | 1 | 0 |
+| [Tenstorrent_Wormhole.md](hardware_target/Tenstorrent_Wormhole.md) | hardware_target | Tenstorrent Wormhole | Tenstorrent, Wormhole, RISC-V, AI accelerator, Tensix | 1 | 0 |
 | [TeraPool_1024_Core_Cluster.md](hardware_target/TeraPool_1024_Core_Cluster.md) | hardware_target | TeraPool 1024-Core Cluster | RISC-V, many-core, barrier synchronization, TeraPool, shared memory | 1 | 0 |
 | [TeraPool_Barrier_Synchronization_Benchmark_Results.md](benchmark_result/TeraPool_Barrier_Synchronization_Benchmark_Results.md) | benchmark_result | TeraPool Barrier Synchronization Benchmark Results | RISC-V, TeraPool, barrier synchronization, many-core, shared memory | 1 | 0 |
 | [RVV-Lite.md](hardware_target/RVV-Lite.md) | hardware_target | RVV-Lite | RISC-V, RVV, vector, ISA, subset, RVV-Lite | 1 | 0 |

@@ -8,7 +8,7 @@ datatypes:
 - double-precision (f64)
 - single-precision (f32)
 - half-precision (f16)
-inbound_links: 25
+inbound_links: 26
 needs_summary_revision: true
 scorecard:
   bridge_score: 0.7

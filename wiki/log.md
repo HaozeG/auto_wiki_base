@@ -425,3 +425,27 @@ cold_start: false
 ## [2026-06-29] query_synthesis | Kernel Dispatch Decision Tree for RVV+AME
 source_query: agentic kernel optimization — when to use AME vs RVV vs scalar on RISC-V multi-PE chip
 pages_created: [synthesis/Kernel_Dispatch_Decision_Tree_RVV_AME.md]
+
+## [2026-06-29] research | arxiv T-Head XuanTie AME matrix engine xtheadmatmul GEMM acc
+session_id: 9896a8ab
+candidates_evaluated: 8
+pages_written: 3
+pipeline_rejection_rate: 50%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_9896a8ab_2026-06-29.json
+theme_profile: RISC-V ai accelerator | workflow_first
+
+## [2026-06-29] research | github SHL CSINN2 AME kernel xtheadmatmul T-Head matrix inst
+session_id: 98f43cf1
+candidates_evaluated: 6
+pages_written: 2
+pipeline_rejection_rate: 17%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_98f43cf1_2026-06-29.json
+theme_profile: RISC-V ai accelerator | workflow_first
+
+## [2026-06-29] research | XuanTie C930 server chip AME matrix engine INT8 throughput A
+session_id: e36ec430
+candidates_evaluated: 6
+pages_written: 2
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_e36ec430_2026-06-29.json
+theme_profile: RISC-V ai accelerator | workflow_first

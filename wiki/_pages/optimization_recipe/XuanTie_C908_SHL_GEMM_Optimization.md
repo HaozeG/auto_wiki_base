@@ -13,7 +13,7 @@ datatypes:
 evidence_strength: reported
 hardware_targets:
 - XuanTie C908
-inbound_links: 11
+inbound_links: 12
 metrics:
 - speedup
 needs_summary_revision: true

@@ -14,7 +14,7 @@ constraints:
 created: '2026-06-28'
 hardware_targets:
 - Tenstorrent Blackhole
-inbound_links: 0
+inbound_links: 1
 needs_summary_revision: false
 scorecard:
   bridge_score: 0.5

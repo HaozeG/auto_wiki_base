@@ -98,7 +98,7 @@ Constructing a roofline on RISC-V hardware requires measuring peak compute (FLOP
 
 ## Open Questions
 
-- T-Head AME ISA register model (tile dimensions, accumulator layout, instruction mnemonics) is not publicly documented in English; the XuanTie C930 AME throughput numbers are unconfirmed. A direct comparison of `xtheadmatmul` vs. RVME `mmacc` at identical workloads does not yet exist in the wiki.
+- T-Head AME ISA is now documented in `XUANTIE-RV/riscv-matrix-extension-spec` (v0.6.0, master branch). The core instruction is `mmaqa.b` (XuanTie naming) / `mmacc.w.b` (community RVM naming) — both are INT8→INT32 quad-widen MACs. The C intrinsic is `mmaqa()`. Throughput numbers for C930 AME at real workloads remain unconfirmed in public benchmarks; no direct comparison of XuanTie AME vs. RVME OPA at identical GEMM dimensions has been published. See [[XuanTie_AME_ISA]] for the full register model.
 - The AME tile-fill threshold for M is implementation-specific (RVME uses 8×8 OPAs); for prefill attention with sequence length S > 1, the crossover point between AME and RVV depends on the tile dimensions of the target hardware.
 - I-LLM's DI-MatMul integer-only quantization has only been validated on ARM/GPU targets; applicability to RISC-V RVV integer pipelines (no hardware multiplication widening) needs verification.
 - RVV autovectorization from compilers (GCC 12+, LLVM 14+) does not yet generate AME instructions automatically; a compiler that jointly schedules RVV and AME requires an MLIR linalg-to-AME lowering path not yet described in the wiki.
