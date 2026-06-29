@@ -4,7 +4,7 @@
 
 **Organization**: Workflow-first — pages are typed as `hardware_target`, `workload_kernel`, `optimization_recipe`, `benchmark_result`, `entity`, or `synthesis`.
 
-Last updated: 2026-06-29 | Pages: 92 | Sources: 0
+Last updated: 2026-06-29 | Pages: 94 | Sources: 0
 
 ## Entity Pages
 
@@ -78,11 +78,13 @@ Last updated: 2026-06-29 | Pages: 92 | Sources: 0
 | [RVV_1_0_CNN_Preprocessing_Fallback_Benchmark.md](benchmark_result/RVV_1_0_CNN_Preprocessing_Fallback_Benchmark.md) | benchmark_result | RVV-1.0 CNN Pre-processing and Fallback Acceleration Benchmark | RVV 1.0, CNN, pre-processing, YOLOv3, NVDLA, VecBoost, DLA fallback | 1 | 0 |
 | [HAL_riscv_rvv_Performance_Benchmarks.md](benchmark_result/HAL_riscv_rvv_Performance_Benchmarks.md) | benchmark_result | HAL riscv-rvv Performance Benchmarks | OpenCV, HAL, RVV 1.0, RISC-V, benchmark, SpacemiT | 1 | 0 |
 | [HAL_riscv_rvv_OpenCV_Optimization_Recipe.md](optimization_recipe/HAL_riscv_rvv_OpenCV_Optimization_Recipe.md) | optimization_recipe | HAL riscv-rvv OpenCV Optimization Recipe | OpenCV, HAL, RVV 1.0, RISC-V, SpacemiT | 1 | 0 |
-| [Gemmini_Architecture.md](hardware_target/Gemmini_Architecture.md) | hardware_target | Gemmini Architecture | Gemmini, DNN accelerator, full-stack, RISC-V, systolic array, vector array, hardware generator | 1 | 0 |
+| [RVME_Matrix_Engine.md](hardware_target/RVME_Matrix_Engine.md) | hardware_target | RVME Matrix Engine — decoupled RISC-V matrix coprocessor with OPAs (28nm, 1GHz) | RISC-V, matrix extension, coprocessor, OPA, GEMM, AI accelerator | 1 | 0 |
+| [Gemmini_Architecture.md](hardware_target/Gemmini_Architecture.md) | hardware_target | Gemmini Architecture | Gemmini, DNN accelerator, full-stack, RISC-V, systolic array, vector array, hardware generator | 1 | 5 |
 | [TVM_and_Gemmini_Accelerator_Benchmark_Results.md](benchmark_result/TVM_and_Gemmini_Accelerator_Benchmark_Results.md) | benchmark_result | TVM and Gemmini Accelerator Benchmark Results | TVM, Gemmini, GEMM, FPGA, Xilinx ZCU102, systolic array, hardware accelerator | 1 | 0 |
 | [Chiplet_RISC_V_AI_SoC_Benchmark_Results.md](benchmark_result/Chiplet_RISC_V_AI_SoC_Benchmark_Results.md) | benchmark_result | Chiplet-Based RISC-V AI SoC Benchmark Results | RISC-V, chiplet, AI accelerator, MobileNetV2, ResNet-50 | 1 | 0 |
 | [FPGA_Accelerated_RISC-V_CNN_ISA_Extensions_Recipe.md](optimization_recipe/FPGA_Accelerated_RISC-V_CNN_ISA_Extensions_Recipe.md) | optimization_recipe | FPGA-Accelerated RISC-V ISA Extensions for CNN Inference | RISC-V, FPGA, PYNQ-Z2, CNN, ISA extension, neural network, edge AI, custom instruction | 1 | 0 |
 | [PYNQ-Z2_RISC-V_CNN_ISA_Extensions_Benchmark.md](benchmark_result/PYNQ-Z2_RISC-V_CNN_ISA_Extensions_Benchmark.md) | benchmark_result | PYNQ-Z2 RISC-V CNN ISA Extensions Benchmark | RISC-V, FPGA, PYNQ-Z2, CNN, ISA extension, neural network, edge AI | 1 | 0 |
+| [RVME_GEMM_Benchmark.md](benchmark_result/RVME_GEMM_Benchmark.md) | benchmark_result | RVME GEMM benchmark — 1921.4 GOPS/W/mm², 7.9×–13.4× speedup over RVV | RISC-V, GEMM, matrix extension, coprocessor, benchmark, DNN inference | 1 | 0 |
 | [DSC_Fused_Dataflow_Benchmark_Results.md](benchmark_result/DSC_Fused_Dataflow_Benchmark_Results.md) | benchmark_result | DSC Fused Dataflow Benchmark Results | TinyML, DSC, fused dataflow, zero-buffer, RISC-V, CFU, FPGA | 1 | 0 |
 | [DSC_Fused_Dataflow_Optimization_Recipe.md](optimization_recipe/DSC_Fused_Dataflow_Optimization_Recipe.md) | optimization_recipe | Fused Pixel-wise Dataflow for TinyML Depthwise Separable Convolutions (DSC) | TinyML, DSC, fused dataflow, zero-buffer, RISC-V, CFU | 1 | 0 |
 | [XuanTie_C910.md](hardware_target/XuanTie_C910.md) | hardware_target | XuanTie C910 | RISC-V, T-HEAD, out-of-order, RVV, Alibaba, XuanTie, C910 | 1 | 0 |

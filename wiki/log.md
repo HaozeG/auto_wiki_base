@@ -1,5 +1,12 @@
 # Wiki Log
 
+## [2026-06-29] ingest | RVME_An_Efficient_Matrix_Engine_Design_Based_on_Matrix_Extension_of_RISC-V.pdf
+pages_created: [hardware_target/RVME_Matrix_Engine.md, benchmark_result/RVME_GEMM_Benchmark.md]
+pages_updated: []
+pages_deferred: []
+cold_start: true
+inbound_link_updates: [RISC-V_Matrix_Extension.md +2, Gemmini_Architecture.md +2]
+
 ## [2026-06-29] ingest | riscv_matrix_extension_proposal.pdf
 pages_created: [entity/RISC-V_Matrix_Extension.md]
 pages_updated: []
