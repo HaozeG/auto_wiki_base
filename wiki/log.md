@@ -449,3 +449,24 @@ pages_written: 2
 pipeline_rejection_rate: 0%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_e36ec430_2026-06-29.json
 theme_profile: RISC-V ai accelerator | workflow_first
+
+## [2026-06-29] research | arxiv.org RISC-V matrix extension benchmark performance eval
+session_id: e551970d
+candidates_evaluated: 0
+pages_written: 0
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_e551970d_2026-06-29.json
+theme_profile: RISC-V ai accelerator | workflow_first
+
+## [2026-06-29] research | arxiv Quadrilatero RISC-V matrix coprocessor edge 2504.07565
+session_id: cb22d7ee
+candidates_evaluated: 0
+pages_written: 0
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_cb22d7ee_2026-06-29.json
+theme_profile: RISC-V ai accelerator | workflow_first
+
+## [2026-06-29] ingest | XuanTie AME primary source — sessions 13-15 + manual
+pages_created: [RISC-V_Matrix_Extension_Specification, SHL_Library, XuanTie, XuanTie_AME_ISA, SHL_AME_GEMM_Optimization_Recipe, XuanTie_C950, Tenstorrent_Wormhole, Tenstorrent_Blackhole, Quadrilatero_RISC-V_Matrix_Coprocessor, Zero_Stall_MatMul_RISC-V_Cluster, RVV_Portable_Performance_GCC15_LLVM21]
+pages_updated: [Kernel_Dispatch_Decision_Tree_RVV_AME (open questions updated with confirmed AME ISA)]
+cold_start: false
