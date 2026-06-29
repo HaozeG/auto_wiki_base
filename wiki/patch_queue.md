@@ -62,3 +62,10 @@ target_section: toolchains
 source: https://github.com/tenstorrent/tt-forge
 status: pending_review
 proposed_update: Add TT-Forge to the list of toolchains, as it is the new MLIR-based compiler stack built on TT-Metalium that supports compiling and running AI workloads on Grayskull hardware. TT-Forge is now the primary open-source compiler for Tenstorrent hardware.
+
+## [2026-06-29] pending | Kendryte_K210.md
+target_page: Kendryte_K210.md
+target_section: Debugging
+source: https://visualgdb.com/tutorials/risc-v/kendryte/k210/
+status: pending_review
+proposed_update: Add a new 'Debugging' section covering JTAG debug setup for the Kendryte K210 using Visual Studio and VisualGDB. Include: JTAG signal mapping (TDI, TMS, TCK, TDO, RESET) to Sipeed M1 Dock board; recommended JTAG debuggers (Segger J-Link, Olimex ARM-USB-OCD-H, FTDI-based); steps to create, build, and debug a Blinking LED project using the VisualGDB Embedded Project Wizard; note on using the Kendryte-specific toolchain (not generic RISC-V); description of the debug workflow (breakpoints, 'load' command fallback); instructions for programming the external FLASH using K-FLASH tool; reliability issues with Kendryte OpenOCD fork and workarounds (setting breakpoints before program start, reloading firmware, using K-FLASH). This information is sourced from the VisualGDB tutorial 'Debugging Kendryte K210 Projects with Visual Studio'.

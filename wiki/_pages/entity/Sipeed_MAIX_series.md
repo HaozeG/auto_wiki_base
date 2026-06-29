@@ -1,7 +1,7 @@
 ---
 cold_start: false
 created: YYYY-MM-DD
-inbound_links: 32
+inbound_links: 35
 needs_summary_revision: true
 scorecard:
   bridge_score: 0.5

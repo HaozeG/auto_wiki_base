@@ -4,12 +4,15 @@
 
 **Organization**: Workflow-first — pages are typed as `hardware_target`, `workload_kernel`, `optimization_recipe`, `benchmark_result`, `entity`, or `synthesis`.
 
-Last updated: 2026-06-29 | Pages: 120 | Sources: 0
+Last updated: 2026-06-29 | Pages: 124 | Sources: 0
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [Qwen3.6.md](entity/Qwen3.6.md) | Qwen3.6 | LLM, Qwen, Alibaba, multimodal, hybrid-thinking | 1 | 0 |
+| [Qwen2.5-Coder-1.5B-Instruct-GGUF.md](entity/Qwen2.5-Coder-1.5B-Instruct-GGUF.md) | Qwen2.5-Coder-1.5B-Instruct-GGUF | Qwen, code model, LLM, GGUF, llama.cpp, Alibaba Cloud | 1 | 0 |
+| [PyAi_k210.md](entity/PyAi_k210.md) | PyAi-k210 | Kendryte K210, machine vision, 01Studio, RISC-V, AI | 1 | 0 |
 | [Gemmini.md](entity/Gemmini.md) | Gemmini | RISC-V, DNN accelerator, hardware generator, Chipyard, full-stack evaluation | 1 | 0 |
 | [Chipyard_Framework.md](entity/Chipyard_Framework.md) | Chipyard Framework | RISC-V, SoC, framework, agile hardware, UC Berkeley | 1 | 0 |
 | [SYCL_MLIR_Compiler.md](entity/SYCL_MLIR_Compiler.md) | SYCL-MLIR Compiler | MLIR, SYCL, compiler, compiler optimization, codeplay | 1 | 0 |
@@ -73,6 +76,7 @@ Last updated: 2026-06-29 | Pages: 120 | Sources: 0
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [nncase_K230_Benchmark_Results.md](benchmark_result/nncase_K230_Benchmark_Results.md) | benchmark_result | nncase K230 Benchmark Results | nncase, K230, neural network compiler, benchmark | 1 | 0 |
 | [SpacemiT_Key_Stone_K1.md](hardware_target/SpacemiT_Key_Stone_K1.md) | hardware_target | SpacemiT Key Stone K1 | RISC-V, SpacemiT, Key Stone K1 | 1 | 0 |
 | [NVIDIA_Deep_Learning_Accelerator.md](hardware_target/NVIDIA_Deep_Learning_Accelerator.md) | hardware_target | NVIDIA Deep Learning Accelerator (DLA) | NVIDIA, DLA, deep learning accelerator, fixed-function, Jetson, DRIVE, Orin, Xavier | 1 | 0 |
 | [Gemmini_IREE_Integration_Strategy.md](optimization_recipe/Gemmini_IREE_Integration_Strategy.md) | optimization_recipe | Gemmini IREE Integration Strategy | Gemmini, IREE, RoCC, integration, systolic array, compiler | 1 | 0 |

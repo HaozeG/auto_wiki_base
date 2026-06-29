@@ -334,3 +334,11 @@ pages_written: 8
 pipeline_rejection_rate: 26%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_89f5cc6f_2026-06-29.json
 theme_profile: RISC-V ai accelerator | workflow_first
+
+## [2026-06-29] research | RISC-V MLIR dialect compiler optimization pass AI hardware b
+session_id: 659eeab3
+candidates_evaluated: 17
+pages_written: 6
+pipeline_rejection_rate: 24%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_659eeab3_2026-06-29.json
+theme_profile: RISC-V ai accelerator | workflow_first
