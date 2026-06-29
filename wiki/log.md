@@ -1,5 +1,9 @@
 # Wiki Log
 
+## [2026-06-29] query_synthesis | MLIR for RISC-V AI Compilation
+source_query: synthesis gap — 4 MLIR-tagged entity pages without synthesis coverage
+pages_created: [synthesis/MLIR_for_RISC-V_AI_Compilation.md]
+
 ## [2026-06-29] query_synthesis | Tenstorrent RISC-V AI Ecosystem
 source_query: synthesis gap — 6 Tenstorrent-tagged entity pages without synthesis coverage
 pages_created: [synthesis/Tenstorrent_RISC-V_AI_Ecosystem.md]

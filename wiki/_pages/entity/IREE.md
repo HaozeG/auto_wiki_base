@@ -1,7 +1,7 @@
 ---
 cold_start: false
 created: '2026-06-28'
-inbound_links: 1
+inbound_links: 2
 needs_summary_revision: true
 scorecard:
   bridge_score: 0.8

@@ -9,7 +9,7 @@ datatypes: []
 evidence_strength: reported
 hardware_targets:
 - Gemmini (systolic array GEMM accelerator)
-inbound_links: 0
+inbound_links: 1
 metrics: []
 scorecard:
   bridge_score: 0.8
