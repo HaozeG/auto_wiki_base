@@ -354,3 +354,11 @@ pages_written: 11
 pipeline_rejection_rate: 6%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_4e65adaa_2026-06-29.json
 theme_profile: RISC-V ai accelerator | workflow_first
+
+## [2026-06-29] research | SiFive Intelligence X390 P870 XuanTie C910 RVV inference edg
+session_id: 09cb5503
+candidates_evaluated: 18
+pages_written: 7
+pipeline_rejection_rate: 50%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_09cb5503_2026-06-29.json
+theme_profile: RISC-V ai accelerator | workflow_first

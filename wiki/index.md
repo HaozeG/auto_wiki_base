@@ -4,12 +4,13 @@
 
 **Organization**: Workflow-first — pages are typed as `hardware_target`, `workload_kernel`, `optimization_recipe`, `benchmark_result`, `entity`, or `synthesis`.
 
-Last updated: 2026-06-29 | Pages: 134 | Sources: 0
+Last updated: 2026-06-29 | Pages: 139 | Sources: 0
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [XuanTie_C930.md](entity/XuanTie_C930.md) | XuanTie C930 | RISC-V, Alibaba, XuanTie, server, AI-HPC | 1 | 0 |
 | [RV-VP2.md](entity/RV-VP2.md) | RV-VP² | RISC-V, Packed-SIMD, P-extension, Virtual Prototype, SystemC, TLM, simulation | 3 | 0 |
 | [rvv-bench.md](entity/rvv-bench.md) | rvv-bench | RISC-V, RVV, benchmark, open-source, vector | 1 | 0 |
 | [Qwen3.6.md](entity/Qwen3.6.md) | Qwen3.6 | LLM, Qwen, Alibaba, multimodal, hybrid-thinking | 1 | 0 |
@@ -79,6 +80,10 @@ Last updated: 2026-06-29 | Pages: 134 | Sources: 0
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [T-HEAD_Xuantie_C910.md](hardware_target/T-HEAD_Xuantie_C910.md) | hardware_target | T-HEAD Xuantie C910 | RISC-V, T-HEAD, Xuantie, C910, out-of-order, vector extension | 1 | 0 |
+| [SiFive_Performance_P870_D.md](hardware_target/SiFive_Performance_P870_D.md) | hardware_target | SiFive Performance P870-D | RISC-V, datacenter, SiFive, P870-D, high-performance | 1 | 0 |
+| [AraXL.md](hardware_target/AraXL.md) | hardware_target | AraXL | RISC-V, vector processor, long vectors, HPC, ML, 22nm | 1 | 0 |
+| [SiFive_Intelligence_X300_Series.md](hardware_target/SiFive_Intelligence_X300_Series.md) | hardware_target | SiFive Intelligence X300 Series | RISC-V, SiFive, AI accelerator, vector processing, second generation | 1 | 0 |
 | [RVME_Model.md](hardware_target/RVME_Model.md) | hardware_target | RVME Model | RISC-V, matrix engine, gem5, simulation | 1 | 0 |
 | [P-Box_RISC-V_Packed-SIMD_Implementation.md](hardware_target/P-Box_RISC-V_Packed-SIMD_Implementation.md) | hardware_target | P-Box: RISC-V Packed-SIMD Implementation | RISC-V, Packed-SIMD, RVP, edge AI, DSP, CV, P-Box | 1 | 0 |
 | [P_CORE_Packed_SIMD_Extension_Benchmark_Results.md](benchmark_result/P_CORE_Packed_SIMD_Extension_Benchmark_Results.md) | benchmark_result | P-CORE Packed-SIMD Extension Benchmark Results | RISC-V, P-extension, Packed-SIMD, CNN, RV32IM | 1 | 0 |
