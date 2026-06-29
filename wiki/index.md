@@ -4,12 +4,13 @@
 
 **Organization**: Workflow-first — pages are typed as `hardware_target`, `workload_kernel`, `optimization_recipe`, `benchmark_result`, `entity`, or `synthesis`.
 
-Last updated: 2026-06-29 | Pages: 102 | Sources: 0
+Last updated: 2026-06-29 | Pages: 104 | Sources: 0
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [TT_Inference_Server_Benchmarking.md](entity/TT_Inference_Server_Benchmarking.md) | TT-Inference-Server Benchmarking | Tenstorrent, LLM, benchmark, tt-inference-server | 1 | 0 |
 | [tt-awesome.md](entity/tt-awesome.md) | tt-awesome | tenstorrent, awesome-list, community | 1 | 0 |
 | [TT_Metalium.md](entity/TT_Metalium.md) | TT-Metalium | Tenstorrent, TT-Metalium, low-level programming, kernel development, AI accelerator | 1 | 0 |
 | [MLPerf_Training_Reference_Implementations.md](entity/MLPerf_Training_Reference_Implementations.md) | MLPerf Training Reference Implementations | MLPerf, training benchmark, reference implementation, MLCommons | 1 | 0 |
@@ -63,6 +64,7 @@ Last updated: 2026-06-29 | Pages: 102 | Sources: 0
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [TT_BUDA_Benchmark_Results.md](benchmark_result/TT_BUDA_Benchmark_Results.md) | benchmark_result | TT-BUDA Benchmark Results | Tenstorrent, BUDA, AI, benchmark | 1 | 0 |
 | [Blackhole_Architecture.md](hardware_target/Blackhole_Architecture.md) | hardware_target | Blackhole Architecture | Tenstorrent, Blackhole, AI accelerator, RISC-V, Tensix, Ethernet | 1 | 0 |
 | [Tenstorrent_Grayskull_MatMul_Efficiency.md](benchmark_result/Tenstorrent_Grayskull_MatMul_Efficiency.md) | benchmark_result | Tenstorrent Grayskull MatMul Efficiency | RISC-V, Tenstorrent, Grayskull, MatMul, efficiency | 2 | 0 |
 | [Grayskull_SRAM_Attention_Benchmarks.md](benchmark_result/Grayskull_SRAM_Attention_Benchmarks.md) | benchmark_result | Grayskull SRAM Attention Benchmarks | Tenstorrent, Grayskull, attention, Softmax, SRAM, speedup | 1 | 0 |

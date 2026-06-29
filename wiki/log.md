@@ -298,3 +298,11 @@ pages_written: 11
 pipeline_rejection_rate: 6%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_7a0d191c_2026-06-29.json
 theme_profile: RISC-V ai accelerator | workflow_first
+
+## [2026-06-29] research | Tenstorrent TT-NN PyBuda tt-buda model inference benchmark p
+session_id: dc2ac266
+candidates_evaluated: 18
+pages_written: 2
+pipeline_rejection_rate: 17%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_dc2ac266_2026-06-29.json
+theme_profile: RISC-V ai accelerator | workflow_first
