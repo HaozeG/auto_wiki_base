@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - long vector architectures
 - cross-platform portability
@@ -12,6 +12,7 @@ hardware_targets:
 inbound_links: 0
 metrics:
 - speedup factor
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.8
   claim_density: 0.8

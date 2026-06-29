@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - RVV 1.0 support required
 created: '2025-03-04'
@@ -11,6 +11,7 @@ hardware_targets:
 inbound_links: 0
 metrics:
 - performance improvement (speedup)
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.6
   claim_density: 0.4

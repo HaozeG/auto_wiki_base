@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - VCIX technology
 - multi-cluster support
@@ -10,6 +10,7 @@ created: '2025-03-08'
 hardware_targets:
 - SiFive Intelligence X280
 inbound_links: 0
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.6
   claim_density: 0.7

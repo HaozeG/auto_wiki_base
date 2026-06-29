@@ -1,10 +1,11 @@
 ---
-cold_start: true
+cold_start: false
 constraints: []
 created: YYYY-MM-DD
 hardware_targets:
 - Kendryte K210
 inbound_links: 1
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.5
   claim_density: 0.8

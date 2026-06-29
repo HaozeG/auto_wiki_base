@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - RISC-V Vector Extension (RVV)
 - 8-core CPU
@@ -16,6 +16,7 @@ metrics:
 - tokens per second
 - perplexity
 - model size
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.7
   claim_density: 0.8

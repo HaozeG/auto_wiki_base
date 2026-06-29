@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 created: '2025-05-09'
 datatypes:
 - Q4_K_XL

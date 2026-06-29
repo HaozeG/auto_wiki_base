@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 created: '2025-03-26'
 datatypes:
 - int16
@@ -70,7 +70,9 @@ Benchmark results for FPGA-accelerated RISC-V ISA extensions are measured on the
 ## Relationships
 
 - [[Custom_RISC-V_Core_PYNQ-Z2]] – The hardware target page for this custom core.
+- [[FPGA_Accelerated_RISC-V_CNN_ISA_Extensions_Recipe]] – The optimization recipe describing the design methodology for this system.
 - [[DSC_Fused_Dataflow_Benchmark_Results]] – Another FPGA-based benchmark on a different platform (Artix-7) for depthwise separable convolution.
+- [[TVM_and_Gemmini_Accelerator_Benchmark_Results]] – Benchmark of a systolic array GEMM accelerator on Xilinx ZCU102; contrasts custom ISA extension approach with Gemmini RoCC accelerator approach.
 
 ## Sources
 

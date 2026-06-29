@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - 8-core
 - 1.8 GHz
@@ -10,6 +10,7 @@ hardware_targets:
 - DC-ROMA AI PC RISC-V Mainboard II
 - SiFive P550
 inbound_links: 0
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.7
   claim_density: 1.0

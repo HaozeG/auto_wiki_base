@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 created: '2025-07-09'
 datatypes: []
 evidence_strength: reported
@@ -13,7 +13,7 @@ measurement_method: Single-core performance tests using OpenCV's own performance
   1.0.5. Multithreading disabled to isolate RVV 1.0 core capability.
 metrics:
 - performance uplift (mean)
-needs_summary_revision: false
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.7
   claim_density: 0.8

@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - 1+8 RISC-V cores (fabric controller + 8 compute cores)
 - four-level memory hierarchy with scratchpad memories instead of caches
@@ -10,6 +10,7 @@ created: '2024-02-19'
 hardware_targets:
 - GAP8 (PULP platform)
 inbound_links: 2
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.8
   claim_density: 0.7

@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - Requires LLM with coding capability
 - Requires test suite for compile-and-test feedback
@@ -11,6 +11,7 @@ hardware_targets:
 inbound_links: 0
 metrics:
 - performance speedup
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.6
   claim_density: 0.7

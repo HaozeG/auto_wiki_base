@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 created: '2026-07-02'
 datatypes: []
 evidence_strength: measured
@@ -14,7 +14,7 @@ measurement_method: Peak throughput measured at 100 MHz clock on Xilinx ZCU102 F
   default hand-tuned schedules.
 metrics:
 - throughput (GOPs)
-needs_summary_revision: false
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.6
   claim_density: 0.8

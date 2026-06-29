@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - 9-stage dual-issue in-order pipeline
 - RV64GCB[V]
@@ -15,6 +15,7 @@ created: '2025-03-05'
 hardware_targets:
 - XuanTie C908
 inbound_links: 2
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.7
   claim_density: 0.9
@@ -47,9 +48,11 @@ The XuanTie C908 is a 64-bit RISC-V processor core designed by T-Head Semiconduc
 - Dynamic power consumption of 52.8 mW/GHz per core on TSMC 12nm process.
 - Energy efficiency improvement >20% over C906 under same frequency and process.
 - RISC-V Vector Extension 1.0 acceleration yields 2–3.5x speedup over C906 for AI workloads (wake word detection, image classification, keyword spotting, anomaly detection) using INT4 data type in MLPerf Tiny v0.7.
-- Supports RV32 COMPAT mode for 32-bit binary execution on 64-bit cores.
+- Supports RV32 COMPAT mode for 32-bit binary execution on 64-bit cores (first in industry per T-Head; merged into Linux mainline from v5.19).
 - Bus interface: AXI4/ACE with optional DCP and LLP interfaces.
 - ePMP with up to 64 regions; PLIC configurable up to 1023 interrupt sources.
+- Optional vector unit supports BF16 operations in addition to RVV 1.0 and INT4; released 2022 targeting AIoT applications including AR/VR, intelligent interaction, and image/video processing.
+- T-Head Semiconductor is a subsidiary of Alibaba Group.
 
 ## Optimization-Relevant Details
 
@@ -61,9 +64,11 @@ The XuanTie C908 is a 64-bit RISC-V processor core designed by T-Head Semiconduc
 ## Relationships
 
 - [[XuanTie_C906]] – The predecessor core that the C908 outperforms by 24–64% in benchmarks.
+- [[XuanTie_C908_SHL_GEMM_Optimization]] – GEMM optimization recipe targeting this core using the SHL library.
 - [[T-HEAD_C910_SPEC_CPU_Benchmark]] – The higher-end XuanTie C910 core with out-of-order pipeline, for comparison.
 - [[SiFive_Intelligence_X390]] – A competing RISC-V AI core with vector extensions and similar target applications.
 
 ## Sources
 
 - [CNX Software: T-Head XuanTie C908 RISC-V core targets AIoT applications](https://www.cnx-software.com/2022/11/04/t-head-xuantie-c908-risc-v-core-targets-aiot-applications/)
+- [RISC-V International Blog: XuanTie C908 High-performance RISC-V Processor Catered to AIoT Industry](https://riscv.org/blog/xuantie-c908-high-performance-risc-v-processor-catered-to-aiot-industry-chang-liu-alibaba-cloud/)

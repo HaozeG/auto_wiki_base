@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - scratchpad memory hierarchy requiring explicit DMA transfers
 - 1+8 core heterogeneous architecture
@@ -17,6 +17,7 @@ metrics:
 - bandwidth
 - power
 - energy
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.8
   claim_density: 0.7

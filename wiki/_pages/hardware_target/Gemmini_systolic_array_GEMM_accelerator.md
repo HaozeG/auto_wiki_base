@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - Configurable 2-level systolic array hierarchy (tileRows, tileColumns, meshRows,
   meshColumns)
@@ -13,7 +13,8 @@ constraints:
 created: '2025-03-04'
 hardware_targets:
 - Gemmini (systolic array GEMM accelerator)
-inbound_links: 7
+inbound_links: 8
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.7
   claim_density: 0.8
@@ -59,10 +60,17 @@ Gemmini is a systolic-array-based matrix multiplication (GEMM) unit generator de
 - Memory/cache/TLB/DMA: Connects via System Bus to L2 cache; DMA engine with configurable max bytes and bus width; closely tied to cache block size and bus parameters.
 - Compiler/toolchain support: GNU binutils (custom instructions not directly exposed; C macros provided to encode instructions).
 
+## Ecosystem and Simulation
+
+Gemmini is developed at UC Berkeley as part of the Chipyard SoC construction framework and is implemented in the Chisel hardware description language. It supports simulation through Verilator, VCS, and FireSim (FPGA-accelerated RTL simulation), enabling rapid design-space exploration. A functional simulator is available via Spike. Gemmini includes hardware performance counters for profiling workloads and can run full DNN models such as ResNet-50 on cycle-accurate simulators. Tutorial materials from MLSys 2022 and IISWC 2021 cover building diverse accelerators and adding custom datatypes to the generator.
+
 ## Relationships
 
-- [[GEMM_with_RISC-V_Vector_Extension]] – Both implement GEMM on RISC-V but using different approaches: a dedicated systolic array accelerator (Gemmini) versus a vector extension kernel. (Insufficient context for additional cross-links)
+- [[GEMM_with_RISC-V_Vector_Extension]] – Both implement GEMM on RISC-V but using different approaches: a dedicated systolic array accelerator (Gemmini) versus a vector extension kernel.
+- [[TVM_and_Gemmini_Accelerator_Benchmark_Results]] – Benchmark results for this accelerator integrated with TVM.
+- [[Sipeed_MAIX_series]] – Another RISC-V platform targeting edge AI; contrasts dedicated accelerator (Gemmini) with general-purpose RISC-V approach.
 
 ## Sources
 
 - [Gemmini – Chipyard documentation](https://chipyard.readthedocs.io/en/1.1.0/Generators/Gemmini.html)
+- [GitHub: Gemmini README](https://github.com/ucb-bar/gemmini/blob/master/README.md)

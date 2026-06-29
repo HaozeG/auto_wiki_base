@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - 50 MHz clock
 - 5-stage in-order pipeline
@@ -14,6 +14,7 @@ hardware_targets:
 - PYNQ-Z2 (Xilinx Zynq-7020)
 - Custom RISC-V core (RV32IM + custom-0 space)
 inbound_links: 2
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.8
   claim_density: 0.9

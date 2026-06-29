@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - RVA22 profile
 - RISC-V 64GCVB
@@ -10,6 +10,7 @@ created: '2026-07-10'
 hardware_targets:
 - SpacemiT KeyStone K1
 inbound_links: 1
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.3
   claim_density: 0.5

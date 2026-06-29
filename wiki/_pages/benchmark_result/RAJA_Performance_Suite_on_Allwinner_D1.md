@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 created: '2025-03-05'
 datatypes: []
 evidence_strength: measured
@@ -12,7 +12,7 @@ measurement_method: Benchmarks executed on the Allwinner D1 board using vendor-p
   compiler, comparing vectorised vs. scalar execution to measure speedup.
 metrics:
 - vectorisation speedup
-needs_summary_revision: false
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.6
   claim_density: 0.6

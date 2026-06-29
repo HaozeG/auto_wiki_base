@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 created: '2026-07-02'
 datatypes:
 - FP32
@@ -18,7 +18,7 @@ metrics:
 - inference time
 - model size
 - mAP50-95
-needs_summary_revision: false
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.7
   claim_density: 0.8

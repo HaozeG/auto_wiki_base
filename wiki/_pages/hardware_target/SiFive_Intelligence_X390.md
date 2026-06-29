@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - 8-stage dual-issue in-order pipeline
 - 512-bit vector register length
@@ -12,6 +12,7 @@ created: YYYY-MM-DD
 hardware_targets:
 - SiFive Intelligence X390
 inbound_links: 6
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.5
   claim_density: 0.5

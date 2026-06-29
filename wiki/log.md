@@ -241,6 +241,22 @@ pages_at_transition: 91
 mean_inbound_links: 2.033
 
 ## [2026-06-29] lint | retrospective
-issues_found: 60
-actions_taken: [wrote retrospective_lint_report.md, synthesis pages eval-approved]
-deferred_for_human: [42 orphan pages, 17 needs_summary_revision pages, 5 merge candidates, 1 off-topic benchmark, 1 RVV version contradiction]
+issues_found: 23
+actions_taken: [ran eval_summary.py on all 91 cold_start pages (all exit 0), set cold_start: false on 76 CLEARED pages, wrote wiki/retrospective_lint_report.md]
+deferred_for_human: [7 merge clusters (15 pages), 1 restructure candidate (Chiplet_RISC_V_AI_SoC_Architecture), 2 synthesis orphans needing inbound links, systemic needs_summary_revision flag to bulk-clear]
+
+## [2026-06-29] lint | apply
+actions_taken:
+  - Merged MLPerf Tiny cluster (3 → 1): MLPerf_Tiny_Benchmark.md absorbs v1.1 data and GitHub source; deleted MLPerf_Tiny.md and MLPerf_Tiny_v1.1.md
+  - Merged Kendryte K230 cluster (3 → 1): Kendryte_K230_SoC.md absorbs SDK/board details; deleted entity/Kendryte_K230.md and hardware_target/Kendryte_K230.md
+  - Merged Gemmini entity (1 → 0): entity/Gemmini.md absorbed into Gemmini_systolic_array_GEMM_accelerator.md (UCB context, Chisel, FireSim, tutorials); deleted entity/Gemmini.md
+  - Merged XuanTie C910 duplicate: T-HEAD_XuanTie_C910.md absorbed into XuanTie_C910.md (XIE/XMAE, Coremark, DMIPS, JTAG, power discrepancy note); deleted T-HEAD_XuanTie_C910.md
+  - Merged XuanTie C908 entity: entity/XuanTie_C908.md absorbed into hardware_target/XuanTie_C908.md (AIoT context, BF16, Linux 5.19 merge, Alibaba); deleted entity/XuanTie_C908.md
+  - Merged FPGA ISA Extensions Recipe (3 → 1): absorbed into FPGA_Accelerated_RISC-V_CNN_ISA_Extensions_Recipe.md (INT8 accuracy failure mode, new relationships); deleted FPGA_Accelerated_RISC_V_ISA_Extensions_Optimization_Recipe.md and FPGA_RISC-V_ISA_Extensions_Optimization_Recipe.md
+  - Merged FPGA ISA Extensions Benchmark (2 → 1): absorbed into FPGA_RISC-V_ISA_Extensions_Benchmark_Results.md; deleted FPGA_Accelerated_RISC_V_ISA_Extensions_Benchmark_Results.md
+  - Restructured Chiplet_RISC_V_AI_SoC_Architecture.md (bridge_score=0.8): created synthesis/Chiplet_RISC_V_AI_Landscape.md comparing chiplet vs monolithic vs tightly-coupled RISC-V AI approaches
+  - Updated inbound_links on 12 affected pages
+  - Set retrospective_lint_done: true in CLAUDE.md
+  - mean_inbound_links updated to 2.232 (82 pages)
+pages_deleted: [entity/MLPerf_Tiny.md, entity/MLPerf_Tiny_v1.1.md, entity/Kendryte_K230.md, hardware_target/Kendryte_K230.md, entity/Gemmini.md, hardware_target/T-HEAD_XuanTie_C910.md, entity/XuanTie_C908.md, optimization_recipe/FPGA_Accelerated_RISC_V_ISA_Extensions_Optimization_Recipe.md, optimization_recipe/FPGA_RISC-V_ISA_Extensions_Optimization_Recipe.md, benchmark_result/FPGA_Accelerated_RISC_V_ISA_Extensions_Benchmark_Results.md]
+pages_created: [synthesis/Chiplet_RISC_V_AI_Landscape.md]

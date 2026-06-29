@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - 64-core RISC-V
 - rv64imafdcv
@@ -11,6 +11,7 @@ created: '2025-11-10'
 hardware_targets:
 - MilkV Pioneer
 inbound_links: 3
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.8
   claim_density: 0.7

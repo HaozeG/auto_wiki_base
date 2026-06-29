@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - RVV 1.0
 - INT8/INT16
@@ -14,7 +14,8 @@ constraints:
 created: '2025-03-25'
 hardware_targets:
 - K230
-inbound_links: 1
+inbound_links: 3
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.5
   claim_density: 0.85
@@ -23,11 +24,14 @@ scorecard:
   self_containedness: 0.95
 sources:
 - https://www.kendryte.com/en/proDetail/230
+- https://github.com/kendryte/k230_sdk
 tags:
 - RISC-V
 - AIoT
 - Kendryte
 - K230
+- AIoT
+- SDK
 toolchains:
 - CanMV (Micropython)
 - RT-Smart SDK
@@ -52,12 +56,17 @@ The Kendryte K230 is a RISC-V-based AIoT (Artificial Intelligence of Things) sys
 - Multiple SDKs: CanMV (Micropython), RT-Smart, Linux, and Linux+RT-Smart dual-core.
 - Claims 13.7x reasoning capability compared to K210 under typical networks.
 
+## Development Boards and SDK
+
+The official SDK (`k230_sdk`) is hosted on GitHub and supports two reference development boards: the K230-USIP-LP3-EVB (with LPDDR3 512 MB, 32 Mbit QSPI NOR Flash, 4 GB eMMC, MIPI CSI/DSI, and FT2232 debug) and the CanMV-K230 (with HDMI, Ethernet, WiFi/BT, OV5647 sensor interface). SDK compilation uses a Docker image (`ghcr.io/kendryte/k230_sdk`); pre-compiled images are available from the Kendryte developer community. Board-specific build configs include `k230_evb_defconfig` and `k230_canmv_defconfig`. The SDK source layout places dual-core sources under `src/big` (RT-Smart), `src/little` (Linux), and `src/common`.
+
 ## Relationships
 
+- [[Sipeed_MAIX_series]] – Prior-generation platform based on the Kendryte K210; the K230 claims 13.7× reasoning improvement over K210.
 - [[Chiplet_RISC_V_AI_SoC_Benchmark_Results]] – Benchmark results for a different RISC-V AI SoC, providing context for comparison with the K230's claimed performance.
 - [[DSC_Fused_Dataflow_Benchmark_Results]] – Benchmark results for a RISC-V-based TinyML accelerator using Depthwise Separable Convolutions, related to the edge AI application space of the K230.
-- Insufficient context for additional cross-links to entity pages in the available wiki context.
 
 ## Sources
 
 - [K230 product page – Kendryte](https://www.kendryte.com/en/proDetail/230)
+- [Kendryte K230 SDK GitHub Repository](https://github.com/kendryte/k230_sdk)

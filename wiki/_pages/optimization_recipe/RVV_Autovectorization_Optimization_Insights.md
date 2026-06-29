@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - RVV 1.0 VLA model
 - predication masks
@@ -15,6 +15,7 @@ inbound_links: 5
 metrics:
 - throughput
 - vector utilization
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.8
   claim_density: 0.8

@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - 5-stage in-order pipeline
 - 4KB I-cache and D-cache
@@ -14,12 +14,13 @@ evidence_strength: measured
 hardware_targets:
 - PYNQ-Z2 (Xilinx Zynq-7020)
 - Custom RISC-V core (RV32IM + custom-0 space)
-inbound_links: 1
+inbound_links: 3
 metrics:
 - latency speedup
 - energy reduction
 - resource utilization
 - timing slack
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.8
   claim_density: 0.9
@@ -78,16 +79,19 @@ This optimization recipe describes the design and implementation of four custom 
   6. Build complete embedded system on PYNQ-Z2, synthesize, implement, and deploy.
   7. Measure inference latency, energy, and resource usage against ARM baseline.
 - **Expected effect:** Average 2.14x latency speedup and 49.1% energy reduction over optimized ARM software baseline for CNN inference. Individual kernel speedups: 7.20x (3x3 conv), 4.20x (GEMM), 3.00x (activation).
-- **Failure modes:** Not specified. Potential bottlenecks include DMA transfer overhead, limited FPGA resource, and memory bandwidth contention. The paper notes that memory bandwidth and DMA overhead limit attainable speedup.
+- **Failure modes:** Memory bandwidth and DMA overhead are the primary bottlenecks that limit maximum attainable speedup. Resource exhaustion on smaller FPGAs prevents portability. Applying INT8 quantization may introduce accuracy degradation (accuracy impact not measured in the paper).
 - **Measurements:** All metrics obtained from physical hardware on PYNQ-Z2 at 50 MHz. Resource usage: 0.43% LUTs, 11.4% BRAM for base core; 38.8% DSPs when accelerators active. Timing closed with +12.793 ns slack.
 
 ## Relationships
 
+- [[Custom_RISC-V_Core_PYNQ-Z2]] – The hardware target implementing this recipe.
 - [[PYNQ-Z2_RISC-V_CNN_ISA_Extensions_Benchmark]] – The benchmark result page for the same design, providing detailed measurement context.
+- [[FPGA_RISC-V_ISA_Extensions_Benchmark_Results]] – Detailed benchmark measurements for this system.
 - [[DSC_Fused_Dataflow_Optimization_Recipe]] – Another RISC-V-based CNN acceleration recipe using CFU, contrasting custom ISA vs. custom function unit approach.
 - [[GEMM_with_RISC-V_Vector_Extension]] – A general-purpose RISC-V vector GEMM kernel; this recipe uses custom instructions instead of standard vector extension.
 
 ## Sources
 
 - [arXiv:2511.06955](https://arxiv.org/abs/2511.06955)
+- [arXiv HTML version](https://arxiv.org/html/2511.06955v1)
 

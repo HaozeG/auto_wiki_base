@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 created: '2023-12-31'
 datatypes: []
 evidence_strength: measured
@@ -9,7 +9,7 @@ hardware_targets:
 hardware_versions:
 - T-HEAD C910 in TH1520 SoC
 - Lichee Module 4A
-inbound_links: 17
+inbound_links: 14
 measurement_method: SPEC CPU benchmark suite run on the board at 2GHz frequency with
   specified toolchains.
 metrics:

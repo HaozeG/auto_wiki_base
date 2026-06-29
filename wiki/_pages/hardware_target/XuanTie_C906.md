@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - RVV v0.7.1
 - minimum VLEN 128 bits (per RVV v0.7.1)
@@ -8,6 +8,7 @@ hardware_targets:
 - XuanTie C906
 - Allwinner D1
 inbound_links: 4
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.6
   claim_density: 0.6

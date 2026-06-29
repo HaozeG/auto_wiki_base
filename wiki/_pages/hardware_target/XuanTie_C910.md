@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - 3-wide out-of-order superscalar
 - 12-stage pipeline
@@ -26,6 +26,7 @@ hardware_targets:
 - TH1520
 - LicheePi
 inbound_links: 3
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.7
   claim_density: 0.8
@@ -68,6 +69,10 @@ The XuanTie C910 is a 3-wide out-of-order RISC-V processor core designed by T-HE
 - Core voltage scaling: 0.8V at 2 GHz, 1.0V at 2.5 GHz.
 - L2 cache: 1 MB shared across quad-core cluster in TH1520.
 - RVV 0.7.1 support with masking and variable vector length; C920 later moves to RVV 1.0.
+- Custom extensions: XIE (XuanTie Instruction Extension) and XMAE (XuanTie Memory Attributes Extension) for PTE-level memory attributes.
+- PLIC: up to 1023 interrupt sources, 32 priority levels, 8 targets; standard CLINT included.
+- JTAG debug: multi-core, software breakpoints, register access supported.
+- Published integer benchmark scores from vendor: 6 DMIPS/MHz (O2 compilation), 7 Coremark/MHz (O3 compilation). Note: a second source reports 200 µW/MHz dynamic power and 1.137 mm² (MP2) / 0.398 mm² (core) area, conflicting with the 100 µW/MHz and 0.8 mm² values from Chips and Cheese microarchitectural analysis.
 
 ## Optimization-Relevant Details
 

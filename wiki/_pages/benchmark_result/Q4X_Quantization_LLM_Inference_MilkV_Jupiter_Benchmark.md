@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 created: '2025-03-04'
 datatypes:
 - int4 (codebook Q4X)
@@ -18,7 +18,7 @@ metrics:
 - perplexity
 - file size
 - bits per weight (BPW)
-needs_summary_revision: false
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.7
   claim_density: 0.8

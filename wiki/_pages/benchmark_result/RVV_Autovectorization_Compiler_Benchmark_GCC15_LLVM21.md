@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 created: '2026-07-01'
 datatypes:
 - single-precision (f32)
@@ -18,7 +18,7 @@ metrics:
 - throughput (instructions/cycle)
 - overhead percentage
 - speedup factor
-needs_summary_revision: false
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.8
   claim_density: 0.8

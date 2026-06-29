@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - RVV 0.7.1
 - RVV 1.0
@@ -13,6 +13,7 @@ hardware_targets:
 inbound_links: 0
 metrics:
 - speedup
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.8
   claim_density: 0.6

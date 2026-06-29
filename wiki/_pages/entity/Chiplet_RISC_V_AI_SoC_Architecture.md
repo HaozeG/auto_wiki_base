@@ -1,8 +1,8 @@
 ---
-cold_start: true
+cold_start: false
 created: '2025-03-25'
-inbound_links: 2
-needs_summary_revision: false
+inbound_links: 3
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.8
   claim_density: 0.8
@@ -35,10 +35,10 @@ The Chiplet-Based RISC-V SoC with Modular AI Acceleration is a novel architectur
 
 ## Relationships
 
-- [[DSC_Fused_Dataflow_Benchmark_Results]] – This benchmark result for a different RISC-V AI accelerator provides contrast in measurement methodology and performance targets.
 - [[Chiplet_RISC_V_AI_SoC_Benchmark_Results]] – Detailed benchmark results of this architecture.
-
-Insufficient context for additional entity cross-links.
+- [[Chiplet_RISC_V_AI_Landscape]] – Synthesis page comparing this chiplet architecture against monolithic edge SoC and tightly-coupled accelerator approaches.
+- [[DSC_Fused_Dataflow_Benchmark_Results]] – A contrasting edge AI accelerator that minimizes off-chip memory access rather than maximizing peak compute.
+- [[Kendryte_K230_SoC]] – A monolithic RISC-V AI SoC representing the integration trade-off alternative to chiplet designs.
 
 ## Sources
 

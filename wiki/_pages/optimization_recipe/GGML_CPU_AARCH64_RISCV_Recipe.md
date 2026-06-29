@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - RISC-V with vector extensions (v)
 - 64-core CPU
@@ -15,6 +15,7 @@ hardware_targets:
 - MilkV Pioneer
 inbound_links: 0
 metrics: []
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.8
   claim_density: 0.7

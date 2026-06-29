@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - zero intermediate buffer
 - pixel-wise streaming
@@ -13,6 +13,7 @@ inbound_links: 4
 metrics:
 - data movement reduction
 - speedup
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.6
   claim_density: 0.9

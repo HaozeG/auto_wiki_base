@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - VLEN128/256
 - instruction fusion
@@ -13,9 +13,10 @@ datatypes:
 evidence_strength: reported
 hardware_targets:
 - XuanTie C908
-inbound_links: 6
+inbound_links: 7
 metrics:
 - speedup
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.6
   claim_density: 0.9

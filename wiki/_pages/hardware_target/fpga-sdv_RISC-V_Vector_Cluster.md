@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - 50 MHz
 - rvv0.7
@@ -8,7 +8,8 @@ constraints:
 created: '2025-03-04'
 hardware_targets:
 - fpga-sdv cluster
-inbound_links: 9
+inbound_links: 8
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.8
   claim_density: 0.8

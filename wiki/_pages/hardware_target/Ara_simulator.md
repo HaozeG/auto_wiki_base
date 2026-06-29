@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - Simulated hardware
 - Long VLEN (default 4096-bit)
@@ -9,6 +9,7 @@ hardware_targets:
 - Ara
 - RISC-V Vector Extension v1.0
 inbound_links: 1
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.7
   claim_density: 0.8

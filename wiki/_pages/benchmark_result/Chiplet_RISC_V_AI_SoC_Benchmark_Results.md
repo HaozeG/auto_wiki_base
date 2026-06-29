@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 created: '2025-03-25'
 datatypes:
 - INT8
@@ -10,7 +10,7 @@ hardware_targets:
 hardware_versions:
 - 7nm RISC-V CPU chiplet
 - 5nm AI accelerator (15 TOPS INT8)
-inbound_links: 5
+inbound_links: 6
 measurement_method: Experimental results across industry standard benchmarks (MobileNetV2,
   ResNet-50, real-time video) compared to previous basic chiplet implementations.
 metrics:
@@ -19,7 +19,7 @@ metrics:
 - power
 - energy
 - efficiency
-needs_summary_revision: false
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.8
   claim_density: 0.8

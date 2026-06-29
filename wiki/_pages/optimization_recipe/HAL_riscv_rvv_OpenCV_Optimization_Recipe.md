@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - RVV 1.0
 - 256-bit vector length
@@ -12,6 +12,7 @@ hardware_targets:
 inbound_links: 4
 metrics:
 - performance uplift (mean)
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.7
   claim_density: 0.8

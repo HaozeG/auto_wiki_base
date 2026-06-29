@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - Configurable dataflow (output-stationary, weight-stationary, runtime-selectable)
 - 'Datatypes: int8, int16, int32, float'
@@ -13,6 +13,7 @@ hardware_targets:
 - TSMC 16nm FinFET (fabricated)
 - Intel 22nm FFL (fabricated)
 inbound_links: 3
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.8
   claim_density: 0.9

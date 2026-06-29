@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - 8-stage dual-issue in-order pipeline
 - 512-bit vector register length (256-bit DLEN)
@@ -16,6 +16,7 @@ created: '2025-03-25'
 hardware_targets:
 - SiFive Intelligence X280 Gen 2
 inbound_links: 0
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.5
   claim_density: 0.6

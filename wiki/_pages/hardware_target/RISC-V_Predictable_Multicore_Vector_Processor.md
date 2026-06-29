@@ -1,5 +1,5 @@
 ---
-cold_start: true
+cold_start: false
 constraints:
 - Local scratchpad memories per core
 - Static compile-time schedule for shared memory access
@@ -9,6 +9,7 @@ created: YYYY-MM-DD
 hardware_targets:
 - Custom RISC-V multicore vector processor with Vicuna co-processor
 inbound_links: 0
+needs_summary_revision: true
 scorecard:
   bridge_score: 0.6
   claim_density: 0.7
