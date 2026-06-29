@@ -1,5 +1,12 @@
 # Wiki Log
 
+## [2026-06-29] ingest | riscv_matrix_extension_proposal.pdf
+pages_created: [entity/RISC-V_Matrix_Extension.md]
+pages_updated: []
+pages_deferred: []
+cold_start: true
+inbound_link_updates: [RISC-V_Vector_Extension.md +1, GEMM_with_RISC-V_Vector_Extension.md +1]
+
 ## [2026-06-28] setup | theme — RISC-V AI Accelerator
 branch: test/riscv-ai-accelerator-2026-06-28
 organization: workflow_first

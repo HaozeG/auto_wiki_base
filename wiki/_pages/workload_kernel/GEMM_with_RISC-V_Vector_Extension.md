@@ -1,5 +1,6 @@
 ---
 cold_start: false
+inbound_links: 1
 constraints:
 - Arbitrary matrix sizes (M, N, K)
 - No transpose, alpha, or beta support (initial implementation)

@@ -4,12 +4,13 @@
 
 **Organization**: Workflow-first — pages are typed as `hardware_target`, `workload_kernel`, `optimization_recipe`, `benchmark_result`, `entity`, or `synthesis`.
 
-Last updated: 2026-06-29 | Pages: 91 | Sources: 0
+Last updated: 2026-06-29 | Pages: 92 | Sources: 0
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [RISC-V_Matrix_Extension.md](entity/RISC-V_Matrix_Extension.md) | RISC-V Matrix Extension (RVM) draft ISA — tile registers, accumulation registers, mfmacc/mmacc GEMM instructions | RISC-V, matrix extension, ISA, GEMM, AI accelerator, RVM | 1 | 0 |
 | [APS_Framework.md](entity/APS_Framework.md) | APS Framework | RISC-V, MLIR, hardware-software co-design, processor specialization, EDA | 1 | 0 |
 | [SpacemiT.md](entity/SpacemiT.md) | SpacemiT | SpacemiT, RISC-V, AI accelerator, K1, K3 | 1 | 0 |
 | [Sipeed.md](entity/Sipeed.md) | Sipeed | Sipeed, RISC-V, AI, FPGA, SBC, development_board | 1 | 0 |
