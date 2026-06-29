@@ -12,7 +12,7 @@ constraints:
 created: '2025-09-01'
 hardware_targets:
 - Tenstorrent Wormhole n300
-inbound_links: 3
+inbound_links: 4
 scorecard:
   bridge_score: 0.7
   claim_density: 0.7

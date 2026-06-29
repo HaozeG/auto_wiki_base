@@ -11,7 +11,7 @@ datatypes: []
 evidence_strength: reported
 hardware_targets:
 - Tenstorrent Wormhole n150
-inbound_links: 0
+inbound_links: 1
 metrics:
 - speedup
 scorecard:

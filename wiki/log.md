@@ -1,5 +1,9 @@
 # Wiki Log
 
+## [2026-06-29] query_synthesis | Tenstorrent RISC-V AI Ecosystem
+source_query: synthesis gap — 6 Tenstorrent-tagged entity pages without synthesis coverage
+pages_created: [synthesis/Tenstorrent_RISC-V_AI_Ecosystem.md]
+
 ## [2026-06-29] ingest | RVME_An_Efficient_Matrix_Engine_Design_Based_on_Matrix_Extension_of_RISC-V.pdf
 pages_created: [hardware_target/RVME_Matrix_Engine.md, benchmark_result/RVME_GEMM_Benchmark.md]
 pages_updated: []

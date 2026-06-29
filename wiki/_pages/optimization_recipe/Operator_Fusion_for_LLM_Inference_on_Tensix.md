@@ -9,7 +9,7 @@ datatypes: []
 evidence_strength: reported
 hardware_targets:
 - Tenstorrent Wormhole n300
-inbound_links: 0
+inbound_links: 1
 metrics:
 - latency reduction
 - Pearson Correlation Coefficient
