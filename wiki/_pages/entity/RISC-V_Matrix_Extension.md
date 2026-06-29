@@ -12,7 +12,7 @@ sources:
 created: 2026-06-29
 updated: 2026-06-29
 cold_start: true
-inbound_links: 2
+inbound_links: 3
 scorecard:
   novelty_delta: 0.95
   claim_density: 0.9

@@ -1,5 +1,9 @@
 # Wiki Log
 
+## [2026-06-29] query_synthesis | RISC-V ISA Extensions for AI Acceleration
+source_query: synthesis gap — 18 RISC-V-tagged entity pages without synthesis coverage
+pages_created: [synthesis/RISC-V_ISA_Extensions_for_AI.md]
+
 ## [2026-06-29] query_synthesis | MLIR for RISC-V AI Compilation
 source_query: synthesis gap — 4 MLIR-tagged entity pages without synthesis coverage
 pages_created: [synthesis/MLIR_for_RISC-V_AI_Compilation.md]

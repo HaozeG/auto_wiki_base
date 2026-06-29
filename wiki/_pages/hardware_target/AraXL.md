@@ -12,7 +12,7 @@ constraints:
 created: '2025-07-15'
 hardware_targets:
 - AraXL
-inbound_links: 0
+inbound_links: 1
 scorecard:
   bridge_score: 0.6
   claim_density: 0.8

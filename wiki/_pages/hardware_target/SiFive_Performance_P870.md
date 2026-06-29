@@ -15,7 +15,7 @@ constraints:
 created: YYYY-MM-DD
 hardware_targets:
 - SiFive Performance P870
-inbound_links: 1
+inbound_links: 2
 needs_summary_revision: true
 scorecard:
   bridge_score: 0.5

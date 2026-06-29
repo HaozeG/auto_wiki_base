@@ -7,7 +7,7 @@ datatypes: []
 evidence_strength: reported
 hardware_targets:
 - RISC-V Vector Extension 1.0 (RVV 1.0)
-inbound_links: 0
+inbound_links: 1
 metrics:
 - area reduction
 - power reduction

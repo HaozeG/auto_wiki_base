@@ -7,7 +7,7 @@ constraints:
 created: '2026-07-14'
 hardware_targets:
 - RISC-V Packed-SIMD (RVP v0.9.11)
-inbound_links: 0
+inbound_links: 1
 scorecard:
   bridge_score: 0.7
   claim_density: 0.4
