@@ -10,7 +10,7 @@ datatypes:
 evidence_strength: reported
 hardware_targets:
 - GAP8 (PULP platform)
-inbound_links: 2
+inbound_links: 3
 metrics:
 - latency
 - throughput

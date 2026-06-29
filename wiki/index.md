@@ -4,12 +4,17 @@
 
 **Organization**: Workflow-first — pages are typed as `hardware_target`, `workload_kernel`, `optimization_recipe`, `benchmark_result`, `entity`, or `synthesis`.
 
-Last updated: 2026-06-29 | Pages: 94 | Sources: 0
+Last updated: 2026-06-29 | Pages: 92 | Sources: 0
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [TT_Metalium.md](entity/TT_Metalium.md) | TT-Metalium | Tenstorrent, TT-Metalium, low-level programming, kernel development, AI accelerator | 1 | 0 |
+| [MLPerf_Training_Reference_Implementations.md](entity/MLPerf_Training_Reference_Implementations.md) | MLPerf Training Reference Implementations | MLPerf, training benchmark, reference implementation, MLCommons | 1 | 0 |
+| [MLPerf_Inference_Benchmark_Suite.md](entity/MLPerf_Inference_Benchmark_Suite.md) | MLPerf® Inference Benchmark Suite | MLPerf, inference, benchmark, RISC-V AI accelerator | 1 | 0 |
+| [MLPerf_Inference_Benchmarks.md](entity/MLPerf_Inference_Benchmarks.md) | MLPerf Inference Benchmarks | benchmark, MLPerf, MLCommons, inference, RISC-V AI accelerator | 1 | 0 |
+| [Tenstorrent.md](entity/Tenstorrent.md) | Tenstorrent | RISC-V, Tenstorrent, AI, IP, semiconductor, licensing | 1 | 0 |
 | [RISC-V_Matrix_Extension.md](entity/RISC-V_Matrix_Extension.md) | RISC-V Matrix Extension (RVM) draft ISA — tile registers, accumulation registers, mfmacc/mmacc GEMM instructions | RISC-V, matrix extension, ISA, GEMM, AI accelerator, RVM | 1 | 0 |
 | [APS_Framework.md](entity/APS_Framework.md) | APS Framework | RISC-V, MLIR, hardware-software co-design, processor specialization, EDA | 1 | 0 |
 | [SpacemiT.md](entity/SpacemiT.md) | SpacemiT | SpacemiT, RISC-V, AI accelerator, K1, K3 | 1 | 0 |
@@ -57,6 +62,8 @@ Last updated: 2026-06-29 | Pages: 94 | Sources: 0
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [Wormhole_Tensix_Processor.md](hardware_target/Wormhole_Tensix_Processor.md) | hardware_target | Wormhole Tensix Processor | Tenstorrent, Wormhole, Tensix, RISC-V, AI accelerator | 1 | 0 |
+| [Blackhole_Tensix_Processor.md](hardware_target/Blackhole_Tensix_Processor.md) | hardware_target | Blackhole Tensix Processor | Tenstorrent, Blackhole, Tensix, RISC-V, AI accelerator | 1 | 0 |
 | [FPGA_RISC-V_ISA_Extensions_Optimization_Recipe.md](optimization_recipe/FPGA_RISC-V_ISA_Extensions_Optimization_Recipe.md) | optimization_recipe | FPGA RISC-V ISA Extensions Optimization Recipe | RISC-V, FPGA, PYNQ-Z2, custom ISA, neural network inference, edge AI | 1 | 0 |
 | [FPGA_RISC-V_ISA_Extensions_Benchmark_Results.md](benchmark_result/FPGA_RISC-V_ISA_Extensions_Benchmark_Results.md) | benchmark_result | FPGA RISC-V ISA Extensions Benchmark Results | RISC-V, FPGA, PYNQ-Z2, neural network inference, edge AI | 1 | 0 |
 | [Custom_RISC-V_Core_PYNQ-Z2.md](hardware_target/Custom_RISC-V_Core_PYNQ-Z2.md) | hardware_target | Custom RISC-V Core PYNQ-Z2 | RISC-V, FPGA, PYNQ-Z2, custom ISA, edge AI | 1 | 0 |

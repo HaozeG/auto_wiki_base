@@ -274,3 +274,19 @@ actions_taken:
   - mean_inbound_links updated to 2.232 (82 pages)
 pages_deleted: [entity/MLPerf_Tiny.md, entity/MLPerf_Tiny_v1.1.md, entity/Kendryte_K230.md, hardware_target/Kendryte_K230.md, entity/Gemmini.md, hardware_target/T-HEAD_XuanTie_C910.md, entity/XuanTie_C908.md, optimization_recipe/FPGA_Accelerated_RISC_V_ISA_Extensions_Optimization_Recipe.md, optimization_recipe/FPGA_RISC-V_ISA_Extensions_Optimization_Recipe.md, benchmark_result/FPGA_Accelerated_RISC_V_ISA_Extensions_Benchmark_Results.md]
 pages_created: [synthesis/Chiplet_RISC_V_AI_Landscape.md]
+
+## [2026-06-29] research | Tenstorrent RISC-V AI accelerator hardware software
+session_id: 5d4b487e
+candidates_evaluated: 0
+pages_written: 0
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_5d4b487e_2026-06-29.json
+theme_profile: RISC-V ai accelerator | workflow_first
+
+## [2026-06-29] research | Tenstorrent RISC-V AI accelerator hardware software
+session_id: 473e371a
+candidates_evaluated: 18
+pages_written: 7
+pipeline_rejection_rate: 17%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_473e371a_2026-06-29.json
+theme_profile: RISC-V ai accelerator | workflow_first

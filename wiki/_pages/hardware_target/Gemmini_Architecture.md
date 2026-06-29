@@ -12,7 +12,7 @@ hardware_targets:
 - Gemmini (hardware generator)
 - TSMC 16nm FinFET (fabricated)
 - Intel 22nm FFL (fabricated)
-inbound_links: 5
+inbound_links: 6
 needs_summary_revision: true
 scorecard:
   bridge_score: 0.8
