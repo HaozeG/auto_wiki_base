@@ -4,12 +4,13 @@
 
 **Organization**: Workflow-first — pages are typed as `hardware_target`, `workload_kernel`, `optimization_recipe`, `benchmark_result`, `entity`, or `synthesis`.
 
-Last updated: 2026-06-29 | Pages: 92 | Sources: 0
+Last updated: 2026-06-29 | Pages: 102 | Sources: 0
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [tt-awesome.md](entity/tt-awesome.md) | tt-awesome | tenstorrent, awesome-list, community | 1 | 0 |
 | [TT_Metalium.md](entity/TT_Metalium.md) | TT-Metalium | Tenstorrent, TT-Metalium, low-level programming, kernel development, AI accelerator | 1 | 0 |
 | [MLPerf_Training_Reference_Implementations.md](entity/MLPerf_Training_Reference_Implementations.md) | MLPerf Training Reference Implementations | MLPerf, training benchmark, reference implementation, MLCommons | 1 | 0 |
 | [MLPerf_Inference_Benchmark_Suite.md](entity/MLPerf_Inference_Benchmark_Suite.md) | MLPerf® Inference Benchmark Suite | MLPerf, inference, benchmark, RISC-V AI accelerator | 1 | 0 |
@@ -62,6 +63,15 @@ Last updated: 2026-06-29 | Pages: 92 | Sources: 0
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [Blackhole_Architecture.md](hardware_target/Blackhole_Architecture.md) | hardware_target | Blackhole Architecture | Tenstorrent, Blackhole, AI accelerator, RISC-V, Tensix, Ethernet | 1 | 0 |
+| [Tenstorrent_Grayskull_MatMul_Efficiency.md](benchmark_result/Tenstorrent_Grayskull_MatMul_Efficiency.md) | benchmark_result | Tenstorrent Grayskull MatMul Efficiency | RISC-V, Tenstorrent, Grayskull, MatMul, efficiency | 2 | 0 |
+| [Grayskull_SRAM_Attention_Benchmarks.md](benchmark_result/Grayskull_SRAM_Attention_Benchmarks.md) | benchmark_result | Grayskull SRAM Attention Benchmarks | Tenstorrent, Grayskull, attention, Softmax, SRAM, speedup | 1 | 0 |
+| [Grayskull_SRAM_Fused_Attention_Kernel.md](optimization_recipe/Grayskull_SRAM_Fused_Attention_Kernel.md) | optimization_recipe | Grayskull SRAM Fused Attention Kernel | Tenstorrent, Grayskull, attention, Softmax, SRAM, fusion | 1 | 0 |
+| [Tenstorrent_Grayskull_e150.md](hardware_target/Tenstorrent_Grayskull_e150.md) | hardware_target | Tenstorrent Grayskull e150 | Tenstorrent, Grayskull, RISC-V, dataflow, AI accelerator | 1 | 0 |
+| [Tenstorrent_Grayskull.md](hardware_target/Tenstorrent_Grayskull.md) | hardware_target | Tenstorrent Grayskull | Tenstorrent, Grayskull, AI accelerator, TT-Metalium, TT-BUDA | 1 | 0 |
+| [Tenstorrent_Blackhole.md](hardware_target/Tenstorrent_Blackhole.md) | hardware_target | Tenstorrent Blackhole | Tenstorrent, RISC-V, AI accelerator, Ethernet | 1 | 0 |
+| [N_Body_Simulation_on_Tenstorrent_Wormhole_Benchmark.md](benchmark_result/N_Body_Simulation_on_Tenstorrent_Wormhole_Benchmark.md) | benchmark_result | N-Body Simulation on Tenstorrent Wormhole Benchmark | N-body, astrophysics, Tenstorrent, Wormhole, RISC-V, benchmark | 1 | 0 |
+| [Tenstorrent_Wormhole_n300.md](hardware_target/Tenstorrent_Wormhole_n300.md) | hardware_target | Tenstorrent Wormhole n300 | RISC-V, Tenstorrent, Wormhole, AI accelerator | 1 | 0 |
 | [Wormhole_Tensix_Processor.md](hardware_target/Wormhole_Tensix_Processor.md) | hardware_target | Wormhole Tensix Processor | Tenstorrent, Wormhole, Tensix, RISC-V, AI accelerator | 1 | 0 |
 | [Blackhole_Tensix_Processor.md](hardware_target/Blackhole_Tensix_Processor.md) | hardware_target | Blackhole Tensix Processor | Tenstorrent, Blackhole, Tensix, RISC-V, AI accelerator | 1 | 0 |
 | [FPGA_RISC-V_ISA_Extensions_Optimization_Recipe.md](optimization_recipe/FPGA_RISC-V_ISA_Extensions_Optimization_Recipe.md) | optimization_recipe | FPGA RISC-V ISA Extensions Optimization Recipe | RISC-V, FPGA, PYNQ-Z2, custom ISA, neural network inference, edge AI | 1 | 0 |

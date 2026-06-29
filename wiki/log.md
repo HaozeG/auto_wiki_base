@@ -290,3 +290,11 @@ pages_written: 7
 pipeline_rejection_rate: 17%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_473e371a_2026-06-29.json
 theme_profile: RISC-V ai accelerator | workflow_first
+
+## [2026-06-29] research | Tenstorrent TT-Metal TT-NN tt-buda Tensix core RISC-V kernel
+session_id: 7a0d191c
+candidates_evaluated: 17
+pages_written: 11
+pipeline_rejection_rate: 6%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_7a0d191c_2026-06-29.json
+theme_profile: RISC-V ai accelerator | workflow_first
