@@ -4,12 +4,17 @@
 
 **Organization**: Workflow-first — pages are typed as `hardware_target`, `workload_kernel`, `optimization_recipe`, `benchmark_result`, `entity`, or `synthesis`.
 
-Last updated: 2026-06-29 | Pages: 112 | Sources: 0
+Last updated: 2026-06-29 | Pages: 120 | Sources: 0
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [Gemmini.md](entity/Gemmini.md) | Gemmini | RISC-V, DNN accelerator, hardware generator, Chipyard, full-stack evaluation | 1 | 0 |
+| [Chipyard_Framework.md](entity/Chipyard_Framework.md) | Chipyard Framework | RISC-V, SoC, framework, agile hardware, UC Berkeley | 1 | 0 |
+| [SYCL_MLIR_Compiler.md](entity/SYCL_MLIR_Compiler.md) | SYCL-MLIR Compiler | MLIR, SYCL, compiler, compiler optimization, codeplay | 1 | 0 |
+| [MLIR.md](entity/MLIR.md) | MLIR | MLIR, LLVM, compiler, intermediate representation, multi-level | 1 | 0 |
+| [MLIR_software.md](entity/MLIR_software.md) | MLIR (software) | compiler, MLIR, LLVM, multi-level IR | 1 | 0 |
 | [Tenstorrent_Ascalon.md](entity/Tenstorrent_Ascalon.md) | Tenstorrent Ascalon | RISC-V, Tenstorrent, Ascalon, simulation | 1 | 0 |
 | [Tenstorrent_Software_Stack.md](entity/Tenstorrent_Software_Stack.md) | Tenstorrent Software Stack | Tenstorrent, TT-Forge, TT-Metalium, TT-NN, MLIR, RISC-V, AI compiler | 3 | 0 |
 | [TT-Forge.md](entity/TT-Forge.md) | TT-Forge | Tenstorrent, TT-Forge, MLIR, compiler, AI, open-source | 1 | 0 |
@@ -68,6 +73,9 @@ Last updated: 2026-06-29 | Pages: 112 | Sources: 0
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [SpacemiT_Key_Stone_K1.md](hardware_target/SpacemiT_Key_Stone_K1.md) | hardware_target | SpacemiT Key Stone K1 | RISC-V, SpacemiT, Key Stone K1 | 1 | 0 |
+| [NVIDIA_Deep_Learning_Accelerator.md](hardware_target/NVIDIA_Deep_Learning_Accelerator.md) | hardware_target | NVIDIA Deep Learning Accelerator (DLA) | NVIDIA, DLA, deep learning accelerator, fixed-function, Jetson, DRIVE, Orin, Xavier | 1 | 0 |
+| [Gemmini_IREE_Integration_Strategy.md](optimization_recipe/Gemmini_IREE_Integration_Strategy.md) | optimization_recipe | Gemmini IREE Integration Strategy | Gemmini, IREE, RoCC, integration, systolic array, compiler | 1 | 0 |
 | [Tenstorrent_Ascalon.md](hardware_target/Tenstorrent_Ascalon.md) | hardware_target | Tenstorrent Ascalon | RISC-V, Tenstorrent, Ascalon, Jim Keller, out-of-order, wide core | 2 | 0 |
 | [TT-QuietBox_2.md](hardware_target/TT-QuietBox_2.md) | hardware_target | TT-QuietBox 2 | Tenstorrent, QuietBox, RISC-V, AI workstation, open-source | 1 | 0 |
 | [FlashAttention_on_Tenstorrent_Wormhole_Optimization.md](optimization_recipe/FlashAttention_on_Tenstorrent_Wormhole_Optimization.md) | optimization_recipe | FlashAttention on Tenstorrent Wormhole Optimization | FlashAttention, Tenstorrent, Wormhole, TT-Metal, attention, transformer | 1 | 0 |

@@ -12,7 +12,7 @@ hardware_versions:
 - Xilinx Artix-7
 - 28nm ASIC
 - 40nm ASIC
-inbound_links: 13
+inbound_links: 14
 measurement_method: FPGA measurements (speedup, data movement); ASIC synthesis (area,
   power)
 metrics:

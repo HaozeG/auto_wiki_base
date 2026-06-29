@@ -326,3 +326,11 @@ pages_written: 2
 pipeline_rejection_rate: 21%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_e2416a7d_2026-06-29.json
 theme_profile: RISC-V ai accelerator | workflow_first
+
+## [2026-06-29] research | RISC-V AI accelerator MLIR compiler backend TVM IREE Gemmini
+session_id: 89f5cc6f
+candidates_evaluated: 19
+pages_written: 8
+pipeline_rejection_rate: 26%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_89f5cc6f_2026-06-29.json
+theme_profile: RISC-V ai accelerator | workflow_first
