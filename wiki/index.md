@@ -4,12 +4,14 @@
 
 **Organization**: Workflow-first — pages are typed as `hardware_target`, `workload_kernel`, `optimization_recipe`, `benchmark_result`, `entity`, or `synthesis`.
 
-Last updated: 2026-06-29 | Pages: 125 | Sources: 0
+Last updated: 2026-06-29 | Pages: 134 | Sources: 0
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [RV-VP2.md](entity/RV-VP2.md) | RV-VP² | RISC-V, Packed-SIMD, P-extension, Virtual Prototype, SystemC, TLM, simulation | 3 | 0 |
+| [rvv-bench.md](entity/rvv-bench.md) | rvv-bench | RISC-V, RVV, benchmark, open-source, vector | 1 | 0 |
 | [Qwen3.6.md](entity/Qwen3.6.md) | Qwen3.6 | LLM, Qwen, Alibaba, multimodal, hybrid-thinking | 1 | 0 |
 | [Qwen2.5-Coder-1.5B-Instruct-GGUF.md](entity/Qwen2.5-Coder-1.5B-Instruct-GGUF.md) | Qwen2.5-Coder-1.5B-Instruct-GGUF | Qwen, code model, LLM, GGUF, llama.cpp, Alibaba Cloud | 1 | 0 |
 | [PyAi_k210.md](entity/PyAi_k210.md) | PyAi-k210 | Kendryte K210, machine vision, 01Studio, RISC-V, AI | 1 | 0 |
@@ -77,6 +79,13 @@ Last updated: 2026-06-29 | Pages: 125 | Sources: 0
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [RVME_Model.md](hardware_target/RVME_Model.md) | hardware_target | RVME Model | RISC-V, matrix engine, gem5, simulation | 1 | 0 |
+| [P-Box_RISC-V_Packed-SIMD_Implementation.md](hardware_target/P-Box_RISC-V_Packed-SIMD_Implementation.md) | hardware_target | P-Box: RISC-V Packed-SIMD Implementation | RISC-V, Packed-SIMD, RVP, edge AI, DSP, CV, P-Box | 1 | 0 |
+| [P_CORE_Packed_SIMD_Extension_Benchmark_Results.md](benchmark_result/P_CORE_Packed_SIMD_Extension_Benchmark_Results.md) | benchmark_result | P-CORE Packed-SIMD Extension Benchmark Results | RISC-V, P-extension, Packed-SIMD, CNN, RV32IM | 1 | 0 |
+| [Ara2_RVV_1.0_Vector_Processor.md](hardware_target/Ara2_RVV_1.0_Vector_Processor.md) | hardware_target | Ara2 RVV 1.0 Vector Processor | RISC-V, Ara2, RVV 1.0, vector processor, open-source | 1 | 0 |
+| [EARTH_Efficient_Architecture_RISC_V_Vector_Memory_Access.md](optimization_recipe/EARTH_Efficient_Architecture_RISC_V_Vector_Memory_Access.md) | optimization_recipe | EARTH: Efficient Architecture for RISC-V Vector Memory Access | RISC-V, vector, memory access, shift network, EARTH | 1 | 0 |
+| [Ara2_Benchmark_Results.md](benchmark_result/Ara2_Benchmark_Results.md) | benchmark_result | Ara2 Benchmark Results | RISC-V, vector processor, Ara2, RVV 1.0, energy efficiency | 1 | 0 |
+| [Ara2.md](hardware_target/Ara2.md) | hardware_target | Ara2 | RISC-V, vector processor, open-source, RVV 1.0 | 1 | 0 |
 | [nncase_K230_Benchmark_Results.md](benchmark_result/nncase_K230_Benchmark_Results.md) | benchmark_result | nncase K230 Benchmark Results | nncase, K230, neural network compiler, benchmark | 1 | 0 |
 | [SpacemiT_Key_Stone_K1.md](hardware_target/SpacemiT_Key_Stone_K1.md) | hardware_target | SpacemiT Key Stone K1 | RISC-V, SpacemiT, Key Stone K1 | 1 | 0 |
 | [NVIDIA_Deep_Learning_Accelerator.md](hardware_target/NVIDIA_Deep_Learning_Accelerator.md) | hardware_target | NVIDIA Deep Learning Accelerator (DLA) | NVIDIA, DLA, deep learning accelerator, fixed-function, Jetson, DRIVE, Orin, Xavier | 1 | 0 |

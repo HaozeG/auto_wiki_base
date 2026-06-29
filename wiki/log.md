@@ -346,3 +346,11 @@ pages_written: 6
 pipeline_rejection_rate: 24%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_659eeab3_2026-06-29.json
 theme_profile: RISC-V ai accelerator | workflow_first
+
+## [2026-06-29] research | RISC-V RVV Zve matrix extension P-extension custom ISA SIMD 
+session_id: 4e65adaa
+candidates_evaluated: 16
+pages_written: 11
+pipeline_rejection_rate: 6%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_4e65adaa_2026-06-29.json
+theme_profile: RISC-V ai accelerator | workflow_first

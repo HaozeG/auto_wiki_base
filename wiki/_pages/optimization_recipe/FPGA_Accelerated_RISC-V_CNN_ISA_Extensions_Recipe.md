@@ -14,7 +14,7 @@ evidence_strength: measured
 hardware_targets:
 - PYNQ-Z2 (Xilinx Zynq-7020)
 - Custom RISC-V core (RV32IM + custom-0 space)
-inbound_links: 3
+inbound_links: 4
 metrics:
 - latency speedup
 - energy reduction

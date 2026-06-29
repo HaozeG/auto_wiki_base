@@ -1,6 +1,5 @@
 ---
 cold_start: false
-inbound_links: 1
 constraints:
 - Arbitrary matrix sizes (M, N, K)
 - No transpose, alpha, or beta support (initial implementation)
@@ -9,7 +8,7 @@ datatypes:
 - double-precision (f64)
 - single-precision (f32)
 - half-precision (f16)
-inbound_links: 20
+inbound_links: 21
 needs_summary_revision: true
 scorecard:
   bridge_score: 0.7

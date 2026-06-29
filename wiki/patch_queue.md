@@ -69,3 +69,10 @@ target_section: Debugging
 source: https://visualgdb.com/tutorials/risc-v/kendryte/k210/
 status: pending_review
 proposed_update: Add a new 'Debugging' section covering JTAG debug setup for the Kendryte K210 using Visual Studio and VisualGDB. Include: JTAG signal mapping (TDI, TMS, TCK, TDO, RESET) to Sipeed M1 Dock board; recommended JTAG debuggers (Segger J-Link, Olimex ARM-USB-OCD-H, FTDI-based); steps to create, build, and debug a Blinking LED project using the VisualGDB Embedded Project Wizard; note on using the Kendryte-specific toolchain (not generic RISC-V); description of the debug workflow (breakpoints, 'load' command fallback); instructions for programming the external FLASH using K-FLASH tool; reliability issues with Kendryte OpenOCD fork and workarounds (setting breakpoints before program start, reloading firmware, using K-FLASH). This information is sourced from the VisualGDB tutorial 'Debugging Kendryte K210 Projects with Visual Studio'.
+
+## [2026-06-29] pending | Ara_simulator.md
+target_page: Ara_simulator.md
+target_section: full
+source: https://github.com/pulp-platform/ara
+status: pending_review
+proposed_update: Replace the Ara_simulator.md content with detailed hardware/software dependency information, toolchain build instructions (LLVM, Spike, Verilator), configuration parameters (config folder), simulation modes (including Ideal Dispatcher mode without CVA6), and an overview of supported instructions from the official Ara GitHub README. Update frontmatter: hardware_targets to include Ara and CVA6; toolchains to include LLVM, gcc 7.2.0, Verilator, Bender; constraints to include RISC-V Vector Extension 1.0, CVA6 coprocessor interface, Verilator simulation, and long vector length (default 4096-bit). Add relationships section linking to CVA6 (if page exists) and PULP platform. Retain existing created date and inbound_links count. Update scorecard to reflect new evidence.
