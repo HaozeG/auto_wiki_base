@@ -55,3 +55,10 @@ target_section: Sources
 source: https://arxiv.org/html/2306.15552v3
 status: pending_review
 proposed_update: Add reference to survey 'A Survey on Deep Learning Hardware Accelerators for Heterogeneous HPC Platforms' (arXiv:2306.15552) which covers RISC-V-based accelerators as part of a broader taxonomy of DL hardware accelerators. This provides context for the RISC-V vector GEMM implementation.
+
+## [2026-06-29] pending | Tenstorrent_Grayskull_e150.md
+target_page: Tenstorrent_Grayskull_e150.md
+target_section: toolchains
+source: https://github.com/tenstorrent/tt-forge
+status: pending_review
+proposed_update: Add TT-Forge to the list of toolchains, as it is the new MLIR-based compiler stack built on TT-Metalium that supports compiling and running AI workloads on Grayskull hardware. TT-Forge is now the primary open-source compiler for Tenstorrent hardware.

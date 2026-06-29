@@ -306,3 +306,11 @@ pages_written: 2
 pipeline_rejection_rate: 17%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_dc2ac266_2026-06-29.json
 theme_profile: RISC-V ai accelerator | workflow_first
+
+## [2026-06-29] research | Tenstorrent Tensix NoC mesh interconnect tt-forge tt-nn ops 
+session_id: e217a61b
+candidates_evaluated: 16
+pages_written: 7
+pipeline_rejection_rate: 25%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_e217a61b_2026-06-29.json
+theme_profile: RISC-V ai accelerator | workflow_first
