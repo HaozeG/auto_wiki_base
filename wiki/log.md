@@ -314,3 +314,11 @@ pages_written: 7
 pipeline_rejection_rate: 25%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_e217a61b_2026-06-29.json
 theme_profile: RISC-V ai accelerator | workflow_first
+
+## [2026-06-29] research | Tenstorrent Galaxy multi-chip Ascalon RISC-V CPU IP LLM infe
+session_id: e2416a7d
+candidates_evaluated: 19
+pages_written: 2
+pipeline_rejection_rate: 21%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_e2416a7d_2026-06-29.json
+theme_profile: RISC-V ai accelerator | workflow_first

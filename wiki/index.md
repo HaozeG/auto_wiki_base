@@ -4,12 +4,13 @@
 
 **Organization**: Workflow-first — pages are typed as `hardware_target`, `workload_kernel`, `optimization_recipe`, `benchmark_result`, `entity`, or `synthesis`.
 
-Last updated: 2026-06-29 | Pages: 109 | Sources: 0
+Last updated: 2026-06-29 | Pages: 111 | Sources: 0
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [Tenstorrent_Ascalon.md](entity/Tenstorrent_Ascalon.md) | Tenstorrent Ascalon | RISC-V, Tenstorrent, Ascalon, simulation | 1 | 0 |
 | [Tenstorrent_Software_Stack.md](entity/Tenstorrent_Software_Stack.md) | Tenstorrent Software Stack | Tenstorrent, TT-Forge, TT-Metalium, TT-NN, MLIR, RISC-V, AI compiler | 3 | 0 |
 | [TT-Forge.md](entity/TT-Forge.md) | TT-Forge | Tenstorrent, TT-Forge, MLIR, compiler, AI, open-source | 1 | 0 |
 | [TT_Inference_Server_Benchmarking.md](entity/TT_Inference_Server_Benchmarking.md) | TT-Inference-Server Benchmarking | Tenstorrent, LLM, benchmark, tt-inference-server | 1 | 0 |
@@ -66,6 +67,7 @@ Last updated: 2026-06-29 | Pages: 109 | Sources: 0
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [Tenstorrent_Ascalon.md](hardware_target/Tenstorrent_Ascalon.md) | hardware_target | Tenstorrent Ascalon | RISC-V, Tenstorrent, Ascalon, Jim Keller, out-of-order, wide core | 2 | 0 |
 | [TT-QuietBox_2.md](hardware_target/TT-QuietBox_2.md) | hardware_target | TT-QuietBox 2 | Tenstorrent, QuietBox, RISC-V, AI workstation, open-source | 1 | 0 |
 | [FlashAttention_on_Tenstorrent_Wormhole_Optimization.md](optimization_recipe/FlashAttention_on_Tenstorrent_Wormhole_Optimization.md) | optimization_recipe | FlashAttention on Tenstorrent Wormhole Optimization | FlashAttention, Tenstorrent, Wormhole, TT-Metal, attention, transformer | 1 | 0 |
 | [Operator_Fusion_for_LLM_Inference_on_Tensix.md](optimization_recipe/Operator_Fusion_for_LLM_Inference_on_Tensix.md) | optimization_recipe | Operator Fusion for LLM Inference on the Tensix Architecture | LLM inference, operator fusion, Tensix, Tenstorrent, Wormhole, TT-Metalium | 1 | 0 |

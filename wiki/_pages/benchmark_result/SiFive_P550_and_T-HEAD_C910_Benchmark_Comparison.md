@@ -9,7 +9,7 @@ hardware_targets:
 hardware_versions:
 - EIC7700X with P550 at 1.4 GHz
 - C910 at 1.85 GHz
-inbound_links: 2
+inbound_links: 3
 measurement_method: 'Benchmarks run on stock boards with GCC 14.2.0. SPEC CPU2017
   built with march flags specified. 7-Zip: compressing 2.67 GB file with 4 threads.
   SHA256: sha256sum on 2.67 GB file. x264: software video encode using libx264.'

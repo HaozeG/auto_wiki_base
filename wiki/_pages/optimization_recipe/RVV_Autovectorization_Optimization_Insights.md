@@ -11,7 +11,7 @@ datatypes:
 evidence_strength: measured
 hardware_targets:
 - RVV 1.0 hardware
-inbound_links: 5
+inbound_links: 6
 metrics:
 - throughput
 - vector utilization
