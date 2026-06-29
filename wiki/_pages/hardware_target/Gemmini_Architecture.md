@@ -64,3 +64,4 @@ Gemmini is an open-source, full-stack DNN accelerator generator developed at UC 
 ## Sources
 
 - [arXiv:1911.09925](https://arxiv.org/abs/1911.09925)
+- Gemmini tutorial at IISWC 2021 and MLSys 2022; presented at DAC 2021: https://sites.google.com/berkeley.edu/gemminitutorialiiswc2021/

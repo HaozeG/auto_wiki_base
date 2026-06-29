@@ -57,6 +57,15 @@ RVME is a decoupled CPU coprocessor architecture for efficient GEMM acceleration
 - [[GEMM_with_RISC-V_Vector_Extension]] — the RVV GEMM kernel is the direct performance baseline; single `mmacc` replaces 64× the operations of a single `vmacc`.
 - [[Gemmini_Architecture]] — Gemmini is a systolic array DNN accelerator; RVME achieves 8.8× higher average area efficiency than Gemmini (22 nm, 1 GHz) on identical GEMM workloads.
 
+## Simulation Model (gem5)
+
+The RVME GitHub repository (`superboy999/RVME`) provides a gem5 microarchitectural model implementing the Xuantie MME v0.3 instruction subset. Key implementation details:
+- Compute Unit Array initially used direct sub-matrix computation (one partial sum per cycle); later upgraded to systolic array connection for improved dataflow.
+- SRAM Occupy Mechanism handles read operations; Memchecker verifies memory correctness.
+- Second matrix operand (`mb`) is automatically transposed before computation.
+- X/Y/Z Buffers support `int` or `uint` via `static_cast`; large cache-line accesses patched.
+- Build: gem5 SCons with `gem5.debug` and `gem5.opt` targets; GDB-compatible.
+
 ## Sources
 
 - RVME: An Efficient Matrix Engine Design Based on Matrix Extension of RISC-V (IEEE ICCD 2025, DOI 10.1109/ICCD65941.2025.00092): `raw/sources/RVME_An_Efficient_Matrix_Engine_Design_Based_on_Matrix_Extension_of_RISC-V.pdf`

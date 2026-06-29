@@ -4,7 +4,7 @@
 
 **Organization**: Workflow-first — pages are typed as `hardware_target`, `workload_kernel`, `optimization_recipe`, `benchmark_result`, `entity`, or `synthesis`.
 
-Last updated: 2026-06-29 | Pages: 140 | Sources: 0
+Last updated: 2026-06-29 | Pages: 136 | Sources: 0
 
 ## Entity Pages
 
@@ -13,10 +13,7 @@ Last updated: 2026-06-29 | Pages: 140 | Sources: 0
 | [XuanTie_C930.md](entity/XuanTie_C930.md) | XuanTie C930 | RISC-V, Alibaba, XuanTie, server, AI-HPC | 1 | 0 |
 | [RV-VP2.md](entity/RV-VP2.md) | RV-VP² | RISC-V, Packed-SIMD, P-extension, Virtual Prototype, SystemC, TLM, simulation | 3 | 0 |
 | [rvv-bench.md](entity/rvv-bench.md) | rvv-bench | RISC-V, RVV, benchmark, open-source, vector | 1 | 0 |
-| [Qwen3.6.md](entity/Qwen3.6.md) | Qwen3.6 | LLM, Qwen, Alibaba, multimodal, hybrid-thinking | 1 | 0 |
-| [Qwen2.5-Coder-1.5B-Instruct-GGUF.md](entity/Qwen2.5-Coder-1.5B-Instruct-GGUF.md) | Qwen2.5-Coder-1.5B-Instruct-GGUF | Qwen, code model, LLM, GGUF, llama.cpp, Alibaba Cloud | 1 | 0 |
 | [PyAi_k210.md](entity/PyAi_k210.md) | PyAi-k210 | Kendryte K210, machine vision, 01Studio, RISC-V, AI | 1 | 0 |
-| [Gemmini.md](entity/Gemmini.md) | Gemmini | RISC-V, DNN accelerator, hardware generator, Chipyard, full-stack evaluation | 1 | 0 |
 | [Chipyard_Framework.md](entity/Chipyard_Framework.md) | Chipyard Framework | RISC-V, SoC, framework, agile hardware, UC Berkeley | 1 | 0 |
 | [SYCL_MLIR_Compiler.md](entity/SYCL_MLIR_Compiler.md) | SYCL-MLIR Compiler | MLIR, SYCL, compiler, compiler optimization, codeplay | 1 | 0 |
 | [MLIR.md](entity/MLIR.md) | MLIR | MLIR, LLVM, compiler, intermediate representation, multi-level | 1 | 0 |
@@ -50,7 +47,6 @@ Last updated: 2026-06-29 | Pages: 140 | Sources: 0
 | [Codasip_Re-targetable_LLVM_Compiler.md](entity/Codasip_Re-targetable_LLVM_Compiler.md) | Codasip Re-targetable LLVM Compiler |  | 1 | 0 |
 | [Seal5.md](entity/Seal5.md) | Seal5 | RISC-V, LLVM, compiler, ISA extension, automation | 2 | 0 |
 | [XuanTie_GNU_Toolchain.md](entity/XuanTie_GNU_Toolchain.md) | XuanTie GNU Toolchain | Xuantie, GNU, toolchain, RISC-V | 1 | 0 |
-| [Gemmini.md](entity/Gemmini.md) | Gemmini | RISC-V, DNN, accelerator, Chipyard, Chisel | 1 | 0 |
 | [KPU_Knowledge_Processing_Unit.md](entity/KPU_Knowledge_Processing_Unit.md) | KPU (Knowledge Processing Unit) | RISC-V, AI, accelerator, K230, Kendryte, edge_computing | 1 | 0 |
 | [XuanTie_C908.md](entity/XuanTie_C908.md) | XuanTie C908 | RISC-V, T-Head, XuanTie, AIoT, processor | 1 | 0 |
 | [Kendryte_K510.md](entity/Kendryte_K510.md) | Kendryte K510 | RISC-V, AI, edge_computing, accelerator, Canaan | 1 | 0 |
@@ -85,7 +81,6 @@ Last updated: 2026-06-29 | Pages: 140 | Sources: 0
 | [SiFive_Performance_P870_D.md](hardware_target/SiFive_Performance_P870_D.md) | hardware_target | SiFive Performance P870-D | RISC-V, datacenter, SiFive, P870-D, high-performance | 1 | 0 |
 | [AraXL.md](hardware_target/AraXL.md) | hardware_target | AraXL | RISC-V, vector processor, long vectors, HPC, ML, 22nm | 1 | 0 |
 | [SiFive_Intelligence_X300_Series.md](hardware_target/SiFive_Intelligence_X300_Series.md) | hardware_target | SiFive Intelligence X300 Series | RISC-V, SiFive, AI accelerator, vector processing, second generation | 1 | 0 |
-| [RVME_Model.md](hardware_target/RVME_Model.md) | hardware_target | RVME Model | RISC-V, matrix engine, gem5, simulation | 1 | 0 |
 | [P-Box_RISC-V_Packed-SIMD_Implementation.md](hardware_target/P-Box_RISC-V_Packed-SIMD_Implementation.md) | hardware_target | P-Box: RISC-V Packed-SIMD Implementation | RISC-V, Packed-SIMD, RVP, edge AI, DSP, CV, P-Box | 1 | 0 |
 | [P_CORE_Packed_SIMD_Extension_Benchmark_Results.md](benchmark_result/P_CORE_Packed_SIMD_Extension_Benchmark_Results.md) | benchmark_result | P-CORE Packed-SIMD Extension Benchmark Results | RISC-V, P-extension, Packed-SIMD, CNN, RV32IM | 1 | 0 |
 | [Ara2_RVV_1.0_Vector_Processor.md](hardware_target/Ara2_RVV_1.0_Vector_Processor.md) | hardware_target | Ara2 RVV 1.0 Vector Processor | RISC-V, Ara2, RVV 1.0, vector processor, open-source | 1 | 0 |

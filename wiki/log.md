@@ -1,5 +1,14 @@
 # Wiki Log
 
+## [2026-06-29] lint | apply
+actions_taken:
+  - DELETED entity/Qwen3.6.md (off-theme, 0 inbound)
+  - DELETED entity/Qwen2.5-Coder-1.5B-Instruct-GGUF.md (off-theme, 0 inbound)
+  - DELETED entity/Gemmini.md (merged into hardware_target/Gemmini_Architecture.md)
+  - DELETED hardware_target/RVME_Model.md (merged into hardware_target/RVME_Matrix_Engine.md)
+pages_after: 136
+mean_inbound_links: 2.302
+
 ## [2026-06-29] lint | routine
 issues_found: 6 categories
 actions_taken: [none — output for human review]
