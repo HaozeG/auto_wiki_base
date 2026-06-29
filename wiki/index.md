@@ -4,7 +4,7 @@
 
 **Organization**: Workflow-first — pages are typed as `hardware_target`, `workload_kernel`, `optimization_recipe`, `benchmark_result`, `entity`, or `synthesis`.
 
-Last updated: 2026-06-29 | Pages: 156 | Sources: 0
+Last updated: 2026-06-29 | Pages: 157 | Sources: 0
 
 ## Entity Pages
 
@@ -75,6 +75,7 @@ Last updated: 2026-06-29 | Pages: 156 | Sources: 0
 | [Tenstorrent_RISC-V_AI_Ecosystem.md](synthesis/Tenstorrent_RISC-V_AI_Ecosystem.md) | Tenstorrent, TT_Metalium, TT-Forge, Tenstorrent_Software_Stack, Tenstorrent_Ascalon, Blackhole_Architecture, Tenstorrent_Wormhole_n300, Tenstorrent_Grayskull, Wormhole_Tensix_Processor | active | 0 |
 | [MLIR_for_RISC-V_AI_Compilation.md](synthesis/MLIR_for_RISC-V_AI_Compilation.md) | MLIR, IREE, APS_Framework, SYCL_MLIR_Compiler, TT-Forge, Seal5, Gemmini_IREE_Integration_Strategy, tvmonriscv | active | 0 |
 | [RISC-V_ISA_Extensions_for_AI.md](synthesis/RISC-V_ISA_Extensions_for_AI.md) | RISC-V_Vector_Extension, RISC-V_Matrix_Extension, Ara2_RVV_1.0_Vector_Processor, AraXL, SiFive_Performance_P870, P-Box_RISC-V_Packed-SIMD_Implementation, Tenstorrent_Wormhole_n300, rvv-bench | active | 0 |
+| [Kernel_Dispatch_Decision_Tree_RVV_AME.md](synthesis/Kernel_Dispatch_Decision_Tree_RVV_AME.md) | RVME_Matrix_Engine, RISC-V_Vector_Extension, RISC-V_Matrix_Extension, XuanTie_C908, XuanTie_C930, PMU_Roofline_Analysis_RISCV, T-SAR_In_Place_SIMD_ALU_Reorganization, I-LLM_Integer_Only_LLM_Optimization, TeraPool_Barrier_Synchronization | active | 0 |
 
 ## Concept Index
 

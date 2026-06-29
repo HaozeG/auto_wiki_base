@@ -415,3 +415,13 @@ pages_written: 10
 pipeline_rejection_rate: 14%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_648eb276_2026-06-29.json
 theme_profile: RISC-V ai accelerator | workflow_first
+
+## [2026-06-29] ingest | sessions 10-12 — XuanTie hardware, T-SAR/I-LLM, multi-PE roofline
+pages_created: [XuanTie_C908 (entity+hw), XuanTie_C930 (entity+hw), XuanTie_C910_ICE_SoC, Xuantie_C920_C907_R910, TVM_CSINN2_Integration_Optimization_Recipe, T-SAR_In_Place_SIMD_ALU_Reorganization, T-SAR_Benchmark_Results, I-LLM_Integer_Only_LLM_Optimization, RISC-V_Vector_Tests_Generator, SpacemiT_Key_Stone_K1, SpacemiT_KeyStone_K1, SpacemiT_K1, Milk-V_Jupiter2, PMU_Roofline_Analysis_RISCV, Ara_Vector_Processor, Ara_Microarchitectural_Co_Optimization, Ara_Microarchitectural_Co_Optimization_Benchmark_Results, FeNN_DMA_RISC_V_SoC, RVV-Lite, TeraPool_1024_Core_Cluster, TeraPool_Barrier_Synchronization_Benchmark_Results, BitNet_RISCV_Multicore]
+pages_updated: []
+pages_deferred: []
+cold_start: false
+
+## [2026-06-29] query_synthesis | Kernel Dispatch Decision Tree for RVV+AME
+source_query: agentic kernel optimization — when to use AME vs RVV vs scalar on RISC-V multi-PE chip
+pages_created: [synthesis/Kernel_Dispatch_Decision_Tree_RVV_AME.md]
