@@ -4,12 +4,14 @@
 
 **Organization**: Workflow-first — pages are typed as `hardware_target`, `workload_kernel`, `optimization_recipe`, `benchmark_result`, `entity`, or `synthesis`.
 
-Last updated: 2026-06-29 | Pages: 136 | Sources: 0
+Last updated: 2026-06-29 | Pages: 141 | Sources: 0
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [XuanTie_C908.md](entity/XuanTie_C908.md) | XuanTie C908 | RISC-V, T-Head, XuanTie, C908, AIoT, vector | 1 | 0 |
+| [Xuantie_C920_C907_R910.md](entity/Xuantie_C920_C907_R910.md) | Xuantie C920, C907, R910 Processors | RISC-V, Pingtouge, Xuantie, AI, automotive, vector_extension | 1 | 0 |
 | [XuanTie_C930.md](entity/XuanTie_C930.md) | XuanTie C930 | RISC-V, Alibaba, XuanTie, server, AI-HPC | 1 | 0 |
 | [RV-VP2.md](entity/RV-VP2.md) | RV-VP² | RISC-V, Packed-SIMD, P-extension, Virtual Prototype, SystemC, TLM, simulation | 3 | 0 |
 | [rvv-bench.md](entity/rvv-bench.md) | rvv-bench | RISC-V, RVV, benchmark, open-source, vector | 1 | 0 |
@@ -77,6 +79,9 @@ Last updated: 2026-06-29 | Pages: 136 | Sources: 0
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [XuanTie_C910_ICE_SoC.md](hardware_target/XuanTie_C910_ICE_SoC.md) | hardware_target | XuanTie C910 ICE SoC | RISC-V, XuanTie, C910, GPU, NPU, Alibaba T-Head | 1 | 0 |
+| [TVM_CSINN2_Integration_Optimization_Recipe.md](optimization_recipe/TVM_CSINN2_Integration_Optimization_Recipe.md) | optimization_recipe | TVM CSI-NN2 Integration Optimization Recipe | TVM, CSI-NN2, CSINN2, BYOC, RISC-V, XuanTie C906, vector extension | 1 | 0 |
+| [XuanTie_C930.md](hardware_target/XuanTie_C930.md) | hardware_target | XuanTie C930 | RISC-V, XuanTie, T-Head, Alibaba, C930, AI-HPC, server | 3 | 0 |
 | [T-HEAD_Xuantie_C910.md](hardware_target/T-HEAD_Xuantie_C910.md) | hardware_target | T-HEAD Xuantie C910 | RISC-V, T-HEAD, Xuantie, C910, out-of-order, vector extension | 1 | 0 |
 | [SiFive_Performance_P870_D.md](hardware_target/SiFive_Performance_P870_D.md) | hardware_target | SiFive Performance P870-D | RISC-V, datacenter, SiFive, P870-D, high-performance | 1 | 0 |
 | [AraXL.md](hardware_target/AraXL.md) | hardware_target | AraXL | RISC-V, vector processor, long vectors, HPC, ML, 22nm | 1 | 0 |

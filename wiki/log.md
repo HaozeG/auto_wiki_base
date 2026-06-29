@@ -391,3 +391,11 @@ pages_written: 7
 pipeline_rejection_rate: 50%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_09cb5503_2026-06-29.json
 theme_profile: RISC-V ai accelerator | workflow_first
+
+## [2026-06-29] research | T-Head AME xtheadmatmul matrix engine ISA register tile SHL 
+session_id: c60775a1
+candidates_evaluated: 20
+pages_written: 5
+pipeline_rejection_rate: 15%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_c60775a1_2026-06-29.json
+theme_profile: RISC-V ai accelerator | workflow_first

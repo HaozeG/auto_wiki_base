@@ -10,7 +10,7 @@ constraints:
 created: '2025-11-10'
 hardware_targets:
 - MilkV Pioneer
-inbound_links: 3
+inbound_links: 4
 needs_summary_revision: true
 scorecard:
   bridge_score: 0.8
