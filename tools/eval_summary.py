@@ -24,6 +24,7 @@ from pathlib import Path
 
 import yaml
 
+import frontmatter
 from domain_analysis import validate_benchmark_claim
 
 # ---------------------------------------------------------------------------
@@ -68,17 +69,8 @@ def _get_eval_thresholds() -> dict:
 
 def parse_page(path: Path) -> tuple[dict, str]:
     """Return (frontmatter_dict, body_text) for a markdown page."""
-    text = path.read_text(encoding="utf-8")
-    if text.startswith("---"):
-        end = text.find("---", 3)
-        if end != -1:
-            fm_text = text[3:end].strip()
-            body = text[end + 3:].strip()
-            try:
-                return yaml.safe_load(fm_text) or {}, body
-            except yaml.YAMLError:
-                pass
-    return {}, text
+    fm, body = frontmatter.parse_page(path)
+    return fm, body.strip()
 
 
 def _extract_first_paragraph(body: str) -> str:
@@ -407,22 +399,8 @@ def layer3_check(path: Path, page_type: str, verbose: bool = False) -> dict:
 
 
 def _set_frontmatter_flag(path: Path, key: str, value) -> None:
-    """Add or update a key in the page's YAML frontmatter."""
-    text = path.read_text(encoding="utf-8")
-    if not text.startswith("---"):
-        return
-    end = text.find("---", 3)
-    if end == -1:
-        return
-    fm_text = text[3:end].strip()
-    body_rest = text[end + 3:]  # skip the closing --- delimiter
-    try:
-        fm = yaml.safe_load(fm_text) or {}
-    except yaml.YAMLError:
-        return
-    fm[key] = value
-    new_fm = yaml.dump(fm, default_flow_style=False, allow_unicode=True)
-    path.write_text(f"---\n{new_fm}---{body_rest}", encoding="utf-8")
+    """Add or update a key in the page's YAML frontmatter (atomic round-trip)."""
+    frontmatter.set_page_field(path, key, value)
 
 
 # ---------------------------------------------------------------------------

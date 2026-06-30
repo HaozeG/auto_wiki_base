@@ -33,11 +33,15 @@ import yaml
 _TOOLS_DIR = Path(__file__).parent
 sys.path.insert(0, str(_TOOLS_DIR))
 
+import frontmatter
+import graph_stats
+import identity
 from audit import AuditLog
 from context_selector import select_context_pages
 from domain_analysis import (
     DEFAULT_PAGE_TYPE_TAXONOMY,
     DEFAULT_REQUIRED_MEASUREMENT_FIELDS,
+    THEME_PAGE_TYPE_LIBRARY,
     build_gap_manifest,
     build_structured_query,
     extract_evidence,
@@ -48,9 +52,11 @@ from qmd_runner import QmdRunner, assess_candidate_similarity, candidate_similar
 from quota import MAX_TOKENS_PER_SUBAGENT_OUTPUT, MIN_SECONDS_BETWEEN_CALLS, QuotaManager
 from research_state import ResearchSessionState, list_sessions, write_key
 from subagent_prompts import (
+    CONTENT_MERGE_SYSTEM_PROMPT,
     DISCOVERY_SYSTEM_PROMPT,
     EVALUATION_SYSTEM_PROMPT,
     KEYWORD_RECOMMENDER_SYSTEM_PROMPT,
+    PROFILE_ARCHITECT_SYSTEM_PROMPT,
 )
 from validate_output import extract_json_block, validate_and_parse
 
@@ -61,6 +67,10 @@ _WIKI_PAGES_DIR = _PROJECT_ROOT / "wiki" / "_pages"
 _INDEX_MD = _PROJECT_ROOT / "wiki" / "index.md"
 _LOG_MD = _PROJECT_ROOT / "wiki" / "log.md"
 _CLAUDE_MD = _PROJECT_ROOT / "CLAUDE.md"
+# Machine-curated, immutable-once-written snapshots of web-fetched content. This
+# is the one place the harness writes under raw/ (see design doc §11 Provenance):
+# it preserves the "raw is the source of truth" guarantee for the autonomous loop.
+_RAW_CACHE_DIR = _PROJECT_ROOT / "raw" / "cache"
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -149,9 +159,91 @@ def _research_state_dir(research_config: dict) -> Path:
     return state_dir
 
 
+def _normalize_agent_profile(profile: dict, theme: str) -> dict:
+    """Coerce an architect-subagent profile into the deterministic profile shape."""
+    page_types = {}
+    for name, spec in (profile.get("page_types") or {}).items():
+        if isinstance(spec, dict):
+            page_types[name] = {
+                "description": str(spec.get("description", "")),
+                "structured_fields": list(spec.get("structured_fields", []) or []),
+            }
+        else:
+            page_types[name] = {"description": str(spec), "structured_fields": []}
+    return {
+        "id": str(profile.get("id", "")).strip() or "profile",
+        "name": str(profile.get("name", "")).strip() or "Profile",
+        "description": str(profile.get("description", "")).strip(),
+        "page_types": page_types,
+        "source_preferences": list(profile.get("source_preferences", []) or []),
+        "coverage_priorities": list(profile.get("coverage_priorities", []) or []),
+        "relationship_rules": list(profile.get("relationship_rules", []) or []),
+        "lint_priorities": list(profile.get("lint_priorities", []) or []),
+        "theme": theme,
+    }
+
+
+def _propose_profiles_via_agent(theme: str) -> list[dict] | None:
+    """Ask the profile-architect subagent for organization profiles. Returns None
+    on any failure so callers fall back to the deterministic proposer."""
+    try:
+        research_config = _load_research_config()
+        manifest = {"theme": theme, "page_type_library": THEME_PAGE_TYPE_LIBRARY}
+        raw = _call_subagent("profile_architect", manifest, research_config)
+    except Exception as exc:  # noqa: BLE001 — offline/degraded → deterministic fallback
+        logger.warning("profile-architect subagent unavailable (%s); using deterministic profiles", exc)
+        return None
+    data = validate_and_parse(raw, "ProfileList")
+    if not data:
+        return None
+    profiles = [_normalize_agent_profile(p, theme) for p in data.get("profiles", [])]
+    return profiles or None
+
+
+def _profiles_cache_path(theme: str) -> Path:
+    digest = hashlib.sha1(theme.strip().lower().encode("utf-8")).hexdigest()[:12]
+    state_dir = _research_state_dir(_load_research_config())
+    return state_dir / f"proposed_profiles_{digest}.json"
+
+
+def _save_cached_profiles(theme: str, profiles: list[dict]) -> None:
+    path = _profiles_cache_path(theme)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(profiles, indent=2, ensure_ascii=False), encoding="utf-8")
+
+
+def _load_cached_profiles(theme: str) -> list[dict] | None:
+    """Profiles proposed during the most recent `setup theme` listing, so the id
+    the human picked still resolves even though agent output is non-deterministic."""
+    path = _profiles_cache_path(theme)
+    if not path.exists():
+        return None
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    return data or None
+
+
+def propose_profiles(theme: str, use_agent: bool = True) -> list[dict]:
+    """Agent-generated organization profiles, with deterministic fallback.
+
+    The chosen profile is what makes the wiki theme-agnostic: structure emerges
+    from the theme via the architect subagent rather than a hardcoded rule table.
+    """
+    if use_agent:
+        agentic = _propose_profiles_via_agent(theme)
+        if agentic:
+            return agentic
+    return propose_theme_profiles(theme)
+
+
 def select_theme_profile(theme: str, choice: str | None = None) -> dict:
-    """Select a deterministic setup profile by id/name, defaulting to the first option."""
-    profiles = propose_theme_profiles(theme)
+    """Select an organization profile by id/name, defaulting to the first option.
+
+    Prefers profiles cached from the most recent `setup theme` listing (so the id
+    the human picked matches), then agent-generated, then deterministic."""
+    profiles = _load_cached_profiles(theme) or propose_profiles(theme)
     if not profiles:
         raise ValueError(f"No theme profiles available for {theme!r}")
     if choice:
@@ -303,6 +395,79 @@ def _wiki_is_mature() -> bool:
     return bool(match and match.group(1) == "true")
 
 
+def _load_system_state() -> dict:
+    return _load_claude_md_block("system_state")
+
+
+def _write_system_state(state: dict) -> None:
+    if not _CLAUDE_MD.exists():
+        return
+    text = _CLAUDE_MD.read_text(encoding="utf-8")
+    text = _replace_or_insert_yaml_block(text, "system_state", state)
+    _CLAUDE_MD.write_text(text, encoding="utf-8")
+
+
+def _maybe_transition_maturity(session_id: str) -> None:
+    """Refresh connectivity metrics in [system_state] and flip graph_maturity
+    when the connectivity predicate (orphan_fraction + median) is satisfied.
+
+    This is the writer the design always implied but that never existed:
+    previously nothing flipped graph_maturity, and the threshold was a gameable
+    mean. Now maturity is connectivity-based (see graph_stats.is_mature)."""
+    stats = graph_stats.compute_stats(_WIKI_PAGES_DIR)
+    state = _load_system_state()
+    state["orphan_fraction"] = stats.get("orphan_fraction", 1.0)
+    state["median_inbound_links"] = stats.get("median_inbound_links", 0.0)
+    state["mean_inbound_links"] = stats.get("mean_inbound_links", 0.0)
+    transitioned = False
+    if not state.get("graph_maturity") and stats.get("mature"):
+        state["graph_maturity"] = True
+        transitioned = True
+    _write_system_state(state)
+    if transitioned:
+        entry = (
+            f"## [{_now_date()}] transition | cold_start → mature\n"
+            f"session_id: {session_id}\n"
+            f"pages_at_transition: {stats.get('page_count', 0)}\n"
+            f"orphan_fraction: {stats.get('orphan_fraction')}\n"
+            f"median_inbound_links: {stats.get('median_inbound_links')}\n"
+            f"mean_inbound_links: {stats.get('mean_inbound_links')}\n"
+        )
+        if _LOG_MD.exists():
+            _LOG_MD.write_text(_LOG_MD.read_text(encoding="utf-8").rstrip() + "\n\n" + entry,
+                               encoding="utf-8")
+        print(f"[{session_id}] graph maturity transition: cold_start → mature")
+
+
+def _max_linking_debt(research_config: dict) -> int:
+    try:
+        return int(research_config.get("max_linking_debt", 5))
+    except (TypeError, ValueError):
+        return 5
+
+
+def _current_linking_debt(session_state: ResearchSessionState) -> int:
+    """Pages created this session that still have 0 inbound links.
+
+    Computed from live frontmatter (reusing the canonical parser) rather than a
+    drifting counter, so within-session links that later point at an earlier page
+    correctly reduce the debt."""
+    debt = 0
+    for stem in session_state.created_page_stems:
+        page = _find_page_by_filename(stem)
+        if page is None:
+            continue
+        fm, _ = frontmatter.parse_page(page)
+        try:
+            inbound = int(fm.get("inbound_links", 0) or 0)
+        except (TypeError, ValueError):
+            inbound = 0
+        if inbound == 0:
+            debt += 1
+    session_state.linking_debt = debt
+    return debt
+
+
 def _get_wiki_topic_summary() -> str:
     if not _INDEX_MD.exists():
         return ""
@@ -404,16 +569,28 @@ def _title_matches_existing(title: str, extra_stems: set[str] | None = None,
     if not title:
         return None
 
+    # Identity key for an alias-aware pre-filter. This is a cheap, NON-authoritative
+    # pre-fetch optimization (allowed to miss); the orchestrator's write gate does
+    # the deterministic, authoritative identity hard-block (see _write_approved_entry).
+    title_key = identity.normalize_canonical(title)
+
     # Check pages written this session first (not yet in index)
     if extra_stems:
         for stem in extra_stems:
             if _title_word_overlap(title, stem) >= overlap_threshold:
+                return stem
+            if title_key and identity.normalize_canonical(stem) == title_key:
                 return stem
 
     # Check existing wiki pages on disk
     for p in _WIKI_PAGES_DIR.rglob("*.md"):
         if _title_word_overlap(title, p.stem) >= overlap_threshold:
             return p.stem
+        if title_key:
+            fm, _ = frontmatter.parse_page(p)
+            for surface in [fm.get("canonical_name") or "", *(fm.get("aliases") or [])]:
+                if surface and identity.normalize_canonical(str(surface)) == title_key:
+                    return p.stem
     return None
 
 
@@ -424,19 +601,7 @@ def _check_synthesis_gaps() -> list[str]:
     """
     tag_to_pages: dict[str, list[str]] = {}
     for p in _WIKI_PAGES_DIR.rglob("*.md"):
-        try:
-            text = p.read_text(encoding="utf-8")
-        except OSError:
-            continue
-        if not text.startswith("---"):
-            continue
-        end = text.find("---", 3)
-        if end == -1:
-            continue
-        try:
-            fm = yaml.safe_load(text[3:end].strip()) or {}
-        except yaml.YAMLError:
-            continue
+        fm, _ = frontmatter.parse_page(p)
         if fm.get("type") == "entity":
             for tag in fm.get("tags", []):
                 tag_to_pages.setdefault(tag, []).append(p.stem)
@@ -444,19 +609,7 @@ def _check_synthesis_gaps() -> list[str]:
     # Collect all entity pages already named in a synthesis connected_entities list
     covered: set[str] = set()
     for p in _WIKI_PAGES_DIR.rglob("*.md"):
-        try:
-            text = p.read_text(encoding="utf-8")
-        except OSError:
-            continue
-        if not text.startswith("---"):
-            continue
-        end = text.find("---", 3)
-        if end == -1:
-            continue
-        try:
-            fm = yaml.safe_load(text[3:end].strip()) or {}
-        except yaml.YAMLError:
-            continue
+        fm, _ = frontmatter.parse_page(p)
         if fm.get("type") == "synthesis":
             covered.update(fm.get("connected_entities", []))
 
@@ -697,6 +850,24 @@ def _fetch_smart(url: str, retries: int = 2) -> str | None:
     return fetch_resource(url, retries=retries)
 
 
+def _snapshot_source(url: str, content: str) -> str | None:
+    """Write fetched content to an immutable content-addressed snapshot under
+    raw/cache/ and return its project-relative path (skips if already present).
+
+    This makes citations reproducible: a page's `sources` points at the local
+    snapshot rather than a bare live URL that may change or disappear."""
+    if not content:
+        return None
+    digest = hashlib.sha1(f"{url}\n{content}".encode("utf-8")).hexdigest()[:16]
+    _RAW_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    path = _RAW_CACHE_DIR / f"{digest}.md"
+    if not path.exists():
+        header = (f"<!-- source_url: {url}\n"
+                  f"     fetched_at: {datetime.now(timezone.utc).isoformat()} -->\n\n")
+        path.write_text(header + content, encoding="utf-8")
+    return str(path.relative_to(_PROJECT_ROOT))
+
+
 # ---------------------------------------------------------------------------
 # Subagent API call
 # ---------------------------------------------------------------------------
@@ -728,6 +899,12 @@ def _call_subagent(subagent_type: str, manifest: dict, research_config: dict) ->
     if subagent_type == "discovery":
         system = DISCOVERY_SYSTEM_PROMPT
         max_tokens = research_config.get("max_discovery_subagent_tokens", 3000)
+    elif subagent_type == "content_merge":
+        system = CONTENT_MERGE_SYSTEM_PROMPT
+        max_tokens = research_config.get("max_eval_subagent_tokens", 6000)
+    elif subagent_type == "profile_architect":
+        system = PROFILE_ARCHITECT_SYSTEM_PROMPT
+        max_tokens = research_config.get("max_eval_subagent_tokens", 6000)
     else:
         system = EVALUATION_SYSTEM_PROMPT
         max_tokens = research_config.get("max_eval_subagent_tokens", 6000)
@@ -938,8 +1115,7 @@ def _write_page(draft: dict) -> Path:
     fm["cold_start"] = True        # new pages always cold until retrospective lint clears them
     fm.setdefault("inbound_links", 0)
 
-    fm_yaml = yaml.dump(fm, default_flow_style=False, allow_unicode=True)
-    page_path.write_text(f"---\n{fm_yaml}---\n\n{content}\n", encoding="utf-8")
+    frontmatter.write_page(page_path, fm, content)
     return page_path
 
 
@@ -974,6 +1150,7 @@ def _write_draft_once(
     _update_index(draft)
     quota.record_page_written()
     session_state.mark_written_key(key)
+    session_state.record_created_page(page_path.stem)
     session_written_stems.add(page_path.stem)
     return page_path
 
@@ -1045,22 +1222,7 @@ def _update_inbound_links(draft: dict) -> None:
 
 
 def _increment_frontmatter_field(path: Path, field: str) -> None:
-    if not path.exists():
-        return
-    text = path.read_text(encoding="utf-8")
-    if not text.startswith("---"):
-        return
-    end = text.find("---", 3)
-    if end == -1:
-        return
-    try:
-        fm = yaml.safe_load(text[3:end].strip()) or {}
-    except yaml.YAMLError:
-        return
-    fm[field] = int(fm.get(field, 0)) + 1
-    body = text[end:]
-    path.write_text(f"---\n{yaml.dump(fm, default_flow_style=False, allow_unicode=True)}---{body}",
-                    encoding="utf-8")
+    frontmatter.increment_page_field(path, field)
 
 
 def _update_index(draft: dict) -> None:
@@ -1183,8 +1345,7 @@ def _run_eval_pipeline(draft: dict) -> tuple[bool, dict]:
     page_type = draft.get("page_type", "entity")
     fm = draft.get("frontmatter", {})
     content = draft.get("content", "")
-    fm_yaml = yaml.dump(fm, default_flow_style=False, allow_unicode=True)
-    page_md = f"---\n{fm_yaml}---\n\n{content}\n"
+    page_md = frontmatter.render_page(fm, content)
 
     with tempfile.NamedTemporaryFile(suffix=".md", mode="w", delete=False, encoding="utf-8") as f:
         f.write(page_md)
@@ -1749,6 +1910,199 @@ def _candidate_url(entry: dict) -> str:
     return entry.get("candidate", {}).get("url", "")
 
 
+_REGISTRY_CACHE: dict[str, dict] = {}
+
+
+def _session_registry(session_state: ResearchSessionState) -> dict:
+    """Build (once per session) and return the in-memory identity registry."""
+    cached = _REGISTRY_CACHE.get(session_state.session_id)
+    if cached is None:
+        cached = identity.build_registry(_WIKI_PAGES_DIR)
+        _REGISTRY_CACHE[session_state.session_id] = cached
+    return cached
+
+
+def _draft_canonical(draft: dict) -> tuple[str, list[str]]:
+    fm = draft.get("frontmatter", {}) or {}
+    canonical = str(fm.get("canonical_name") or draft.get("filename") or "").strip()
+    aliases = fm.get("aliases")
+    aliases = [str(a) for a in aliases] if isinstance(aliases, list) else []
+    return canonical, aliases
+
+
+def _apply_provenance(draft: dict, entry: dict) -> None:
+    """Deterministically set sources/source_url/fetched_at on a draft from the
+    fetched-content snapshot, so `sources` always references an immutable local
+    file rather than a bare live URL (overrides whatever the subagent guessed)."""
+    snapshot = entry.get("source_snapshot")
+    if not snapshot:
+        return
+    fm = draft.setdefault("frontmatter", {})
+    sources = fm.get("sources") or []
+    if not isinstance(sources, list):
+        sources = [sources]
+    if snapshot not in sources:
+        sources = [snapshot, *sources]
+    fm["sources"] = sources
+    fm.setdefault("source_url", entry.get("source_url"))
+    fm.setdefault("fetched_at", entry.get("fetched_at"))
+
+
+def _queue_identity_upsert(
+    draft: dict,
+    ref: "identity.PageRef",
+    url: str,
+    session_state: ResearchSessionState,
+    quota: QuotaManager,
+) -> Path:
+    """Hard-block path for a duplicate: apply the trivial, safe merges directly
+    (union aliases/sources, bump updated) and queue the substantive content
+    merge to patch_queue.md for human approval (Part 3b applies it)."""
+    existing_fm, _ = frontmatter.parse_page(ref.path)
+    draft_fm = draft.get("frontmatter", {}) or {}
+    draft_canonical, draft_aliases = _draft_canonical(draft)
+
+    # Union aliases: record the colliding surface form(s) so future lookups hit.
+    aliases = list(existing_fm.get("aliases") or [])
+    for a in [draft_canonical, *draft_aliases]:
+        if a and a != existing_fm.get("canonical_name") and a not in aliases:
+            aliases.append(a)
+    if aliases:
+        frontmatter.set_page_field(ref.path, "aliases", aliases)
+
+    # Union sources (snapshot paths / urls already on the draft).
+    sources = list(existing_fm.get("sources") or [])
+    for s in (draft_fm.get("sources") or []):
+        if s and s not in sources:
+            sources.append(s)
+    if sources:
+        frontmatter.set_page_field(ref.path, "sources", sources)
+    frontmatter.set_page_field(ref.path, "updated", _now_date())
+
+    # Queue the content merge for approval.
+    queue_path = _patch_queue_path()
+    queue_path.parent.mkdir(parents=True, exist_ok=True)
+    queue_text = queue_path.read_text(encoding="utf-8") if queue_path.exists() else "# Wiki Patch Queue\n\n"
+    body = (draft.get("content", "") or "").strip()
+    entry_text = (
+        f"## [{_now_date()}] merge_pending | {ref.path.name}\n"
+        f"target_page: {ref.path.name}\n"
+        f"canonical_name: {ref.canonical_name}\n"
+        f"colliding_name: {draft_canonical}\n"
+        f"source: {url}\n"
+        f"status: pending_review\n"
+        f"<!-- merge_draft_body\n{body}\nmerge_draft_body -->\n"
+    )
+    key = write_key(url, f"merge:{ref.path.name}")
+    if entry_text not in queue_text and key not in session_state.written_keys:
+        queue_path.write_text(queue_text.rstrip() + "\n\n" + entry_text, encoding="utf-8")
+        session_state.mark_written_key(key)
+    return queue_path
+
+
+# ---------------------------------------------------------------------------
+# Approval-gated content merge (`patch apply`)
+# ---------------------------------------------------------------------------
+
+_MERGE_BODY_RE = re.compile(r"<!--\s*merge_draft_body\n(.*?)\nmerge_draft_body\s*-->", re.DOTALL)
+
+
+def _patch_block_field(block: str, name: str) -> str | None:
+    m = re.search(rf"^{re.escape(name)}:\s*(.+)$", block, flags=re.MULTILINE)
+    return m.group(1).strip() if m else None
+
+
+def _parse_merge_block(block: str) -> dict:
+    body_m = _MERGE_BODY_RE.search(block)
+    return {
+        "target_page": _patch_block_field(block, "target_page"),
+        "canonical_name": _patch_block_field(block, "canonical_name"),
+        "source": _patch_block_field(block, "source"),
+        "status": _patch_block_field(block, "status"),
+        "new_body": body_m.group(1) if body_m else "",
+    }
+
+
+def _set_patch_status(block: str, new_status: str) -> str:
+    return re.sub(r"^status:\s*.+$", f"status: {new_status}",
+                  block, count=1, flags=re.MULTILINE)
+
+
+def _apply_one_merge(block: str, call_subagent, research_config: dict) -> tuple[bool, str]:
+    entry = _parse_merge_block(block)
+    target = entry.get("target_page")
+    page = _find_page_by_filename(target) if target else None
+    if page is None:
+        return False, _set_patch_status(block, "apply_failed (page not found)")
+    fm, body = frontmatter.parse_page(page)
+    manifest = {
+        "existing_content": body.strip(),
+        "new_draft": (entry.get("new_body") or "").strip(),
+        "canonical_name": entry.get("canonical_name") or fm.get("canonical_name"),
+        "source": entry.get("source"),
+    }
+    try:
+        raw = call_subagent("content_merge", manifest, research_config)
+    except Exception as exc:  # noqa: BLE001 — never crash the queue
+        logger.warning("content-merge subagent failed: %s", exc)
+        return False, _set_patch_status(block, "apply_failed (subagent error)")
+    result = validate_and_parse(raw, "MergeResult")
+    if result is None:
+        return False, _set_patch_status(block, "apply_failed (invalid merge output)")
+    merged = result["merged_content"]
+    # Deterministic pipeline gate — same gate as any other write.
+    page_type = fm.get("type", "entity")
+    passes, _ = _run_eval_pipeline({"page_type": page_type, "frontmatter": fm, "content": merged})
+    if not passes:
+        return False, _set_patch_status(block, "apply_failed (pipeline rejected)")
+    # Rewrite the single target page atomically; bump updated; bump inbound only
+    # for links that are newly introduced by the merge (avoid double counting).
+    old_links = set(re.findall(r"\[\[([^\]]+)\]\]", body))
+    new_links = set(re.findall(r"\[\[([^\]]+)\]\]", merged))
+    fm["updated"] = _now_date()
+    frontmatter.write_page(page, fm, merged)
+    for ref in new_links - old_links:
+        for linked in _WIKI_PAGES_DIR.rglob(f"{ref}.md"):
+            _increment_frontmatter_field(linked, "inbound_links")
+    return True, _set_patch_status(block, "applied")
+
+
+def apply_patch_queue(call_subagent=_call_subagent) -> dict:
+    """Apply human-approved merge_pending patches.
+
+    A patch is applied only when its ``status`` is ``approved`` (the human edits
+    ``pending_review`` -> ``approved`` in patch_queue.md). Each approved patch runs
+    the content-merge subagent, is gated by the deterministic pipeline, and rewrites
+    the single target page. ``call_subagent`` is injectable for testing.
+    """
+    path = _patch_queue_path()
+    if not path.exists():
+        return {"applied": 0, "skipped": 0, "failed": 0}
+    research_config = _load_research_config()
+    text = path.read_text(encoding="utf-8")
+    blocks = re.split(r"(?=^## \[)", text, flags=re.MULTILINE)
+    applied = skipped = failed = 0
+    out_blocks: list[str] = []
+    for block in blocks:
+        header = block.split("\n", 1)[0]
+        if "merge_pending" not in header:
+            out_blocks.append(block)
+            continue
+        status = _patch_block_field(block, "status")
+        if status != "approved":
+            skipped += 1
+            out_blocks.append(block)
+            continue
+        ok, new_block = _apply_one_merge(block, call_subagent, research_config)
+        applied += int(ok)
+        failed += int(not ok)
+        out_blocks.append(new_block)
+    path.write_text("".join(out_blocks), encoding="utf-8")
+    summary = {"applied": applied, "skipped": skipped, "failed": failed}
+    print(f"patch apply: {summary}")
+    return summary
+
+
 def _write_approved_entry(
     entry: dict,
     session_state: ResearchSessionState,
@@ -1759,10 +2113,33 @@ def _write_approved_entry(
 ) -> tuple[str, str | None]:
     url = _candidate_url(entry)
     written_files = list(entry.get("written_files", []))
+    registry = _session_registry(session_state)
+    max_debt = _max_linking_debt(_load_research_config())
+    handled_any = False
     for draft in entry.get("drafts", []):
+        _apply_provenance(draft, entry)
+        canonical, aliases = _draft_canonical(draft)
+        # Authoritative, deterministic identity check (overrides the subagent's
+        # advisory identity_action). A collision hard-blocks page creation.
+        action, ref = identity.resolve(canonical, registry, aliases)
+        if action == "upsert" and ref is not None:
+            _queue_identity_upsert(draft, ref, url, session_state, quota)
+            handled_any = True
+            print(f"[{session_state.session_id}] Identity collision (create blocked): "
+                  f"{canonical!r} → upsert {ref.filename}")
+            continue
+        # Linking-debt backpressure: stop creating once too many session pages
+        # are still orphaned; remaining work waits for linking/upserts.
+        if max_debt > 0 and _current_linking_debt(session_state) >= max_debt:
+            print(f"[{session_state.session_id}] Linking-debt cap ({max_debt}) reached; "
+                  f"deferring new page {canonical!r}")
+            session_state.transition(entry, "deferred_linking_debt", written_files=written_files)
+            return "ok", None
         page_path = _write_draft_once(draft, url, session_state, quota, session_written_stems)
         if page_path is None:
             break
+        identity.register(registry, canonical, page_path.name, page_path, aliases)
+        handled_any = True
         if page_path.name not in written_files:
             written_files.append(page_path.name)
         ev_idx = entry.get("audit_invocation_idx")
@@ -1787,6 +2164,11 @@ def _write_approved_entry(
         ok, error = _run_qmd_update(qmd_runner)
         if not ok:
             return "blocked_qmd", error
+    # Collision-only entries (every draft hard-blocked into an upsert) produced
+    # no created page; mark them terminal so they don't linger as pending.
+    from research_state import TERMINAL_STATES
+    if handled_any and entry.get("state") not in TERMINAL_STATES:
+        session_state.transition(entry, "upserted", written_files=written_files)
     return "ok", None
 
 
@@ -1898,6 +2280,12 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
             logger.warning("fetch failed and no enriched snippet for %s — skipping", url)
             session_state.transition(entry, "fetch_failed", error="fetch failed and no snippet")
             continue
+
+        # Provenance: snapshot fetched content immutably so citations are
+        # reproducible and `sources` references a local file, not a live URL.
+        entry["source_snapshot"] = _snapshot_source(url, content)
+        entry["source_url"] = url
+        entry["fetched_at"] = datetime.now(timezone.utc).isoformat()
 
         if effective_depth == "deep" and content:
             supplement = _enrich_snippet(candidate.get("title", ""), candidate.get("snippet", ""))
@@ -2087,6 +2475,9 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
         theme_profile=research_config.get("theme_profile"),
         coverage_gaps=(gap_manifest.get("gap_types", []) if isinstance(gap_manifest, dict) else []),
     )
+    # Refresh connectivity metrics and flip graph_maturity if the connectivity
+    # predicate is now satisfied (the transition writer the design implied).
+    _maybe_transition_maturity(session_id)
 
     summary = {
         "session_id": session_id,
@@ -2213,13 +2604,22 @@ def main():
     research_parser.add_argument("--resume", help="Resume a prior session id")
     research_parser.add_argument("--list-sessions", action="store_true", help="List resumable research sessions")
 
+    patch_parser = subparsers.add_parser("patch", help="Operate on the wiki patch queue")
+    patch_subparsers = patch_parser.add_subparsers(dest="patch_command")
+    patch_subparsers.add_parser(
+        "apply",
+        help="Apply human-approved merge_pending patches (status: approved) via the content-merge subagent",
+    )
+
     args = parser.parse_args()
     if args.command == "setup":
         if args.setup_command != "theme":
             setup_parser.print_help()
             sys.exit(1)
         if not args.choice:
-            for profile in propose_theme_profiles(args.theme):
+            profiles = propose_profiles(args.theme)
+            _save_cached_profiles(args.theme, profiles)
+            for profile in profiles:
                 print(f"{profile['id']}\t{profile['name']}\t{profile['description']}")
             print("Pass --choice <id> to write the selected profile into CLAUDE.md.")
             sys.exit(0)
@@ -2251,6 +2651,13 @@ def main():
                 depth=args.depth,
             )
         sys.exit(0 if result.get("status") in ("complete", "discovery_failed") else 1)
+    if args.command == "patch":
+        if args.patch_command != "apply":
+            patch_parser.print_help()
+            sys.exit(1)
+        logging.basicConfig(level=logging.WARNING)
+        summary = apply_patch_queue()
+        sys.exit(0 if summary.get("failed", 0) == 0 else 1)
     else:
         parser.print_help()
         sys.exit(1)

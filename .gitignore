@@ -1,5 +1,7 @@
 wiki/audit/
 wiki/research_state/
+# Machine-curated fetched-content snapshots; reproducibility cache, not source.
+raw/cache/
 # Local credential/env files — copy from subagent_env_setup.sh.template, never commit
 subagent_env_setup.sh
 setup.sh
