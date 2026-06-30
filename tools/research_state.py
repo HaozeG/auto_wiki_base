@@ -2,12 +2,21 @@
 
 from __future__ import annotations
 
+import datetime as _dt
 import hashlib
 import json
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
+
+class _DateEncoder(json.JSONEncoder):
+    """Serialize date/datetime to ISO strings so checkpoint JSON stays clean."""
+    def default(self, obj):
+        if isinstance(obj, (_dt.datetime, _dt.date)):
+            return obj.isoformat()
+        return super().default(obj)
 
 
 TERMINAL_STATES = {
@@ -110,11 +119,11 @@ class ResearchSessionState:
             "created_at": self.created_at,
             "updated_at": self.updated_at,
         }
-        self.checkpoint_path.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
+        self.checkpoint_path.write_text(json.dumps(data, indent=2, ensure_ascii=False, cls=_DateEncoder), encoding="utf-8")
         if event_type:
             event = {"timestamp": self.updated_at, "event": event_type, "payload": payload or {}}
             with self.event_path.open("a", encoding="utf-8") as f:
-                f.write(json.dumps(event, ensure_ascii=False) + "\n")
+                f.write(json.dumps(event, ensure_ascii=False, cls=_DateEncoder) + "\n")
 
     def set_candidates(self, candidates: list[dict]) -> None:
         existing = {c["id"]: c for c in self.candidates}

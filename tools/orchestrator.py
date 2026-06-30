@@ -1107,6 +1107,15 @@ def _write_page(draft: dict) -> Path:
     fm = draft.get("frontmatter", {})
     content = draft.get("content", "")
 
+    # Strip any frontmatter the subagent embedded in the content block
+    # (subagent sometimes returns the full page; we own the frontmatter here)
+    _embedded_fm, _stripped_body, _had_fm = frontmatter.split_frontmatter(content)
+    if _had_fm:
+        content = _stripped_body
+        # Merge subagent-supplied fm fields that ours doesn't already have
+        for k, v in _embedded_fm.items():
+            fm.setdefault(k, v)
+
     # Ensure required frontmatter fields
     today = _now_date()
     fm.setdefault("type", page_type)
@@ -1114,6 +1123,13 @@ def _write_page(draft: dict) -> Path:
     fm["updated"] = today          # always reflect write date
     fm["cold_start"] = True        # new pages always cold until retrospective lint clears them
     fm.setdefault("inbound_links", 0)
+
+    # Synthesis pages: populate connected_entities from body wiki-links when the
+    # eval schema omits it (subagent only supplies canonical_name/aliases/subtype).
+    if page_type == "synthesis" and not fm.get("connected_entities"):
+        fm["connected_entities"] = list(dict.fromkeys(
+            re.findall(r"\[\[([^\]]+)\]\]", content)
+        ))
 
     frontmatter.write_page(page_path, fm, content)
     return page_path
@@ -2412,6 +2428,16 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
         approved_drafts = []
         for draft in eval_result.get("page_drafts", []):
             _apply_scorecard_to_draft(draft, eval_sc)
+            # Inject source URL into frontmatter.sources before pipeline checks
+            # EMPTY_SOURCES (provenance must be set before the gate, not after).
+            _url = _candidate_url(entry)
+            if _url:
+                _fm = draft.setdefault("frontmatter", {})
+                _srcs = _fm.get("sources") or []
+                if not isinstance(_srcs, list):
+                    _srcs = [_srcs]
+                if _url not in _srcs:
+                    _fm["sources"] = [_url, *_srcs]
             passes, pipeline_result = _run_eval_pipeline(draft)
             audit.record_pipeline_result(
                 ev_idx,
