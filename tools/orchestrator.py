@@ -2040,7 +2040,16 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
         approved_drafts = []
         for draft in eval_result.get("page_drafts", []):
             _apply_scorecard_to_draft(draft, eval_sc)
-            _apply_provenance(draft, entry)  # inject sources before pipeline checks EMPTY_SOURCES
+            # Inject source URL into frontmatter.sources before pipeline checks
+            # EMPTY_SOURCES (provenance must be set before the gate, not after).
+            _url = _candidate_url(entry)
+            if _url:
+                _fm = draft.setdefault("frontmatter", {})
+                _srcs = _fm.get("sources") or []
+                if not isinstance(_srcs, list):
+                    _srcs = [_srcs]
+                if _url not in _srcs:
+                    _fm["sources"] = [_url, *_srcs]
             passes, pipeline_result = _run_eval_pipeline(draft)
             audit.record_pipeline_result(
                 ev_idx,
