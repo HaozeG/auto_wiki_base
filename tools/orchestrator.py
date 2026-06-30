@@ -930,6 +930,15 @@ def _write_page(draft: dict) -> Path:
     fm = draft.get("frontmatter", {})
     content = draft.get("content", "")
 
+    # Strip any frontmatter the subagent embedded in the content block
+    # (subagent sometimes returns the full page; we own the frontmatter here)
+    _embedded_fm, _stripped_body, _had_fm = frontmatter.split_frontmatter(content)
+    if _had_fm:
+        content = _stripped_body
+        # Merge subagent-supplied fm fields that ours doesn't already have
+        for k, v in _embedded_fm.items():
+            fm.setdefault(k, v)
+
     # Ensure required frontmatter fields
     today = _now_date()
     fm.setdefault("type", page_type)
@@ -2024,6 +2033,7 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
         approved_drafts = []
         for draft in eval_result.get("page_drafts", []):
             _apply_scorecard_to_draft(draft, eval_sc)
+            _apply_provenance(draft, entry)  # inject sources before pipeline checks EMPTY_SOURCES
             passes, pipeline_result = _run_eval_pipeline(draft)
             audit.record_pipeline_result(
                 ev_idx,
