@@ -6,13 +6,24 @@ You are the maintainer of this wiki. You create pages, update them on ingest, ma
 
 ---
 
+## Theme Setup
+
+The wiki is domain-agnostic. Its organization is **not** hand-coded. At theme setup a **profile-architect subagent** reads the theme string and a guided prompt and proposes 2–4 candidate organization profiles, each specifying: an organizing principle, `entity` **subtypes** (e.g. `hardware_target`, `optimization_recipe`) with their `structured_fields`, source preferences, and coverage/lint priorities. The human selects and edits one; the chosen profile is written below as a `[theme_profile]` block (absent until setup runs). A deterministic fallback profile is used only when the agent is unavailable.
+
+Subtypes are **specializations of `entity`**, never new top-level types: a subtype page is still an `entity` for retrieval, identity, and dedup, and only adds `structured_fields`. The two canonical types — `entity` and `synthesis` — remain the RAG-retrieval contract.
+
+---
+
 ## System State
 
 ```yaml
 [system_state]
 graph_maturity: false
 cold_start_page_count: 0
-mean_inbound_links: 0.0
+orphan_fraction: 1.0          # fraction of pages with 0 inbound links — primary maturity signal
+median_inbound_links: 0       # median inbound across all pages — primary maturity signal
+mean_inbound_links: 0.0       # secondary signal only (gameable by a few hub pages)
+linking_debt: 0               # pages created this session still at 0 inbound (autonomous loop)
 retrospective_lint_done: false
 ```
 
@@ -27,8 +38,14 @@ Every entity page must use this exact frontmatter structure:
 ```markdown
 ---
 type: entity
+subtype: ~          # optional theme subtype (e.g. hardware_target); declared in [theme_profile]
+canonical_name: ""  # normalized concept identity — the dedup key (see Identity Resolution)
+aliases: []         # alternate surface forms: vendor names, part numbers, abbreviations, URL slugs
 tags: []
-sources: []
+structured_fields: {}   # subtype-specific fields per [theme_profile]; {} for plain entities
+sources: []        # immutable local snapshot paths under raw/ (raw/sources or raw/cache)
+source_url: ~      # original URL when web-fetched; null for human-curated raw/ files
+fetched_at: ~      # ISO-8601 snapshot time, when applicable
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
 cold_start: true
@@ -58,13 +75,15 @@ that stands alone. Prefer: numbers, ratios, named systems, concrete comparisons.
 
 ## Sources
 
-<Inline citations to raw/ files for each major claim.>
+<Inline citations to the immutable snapshot(s) in raw/ for each major claim. Cite the snapshot,
+not a bare live URL; the originating URL is recorded in `source_url`.>
 ```
 
 **Hard rejection criteria — stop and do not write the page if:**
 - First paragraph contains a dangling reference pattern (see `[eval_config]` below)
 - Page has fewer than 3 independently verifiable claims
 - `sources` list is empty (ungrounded page)
+- `canonical_name` resolves to an existing entity but this is a *new* page rather than an upsert (duplicate creation is hard-blocked — see Identity Resolution)
 
 ---
 
@@ -125,13 +144,26 @@ or gaps that new sources could fill.>
 
 ---
 
+## Identity Resolution
+
+Before drafting **any** page, resolve the concept to a canonical identity. This runs in ingest Step 0 and in the autonomous evaluation step, and it is what prevents duplicate pages (e.g. `entity/Gemmini` vs a `hardware_target` Gemmini page, or three pages drafted from one spec under different titles).
+
+- **Concept identity** = `canonical_name` (normalized: lowercased, punctuation-folded, vendor/series noise stripped) + `aliases[]`. The Concept Index in `wiki/index.md` is the **identity registry** mapping every known name/alias → page, across all subtypes.
+- **Match the candidate against the registry across all subtypes** (never just the folder it would land in) and pick one:
+  - `create` — no match → draft a new page.
+  - `upsert` — match → do not create a second page; emit an update/merge patch to the existing page (`wiki/patch_queue.md` in the manual loop; applied through the deterministic pipeline in the autonomous loop).
+  - `alias` — same concept, new surface form → add the alias to the existing page, then `upsert`.
+- **Duplicate creation is hard-blocked**: a `create` whose `canonical_name` resolves to an existing identity is forced to `upsert`. Linking is *not* hard-blocked — a new page may be temporarily unlinked, but that is tracked as bounded `linking_debt` (see Maturity Transition).
+
+---
+
 ## Ingest Protocol
 
 When asked to ingest a source file, follow these steps in order:
 
-### Step 0 — Source-Level Filter
+### Step 0 — Source-Level Filter + Identity Resolution
 
-Read `wiki/index.md`. Estimate how much of the source's content is already covered by existing pages with `cold_start: false`. If >80% is already covered, log a `skipped` entry and stop:
+Read `wiki/index.md`. For each candidate concept in the source, run Identity Resolution (above) against the Concept Index registry; concepts that resolve to existing pages are routed to `upsert`, not `create`. Then estimate how much of the source's content is already covered by existing pages with `cold_start: false`. If >80% is already covered, log a `skipped` entry and stop:
 
 ```
 ## [YYYY-MM-DD] skipped | <source filename>
@@ -163,7 +195,8 @@ For each page that passes its scorecard:
 1. Create or update the page file in `wiki/_pages/entity/` or `wiki/_pages/synthesis/`
 2. Update `inbound_links` count on any page that gains a new reference from this page
 3. Update `wiki/index.md` (add row to the correct table, update Concept Index)
-4. Run: `python tools/graph_stats.py wiki/_pages/` and update `[system_state].mean_inbound_links`
+4. Run: `python tools/graph_stats.py wiki/_pages/` and update `[system_state]` connectivity fields (`orphan_fraction`, `median_inbound_links`, `mean_inbound_links`)
+5. Write/refresh frontmatter only by atomic YAML round-trip (parse → mutate → re-serialize), never by string/delimiter splicing
 
 ### Step 4 — Log Entry
 
@@ -179,15 +212,19 @@ cold_start: true
 
 ### Maturity Transition
 
-After each ingest, if `graph_stats.py` reports `mean_inbound_links > 2.0` and `[system_state].graph_maturity` is still `false`:
+Maturity is judged on the **connectivity distribution**, not the mean (a few hub pages can lift the mean over threshold while most pages have zero inbound links). After each ingest, if `graph_stats.py` reports `orphan_fraction < 0.2` **and** `median_inbound_links >= 1`, and `[system_state].graph_maturity` is still `false`:
 1. Set `graph_maturity: true` in `[system_state]`
 2. Log:
    ```
    ## [YYYY-MM-DD] transition | cold_start → mature
    pages_at_transition: N
+   orphan_fraction: 0.XX
+   median_inbound_links: X
    mean_inbound_links: X.XX
    ```
 3. Do NOT immediately run retrospective lint — wait for explicit `lint retrospective` command.
+
+**Linking debt (autonomous loop).** Track `linking_debt` = pages created this session still at 0 inbound. When it exceeds `max_linking_debt` (`[research_config]`), stop creating new pages and switch to linking/upserting existing ones until the debt clears, so connectivity never falls behind generation.
 
 ---
 
@@ -215,6 +252,8 @@ After writing any new synthesis page, run `uv run --no-sync qmd update` (see qmd
 ---
 
 ## Lint Protocol
+
+Lint is a **health check and safety net, not the primary quality gate.** Duplicate prevention happens at write time via Identity Resolution, and connectivity is kept current via linking debt — because a periodic pass cannot keep up with a high-throughput generation loop. Lint catches what slips through and surfaces judgement calls for the human.
 
 ### Routine Lint (`lint routine`)
 
@@ -386,6 +425,7 @@ spacy_model: en_core_web_sm
 [research_config]
 max_candidates_per_session: 20
 max_new_pages_per_session: 10
+max_linking_debt: 5                  # autonomous loop stops creating when this many session pages remain at 0 inbound
 max_eval_subagent_tokens: 16000
 max_discovery_subagent_tokens: 3000
 max_retries_on_fetch_failure: 2
@@ -414,6 +454,9 @@ required_measurement_fields:
   - metrics
   - measurement_context
 page_type_taxonomy:
+  # Only entity + synthesis are canonical RAG types. Theme-specific kinds
+  # (e.g. hardware_target, optimization_recipe) are declared as entity SUBTYPES
+  # in [theme_profile] and resolve to type=entity for identity/dedup/retrieval.
   entity: general concept, project, system, chip, or architecture page
   synthesis: cross-page comparison, contradiction, or landscape page
   source_note: source-grounded note used when a source is useful but not yet page-worthy
