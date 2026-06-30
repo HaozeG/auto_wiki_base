@@ -10,8 +10,7 @@ import re
 import sys
 from pathlib import Path
 
-import yaml
-
+from frontmatter import split_frontmatter
 from qmd_runner import QmdRunner
 
 
@@ -29,15 +28,7 @@ def _parse_frontmatter(path: Path) -> tuple[dict, str]:
         text = path.read_text(encoding="utf-8")
     except OSError:
         return {}, ""
-    if not text.startswith("---"):
-        return {}, text
-    end = text.find("---", 3)
-    if end == -1:
-        return {}, text
-    try:
-        fm = yaml.safe_load(text[3:end].strip()) or {}
-    except yaml.YAMLError:
-        fm = {}
+    fm, _body, _ = split_frontmatter(text)
     return fm, text
 
 
