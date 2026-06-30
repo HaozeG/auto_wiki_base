@@ -14,30 +14,25 @@ Exit codes:
 """
 
 import argparse
-import re
 import sys
 from pathlib import Path
 
-import yaml
+from frontmatter import parse_frontmatter
 
 MATURITY_THRESHOLD = 2.0
+# Connectivity-based maturity (primary). A mean can be lifted past threshold by a
+# few hub pages while most pages are orphans; require a low orphan fraction AND a
+# non-trivial median instead.
+ORPHAN_FRACTION_THRESHOLD = 0.2   # T1: mature requires orphan_fraction < this
+MEDIAN_INBOUND_THRESHOLD = 1.0    # T2: mature requires median_inbound_links >= this
 
 
-def parse_frontmatter(path: Path) -> dict:
-    """Return the YAML frontmatter dict from a markdown file, or {} on failure."""
-    try:
-        text = path.read_text(encoding="utf-8")
-    except OSError:
-        return {}
-    if not text.startswith("---"):
-        return {}
-    end = text.find("---", 3)
-    if end == -1:
-        return {}
-    try:
-        return yaml.safe_load(text[3:end].strip()) or {}
-    except yaml.YAMLError:
-        return {}
+def is_mature(stats: dict,
+              orphan_threshold: float = ORPHAN_FRACTION_THRESHOLD,
+              median_threshold: float = MEDIAN_INBOUND_THRESHOLD) -> bool:
+    """Connectivity-based maturity predicate (the authoritative one)."""
+    return (stats.get("orphan_fraction", 1.0) < orphan_threshold
+            and stats.get("median_inbound_links", 0.0) >= median_threshold)
 
 
 def compute_stats(pages_dir: Path, verbose: bool = False,
@@ -55,6 +50,9 @@ def compute_stats(pages_dir: Path, verbose: bool = False,
             "page_count": 0,
             "mean_inbound_links": 0.0,
             "median_inbound_links": 0.0,
+            "orphan_fraction": 1.0,
+            "orphan_count": 0,
+            "mature": False,
             "above_maturity_threshold": False,
             "maturity_threshold": MATURITY_THRESHOLD,
         }
@@ -94,17 +92,28 @@ def compute_stats(pages_dir: Path, verbose: bool = False,
 
     primary = median if use_median else mean
 
-    return {
+    orphan_count = sum(1 for v in all_values if v == 0)
+    orphan_fraction = (orphan_count / len(all_values)) if all_values else 1.0
+
+    stats = {
         "page_count": len(md_files),
         "pages_with_inbound_links": len(all_values),
         "mean_inbound_links": round(mean, 4),
         "median_inbound_links": round(median, 4),
+        "orphan_count": orphan_count,
+        "orphan_fraction": round(orphan_fraction, 4),
         "hubs_excluded": hub_count,
         "excl_mean_inbound_links": round(excl_mean, 4) if excl_mean is not None else None,
         "excl_median_inbound_links": round(excl_median, 4) if excl_median is not None else None,
+        # legacy mean/median threshold flag, kept for backward compatibility
         "above_maturity_threshold": primary > MATURITY_THRESHOLD,
         "maturity_threshold": MATURITY_THRESHOLD,
+        "orphan_fraction_threshold": ORPHAN_FRACTION_THRESHOLD,
+        "median_inbound_threshold": MEDIAN_INBOUND_THRESHOLD,
     }
+    # authoritative connectivity-based maturity
+    stats["mature"] = is_mature(stats)
+    return stats
 
 
 def main():
@@ -136,23 +145,25 @@ def main():
     print(f"pages_with_inbound_links: {stats.get('pages_with_inbound_links', 0)}")
     print(f"mean_inbound_links: {stats['mean_inbound_links']}")
     print(f"median_inbound_links: {stats['median_inbound_links']}")
+    print(f"orphan_count: {stats.get('orphan_count', 0)}")
+    print(f"orphan_fraction: {stats.get('orphan_fraction', 1.0)}")
     if args.exclude_hubs > 0:
         print(f"hubs_excluded (>{args.exclude_hubs} links): {stats['hubs_excluded']}")
         print(f"excl_mean_inbound_links: {stats['excl_mean_inbound_links']}")
         print(f"excl_median_inbound_links: {stats['excl_median_inbound_links']}")
 
-    primary_label = "median" if args.median else "mean"
-    primary_val = stats["median_inbound_links"] if args.median else stats["mean_inbound_links"]
-
-    if stats["above_maturity_threshold"]:
+    if stats["mature"]:
         print(
-            f"STATUS: MATURE — {primary_label}_inbound_links ({primary_val}) "
-            f"> threshold ({MATURITY_THRESHOLD}). Set graph_maturity: true in CLAUDE.md."
+            f"STATUS: MATURE — orphan_fraction ({stats['orphan_fraction']}) "
+            f"< {ORPHAN_FRACTION_THRESHOLD} AND median_inbound_links "
+            f"({stats['median_inbound_links']}) >= {MEDIAN_INBOUND_THRESHOLD}. "
+            f"Set graph_maturity: true in CLAUDE.md."
         )
     else:
         print(
-            f"STATUS: COLD_START — {primary_label}_inbound_links ({primary_val}) "
-            f"<= threshold ({MATURITY_THRESHOLD})."
+            f"STATUS: COLD_START — connectivity below maturity "
+            f"(orphan_fraction {stats['orphan_fraction']} must be < {ORPHAN_FRACTION_THRESHOLD}, "
+            f"median_inbound_links {stats['median_inbound_links']} must be >= {MEDIAN_INBOUND_THRESHOLD})."
         )
 
 

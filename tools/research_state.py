@@ -25,6 +25,8 @@ TERMINAL_STATES = {
     "eval_rejected",
     "pipeline_rejected",
     "written",
+    "deferred_linking_debt",
+    "upserted",
 }
 
 
@@ -51,6 +53,8 @@ class ResearchSessionState:
     status: str = "running"
     effective_depth: str | None = None
     written_keys: list[str] = field(default_factory=list)
+    created_page_stems: list[str] = field(default_factory=list)
+    linking_debt: int = 0
     keyword_plan: dict[str, Any] = field(default_factory=dict)
     discovery_metadata: dict[str, Any] = field(default_factory=dict)
     created_at: str = field(default_factory=_now)
@@ -89,6 +93,8 @@ class ResearchSessionState:
             status=data.get("status", "running"),
             effective_depth=data.get("effective_depth") or data.get("scope", {}).get("depth"),
             written_keys=data.get("written_keys", []),
+            created_page_stems=data.get("created_page_stems", []),
+            linking_debt=data.get("linking_debt", 0),
             keyword_plan=data.get("keyword_plan", {}),
             discovery_metadata=data.get("discovery_metadata", {}),
             created_at=data.get("created_at", _now()),
@@ -106,6 +112,8 @@ class ResearchSessionState:
             "effective_depth": self.effective_depth,
             "candidates": self.candidates,
             "written_keys": self.written_keys,
+            "created_page_stems": self.created_page_stems,
+            "linking_debt": self.linking_debt,
             "keyword_plan": self.keyword_plan,
             "discovery_metadata": self.discovery_metadata,
             "created_at": self.created_at,
@@ -157,6 +165,12 @@ class ResearchSessionState:
         if key not in self.written_keys:
             self.written_keys.append(key)
             self.save("write_key_recorded", {"write_key": key})
+
+    def record_created_page(self, stem: str) -> None:
+        """Track a page newly created this session (for linking-debt accounting)."""
+        if stem not in self.created_page_stems:
+            self.created_page_stems.append(stem)
+            self.save("page_created", {"stem": stem})
 
 
 def list_sessions(state_dir: Path) -> list[dict]:

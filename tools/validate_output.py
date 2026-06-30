@@ -85,11 +85,42 @@ def _validate_eval_result(data: dict) -> None:
                 raise ValueError(f"PageDraft missing fields: {missing_d}")
             if not _valid_page_type(draft.get("page_type")):
                 raise ValueError(f"Invalid page_type: {draft.get('page_type')}")
+            if not isinstance(draft.get("frontmatter"), dict):
+                raise TypeError("PageDraft.frontmatter must be a dict")
+            # identity_action is advisory; validate only its value when present.
+            action = draft.get("identity_action")
+            if action is not None and action not in ("create", "upsert", "alias"):
+                raise ValueError(f"Invalid identity_action: {action}")
+
+
+_MERGE_RESULT_REQUIRED = {"merged_content"}
+
+
+def _validate_merge_result(data: dict) -> None:
+    missing = _MERGE_RESULT_REQUIRED - data.keys()
+    if missing:
+        raise ValueError(f"MergeResult missing fields: {missing}")
+    if not isinstance(data["merged_content"], str) or not data["merged_content"].strip():
+        raise ValueError("MergeResult.merged_content must be a non-empty string")
+
+
+def _validate_profile_list(data: dict) -> None:
+    profiles = data.get("profiles")
+    if not isinstance(profiles, list) or not profiles:
+        raise ValueError("ProfileList.profiles must be a non-empty list")
+    for i, p in enumerate(profiles):
+        for key in ("id", "name", "description"):
+            if not isinstance(p.get(key), str) or not p.get(key).strip():
+                raise ValueError(f"Profile {i} missing/invalid {key}")
+        if not isinstance(p.get("page_types"), dict) or not p["page_types"]:
+            raise ValueError(f"Profile {i} must define page_types (subtypes)")
 
 
 _SCHEMA_VALIDATORS = {
     "CandidateList": _validate_candidate_list,
     "EvalResult": _validate_eval_result,
+    "MergeResult": _validate_merge_result,
+    "ProfileList": _validate_profile_list,
 }
 
 
