@@ -13,7 +13,7 @@ LLM Wiki is a dual-purpose knowledge base system:
 
 The LLM owns the wiki entirely — it creates pages, updates them on ingest, maintains cross-references, and runs lint passes. The human sources, directs, and asks questions. The schema file (`CLAUDE.md`) governs the LLM's behavior as a disciplined wiki maintainer.
 
-**Key design constraint**: the system must be domain-agnostic. No domain-specific configuration at startup. All structure emerges from the data.
+**Key design constraint**: the system must be domain-agnostic. The schema author never hand-codes a per-domain page taxonomy. Instead, at theme setup a **profile-architect subagent** reads the theme and a guided prompt and proposes 2–4 candidate organization profiles (organizing principle, page subtypes, structured fields, source preferences, coverage/lint priorities); the human selects and edits one, and the chosen profile is written into `CLAUDE.md [theme_profile]`. A deterministic fallback profile is used only when the agent is unavailable (offline/degraded runs). Structure thus emerges from the data *through the agent* — not from a hardcoded rule table, and not from fixed configuration baked in before any source is seen.
 
 ---
 
@@ -45,14 +45,15 @@ wiki/
 ```
 project-root/
 ├── CLAUDE.md               ← Schema file (this document's §4 defines its content)
-├── raw/                    ← Source documents (never modified by LLM)
-│   ├── sources/            ← Articles, papers, notes
+├── raw/                    ← Source documents (immutable once written)
+│   ├── sources/            ← Human-curated articles, papers, notes
+│   ├── cache/              ← Machine-curated snapshots of web-fetched content (§11 Provenance)
 │   └── assets/             ← Images, attachments
 ├── wiki/
-│   ├── index.md
+│   ├── index.md            ← Catalog + Concept Index / identity registry (§4.1b)
 │   ├── log.md
 │   └── _pages/
-│       ├── entity/
+│       ├── entity/         ← Entities; may be foldered by subtype (e.g. entity/hardware_target/)
 │       └── synthesis/
 └── tools/                  ← Evaluation scripts (§7)
     ├── eval_summary.py
@@ -68,7 +69,9 @@ project-root/
 
 ### 4.1 Page Types
 
-The system has exactly two page types. Every wiki page must declare its type in frontmatter.
+The system has exactly **two canonical types** — `entity` and `synthesis` — and they define the RAG-retrieval contract: every retrievable chunk is either a self-contained entity page or a synthesis RAG Summary. Themes do not add new top-level types. Instead, a theme may declare **subtypes of `entity`** (e.g. `hardware_target`, `optimization_recipe`, `benchmark_result`, `workload_kernel`) in `[theme_profile]`. A subtype is still an `entity` for retrieval, identity, and dedup purposes; it only adds `structured_fields` to the frontmatter. This keeps one identity namespace and one uniform RAG backend while allowing rich per-domain typing.
+
+Every wiki page must declare `type` (and, for entities, an optional `subtype`) in frontmatter. Folder layout MAY mirror subtypes for Obsidian browsing, but identity and dedup operate on `type` + canonical name, **never** on the folder a page happens to live in.
 
 #### Entity / Concept Page
 
@@ -77,8 +80,14 @@ Purpose: serve RAG direct retrieval. Must be independently meaningful without an
 ```markdown
 ---
 type: entity
+subtype: ~          # optional theme subtype (e.g. hardware_target); declared in [theme_profile]
+canonical_name: ""  # normalized concept identity (see §4.1b); the dedup key
+aliases: []         # alternate surface forms: vendor names, part numbers, abbreviations, URL slugs
 tags: []
-sources: []        # list of raw/ filenames that contributed to this page
+structured_fields: {}   # subtype-specific fields, per [theme_profile]; empty for plain entities
+sources: []        # list of immutable local snapshot paths under raw/ (see §11 Provenance)
+source_url: ~      # original URL when the source was web-fetched; null for human-curated raw/ files
+fetched_at: ~      # ISO-8601 timestamp of the snapshot, when applicable
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
 cold_start: true   # set to false after retrospective lint clears it
@@ -108,13 +117,15 @@ that stands alone. Prefer: numbers, ratios, named systems, concrete comparisons.
 
 ## Sources
 
-<Inline citations to raw/ files for each major claim.>
+<Inline citations to the immutable snapshot(s) in raw/ for each major claim. Cite the snapshot,
+not a bare live URL; the originating URL is recorded in `source_url`.>
 ```
 
 **Rejection criteria for Entity pages** (hard stops):
 - First paragraph contains a dangling reference pattern (see §7.1)
 - Page contains fewer than 3 independently verifiable claims
 - No `sources` entry (ungrounded page)
+- `canonical_name` resolves to an existing entity but the draft is a *new* page rather than an upsert (see §4.1b — duplicate creation is hard-blocked)
 
 #### Synthesis Page
 
@@ -171,13 +182,29 @@ or gaps that new sources could fill. This is input for lint pass.>
 - RAG Summary contains any dangling reference pattern
 - `connected_entities` list is empty (a synthesis over nothing is a duplicate entity page)
 
+### 4.1b Identity Resolution (runs before any page is drafted)
+
+Duplicate pages are the dominant failure mode of a high-throughput wiki, and they arise because dedup historically keyed on **filename, folder, and title** — the three things that differ between `entity/Gemmini` and `hardware_target/Gemmini`, or between three pages drafted from the same matrix-extension spec under slightly different titles. Identity resolution removes those keys from the decision.
+
+**Concept identity.** Every entity has a `canonical_name` (normalized: lowercased, punctuation-folded, vendor/series noise stripped) plus an `aliases[]` set (vendor names, part numbers, abbreviations, URL slugs). The Concept Index in `index.md` (§9.1) is the **identity registry**: it maps every known canonical name and alias to its page, across all subtypes.
+
+**Resolution step.** Before drafting — in ingest Step 0 and in the autonomous evaluation subagent — the candidate concept is matched against the registry across *all* subtypes (not just the folder it would land in). The step returns exactly one decision:
+
+- `create` — no identity match. Draft a new page.
+- `upsert` — identity matches an existing page. Do **not** create a second page; emit an update/merge patch to the existing page instead.
+- `alias` — same concept under a new surface form. Record the new alias on the existing page and treat as `upsert`.
+
+**Hybrid enforcement (autonomous loop).** A `create` whose `canonical_name` resolves to an existing identity is **hard-blocked** and forced to `upsert`. This is the single rule that collapses the Gemmini / XuanTie / AME duplicate classes at write time rather than leaving them for lint. Linking, by contrast, is *not* hard-blocked at write — a freshly created page may be temporarily unlinked, but its unlinked state is tracked as bounded lint debt (§6.3).
+
+**Routing.** Upserts go through `wiki/patch_queue.md` for review in the manual loop, or are applied directly with the deterministic pipeline (§7) as the gate in the autonomous loop.
+
 ### 4.2 Ingest Protocol
 
 On receiving a new source, the LLM follows these steps in order:
 
-**Step 0 — Source-level filter (reads only `index.md`)**
+**Step 0 — Source-level filter + identity resolution (reads only `index.md`)**
 
-Estimate novelty by scanning the source for entities and concepts, then checking against `index.md` entries. If >80% of the source's content appears already covered by existing pages with `cold_start: false`, log as `skipped` and stop.
+Extract the candidate entities and concepts from the source and run identity resolution (§4.1b) for each against the Concept Index registry. Concepts that resolve to existing pages are routed to `upsert`, not `create`. Then estimate novelty: if >80% of the source's content resolves to existing pages with `cold_start: false`, log as `skipped` and stop.
 
 ```
 ## [YYYY-MM-DD] skipped | <source filename>
@@ -316,9 +343,12 @@ Structural metrics (bridge score, hub potential, retrieval path coverage) requir
 
 ```yaml
 [system_state]
-graph_maturity: false         # flips to true when trigger condition met
+graph_maturity: false         # flips to true when trigger condition met (§6.3)
 cold_start_page_count: 0      # increments on each cold_start page created
-mean_inbound_links: 0.0       # recomputed by tools/graph_stats.py on each ingest
+orphan_fraction: 1.0          # fraction of pages with 0 inbound links (primary maturity signal)
+median_inbound_links: 0       # median inbound across all pages (primary maturity signal)
+mean_inbound_links: 0.0       # recomputed by tools/graph_stats.py on each ingest (secondary signal only)
+linking_debt: 0               # pages created this session still at 0 inbound (autonomous loop)
 retrospective_lint_done: false
 ```
 
@@ -330,15 +360,21 @@ After each ingest, run:
 python tools/graph_stats.py wiki/_pages/
 ```
 
-When `mean_inbound_links > 2.0`:
+Maturity is a property of the graph's **connectivity distribution**, not of its mean. A mean inbound-link count is gameable: a handful of hub pages can carry the average above threshold while the median page has zero inbound links. (In one test instantiation, maturity flipped at mean > 2.0 while 50% of pages had zero inbound and the median was 0 — a "mature" wiki that was mostly disconnected.) The trigger therefore uses the distribution:
+
+When `orphan_fraction < T1` **and** `median_inbound_links ≥ T2` (defaults: `T1 = 0.2`, `T2 = 1`; mean is reported only as a secondary signal):
 1. Set `graph_maturity: true` in `[system_state]`
 2. Log the transition:
    ```
    ## [YYYY-MM-DD] transition | cold_start → mature
    pages_at_transition: N
+   orphan_fraction: 0.XX
+   median_inbound_links: X
    mean_inbound_links: X.XX
    ```
 3. **Do not immediately run retrospective lint** — log the pending status and wait for explicit `lint retrospective` command
+
+**Linking debt (autonomous loop).** The autonomous research loop tracks a *linking-debt counter* — pages created in the session that still have zero inbound links. When debt exceeds the configurable cap (`max_linking_debt`), the loop stops *creating* new pages and switches to *linking and upserting* existing ones until the debt clears. This keeps connectivity from falling behind generation, the mechanism that previously produced a 50% orphan rate.
 
 ### 6.4 Cold Start Page Behavior
 
@@ -465,6 +501,8 @@ Returns exit code 0 (pass) or 1 (fail with reasons).
 Two types of lint pass:
 
 ### 8.1 Routine Lint
+
+Lint is a **health check and safety net, not the primary quality gate.** Duplicate prevention and linking now happen at write time (§4.1b identity resolution; §6.3 linking debt), because post-hoc lint structurally loses the race against generation — a high-throughput loop creates duplicates and orphans faster than a periodic pass can merge them. Lint exists to catch what slips through and to surface judgement calls for the human, not to be the mechanism that keeps the graph clean.
 
 Run periodically or on request. Checks:
 
@@ -634,7 +672,11 @@ Implement in this order. Each phase is independently testable.
 
 **The LLM never modifies `raw/`.** All writes are to `wiki/` or `CLAUDE.md`.
 
+**Provenance: web-fetched content is snapshotted, never cited as a bare live URL.** The autonomous research harness fetches URLs the human never hand-curated. To preserve "raw is the source of truth," every fetched resource is written once to a content-addressed snapshot under `raw/cache/<hash>.md` — machine-curated, but immutable-once-written, just like human-curated `raw/sources/` files. A page's `sources:` references the snapshot path; the originating URL and fetch time live in `source_url` / `fetched_at`. This makes citations reproducible even after the live page changes or disappears, and keeps the `sources:` field meaning "a local immutable file" (never a URL that silently rots). Without this, `sources:` degrades into bare URLs and the immutability guarantee is broken in the autonomous loop.
+
 **Frontmatter is the source of truth for graph structure.** `inbound_links` in frontmatter is the canonical count. `graph_stats.py` reads frontmatter, not markdown link syntax, to avoid parsing edge cases.
+
+**Frontmatter must be written by atomic YAML round-trip, never string mutation.** All frontmatter edits parse the block into an object, mutate the object, and re-serialize — never append or splice raw text. String/delimiter mutation under a high-throughput write loop is what produced accumulated-dash delimiter corruption and double-counted `inbound_links` in practice. The parse→mutate→serialize discipline eliminates that entire class of corruption.
 
 **Thresholds in §7.4 are starting points, not fixed values.** After the first retrospective lint, the human should review whether the thresholds correctly separated useful from low-value cold_start pages, and adjust `[eval_thresholds]` in `CLAUDE.md` accordingly.
 
@@ -653,6 +695,8 @@ The auto research harness enables autonomous resource discovery and evaluation. 
 > **For Claude Code**: §12 is a strict implementation spec. Do not deviate from the subagent type definitions, I/O schemas, or the write isolation rule. Every deviation is a correctness bug, not a style choice.
 
 ### 12.1 Core Principles
+
+**Identity-first writes**: before the evaluation subagent drafts anything, the orchestrator resolves the candidate to a canonical identity against the Concept Index registry across all subtypes (§4.1b). A candidate that resolves to an existing page yields an upsert patch, never a new page — duplicate creation is hard-blocked. The theme's page subtypes and structured fields come from the agent-generated `[theme_profile]` (§1), not a hardcoded table. Maturity and stop conditions read the connectivity distribution and linking debt (§6.3), and every fetched resource is snapshotted before use (§11 Provenance). These are write-time gates; lint (§8) is only the safety net behind them.
 
 **Write isolation**: subagents never write to disk. They return content. The orchestrator validates and writes. This is non-negotiable — it is what allows the deterministic evaluation pipeline (§7) to act as a gate between LLM output and wiki state.
 
