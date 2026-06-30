@@ -1,6 +1,8 @@
 wiki/audit/
 wiki/research_state/
+# Local credential/env files — copy from subagent_env_setup.sh.template, never commit
 subagent_env_setup.sh
+setup.sh
 .obsidian/
 __pycache__/
 *.pyc
