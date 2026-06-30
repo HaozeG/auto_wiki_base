@@ -947,6 +947,13 @@ def _write_page(draft: dict) -> Path:
     fm["cold_start"] = True        # new pages always cold until retrospective lint clears them
     fm.setdefault("inbound_links", 0)
 
+    # Synthesis pages: populate connected_entities from body wiki-links when the
+    # eval schema omits it (subagent only supplies canonical_name/aliases/subtype).
+    if page_type == "synthesis" and not fm.get("connected_entities"):
+        fm["connected_entities"] = list(dict.fromkeys(
+            re.findall(r"\[\[([^\]]+)\]\]", content)
+        ))
+
     fm_yaml = yaml.dump(fm, default_flow_style=False, allow_unicode=True)
     page_path.write_text(f"---\n{fm_yaml}---\n\n{content}\n", encoding="utf-8")
     return page_path

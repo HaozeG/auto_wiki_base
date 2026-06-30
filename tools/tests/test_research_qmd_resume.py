@@ -453,6 +453,8 @@ def test_write_theme_profile_inserts_selected_profile(tmp_path, monkeypatch):
         encoding="utf-8",
     )
     monkeypatch.setattr(orchestrator, "_CLAUDE_MD", claude)
+    # Force deterministic fallback — isolate from any on-disk cached profiles
+    monkeypatch.setattr(orchestrator, "_load_cached_profiles", lambda _theme: None)
 
     profile = orchestrator.select_theme_profile("RISC-V AI accelerator", "workflow_first")
     orchestrator.write_theme_profile(profile)
