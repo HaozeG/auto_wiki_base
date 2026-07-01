@@ -193,3 +193,20 @@ pages_written: 1
 pipeline_rejection_rate: 0%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_15511944_2026-07-01.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-01] research | RISC-V neural network accelerator convolution kernel optimiz
+session_id: 4b77bbdd
+candidates_evaluated: 8
+pages_written: 0
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_4b77bbdd_2026-07-01.json
+theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-01] research | RISC-V neural network accelerator convolution kernel optimization tiling loop
+session_id: 4b77bbdd
+candidates_evaluated: 8
+pages_written: 0
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_4b77bbdd_2026-07-01.json
+theme_profile: RISC-V AI accelerator | optimization_first
+notes: DDG discovery returned mostly generic (non-RISC-V-specific) convolution algorithm pages (im2col, Winograd, indirect convolution); subagent correctly rejected them as insufficiently grounded to the RISC-V theme rather than writing off-theme pages.
