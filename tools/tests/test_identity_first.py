@@ -85,6 +85,40 @@ def test_merge_embedded_frontmatter_preserves_content_fields():
     assert "sources" not in fm or "https://hallucinated.example/ime" not in fm["sources"]
 
 
+def test_merge_embedded_frontmatter_strips_malformed_yaml_block():
+    """Reproduces the allwinner_t536.md corruption at the orchestrator level:
+    the embedded block's own YAML is malformed (duplicate `tags:` key), so it
+    can't be parsed for field values, but it must still be structurally
+    stripped from draft['content'] -- otherwise the garbage block reaches
+    _write_page and survives to disk ahead of the real title/content."""
+    draft = {
+        "frontmatter": {"canonical_name": "Allwinner T536", "subtype": "hardware_target"},
+        "content": (
+            "---\n"
+            "type: hardware_target\n"
+            "tags:\n"
+            "- allwinner\n"
+            "- risc-v\n"
+            "tags: []\n"
+            "- risc-v\n"
+            "- npu\n"
+            "sources:\n"
+            "- https://example.com/t536\n"
+            "---\n"
+            "\n"
+            "# Allwinner T536\n"
+            "\n"
+            "Body text.\n"
+        ),
+    }
+    orchestrator._merge_embedded_frontmatter(draft)
+    # Malformed YAML means no fields could be parsed out of the embedded block,
+    # but the block itself must still be gone from the content.
+    assert draft["content"].startswith("# Allwinner T536")
+    assert "tags: []" not in draft["content"]
+    assert "allwinner" not in draft["content"]
+
+
 def test_merge_embedded_frontmatter_noop_without_embedded_block():
     draft = {"frontmatter": {"canonical_name": "X"}, "content": "# X\n\nBody.\n"}
     before = dict(draft["frontmatter"])

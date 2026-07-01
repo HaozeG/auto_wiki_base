@@ -44,6 +44,67 @@ class TestLayer1EntityPages:
         word_count = len(first_para.split())
         assert 80 <= word_count <= 300, f"Expected 80-300 words, got {word_count}"
 
+    def test_fail_embedded_frontmatter_block_survives_write(self, tmp_path):
+        """Reproduces the allwinner_t536.md corruption: a second '---'-delimited
+        block (with malformed YAML -- a duplicate `tags:` key) sits between the
+        real frontmatter and the real content. Its own bulk is long/technical
+        enough to otherwise clear WORD_COUNT_LOW by accident, so Layer 1 needs an
+        explicit structural check rather than relying on the word-count/dangling
+        checks to catch it indirectly."""
+        page = tmp_path / "corrupted.md"
+        page.write_text("""---
+canonical_name: Allwinner T536
+subtype: hardware_target
+scorecard:
+  novelty_delta: 0.7
+sources: [raw/sources/test.md]
+type: hardware_target
+created: 2026-07-01
+updated: 2026-07-01
+cold_start: true
+inbound_links: 0
+---
+
+---
+type: hardware_target
+tags:
+- allwinner
+- risc-v
+tags: []
+- risc-v
+- npu
+sources:
+- https://example.com/t536
+constraints:
+- Quad-core Cortex-A55 @ 1.6GHz
+- 2 TOPS NPU
+---
+
+# Allwinner T536
+
+The Allwinner T536 is an industrial embedded SoC combining Cortex-A55 cores
+with XuanTie RISC-V microcontrollers and a dedicated NPU for AI inference at
+the edge, targeting industrial control and vision applications that need both
+general-purpose compute and low-power always-on sensing in a single package.
+
+## Key Claims
+
+- Quad-core Cortex-A55 running at 1.6GHz.
+- Includes a 2 TOPS NPU for on-device inference.
+- Integrates XuanTie E907 and E902 RISC-V microcontroller cores.
+
+## Relationships
+
+None.
+
+## Sources
+
+- raw/sources/test.md
+""")
+        result = layer1_check(page, "hardware_target")
+        assert result["pass"] is False
+        assert any("EMBEDDED_FRONTMATTER" in v for v in result["violations"])
+
 
 class TestLayer1DanglingPatterns:
     """Test specific dangling reference patterns."""
