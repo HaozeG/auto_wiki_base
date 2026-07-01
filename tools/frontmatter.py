@@ -67,8 +67,18 @@ def parse_frontmatter(path: Path) -> dict:
 
 def render_page(fm: dict, body: str) -> str:
     """Render frontmatter + body to a single well-formed document with one
-    ``---`` delimiter pair and a blank line before the body."""
+    ``---`` delimiter pair and a blank line before the body.
+
+    Subagent drafts occasionally echo a duplicate frontmatter block inside
+    their own ``content`` field (in addition to the separate structured
+    ``frontmatter`` dict). If left in place, that duplicate block corrupts
+    downstream first-paragraph/word-count extraction, so it is stripped here
+    before assembling the canonical single-frontmatter document.
+    """
     body = body.lstrip("\n")
+    _, stripped_body, has_embedded_fm = split_frontmatter(body)
+    if has_embedded_fm:
+        body = stripped_body.lstrip("\n")
     rendered = f"---\n{dump_frontmatter(fm)}---\n\n{body}"
     if not rendered.endswith("\n"):
         rendered += "\n"
