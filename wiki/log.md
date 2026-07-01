@@ -149,3 +149,11 @@ pages_written: 2
 pipeline_rejection_rate: 0%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_7f679ee0_2026-07-01.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-01] research | RISC-V AI accelerator quantization INT8 inference benchmark
+session_id: 5fec7d16
+candidates_evaluated: 9
+pages_written: 1
+pipeline_rejection_rate: 11%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_5fec7d16_2026-07-01.json
+theme_profile: RISC-V AI accelerator | optimization_first
