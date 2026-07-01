@@ -108,3 +108,9 @@ pages_created: [entity/riscv_matrix_extension_proposal.md]
 pages_updated: [hardware_target/xuantie_c908.md (inbound_links 1 -> 2)]
 pages_deferred: []
 cold_start: true
+
+## [2026-07-01] ingest | RVME_An_Efficient_Matrix_Engine_Design_Based_on_Matrix_Extension_of_RISC-V.pdf
+pages_created: [hardware_target/rvme.md, benchmark_result/rvme_gemm_benchmark_comparison.md]
+pages_updated: [entity/riscv_matrix_extension_proposal.md (inbound_links 0 -> 1)]
+pages_deferred: []
+cold_start: true
