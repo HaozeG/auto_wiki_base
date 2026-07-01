@@ -20,10 +20,10 @@ Subtypes are **specializations of `entity`**, never new top-level types: a subty
 [system_state]
 graph_maturity: false
 cold_start_page_count: 0
-orphan_fraction: 1.0          # fraction of pages with 0 inbound links — primary maturity signal
-median_inbound_links: 0       # median inbound across all pages — primary maturity signal
-mean_inbound_links: 0.0       # secondary signal only (gameable by a few hub pages)
-linking_debt: 0               # pages created this session still at 0 inbound (autonomous loop)
+orphan_fraction: 1.0
+median_inbound_links: 0.0
+mean_inbound_links: 0.0
+linking_debt: 0
 retrospective_lint_done: false
 ```
 
