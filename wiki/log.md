@@ -102,3 +102,9 @@ coverage_gaps:
   - missing_structured_field:workloads
   - missing_structured_field:metrics
   - missing_structured_field:toolchains
+
+## [2026-07-01] ingest | riscv_matrix_extension_proposal.pdf
+pages_created: [entity/riscv_matrix_extension_proposal.md]
+pages_updated: [hardware_target/xuantie_c908.md (inbound_links 1 -> 2)]
+pages_deferred: []
+cold_start: true
