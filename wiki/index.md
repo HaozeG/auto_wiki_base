@@ -1,11 +1,13 @@
 # Wiki Index
 
-Last updated: 2026-07-01 | Pages: 20 | Sources: 3
+Last updated: 2026-07-01 | Pages: 24 | Sources: 3
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [llvm_riscv_target.md](entity/llvm_riscv_target.md) | LLVM RISC-V Target | LLVM, RISC-V, compiler | 2 | 0 |
+| [sifive_intelligence_family.md](entity/sifive_intelligence_family.md) | SiFive Intelligence Family |  | 2 | 0 |
 | [rvismith_fuzzer_rvv_intrinsics.md](entity/rvismith_fuzzer_rvv_intrinsics.md) | RVISmith | fuzzing, compiler testing, RVV, RISC-V, intrinsics | 2 | 0 |
 | [xuantie_c930.md](entity/xuantie_c930.md) | XuanTie C930 | risc-v, xuantie, server, alibaba | 2 | 0 |
 | [riscv_vector_extension.md](entity/riscv_vector_extension.md) | RISC-V Vector Extension (RVV) | riscv, vector, specification | 2 | 0 |
@@ -40,6 +42,8 @@ Last updated: 2026-07-01 | Pages: 20 | Sources: 3
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [sifive_intelligence_x200_series.md](hardware_target/sifive_intelligence_x200_series.md) | hardware_target | SiFive Intelligence X200 Series |  | 2 | 0 |
+| [sifive_intelligence_x280.md](hardware_target/sifive_intelligence_x280.md) | hardware_target | SiFive Intelligence X280 |  | 2 | 0 |
 | [xuantie_c950.md](hardware_target/xuantie_c950.md) | hardware_target | XuanTie C950 | risc-v, alibaba | 2 | 0 |
 | [xuantie_c906.md](hardware_target/xuantie_c906.md) | hardware_target | XuanTie C906 |  | 2 | 0 |
 | [starfive_visionfive2_jh7110.md](hardware_target/starfive_visionfive2_jh7110.md) | hardware_target | StarFive VisionFive2 | risc-v, jh7110, starfive, sdk | 2 | 0 |

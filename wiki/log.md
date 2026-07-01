@@ -165,3 +165,11 @@ pages_written: 4
 pipeline_rejection_rate: 20%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_884cdc8a_2026-07-01.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-01] research | SiFive Andes RISC-V AI accelerator compiler LLVM optimizatio
+session_id: d1ad0783
+candidates_evaluated: 10
+pages_written: 5
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_d1ad0783_2026-07-01.json
+theme_profile: RISC-V AI accelerator | optimization_first

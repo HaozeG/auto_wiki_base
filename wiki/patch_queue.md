@@ -131,3 +131,119 @@ The Xuantie C910 is a 3-wide out-of-order RISC-V processor core developed by T-H
 
 - https://chipsandcheese.com/p/alibabat-heads-xuantie-c910
 merge_draft_body -->
+
+## [2026-07-01] merge_pending | sifive_intelligence_x280.md
+target_page: sifive_intelligence_x280.md
+canonical_name: SiFive Intelligence X280
+colliding_name: SiFive Intelligence X280
+source: https://www.sifive.com/blog/introduction-to-the-sifive-intelligence-x280
+status: pending_review
+<!-- merge_draft_body
+# SiFive Intelligence X280
+
+The SiFive Intelligence X280 is a multi-core, multi-cluster capable RISC-V processor designed for AI/ML compute at the edge. It implements the RISC-V Vector Extension (RVV) v1.0 with 512-bit vector registers, enabling up to 4096-bit vector operations through LMUL=8. The processor features decoupled scalar and vector pipelines for parallel execution of scalar and vector computations, and integrates SiFive Intelligence Extensions, custom instructions that accelerate AI/ML performance-critical operations. It supports virtual memory with up to 48-bit addressing, flexible connectivity to SoC peripherals, and multi-core configuration options with up to 8 cores. The X280 is marketed as a second-generation Intelligence processor (Gen 2) and builds on the X280 core complex with scalable, configurable IP. The scalar unit is a RISC-V 64-bit 8-stage dual-issue in-order pipeline, paired with a vector unit supporting variable vector length computation.
+
+## Key Claims
+
+- Implements RISC-V Vector Extension v1.0 with 512-bit vector register length and up to 4096-bit operations via LMUL=8.
+- Features decoupled scalar and vector pipelines for optimum parallel execution.
+- Includes SiFive Intelligence Extensions, custom instructions that accelerate AI/ML performance-critical operations.
+- Supports multi-core, multi-cluster configurations with up to 8 cores.
+- Provides virtual memory support with up to 48-bit addressing.
+- Offers high-performance, flexible connectivity to SoC peripherals.
+- Scalar pipeline: RISC-V 64-bit, 8-stage, dual-issue, in-order.
+- Optimized for AI/ML compute at the edge.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V 64-bit (RV64) with RVV v1.0.
+- Vector/matrix/accelerator support: 512-bit vector registers, SiFive Intelligence Extensions (custom AI instructions), RVV v1.0.
+- Memory/cache/TLB/DMA: Virtual memory up to 48-bit addressing; details on cache hierarchy not provided in available snippets.
+- Compiler/toolchain support: Not documented in available sources; SiFive typically provides toolchain support (GCC/LLVM with RVV).
+
+## Relationships
+
+- Related RISC-V AI accelerator core: [[xuantie_c908]]
+- Related matrix engine design: [[rvme]]
+- Related code generation approach: [[mlir_xdsl_rvv_gemm_codegen_recipe]]
+
+## Sources
+
+- https://www.sifive.com/blog/introduction-to-the-sifive-intelligence-x280
+- https://thincb2b.com/intelligence-processor-gets-smarter/
+- https://www.cnx-software.com/
+- https://www.techpowerup.com/
+merge_draft_body -->
+
+## [2026-07-01] merge_pending | sifive_intelligence_x280.md
+target_page: sifive_intelligence_x280.md
+canonical_name: SiFive Intelligence X280
+colliding_name: SiFive X280
+source: https://reviews.llvm.org/D149710
+status: pending_review
+<!-- merge_draft_body
+# SiFive X280
+
+The SiFive X280 is a 64-bit RISC-V processor core from SiFive that implements the SiFive7 scheduler model and provides support for the RISC-V Vector Extension (RVV) 1.0, including multiple vector length configurations (32, 64, 128, 256, and 512 bits). It includes the standard extensions M, A, F, D, C, Zfh, Zvfh (experimental), Zba, Zbb, along with the Zicsr and Zifencei features. Designed for AI/ML workloads in the datacenter, the X280 is part of SiFive's Intelligence product line. LLVM added target support for this processor in 2023, enabling compilation with `-mcpu=sifive-x280` which automatically enables the appropriate feature flags and uses the SiFive7 scheduling model.
+
+## Key Claims
+
+- The SiFive X280 is supported in LLVM as a target CPU via `-mcpu=sifive-x280`, enabling vector and sub-vector length extensions (Zvl32b, Zvl64b, Zvl128b, Zvl256b, Zvl512b). (source: D149710)
+- It uses the SiFive7 scheduler model for instruction scheduling in LLVM. (source: D149710)
+- The processor is targeted at AI/ML applications in the datacenter, with multi-core capabilities and vector processing. (source: SiFive Intelligence X280 product descriptions as referenced in evidence snippets)
+
+## Optimization-Relevant Details
+
+- ISA/profile: RV64, with extensions M, A, F, D, C, V, Zfh, Zvfh, Zba, Zbb, Zicsr, Zifencei, Zvl32b, Zvl64b, Zvl128b, Zvl256b, Zvl512b.
+- Vector/matrix/accelerator support: Full RVV 1.0 support with variable vector lengths up to 512 bits.
+- Memory/cache/TLB/DMA: Not explicitly detailed in the LLVM patch; refer to SiFive documentation.
+- Compiler/toolchain support: LLVM (from version 17) with `-mcpu=sifive-x280`.
+
+## Relationships
+
+- [[mlir_xdsl_rvv_gemm_codegen_recipe]] This optimization recipe targets RISC-V Vector code generation and can be compiled for the SiFive X280 using the LLVM RISC-V backend.
+- [[llvm_riscv_target]] The LLVM RISC-V target backend provides the compiler support for the SiFive X280, including the scheduler model and feature definitions.
+
+## Sources
+
+- D149710: [RISCV] Add sifive-x280 processor with all of its extensions. LLVM Phabricator. https://reviews.llvm.org/D149710
+merge_draft_body -->
+
+## [2026-07-01] pending | llvm_riscv_target.md
+target_page: llvm_riscv_target.md
+target_section: Key Claims
+source: https://reviews.llvm.org/D149710
+status: pending_review
+proposed_update: Add a new Key Claim: 'The SiFive X280 processor is supported as -mcpu=sifive-x280 starting from LLVM 17 (commit rG839469436afc), with features including RVV, Zvl, Zfh, Zvfh, Zba, Zbb, and the SiFive7 scheduler model.' Also add a relationship link to the new page [[sifive_x280]] in Relationships section.
+
+## [2026-07-01] merge_pending | sifive_intelligence_x280.md
+target_page: sifive_intelligence_x280.md
+canonical_name: SiFive Intelligence X280
+colliding_name: SiFive Intelligence X280
+source: https://www.sifive.com/press/tenstorrent-selects-sifive-intelligence-x280-for-next-generation1
+status: pending_review
+<!-- merge_draft_body
+# SiFive Intelligence X280
+
+The SiFive Intelligence X280 is a 64-bit RISC-V processor core from SiFive, Inc., designed to accelerate machine learning workloads through a comprehensive suite of vector instructions called SiFive Intelligence Extensions. It features a dual-issue, in-order 8-stage pipeline and supports coherent multi-core configurations, making it suitable for Linux-capable systems-on-chip (SoCs). The X280 supports a wide range of data types critical for AI workloads, including BF16, FP16, FP32, FP64, and integer types from 8-bit to 64-bit. In April 2021, Tenstorrent, a next-generation AI computing company, announced that it had selected the X280 for its upcoming AI training and inference SoC, which will integrate Tenstorrent's Tensix AI cores. The Tensix architecture is initially targeting datacenter deployments, with versions planned for near-edge and micro-edge devices. This selection signals the X280's role as a vector-capable RISC-V core suitable for high-performance AI accelerator designs, providing a programmable vector processing unit that complements dedicated tensor cores.
+
+## Key Claims
+
+- The SiFive Intelligence X280 is a 64-bit RISC-V core with an 8-stage dual-issue in-order pipeline.
+- It implements SiFive Intelligence Extensions, a set of vector instructions designed to accelerate machine learning workloads.
+- Supports data types BF16, FP16, FP32, FP64, and integer types from int8 to int64.
+- The core is multi-core coherent and Linux-capable, based on the U7 series core.
+- Tenstorrent selected the X280 for its next-generation AI processor, integrating it with Tensix AI cores for training and inference.
+- The Tensix-based SoC targets datacenter, near-edge, and micro-edge applications.
+
+## Relationships
+
+- The X280 is a RISC-V core developed by [[sifive]] (entity page not yet present in wiki).
+- The processor is designed for AI acceleration, a domain also addressed by the [[mlir_xdsl_rvv_gemm_codegen_recipe]] which targets RISC-V Vector code generation for GEMM workloads.
+- The [[k230]] SoC from Canaan integrates a different RISC-V core (C908), but like the X280 is used in AI-capable systems and benefits from vector extension support.
+- Insufficient context for additional cross-links to entity pages; this note acknowledges that fewer than two related entity pages exist in current wiki context.
+
+## Sources
+
+- https://www.sifive.com/press/tenstorrent-selects-sifive-intelligence-x280-for-next-generation1
+merge_draft_body -->
