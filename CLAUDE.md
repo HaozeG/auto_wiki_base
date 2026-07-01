@@ -419,6 +419,63 @@ spacy_model: en_core_web_sm
 
 ---
 
+## Theme Profile
+
+```yaml
+[theme_profile]
+theme: RISC-V AI accelerator
+organization_choice: optimization_first
+organization_name: Optimization-first
+page_types:
+  optimization_recipe:
+    description: Transformation, prerequisites, expected effect, failure modes, and
+      measurements
+    structured_fields:
+    - hardware_targets
+    - workloads
+    - datatypes
+    - metrics
+    - toolchains
+  hardware_target:
+    description: Hardware or ISA target with memory hierarchy, accelerator, and compiler
+      details
+    structured_fields:
+    - hardware_targets
+    - toolchains
+    - constraints
+  workload_kernel:
+    description: Kernel/workload shape, datatype, layout, sparsity, and baseline implementation
+    structured_fields:
+    - workloads
+    - datatypes
+    - constraints
+  benchmark_result:
+    description: Measured or reported result with hardware/software versions and measurement
+      context
+    structured_fields:
+    - hardware_targets
+    - workloads
+    - datatypes
+    - metrics
+    - toolchains
+    - evidence_strength
+relationship_rules:
+- optimization_recipe targets specific hardware_target and workload_kernel
+- benchmark_result validates optimization
+source_preferences:
+- optimization guides
+- compiler documentation
+- research papers
+coverage_priorities:
+- transformation sequences
+- prerequisites
+- expected speedup
+- failure modes
+lint_priorities:
+- verify optimization_recipe has all fields
+- check metrics are present
+```
+
 ## Research Configuration
 
 ```yaml
