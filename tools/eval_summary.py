@@ -121,6 +121,19 @@ def layer1_check(path: Path, page_type: str, verbose: bool = False) -> dict:
     fm, body = parse_page(path)
     violations = []
 
+    # Hard rejection: a second, embedded frontmatter block surviving after the
+    # real one (subagent echo that the write-time stripper failed to catch).
+    # Detected structurally so malformed YAML inside the block can't hide it --
+    # this is what let a corrupted embedded block coast through word-count/
+    # entity-density checks by accident (its bulk read as a plausible "first
+    # paragraph").
+    _, _, _embedded_raw_block = frontmatter.strip_embedded_frontmatter_block(body)
+    if _embedded_raw_block is not None:
+        violations.append(
+            "EMBEDDED_FRONTMATTER: body contains a second '---'-delimited block "
+            "after the real frontmatter"
+        )
+
     # Determine the text block to check for dangling references and word count
     if page_type != "synthesis":
         target_text = _extract_first_paragraph(body)

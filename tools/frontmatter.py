@@ -65,6 +65,41 @@ def parse_frontmatter(path: Path) -> dict:
     return parse_page(path)[0]
 
 
+def strip_embedded_frontmatter_block(body: str) -> tuple[str, dict, str | None]:
+    """Detect and remove a leading ``---``-delimited block from body text.
+
+    Unlike ``split_frontmatter``, detection here is purely structural (delimiter
+    position), not gated on the block's YAML parsing cleanly. A subagent-echoed
+    duplicate frontmatter block with malformed YAML inside (e.g. a duplicate
+    ``tags:`` key) must still be recognized and stripped -- otherwise it survives
+    untouched in the rendered page, and its bulk can even coast first-paragraph/
+    word-count checks downstream by accident.
+
+    Returns ``(remaining_body, parsed_fields, raw_block)``. ``parsed_fields`` is
+    ``{}`` when the block's YAML doesn't parse (still stripped regardless).
+    ``raw_block`` is the raw text between the delimiters, or ``None`` if no
+    ``---``-delimited block was found at the start of ``body``.
+    """
+    stripped = body.lstrip("\n")
+    if not stripped.startswith("---"):
+        return body, {}, None
+    end = stripped.find("\n---", 3)
+    if end == -1:
+        return body, {}, None
+    close_line_end = stripped.find("\n", end + 1)
+    if close_line_end == -1:
+        close_line_end = len(stripped)
+    raw_block = stripped[3:end]
+    remainder = stripped[close_line_end:].lstrip("\n")
+    try:
+        fields = yaml.safe_load(raw_block.strip()) or {}
+        if not isinstance(fields, dict):
+            fields = {}
+    except yaml.YAMLError:
+        fields = {}
+    return remainder, fields, raw_block
+
+
 def render_page(fm: dict, body: str) -> str:
     """Render frontmatter + body to a single well-formed document with one
     ``---`` delimiter pair and a blank line before the body.
@@ -76,9 +111,9 @@ def render_page(fm: dict, body: str) -> str:
     before assembling the canonical single-frontmatter document.
     """
     body = body.lstrip("\n")
-    _, stripped_body, has_embedded_fm = split_frontmatter(body)
-    if has_embedded_fm:
-        body = stripped_body.lstrip("\n")
+    stripped_body, _, has_embedded_fm = strip_embedded_frontmatter_block(body)
+    if has_embedded_fm is not None:
+        body = stripped_body
     rendered = f"---\n{dump_frontmatter(fm)}---\n\n{body}"
     if not rendered.endswith("\n"):
         rendered += "\n"

@@ -1108,9 +1108,11 @@ def _write_page(draft: dict) -> Path:
     content = draft.get("content", "")
 
     # Strip any frontmatter the subagent embedded in the content block
-    # (subagent sometimes returns the full page; we own the frontmatter here)
-    _embedded_fm, _stripped_body, _had_fm = frontmatter.split_frontmatter(content)
-    if _had_fm:
+    # (subagent sometimes returns the full page; we own the frontmatter here).
+    # Structural (delimiter-based) detection so a malformed embedded block
+    # (invalid YAML) still gets stripped instead of surviving to disk.
+    _stripped_body, _embedded_fm, _raw_block = frontmatter.strip_embedded_frontmatter_block(content)
+    if _raw_block is not None:
         content = _stripped_body
         # Merge subagent-supplied fm fields that ours doesn't already have
         for k, v in _embedded_fm.items():
@@ -1347,14 +1349,14 @@ def _merge_embedded_frontmatter(draft: dict) -> None:
     silently lost; the structured frontmatter dict wins on key conflicts, and
     orchestrator-managed keys are never taken from the embedded block."""
     content = draft.get("content", "")
-    embedded_fm, stripped_body, has_embedded_fm = frontmatter.split_frontmatter(content.lstrip("\n"))
-    if not has_embedded_fm:
+    stripped_body, embedded_fm, raw_block = frontmatter.strip_embedded_frontmatter_block(content.lstrip("\n"))
+    if raw_block is None:
         return
     fm = draft.setdefault("frontmatter", {})
     for key, value in embedded_fm.items():
         if key not in _ORCHESTRATOR_MANAGED_FRONTMATTER_KEYS:
             fm.setdefault(key, value)
-    draft["content"] = stripped_body.lstrip("\n")
+    draft["content"] = stripped_body
 
 
 def _apply_scorecard_to_draft(draft: dict, eval_scorecard: dict) -> None:
