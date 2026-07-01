@@ -17,7 +17,7 @@ constraints: []
 created: '2026-07-01'
 updated: '2026-07-01'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 scorecard:
   novelty_delta: 0.9
   claim_density: 0.5

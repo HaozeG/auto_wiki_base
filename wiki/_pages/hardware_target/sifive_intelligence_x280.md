@@ -41,7 +41,7 @@ type: hardware_target
 created: '2026-07-01'
 updated: '2026-07-01'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 needs_summary_revision: false
 ---
 
@@ -71,6 +71,7 @@ The SiFive Intelligence X280 is a RISC-V processor core developed by SiFive, des
 - Related RISC-V processor core with similar AI focus: [[xuantie_c908]]
 - Decoupled matrix engine design for GEMM: [[rvme]]
 - Optimization recipe leveraging RISC-V Vector instructions: [[mlir_xdsl_rvv_gemm_codegen_recipe]]
+- [[sifive_intelligence_family]]: the product family this core belongs to.
 
 ## Sources
 

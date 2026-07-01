@@ -27,7 +27,7 @@ type: hardware_target
 created: '2026-07-01'
 updated: '2026-07-01'
 cold_start: true
-inbound_links: 11
+inbound_links: 14
 needs_summary_revision: false
 ---
 
@@ -53,10 +53,13 @@ The XuanTie C908 is a RISC-V processor core developed by T-Head Semiconductor, t
 
 ## Relationships
 
-- Optimized convolution recipe: [[xuantie_c908_shl_convolution_acceleration]]
 - GEMM kernel: [[xuantie_c908_fp16_gemm_kernel]]
-- Benchmark results: [[xuantie_c908_ai_inference_performance]]
 - Related DNN accelerator generator: [[gemmini]]
+- [[xuantie_c906]]: earlier-generation XuanTie core; the C908's Key Claims cite a 3.75-4.57x AI inference speedup over the C906.
+- [[xuantie_c950]]: newer-generation, server-class XuanTie core from the same T-Head family.
+- [[xuantie_e907]] and [[allwinner_v851s]]/[[allwinner_t536]]: sibling/embedding XuanTie-family cores integrated into Allwinner AIoT SoCs.
+- [[xuantie_c930]]: server-class XuanTie core targeting AI/HPC workloads, a different market segment from the C908's embedded/AIoT focus.
+- [[mlperf_inference_tiny_benchmark_suite]]: the C906 predecessor to this core was benchmarked on MLPerf Tiny; the C908's cited speedup over the C906 is directly relevant to that benchmark context.
 
 ## Sources
 

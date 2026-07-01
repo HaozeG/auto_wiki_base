@@ -22,7 +22,7 @@ type: entity
 created: '2026-07-01'
 updated: '2026-07-01'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 needs_summary_revision: false
 ---
 
@@ -42,6 +42,7 @@ SiFive Intelligence Family is a line of RISC-V processor IP cores from SiFive th
 
 - [[xuantie_c908]]: Another RISC-V processor core targeting AI inference with vector extensions, developed by T-Head Semiconductor, representing a different vendor approach in the same market space.
 - [[rvme]]: A matrix engine coprocessor design for RISC-V, representing a research-oriented approach to accelerating GEMM for deep learning, complementary to SiFive's commercial IP.
+- [[sifive_intelligence_x280]] and [[sifive_intelligence_x200_series]]: specific cores within this Intelligence product family.
 
 ## Sources
 

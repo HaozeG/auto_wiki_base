@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-01 | Pages: 26 | Sources: 3
+Last updated: 2026-07-01 | Pages: 30 | Sources: 3
 
 ## Entity Pages
 
@@ -55,6 +55,10 @@ Last updated: 2026-07-01 | Pages: 26 | Sources: 3
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [allwinner_v853.md](hardware_target/allwinner_v853.md) | hardware_target | Allwinner V853 |  | 2 | 0 |
+| [allwinner_t536.md](hardware_target/allwinner_t536.md) | hardware_target | Allwinner T536 | allwinner, risc-v, arm, npu, industrial | 2 | 1 |
+| [allwinner_v851s.md](hardware_target/allwinner_v851s.md) | hardware_target | Allwinner V851s | allwinner, ip-camera, risc-v, arm-cortex-a7, npu | 2 | 0 |
+| [xuantie_e907.md](hardware_target/xuantie_e907.md) | hardware_target | XuanTie E907 | e907, risc-v, xuantie | 2 | 0 |
 | [sifive_intelligence_x200_series.md](hardware_target/sifive_intelligence_x200_series.md) | hardware_target | SiFive Intelligence X200 Series |  | 2 | 0 |
 | [sifive_intelligence_x280.md](hardware_target/sifive_intelligence_x280.md) | hardware_target | SiFive Intelligence X280 |  | 2 | 0 |
 | [xuantie_c950.md](hardware_target/xuantie_c950.md) | hardware_target | XuanTie C950 | risc-v, alibaba | 2 | 0 |
