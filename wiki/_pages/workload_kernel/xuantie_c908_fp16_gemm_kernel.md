@@ -27,7 +27,7 @@ type: workload_kernel
 created: '2026-07-01'
 updated: '2026-07-01'
 cold_start: true
-inbound_links: 1
+inbound_links: 6
 needs_summary_revision: false
 ---
 
