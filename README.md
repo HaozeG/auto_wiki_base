@@ -120,6 +120,27 @@ Useful prompt for source ingest:
 Ingest raw/sources/<file> into the wiki. Follow CLAUDE.md, use the active theme profile, keep raw/ immutable, write only orchestrator-approved pages/patch-queue entries, update wiki/index.md and wiki/log.md, run validation, and summarize what changed.
 ```
 
+## Install the Claude Code Wiki Skill
+
+A Claude Code skill is included at `.claude/skills/wiki/SKILL.md`. Install it so you can invoke `/wiki` in any Claude Code session to get guided through setup, research, patch apply, ingest, query, and lint operations without consulting this README.
+
+**Installation (copy to your own repo or project):**
+
+```bash
+mkdir -p .claude/skills/wiki
+cp path/to/auto_wiki_base/.claude/skills/wiki/SKILL.md .claude/skills/wiki/SKILL.md
+```
+
+If you are working in this repository directly, the skill is already installed — Claude Code loads `.claude/skills/` automatically. Invoke it with `/wiki` in the chat.
+
+The skill covers:
+- `setup theme` — propose and persist an organization profile
+- `research` — run the autonomous research loop via the orchestrator CLI
+- `patch apply` — apply human-approved merge patches from the patch queue
+- **Ingest / Query / Lint** — step-by-step pointers to the `CLAUDE.md` protocol for each operation
+
+---
+
 ## Query The Wiki
 
 For quick local search:
