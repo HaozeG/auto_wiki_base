@@ -27,7 +27,7 @@ type: hardware_target
 created: '2026-07-01'
 updated: '2026-07-01'
 cold_start: true
-inbound_links: 4
+inbound_links: 7
 needs_summary_revision: false
 ---
 

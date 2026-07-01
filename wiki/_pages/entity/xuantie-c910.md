@@ -5,6 +5,10 @@ aliases:
 - T-HEAD XuanTie C910
 - Xuantie C910
 - OpenC910
+- T-HEAD C910
+- T-Head Xuantie C910
+- C920 (vector extension version)
+- Alibaba Xuantie C910
 subtype: null
 scorecard:
   novelty_delta: 0.85
@@ -15,6 +19,10 @@ scorecard:
 sources:
 - raw/cache/d259cf05ce140dc4.md
 - https://www.riscvschool.com/2023/03/09/t-head-xuantie-c910-risc-v/
+- raw/cache/2653baa6434ac0da.md
+- https://github.com/XUANTIE-RV/buildroot
+- raw/cache/33ce295c0ab2ac0a.md
+- https://chipsandcheese.com/p/alibabat-heads-xuantie-c910
 source_url: https://www.riscvschool.com/2023/03/09/t-head-xuantie-c910-risc-v/
 fetched_at: '2026-07-01T02:48:58.954759+00:00'
 type: entity
