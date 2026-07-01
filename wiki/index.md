@@ -1,11 +1,12 @@
 # Wiki Index
 
-Last updated: 2026-07-01 | Pages: 25 | Sources: 3
+Last updated: 2026-07-01 | Pages: 26 | Sources: 3
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [mlperf_inference_tiny_benchmark_suite.md](entity/mlperf_inference_tiny_benchmark_suite.md) | MLPerf Inference: Tiny | benchmark, MLPerf, TinyML | 2 | 0 |
 | [llvm_riscv_target.md](entity/llvm_riscv_target.md) | LLVM RISC-V Target | LLVM, RISC-V, compiler | 2 | 1 |
 | [sifive_intelligence_family.md](entity/sifive_intelligence_family.md) | SiFive Intelligence Family |  | 2 | 0 |
 | [rvismith_fuzzer_rvv_intrinsics.md](entity/rvismith_fuzzer_rvv_intrinsics.md) | RVISmith | fuzzing, compiler testing, RVV, RISC-V, intrinsics | 2 | 1 |

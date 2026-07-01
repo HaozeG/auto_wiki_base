@@ -185,3 +185,11 @@ pages_written: 0
 pipeline_rejection_rate: 0%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_bb732f4c_2026-07-01.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-01] research | RISC-V edge AI inference benchmark MLPerf tiny
+session_id: 15511944
+candidates_evaluated: 8
+pages_written: 1
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_15511944_2026-07-01.json
+theme_profile: RISC-V AI accelerator | optimization_first

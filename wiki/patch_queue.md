@@ -247,3 +247,36 @@ The SiFive Intelligence X280 is a 64-bit RISC-V processor core from SiFive, Inc.
 
 - https://www.sifive.com/press/tenstorrent-selects-sifive-intelligence-x280-for-next-generation1
 merge_draft_body -->
+
+## [2026-07-01] merge_pending | mlperf_inference_tiny_benchmark_suite.md
+target_page: mlperf_inference_tiny_benchmark_suite.md
+canonical_name: MLPerf Inference: Tiny
+colliding_name: MLPerf Tiny Benchmark
+source: https://www.researchgate.net/publication/352397004_MLPerf_Tiny_Benchmark
+status: pending_review
+<!-- merge_draft_body
+# MLPerf Tiny Benchmark
+
+MLPerf Tiny is the first industry-standard benchmark suite for ultra-low-power tiny machine learning (TinyML) systems. Developed by more than 50 organizations in academia and industry, it provides a set of four standard benchmarks—keyword spotting, visual wake words, image classification, and anomaly detection—to evaluate deep neural network inference on resource-constrained devices such as microcontrollers, digital signal processors (DSPs), and tiny neural network accelerators. The benchmark suite captures the inherent tradeoffs in TinyML by measuring latency, energy consumption, and accuracy across these workloads. It defines two submission divisions: a stricter closed division that requires identical models and preprocessing, and a more flexible open division that allows customization, enabling reproducible comparison across a wide range of hardware platforms. The benchmark framework is based on EEMBC's software development platform and is open-source, hosted under MLCommons.
+
+## Key Claims
+
+- First industry-standard benchmark suite specifically designed for ultra-low-power TinyML systems.
+- Provides four representative benchmarks (keyword spotting, visual wake words, image classification, anomaly detection) selected through community consensus of more than 50 organizations.
+- Measures latency, energy, and accuracy to capture the tradeoffs inherent to TinyML inference.
+- Two submission divisions: closed (strict, reproducible) and open (flexible, encouraging innovation).
+- Built on the EEMBC software development platform for consistent measurement methodology.
+- Open-source implementation available on GitHub under MLCommons/tiny.
+- Aims to enable fair comparison across microcontrollers, DSPs, and tiny NN accelerators.
+
+## Relationships
+
+- [[xuantie_c908]]: A RISC-V processor core capable of running TinyML inference workloads that could be evaluated via the MLPerf Tiny benchmark suite.
+- [[rvme]]: A RISC-V matrix engine coprocessor design that may be applicable to TinyML inference tasks relevant to MLPerf Tiny benchmarks.
+
+## Sources
+
+- https://arxiv.org/abs/2106.07597
+- https://www.researchgate.net/publication/352397004_MLPerf_Tiny_Benchmark
+- https://github.com/mlcommons/tiny
+merge_draft_body -->
