@@ -114,3 +114,15 @@ pages_created: [hardware_target/rvme.md, benchmark_result/rvme_gemm_benchmark_co
 pages_updated: [entity/riscv_matrix_extension_proposal.md (inbound_links 0 -> 1)]
 pages_deferred: []
 cold_start: true
+
+## [2026-07-01] ingest | 2512.23236v3.pdf
+pages_created: [hardware_target/meta_mtia.md]
+pages_updated: [entity/xuantie-c910.md (inbound_links 0 -> 1), workload_kernel/xuantie_c908_fp16_gemm_kernel.md (inbound_links 0 -> 1), hardware_target/rvme.md (inbound_links 1 -> 2)]
+pages_deferred: [KernelEvolve system architecture / non-RISC-V-specific GPU-CUDA-AMD kernel-generation content: out of theme scope for this wiki, only the MTIA RISC-V-codegen connection was extracted]
+cold_start: true
+
+## [2026-07-01] transition | cold_start → mature
+pages_at_transition: 8
+orphan_fraction: 0.125
+median_inbound_links: 1.0
+mean_inbound_links: 1.25
