@@ -173,3 +173,15 @@ pages_written: 5
 pipeline_rejection_rate: 0%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_d1ad0783_2026-07-01.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-01] query_synthesis | riscv_matrix_extension_design_space
+source_query: manual synthesis addressing detected gap - 3 entity pages tagged 'RISC-V' without synthesis coverage
+pages_created: [synthesis/riscv_matrix_extension_design_space.md]
+
+## [2026-07-01] research | Andes AndesCore AX45MP RISC-V AI NPU accelerator
+session_id: bb732f4c
+candidates_evaluated: 8
+pages_written: 0
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_bb732f4c_2026-07-01.json
+theme_profile: RISC-V AI accelerator | optimization_first

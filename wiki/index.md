@@ -1,19 +1,19 @@
 # Wiki Index
 
-Last updated: 2026-07-01 | Pages: 24 | Sources: 3
+Last updated: 2026-07-01 | Pages: 25 | Sources: 3
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
-| [llvm_riscv_target.md](entity/llvm_riscv_target.md) | LLVM RISC-V Target | LLVM, RISC-V, compiler | 2 | 0 |
+| [llvm_riscv_target.md](entity/llvm_riscv_target.md) | LLVM RISC-V Target | LLVM, RISC-V, compiler | 2 | 1 |
 | [sifive_intelligence_family.md](entity/sifive_intelligence_family.md) | SiFive Intelligence Family |  | 2 | 0 |
-| [rvismith_fuzzer_rvv_intrinsics.md](entity/rvismith_fuzzer_rvv_intrinsics.md) | RVISmith | fuzzing, compiler testing, RVV, RISC-V, intrinsics | 2 | 0 |
+| [rvismith_fuzzer_rvv_intrinsics.md](entity/rvismith_fuzzer_rvv_intrinsics.md) | RVISmith | fuzzing, compiler testing, RVV, RISC-V, intrinsics | 2 | 1 |
 | [xuantie_c930.md](entity/xuantie_c930.md) | XuanTie C930 | risc-v, xuantie, server, alibaba | 2 | 0 |
-| [riscv_vector_extension.md](entity/riscv_vector_extension.md) | RISC-V Vector Extension (RVV) | riscv, vector, specification | 2 | 0 |
-| [integrated_matrix_extension.md](entity/integrated_matrix_extension.md) | Integrated Matrix Extension (IME) | RISC-V, ISA, Matrix Extension | 2 | 0 |
-| [matrix_tile_extension.md](entity/matrix_tile_extension.md) | Matrix Tile Extension (MTE) |  | 2 | 0 |
-| [riscv_matrix_extension_proposal.md](entity/riscv_matrix_extension_proposal.md) | RISC-V Matrix Specification Proposal | risc-v, matrix-extension, isa, accelerator | 1 | 1 |
+| [riscv_vector_extension.md](entity/riscv_vector_extension.md) | RISC-V Vector Extension (RVV) | riscv, vector, specification | 2 | 1 |
+| [integrated_matrix_extension.md](entity/integrated_matrix_extension.md) | Integrated Matrix Extension (IME) | RISC-V, ISA, Matrix Extension | 2 | 1 |
+| [matrix_tile_extension.md](entity/matrix_tile_extension.md) | Matrix Tile Extension (MTE) |  | 2 | 1 |
+| [riscv_matrix_extension_proposal.md](entity/riscv_matrix_extension_proposal.md) | RISC-V Matrix Specification Proposal | risc-v, matrix-extension, isa, accelerator | 1 | 2 |
 | [xuantie-c910.md](entity/xuantie-c910.md) | XuanTie C910 |  | 2 | 1 |
 | [gemmini.md](entity/gemmini.md) | Gemmini |  | 2 | 2 |
 
@@ -21,6 +21,7 @@ Last updated: 2026-07-01 | Pages: 24 | Sources: 3
 
 | Page | Connected Entities | Status | Inbound |
 |------|--------------------|--------|---------|
+| [riscv_matrix_extension_design_space.md](synthesis/riscv_matrix_extension_design_space.md) | integrated_matrix_extension, matrix_tile_extension, riscv_matrix_extension_proposal, riscv_vector_extension, rvme, llvm_riscv_target | draft | 0 |
 
 ## Concept Index
 
@@ -37,6 +38,17 @@ Last updated: 2026-07-01 | Pages: 24 | Sources: 3
 - **Template-Based Micro-kernel Generation for GEMM**: → [generic_micro_kernel_templates_gemm](optimization_recipe/generic_micro_kernel_templates_gemm.md)
 - **MLIR+xDSL RISC-V Vector GEMM Benchmark**: → [mlir_xdsl_gemm_benchmark_k230_bananapi_f3](benchmark_result/mlir_xdsl_gemm_benchmark_k230_bananapi_f3.md)
 - **MLIR+xDSL RVV GEMM Codegen Recipe**: → [mlir_xdsl_rvv_gemm_codegen_recipe](optimization_recipe/mlir_xdsl_rvv_gemm_codegen_recipe.md)
+- **LLVM RISC-V Target**: → [llvm_riscv_target](entity/llvm_riscv_target.md)
+- **SiFive Intelligence Family**: → [sifive_intelligence_family](entity/sifive_intelligence_family.md)
+- **RVISmith**: → [rvismith_fuzzer_rvv_intrinsics](entity/rvismith_fuzzer_rvv_intrinsics.md)
+- **XuanTie C930**: → [xuantie_c930](entity/xuantie_c930.md)
+- **XuanTie C906**: → [xuantie_c906](hardware_target/xuantie_c906.md)
+- **XuanTie C950**: → [xuantie_c950](hardware_target/xuantie_c950.md)
+- **StarFive VisionFive2**: → [starfive_visionfive2_jh7110](hardware_target/starfive_visionfive2_jh7110.md)
+- **K230**: → [k230](hardware_target/k230.md)
+- **SiFive Intelligence X280**: → [sifive_intelligence_x280](hardware_target/sifive_intelligence_x280.md)
+- **SiFive Intelligence X200 Series**: → [sifive_intelligence_x200_series](hardware_target/sifive_intelligence_x200_series.md)
+- **Competing Approaches to Matrix Acceleration on RISC-V**: → [riscv_matrix_extension_design_space](synthesis/riscv_matrix_extension_design_space.md)
 
 ## Optimization Pages
 
@@ -50,9 +62,9 @@ Last updated: 2026-07-01 | Pages: 24 | Sources: 3
 | [k230.md](hardware_target/k230.md) | hardware_target | K230 | SoC, K230, Kendryte, RISC-V | 2 | 0 |
 | [generic_micro_kernel_templates_gemm.md](optimization_recipe/generic_micro_kernel_templates_gemm.md) | optimization_recipe | Template-Based Micro-kernel Generation for GEMM | gemm, micro-kernel, SIMD, intrinsics, BLIS, ARM, x86 | 2 | 0 |
 | [mlir_xdsl_gemm_benchmark_k230_bananapi_f3.md](benchmark_result/mlir_xdsl_gemm_benchmark_k230_bananapi_f3.md) | benchmark_result | MLIR+xDSL RISC-V Vector GEMM Benchmark on K230 and BananaPi F3 vs OpenBLAS | GEMM, RVV, MLIR, xDSL, OpenBLAS | 2 | 0 |
-| [mlir_xdsl_rvv_gemm_codegen_recipe.md](optimization_recipe/mlir_xdsl_rvv_gemm_codegen_recipe.md) | optimization_recipe | MLIR+xDSL Lowering Pipeline for RISC-V Vector GEMM Micro-kernels | MLIR, xDSL, RISC-V, RVV, GEMM, code generation | 2 | 5 |
-| [rvme.md](hardware_target/rvme.md) | hardware_target | RVME | risc-v, matrix-extension, accelerator, gemm, gem5 | 1 | 2 |
+| [mlir_xdsl_rvv_gemm_codegen_recipe.md](optimization_recipe/mlir_xdsl_rvv_gemm_codegen_recipe.md) | optimization_recipe | MLIR+xDSL Lowering Pipeline for RISC-V Vector GEMM Micro-kernels | MLIR, xDSL, RISC-V, RVV, GEMM, code generation | 2 | 11 |
+| [rvme.md](hardware_target/rvme.md) | hardware_target | RVME | risc-v, matrix-extension, accelerator, gemm, gem5 | 1 | 9 |
 | [meta_mtia.md](hardware_target/meta_mtia.md) | hardware_target | Meta MTIA | risc-v, accelerator, dlrm, triton, compiler | 1 | 0 |
 | [rvme_gemm_benchmark_comparison.md](benchmark_result/rvme_gemm_benchmark_comparison.md) | benchmark_result | RVME GEMM benchmark comparison | risc-v, benchmark, gemm, accelerator-comparison | 1 | 1 |
-| [xuantie_c908_fp16_gemm_kernel.md](workload_kernel/xuantie_c908_fp16_gemm_kernel.md) | workload_kernel | XuanTie C908 FP16 GEMM Outer Product Kernel |  | 2 | 6 |
-| [xuantie_c908.md](hardware_target/xuantie_c908.md) | hardware_target | XuanTie C908 |  | 2 | 3 |
+| [xuantie_c908_fp16_gemm_kernel.md](workload_kernel/xuantie_c908_fp16_gemm_kernel.md) | workload_kernel | XuanTie C908 FP16 GEMM Outer Product Kernel |  | 2 | 7 |
+| [xuantie_c908.md](hardware_target/xuantie_c908.md) | hardware_target | XuanTie C908 |  | 2 | 10 |
