@@ -1325,6 +1325,38 @@ def _run_qmd_update(qmd_runner: QmdRunner) -> tuple[bool, str | None]:
     return ok, error
 
 
+### Frontmatter keys the orchestrator (not the subagent) is authoritative for:
+### _write_page/_apply_scorecard_to_draft/_apply_provenance set or hard-overwrite
+### these deterministically. An embedded duplicate block must never seed them —
+### e.g. a model-hallucinated `created` date would otherwise survive because
+### _write_page only does `setdefault("created", today)`.
+_ORCHESTRATOR_MANAGED_FRONTMATTER_KEYS = {
+    "type", "created", "updated", "cold_start", "inbound_links",
+    "scorecard", "sources", "source_url", "fetched_at",
+}
+
+
+def _merge_embedded_frontmatter(draft: dict) -> None:
+    """Subagent drafts occasionally echo a second frontmatter block inside their
+    own content field, in addition to the separate structured frontmatter dict
+    (observed with weaker/cheaper eval-subagent models). If left untouched, the
+    embedded block corrupts first-paragraph/word-count extraction downstream
+    (frontmatter.render_page strips it defensively). Merge it into
+    draft["frontmatter"] first so content-derived fields (tags, hardware_targets,
+    toolchains, constraints, etc.) that only exist in the embedded block are not
+    silently lost; the structured frontmatter dict wins on key conflicts, and
+    orchestrator-managed keys are never taken from the embedded block."""
+    content = draft.get("content", "")
+    embedded_fm, stripped_body, has_embedded_fm = frontmatter.split_frontmatter(content.lstrip("\n"))
+    if not has_embedded_fm:
+        return
+    fm = draft.setdefault("frontmatter", {})
+    for key, value in embedded_fm.items():
+        if key not in _ORCHESTRATOR_MANAGED_FRONTMATTER_KEYS:
+            fm.setdefault(key, value)
+    draft["content"] = stripped_body.lstrip("\n")
+
+
 def _apply_scorecard_to_draft(draft: dict, eval_scorecard: dict) -> None:
     """
     Copy scorecard scores from the eval agent's top-level scorecard into
@@ -2427,6 +2459,7 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
 
         approved_drafts = []
         for draft in eval_result.get("page_drafts", []):
+            _merge_embedded_frontmatter(draft)
             _apply_scorecard_to_draft(draft, eval_sc)
             # Inject source URL into frontmatter.sources before pipeline checks
             # EMPTY_SOURCES (provenance must be set before the gate, not after).

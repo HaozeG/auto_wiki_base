@@ -47,6 +47,52 @@ def test_frontmatter_noop_without_block(tmp_path):
     assert "x:" not in p.read_text()
 
 
+def test_merge_embedded_frontmatter_preserves_content_fields():
+    """Weaker eval-subagent models sometimes echo a second frontmatter block
+    inside their own `content` field instead of using the structured
+    `frontmatter` dict. That embedded block must be merged into
+    draft['frontmatter'] (not silently discarded) so content-derived fields
+    like tags/hardware_targets/constraints survive, matching an observed
+    live-run draft (RISC-V IME Option D)."""
+    draft = {
+        "frontmatter": {"canonical_name": "IME Option D", "subtype": "hardware_target"},
+        "content": (
+            "---\n"
+            "type: hardware_target\n"
+            "created: 2025-04-10\n"
+            "tags: [risc-v, ime, matrix-extension]\n"
+            "sources: [\"https://hallucinated.example/ime\"]\n"
+            "hardware_targets: [\"RISC-V IME\"]\n"
+            "constraints: [\"VLEN=1024\"]\n"
+            "---\n"
+            "\n"
+            "# RISC-V IME Option D\n"
+            "\n"
+            "Body text.\n"
+        ),
+    }
+    orchestrator._merge_embedded_frontmatter(draft)
+    fm = draft["frontmatter"]
+    # structured dict fields win, embedded content-derived fields fill the rest
+    assert fm["canonical_name"] == "IME Option D"
+    assert fm["tags"] == ["risc-v", "ime", "matrix-extension"]
+    assert fm["hardware_targets"] == ["RISC-V IME"]
+    assert fm["constraints"] == ["VLEN=1024"]
+    assert draft["content"].startswith("# RISC-V IME Option D")
+    # orchestrator-managed keys must NOT be seeded from the embedded block,
+    # even though the model echoed a (hallucinated) value for them
+    assert "created" not in fm
+    assert "sources" not in fm or "https://hallucinated.example/ime" not in fm["sources"]
+
+
+def test_merge_embedded_frontmatter_noop_without_embedded_block():
+    draft = {"frontmatter": {"canonical_name": "X"}, "content": "# X\n\nBody.\n"}
+    before = dict(draft["frontmatter"])
+    orchestrator._merge_embedded_frontmatter(draft)
+    assert draft["frontmatter"] == before
+    assert draft["content"] == "# X\n\nBody.\n"
+
+
 # ---------------------------------------------------------------------------
 # Part 3 — canonical_name normalizer spec (merge vs split)
 # ---------------------------------------------------------------------------
