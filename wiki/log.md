@@ -231,3 +231,9 @@ actions_taken:
 deferred_for_human:
 - "4 remaining orphan pages (0 inbound links) not yet cross-linked; acceptable under MATURE threshold but worth reviewing during retrospective lint."
 - "Harness fix for the embedded-frontmatter gap is complete and tested locally but not yet committed/PR'd to main, per the standing instruction to isolate harness fixes onto their own branch."
+
+## [2026-07-01] lint | routine (follow-up)
+issues_found: 1
+actions_taken: []
+deferred_for_human:
+- "workload_kernel/xuantie_c908_fp16_gemm_kernel.md Relationships section links to [[xuantie_c908_shl_convolution_acceleration]] and [[xuantie_c908_ai_inference_performance]], neither of which exists as a page. Found during the manual 30-page quality evaluation; not yet removed/fixed, deferred for human decision (remove vs. create the missing pages)."
