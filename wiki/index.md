@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-01 | Pages: 14 | Sources: 3
+Last updated: 2026-07-01 | Pages: 15 | Sources: 3
 
 ## Entity Pages
 
@@ -38,6 +38,7 @@ Last updated: 2026-07-01 | Pages: 14 | Sources: 3
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [k230.md](hardware_target/k230.md) | hardware_target | K230 | SoC, K230, Kendryte, RISC-V | 2 | 0 |
 | [generic_micro_kernel_templates_gemm.md](optimization_recipe/generic_micro_kernel_templates_gemm.md) | optimization_recipe | Template-Based Micro-kernel Generation for GEMM | gemm, micro-kernel, SIMD, intrinsics, BLIS, ARM, x86 | 2 | 0 |
 | [mlir_xdsl_gemm_benchmark_k230_bananapi_f3.md](benchmark_result/mlir_xdsl_gemm_benchmark_k230_bananapi_f3.md) | benchmark_result | MLIR+xDSL RISC-V Vector GEMM Benchmark on K230 and BananaPi F3 vs OpenBLAS | GEMM, RVV, MLIR, xDSL, OpenBLAS | 2 | 0 |
 | [mlir_xdsl_rvv_gemm_codegen_recipe.md](optimization_recipe/mlir_xdsl_rvv_gemm_codegen_recipe.md) | optimization_recipe | MLIR+xDSL Lowering Pipeline for RISC-V Vector GEMM Micro-kernels | MLIR, xDSL, RISC-V, RVV, GEMM, code generation | 2 | 5 |

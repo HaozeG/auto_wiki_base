@@ -141,3 +141,11 @@ coverage_gaps:
 issues_found: 6
 actions_taken: []
 deferred_for_human: [6 orphan pages from most recent research session (meta_mtia, integrated_matrix_extension, riscv_vector_extension, matrix_tile_extension, generic_micro_kernel_templates_gemm, mlir_xdsl_gemm_benchmark_k230_bananapi_f3) - expected transient state mid-build; no stale claims, no contradictions, no empty synthesis open_questions found (no synthesis pages yet). xuantie_c908_fp16_gemm_kernel (6 inbound) and mlir_xdsl_rvv_gemm_codegen_recipe (5 inbound) verified as legitimate hub pages, not a counting artifact.]
+
+## [2026-07-01] research | RISC-V NPU AI accelerator chip specifications
+session_id: 7f679ee0
+candidates_evaluated: 4
+pages_written: 2
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_7f679ee0_2026-07-01.json
+theme_profile: RISC-V AI accelerator | optimization_first
