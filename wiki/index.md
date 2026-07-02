@@ -1,11 +1,13 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 69 | Sources: 3
+Last updated: 2026-07-02 | Pages: 72 | Sources: 3
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [rvv-lite.md](entity/rvv-lite.md) | RVV-Lite | risc-v, vector, iot, rvv | 2 | 0 |
+| [rvv_intrinsic_spec.md](entity/rvv_intrinsic_spec.md) | RISC-V Vector (RVV) C Intrinsic Specification | RISC-V, RVV, intrinsics, specification, API | 2 | 0 |
 | [mos2_risc_v_prototype.md](entity/mos2_risc_v_prototype.md) | MoS2 RISC-V Prototype | RISC-V, 2D materials, MoS2, prototype | 2 | 0 |
 | [rv32i_base_integer_instruction_set.md](entity/rv32i_base_integer_instruction_set.md) | RV32I Base Integer Instruction Set |  | 2 | 0 |
 | [cab_and_grin_task_scheduling.md](entity/cab_and_grin_task_scheduling.md) | CAB and GrIn Task Scheduling | scheduling, heterogeneous, optimal policy | 2 | 0 |
@@ -69,6 +71,7 @@ Last updated: 2026-07-02 | Pages: 69 | Sources: 3
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [coral_npu_vector_execution_engine.md](hardware_target/coral_npu_vector_execution_engine.md) | hardware_target | Coral NPU Vector Execution Engine | Coral, Google, RISC-V, RVV, NPU, Zve32x | 2 | 0 |
 | [semidynamics_tensor_unit.md](hardware_target/semidynamics_tensor_unit.md) | hardware_target | Semidynamics Tensor Unit | RISC-V, tensor unit, AI accelerator, Semidynamics, coherent | 2 | 0 |
 | [et_soc_1.md](hardware_target/et_soc_1.md) | hardware_target | ET-SoC-1 |  | 2 | 0 |
 | [grayskull_e75_matmul_benchmark.md](benchmark_result/grayskull_e75_matmul_benchmark.md) | benchmark_result | Tenstorrent Grayskull e75 MatMul Benchmark (arXiv:2505.06085) |  | 2 | 0 |

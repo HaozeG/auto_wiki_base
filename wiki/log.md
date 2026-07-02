@@ -378,3 +378,11 @@ actions_taken:
 - "Closed 14 orphan pages from research sessions bf6a774a/7a92c384/391ada56/da85dc58/5943dca4 by adding reciprocal [[wikilink]] Relationships entries (ara2<->ara2_22nm_vector_benchmarks, araxl<->araxl_hpc_ml_benchmark_22nm, tenstorrent_grayskull_e75<->grayskull_e75_matmul_benchmark, pulp_nn<->pulp_nn_gap8_cifar10_benchmark, pulp_platform<->pulpissimo/pulp_nn, andes_nx27v<->andestech_ax45mpv, xuantie_c908->rv32i_base_integer_instruction_set/semidynamics_tensor_unit, rv32i_base_integer_instruction_set->mos2_risc_v_prototype, k230->cab_and_grin_task_scheduling/et_soc_1, xuantie_c930->ventana_veyron_v2) and incrementing target inbound_links."
 - "graph_stats.py now reports orphan_count: 0, orphan_fraction: 0.0, median_inbound_links: 1.0, mean_inbound_links: 3.0145 across 69 pages — MATURE."
 deferred_for_human: []
+
+## [2026-07-02] research | RISC-V vector reduction sum instruction throughput microbenc
+session_id: 9641d1f1
+candidates_evaluated: 8
+pages_written: 3
+pipeline_rejection_rate: 25%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_9641d1f1_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first

@@ -20,9 +20,9 @@ Subtypes are **specializations of `entity`**, never new top-level types: a subty
 [system_state]
 graph_maturity: true
 cold_start_page_count: 30
-orphan_fraction: 0.0
+orphan_fraction: 0.0417
 median_inbound_links: 1.0
-mean_inbound_links: 3.0145
+mean_inbound_links: 2.9722
 linking_debt: 0
 retrospective_lint_done: false
 ```

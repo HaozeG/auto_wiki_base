@@ -26,7 +26,7 @@ type: entity
 created: '2026-07-01'
 updated: '2026-07-01'
 cold_start: true
-inbound_links: 10
+inbound_links: 12
 needs_summary_revision: false
 ---
 
