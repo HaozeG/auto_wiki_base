@@ -1336,3 +1336,78 @@ RISC-V (pronounced "risk-five") is a free and open standard instruction set arch
 
 - https://en.wikipedia.org/wiki/RISC-V
 merge_draft_body -->
+
+## [2026-07-02] merge_pending | xiangshan.md
+target_page: xiangshan.md
+canonical_name: XiangShan
+colliding_name: XiangShan
+source: https://www.servethehome.com/xiangshan-high-performance-risc-v-processors-at-hot-chips-2024/
+status: pending_review
+<!-- merge_draft_body
+# XiangShan
+
+XiangShan is an open-source high-performance RISC-V CPU project developed by Chinese universities and hosted on GitHub. The project targets server-class and high-performance computing applications, with two microarchitectures: Kunminghu, aimed at competing with the Arm Neoverse N2, and Nanhu, targeting the Arm Cortex A76. The design features a 13-stage pipeline with 6-wide decode, rename, and dispatch, a 4-ALU integer execution block, and dedicated floating-point and vector units. The memory hierarchy includes private L2 caches of up to 1 MB per core and a shared L3 cache of 16 MB. The project also provides an agile development toolchain called Minjie, along with verification tools like difftest and LightSSS for RTL error detection and debug reproduction. XiangShan includes support for RISC-V vector and hypervisor extensions, and the roadmap aims for a tapeout every year with two teams working in parallel.
+
+## Key Claims
+
+- Kunminghu microarchitecture targets Arm Neoverse N2 performance; Nanhu targets Arm Cortex A76.
+- 13-stage out-of-order pipeline with 6-wide frontend (decode, rename, dispatch) and backend.
+- 4 ALU integer execution block; floating-point and vector blocks present.
+- Private L2 cache up to 1 MB per core; shared L3 cache 16 MB.
+- Supports RISC-V vector and hypervisor extensions (exact version unspecified).
+- Agile development toolchain: Minjie; verification tools: difftest (RTL error detection), LightSSS (debug reproduction).
+- Collaborations include a server CPU, a 5 nm AI acceleration chip, and a 7 nm DPU.
+- Aims for yearly tapeouts through two parallel teams.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V with vector and hypervisor extensions (exact profile not disclosed).
+- Vector/matrix/accelerator support: Vector units present; no specific matrix or AI accelerator mentioned for the core, though chip-level collaborations include AI and DPU accelerators.
+- Memory/cache/TLB/DMA: Private L2 up to 1 MB per core; shared L3 16 MB; no specific L1, TLB, or DMA details provided.
+- Compiler/toolchain support: Minjie agile development toolchain; difftest for RTL verification; LightSSS for simulation debug.
+
+## Relationships
+
+- [[xuantie_c908]]: Another high-performance RISC-V core design, but targeting embedded AI rather than server-class; both demonstrate the diversity of RISC-V high-performance implementations.
+- [[k230]]: An SoC integrating a RISC-V core (C908) with AI accelerators, contrasting with XiangShan's general-purpose high-performance approach aimed at server and compute markets.
+- [[mlir_xdsl_rvv_gemm_codegen_recipe]]: A code generation recipe for RISC-V Vector, relevant to software tooling that could be applied to XiangShan's vector units.
+
+## Sources
+
+- https://www.servethehome.com/xiangshan-high-performance-risc-v-processors-at-hot-chips-2024/
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | xiangshan.md
+target_page: xiangshan.md
+canonical_name: XiangShan
+colliding_name: XiangShan
+source: https://github.com/SigmaOfTy/XiangShan_ty
+status: pending_review
+<!-- merge_draft_body
+# XiangShan
+
+XiangShan (Chinese: 香山) is an open-source, high-performance RISC-V processor project developed by the Institute of Computing Technology (ICT) at the Chinese Academy of Sciences (CAS). It employs agile hardware development methodology and has produced three microarchitecture generations: Yanqihu (first stable, June 2020), Nanhu (second stable), and Kunminghu (currently under development on the master branch). The project provides comprehensive documentation at docs.xiangshan.cc, a design document for Kunminghu V2R2, and a user guide. XiangShan's research contributions include a MICRO 2022 paper on agile RISC-V processor development, which received all three artifact evaluation badges (Available, Functional, Reproduced). The repository includes design files in Scala/Chisel, simulation infrastructure via Verilator and XSPdb, a difftest co-simulation framework, and scripts for agile development workflows. Submodules such as NEMU (a RISC-V ISA simulator), nexus-am (abstract machine), huancun (cache subsystem), and yunsuan (custom functional units) support the verification and extension of the processor design.
+
+## Key Claims
+
+- XiangShan is an open-source high-performance RISC-V processor project from ICT, CAS.
+- Three microarchitecture generations: Yanqihu (stable since June 2020), Nanhu, and Kunminghu (active development on master branch).
+- Agile hardware development methodology is used, including custom tools for design, verification, debugging, and performance validation.
+- MICRO 2022 paper "Towards Developing High Performance RISC-V Processors Using Agile Methodology" received all three artifact evaluation badges.
+- Documentation is publicly available under CC-BY-4.0 license.
+- Design files are written in Scala/Chisel and compile to Verilog via Chisel.
+- Supports simulation with Verilator (C++ emulator) and prebuilt simulation binaries.
+- Integration with NEMU ISA simulator, difftest framework, and nexus-am for functional verification.
+
+## Relationships
+
+- [[xuantie_c908]]: Another open-source RISC-V processor core, though targeting AIoT rather than the high-performance general-purpose compute focus of XiangShan.
+- [[k230]]: An SoC integrating RISC-V C908 cores, demonstrating the broader RISC-V hardware ecosystem to which XiangShan belongs.
+- [[mlir_xdsl_rvv_gemm_codegen_recipe]]: A compiler pipeline for generating RVV intrinsics-based code, applicable to RISC-V vector processors like XiangShan for runtime performance optimization.
+
+## Sources
+
+- https://github.com/SigmaOfTy/XiangShan_ty
+- https://docs.xiangshan.cc
+- https://talks-pubs.xiangshan.cc/publications/micro2022-xiangshan.pdf
+merge_draft_body -->

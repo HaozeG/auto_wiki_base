@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 90 | Sources: 3
+Last updated: 2026-07-02 | Pages: 91 | Sources: 3
 
 ## Entity Pages
 
@@ -84,6 +84,7 @@ Last updated: 2026-07-02 | Pages: 90 | Sources: 3
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [xiangshan_kunminghu.md](hardware_target/xiangshan_kunminghu.md) | hardware_target | XiangShan Kunminghu | RISC-V, XiangShan, Kunminghu, FPGA, QEMU | 2 | 0 |
 | [onnx_int8_vs_fp16_jetson_orin_nano_latency_benchmark.md](benchmark_result/onnx_int8_vs_fp16_jetson_orin_nano_latency_benchmark.md) | benchmark_result | ONNX INT8 vs FP16 Latency on Jetson Orin Nano |  | 2 | 0 |
 | [xuantie_c908_ai_inference_performance.md](benchmark_result/xuantie_c908_ai_inference_performance.md) | benchmark_result | XuanTie C908 AI Inference Performance | XuanTie C908, AI inference, HHB, SHL, MobileNet, int8 quantization, RVV | 2 | 0 |
 | [hhb_mobilenetv2_c908_compilation.md](optimization_recipe/hhb_mobilenetv2_c908_compilation.md) | optimization_recipe | HHB MobileNetV2 C908 Compilation | compilation, model deployment, HHB, C908, K230 | 2 | 0 |

@@ -6,6 +6,10 @@ aliases:
 - XiangShan processor
 - Open XiangShan
 - XiangShan RISC-V
+- XiangShan RISC-V CPU
+- XiangShan project
+- XiangShan high-performance RISC-V
+- XiangShan (香山)
 subtype: null
 tags:
 - RISC-V
@@ -22,6 +26,10 @@ sources:
 - https://github.com/OpenXiangShan/XiangShan
 - raw/cache/8f18060118756a81.md
 - https://openxiangshan.github.io/
+- raw/cache/478606518fc3ba24.md
+- https://www.servethehome.com/xiangshan-high-performance-risc-v-processors-at-hot-chips-2024/
+- raw/cache/ff059b90f8734be6.md
+- https://github.com/SigmaOfTy/XiangShan_ty
 source_url: https://github.com/OpenXiangShan/XiangShan
 fetched_at: '2026-07-02T06:41:53.817293+00:00'
 type: entity

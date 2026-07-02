@@ -481,3 +481,11 @@ pages_written: 2
 pipeline_rejection_rate: 38%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_ff52a54f_2026-07-02.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] research | XiangShan Kunminghu SHIC vector unit RISC-V microarchitectur
+session_id: f1eb1b0a
+candidates_evaluated: 9
+pages_written: 1
+pipeline_rejection_rate: 11%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_f1eb1b0a_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first
