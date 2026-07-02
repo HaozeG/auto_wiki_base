@@ -5,6 +5,11 @@ aliases:
 - MTIA
 - Meta Training and Inference Accelerator
 - MTIA v3
+- Next-generation Meta MTIA
+- MTIA 300
+- MTIA 400
+- MTIA 450
+- MTIA 500
 tags:
 - risc-v
 - accelerator
@@ -23,8 +28,12 @@ constraints:
 - Triton codegen for MTIA lowers through TritonMTIA-MLIR and LLVM-IR to a RISC-V binary
 sources:
 - raw/sources/2512.23236v3.pdf
+- raw/cache/3bb80caeb3c6f36c.md
+- https://www.servethehome.com/meta-ai-acceleration-in-the-next-gen-meta-mtia-for-recommendation-inference-risc-v/
+- raw/cache/789d3a7d41717916.md
+- https://www.abhs.in/blog/meta-mtia-chip-roadmap-four-generations-inference-2026
 created: 2026-07-01
-updated: 2026-07-01
+updated: '2026-07-02'
 cold_start: true
 inbound_links: 1
 scorecard:

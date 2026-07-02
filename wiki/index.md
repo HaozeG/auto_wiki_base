@@ -1,11 +1,12 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 79 | Sources: 3
+Last updated: 2026-07-02 | Pages: 80 | Sources: 3
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [semidynamics.md](entity/semidynamics.md) | Semidynamics |  | 2 | 0 |
 | [llvm_vcix_scheduling_model.md](entity/llvm_vcix_scheduling_model.md) | VCIX Scheduling Model | VCIX, LLVM, scheduling, RISC-V, SiFive, compiler, vector coprocessor | 2 | 0 |
 | [systolic_tensor_units.md](entity/systolic_tensor_units.md) | Systolic Tensor Units | systolic array, tensor unit, TPU, accelerator | 2 | 0 |
 | [risc_v_sparse_dnn_fpga_extensions.md](entity/risc_v_sparse_dnn_fpga_extensions.md) | RISC-V Sparse DNN FPGA Extensions |  | 2 | 0 |

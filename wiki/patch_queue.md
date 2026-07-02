@@ -898,3 +898,181 @@ target_section: multiple
 source: https://www.cnx-software.com/2022/11/04/t-head-xuantie-c908-risc-v-core-targets-aiot-applications/
 status: pending_review
 proposed_update: Add power consumption (52.8 mW/GHz per core on TSMC 12nm), performance numbers (24-64% improvement on synthetic benchmarks, 2-3.5x on AI workloads MLPerf Tiny v0.7 INT4), and architectural details: 9-stage dual-issue in-order pipeline, ePMP with up to 64 regions, PLIC configurable up to 1023 interrupt sources, RV32 COMPAT mode, AXI4/ACE bus with DCP and LLP. Incorporate these into the first paragraph (adding power and process context), Key Claims (add specific power and comparison numbers), and Optimization-Relevant Details (pipeline stage, ePMP, PLIC, bus interfaces).
+
+## [2026-07-02] merge_pending | semidynamics_tensor_unit.md
+target_page: semidynamics_tensor_unit.md
+canonical_name: Semidynamics Tensor Unit
+colliding_name: Semidynamics Tensor Unit
+source: https://www.eetimes.com/semidynamics-releases-risc-v-tensor-unit-for-ai/
+status: pending_review
+<!-- merge_draft_body
+# Semidynamics Tensor Unit
+
+Semidynamics has announced a RISC-V Tensor Unit designed for ultra-fast AI solutions, based on its fully customizable 64-bit cores. The Tensor Unit provides hardware specifically tailored to matrix multiplication workloads, integrating with the company's Vector Unit and Gazzillion Misses technology to avoid data misses. It is used for layers requiring matrix multiplication such as fully connected and convolutional layers, while activation functions are delegated to the Vector Unit. The unit recently demonstrated over 70% utilization on the Llama2-7B model, as reported by Semidynamics.
+
+## Key Claims
+
+- Provides hardware specifically tailored to matrix multiplication workloads, accelerating fully connected and convolutional layers.
+- Integrates with the company's 64-bit fully customizable RISC-V core and Vector Unit.
+- Uses Gazzillion Misses technology to ensure continuous data supply with no misses.
+- Reports tensor-unit utilization exceeding 70% while executing the Llama2-7B large language model.
+- Delegates activation functions (ReLU, Sigmoid, Softmax) to the Vector Unit.
+
+## Relationships
+
+- [[xuantie_c908]]: another RISC-V AI accelerator core with a different microarchitectural approach; the Semidynamics Tensor Unit reuses vector registers for matrix storage, contrasting with the C908's instruction fusion.
+- [[llama.cpp]]: LLM inference library that could target this tensor unit for efficient execution of models like Llama2-7B.
+
+## Sources
+
+- https://www.eetimes.com/semidynamics-releases-risc-v-tensor-unit-for-ai/
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | semidynamics_tensor_unit.md
+target_page: semidynamics_tensor_unit.md
+canonical_name: Semidynamics Tensor Unit
+colliding_name: Semidynamics Tensor Unit
+source: https://www.eejournal.com/industry_news/semidynamics-launches-first-fully-coherent-risc-v-tensor-unit-to-supercharge-ai-applications/
+status: pending_review
+<!-- merge_draft_body
+# Semidynamics Tensor Unit
+
+The Semidynamics Tensor Unit is a hardware accelerator for matrix multiplication workloads, announced by Semidynamics in October 2023, designed to supercharge AI applications on RISC-V platforms. It is built on top of the Semidynamics RVV1.0 Vector Processing Unit and leverages the existing vector registers to store matrix data, avoiding the introduction of new architectural state. The Tensor Unit is integrated into the cache-coherent subsystem of the Atrevido-423 core, using the Gazzillion technology to fetch data from memory at the high rates required by tensor operations. This design allows the Tensor Unit to handle matrix multiplication for fully connected and convolutional layers while the Vector Unit handles activation functions, providing a combined solution that outperforms standalone NPUs on activation-layer processing. Semidynamics claims a performance increase of 128x compared to running the same AI software on the scalar core alone, and the unit operates seamlessly under any RISC-V vector-enabled Linux distribution without additional driver changes. The company is based in Barcelona, Spain, and focuses on high-bandwidth, high-performance RISC-V processor IP for machine learning and AI applications.
+
+## Key Claims
+
+- First fully-coherent RISC-V tensor unit announced (October 2023).
+- Built on Semidynamics RVV1.0 Vector Processing Unit; reuses vector registers for matrix storage.
+- Leverages Gazzillion technology for high-bandwidth data fetching to keep the tensor unit fed.
+- Cache-coherent integration eliminates the need for difficult-to-program DMAs.
+- 128x performance improvement over scalar-core-only execution for AI software.
+- No new architecturally-visible state; works under any RISC-V vector-enabled Linux without changes.
+- Optimized for matrix multiplication in LLMs (e.g., LLaMa-2, ChatGPT) and convolution layers.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V Vector Extension 1.0 (RVV1.0).
+- Vector/matrix/accelerator support: Tensor unit built on vector unit; uses vector registers for matrix data; matrix multiplication for fully-connected and convolution layers; activation functions handled by vector unit.
+- Memory/cache/TLB/DMA: Cache-coherent subsystem integrated with Atrevido-423 core; Gazzillion technology for data fetching; no external DMA required.
+- Compiler/toolchain support: Works with standard RISC-V vector-enabled Linux; no special compiler modifications required.
+
+## Relationships
+
+- [[xuantie_c908]]: Another RISC-V processor with RVV 1.0 support and AI acceleration focus; the XuanTie C908 page already links to this Semidynamics Tensor Unit as a comparison point for different microarchitectural choices (vector-register reuse vs. instruction fusion).
+- [[k230]]: A SoC that integrates the XuanTie C908 core, demonstrating a different approach to AI acceleration via a dedicated KPU; the K230 can serve as a validation platform for comparing vector-based and fixed-function AI accelerators.
+- [[mlir_xdsl_rvv_gemm_codegen_recipe]]: A compiler pipeline for generating RVV micro-kernels; techniques from this recipe could potentially be adapted to target the Semidynamics Tensor Unit’s matrix multiplication capabilities.
+- [[llama_cpp]]: An LLM inference library with explicit RVV support; the Tensor Unit’s claim of 128x speedup over scalar execution is directly relevant to running llama.cpp on Semidynamics hardware.
+
+## Sources
+
+- https://www.eejournal.com/industry_news/semidynamics-launches-first-fully-coherent-risc-v-tensor-unit-to-supercharge-ai-applications/
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | semidynamics_tensor_unit.md
+target_page: semidynamics_tensor_unit.md
+canonical_name: Semidynamics Tensor Unit
+colliding_name: Semidynamics All-In-One AI IP
+source: https://www.electronicspecifier.com/products/artificial-intelligence/semidynamics-reveals-tensor-unit-efficiency-for-new-ai-ip/
+status: pending_review
+<!-- merge_draft_body
+# Semidynamics All-In-One AI IP
+
+Semidynamics All-In-One AI IP is a proprietary accelerator architecture developed by Semidynamics, a European RISC-V custom core AI specialist. The architecture integrates a RISC-V CPU core, a Tensor Unit for matrix multiplication (analogous to an NPU), and a Vector Unit for activation computations (analogous to a GPU) into a single scalable processing element. This unified design eliminates the need for DMA-intensive programming and separate software stacks typical of traditional CPU-GPU-NPU systems. The architecture uses a single ONNX-based software stack running on RISC-V and achieves zero-latency connectivity between the compute units by sharing vector registers. Semidynamics’ Gazzillion Misses technology enables efficient data movement by allowing a large number of in-flight cache misses for ahead-of-time data fetching. The company reported Tensor Unit utilization above 80% for most matrix multiplication shapes in LLaMA-2 7B (BF16) inference, with stable performance above 70% regardless of matrix size.
+
+## Key Claims
+
+- The architecture merges CPU, Tensor Unit, and Vector Unit into a single processing element with zero-latency data transfer via shared vector registers.
+- The Tensor Unit handles all matrix multiplications (MatMul) in attention layers, while the Vector Unit handles Transpose and SoftMax activations.
+- The system is DMA-free and uses a single software stack based on ONNX and RISC-V, reducing programming complexity and integration overhead.
+- Gazzillion Misses technology enables high streaming data rates by supporting many in-flight cache misses for ahead-of-time data fetching.
+- Tensor Unit utilization exceeds 80% for most MatMul shapes in LLaMA-2 7B (BF16), with the most challenging shapes (batch=1, first-token) still achieving over 80%.
+- Performance remains stable above 70% regardless of total matrix size, even when matrices exceed cache/scratchpad capacity.
+
+## Relationships
+
+- [[tenstorrent_grayskull_e75]]: Another RISC-V AI accelerator with comparable benchmark data on MatMul efficiency.
+- [[k230]]: A RISC-V AI accelerator targeting edge inference, relevant for architectural comparison.
+
+## Sources
+
+- https://www.electronicspecifier.com/products/artificial-intelligence/semidynamics-reveals-tensor-unit-efficiency-for-new-ai-ip/
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | meta_mtia.md
+target_page: meta_mtia.md
+canonical_name: Meta MTIA
+colliding_name: Meta MTIA
+source: https://www.servethehome.com/meta-ai-acceleration-in-the-next-gen-meta-mtia-for-recommendation-inference-risc-v/
+status: pending_review
+<!-- merge_draft_body
+# Meta MTIA
+
+The Meta MTIA (Meta Training and Inference Accelerator) is a custom application-specific integrated circuit (ASIC) designed by Meta Platforms for recommendation inference workloads. The second-generation MTIA, announced at Hot Chips 2024, is built on TSMC's 5nm process with a 90W thermal design power (TDP). It features 128GB of LPDDR5 memory and 256MB of on-chip SRAM organized in an 8x8 compute grid. The accelerator uses a PCIe Gen5 x8 host interface and employs RISC-V cores for control and processing elements with scalar and vector units. The design includes a dot product engine (DPE), an integer dynamic quantization engine, hardware decompression engines for both data and weights, and a Table Branch Embedding (TBE) unit that improves runtime by 2-3x. The accelerator module integrates two MTIA chips per card with a total TDP of 220W, and the rack-scale system uses twelve modules per chassis, three chassis per rack, totaling 72 accelerators at approximately 16kW accelerator power.
+
+## Key Claims
+
+- Built on TSMC 5nm process with 90W TDP.
+- Includes 128GB LPDDR5 memory and 256MB on-chip SRAM.
+- Uses PCIe Gen5 x8 host interface.
+- RISC-V cores for control and processing elements (scalar and vector).
+- Features dot product engine (DPE) and integer dynamic quantization engine.
+- Hardware decompression engine for data and weight decompression.
+- Table Branch Embedding (TBE) improves runtime by 2-3x.
+- Dual-chip module with 220W TDP.
+- Rack configuration: 12 modules per chassis, 3 chassis per rack, 72 accelerators, ~16kW accelerator power.
+- Model performance claims on internal workloads (baseline unspecified).
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V (control and PE cores), no specific profile disclosed.
+- Vector/matrix/accelerator support: Dot product engine, integer dynamic quantization engine, hardware decompression engine, Table Branch Embedding.
+- Memory/cache/TLB/DMA: 128GB LPDDR5, 256MB on-chip SRAM, PCIe Gen5 x8 host interface.
+- Compiler/toolchain support: Not specified; likely Meta's internal software stack.
+
+## Relationships
+
+- [[xuantie_c908]]: Another RISC-V-based AI accelerator core, though targeting embedded AIoT rather than datacenter recommendation inference.
+- [[k230]]: A RISC-V system-on-chip with dedicated AI acceleration (KPU), representing a different design point in the RISC-V AI accelerator space.
+
+## Sources
+
+- https://www.servethehome.com/meta-ai-acceleration-in-the-next-gen-meta-mtia-for-recommendation-inference-risc-v/
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | meta_mtia.md
+target_page: meta_mtia.md
+canonical_name: Meta MTIA
+colliding_name: Meta MTIA
+source: https://www.abhs.in/blog/meta-mtia-chip-roadmap-four-generations-inference-2026
+status: pending_review
+<!-- merge_draft_body
+# Meta MTIA
+
+Meta MTIA (Meta Training and Inference Accelerator) is a family of custom application-specific integrated circuits (ASICs) designed by Meta Platforms for accelerating AI inference workloads in its data centers. The MTIA roadmap, announced in March 2026, comprises four generations—MTIA 300, MTIA 400, MTIA 450, and MTIA 500—developed within a two-year cycle. These chips are built on the open-source RISC-V instruction set architecture, fabricated by TSMC, and co-designed with Broadcom. They are optimized for generative AI inference at scale, with each generation delivering significant compute and memory bandwidth improvements. The roadmap reflects a strategy of rapid silicon iteration to keep pace with evolving AI models, countering the traditional multi-year ASIC development timeline.
+
+## Key Claims
+
+- Meta unveiled four MTIA chip generations (300, 400, 450, 500) in March 2026, all within a two-year development window.
+- MTIA 400 delivers over 5x the compute performance and 50% more HBM bandwidth than MTIA 300, with 400% higher FP8 FLOPS.
+- Compute scaling from MTIA 300 to MTIA 500 is 25x.
+- Chips are based on RISC-V architecture and fabricated by TSMC.
+- The roadmap delivers a new chip generation every six months through 2027.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V (specific profile not disclosed in source).
+- Vector/matrix/accelerator support: Inference acceleration units (exact microarchitecture not detailed).
+- Memory/cache/TLB/DMA: HBM memory (explicitly mentioned for MTIA 400).
+- Compiler/toolchain support: Not specified in source.
+
+## Relationships
+
+- [[xuantie_c908]]: A RISC-V processor core for AIoT applications, representing a different market segment from Meta's data center inference accelerators.
+- [[k230]]: A RISC-V SoC with dedicated AI acceleration (KPU), illustrating a contrasting approach to on-chip AI acceleration versus MTIA's data-center-scale design.
+- [[llama_cpp]]: An LLM inference runtime that could potentially target MTIA hardware if appropriate toolchain support is developed.
+- [[mlir_xdsl_rvv_gemm_codegen_recipe]]: A RISC-V vector code generation recipe that represents the open-source approach to optimizing inference kernels, contrasting with Meta's proprietary compilation stack.
+
+## Sources
+
+- https://www.abhs.in/blog/meta-mtia-chip-roadmap-four-generations-inference-2026
+merge_draft_body -->

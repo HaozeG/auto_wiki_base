@@ -3,6 +3,12 @@ canonical_name: Semidynamics Tensor Unit
 aliases:
 - Semidynamics RISC-V Tensor Unit
 - Semidynamics Tensor Unit (coherent)
+- Semidynamics All-In-One AI IP
+- RISC-V Tensor Unit
+- Semidynamics fully-coherent RISC-V Tensor unit
+- Semidynamics Tensor Unit (Atrevido-423 based)
+- Semidynamics All-In-One
+- Semidynamics AI IP
 subtype: null
 tags:
 - RISC-V
@@ -27,6 +33,12 @@ scorecard:
 sources:
 - raw/cache/5ef450fb4fdde907.md
 - https://semiwiki.com/forum/index.php?threads/semidynamics-launches-first-fully-coherent-risc-v-tensor-unit-to-supercharge-ai-applications.19065/
+- raw/cache/ee892e168b86c03e.md
+- https://www.eetimes.com/semidynamics-releases-risc-v-tensor-unit-for-ai/
+- raw/cache/34bb4536a0fabbe2.md
+- https://www.eejournal.com/industry_news/semidynamics-launches-first-fully-coherent-risc-v-tensor-unit-to-supercharge-ai-applications/
+- raw/cache/0955644abf9f11f9.md
+- https://www.electronicspecifier.com/products/artificial-intelligence/semidynamics-reveals-tensor-unit-efficiency-for-new-ai-ip/
 source_url: https://semiwiki.com/forum/index.php?threads/semidynamics-launches-first-fully-coherent-risc-v-tensor-unit-to-supercharge-ai-applications.19065/
 fetched_at: '2026-07-02T05:13:28.668379+00:00'
 type: hardware_target
