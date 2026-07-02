@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 57 | Sources: 138
+Last updated: 2026-07-02 | Pages: 58 | Sources: 138
 
 ## Entity Pages
 
@@ -41,6 +41,7 @@ Flat list of all concepts mentioned across pages (with or without dedicated page
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [rvme.md](hardware_target/rvme.md) | hardware_target | RVME |  | 2 | 0 |
 | [gap9-vs-stm32f7-odtl-benchmark.md](benchmark_result/gap9-vs-stm32f7-odtl-benchmark.md) | benchmark_result | GAP9 vs STM32F7 On-Device Training Benchmark |  | 2 | 1 |
 | [intel-core-ultra-7-256v-resnet50-openvino-benchmark.md](benchmark_result/intel-core-ultra-7-256v-resnet50-openvino-benchmark.md) | benchmark_result | Intel Core Ultra 7 256V ResNet-50 OpenVINO Inference Benchmark |  | 2 | 0 |
 | [jacobi-stencil-grayskull-e150-vs-xeon-platinum.md](benchmark_result/jacobi-stencil-grayskull-e150-vs-xeon-platinum.md) | benchmark_result | Jacobi Stencil on Tenstorrent Grayskull e150 vs Xeon Platinum |  | 2 | 0 |

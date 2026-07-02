@@ -20,7 +20,7 @@ type: entity
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 13
+inbound_links: 14
 ---
 
 # Gemmini
