@@ -347,3 +347,11 @@ pages_written: 5
 pipeline_rejection_rate: 0%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_7a92c384_2026-07-02.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] research | Ventana Veyron RISC-V server AI datacenter processor
+session_id: 391ada56
+candidates_evaluated: 10
+pages_written: 1
+pipeline_rejection_rate: 10%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_391ada56_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first

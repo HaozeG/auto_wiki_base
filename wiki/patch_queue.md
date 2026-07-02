@@ -783,3 +783,33 @@ PULP-NN is a multicore computing library for quantized neural network (QNN) infe
 - https://arxiv.org/abs/1908.11263 (Garofalo et al. 2020)
 - https://arxiv.org/abs/2007.07759 (Bruschi et al. 2020)
 merge_draft_body -->
+
+## [2026-07-02] merge_pending | ventana_veyron_v2.md
+target_page: ventana_veyron_v2.md
+canonical_name: Ventana Veyron V2
+colliding_name: Ventana Veyron V2
+source: https://www.nextplatform.com/compute/2023/11/07/ventana-launches-veyron-v2-risc-v-into-the-datacenter/1652320
+status: pending_review
+<!-- merge_draft_body
+# Ventana Veyron V2
+
+The Ventana Veyron V2 is a RISC-V server processor chip launched by Ventana Micro Systems in November 2023. It is the second generation of the Veyron chiplet-based server design, following the Veyron V1 which had been in development since 2022. The Veyron V2 is targeted at hyperscalers and cloud builders seeking greater control over their infrastructure by adopting an open-standard RISC-V architecture. A key feature of the V2 is the adoption of the Universal Chiplet Interconnect Express (UCI-Express) standard, replacing the earlier Bunch of Wires (BoW) interconnect used in the V1. Ventana made this shift in response to customer demand, as UCI-Express offers double the data rate, twice the power efficiency, less than half the latency, and 35–65% higher bandwidth per millimeter compared to BoW. The Veyron V2 also integrates the RISC-V Vector Extension 1.0 with 512-bit vector length, bringing advanced SIMD capabilities for datacenter workloads. The processor includes AMBA CHI coherent interface support, addressing a gap in the UCI-Express 1.0 standard. Ventana's co-founder and CEO Balaji Baktha stated that the company accelerated the V2 launch due to strong industry momentum behind UCI-Express, which also solves packaging costs and 3D memory stacking challenges.
+
+## Key Claims
+
+- Launched November 2023 as the second-generation Veyron server chip.
+- Replaced BoW chiplet interconnect with UCI-Express 1.1, achieving 2× data rate, 2× power efficiency, and less than half the latency of BoW.
+- Added support for RISC-V Vector Extension 1.0 with 512-bit vector length.
+- Integrated AMBA CHI coherent interface on top of UCI-Express 2.0.
+- Targeting hyperscalers and cloud builders who want to control their own hardware stacks.
+- Backward compatible with Veyron V1 design and chiplet ecosystem.
+
+## Relationships
+
+- [[k230]]: Another RISC-V SoC with vector extension support, though aimed at AIoT rather than datacenter, providing a contrast in target market.
+- [[xuantie_c908]]: A RISC-V core with RVV 1.0 support, but with configurable 128/256-bit vector length versus the Veyron V2's 512-bit vector length.
+
+## Sources
+
+- https://www.nextplatform.com/compute/2023/11/07/ventana-launches-veyron-v2-risc-v-into-the-datacenter/1652320
+merge_draft_body -->
