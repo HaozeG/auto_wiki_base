@@ -179,3 +179,11 @@ pages_written: 2
 pipeline_rejection_rate: 11%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/riscv-v2-replication/wiki/audit/research_170a79f2_2026-07-02.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] research | Andes NX27V AX45MPV RISC-V vector core
+session_id: 2e2b6aab
+candidates_evaluated: 5
+pages_written: 6
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/riscv-v2-replication/wiki/audit/research_2e2b6aab_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first

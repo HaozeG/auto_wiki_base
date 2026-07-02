@@ -1176,3 +1176,10 @@ The LLVM RISC-V Vector Extension (RVV) implementation models the version 1.0 of 
 
 - [RISC-V Vector Extension - LLVM Documentation](https://github.com/llvm/llvm-project/blob/main/llvm/docs/RISCV/RISCVVectorExtension.rst)
 merge_draft_body -->
+
+## [2026-07-02] pending | andes-ax45mpv.md
+target_page: andes-ax45mpv.md
+target_section: Key Claims
+source: https://www.andestech.com/en/products-solutions/andescore-processors/riscv-ax45mpv/
+status: pending_review
+proposed_update: Add the following claims sourced from the Andes official page and press releases: Supports MMU for Linux-based applications; features dynamic branch prediction for efficient branch execution; dual-issue of common instruction pairs; level-1 instruction/data caches and local memories for low-latency accesses; demonstrated booting a lightweight LLM on an S2C Prodigy S8-100 FPGA with AMD Versal VP1902; collaboration with MachineWare for early RISC-V software simulation; general availability announced; licensed by Rain AI for in-memory computing solutions.
