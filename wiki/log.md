@@ -450,3 +450,11 @@ pages_written: 6
 pipeline_rejection_rate: 10%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_6a240ef2_2026-07-02.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] research | RISC-V object detection YOLO edge inference benchmark board
+session_id: ce35c9e1
+candidates_evaluated: 10
+pages_written: 2
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_ce35c9e1_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first

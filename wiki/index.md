@@ -1,11 +1,12 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 86 | Sources: 3
+Last updated: 2026-07-02 | Pages: 88 | Sources: 3
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [yolov8.md](entity/yolov8.md) | YOLOv8 | object detection, computer vision, YOLO, real-time inference | 2 | 0 |
 | [mlir.md](entity/mlir.md) | MLIR | compiler infrastructure, IR, LLVM | 2 | 0 |
 | [xuantie_c900_bugs.md](entity/xuantie_c900_bugs.md) | Xuantie C900 Bugs | Xuantie, C900, bug, security, erratum | 2 | 0 |
 | [shl.md](entity/shl.md) | SHL |  | 2 | 0 |
@@ -81,6 +82,7 @@ Last updated: 2026-07-02 | Pages: 86 | Sources: 3
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [onnx_int8_vs_fp16_jetson_orin_nano_latency_benchmark.md](benchmark_result/onnx_int8_vs_fp16_jetson_orin_nano_latency_benchmark.md) | benchmark_result | ONNX INT8 vs FP16 Latency on Jetson Orin Nano |  | 2 | 0 |
 | [xuantie_c908_ai_inference_performance.md](benchmark_result/xuantie_c908_ai_inference_performance.md) | benchmark_result | XuanTie C908 AI Inference Performance | XuanTie C908, AI inference, HHB, SHL, MobileNet, int8 quantization, RVV | 2 | 0 |
 | [hhb_mobilenetv2_c908_compilation.md](optimization_recipe/hhb_mobilenetv2_c908_compilation.md) | optimization_recipe | HHB MobileNetV2 C908 Compilation | compilation, model deployment, HHB, C908, K230 | 2 | 0 |
 | [iree_mlir_ukernel_rvv_matmul.md](optimization_recipe/iree_mlir_ukernel_rvv_matmul.md) | optimization_recipe | IREE MLIR uKernel for RISC-V Vector Extension | IREE, MLIR, RISC-V, RVV, ukernel, matmul, LLVM | 2 | 0 |
