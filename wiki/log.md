@@ -402,3 +402,11 @@ pages_written: 2
 pipeline_rejection_rate: 0%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_b0b9b301_2026-07-02.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] research | RISC-V CNN convolution winograd im2col kernel edge accelerat
+session_id: 1fa21f0b
+candidates_evaluated: 10
+pages_written: 1
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_1fa21f0b_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first

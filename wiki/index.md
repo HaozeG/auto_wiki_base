@@ -1,11 +1,12 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 75 | Sources: 3
+Last updated: 2026-07-02 | Pages: 76 | Sources: 3
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [riscv_gem5_fault_injector.md](entity/riscv_gem5_fault_injector.md) | riscv-gem5-fault-injector |  | 2 | 0 |
 | [tile_language.md](entity/tile_language.md) | Tile Language |  | 2 | 0 |
 | [rvv-lite.md](entity/rvv-lite.md) | RVV-Lite | risc-v, vector, iot, rvv | 2 | 0 |
 | [rvv_intrinsic_spec.md](entity/rvv_intrinsic_spec.md) | RISC-V Vector (RVV) C Intrinsic Specification | RISC-V, RVV, intrinsics, specification, API | 2 | 0 |
