@@ -38,7 +38,7 @@ type: benchmark_result
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # ONNX INT8 vs FP16 Latency on Jetson Orin Nano

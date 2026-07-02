@@ -67,6 +67,9 @@ The XuanTie C908 is a RISC-V processor core developed by T-Head Semiconductor, t
 - [[riscv_vector_tests_generator]]: an automated RVV instruction test generator applicable to validating C908-class vector implementations.
 - [[rv32i_base_integer_instruction_set]]: the mandatory base integer ISA that the C908's RV32GCB[V]/RV64GCB[V] profile extends.
 - [[semidynamics_tensor_unit]]: another RVV1.0-based AI accelerator design that reuses vector registers for matrix storage, a different microarchitectural choice than the C908's instruction-fusion approach.
+- [[xuantie_c908_ai_inference_performance]]: the detailed HHB/SHL benchmark data behind this page's cited INT8 dot-product and VLEN128-vs-256 speedup figures.
+- [[risc_v_sparse_dnn_fpga_extensions]]: a research proposal for custom sparsity-aware instruction extensions that could complement the C908's dense-GEMM-oriented vector dot-product path.
+- [[riscv_gem5_fault_injector]]: a gem5-based single-bit fault injector applicable to soft-error resiliency studies on RISC-V cores such as the C908.
 
 ## Sources
 

@@ -79,6 +79,7 @@ This optimization recipe describes a compilation approach that combines the MLIR
 - [[opengemm]]: a Chisel-based hardware GeMM accelerator generator for RISC-V edge devices — a hardware-acceleration alternative to this compiler-generated software micro-kernel approach.
 - [[banana_pi_gemm_optimization_benchmark]]: hand-tuned/auto-vectorized RISC-V GEMM results on similar Banana Pi-class hardware, useful as an independent baseline comparison point.
 - [[generic_micro_kernel_templates_gemm]]: a non-RISC-V (ARM/x86) template-based micro-kernel generation approach, offering a cross-architecture contrast to this RISC-V-specific MLIR+xDSL pipeline.
+- [[mlir]]: the underlying LLVM compiler infrastructure this pipeline builds on, extended here with custom xDSL lowerings for RVV.
 
 ## Sources
 

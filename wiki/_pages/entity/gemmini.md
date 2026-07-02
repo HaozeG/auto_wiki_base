@@ -42,6 +42,7 @@ Gemmini is an open-source, full-stack DNN accelerator generator developed at UC 
 ## Relationships
 
 - [[meta_mtia]]: a production, data-center-scale AI accelerator (Meta's Training and Inference Accelerator) that, unlike Gemmini's research/generator model, reaches RISC-V only as a Triton compiler codegen target rather than as a native accelerator ISA.
+- [[systolic_tensor_units]]: the general systolic-array dataflow concept (as used in Google's TPU) that Gemmini's configurable spatial array can be instantiated as.
 
 ## Sources
 

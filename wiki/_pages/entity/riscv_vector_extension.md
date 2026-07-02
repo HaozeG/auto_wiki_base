@@ -48,6 +48,8 @@ The RISC-V Vector Extension (RVV) is a standard extension to the RISC-V Instruct
 
 - [[xuantie_c908]] – implements RVV 1.0 with configurable VLEN.
 - [[mlir_xdsl_rvv_gemm_codegen_recipe]] – uses RVV intrinsics for GEMM code generation.
+- [[rvv-lite]] – a reduced, area-optimized subset of this specification proposed for resource-constrained IoT devices.
+- [[rvv_intrinsic_spec]] – the companion C intrinsic API specification that exposes this ISA to software.
 
 ## Sources
 

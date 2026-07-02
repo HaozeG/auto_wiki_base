@@ -48,7 +48,8 @@ HHB (Heterogeneous Honey Badger) is a neural network model deployment toolset de
 - HHB is the primary model deployment tool for the [[k230]] SoC, which integrates dual Xuantie C908 cores and a KPU accelerator, as documented in the official K230 SDK.
 - HHB's reliance on TVM connects it to the broader TVM compilation ecosystem, though no dedicated TVM page exists in this wiki yet.
 - The [[allwinner_v853]] SoC also targets AIoT applications with an NPU, but uses a different vendor toolchain rather than HHB, making it a contrasting reference point in the RISC-V AI accelerator landscape.
-- HHB integrates with SHL (Simple Heterogeneous Library), an optimized neural network library for Xuantie CPUs, which provides assembly-optimized implementations.
+- HHB integrates with [[shl]] (Structure of Heterogeneous Library), an optimized neural network library for Xuantie CPUs, which provides assembly-optimized implementations.
+- [[hhb_mobilenetv2_c908_compilation]]: a step-by-step recipe applying this toolset to compile a quantized MobileNetV2 model for the XuanTie C908 core on K230.
 
 ## Sources
 

@@ -72,6 +72,7 @@ The Semidynamics Tensor Unit is a fully-coherent RISC-V tensor accelerator annou
 
 - Compare to [[xuantie_c908]]: both are RISC-V accelerators for AI, but the Semidynamics Tensor Unit emphasizes cache coherence and no new architectural state, while the C908 uses instruction fusion and configurable VLEN.
 - Contrast with [[k230]]: the K230 integrates a fixed-function KPU for AI acceleration, whereas the Semidynamics Tensor Unit is a more programmable solution integrated with a vector unit and coherent memory.
+- [[semidynamics]]: the RISC-V IP vendor that designs this tensor unit as part of its broader configurable core/vector/tensor IP portfolio.
 
 ## Sources
 

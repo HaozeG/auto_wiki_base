@@ -77,6 +77,8 @@ The SiFive Performance P570 Gen3 is a 64-bit out-of-order RISC-V processor core 
 - Comparable to [[xuantie_c908]] as a contemporary RISC-V core targeting AIoT workloads, though the P570 is a higher-performance out-of-order design while the C908 is an in-order core with configurable vector length.
 - Expected to serve as a hardware target for optimization recipes such as [[mlir_xdsl_rvv_gemm_codegen_recipe]] when targeting the RISC-V vector unit.
 - The P570's predecessor, the P550, and its mid-range sibling, the P470, are referenced in performance comparisons but do not yet have dedicated wiki pages.
+- [[llvm_vcix_scheduling_model]]: the LLVM scheduling model mechanism for SiFive Vector Coprocessor Interface (VCIX) instructions, applicable to this core's SiFive 7-family scheduling.
+- [[compiler_benchmark_bananapi_f3_gcc15_clang21]]: a GCC-vs-Clang RVV 1.0 autovectorization comparison on a different (in-order) core, offering a contrasting compiler-quality data point to this out-of-order design.
 
 ## Sources
 

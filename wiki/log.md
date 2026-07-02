@@ -458,3 +458,10 @@ pages_written: 2
 pipeline_rejection_rate: 0%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_ce35c9e1_2026-07-02.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] lint | routine (linking debt pass 4)
+issues_found: 16
+actions_taken:
+- "Closed 16 orphan pages accrued from research sessions 9641d1f1/d3e4213a/b0b9b301/1fa21f0b/ff4e127a/42e6cfaf/5cad5846/bk0cqlpkc/b42tks83l/ce35c9e1 by adding reciprocal [[wikilink]] Relationships entries (sifive_performance_p570_gen3->llvm_vcix_scheduling_model/compiler_benchmark_bananapi_f3_gcc15_clang21, xuantie_c908->risc_v_sparse_dnn_fpga_extensions/riscv_gem5_fault_injector, k230->onnx_int8_vs_fp16_jetson_orin_nano_latency_benchmark/yolov8, gemmini->systolic_tensor_units, riscv_vector_extension->rvv-lite/rvv_intrinsic_spec, semidynamics_tensor_unit->semidynamics, tenstorrent_grayskull_e75->tile_language, hhb->shl/hhb_mobilenetv2_c908_compilation, xuantie_c908->xuantie_c908_ai_inference_performance, xuantie_c906->xuantie_c900_bugs, mlir_xdsl_rvv_gemm_codegen_recipe->mlir) and incrementing target inbound_links."
+- "graph_stats.py now reports orphan_count: 0, orphan_fraction: 0.0, median_inbound_links: 1.0, mean_inbound_links: 3.1136 across 88 pages — MATURE."
+deferred_for_human: []
