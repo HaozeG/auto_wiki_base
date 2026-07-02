@@ -813,3 +813,88 @@ The Ventana Veyron V2 is a RISC-V server processor chip launched by Ventana Micr
 
 - https://www.nextplatform.com/compute/2023/11/07/ventana-launches-veyron-v2-risc-v-into-the-datacenter/1652320
 merge_draft_body -->
+
+## [2026-07-02] merge_pending | xuantie_c906.md
+target_page: xuantie_c906.md
+canonical_name: XuanTie C906
+colliding_name: XuanTie C906
+source: https://www.riscvschool.com/2023/03/09/t-head-xuantie-c906-risc-v/
+status: pending_review
+<!-- merge_draft_body
+# XuanTie C906
+
+The XuanTie C906 is a RISC-V processor core developed by T-Head Semiconductor, designed for high energy efficiency and low cost in AIoT and embedded applications. It is based on the RV64GCV instruction set and includes customized arithmetic enhancement, bit manipulation, load store enhancement, and TLB/Cache operations enhancements. The core supports a configurable RISC-V V vector instruction extension with a vector register width of 128 bits, supporting element sizes of 8, 16, 32, and 64 bits, as well as half-precision floating-point (FP16) operations. It integrates a floating-point unit, a vector unit, and an AXI master interface with a Turbo Engine for efficient data movement. The C906 is positioned in T-Head's XuanTie processor family between the earlier C910 and the later C908, and it implements the RVV 0.7.1 vector extension (pre-ratified version). The core has been used as a reference target for early RISC-V vector software optimizations, such as the OpenBLAS library which includes hand-tuned kernels for the C906's vector units.
+
+## Key Claims
+
+- Based on the RV64GCV instruction set with customized arithmetic, bit manipulation, load store, and TLB/cache enhancement extensions.
+- Supports configurable RISC-V V vector instruction extension (pre-ratification version RVV 0.7.1).
+- Vector register width of 128 bits with element sizes 8/16/32/64 bits and half-precision support.
+- Includes a floating-point unit, vector unit, and Turbo Engine with AXI master interface.
+- Targets high energy efficiency and low cost, suitable for AIoT and embedded scenarios.
+- Performance lies between the XuanTie C910 and C908 cores.
+- OpenBLAS has been optimized for the C906's RVV 0.7.1 vector extensions, indicating software ecosystem support.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RV64GCV (includes G, C, V extensions) with custom T-Head extensions.
+- Vector/matrix/accelerator support: 128-bit vector unit supporting RVV 0.7.1, FP16, INT8/16/32/64 operations.
+- Memory/cache/TLB/DMA: TLB/Cache operations enhancements, AXI master interface with Turbo Engine; specific cache sizes not publicly documented.
+- Compiler/toolchain support: OpenBLAS optimized for RVV 0.7.1; GCC/LLVM toolchains with RVV 0.7.1 support.
+
+## Relationships
+
+- [[xuantie_c908]]: the next-generation XuanTie core after the C906, implementing RISC-V Vector Extension 1.0 and offering higher performance with instruction fusion and configurable VLEN.
+- [[k230]]: a Canaan Kendryte SoC that integrates the XuanTie C908 core; the C906 is an earlier core in the same T-Head family, providing architectural lineage.
+- [[llama_cpp]]: the LLM inference library supports RISC-V vector instructions (RVV), which can target the C906's RVV 0.7.1 unit for efficient inference on capable hardware.
+
+## Sources
+
+- https://www.riscvschool.com/2023/03/09/t-head-xuantie-c906-risc-v/
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | xuantie_c906.md
+target_page: xuantie_c906.md
+canonical_name: XuanTie C906
+colliding_name: XuanTie C906
+source: https://riscv.org/blog/2022/06/xuantie-c906-tops-mlperf-tiny-v0-7-benchmark-mengchang-alibaba-cloud/
+status: pending_review
+<!-- merge_draft_body
+# XuanTie C906
+
+The XuanTie C906 is a 64-bit high-energy processor core developed by Alibaba Cloud (T-Head Semiconductor) based on the RISC-V instruction set architecture. It features a five to eight stage integer pipeline and implements the RISC-V Vector Extension version 0.7.1 with 128-bit vector operation units, supporting data formats including int8, int16, int32, int64, bf16, fp16, fp32, and fp64. The C906 incorporates multi-channel and mode data prefetching technologies to optimize data access bandwidth and prefetching efficiency. This core is used in the Allwinner D1 system-on-chip (SoC), which has entered full-scale production and is available in various development boards on the open market. A comprehensive software stack supports neural network deployment on the C906, including the CSI-NN2 acceleration library (assembly-optimized for the RISC-V Vector extension), the HHB deployment toolset based on Apache TVM, and the Sinian model compression platform.
+
+## Key Claims
+
+- Achieved top marks in the MLPerf Tiny v0.7 benchmark across all four core categories: Visual Wake Words (VWW), Image Classification (IC), Keyword Spotting (KWS), and Anomaly Detection (AD).
+- Implements RISC-V Vector Extension V0.7.1 with 128-bit vector units, supporting a wide range of data formats (int8/16/32/64, bf16, fp16/32/64).
+- Uses fp16 as the default data format for MLPerf Tiny benchmarks, achieving best performance.
+- Integrated into the Allwinner D1 SoC, which is commercially available.
+- CSI-NN2 provides assembly-level optimization for the RISC-V Vector extension and is open source on GitHub.
+- HHB, based on Apache TVM, supports model formats from Caffe, TensorFlow, ONNX, and TensorFlow Lite, and generates C code with CSI-NN2 API calls.
+- Sinian model compression platform reduced calculation workload by three to eight times for the benchmark models.
+
+## Optimization-Relevant Details
+
+- ISA/profile: 64-bit RISC-V with RVV 0.7.1 vector extension (supports V extension subset).
+- Vector/matrix/accelerator support: 128-bit vector operation units; no dedicated matrix accelerator (relies on vector units for neural network ops).
+- Memory/cache/TLB/DMA: Multi-channel data prefetching; specific cache sizes not disclosed in available sources.
+- Compiler/toolchain support: CSI-NN2 library (assembly-optimized for RVV), HHB toolchain (TVM-based), Sinian compression tool; supports TensorFlow, Caffe, ONNX, TensorFlow Lite.
+
+## Relationships
+
+- The [[k230]] hardware target uses the newer XuanTie C908 core, a different design from the C906, and represents a later generation in the XuanTie family.
+- The [[allwinner_v853]] is an SoC combining an Arm Cortex-A7 with a Xuantie E907 RISC-V core, representing a different approach to AI acceleration compared to the C906's vector-based compute.
+- Insufficient context for additional cross-links.
+
+## Sources
+
+- https://riscv.org/blog/2022/06/xuantie-c906-tops-mlperf-tiny-v0-7-benchmark-mengchang-alibaba-cloud/
+merge_draft_body -->
+
+## [2026-07-02] pending | xuantie_c908.md
+target_page: xuantie_c908.md
+target_section: multiple
+source: https://www.cnx-software.com/2022/11/04/t-head-xuantie-c908-risc-v-core-targets-aiot-applications/
+status: pending_review
+proposed_update: Add power consumption (52.8 mW/GHz per core on TSMC 12nm), performance numbers (24-64% improvement on synthetic benchmarks, 2-3.5x on AI workloads MLPerf Tiny v0.7 INT4), and architectural details: 9-stage dual-issue in-order pipeline, ePMP with up to 64 regions, PLIC configurable up to 1023 interrupt sources, RV32 COMPAT mode, AXI4/ACE bus with DCP and LLP. Incorporate these into the first paragraph (adding power and process context), Key Claims (add specific power and comparison numbers), and Optimization-Relevant Details (pipeline stage, ePMP, PLIC, bus interfaces).

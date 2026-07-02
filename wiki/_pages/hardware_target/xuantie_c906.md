@@ -4,6 +4,9 @@ aliases:
 - C906
 - T-Head XuanTie C906
 - T-HEAD XuanTie C906
+- XuanTie C906 processor
+- Xuantie C906
+- Alibaba XuanTie C906
 subtype: null
 tags: []
 hardware_targets:
@@ -27,11 +30,14 @@ scorecard:
 sources:
 - raw/cache/89756ce7e9d9be7f.md
 - https://www.riscvschool.com/2023/03/09/t-head-xuantie-c906-risc-v/
+- raw/cache/4846536b770902d6.md
+- raw/cache/7d46c580f16bec4d.md
+- https://riscv.org/blog/2022/06/xuantie-c906-tops-mlperf-tiny-v0-7-benchmark-mengchang-alibaba-cloud/
 source_url: https://www.riscvschool.com/2023/03/09/t-head-xuantie-c906-risc-v/
 fetched_at: '2026-07-01T04:19:54.493265+00:00'
 type: hardware_target
 created: '2026-07-01'
-updated: '2026-07-01'
+updated: '2026-07-02'
 cold_start: true
 inbound_links: 2
 needs_summary_revision: false
