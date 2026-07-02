@@ -1372,3 +1372,45 @@ target_section: Measurements (under Transformation)
 source: https://arxiv.org/abs/2011.14325
 status: pending_review
 proposed_update: Add the specific measured speedups from the XpulpNN paper: 6x for 4-bit operands, 8x for 2-bit operands, and peak efficiency 2.22 TOPs/s/W from a parallel cluster in GF22FDX. Reference the XpulpNN paper as a source for these hardware-level benchmarks. Also add XpulpNN as an explicit related ISA extension in the constraints list.
+
+## [2026-07-02] pending | cutie-ternary-accelerator.md
+target_page: cutie-ternary-accelerator.md
+target_section: Key Claims
+source: https://arxiv.org/abs/2011.01713
+status: pending_review
+proposed_update: From arXiv:2011.01713 (primary CUTIE paper), add the following claims: CUTIE achieves 3.1 POp/s/W (3100 TOp/s/W) energy efficiency, reduces core inference energy cost by a factor of 4.8x to 21x compared to state-of-the-art accelerators, and uses an architecture with completely unrolled data path in feature map and filter dimensions, ternary neural network targeting, and an optimized training method for higher weight sparsity.
+
+## [2026-07-02] pending | cutie-ternary-accelerator.md
+target_page: cutie-ternary-accelerator.md
+target_section: frontmatter
+source: https://www.researchgate.net/publication/345261170_CUTIE_Beyond_PetaOpsW_Ternary_DNN_Inference_Acceleration_with_Better-than-Binary_Energy_Efficiency
+status: pending_review
+proposed_update: Add new alias 'CUTIE (Completely Unrolled Ternary Inference Engine)' to frontmatter aliases list.
+
+## [2026-07-02] pending | cutie-ternary-accelerator.md
+target_page: cutie-ternary-accelerator.md
+target_section: content
+source: https://www.researchgate.net/publication/345261170_CUTIE_Beyond_PetaOpsW_Ternary_DNN_Inference_Acceleration_with_Better-than-Binary_Energy_Efficiency
+status: pending_review
+proposed_update: Replace the first paragraph with an expanded introduction: 'CUTIE (Completely Unrolled Ternary Inference Engine) is an all-digital ternary neural network accelerator fabricated in GF 22 nm FDX (FDSOI) technology. It achieves 3.1 POp/s/W energy efficiency by minimizing non-computational energy through a completely unrolled datapath architecture in feature map and filter dimensions, reducing switching activity via silencing and maximizing data reuse. CUTIE targets ternary neural networks (TNNs) where sparse weights further reduce switching activity, and introduces an optimized training method to increase weight sparsity. Compared with state-of-the-art accelerators, CUTIE achieves equal or greater accuracy while reducing core inference energy by 4.8x–21x. The design supports fully ternarized Temporal Convolutional Networks (TCNs) and is reported to achieve 3.1 POp/s/W, 2.72 µJ per inference at 12.2 mW, and post-synthesis simulation shows 1.7 µJ per frame for DVS gesture recognition.'
+
+## [2026-07-02] pending | cutie-ternary-accelerator.md
+target_page: cutie-ternary-accelerator.md
+target_section: Key Claims
+source: https://www.researchgate.net/publication/345261170_CUTIE_Beyond_PetaOpsW_Ternary_DNN_Inference_Acceleration_with_Better-than-Binary_Energy_Efficiency
+status: pending_review
+proposed_update: Add new claims: 'Achieves 3.1 POp/s/W energy efficiency (3100 TOp/s/W) [source]. Reduces core inference energy by 4.8x–21x compared to state-of-the-art accelerators [source]. Introduces an optimized training method to increase weight sparsity and further reduce switching activity [source].' Keep existing claims but note measurement context differences (the 1,036 TOp/s/W figure may be for a different configuration).
+
+## [2026-07-02] pending | cutie-ternary-accelerator.md
+target_page: cutie-ternary-accelerator.md
+target_section: Optimization-Relevant Details
+source: https://www.researchgate.net/publication/345261170_CUTIE_Beyond_PetaOpsW_Ternary_DNN_Inference_Acceleration_with_Better-than-Binary_Energy_Efficiency
+status: pending_review
+proposed_update: Expand with: 'Architecture: Completely unrolled in feature map and filter dimensions to eliminate iterative computation; hierarchical clock gating minimizes clock power. Standard cell memories (SCMs) used for weight and feature map storage. Fabrication: GF 22 nm FDX (FDSOI) technology. Training: Custom training method to encourage sparse ternary weights, reducing switching activity. Power: 12.2 mW (core) with 3.1 POp/s/W efficiency. Measurement context: Based on post-layout power simulation on CIFAR-10 test dataset.'
+
+## [2026-07-02] pending | cutie-ternary-accelerator.md
+target_page: cutie-ternary-accelerator.md
+target_section: Relationships
+source: https://www.researchgate.net/publication/345261170_CUTIE_Beyond_PetaOpsW_Ternary_DNN_Inference_Acceleration_with_Better-than-Binary_Energy_Efficiency
+status: pending_review
+proposed_update: Add link: [[cpa-factored-gemmini-systolic-array]] for comparison of accelerator design approaches (systolic array vs. fully unrolled datapath).
