@@ -1183,3 +1183,152 @@ target_section: Key Claims
 source: https://www.andestech.com/en/products-solutions/andescore-processors/riscv-ax45mpv/
 status: pending_review
 proposed_update: Add the following claims sourced from the Andes official page and press releases: Supports MMU for Linux-based applications; features dynamic branch prediction for efficient branch execution; dual-issue of common instruction pairs; level-1 instruction/data caches and local memories for low-latency accesses; demonstrated booting a lightweight LLM on an S2C Prodigy S8-100 FPGA with AMD Versal VP1902; collaboration with MachineWare for early RISC-V software simulation; general availability announced; licensed by Rain AI for in-memory computing solutions.
+
+## [2026-07-02] merge_pending | ventana-veyron-v2.md
+target_page: ventana-veyron-v2.md
+canonical_name: Ventana Veyron V2
+colliding_name: Veyron V2
+source: https://linuxgizmos.com/ventana-to-launch-veyron-v2-risc-v-platform-for-hpc-in-2025/
+status: pending_review
+<!-- merge_draft_body
+# Ventana Veyron V2
+
+Ventana Veyron V2 is a high-performance RISC-V accelerated compute platform announced by Ventana Micro Systems in October 2024, targeting AI, data center, HPC, automotive, and edge computing workloads. The platform features a fifteen-wide out-of-order pipeline operating at 3.6GHz, built on a 4nm process technology. Each cluster supports 32 cores with scalability to 192 cores across multiple clusters, and includes 128MB of shared L3 cache per cluster. A 512-bit vector unit and AI matrix extensions enhance AI and machine learning workloads. The Veyron V2 also provides server-class IOMMU, Advanced Interrupt Architecture, comprehensive RAS features, and side channel attack mitigations for secure enterprise deployments.
+
+## Key Claims
+
+- Features a 15-wide out-of-order pipeline with 3.6GHz clock speed, built on 4nm process.
+- Supports 32 cores per cluster, scalable to 192 cores across clusters.
+- Includes 128MB shared L3 cache per cluster to reduce latency.
+- Integrates a 512-bit vector unit for data-intensive operations.
+- Incorporates AI matrix extensions for AI and machine learning acceleration.
+- Provides server-class IOMMU, Advanced Interrupt Architecture, RAS features, and side channel attack mitigations.
+- Designed for AI, data center, automotive, edge computing, and HPC workloads.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V (implied by the context, no specific profile stated).
+- Vector/matrix/accelerator support: 512-bit vector unit, AI matrix extensions.
+- Memory/cache/TLB/DMA: 128MB shared L3 cache per cluster; no DMA details provided.
+- Compiler/toolchain support: Not specified in the source.
+
+## Relationships
+
+- [[earth-shifting-based-vector-memory-access]]: Veyron V2's vector unit could benefit from optimized vector memory access techniques described in this recipe.
+- [[llvm-riscv-fptrunc-narrowing-optimization]]: Compiler optimizations targeting RISC-V floating-point performance are relevant to the Veyron V2 platform.
+
+## Sources
+
+- [Ventana to Launch Veyron V2 RISC-V Platform for HPC in 2025](https://linuxgizmos.com/ventana-to-launch-veyron-v2-risc-v-platform-for-hpc-in-2025/)
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | ventana-veyron-v2.md
+target_page: ventana-veyron-v2.md
+canonical_name: Ventana Veyron V2
+colliding_name: Veyron V2
+source: https://www.nextplatform.com/2023/11/07/ventana-launches-veyron-v2-risc-v-into-the-datacenter/
+status: pending_review
+<!-- merge_draft_body
+# Veyron V2
+
+The Veyron V2 is a RISC-V server processor designed by Ventana Micro Systems, announced in November 2023 as a successor to the Veyron V1. It targets datacenter workloads and incorporates the RISC-V Vector Extension 1.0 with 512-bit vector support, along with significant core architectural improvements. A key design change from the V1 is the adoption of the Universal Chiplet Interconnect Express (UCI-Express) standard for die-to-die chiplet linking, replacing the earlier Bunch of Wires (BoW) interconnect. This switch, driven by hyperscaler and cloud builder preferences, enables higher data rates, better power efficiency, and improved bandwidth per millimeter. The chip is intended to compete with X86 and Arm server processors in the datacenter space.
+
+## Key Claims
+
+- UCI-Express provides 2× the data rate of BoW, 2× better power efficiency, less than half the latency, and 35–65% higher bandwidth per millimeter compared to BoW, based on a paper by Lei Shan.
+- Veyron V2 features the ratified RISC-V Vector Extension 1.0 with 512-bit vectors, akin to Intel's AVX-512.
+- The chip uses UCI-Express chiplet interconnect instead of the earlier BoW standard, influenced by customer demand and industry momentum.
+- Veyron V1 was competitive with X86 and Arm server chips of its time, and Veyron V2 introduces substantial core enhancements.
+- The design shift to UCI-Express was accelerated to align with the new round of X86 and Arm server chips and to provide a standard chiplet interface.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V with Vector Extension 1.0 (ratified), 512-bit vector length.
+- Vector/matrix/accelerator support: RVV 1.0 512-bit vectors, no specific matrix accelerator details.
+- Memory/cache/TLB/DMA: Not detailed in source; chiplet architecture suggests scalable memory via UCI-Express.
+- Compiler/toolchain support: Standard RISC-V toolchain (GCC, LLVM) with vector support.
+- Chiplet interconnect: UCI-Express (die-to-die), replacing BoW. Provides 2× data rate, 2× power efficiency, <0.5× latency, and 35–65% higher bandwidth density.
+
+## Relationships
+
+- [[earth-shifting-based-vector-memory-access]]: The EARTH optimization targets RISC-V vector memory access, potentially benefiting Veyron V2's vector unit performance.
+- [[llvm-riscv-fptrunc-narrowing-optimization]]: This compiler optimization improves RISC-V floating-point division performance on SiFive P550 and may be applicable to Veyron V2 for datacenter workloads.
+- [[cpa-factored-gemmini-systolic-array]]: As a RISC-V accelerator design technique, this optimization may complement Veyron V2's vector capabilities in AI inference.
+
+## Sources
+
+- [Ventana Launches Veyron V2 RISC-V Into The Datacenter](https://www.nextplatform.com/2023/11/07/ventana-launches-veyron-v2-risc-v-into-the-datacenter/)
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | ventana-veyron-v2.md
+target_page: ventana-veyron-v2.md
+canonical_name: Ventana Veyron V2
+colliding_name: Ventana Veyron V2
+source: https://www.storagereview.com/news/ventana-veyron-v2-risc-v-processor-announced
+status: pending_review
+<!-- merge_draft_body
+# Ventana Veyron V2
+
+The Ventana Veyron V2 is a high-performance RISC-V processor designed by Ventana Micro Systems, fabricated on a 4nm process and operating at up to 3.6 GHz. It features a 15-wide out-of-order pipeline, supports scalable multi-core configurations of up to 192 cores, and includes a 512-bit vector unit with AI matrix extensions. The processor integrates 128 MB of shared L3 cache per cluster, an I/O memory management unit (IOMMU), Advanced Interrupt Architecture, hardware side-channel attack defenses, and comprehensive RAS capabilities. It employs a UCIe chiplet interconnect, allowing customization of compute, I/O, and memory. Ventana also provides a Software Development Kit (SDK) validated on its RISC-V platform. The Veyron V2 targets server-class performance for data center, automotive, 5G, AI, and client applications.
+
+## Key Claims
+
+- Up to 40% performance improvement over previous generation (microarchitecture improvements, processor fabric, cache hierarchy, vector processor).
+- 15-wide out-of-order pipeline at 3.6 GHz.
+- 4nm process technology.
+- Scalable to 192 cores.
+- 128 MB shared L3 cache per cluster.
+- 512-bit vector unit with AI matrix extensions.
+- Supports IOMMU, Advanced Interrupt Architecture, side-channel attack defenses, and RAS.
+- UCIe chiplet interconnect reduces development time and costs.
+- Available as chiplets and IP.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V (unspecified profile, likely RVA22 or later given server features).
+- Vector/matrix/accelerator support: 512-bit vector unit, AI matrix extensions (specific instruction set not detailed).
+- Memory/cache/TLB/DMA: 128 MB shared L3 per cluster, IOMMU for I/O virtualization.
+- Compiler/toolchain support: Ventana SDK, validated on Ventana platform.
+
+## Relationships
+
+- [[cpa-factored-gemmini-systolic-array]]: This optimization recipe targets systolic array designs for RISC-V accelerators, relevant to the Veyron V2's AI matrix extensions.
+- [[earth-shifting-based-vector-memory-access]]: This optimization improves vector memory access for RISC-V vector units, relevant to the Veyron V2's 512-bit vector unit.
+- Insufficient context for additional cross-links; no other entity pages for RISC-V processor families are present in the wiki.
+
+## Sources
+
+- [Ventana Veyron V2 RISC-V Processor Announced - StorageReview.com](https://www.storagereview.com/news/ventana-veyron-v2-risc-v-processor-announced)
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | llvm-riscv-target.md
+target_page: llvm-riscv-target.md
+canonical_name: LLVM RISC-V Target
+colliding_name: LLVM
+source: https://llvm.org/
+status: pending_review
+<!-- merge_draft_body
+# LLVM
+
+LLVM is a collection of modular and reusable compiler and toolchain technologies that originated as a research project at the University of Illinois. Despite its name, LLVM is not a traditional virtual machine; the name "LLVM" is the full name of the project rather than an acronym. LLVM began with the goal of providing a modern, SSA-based compilation strategy capable of supporting both static and dynamic compilation of arbitrary programming languages, and has since grown into an umbrella project comprising numerous subprojects. The LLVM Core libraries provide a source- and target-independent optimizer built around the LLVM intermediate representation (LLVM IR), along with code generation support for many CPUs. LLVM is widely used in commercial and open-source projects, as well as in academic research, and its code is licensed under the Apache 2.0 License with LLVM exceptions. Within the RISC-V AI accelerator ecosystem, LLVM serves as a critical toolchain component for compiling high-level code into optimized machine code for RISC-V targets, including vector extensions (RVV) and specialized accelerators.
+
+## Key Claims
+
+- LLVM provides a modern SSA-based compilation strategy supporting static and dynamic compilation of arbitrary languages.
+- The LLVM Core libraries include a source- and target-independent optimizer and code generation for many popular CPUs.
+- Code in the LLVM project is licensed under the Apache 2.0 License with LLVM exceptions.
+- Primary subprojects include: LLVM Core, Clang (C/C++/Obj-C), Flang (Fortran), LLDB (debugger), libc++/libc++ ABI, libc (C standard library), compiler-rt (low-level code generation support), MLIR (multi-level IR), OpenMP runtime, Polly (polyhedral optimizations), libclc (OpenCL), klee (symbolic execution), LLD (linker), and BOLT (post-link optimizer).
+- LLVM supports code generation for RISC-V CPUs, including RVV (RISC-V Vector Extension).
+- The project releases multiple versions per year; the latest release as of June 2026 is LLVM 22.1.8.
+
+## Relationships
+
+- [[llvm-riscv-fptrunc-narrowing-optimization]]: An optimization recipe that details an LLVM transformation improving code generation for RISC-V targets, leveraging LLVM's range analysis to reduce floating-point division latency.
+- [[mlir-xdsl-rvv-lowering-pipeline]]: An optimization recipe that uses MLIR (a subproject of LLVM) combined with xDSL to enable RVV code generation for RISC-V platforms.
+- [[vectrans]]: An optimization recipe that enhances compiler auto-vectorization using LLM assistance, targeting compilers including LLVM/Clang, relevant to improving LLVM's vectorization on RISC-V.
+- Insufficient context for additional cross-links to entity pages; only optimization recipes are available in the current wiki context.
+
+## Sources
+
+- [The LLVM Compiler Infrastructure Project](https://llvm.org/)
+merge_draft_body -->

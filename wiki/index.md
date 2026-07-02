@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 79 | Sources: 184
+Last updated: 2026-07-02 | Pages: 81 | Sources: 196
 
 ## Entity Pages
 
@@ -10,11 +10,11 @@ Last updated: 2026-07-02 | Pages: 79 | Sources: 184
 | [auto-vectorization-in-rust.md](entity/auto-vectorization-in-rust.md) | Auto-Vectorization in Rust | auto-vectorization, Rust, SIMD, LLVM, GCC | 2 | 0 |
 | [banana-pi-bpi-f3.md](entity/banana-pi-bpi-f3.md) | Banana Pi BPI-F3 |  | 6 | 0 |
 | [earth-vector-memory-access-architecture.md](entity/earth-vector-memory-access-architecture.md) | EARTH (Vector Memory Access Architecture) |  | 2 | 0 |
-| [gemmini.md](entity/gemmini.md) | Gemmini |  | 2 | 18 |
+| [gemmini.md](entity/gemmini.md) | Gemmini |  | 2 | 19 |
 | [libxsmm.md](entity/libxsmm.md) | LIBXSMM |  | 2 | 0 |
 | [llama.cpp.md](entity/llama.cpp.md) | llama.cpp |  | 2 | 0 |
 | [llvm-auto-vectorization.md](entity/llvm-auto-vectorization.md) | LLVM Auto-Vectorization |  | 2 | 0 |
-| [llvm-riscv-target.md](entity/llvm-riscv-target.md) | LLVM RISC-V Target |  | 4 | 0 |
+| [llvm-riscv-target.md](entity/llvm-riscv-target.md) | LLVM RISC-V Target |  | 6 | 0 |
 | [llvm-rv.md](entity/llvm-rv.md) | llvm-rv |  | 4 | 0 |
 | [mlperf-inference-tiny-benchmark.md](entity/mlperf-inference-tiny-benchmark.md) | MLPerf Inference: Tiny |  | 2 | 0 |
 | [muriscv-nn.md](entity/muriscv-nn.md) | MuRISCV-NN |  | 2 | 0 |
@@ -76,6 +76,7 @@ Flat list of all concepts mentioned across pages (with or without dedicated page
 | [nx27v.md](hardware_target/nx27v.md) | hardware_target | NX27V |  | 2 | 0 |
 | [rockchip-rk3588.md](hardware_target/rockchip-rk3588.md) | hardware_target | Rockchip RK3588 |  | 6 | 0 |
 | [rvme.md](hardware_target/rvme.md) | hardware_target | RVME |  | 2 | 0 |
+| [saturn-vector-unit.md](hardware_target/saturn-vector-unit.md) | hardware_target | Saturn Vector Unit |  | 2 | 0 |
 | [sifive-intelligence-x160-gen-2.md](hardware_target/sifive-intelligence-x160-gen-2.md) | hardware_target | SiFive Intelligence X160 Gen 2 |  | 2 | 10 |
 | [sifive-intelligence-x180-gen-2.md](hardware_target/sifive-intelligence-x180-gen-2.md) | hardware_target | SiFive Intelligence X180 Gen 2 |  | 2 | 0 |
 | [sifive-intelligence-x280.md](hardware_target/sifive-intelligence-x280.md) | hardware_target | SiFive Intelligence X280 |  | 8 | 0 |
@@ -83,14 +84,15 @@ Flat list of all concepts mentioned across pages (with or without dedicated page
 | [spacemit-k1.md](hardware_target/spacemit-k1.md) | hardware_target | SpacemiT K1 |  | 8 | 1 |
 | [spacemit-x60-processor.md](hardware_target/spacemit-x60-processor.md) | hardware_target | SpacemiT X60 |  | 2 | 4 |
 | [tenstorrent-grayskull-e75.md](hardware_target/tenstorrent-grayskull-e75.md) | hardware_target | Tenstorrent Grayskull e75 |  | 4 | 1 |
+| [ventana-veyron-v2.md](hardware_target/ventana-veyron-v2.md) | hardware_target | Ventana Veyron V2 | RISC-V, Ventana, server, data center, UCIe, DSA | 8 | 0 |
 | [xiangshan-nanhu-vdot.md](hardware_target/xiangshan-nanhu-vdot.md) | hardware_target | XiangShan Nanhu-vdot |  | 2 | 0 |
 | [xuantie-c906.md](hardware_target/xuantie-c906.md) | hardware_target | XuanTie C906 |  | 2 | 1 |
 | [xuantie-c908.md](hardware_target/xuantie-c908.md) | hardware_target | XuanTie C908 |  | 2 | 0 |
 | [xuantie-c910-ice-board.md](hardware_target/xuantie-c910-ice-board.md) | hardware_target | Xuantie C910 / ICE SoC Board |  | 2 | 0 |
 | [xuantie-c920v1.md](hardware_target/xuantie-c920v1.md) | hardware_target | XuanTie C920v1 |  | 2 | 1 |
-| [xuantie-c950.md](hardware_target/xuantie-c950.md) | hardware_target | XuanTie C950 | RISC-V, Alibaba, XuanTie, server, AI | 2 | 14 |
-| [cpa-factored-gemmini-systolic-array.md](optimization_recipe/cpa-factored-gemmini-systolic-array.md) | optimization_recipe | CPA-Factored Gemmini Systolic Array |  | 2 | 25 |
-| [earth-shifting-based-vector-memory-access.md](optimization_recipe/earth-shifting-based-vector-memory-access.md) | optimization_recipe | EARTH Shifting-Based Vector Memory Access Optimization |  | 2 | 14 |
+| [xuantie-c950.md](hardware_target/xuantie-c950.md) | hardware_target | XuanTie C950 | RISC-V, Alibaba, XuanTie, server, AI | 2 | 15 |
+| [cpa-factored-gemmini-systolic-array.md](optimization_recipe/cpa-factored-gemmini-systolic-array.md) | optimization_recipe | CPA-Factored Gemmini Systolic Array |  | 2 | 26 |
+| [earth-shifting-based-vector-memory-access.md](optimization_recipe/earth-shifting-based-vector-memory-access.md) | optimization_recipe | EARTH Shifting-Based Vector Memory Access Optimization |  | 2 | 15 |
 | [llvm-riscv-fptrunc-narrowing-optimization.md](optimization_recipe/llvm-riscv-fptrunc-narrowing-optimization.md) | optimization_recipe | LLVM RISC-V FPTrunc Narrowing Optimization |  | 2 | 11 |
 | [mlir-xdsl-rvv-lowering-pipeline.md](optimization_recipe/mlir-xdsl-rvv-lowering-pipeline.md) | optimization_recipe | MLIR-xDSL RVV Lowering Pipeline |  | 2 | 3 |
 | [pulp-nn-optimization-recipe.md](optimization_recipe/pulp-nn-optimization-recipe.md) | optimization_recipe | PULP-NN: Accelerating Quantized Neural Networks on Parallel Ultra-Low-Power RISC | RISC-V, quantized neural network, low-power, parallel computing | 2 | 5 |
