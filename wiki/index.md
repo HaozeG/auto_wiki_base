@@ -1,12 +1,13 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 46 | Sources: 110
+Last updated: 2026-07-02 | Pages: 50 | Sources: 116
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
 | [banana-pi-bpi-f3.md](entity/banana-pi-bpi-f3.md) | Banana Pi BPI-F3 |  | 6 | 0 |
+| [earth-vector-memory-access-architecture.md](entity/earth-vector-memory-access-architecture.md) | EARTH (Vector Memory Access Architecture) |  | 2 | 0 |
 | [gemmini.md](entity/gemmini.md) | Gemmini |  | 2 | 13 |
 | [llvm-auto-vectorization.md](entity/llvm-auto-vectorization.md) | LLVM Auto-Vectorization |  | 2 | 0 |
 | [llvm-riscv-target.md](entity/llvm-riscv-target.md) | LLVM RISC-V Target |  | 2 | 0 |
@@ -15,6 +16,7 @@ Last updated: 2026-07-02 | Pages: 46 | Sources: 110
 | [nncase.md](entity/nncase.md) | nncase |  | 2 | 7 |
 | [risc-v-matrix-project.md](entity/risc-v-matrix-project.md) | RISC-V Matrix Project | RISC-V, matrix extension, prototype, riscv-stc | 2 | 0 |
 | [risc-v-vector-intrinsic-specification.md](entity/risc-v-vector-intrinsic-specification.md) | RISC-V Vector Intrinsic Specification |  | 2 | 0 |
+| [risc-v.md](entity/risc-v.md) | RISC-V |  | 2 | 0 |
 | [riscv-vector-intrinsics.md](entity/riscv-vector-intrinsics.md) | RISC-V Vector Intrinsics |  | 6 | 0 |
 | [sifive-intelligence-python.md](entity/sifive-intelligence-python.md) | SiFive Intelligence Python |  | 2 | 0 |
 | [spacemit.md](entity/spacemit.md) | SpacemiT |  | 2 | 0 |
@@ -54,14 +56,16 @@ Flat list of all concepts mentioned across pages (with or without dedicated page
 | [sifive-intelligence-x280.md](hardware_target/sifive-intelligence-x280.md) | hardware_target | SiFive Intelligence X280 |  | 8 | 0 |
 | [sophon-sg2042.md](hardware_target/sophon-sg2042.md) | hardware_target | Sophon SG2042 | RISC-V, SOPHON, HPC, 64-core | 12 | 1 |
 | [spacemit-k1.md](hardware_target/spacemit-k1.md) | hardware_target | SpacemiT K1 |  | 8 | 1 |
-| [spacemit-x60-processor.md](hardware_target/spacemit-x60-processor.md) | hardware_target | SpacemiT X60 |  | 2 | 1 |
+| [spacemit-x60-processor.md](hardware_target/spacemit-x60-processor.md) | hardware_target | SpacemiT X60 |  | 2 | 2 |
 | [tenstorrent-grayskull-e75.md](hardware_target/tenstorrent-grayskull-e75.md) | hardware_target | Tenstorrent Grayskull e75 |  | 4 | 1 |
+| [xiangshan-nanhu-vdot.md](hardware_target/xiangshan-nanhu-vdot.md) | hardware_target | XiangShan Nanhu-vdot |  | 2 | 0 |
 | [xuantie-c908.md](hardware_target/xuantie-c908.md) | hardware_target | XuanTie C908 |  | 2 | 0 |
 | [xuantie-c910-ice-board.md](hardware_target/xuantie-c910-ice-board.md) | hardware_target | Xuantie C910 / ICE SoC Board |  | 2 | 0 |
 | [xuantie-c920v1.md](hardware_target/xuantie-c920v1.md) | hardware_target | XuanTie C920v1 |  | 2 | 1 |
 | [xuantie-c950.md](hardware_target/xuantie-c950.md) | hardware_target | XuanTie C950 | RISC-V, Alibaba, XuanTie, server, AI | 2 | 12 |
-| [cpa-factored-gemmini-systolic-array.md](optimization_recipe/cpa-factored-gemmini-systolic-array.md) | optimization_recipe | CPA-Factored Gemmini Systolic Array |  | 2 | 15 |
-| [llvm-riscv-fptrunc-narrowing-optimization.md](optimization_recipe/llvm-riscv-fptrunc-narrowing-optimization.md) | optimization_recipe | LLVM RISC-V FPTrunc Narrowing Optimization |  | 2 | 1 |
+| [cpa-factored-gemmini-systolic-array.md](optimization_recipe/cpa-factored-gemmini-systolic-array.md) | optimization_recipe | CPA-Factored Gemmini Systolic Array |  | 2 | 18 |
+| [earth-shifting-based-vector-memory-access.md](optimization_recipe/earth-shifting-based-vector-memory-access.md) | optimization_recipe | EARTH Shifting-Based Vector Memory Access Optimization |  | 2 | 0 |
+| [llvm-riscv-fptrunc-narrowing-optimization.md](optimization_recipe/llvm-riscv-fptrunc-narrowing-optimization.md) | optimization_recipe | LLVM RISC-V FPTrunc Narrowing Optimization |  | 2 | 4 |
 | [mlir-xdsl-rvv-lowering-pipeline.md](optimization_recipe/mlir-xdsl-rvv-lowering-pipeline.md) | optimization_recipe | MLIR-xDSL RVV Lowering Pipeline |  | 2 | 3 |
 | [vindexmac-structured-sparse-matrix-optimization.md](optimization_recipe/vindexmac-structured-sparse-matrix-optimization.md) | optimization_recipe | Structured-Sparse Matrix Multiplication Optimization with vindexmac on RISC-V Ve | RISC-V, structured sparsity, matrix multiplication, vindexmac | 2 | 0 |
 | [risc-v-vector-code-examples.md](workload_kernel/risc-v-vector-code-examples.md) | workload_kernel | RISC-V Vector Code Examples | RISC-V, RVV, vector, assembly | 2 | 0 |
