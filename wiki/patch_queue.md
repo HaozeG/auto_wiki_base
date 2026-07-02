@@ -1411,3 +1411,113 @@ XiangShan (Chinese: 香山) is an open-source, high-performance RISC-V processor
 - https://docs.xiangshan.cc
 - https://talks-pubs.xiangshan.cc/publications/micro2022-xiangshan.pdf
 merge_draft_body -->
+
+## [2026-07-02] merge_pending | tenstorrent_grayskull_e75.md
+target_page: tenstorrent_grayskull_e75.md
+canonical_name: Tenstorrent Grayskull e75
+colliding_name: Tenstorrent Grayskull e75
+source: https://arxiv.org/html/2505.06085
+status: pending_review
+<!-- merge_draft_body
+# Tenstorrent Grayskull e75
+
+The Tenstorrent Grayskull e75 is a RISC-V-based AI accelerator card featuring a grid of 96 Tensix cores fabricated on a 12nm process. It operates at 1 GHz, provides 8 GB of LPDDR4 memory with 102.4 GB/s bandwidth, and delivers a peak performance of 55 TFLOPs for FP16. Each Tensix core contains five programmable baby RISC-V cores, a 1 MB local SRAM, a SIMD Matrix & Vector engine, and Network on Chip routers. The accelerator supports multiple data formats including BF16 and Block Floating Point (BFP) with configurable math fidelity levels. It is designed for AI workloads such as LLM inference and matrix multiplication.
+
+## Key Claims
+
+- 96 Tensix cores at 1 GHz on a 12nm process.
+- 8 GB LPDDR4 memory with 102.4 GB/s bandwidth.
+- 55 TFLOPs FP16 peak raw throughput.
+- Each Tensix core: 5 programmable RISC-V cores, 1 MB SRAM, SIMD Matrix & Vector engine, NoC routers.
+- Data format support: BF16, BFP4/8/16, standard FP; four Math Fidelity levels.
+- Peak energy efficiency of 1.55 TFLOPs/Watt when executing MatMul with BF16.
+
+## Optimization-Relevant Details
+
+- ISA/profile: Proprietary RISC-V baby cores within Tensix architecture; not a standard ISA extension.
+- Vector/matrix/accelerator support: SIMD Matrix & Vector engine per Tensix core; block floating point formats for reduced precision.
+- Memory/cache/TLB/DMA: 1 MB local SRAM (L1) per core; 8 GB LPDDR4 external; NoC for inter-core communication.
+- Compiler/toolchain support: TTNN (Python library built on TT-Metal), C++ kernel level programming.
+
+## Relationships
+
+- [[grayskull_e75_matmul_benchmark]]: benchmark results on the same hardware, reporting MatMul efficiency and comparison with NVIDIA GPUs.
+- [[k230]]: another RISC-V-based AI accelerator (Canaan Kendryte), representing an alternative approach with a KPU and dual RISC-V C908 cores.
+- [[allwinner_v853]]: a comparable SoC with a RISC-V MCU and NPU, targeted at similar AI vision workloads.
+
+## Sources
+
+- https://arxiv.org/html/2505.06085
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | tenstorrent_grayskull_e75.md
+target_page: tenstorrent_grayskull_e75.md
+canonical_name: Tenstorrent Grayskull e75
+colliding_name: Tenstorrent Grayskull
+source: https://www.techradar.com/pro/firm-headed-by-legendary-chip-architect-behind-amd-zen-finally-releases-first-hardware-days-after-being-selected-to-build-the-future-of-ai-in-japan-tenstorrent-unveils-grayskull-its-risc-v-answer-to-gpus
+status: pending_review
+<!-- merge_draft_body
+# Tenstorrent Grayskull
+
+Tenstorrent Grayskull is a RISC-V-based AI accelerator architecture developed by Tenstorrent, a company founded by legendary chip architect Jim Keller. The Grayskull processor is designed as an alternative to traditional GPUs for AI inference, with a focus on ease of programming, scalability, and efficient handling of run-time sparsity and conditional computation. The first hardware products based on Grayskull are the Grayskull e75 and Grayskull e150 DevKits, which are inference-only PCIe Gen4 boards targeted at AI development. The architecture is built around Tensix cores, which include integrated network communication hardware that enables direct core-to-core data transfer without routing through DRAM, reducing latency and improving throughput. Tenstorrent provides two software stacks: TT-Buda for running pre-trained models out-of-the-box, and TT-Metalium for users who need to customize models or develop new ones. The DevKits support a range of popular AI models including BERT, ResNet, Whisper, YOLOv5, and U-Net. The e75 operates at 75W and has a low-profile half-length form factor, while the e150 operates at up to 200W in a standard-height 3/4-length form factor. The e75 is priced at $599 and the e150 at $799.
+
+## Key Claims
+
+- Tenstorrent Grayskull is a RISC-V-based AI accelerator architecture for inference, designed to be easier to program than GPUs and efficient at handling sparsity and conditional computation.
+- The Grayskull e75 DevKit is a half-length, low-profile PCIe Gen4 board with a single Grayskull processor, operating at 75W and priced at $599.
+- The Grayskull e150 DevKit is a standard-height, 3/4-length PCIe Gen4 board with a single Grayskull processor, operating at up to 200W and priced at $799.
+- The architecture uses Tensix cores that communicate directly via an integrated network, bypassing DRAM for lower latency.
+- Software support includes TT-Buda (out-of-box model execution) and TT-Metalium (custom model development).
+- Supported models include BERT, ResNet, Whisper, YOLOv5, and U-Net.
+- Tenstorrent also assists in planning to build a 2nm AI Accelerator for Japan's LSTC using RISC-V and Chiplet IP.
+- The DevKits are available for purchase as of the announcement date.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V based (proprietary Tensix cores; exact ISA extensions not publicly detailed).
+- Vector/matrix/accelerator support: Tensix cores with network-on-chip; no standard vector extension confirmed, but custom support for sparsity and conditional computation.
+- Memory/cache/TLB/DMA: Not disclosed in available sources.
+- Compiler/toolchain support: TT-Buda (high-level model execution), TT-Metalium (low-level customization).
+
+## Relationships
+
+- [[xuantie_c908]]: Another RISC-V AI accelerator core, though focused on embedded AIoT with standard RISC-V Vector extensions, representing a different design philosophy from Grayskull's Tensix network architecture.
+- [[k230]]: A RISC-V AIoT SoC integrating C908 cores with a dedicated KPU, contrasting with Grayskull's homogeneous Tensix-core approach.
+- [[mlir_xdsl_rvv_gemm_codegen_recipe]]: A research recipe for generating RVV-optimized GEMM kernels; if Grayskull supports standard RISC-V vector extensions, this recipe could be adapted for optimization, but this is not confirmed.
+
+## Sources
+
+- https://www.techradar.com/pro/firm-headed-by-legendary-chip-architect-behind-amd-zen-finally-releases-first-hardware-days-after-being-selected-to-build-the-future-of-ai-in-japan-tenstorrent-unveils-grayskull-its-risc-v-answer-to-gpus
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | tenstorrent_grayskull_e75.md
+target_page: tenstorrent_grayskull_e75.md
+canonical_name: Tenstorrent Grayskull e75
+colliding_name: Tenstorrent Grayskull
+source: https://gigazine.net/gsc_news/en/20240311-jim-keller-tenstorrent-grayskull-e75-e150/
+status: pending_review
+<!-- merge_draft_body
+# Tenstorrent Grayskull
+
+Tenstorrent Grayskull is a family of PCIe expansion cards for AI inference released by Tenstorrent in March 2024, comprising the Grayskull e75 and Grayskull e150 models. The cards are based on Tenstorrent's Tensix architecture, with the e75 featuring 96 Tensix cores at 75W and the e150 featuring 120 Tensix cores at 200W. They are supported by the TT-Buda and TT-Metalium open-source software stacks, enabling inference of models such as GPT-2 and Stable Diffusion. The product was announced alongside a developer bounty program and partnerships with Japan's LSTC and Rapidus.
+
+## Key Claims
+
+- Grayskull e75: 96 Tensix cores, 75W TDP, priced at $599.
+- Grayskull e150: 120 Tensix cores, 200W TDP, priced at $799.
+- Supported software stacks: TT-Buda and TT-Metalium, both open-source.
+- AI models available through TT-Buda: GPT-2, Stable Diffusion, and others listed in the tt-buda-demos repository.
+- Developer bounty program for adding models: Gemma 2B, Qwen 1.5 (0.5B), and others.
+- Roadmap: Gen 1 networked AI product soon, Gen 2 (Blackhole) planned for April 2024, and Gen 3 low-cost AI later.
+- Partnership with Japan's LSTC (Leading-edge Semiconductor Technology Center) and Rapidus for semiconductor development.
+
+## Relationships
+
+- [[k230]]: Canaan Kendryte K230 SoC with dedicated KPU for AI inference, representing a competing approach to AI acceleration at the edge.
+- [[allwinner_v853]]: Allwinner V853 SoC with NPU up to 1 TOPS, another AI accelerator target in a different performance class.
+- Insufficient context in the wiki for additional cross-links to directly related Tenstorrent or inference-card pages.
+
+## Sources
+
+- https://gigazine.net/gsc_news/en/20240311-jim-keller-tenstorrent-grayskull-e75-e150/
+merge_draft_body -->

@@ -4,6 +4,9 @@ aliases:
 - Grayskull e75
 - Grayskull
 - Tenstorrent Grayskull
+- Grayskull e75 accelerator
+- Grayskull e150
+- Tenstorrent Grayskull Dev Kit
 subtype: null
 tags: []
 hardware_targets:
@@ -26,6 +29,12 @@ scorecard:
 sources:
 - raw/cache/2bb619b763be17f7.md
 - https://arxiv.org/html/2505.06085v1
+- raw/cache/f44e7b65c26d8ecf.md
+- https://arxiv.org/html/2505.06085
+- raw/cache/df18e54edc7608f6.md
+- https://www.techradar.com/pro/firm-headed-by-legendary-chip-architect-behind-amd-zen-finally-releases-first-hardware-days-after-being-selected-to-build-the-future-of-ai-in-japan-tenstorrent-unveils-grayskull-its-risc-v-answer-to-gpus
+- raw/cache/1a940b93ad0e4c31.md
+- https://gigazine.net/gsc_news/en/20240311-jim-keller-tenstorrent-grayskull-e75-e150/
 source_url: https://arxiv.org/html/2505.06085v1
 fetched_at: '2026-07-02T05:05:34.906383+00:00'
 type: hardware_target
