@@ -11,3 +11,6 @@ __pycache__/
 .pytest_cache/
 *.egg-info/
 .venv/
+# Driver-loop run logs (transient; the durable record is wiki/log.md + wiki/audit/)
+replication_run.log
+replication_run_stdout.log
