@@ -711,3 +711,41 @@ The XuanTie C910 is a 64-bit RISC-V out-of-order superscalar processor core deve
 
 - https://chipsandcheese.com/p/alibabat-heads-xuantie-c910
 merge_draft_body -->
+
+## [2026-07-02] merge_pending | andes_nx27v.md
+target_page: andes_nx27v.md
+canonical_name: Andes NX27V
+colliding_name: NX27V
+source: https://www.andestech.com/en/products-solutions/andescore-processors/riscv-nx27v/
+status: pending_review
+<!-- merge_draft_body
+# NX27V
+
+The NX27V is a 64-bit RISC-V vector processor core developed by Andes Technology Corporation, implementing the IMAFD standard instruction profiles and a dedicated Vector Processing Unit (VPU) to accelerate computation-intensive workloads such as AI inference, AR/VR, and computer vision. The core supports the Andes Custom Extension (ACE) framework, enabling customers to create custom domain-specific instructions for application-specific acceleration. The NX27V is integrated into Andes' 7nm QiLai SoC, which pairs it with a quad-core AX45MP cluster to form the compute backbone of the world's first RISC-V AI PC. Andes has also introduced DSP instruction set extensions for the NX27V and other multi-core RISC-V processors targeting HPC markets. The processor is designed for broad market segments requiring high vector throughput and supports the latest RISC-V vector specification.
+
+## Key Claims
+
+- 64-bit RISC-V vector processor supporting IMAFD standard instructions.
+- Integrated Vector Processing Unit (VPU) for AI, AR/VR, and general computation acceleration.
+- Andes Custom Extension (ACE) framework for custom instruction creation.
+- Deployed in the 7nm QiLai SoC alongside a quad-core AX45MP cluster.
+- Used in the first RISC-V AI PC.
+- DSP instruction set extensions available for HPC workloads.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V 64-bit with IMAFD and Vector Extension.
+- Vector/matrix/accelerator support: VPU (Vector Processing Unit), ACE custom instructions.
+- Memory/cache/TLB/DMA: Not specified.
+- Compiler/toolchain support: Not specified.
+
+## Relationships
+
+- [[xuantie_c908]]: Another RISC-V vector processor core with configurable VLEN, offering a comparison point for the NX27V's fixed or unspecified vector length.
+- [[mlir_xdsl_rvv_gemm_codegen_recipe]]: An optimization recipe for RISC-V Vector GEMM code generation; the NX27V's VPU could serve as a target for such code generation pipelines.
+- [[k230]]: An AIoT SoC integrating a different vector processor (C908), illustrating the broader landscape of RISC-V vector-capable platforms.
+
+## Sources
+
+- https://www.andestech.com/en/products-solutions/andescore-processors/riscv-nx27v/
+merge_draft_body -->

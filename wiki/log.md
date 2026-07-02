@@ -331,3 +331,11 @@ actions_taken:
 - "Closed 11 orphan pages accrued from research sessions c0a42591/d86b2af1 by adding reciprocal [[wikilink]] Relationships entries from related hub pages (xuantie_c908, llvm_riscv_target, k230, sifive_intelligence_x280, spacemit_x60, bpif3_llm_rvv_inference_benchmark) and incrementing target inbound_links: llama_cpp, saturn_vector_unit, riscv_vector_tests_generator, llvm_rvv_ir_representation, gcc15_clang21_autovectorization_rvv_bananapi_f3, sifive_performance_p570_gen3, sifive_intelligence_x390, cpufp, risc_v_gpu_integration, spacemit_x60_llvm_spec_cpu2017_benchmark, rvv_llama.cpp_optimization_recipe."
 - "graph_stats.py now reports orphan_count: 0, orphan_fraction: 0.0, median_inbound_links: 1.0, mean_inbound_links: 2.8431 across 51 pages — MATURE."
 deferred_for_human: []
+
+## [2026-07-02] research | Andes RISC-V AI NPU accelerator vector extension
+session_id: bf6a774a
+candidates_evaluated: 8
+pages_written: 6
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_bf6a774a_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first
