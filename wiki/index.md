@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 99 | Sources: 246
+Last updated: 2026-07-02 | Pages: 100 | Sources: 248
 
 ## Entity Pages
 
@@ -24,6 +24,7 @@ Last updated: 2026-07-02 | Pages: 99 | Sources: 246
 | [nncase.md](entity/nncase.md) | nncase |  | 2 | 10 |
 | [opencv-hal-riscv-rvv.md](entity/opencv-hal-riscv-rvv.md) | OpenCV HAL riscv-rvv |  | 2 | 0 |
 | [opengeem-accelerator-generator.md](entity/opengeem-accelerator-generator.md) | OpenGeMM |  | 6 | 0 |
+| [predrac.md](entity/predrac.md) | preDRAC |  | 2 | 0 |
 | [pulp-platform.md](entity/pulp-platform.md) | PULP Platform |  | 8 | 0 |
 | [risc-v-matrix-project.md](entity/risc-v-matrix-project.md) | RISC-V Matrix Project | RISC-V, matrix extension, prototype, riscv-stc | 2 | 0 |
 | [risc-v-vector-intrinsic-specification.md](entity/risc-v-vector-intrinsic-specification.md) | RISC-V Vector Intrinsic Specification |  | 2 | 0 |
@@ -108,7 +109,7 @@ Flat list of all concepts mentioned across pages (with or without dedicated page
 | [xuantie-c910-ice-board.md](hardware_target/xuantie-c910-ice-board.md) | hardware_target | Xuantie C910 / ICE SoC Board |  | 2 | 0 |
 | [xuantie-c920v1.md](hardware_target/xuantie-c920v1.md) | hardware_target | XuanTie C920v1 |  | 2 | 1 |
 | [xuantie-c950.md](hardware_target/xuantie-c950.md) | hardware_target | XuanTie C950 | RISC-V, Alibaba, XuanTie, server, AI | 2 | 16 |
-| [cpa-factored-gemmini-systolic-array.md](optimization_recipe/cpa-factored-gemmini-systolic-array.md) | optimization_recipe | CPA-Factored Gemmini Systolic Array |  | 2 | 31 |
+| [cpa-factored-gemmini-systolic-array.md](optimization_recipe/cpa-factored-gemmini-systolic-array.md) | optimization_recipe | CPA-Factored Gemmini Systolic Array |  | 2 | 32 |
 | [earth-shifting-based-vector-memory-access.md](optimization_recipe/earth-shifting-based-vector-memory-access.md) | optimization_recipe | EARTH Shifting-Based Vector Memory Access Optimization |  | 2 | 23 |
 | [llvm-auto-re-vectorization-to-riscv.md](optimization_recipe/llvm-auto-re-vectorization-to-riscv.md) | optimization_recipe | Auto-Re-Vectorization via LLVM IR Transformation to RISC-V Vector |  | 2 | 0 |
 | [llvm-riscv-fptrunc-narrowing-optimization.md](optimization_recipe/llvm-riscv-fptrunc-narrowing-optimization.md) | optimization_recipe | LLVM RISC-V FPTrunc Narrowing Optimization |  | 2 | 15 |

@@ -299,3 +299,11 @@ pages_written: 1
 pipeline_rejection_rate: 22%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/riscv-v2-replication/wiki/audit/research_4d18e42f_2026-07-02.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] research | RISC-V open source hardware governance foundation
+session_id: 020ee5da
+candidates_evaluated: 10
+pages_written: 1
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/riscv-v2-replication/wiki/audit/research_020ee5da_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first
