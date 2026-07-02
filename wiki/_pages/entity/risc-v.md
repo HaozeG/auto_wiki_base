@@ -3,6 +3,8 @@ canonical_name: RISC-V
 aliases:
 - risk-five
 - RISC-Five
+- Risk-Five
+- RISC-V ISA
 subtype: null
 tags: []
 scorecard:

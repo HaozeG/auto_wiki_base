@@ -1332,3 +1332,36 @@ LLVM is a collection of modular and reusable compiler and toolchain technologies
 
 - [The LLVM Compiler Infrastructure Project](https://llvm.org/)
 merge_draft_body -->
+
+## [2026-07-02] merge_pending | risc-v.md
+target_page: risc-v.md
+canonical_name: RISC-V
+colliding_name: RISC-V
+source: https://en.wikipedia.org/wiki/RISC-V
+status: pending_review
+<!-- merge_draft_body
+# RISC-V
+
+RISC-V (pronounced "risk-five") is a free and open standard instruction set architecture (ISA) based on reduced instruction set computer (RISC) principles. It was developed in 2010 at the University of California, Berkeley as the fifth generation of RISC processors from that institution, with foundational work by Krste Asanović and David Patterson. Unlike proprietary ISAs such as x86 and ARM, RISC-V is released under permissive open-source licenses, enabling royalty-free implementations. The specification defines base integer ISAs for 32-bit (RV32I), 64-bit (RV64I), and 128-bit (RV128I) address spaces, along with a suite of standard extensions: M (multiplication and division), A (atomic instructions), F/D/Q (single, double, and quad-precision floating-point), C (compressed 16-bit instructions), B (bit manipulation), V (vector operations), and various Z extensions for control and status registers, fences, and more. The ISA uses variable-length encoding, little-endian byte ordering, and a load-store architecture. Maintenance and governance of the standard were transferred to RISC-V International, a Swiss non-profit, in 2015. As of 2025, RISC-V International has over 4,500 members, and RISC-V has become widely adopted in microcontrollers and embedded systems, with commercial SoCs from companies such as SiFive, Andes Technology, StarFive, Espressif Systems, and SpacemiT.
+
+## Key Claims
+
+- RISC-V is a free and open standard ISA based on RISC principles, allowing royalty-free implementations.
+- Developed at UC Berkeley in 2010 as the fifth generation of Berkeley RISC designs.
+- Managed by RISC-V International since 2015, a non-profit with over 4,500 members.
+- Supports 32-bit, 64-bit, and 128-bit address spaces (RV32I, RV64I, RV128I).
+- Standard extensions include M (multiply/divide), A (atomics), F/D/Q (floating-point), C (compressed), B (bit manipulation), V (vector), and Z-series extensions.
+- Used in microcontrollers, embedded systems, and growing into mobile, desktop, and server markets.
+- Major implementors include SiFive, Andes Technology, StarFive, Espressif Systems, and SpacemiT.
+
+## Relationships
+
+- [[spacemit-x60-processor]]: A RISC-V processor designed for AI acceleration, based on the RISC-V ISA and used in platforms such as Bit-Brick K1.
+- [[vectrans]]: An LLM-assisted compiler auto-vectorization framework that targets RISC-V and other architectures for improved code generation.
+- [[llvm-riscv-fptrunc-narrowing-optimization]]: A compiler optimization specifically for RISC-V targets that reduces floating-point division latency via range analysis.
+- Insufficient context for additional entity page cross-links; no entity pages are available in the provided wiki context.
+
+## Sources
+
+- [RISC-V - Wikipedia](https://en.wikipedia.org/wiki/RISC-V)
+merge_draft_body -->

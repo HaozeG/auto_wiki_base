@@ -195,3 +195,11 @@ pages_written: 2
 pipeline_rejection_rate: 10%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/riscv-v2-replication/wiki/audit/research_97c857cb_2026-07-02.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] research | Esperanto ET-SoC-1 RISC-V AI accelerator
+session_id: e6d941cf
+candidates_evaluated: 10
+pages_written: 2
+pipeline_rejection_rate: 10%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/riscv-v2-replication/wiki/audit/research_e6d941cf_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first

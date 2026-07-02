@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 81 | Sources: 196
+Last updated: 2026-07-02 | Pages: 83 | Sources: 200
 
 ## Entity Pages
 
@@ -10,6 +10,7 @@ Last updated: 2026-07-02 | Pages: 81 | Sources: 196
 | [auto-vectorization-in-rust.md](entity/auto-vectorization-in-rust.md) | Auto-Vectorization in Rust | auto-vectorization, Rust, SIMD, LLVM, GCC | 2 | 0 |
 | [banana-pi-bpi-f3.md](entity/banana-pi-bpi-f3.md) | Banana Pi BPI-F3 |  | 6 | 0 |
 | [earth-vector-memory-access-architecture.md](entity/earth-vector-memory-access-architecture.md) | EARTH (Vector Memory Access Architecture) |  | 2 | 0 |
+| [esperanto-technologies.md](entity/esperanto-technologies.md) | Esperanto Technologies |  | 2 | 0 |
 | [gemmini.md](entity/gemmini.md) | Gemmini |  | 2 | 19 |
 | [libxsmm.md](entity/libxsmm.md) | LIBXSMM |  | 2 | 0 |
 | [llama.cpp.md](entity/llama.cpp.md) | llama.cpp |  | 2 | 0 |
@@ -71,6 +72,7 @@ Flat list of all concepts mentioned across pages (with or without dedicated page
 | [andes-ax45mpv.md](hardware_target/andes-ax45mpv.md) | hardware_target | AX45MPV |  | 2 | 1 |
 | [andes-qilai.md](hardware_target/andes-qilai.md) | hardware_target | Andes QiLai |  | 2 | 1 |
 | [d1-h.md](hardware_target/d1-h.md) | hardware_target | D1-H |  | 4 | 0 |
+| [et-soc-1.md](hardware_target/et-soc-1.md) | hardware_target | ET-SoC-1 |  | 2 | 1 |
 | [k230.md](hardware_target/k230.md) | hardware_target | K230 | RISC-V, AIoT, Kendryte | 10 | 0 |
 | [milk-v-pioneer.md](hardware_target/milk-v-pioneer.md) | hardware_target | Milk-V Pioneer |  | 4 | 0 |
 | [nx27v.md](hardware_target/nx27v.md) | hardware_target | NX27V |  | 2 | 0 |
@@ -91,8 +93,8 @@ Flat list of all concepts mentioned across pages (with or without dedicated page
 | [xuantie-c910-ice-board.md](hardware_target/xuantie-c910-ice-board.md) | hardware_target | Xuantie C910 / ICE SoC Board |  | 2 | 0 |
 | [xuantie-c920v1.md](hardware_target/xuantie-c920v1.md) | hardware_target | XuanTie C920v1 |  | 2 | 1 |
 | [xuantie-c950.md](hardware_target/xuantie-c950.md) | hardware_target | XuanTie C950 | RISC-V, Alibaba, XuanTie, server, AI | 2 | 15 |
-| [cpa-factored-gemmini-systolic-array.md](optimization_recipe/cpa-factored-gemmini-systolic-array.md) | optimization_recipe | CPA-Factored Gemmini Systolic Array |  | 2 | 26 |
-| [earth-shifting-based-vector-memory-access.md](optimization_recipe/earth-shifting-based-vector-memory-access.md) | optimization_recipe | EARTH Shifting-Based Vector Memory Access Optimization |  | 2 | 15 |
+| [cpa-factored-gemmini-systolic-array.md](optimization_recipe/cpa-factored-gemmini-systolic-array.md) | optimization_recipe | CPA-Factored Gemmini Systolic Array |  | 2 | 27 |
+| [earth-shifting-based-vector-memory-access.md](optimization_recipe/earth-shifting-based-vector-memory-access.md) | optimization_recipe | EARTH Shifting-Based Vector Memory Access Optimization |  | 2 | 17 |
 | [llvm-riscv-fptrunc-narrowing-optimization.md](optimization_recipe/llvm-riscv-fptrunc-narrowing-optimization.md) | optimization_recipe | LLVM RISC-V FPTrunc Narrowing Optimization |  | 2 | 11 |
 | [mlir-xdsl-rvv-lowering-pipeline.md](optimization_recipe/mlir-xdsl-rvv-lowering-pipeline.md) | optimization_recipe | MLIR-xDSL RVV Lowering Pipeline |  | 2 | 3 |
 | [pulp-nn-optimization-recipe.md](optimization_recipe/pulp-nn-optimization-recipe.md) | optimization_recipe | PULP-NN: Accelerating Quantized Neural Networks on Parallel Ultra-Low-Power RISC | RISC-V, quantized neural network, low-power, parallel computing | 2 | 5 |
