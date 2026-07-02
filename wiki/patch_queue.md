@@ -465,3 +465,194 @@ LLVM RISC-V Vector Extension Support is the implementation of the RISC-V Vector 
 
 - [RISC-V Vector Extension — LLVM 23.0.0git documentation](https://llvm.org/docs/RISCV/RISCVVectorExtension.html)
 merge_draft_body -->
+
+## [2026-07-02] merge_pending | spacemit-k1.md
+target_page: spacemit-k1.md
+canonical_name: SpacemiT K1
+colliding_name: SpacemiT K1
+source: https://www.cnx-software.com/2024/04/30/muse-book-laptop-spacemit-k1-octa-core-risc-v-ai-processor-16gb-ram/?trk=article-ssr-frontend-pulse_little-text-block
+status: pending_review
+<!-- merge_draft_body
+# SpacemiT K1
+
+The SpacemiT K1 is an octa-core 64-bit RISC-V SoC compliant with the RVA22 profile and featuring the RVV 1.0 (256-bit vector extension). It integrates an unnamed GPU supporting OpenCL 3.0, OpenGL ES 3.2, and Vulkan 1.2, a VPU capable of 4K H.265/H.264/VP9/VP8 encoding and decoding, and a 2.0 TOPS AI NPU. The SoC supports up to 16GB of LPDDR4/LPDDR4X memory with up to 10.6 GB/s bandwidth, and includes storage interfaces for eMMC 5.1, SDIO 3.0, and NVMe over PCIe 2.1. Connectivity includes dual GMAC, multiple PCIe lanes, USB 3.0, and low-speed interfaces such as SPI, I2C, UART, CAN-FD, and PWM. The chip operates with a typical TDP of 3-5W and supports an industrial temperature range of -40°C to 85°C. Software support includes Bianbu OS (Debian-based), mainline Linux, and RTOS.
+
+## Key Claims
+
+- First RISC-V SoC compliant with the RVA22 standard.
+- First RISC-V SoC compliant with the 256-bit RVV 1.0 standard.
+- AI NPU delivering 2.0 TOPS.
+- Octa-core X60 cores claim to be faster than Cortex-A55 in multi-core configurations.
+- Supports up to 16GB of LPDDR4X memory.
+- Standard power consumption of 3-5W TDP.
+- Industrial temperature range from -40°C to 85°C.
+- Software ecosystem includes Bianbu OS, mainline Linux, and RTOS.
+- Integrated VPU supports 4K H.265/H.264/VP9/VP8 encoding and decoding.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V 64-bit, RVA22 profile.
+- Vector/matrix/accelerator support: RVV 1.0 (256-bit vector length), AI NPU 2.0 TOPS.
+- Memory/cache/TLB/DMA: Up to 16GB LPDDR4X, eMMC 5.1, SDIO 3.0, NVMe via PCIe 2.1.
+- Compiler/toolchain support: Bianbu OS (Debian-based), mainline Linux, RTOS; optimized libraries such as OpenCV, OpenBLAS, XNNPACK.
+
+## Relationships
+
+- [[cpa-factored-gemmini-systolic-array]]: Existing page on systolic array optimization (unrelated to SpacemiT K1).
+- Insufficient context for additional cross-links; no related workloads, recipes, or toolchain pages are present in the wiki.
+
+## Sources
+
+- [CNX Software - Muse Book laptop featuring SpacemiT K1](https://www.cnx-software.com/2024/04/30/muse-book-laptop-spacemit-k1-octa-core-risc-v-ai-processor-16gb-ram/)
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | spacemit-k1.md
+target_page: spacemit-k1.md
+canonical_name: SpacemiT K1
+colliding_name: SpacemiT Key Stone K1
+source: https://wccftech.com/chinese-startup-unveils-first-risc-v-based-ai-cpu-powers-k1-domestic-laptop/
+status: pending_review
+<!-- merge_draft_body
+# SpacemiT Key Stone K1
+
+The SpacemiT Key Stone K1 is an octa-core RISC-V system-on-chip (SoC) designed for AI computing and introduced by the Chinese startup SpacemiT (IntoTimeSpace) in April 2024. It integrates eight X60 RISC-V cores compliant with the RVA22 profile, delivering a reported 2.0 TOPS of AI acceleration from its on-chip NPU. The K1 supports up to 16 GB of LPDDR4X-2666 memory and includes storage interfaces such as eMMC (up to 128 GB) and an M.2 PCIe 2.1 x2 slot for NVMe SSDs up to 1 TB. It powers the SpacemiT Muse Book 1st Gen laptop, which runs the Bianbu OS (Debian-based) and features a 14.1-inch 1920x1080 IPS display with 72% NTSC color gamut. The chip is aimed at demonstrating RISC-V viability in the AI segment, with claimed performance advantages over ARM Cortex-A55 cores including up to 130% higher single-core performance and 60–80% lower power consumption. Networking is provided via a Realtek RTL8852BE WiFi 6 module, and power delivery uses USB PD 3.1 (65 W adapter). The SoC is packaged in a laptop weighing 1.36 kg and measuring 322.6×209.2×17.8 mm.
+
+## Key Claims
+
+- Octa-core X60 RISC-V cores compliant with RVA22 profile.
+- Integrated 2.0 TOPS AI NPU for on-device acceleration.
+- Supports LPDDR4X-2666 memory up to 16 GB.
+- Storage options: 32 GB eMMC (default, option up to 128 GB) and M.2 NVMe SSD up to 1 TB.
+- WiFi 6 (RTL8852BE) and USB PD 3.1 (65 W) connectivity.
+- Claimed 130% higher single-core performance versus ARM Cortex-A55 (source: wccftech article citing jasonwill tweet).
+- Claimed 60–80% lower power consumption versus ARM Cortex-A55 (same source).
+- Claimed 1.5× deployment efficiency for AI models compared to ARM (same source).
+- Powers the SpacemiT Muse Book 1st Gen laptop with Bianbu OS (Debian-based).
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V RVA22 profile (ratified vector extension included via X60 cores).
+- Vector/matrix/accelerator support: 2.0 TOPS AI NPU; core vector unit details not specified in source.
+- Memory/cache/TLB/DMA: LPDDR4X-2666 interface; cache hierarchy not publicly detailed.
+- Compiler/toolchain support: Bianbu OS (Debian-based), Ubuntu, Linux; expects standard RISC-V GCC/LLVM toolchain.
+
+## Relationships
+
+- [[cpa-factored-gemmini-systolic-array]]: This optimization recipe targets Gemmini, another RISC-V AI accelerator design, and represents related work in the RISC-V AI acceleration space.
+- Insufficient context for additional cross-links in the wiki.
+
+## Sources
+
+- [Chinese Startup Unveils The First RISC-V Based AI CPU, Powers The K1 Domestic Laptop – Wccftech](https://wccftech.com/chinese-startup-unveils-first-risc-v-based-ai-cpu-powers-k1-domestic-laptop/)
+
+Specifications compiled by CNX Software as referenced in the article.
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | banana-pi-bpi-f3.md
+target_page: banana-pi-bpi-f3.md
+canonical_name: Banana Pi BPI-F3
+colliding_name: Banana Pi BPI-F3
+source: https://4pda.to/forum/index.php?showtopic=1091545
+status: pending_review
+<!-- merge_draft_body
+# Banana Pi BPI-F3
+
+The Banana Pi BPI-F3 is an industrial-grade RISC-V single-board computer built around the SpacemiT K1 system-on-chip. The SoC integrates eight X60 CPU cores implementing the RV64GCVB ISA with the RVA22 profile and full RVV 1.0 vector extension support, providing 2.0 TOPS of AI compute through an on-chip neural processing unit. The board includes 4GB of onboard DDR memory and 16GB of eMMC storage, with additional expansion via a PCIe-connected M.2 slot. Networking is provided by dual Gigabit Ethernet ports (with PoE support via an add-on HAT), dual-band 2.4G/5G WiFi, and Bluetooth 4.2. Display output is via a full-size HDMI 1.4 port supporting up to 1080p at 60Hz, and four USB 3.0 ports are available for peripherals.
+
+## Key Claims
+
+- The SpacemiT K1 is an 8-core RISC-V processor with X60 cores, RVA22 profile, and RVV 1.0 vector extension.
+- The SoC delivers 2.0 TOPS of AI computing power from its integrated NPU.
+- Onboard memory includes 4GB DDR and 16GB eMMC.
+- The board provides 2x GbE Ethernet, HDMI 1.4 (1080p@60fps), WiFi 2.4G/5G, Bluetooth 4.2, 4x USB 3.0, and PCIe M.2.
+- PoE support is available via an add-on HAT.
+
+## Optimization-Relevant Details
+
+- **ISA/profile**: RV64GCVB, RVA22
+- **Vector/matrix/accelerator support**: RVV 1.0 (128-bit vector length expected per X60 core), integrated 2.0 TOPS NPU
+- **Memory/cache/TLB/DMA**: 4GB DDR (evidently onboard, capacity and type not further specified), 16GB eMMC storage
+- **Compiler/toolchain support**: Not documented in this source; standard RISC-V toolchains (GCC/LLVM) should be compatible given RVA22 compliance.
+
+## Relationships
+
+- [[cpa-factored-gemmini-systolic-array]]: This existing optimization recipe targets a different hardware platform, but the BPI-F3 could serve as a candidate target for similar systolic-array optimizations given its AI accelerator and vector support.
+- Insufficient context for additional cross-links; no other directly related pages were found in the wiki context.
+
+## Sources
+
+- [4PDA Forum - Banana Pi F3 SpacemiT K1 (X60™)](https://4pda.to/forum/index.php?showtopic=1091545)
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | spacemit-k1.md
+target_page: spacemit-k1.md
+canonical_name: SpacemiT K1
+colliding_name: SpacemiT Key Stone K1
+source: http://wikidevi.wive-ng.ru/SpacemiT
+status: pending_review
+<!-- merge_draft_body
+# SpacemiT Key Stone K1
+
+The SpacemiT Key Stone K1 is a high-performance, ultra-low-power system-on-chip developed by SpacemiT (associated with SinoVoIP), integrating eight RISC-V CPU cores based on the RV64GC 64-bit instruction set and operating at a frequency of 1.6 GHz. It incorporates a dedicated Daoyi AI accelerator for machine learning inference tasks. The SoC targets embedded edge AI and networking applications, with reported usage in the Start9 RISC-V Router running a fork of OpenWrt. Software support includes the Armbian Linux distribution, indicating active community and ecosystem development. The K1 is manufactured in the PRC and is available as a sample.
+
+## Key Claims
+
+- 8-core RISC-V RV64GC CPU at 1.6 GHz (source: WikiDevi snippet "CPU: SpacemiT Key Stone K1 (X60) @1.6GHz. SoC: Octa-Core RISC-V (RV64GC) 64-bit.")
+- Integrated SpacemiT Daoyi AI accelerator for machine learning (source: docs-chip snippet "integrates 8 RISC-V CPU cores with SpacemiT Daoyi AI computing power.")
+- Used in the Start9 RISC-V Router with a custom OpenWrt-based firmware (StartWRT) (source: Russian-language snippet)
+- Supported by Armbian Linux, as listed among partner platforms (source: Armbian partner list snippet)
+
+## Optimization-Relevant Details
+
+- ISA/profile: RV64GC
+- Vector/matrix/accelerator support: Daoyi AI accelerator (details not specified in available sources)
+- Memory/cache/TLB/DMA: Not specified in available sources
+- Compiler/toolchain support: Not specified; RISC-V GCC/LLVM likely compatible
+
+## Relationships
+
+No existing entity pages directly related to SpacemiT Key Stone K1 are present in the wiki. Insufficient context for additional cross-links.
+
+## Sources
+
+- [WikiDevi - SpacemiT](http://wikidevi.wive-ng.ru/SpacemiT)
+- [docs-chip/en/key_stone/k1/k1_docs/k1_ds.md at main](https://github.com/spacemit-tech/docs-chip/blob/main/en/key_stone/k1/k1_docs/k1_ds.md)
+- Armbian partner list (snippet mentioning SpacemiT)
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | banana-pi-bpi-f3.md
+target_page: banana-pi-bpi-f3.md
+canonical_name: Banana Pi BPI-F3
+colliding_name: Banana Pi F3
+source: https://dev.to/gounthar/running-a-local-llm-on-risc-v-building-llamacpp-on-a-banana-pi-f3-part-1-4d5g
+status: pending_review
+<!-- merge_draft_body
+# Banana Pi F3
+
+The Banana Pi F3 is a single-board computer built around the SpacemiT K1 SoC, which houses an 8-core SpacemiT X60 RISC-V processor operating at 1.6 GHz. The board provides 16 GB of LPDDR4 RAM (approximately 14 GB available to the operating system), 116 GB of eMMC storage, and runs Armbian 25.11.2 (Debian 13 trixie) with kernel 6.6.99-current-spacemit. It is designed for AI and edge computing workloads, with support for RISC-V Vector (RVV 1.0) extensions including the zvfh float16 vector extension. The platform has been used for local LLM inference via llama.cpp, achieving approximately 8.5 tokens/second on TinyLlama 1.1B. Compiler toolchain support includes GCC 14.2.0 and cmake 3.31.6, and it runs Docker natively. The board was received through the RISC-V DevBoard program and also serves as a self-hosted GitHub Actions runner.
+
+## Key Claims
+
+- Power: Pine64 desktop PSU.
+- Supports RISC-V Vector extensions including zvfh (float16 vector operations).
+- Achieves ~8.5 tokens/second running TinyLlama 1.1B with llama.cpp (OpenAI-compatible API server).
+- Native Docker support with v29.2.1.
+- Used for self-hosted CI (GitHub Actions runner).
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V 64GCVB, RVA22.
+- Vector/matrix/accelerator support: RVV 1.0 with zvfh, zvfhmin, zve32f, zve32x, zve64d, zve64f, zve64x.
+- Memory/cache/TLB/DMA: 16 GB LPDDR4 RAM (14 GB usable), 116 GB eMMC.
+- Compiler/toolchain support: GCC 14.2.0, cmake 3.31.6, Docker v29.2.1, Node v22.22.0, Armbian 25.11.2 OS.
+
+## Relationships
+
+- [[spacemit-x60-processor]]: The Banana Pi F3 uses the SpacemiT X60 processor within the K1 SoC.
+- [[llvm-risc-v-fptrunc-narrowing-optimization]]: As a RISC-V target, the Banana Pi F3 may benefit from LLVM optimizations for floating-point operations.
+- Insufficient context for additional cross-links.
+
+## Sources
+
+- [Running a Local LLM on RISC-V: Building llama.cpp on a Banana Pi F3 (Part 1) - DEV Community](https://dev.to/gounthar/running-a-local-llm-on-risc-v-building-llamacpp-on-a-banana-pi-f3-part-1-4d5g)
+merge_draft_body -->
