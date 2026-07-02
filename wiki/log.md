@@ -513,3 +513,27 @@ pages_written: 5
 pipeline_rejection_rate: 0%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_7eff326d_2026-07-02.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] research | T-Head XuanTie C920 C920v RISC-V core enterprise AI
+session_id: fd7ca8d4
+candidates_evaluated: 5
+pages_written: 2
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_fd7ca8d4_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] research | XuanTie C920/Sophon SG2042 HPC sources
+session_id: fd7ca8d4
+candidates_evaluated: 5
+pages_written: 2
+pipeline_rejection_rate: 0%
+theme_profile: RISC-V AI accelerator | optimization_first
+notes: crossed the 100-page target (101 pages).
+
+## [2026-07-02] lint | routine (linking debt pass 5, final)
+issues_found: 12
+actions_taken:
+- "Closed all remaining orphan pages (xiangshan<->xiangshan_kunminghu, kendryte_k210<->kendryte_k510, sifive_intelligence_x280->sifive_automotive_family, saturn_vector_unit->earth_vector_memory_architecture, k230->windows_ml_on_amd_npu/mobilenetv2_radxa_a733_t527_npu_benchmark, plus verifying existing sophon_sg2042_hpc_cpu->sophon_sg2042_rajaperf_hpc_benchmark and rockchip_rk3588->yolo26_rknn_rockchip_rk3588_benchmark links) by adding reciprocal [[wikilink]] Relationships entries and incrementing target inbound_links."
+- "graph_stats.py now reports orphan_count: 0, orphan_fraction: 0.0, median_inbound_links: 1.0, mean_inbound_links: 3.1485 across 101 pages — MATURE."
+deferred_for_human:
+- "Synthesis gaps persist across sessions (RISC-V, LLVM, RVV tag clusters each have 3+ entity pages without dedicated synthesis coverage per synthesis_gap_min_cluster_size=3); a synthesis page on RISC-V compiler tooling (LLVM/MLIR/RVV intrinsics/xDSL) and one on RISC-V AI accelerator design-space breadth (embedded NPU vs. server vector vs. many-core vs. tensor-unit approaches) would be natural follow-ups but were out of scope for this page-count-focused session."

@@ -25,7 +25,7 @@ type: entity
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # Kendryte K210
@@ -43,6 +43,7 @@ The Kendryte K210 is a RISC-V-based system-on-chip (SoC) developed by Canaan Inc
 
 - [[k230]]: The K230 is Canaan's next-generation SoC that succeeded the K210/K510 family, integrating dual XuanTie C908 cores and a dedicated KPU.
 - [[xuantie_c908]]: A RISC-V processor core from T-Head Semiconductor that powers the K230; the K210 and K510 use different, earlier-generation Canaan core designs but share the same target edge AI application space.
+- [[kendryte_k510]]: the direct successor SoC, doubling clock speed and tripling NPU throughput over the K210.
 
 ## Sources
 

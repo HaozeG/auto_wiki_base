@@ -34,7 +34,7 @@ type: hardware_target
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # Kendryte K510
@@ -59,7 +59,7 @@ The Kendryte K510 is a 64-bit tri-core RISC-V processor designed for edge AI app
 
 - The Kendryte K510 is from the same Canaan Inc. product family as the [[k230]], though the K230 integrates a different core configuration (two C908 cores) and a Knowledge Process Unit.
 - The [[xuantie_c908]] is a comparable RISC-V AI accelerator core used in other Canaan designs; the K510's architecture offers a different balance of general-purpose cores and DSP capability.
-- (Insufficient context for additional cross-links beyond these two.)
+- [[kendryte_k210]]: the predecessor SoC this chip succeeds, offering a dual-core RISC-V design with a 1 TOPS NPU versus the K510's tri-core, 3 TOPS design.
 
 ## Sources
 

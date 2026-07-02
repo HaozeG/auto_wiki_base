@@ -77,6 +77,7 @@ The SiFive Intelligence X280 is a RISC-V processor core developed by SiFive, des
 - Optimization recipe leveraging RISC-V Vector instructions: [[mlir_xdsl_rvv_gemm_codegen_recipe]]
 - [[sifive_intelligence_family]]: the product family this core belongs to.
 - [[sifive_intelligence_x390]]: the successor core, claiming a fourfold vector-performance improvement via doubled VLEN (1024-bit) over the X280.
+- [[sifive_automotive_family]]: SiFive's separate, ISO 26262-certified core family for automotive functional-safety workloads, contrasting with the X280's AI/datacenter focus.
 
 ## Sources
 

@@ -36,7 +36,7 @@ type: entity
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # XiangShan
@@ -57,6 +57,7 @@ XiangShan (香山) is an open-source high-performance RISC-V processor project d
 - [[k230]]: a RISC-V SoC that integrates a different core (XuanTie C908), contrasting with XiangShan's in-house processor design.
 - [[xuantie_c908]]: another open-source RISC-V processor core, representing a different design philosophy (commercial IP vs academic open-source) and target application space.
 - [[mlir_xdsl_rvv_gemm_codegen_recipe]]: a compiler optimization recipe for RVV that could potentially target XiangShan's Kunminghu micro-architecture if it supports the RISC-V Vector Extension.
+- [[xiangshan_kunminghu]]: the current-generation micro-architecture under active development within this project, implementing the RV64GCBSUHV ISA with vector and hypervisor extensions.
 
 ## Sources
 

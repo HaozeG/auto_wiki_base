@@ -62,6 +62,7 @@ The Saturn Vector Unit is a RISC-V Vector Extension 1.0 (RVV) compliant short-ve
 - [[k230]]: An SoC that integrates the XuanTie C908 core and validates RVV code generation; relevant platform for understanding short-vector deployment.
 - [[mlir_xdsl_rvv_gemm_codegen_recipe]]: An optimization recipe for generating RVV micro-kernels, relevant to short-vector execution models like Saturn.
 - [[xuantie_c908_fp16_gemm_kernel]]: A workload kernel for RVV VLEN128, illustrating the type of GEMM kernel optimizable on short-vector units.
+- [[earth_vector_memory_architecture]]: an FPGA-implemented vector memory access optimization built directly on top of this open-source vector unit, adding shift-network-based strided/segment access support.
 
 ## Sources
 

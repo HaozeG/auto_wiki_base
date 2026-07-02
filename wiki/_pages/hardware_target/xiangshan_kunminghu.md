@@ -41,7 +41,7 @@ type: hardware_target
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # XiangShan Kunminghu
@@ -69,6 +69,7 @@ The XiangShan Kunminghu is the third-generation processor core from the open-sou
 - [[xuantie_c908]]: Another open-source RISC-V processor core with a different design philosophy and target market, also supported by QEMU and serving as a comparable RISC-V hardware target for AI acceleration workloads.
 - [[k230]]: A system-on-chip integrating a different RISC-V core (XuanTie C908) with dedicated AI accelerators; contrasts with the XiangShan Kunminghu's approach of a general-purpose high-performance core with FPGA prototyping.
 - [[mlir_xdsl_rvv_gemm_codegen_recipe]]: An optimization recipe for generating RISC-V Vector code, potentially applicable to the Kunminghu's vector extension for GEMM optimization.
+- [[xiangshan]]: the parent open-source RISC-V processor project; Kunminghu is its third-generation micro-architecture.
 
 ## Sources
 

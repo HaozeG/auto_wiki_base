@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 99 | Sources: 3
+Last updated: 2026-07-02 | Pages: 101 | Sources: 3
 
 ## Entity Pages
 
@@ -87,6 +87,8 @@ Last updated: 2026-07-02 | Pages: 99 | Sources: 3
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [sophon_sg2042_rajaperf_hpc_benchmark.md](benchmark_result/sophon_sg2042_rajaperf_hpc_benchmark.md) | benchmark_result | Sophon SG2042 RAJAPerf HPC Benchmark | benchmark, RAJAPerf, HPC, Sophon SG2042 | 2 | 0 |
+| [sophon_sg2042_hpc_cpu.md](hardware_target/sophon_sg2042_hpc_cpu.md) | hardware_target | Sophon SG2042 | Sophon, RISC-V, HPC, XuanTie C920, Milk-V | 2 | 0 |
 | [yolo26_rknn_rockchip_rk3588_benchmark.md](benchmark_result/yolo26_rknn_rockchip_rk3588_benchmark.md) | benchmark_result | YOLO26 RKNN on Rockchip RK3588 |  | 2 | 0 |
 | [yolo26_rknn_export.md](optimization_recipe/yolo26_rknn_export.md) | optimization_recipe | YOLO26 to RKNN Export |  | 2 | 0 |
 | [rockchip_rk3588.md](hardware_target/rockchip_rk3588.md) | hardware_target | Rockchip RK3588 |  | 2 | 0 |

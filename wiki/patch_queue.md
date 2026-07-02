@@ -1551,3 +1551,88 @@ The SiFive Automotive E6-A and S7-A are RISC-V processor core families from SiFi
 
 - https://www.eeworldonline.com/development-tools-for-risc-v-support-sifive-automotive-solutions/
 merge_draft_body -->
+
+## [2026-07-02] merge_pending | xuantie_c950.md
+target_page: xuantie_c950.md
+canonical_name: XuanTie C950
+colliding_name: XuanTie C950
+source: https://www.cnx-software.com/2026/03/25/alibaba-xuantie-c950-a-powerful-rva2364-bit-risc-v-core-for-edge-ai-computing/
+status: pending_review
+<!-- merge_draft_body
+# XuanTie C950
+
+The Alibaba XuanTie C950 is a high-performance 64-bit RISC-V CPU IP core introduced by Alibaba in March 2026. It implements a superscalar out-of-order microarchitecture with an 8-wide decode stage and is compliant with the RVA23 profile, including mandatory and optional extensions such as Vector Crypto, Zacas, and Zama16. The core is designed for multi-core SoCs with up to eight cores per cluster, targeting cloud computing, edge computing, and AI workloads. It features a private L1 and configurable L2 cache (256KB-3072KB) with an optional shared L3 cache up to 8MB, and supports a 5nm manufacturing process. The C950 also integrates Alibaba's proprietary XuanTie AME (Attached Matrix Extension) ISA and can interface with the XuanTie TPE (Tensor Processing Engine) AI coprocessor for generative AI and large language model inference. On the software side, the company contributes compiler, assembler, linker, debugger, and binary tools to GNU/LLVM, and provides QEMU emulation, optimized runtime libraries, an integrated development environment (CDS), and multi-OS support.
+
+## Key Claims
+
+- RVA23 profile compliant with all optional extensions including Vector Crypto, Zacas, Zama16.
+- Up to 8 cores clocked at 3.2 GHz with an 8-wide superscalar out-of-order pipeline.
+- Specint2006 base score of 22+/GHz and a total score of approximately 70 at 3.2 GHz, claimed as a new record for a RISC-V core.
+- Three times faster than the earlier XuanTie C920 core.
+- Supports RISC-V Vector Extension v1.0 with Vector Crypto, and XuanTie AME (v0.5) matrix extension.
+- Integrates with XuanTie TPE AI coprocessor for generative AI and LLM inference, with support for Qwen3-256B-A22B and DeepSeek V3-671B.
+- Software ecosystem: GNU/LLVM compiler tools, QEMU emulation, optimized runtime library, integrated development environment (CDS), and multi-OS support.
+- Cache system: private L1 and L2 (configurable 256KB-3072KB), shared L3 (1-8MB).
+- Bus interface: CHI.E/CHI.F (direct connect) and AXI4.0/ACE4.0 (multi-processor).
+- Security: CFI (Landing Pad, Shadow Stack) and Smmtt.
+- Manufacturing: 5nm process.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RVA23, RV64 with Vector Extension v1.0, Vector Crypto, Zacas, Zama16, AME v0.5.
+- Vector/matrix/accelerator support: RVV 1.0, XuanTie AME, XuanTie TPE coprocessor.
+- Memory/cache/TLB/DMA: Private L1 and configurable L2 (256KB-3072KB), shared L3 (1-8MB); MMU Sv57/Sv48/Sv39 with PA48; bus CHI.E/CHI.F and AXI4.0/ACE4.0.
+- Compiler/toolchain support: GNU toolchain (compiler, assembler, linker, debugger), LLVM, QEMU, optimized runtime library, CDS IDE, multi-OS (Linux etc.).
+
+## Relationships
+
+- Compiler support is provided by the [[llvm_riscv_target]] backend, which supports RVA23 profiles and can generate optimized code for the C950's vector and cryptographic extensions.
+- The C950 can serve as a hardware target for optimization recipes such as [[mlir_xdsl_rvv_gemm_codegen_recipe]] when vectorized or matrix-based workloads are considered.
+- As a high-performance out-of-order RVA23 core, the C950 is comparable to [[sifive_performance_p570_gen3]], though with different design choices (e.g., SiFive's 3-wide 13-stage pipeline vs C950's 8-wide decode).
+- The core's performance claims (Specint2006 score of 70 at 3.2 GHz) can be contrasted with benchmark results from other RISC-V cores documented in the wiki.
+
+## Sources
+
+- https://www.cnx-software.com/2026/03/25/alibaba-xuantie-c950-a-powerful-rva2364-bit-risc-v-core-for-edge-ai-computing/
+- The Register coverage and product page referenced in the article (including datasheet mirror).
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | xuantie_c906.md
+target_page: xuantie_c906.md
+canonical_name: XuanTie C906
+colliding_name: XuanTie C906
+source: https://www.riscvschool.com/2023/03/09/t-head-xuantie-c906-risc-v/
+status: pending_review
+<!-- merge_draft_body
+# XuanTie C906
+
+The XuanTie C906 is a RISC-V processor core developed by T-Head, a subsidiary of Alibaba Group, based on the RV64GCV instruction set. It supports the standard M/S/U privilege model with an 8-16 region Physical Memory Protection (PMP) unit and a Sv39 virtual memory system (MMU) compatible with RISC-V Linux. The processor includes a configurable RISC-V Vector Extension (RVV v0.7.1) with 128-bit vector registers supporting element sizes of 8, 16, 32, and 64 bits, as well as half-precision floating-point operations. It also features a floating-point unit, vector unit, AXI master interface, and TLB/cache operations. The C906 is a single-core processor used in the Sipeed SBC board priced at $12.5, and has been targeted for optimization by the OpenBLAS library for RVV v0.7.1 vector operations.
+
+## Key Claims
+
+- Based on RV64GCV instruction set with custom arithmetic, bit manipulation, load/store enhancement, and TLB/cache operation extensions.
+- Supports standard M/S/U privilege model with 8-16 region PMP and Sv39 MMU.
+- Configurable RISC-V Vector Extension (RVV v0.7.1) with 128-bit vector registers (element sizes 8/16/32/64 bits) and half-precision support.
+- Integrated floating-point unit and vector unit.
+- Single-core processor with AXI master interface.
+- Used in a $12.5 Sipeed SBC board.
+- OpenBLAS optimized for RVV v0.7.1 on C906/C910.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RV64GCV with custom extensions.
+- Vector/matrix/accelerator support: RVV v0.7.1, 128-bit vector width.
+- Memory/cache/TLB/DMA: Sv39 MMU, TLB/cache operations (details not disclosed), AXI master.
+- Compiler/toolchain support: OpenBLAS library with RVV v0.7.1 optimizations; RISC-V GNU toolchain implied.
+
+## Relationships
+
+- Successor core: [[xuantie_c908]] (C908 builds on C906 with RVV 1.0 and higher performance).
+- Integrated in: [[k230]] (K230 SoC uses dual C908 cores, which are the next-generation after C906).
+- Related optimization: [[mlir_xdsl_rvv_gemm_codegen_recipe]] (targets RVV 1.0 hardware but methodology applies to earlier RVV versions like v0.7.1).
+- Note: The C906 is the predecessor to the C908 and is referenced in the [[xuantie_c908]] page's key claims as the baseline for speedup comparisons.
+
+## Sources
+
+- https://www.riscvschool.com/2023/03/09/t-head-xuantie-c906-risc-v/
+merge_draft_body -->

@@ -6,6 +6,7 @@ aliases:
 - XuanTie C950 CPU
 - Alibaba XuanTie C950
 - XuanTie C950 processor
+- Xuantie C950
 subtype: null
 tags:
 - risc-v
@@ -27,6 +28,8 @@ sources:
 - https://www.trendforce.com/news/2026/03/25/news-alibaba-unveils-risc-v-xuantie-c950-cpu-for-ai-agents-5nm-chip-reportedly-made-by-tsmc/
 - raw/cache/1daccc89545f251f.md
 - https://www.eetimes.com/alibaba-launches-xuantie-c950-cpu-for-agentic-ai/
+- raw/cache/51b26aeb16e46d89.md
+- https://www.cnx-software.com/2026/03/25/alibaba-xuantie-c950-a-powerful-rva2364-bit-risc-v-core-for-edge-ai-computing/
 source_url: https://www.trendforce.com/news/2026/03/25/news-alibaba-unveils-risc-v-xuantie-c950-cpu-for-ai-agents-5nm-chip-reportedly-made-by-tsmc/
 fetched_at: '2026-07-01T04:27:57.215503+00:00'
 type: hardware_target
