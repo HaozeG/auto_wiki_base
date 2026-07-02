@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 72 | Sources: 3
+Last updated: 2026-07-02 | Pages: 73 | Sources: 3
 
 ## Entity Pages
 
@@ -71,6 +71,7 @@ Last updated: 2026-07-02 | Pages: 72 | Sources: 3
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [compiler_benchmark_bananapi_f3_gcc15_clang21.md](benchmark_result/compiler_benchmark_bananapi_f3_gcc15_clang21.md) | benchmark_result | Compiler Benchmark Comparison on BananaPi-F3 (RVV 1.0) |  | 2 | 0 |
 | [coral_npu_vector_execution_engine.md](hardware_target/coral_npu_vector_execution_engine.md) | hardware_target | Coral NPU Vector Execution Engine | Coral, Google, RISC-V, RVV, NPU, Zve32x | 2 | 0 |
 | [semidynamics_tensor_unit.md](hardware_target/semidynamics_tensor_unit.md) | hardware_target | Semidynamics Tensor Unit | RISC-V, tensor unit, AI accelerator, Semidynamics, coherent | 2 | 0 |
 | [et_soc_1.md](hardware_target/et_soc_1.md) | hardware_target | ET-SoC-1 |  | 2 | 0 |

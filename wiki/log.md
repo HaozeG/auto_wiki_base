@@ -386,3 +386,11 @@ pages_written: 3
 pipeline_rejection_rate: 25%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_9641d1f1_2026-07-02.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] research | quantized transformer inference INT8 RISC-V edge deployment 
+session_id: d3e4213a
+candidates_evaluated: 10
+pages_written: 1
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_d3e4213a_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first
