@@ -497,3 +497,11 @@ pages_written: 0
 pipeline_rejection_rate: 10%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_b44b56bd_2026-07-02.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] research | RISC-V robotics autonomous driving embedded vision AI SoC
+session_id: bc40ee68
+candidates_evaluated: 10
+pages_written: 3
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_bc40ee68_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first

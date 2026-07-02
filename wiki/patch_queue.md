@@ -1521,3 +1521,33 @@ Tenstorrent Grayskull is a family of PCIe expansion cards for AI inference relea
 
 - https://gigazine.net/gsc_news/en/20240311-jim-keller-tenstorrent-grayskull-e75-e150/
 merge_draft_body -->
+
+## [2026-07-02] merge_pending | sifive_automotive_family.md
+target_page: sifive_automotive_family.md
+canonical_name: SiFive Automotive Family
+colliding_name: SiFive Automotive E6-A and S7-A
+source: https://www.eeworldonline.com/development-tools-for-risc-v-support-sifive-automotive-solutions/
+status: pending_review
+<!-- merge_draft_body
+# SiFive Automotive E6-A and S7-A
+
+The SiFive Automotive E6-A and S7-A are RISC-V processor core families from SiFive designed for automotive applications such as infotainment, connectivity, and ADAS. The E6-A is a 32-bit real-time core targeting system control, hardware security modules (HSMs), safety islands, and standalone microcontrollers, while the S7-A is a 64-bit high-performance real-time core suited for modern SoCs requiring performant safety islands with low latency interrupt support and unified 64-bit memory space visibility. Both processor families offer flexibility for integrity levels including ASIL B and ASIL D, with split-lock capability for mixed criticalities in line with ISO 26262. IAR Systems provides the IAR Embedded Workbench for RISC-V, a comprehensive development toolchain certified by TÜV SÜD for functional safety standards including ISO 26262 and IEC 61508, which supports these SiFive Automotive cores. The toolchain includes a C/C++ compiler, debugger, and C-STAT static analysis tool for MISRA compliance.
+
+## Key Claims
+
+- The E6-A series is a 32-bit real-time RISC-V core for automotive system control, HSMs, and safety islands.
+- The S7-A is a 64-bit high-performance real-time RISC-V core with low latency interrupt support and 64-bit memory space visibility for performant safety islands.
+- Both processor families support ASIL B, ASIL D, and mixed criticalities through split-lock.
+- IAR Embedded Workbench for RISC-V is certified by TÜV SÜD for ISO 26262 and IEC 61508 functional safety standards.
+- The toolchain includes C-STAT for MISRA C/C++ static analysis to ensure code quality for automotive applications.
+- The development solution aims to maximize energy efficiency, simplicity, security, and flexibility for embedded developers at OEMs and suppliers.
+
+## Relationships
+
+- [[xuantie_c908]]: Another RISC-V processor core family from T-Head, offering a comparison point for SiFive's automotive-focused cores.
+- [[k230]]: A RISC-V SoC integrating the XuanTie C908, representing a different approach to RISC-V hardware for embedded systems with AI acceleration.
+
+## Sources
+
+- https://www.eeworldonline.com/development-tools-for-risc-v-support-sifive-automotive-solutions/
+merge_draft_body -->

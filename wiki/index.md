@@ -1,11 +1,13 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 91 | Sources: 3
+Last updated: 2026-07-02 | Pages: 94 | Sources: 3
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [kendryte_k210.md](entity/kendryte_k210.md) | Kendryte K210 | RISC-V, AI accelerator, SoC, Kendryte | 2 | 0 |
+| [sifive_automotive_family.md](entity/sifive_automotive_family.md) | SiFive Automotive Family | automotive, RISC-V, SiFive, safety, ISO 26262 | 2 | 0 |
 | [earth_vector_memory_architecture.md](entity/earth_vector_memory_architecture.md) | EARTH | RISC-V, vector processor, memory access, shift networks, FPGA, Chisel | 2 | 0 |
 | [xiangshan.md](entity/xiangshan.md) | XiangShan | RISC-V, open-source processor, agile development | 2 | 0 |
 | [yolov8.md](entity/yolov8.md) | YOLOv8 | object detection, computer vision, YOLO, real-time inference | 2 | 0 |
@@ -84,6 +86,7 @@ Last updated: 2026-07-02 | Pages: 91 | Sources: 3
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [kendryte_k510.md](hardware_target/kendryte_k510.md) | hardware_target | Kendryte K510 | K510, Kendryte, Canaan, RISC-V | 2 | 0 |
 | [xiangshan_kunminghu.md](hardware_target/xiangshan_kunminghu.md) | hardware_target | XiangShan Kunminghu | RISC-V, XiangShan, Kunminghu, FPGA, QEMU | 2 | 0 |
 | [onnx_int8_vs_fp16_jetson_orin_nano_latency_benchmark.md](benchmark_result/onnx_int8_vs_fp16_jetson_orin_nano_latency_benchmark.md) | benchmark_result | ONNX INT8 vs FP16 Latency on Jetson Orin Nano |  | 2 | 0 |
 | [xuantie_c908_ai_inference_performance.md](benchmark_result/xuantie_c908_ai_inference_performance.md) | benchmark_result | XuanTie C908 AI Inference Performance | XuanTie C908, AI inference, HHB, SHL, MobileNet, int8 quantization, RVV | 2 | 0 |
