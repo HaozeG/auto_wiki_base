@@ -317,3 +317,40 @@ target_section: Key Claims
 source: https://gitee.com/kendryte/nncase
 status: pending_review
 proposed_update: Expand the Key Claims section and add a new subsection 'Detailed Benchmarks' with the full benchmark table from the source. The table includes models (mobilenetv2, resnet50V2, yolov5s, yolov8s variants, etc.), input shapes, quantization type (u8/u8), nncase FPS, original model accuracy (tflite/onnx), and nncase accuracy on ImageNet 2012 and COCO val2017. For example: mobilenetv2 [1,224,224,3] achieves 600.24 FPS with top-1 accuracy 71.3% (original) vs 71.1% (nncase); resnet50V2 [1,3,224,224] achieves 86.17 FPS with top-1 75.44% vs 75.11%; yolov5s_det [1,3,640,640] achieves 23.645 FPS with mAP50 0.567 vs 0.566. Add these as bullet-point claims under Key Claims and optionally include the HTML table from the source.
+
+## [2026-07-02] merge_pending | tenstorrent-grayskull-e75.md
+target_page: tenstorrent-grayskull-e75.md
+canonical_name: Tenstorrent Grayskull e75
+colliding_name: Tenstorrent Grayskull e150
+source: https://www.research.ed.ac.uk/en/publications/accelerating-stencils-on-the-tenstorrent-grayskull-risc-v-acceler
+status: pending_review
+<!-- merge_draft_body
+# Tenstorrent Grayskull e150
+
+The Tenstorrent Grayskull e150 is a RISC-V based PCIe accelerator designed for high-performance computing workloads, built on the Tensix core architecture that decouples data movement from compute. This accelerator targets HPC applications such as stencil computations and can be clustered for higher performance. In a 2024 study by Brown and Barton, the Grayskull e150 demonstrated performance comparable to a Xeon Platinum CPU when executing the Jacobi iterative method, using approximately five times less energy. Scaling to four e150 cards yielded roughly four times the CPU performance at similar energy efficiency. The accelerator operates on BF16 datatype, contrasting with the FP32 baseline of the CPU, and is programmed via RISC-V vector instructions. The architecture supports PCIe integration into existing systems, making it a middle-ground solution for adopting RISC-V in HPC without replacing entire CPU solutions.
+
+## Key Claims
+
+- RISC-V based PCIe accelerator with Tensix core architecture.
+- Decouples data movement from compute within each core.
+- BF16 datatype support.
+- Single e150 delivers similar performance to a Xeon Platinum CPU (BF16 vs FP32) with approximately five times less energy.
+- Four e150 cards provide approximately four times the CPU performance at around five times less energy.
+- Targeted at HPC workloads such as stencil computations (e.g., Jacobi iterative method).
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V with custom Tensix extensions for data movement.
+- Vector/matrix/accelerator support: Proprietary Tensix cores (not standard RVV).
+- Memory/cache/TLB/DMA: Not specified in available source.
+- Compiler/toolchain support: Not specified; likely uses RISC-V toolchain with custom intrinsics.
+
+## Relationships
+
+- [[gemmini]]: Both Tenstorrent Grayskull and Gemmini are RISC-V-based accelerator platforms, though Gemmini generates systolic arrays while Grayskull uses Tensix cores.
+- [[nncase]]: nncase is a compiler stack for RISC-V AI accelerators; similar compilation toolchains may be applicable to Grayskull.
+
+## Sources
+
+- [Accelerating stencils on the Tenstorrent Grayskull RISC-V accelerator (arXiv)](https://arxiv.org/pdf/2409.18835)
+merge_draft_body -->
