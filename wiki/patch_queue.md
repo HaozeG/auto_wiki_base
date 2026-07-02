@@ -1729,3 +1729,55 @@ A performance characterization study using NASA's NAS Parallel Benchmark (NPB) s
 
 - [Performance characterisation of the 64-core SG2042 RISC-V CPU for HPC - arXiv](https://arxiv.org/html/2406.12394)
 merge_draft_body -->
+
+## [2026-07-02] pending | et-soc-1.md
+target_page: et-soc-1.md
+target_section: Optimization-Relevant Details
+source: https://www.mfgrobots.com/Article/iiot/embedded/5249.html
+status: pending_review
+proposed_update: Add memory interface details: Four 64-bit DDR interfaces (each comprising four 16-bit channels) deliver 96×16-bit bandwidth using LPDDR4x. Add off-chip cache capability: a six-chip stack configuration reaches 100 GB off-chip cache. Source: search snippet from 'Esperanto Unveils 1,093‑Core RISC‑V AI Accelerator for Data ...' (https://www.mfgrobots.com/Article/iiot/embedded/5249.html).
+
+## [2026-07-02] merge_pending | et-soc-1.md
+target_page: et-soc-1.md
+canonical_name: ET-SoC-1
+colliding_name: ET-SoC-1
+source: https://docs.hpc.gwdg.de/services/ftp/esperanto/index.html
+status: pending_review
+<!-- merge_draft_body
+# ET-SoC-1 Platform
+
+The ET-SoC-1 (ET) is a manycore processor originally developed by Esperanto Technologies for high-performance computing and artificial intelligence applications. The chip integrates over 1000 RISC-V ET-Minion processing cores, each featuring a vector processing unit (VPU) and a tensor unit (TU) optimized for machine learning operations. A network-on-chip (NoC) interconnects the cores with 32 GB of distributed LPDDR4X memory, enabling high throughput within a power envelope of approximately 40 W per card. Each card connects via a PCIe 4.0 x8 interface. In 2025, Ainekko acquired the intellectual property and plans to open-source the platform. The GWDG Future Technology Platform currently hosts 4 compute nodes with 8 ET-SoC-1 cards each for researcher access.
+
+## Key Claims
+
+- Integrates over 1000 RISC-V ET-Minion cores, each with a VPU and tensor unit.
+- 32 GB of distributed LPDDR4X memory connected via a network-on-chip.
+- Power envelope of approximately 40 W per card.
+- PCIe 4.0 x8 interface per card.
+- Ainekko acquired the IP in 2025 and plans to open-source the platform.
+- Available on the GWDG FTP with 4 compute nodes hosting 8 cards each.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V (ET-Minion cores with vector and tensor extensions)
+- Vector/matrix/accelerator support: Each core contains a VPU and a tensor unit (TU).
+- Memory/cache/TLB/DMA: 32 GB distributed LPDDR4X via NoC; no cache details provided.
+- Compiler/toolchain support: Not specified in the source.
+
+## Relationships
+
+- [[pulp-nn-optimization-recipe]]: Both target accelerating neural network inference on RISC-V manycore platforms, with PULP-NN providing software-level optimizations for quantized NNs on clustered RISC-V processors.
+- [[earth-shifting-based-vector-memory-access]]: EARTH optimization targets vector memory access efficiency on RISC-V vector units, which is relevant to the ET-SoC-1's VPU memory subsystem.
+- Insufficient context for additional cross-links.
+
+## Sources
+
+- [ET-SoC-1 Platform :: Documentation for HPC](https://docs.hpc.gwdg.de/services/ftp/esperanto/index.html)
+merge_draft_body -->
+
+## [2026-07-02] pending | et-soc-1.md
+target_page: et-soc-1.md
+target_section: full
+source: https://vlsifacts.com/esperantos-et-soc-1-chip-integrates-more-than-1000-risc-v-cores-for-energy-efficient-ml-recommendation/
+status: pending_review
+proposed_update: Add details from Hot Chips 33 presentation by Dave Ditzel: present operating frequency ranges (ET-Minion 500 MHz to 1.5 GHz, ET-Maxion 500 MHz to 2 GHz); add transistor count (24 billion); clarify on-die memory (over 160 MB); add interfaces (eMMC FLASH, PCIe x8 Gen4); add Glacier Point v2 accelerator card configuration (up to 6 ET-SoC-1 chips, 192 GB DRAM, 822 GB/s DRAM bandwidth, 120 W limit); add performance per watt estimates (123x for ML recommendation, 25.7x for image classification); note power typically <20 W. Update Key Claims to include these specific numbers.

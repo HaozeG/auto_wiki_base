@@ -3,6 +3,9 @@ canonical_name: ET-SoC-1
 aliases:
 - Esperanto ET-SoC-1
 - Esperanto Technologies ET-SoC-1
+- ET-SoC-1 Platform
+- ET manycore chip
+- Ainekko ET-SoC-1
 subtype: null
 tags: []
 hardware_targets:
@@ -18,6 +21,8 @@ scorecard:
 sources:
 - raw/cache/75a78991629076f1.md
 - https://www.researchgate.net/publication/357611149_Accelerating_ML_Recommendation_with_over_a_Thousand_RISC-VTensor_Processors_on_Esperantos_ET-SoC-1_Chip
+- raw/cache/729dc21ee4c2a626.md
+- https://docs.hpc.gwdg.de/services/ftp/esperanto/index.html
 source_url: https://www.researchgate.net/publication/357611149_Accelerating_ML_Recommendation_with_over_a_Thousand_RISC-VTensor_Processors_on_Esperantos_ET-SoC-1_Chip
 fetched_at: '2026-07-02T11:57:08.943875+00:00'
 type: hardware_target

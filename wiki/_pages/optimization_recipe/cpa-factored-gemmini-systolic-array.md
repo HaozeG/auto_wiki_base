@@ -31,7 +31,7 @@ type: optimization_recipe
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 30
+inbound_links: 31
 ---
 
 # CPA-Factored Gemmini Systolic Array

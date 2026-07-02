@@ -259,3 +259,11 @@ pages_written: 3
 pipeline_rejection_rate: 33%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/riscv-v2-replication/wiki/audit/research_5b423117_2026-07-02.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] research | RISC-V AI accelerator memory bandwidth HBM DDR chiplet
+session_id: 2dd56364
+candidates_evaluated: 9
+pages_written: 2
+pipeline_rejection_rate: 11%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/riscv-v2-replication/wiki/audit/research_2dd56364_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first
