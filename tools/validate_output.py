@@ -104,6 +104,31 @@ def _validate_merge_result(data: dict) -> None:
         raise ValueError("MergeResult.merged_content must be a non-empty string")
 
 
+_SYNTHESIS_RESULT_REQUIRED = {"decision", "rejection_reason", "page_draft"}
+
+
+def _validate_synthesis_result(data: dict) -> None:
+    missing = _SYNTHESIS_RESULT_REQUIRED - data.keys()
+    if missing:
+        raise ValueError(f"SynthesisResult missing fields: {missing}")
+    if data["decision"] not in ("approve", "reject"):
+        raise ValueError(f"Invalid decision: {data['decision']}")
+    if data["decision"] == "approve":
+        draft = data.get("page_draft")
+        if not isinstance(draft, dict):
+            raise TypeError("SynthesisResult.page_draft must be a dict when approved")
+        missing_d = _PAGE_DRAFT_REQUIRED - draft.keys()
+        if missing_d:
+            raise ValueError(f"PageDraft missing fields: {missing_d}")
+        if draft.get("page_type") != "synthesis":
+            raise ValueError(f"SynthesisResult.page_draft.page_type must be 'synthesis': {draft.get('page_type')}")
+        if not isinstance(draft.get("frontmatter"), dict):
+            raise TypeError("PageDraft.frontmatter must be a dict")
+        connected = draft["frontmatter"].get("connected_entities")
+        if not isinstance(connected, list) or len(connected) < 2:
+            raise ValueError("SynthesisResult.page_draft.frontmatter.connected_entities must name >= 2 entities")
+
+
 def _validate_profile_list(data: dict) -> None:
     profiles = data.get("profiles")
     if not isinstance(profiles, list) or not profiles:
@@ -121,6 +146,7 @@ _SCHEMA_VALIDATORS = {
     "EvalResult": _validate_eval_result,
     "MergeResult": _validate_merge_result,
     "ProfileList": _validate_profile_list,
+    "SynthesisResult": _validate_synthesis_result,
 }
 
 

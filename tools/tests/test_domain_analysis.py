@@ -174,3 +174,69 @@ def test_evidence_extractor_finds_generic_measurements_and_toolchains():
     assert "GEMM" in evidence["workload_names"]
     assert any(tool.lower() == "llvm" for tool in evidence["toolchain_names"])
     assert "throughput" in evidence["metrics"]
+
+
+def test_evidence_extractor_returns_empty_for_non_hardware_content_without_theme_patterns():
+    """The hardware/benchmark-shaped default regexes structurally can't match
+    a literature-theme source — confirms extract_evidence() degrades to empty
+    evidence rather than adapting when no theme-specific patterns are given."""
+    evidence = extract_evidence(
+        "Chapter 12 follows Elizabeth Bennet through Pemberley in autumn 1812, "
+        "raising the theme of pride versus prejudice once more.",
+        {"title": "Pride and Prejudice reading notes"},
+    )
+    assert evidence["candidate_measurements"] == []
+    assert evidence["metrics"] == []
+    assert evidence["workload_names"] == []
+    assert evidence["toolchain_names"] == []
+
+
+def test_evidence_extractor_uses_theme_supplied_extraction_patterns():
+    """A theme profile can override the RISC-V-shaped defaults per field via
+    config.extraction_patterns so a non-hardware theme gets real extraction
+    instead of always-empty evidence (see the test above)."""
+    config = {
+        "extraction_patterns": {
+            "hardware": [r"[A-Z][a-z]+ [A-Z][a-z]+"],  # capitalized character names
+            "workloads": [r"pride", r"prejudice", r"marriage"],
+            "toolchains": [r"Pemberley", r"Longbourn"],
+            "metrics": ["reputation", "affection"],
+            "measurements": [r"\bChapter \d+\b"],
+        }
+    }
+    evidence = extract_evidence(
+        "Chapter 12 follows Elizabeth Bennet through Pemberley, where questions of "
+        "reputation and marriage resurface.",
+        {"title": "Pride and Prejudice reading notes"},
+        config,
+    )
+    assert "Chapter 12" in evidence["candidate_measurements"]
+    assert "Elizabeth Bennet" in evidence["hardware_names"]
+    assert "marriage" in [w.lower() for w in evidence["workload_names"]]
+    assert "Pemberley" in evidence["toolchain_names"]
+    assert "reputation" in evidence["metrics"]
+    # RISC-V-shaped defaults must not leak through when the theme overrides a field.
+    assert "GEMM" not in evidence["workload_names"]
+
+
+def test_gap_manifest_respects_theme_supplied_coverage_tracked_page_types(tmp_path):
+    """build_gap_manifest()'s optimization-coverage block is gated on
+    OPTIMIZATION_PAGE_TYPES by default (RISC-V-shaped); a theme can declare
+    its own tracked subtypes via coverage_tracked_page_types/
+    coverage_required_fields so the same gap-detection logic works for e.g.
+    a literature theme's character/event subtypes."""
+    pages = tmp_path / "_pages"
+    (pages / "character").mkdir(parents=True)
+    # No character pages written yet -> should show up as a missing_page_type gap.
+    config = {
+        "page_type_taxonomy": {"entity": {}, "character": {}, "event": {}},
+        "coverage_tracked_page_types": ("character", "event"),
+        "coverage_required_fields": ("relationships",),
+        "structured_fields": ("relationships",),
+    }
+
+    manifest = build_gap_manifest(pages, config)
+
+    assert manifest["optimization_page_type_counts"] == {"character": 0, "event": 0}
+    assert "missing_page_type:character" in manifest["gap_types"]
+    assert "missing_page_type:event" in manifest["gap_types"]

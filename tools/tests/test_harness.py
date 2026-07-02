@@ -138,6 +138,44 @@ class TestValidateAndParse:
         raw = '{"key": "value"}'
         assert validate_and_parse(raw, "UnknownSchema") is None
 
+    def test_valid_synthesis_result_approve(self):
+        raw = """{
+            "decision": "approve",
+            "rejection_reason": null,
+            "page_draft": {
+                "page_type": "synthesis",
+                "filename": "gemm_approaches",
+                "frontmatter": {"connected_entities": ["alpha", "beta"]},
+                "content": "# GEMM Approaches\\n\\n## RAG Summary\\n\\nSummary text.\\n"
+            }
+        }"""
+        result = validate_and_parse(raw, "SynthesisResult")
+        assert result is not None
+        assert result["page_draft"]["page_type"] == "synthesis"
+
+    def test_synthesis_result_rejects_single_connected_entity(self):
+        raw = """{
+            "decision": "approve",
+            "rejection_reason": null,
+            "page_draft": {
+                "page_type": "synthesis",
+                "filename": "gemm_approaches",
+                "frontmatter": {"connected_entities": ["alpha"]},
+                "content": "# X"
+            }
+        }"""
+        assert validate_and_parse(raw, "SynthesisResult") is None
+
+    def test_synthesis_result_reject_decision_does_not_require_draft(self):
+        raw = """{
+            "decision": "reject",
+            "rejection_reason": "cluster too thin",
+            "page_draft": null
+        }"""
+        result = validate_and_parse(raw, "SynthesisResult")
+        assert result is not None
+        assert result["decision"] == "reject"
+
 
 class TestQuotaManager:
     def test_initial_state_not_exceeded(self):

@@ -483,7 +483,7 @@ lint_priorities:
 max_candidates_per_session: 20
 max_new_pages_per_session: 10
 max_linking_debt: 5                  # autonomous loop stops creating when this many session pages remain at 0 inbound
-max_eval_subagent_tokens: 16000
+max_eval_subagent_tokens: 16000      # higher than a first-pass 3000 default: the eval subagent runs on a thinking model that needs headroom for its reasoning trace before the JSON verdict — do not lower this back down without switching the eval subagent's model
 max_discovery_subagent_tokens: 3000
 max_retries_on_fetch_failure: 2
 discovery_search_queries_limit: 5
@@ -499,6 +499,7 @@ near_duplicate_score: 0.90
 topic_saturation_hit_threshold: 2   # pre-eval skip if qmd returns this many similar pages
 title_overlap_threshold: 0.8        # pre-eval skip for hard title duplicates, not broad shared stack/vendor terms
 synthesis_gap_min_cluster_size: 3   # log synthesis gap if tag cluster has >= this many entity pages
+early_exit_after_escalation_failures: 5   # after adaptive depth escalation, stop the session if this many more candidates fail evaluation with 0 pages written (query angle is likely off-theme; see zero_yield_queries feedback to the keyword recommender)
 domain_stopwords: []                # optional domain terms ignored by duplicate/saturation token overlap
 preferred_source_types:
   - official documentation

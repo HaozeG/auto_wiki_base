@@ -377,6 +377,115 @@ def test_recent_discovery_history_collects_previous_queries(tmp_path):
     ]
 
 
+def test_recent_discovery_history_flags_zero_yield_sessions(tmp_path):
+    """Regression coverage for the zero-yield feedback loop: sessions that
+    evaluated a real candidate budget but wrote 0 pages (e.g. session
+    e545ec7c in wiki/log.md, query drifted off-theme into formal verification)
+    should surface in zero_yield_queries so the keyword recommender can steer
+    away from repeating that query's angle.
+    """
+    audit_dir = tmp_path / "audit"
+    audit_dir.mkdir()
+    (audit_dir / "research_zero_2026-01-01.json").write_text(json.dumps({
+        "query": "RISC-V verification formal methods hardware bug fuzzing",
+        "session_summary": {
+            "candidates_evaluated": 10,
+            "pages_written": 0,
+            "pages_rejected_by_subagent": 10,
+        },
+        "invocations": [],
+    }), encoding="utf-8")
+    (audit_dir / "research_ok_2026-01-02.json").write_text(json.dumps({
+        "query": "ProjectNimbus GEMM benchmark",
+        "session_summary": {"candidates_evaluated": 5, "pages_written": 2},
+        "invocations": [],
+    }), encoding="utf-8")
+    # Below the 3-candidate threshold: a tiny/aborted session shouldn't count
+    # as a confirmed unproductive angle.
+    (audit_dir / "research_tiny_2026-01-03.json").write_text(json.dumps({
+        "query": "ProjectNimbus tiny probe",
+        "session_summary": {"candidates_evaluated": 1, "pages_written": 0},
+        "invocations": [],
+    }), encoding="utf-8")
+
+    with patch.object(orchestrator, "_audit_dir", return_value=audit_dir):
+        history = orchestrator._load_recent_discovery_history({
+            "recent_audit_sessions_for_discovery": 10,
+        })
+
+    queries = [z["query"] for z in history["zero_yield_queries"]]
+    assert queries == ["RISC-V verification formal methods hardware bug fuzzing"]
+    assert history["zero_yield_queries"][0]["candidates_evaluated"] == 10
+
+
+def test_early_exit_stops_after_escalation_keeps_failing(tmp_path):
+    """After adaptive depth escalation, if candidates keep failing evaluation
+    with 0 pages written, the session should stop rather than spend its whole
+    candidate budget (see wiki/audit/research_e545ec7c_2026-07-02.json: 10/10
+    candidates rejected, escalated at candidate 5, no early exit existed).
+    """
+    pages_dir = tmp_path / "wiki" / "_pages"
+    pages_dir.mkdir(parents=True)
+    index = tmp_path / "wiki" / "index.md"
+    index.write_text(
+        "# Wiki Index\n\nLast updated: 2020-01-01 | Pages: 0 | Sources: 0\n\n"
+        "## Entity Pages\n\n| Page | Summary | Tags | Sources | Inbound |\n"
+        "|------|---------|------|---------|---------|\n\n"
+        "## Synthesis Pages\n\n| Page | Connected Entities | Status | Inbound |\n"
+        "|------|--------------------|--------|---------|\n",
+        encoding="utf-8",
+    )
+    log_path = tmp_path / "wiki" / "log.md"
+    log_path.write_text("", encoding="utf-8")
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text("```yaml\n[system_state]\ngraph_maturity: true\n```\n", encoding="utf-8")
+
+    # 8 candidates so escalation (halfway=4) fires, then early_exit_after=3
+    # more rejections should stop the loop before candidate 8 is evaluated.
+    candidates = [{"url": f"https://example.com/{i}", "title": f"Candidate {i}"} for i in range(8)]
+    state = ResearchSessionState.create(
+        "sess-early-exit", "unproductive query",
+        {"max_candidates": 8, "max_new_pages": 5, "depth": "shallow"},
+        tmp_path / "state",
+    )
+    state.set_candidates(candidates)
+
+    reject_eval = json.dumps({
+        "decision": "reject",
+        "rejection_reason": "not relevant",
+        "scorecard": {"weighted_total": 0.1},
+        "page_drafts": [],
+        "pages_to_update": [],
+        "contradictions_found": [],
+    })
+
+    with patch.object(orchestrator, "_load_research_config", return_value={
+             "qmd_command": ["uv", "run", "--no-sync", "qmd"],
+             "research_state_dir": str(tmp_path / "state"),
+             "early_exit_after_escalation_failures": 3,
+         }), \
+         patch.object(orchestrator, "QmdRunner", return_value=EmptyQmdRunner()), \
+         patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_INDEX_MD", index), \
+         patch.object(orchestrator, "_LOG_MD", log_path), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md), \
+         patch.object(orchestrator, "AuditLog", return_value=FullDummyAudit()), \
+         patch.object(orchestrator, "_check_synthesis_gaps", return_value=[]), \
+         patch.object(orchestrator, "_wiki_is_mature", return_value=True), \
+         patch.object(orchestrator, "_get_concept_gaps", return_value=[]), \
+         patch.object(orchestrator, "_fetch_smart", return_value="some content about the candidate"), \
+         patch.object(orchestrator, "_call_subagent", return_value=reject_eval):
+        result = orchestrator._run_research_state(state)
+
+    assert result["status"] == "complete"
+    # 4 (halfway, triggers escalation) + 3 (early-exit threshold) = 7 evaluated,
+    # the 8th candidate should never have been reached.
+    assert result["candidates_evaluated"] == 7
+    evaluated_states = {c["state"] for c in state.candidates}
+    assert "eval_rejected" in evaluated_states
+    assert any(c["state"] == "discovered" for c in state.candidates)
+
+
 def test_keyword_manifest_includes_theme_and_previous_queries(monkeypatch):
     captured = {}
 
@@ -438,6 +547,49 @@ def test_load_research_config_merges_selected_theme_profile(tmp_path, monkeypatc
     assert "hardware_target" in config["page_type_taxonomy"]
     assert "benchmark_result" in config["page_type_taxonomy"]
     assert config["preferred_source_types"] == ["official documentation", "benchmark repository"]
+
+
+def test_literature_theme_profile_extraction_patterns_flow_end_to_end(tmp_path, monkeypatch):
+    """Phase 4c dry-run check: a non-hardware theme's extraction_patterns,
+    hand-added to [theme_profile] the same way page_types already is, must
+    actually reach extract_evidence() through _load_research_config() — not
+    just work when called directly with a literal config dict (unit-tested
+    separately in test_domain_analysis.py).
+    """
+    from domain_analysis import extract_evidence
+
+    claude = tmp_path / "CLAUDE.md"
+    claude.write_text(
+        "```yaml\n[research_config]\n```\n\n"
+        "```yaml\n"
+        "[theme_profile]\n"
+        "theme: Victorian novel\n"
+        "organization_choice: character_first\n"
+        "page_types:\n"
+        "  entity: General entity page\n"
+        "  synthesis: Cross-page synthesis\n"
+        "  character: Person or character with traits, relationships, and arc\n"
+        "extraction_patterns:\n"
+        "  hardware: ['[A-Z][a-z]+ [A-Z][a-z]+']\n"
+        "  workloads: ['marriage', 'inheritance']\n"
+        "  metrics: ['reputation']\n"
+        "```\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(orchestrator, "_CLAUDE_MD", claude)
+
+    config = orchestrator._load_research_config()
+    assert config["extraction_patterns"]["workloads"] == ["marriage", "inheritance"]
+
+    evidence = extract_evidence(
+        "Elizabeth Bennet weighs marriage and inheritance against reputation.",
+        {"title": "Reading notes"},
+        config,
+    )
+    assert "Elizabeth Bennet" in evidence["hardware_names"]
+    assert "marriage" in [w.lower() for w in evidence["workload_names"]]
+    assert "reputation" in evidence["metrics"]
+    assert "GEMM" not in evidence["workload_names"]
 
 
 def test_write_theme_profile_inserts_selected_profile(tmp_path, monkeypatch):
@@ -580,6 +732,250 @@ def test_session_checkpoint_pending_skips_terminal_candidates(tmp_path):
     assert loaded.candidates[0]["qmd_matches"][0]["file"] == "a.md"
 
 
+def test_probable_duplicate_by_similarity_catches_mismatched_canonical_names(tmp_path):
+    """Regression test for the MERGE candidate identity.resolve() missed in
+    production: two benchmark_result pages from the same paper/hardware under
+    different canonical_name strings. High BM25 score + shared source
+    snapshot should flag it even though exact-key matching wouldn't.
+    """
+    pages_dir = tmp_path / "wiki" / "_pages" / "benchmark_result"
+    pages_dir.mkdir(parents=True)
+    existing = pages_dir / "compiler_benchmark_bananapi_f3_gcc15_clang21.md"
+    existing.write_text(
+        "---\ntype: benchmark_result\n"
+        "canonical_name: Compiler Benchmark Comparison on BananaPi-F3 (RVV 1.0)\n"
+        "sources: [raw/cache/deadbeef.md]\n---\n\n# Compiler Benchmark\n",
+        encoding="utf-8",
+    )
+    draft = {
+        "frontmatter": {"sources": ["raw/cache/deadbeef.md"]},
+        "content": "# GCC 15 vs Clang 21 Autovectorization on BananaPi-F3 (RVV)\n",
+    }
+    qmd_matches = [{
+        "rank": 1,
+        "file": existing.name,
+        "title": "Compiler Benchmark Comparison on BananaPi-F3 (RVV 1.0)",
+        "score": 0.95,
+    }]
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir.parent):
+        result = orchestrator._probable_duplicate_by_similarity(
+            "GCC 15 vs Clang 21 Autovectorization on BananaPi-F3 (RVV)",
+            draft, qmd_matches, {"near_duplicate_score": 0.90},
+        )
+
+    assert result is not None
+    assert result.filename == "compiler_benchmark_bananapi_f3_gcc15_clang21.md"
+
+
+def test_probable_duplicate_by_similarity_ignores_low_score_or_no_shared_source(tmp_path):
+    pages_dir = tmp_path / "wiki" / "_pages" / "entity"
+    pages_dir.mkdir(parents=True)
+    existing = pages_dir / "other_page.md"
+    existing.write_text(
+        "---\ntype: entity\ncanonical_name: Other Page\nsources: [raw/cache/other.md]\n---\n\n# Other\n",
+        encoding="utf-8",
+    )
+    draft = {"frontmatter": {"sources": ["raw/cache/deadbeef.md"]}, "content": "# Draft\n"}
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir.parent):
+        # High score but no shared source snapshot -> not flagged.
+        assert orchestrator._probable_duplicate_by_similarity(
+            "Some New Concept", draft,
+            [{"rank": 1, "file": existing.name, "title": "Other Page", "score": 0.95}],
+            {"near_duplicate_score": 0.90},
+        ) is None
+        # Shared source but score below near_duplicate_score -> not flagged.
+        draft["frontmatter"]["sources"] = ["raw/cache/other.md"]
+        assert orchestrator._probable_duplicate_by_similarity(
+            "Some New Concept", draft,
+            [{"rank": 1, "file": existing.name, "title": "Other Page", "score": 0.5}],
+            {"near_duplicate_score": 0.90},
+        ) is None
+
+
+def test_rebuild_index_from_frontmatter_resyncs_stale_rows(tmp_path):
+    """_update_index() only appends a row at page-creation time, embedding
+    inbound_links as of then; it never revisits that row when a later page
+    links to it. rebuild_index_from_frontmatter() must be the full-rebuild
+    source of truth: every row's Sources/Inbound must match current
+    frontmatter, and the header Sources/Pages counts must be recomputed too.
+    """
+    pages_dir = tmp_path / "wiki" / "_pages"
+    entity_dir = pages_dir / "entity"
+    entity_dir.mkdir(parents=True)
+    (entity_dir / "alpha.md").write_text(
+        "---\ntype: entity\ntags: [x]\nsources: [raw/cache/a.md, raw/cache/b.md]\n"
+        "inbound_links: 3\n---\n\n# Alpha\n\nAlpha body.\n",
+        encoding="utf-8",
+    )
+    synthesis_dir = pages_dir / "synthesis"
+    synthesis_dir.mkdir(parents=True)
+    (synthesis_dir / "beta.md").write_text(
+        "---\ntype: synthesis\nconnected_entities: [alpha]\nsynthesis_status: draft\n"
+        "sources: []\ninbound_links: 0\n---\n\n# Beta\n",
+        encoding="utf-8",
+    )
+    index = tmp_path / "wiki" / "index.md"
+    index.write_text(
+        "# Wiki Index\n\nLast updated: 2020-01-01 | Pages: 1 | Sources: 1\n\n"
+        "## Entity Pages\n\n| Page | Summary | Tags | Sources | Inbound |\n"
+        "|------|---------|------|---------|---------|\n"
+        "| [alpha.md](entity/alpha.md) | Alpha | x | 2 | 0 |\n\n"
+        "## Synthesis Pages\n\n| Page | Connected Entities | Status | Inbound |\n"
+        "|------|--------------------|--------|---------|\n\n"
+        "## Concept Index\n\n- **Alpha**: → [alpha](entity/alpha.md)\n\n"
+        "## Optimization Pages\n\n| Page | Type | Summary | Tags | Sources | Inbound |\n"
+        "|------|------|---------|------|---------|---------|\n",
+        encoding="utf-8",
+    )
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_INDEX_MD", index):
+        orchestrator.rebuild_index_from_frontmatter()
+
+    text = index.read_text(encoding="utf-8")
+    assert "Pages: 2" in text
+    assert "Sources: 2" in text
+    assert "| [alpha.md](entity/alpha.md) | Alpha | x | 2 | 3 |" in text
+    assert "| [beta.md](synthesis/beta.md) | alpha | draft | 0 |" in text
+    # Concept Index is untouched by the rebuild (not row-based like the tables).
+    assert "**Alpha**: → [alpha](entity/alpha.md)" in text
+
+
+def test_synthesis_gap_clusters_finds_uncovered_tag_and_excludes_covered(tmp_path):
+    pages_dir = tmp_path / "wiki" / "_pages"
+    entity_dir = pages_dir / "entity"
+    entity_dir.mkdir(parents=True)
+    for i in range(3):
+        (entity_dir / f"page{i}.md").write_text(
+            f"---\ntype: entity\ntags: [gemm]\n---\n\n# Page {i}\n", encoding="utf-8"
+        )
+    (entity_dir / "other.md").write_text(
+        "---\ntype: entity\ntags: [unrelated]\n---\n\n# Other\n", encoding="utf-8"
+    )
+    synthesis_dir = pages_dir / "synthesis"
+    synthesis_dir.mkdir(parents=True)
+    (synthesis_dir / "existing.md").write_text(
+        "---\ntype: synthesis\nconnected_entities: [page0]\n---\n\n# Existing\n", encoding="utf-8"
+    )
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir):
+        clusters = orchestrator._synthesis_gap_clusters(min_cluster_size=2)
+
+    assert len(clusters) == 1
+    tag, uncovered = clusters[0]
+    assert tag == "gemm"
+    # page0 is already covered by the existing synthesis page's connected_entities.
+    assert sorted(uncovered) == ["page1", "page2"]
+
+
+def test_generate_synthesis_candidate_writes_page_and_respects_budget(tmp_path):
+    """Regression coverage for Phase 3: the research loop previously only
+    logged synthesis gaps (_check_synthesis_gaps) without ever acting on them.
+    This exercises the full call -> validate -> pipeline -> write path.
+    """
+    pages_dir = tmp_path / "wiki" / "_pages"
+    entity_dir = pages_dir / "entity"
+    entity_dir.mkdir(parents=True)
+    for name, tag in [("alpha", "gemm"), ("beta", "gemm"), ("gamma", "gemm")]:
+        (entity_dir / f"{name}.md").write_text(
+            f"---\ntype: entity\ntags: [{tag}]\ncanonical_name: {name.title()}\n---\n\n"
+            f"# {name.title()}\n\nA GEMM optimization approach.\n\n"
+            f"## Key Claims\n\n- {name.title()} claims something specific.\n",
+            encoding="utf-8",
+        )
+    index = tmp_path / "wiki" / "index.md"
+    index.write_text(
+        "# Wiki Index\n\nLast updated: 2020-01-01 | Pages: 3 | Sources: 0\n\n"
+        "## Entity Pages\n\n| Page | Summary | Tags | Sources | Inbound |\n"
+        "|------|---------|------|---------|---------|\n\n"
+        "## Synthesis Pages\n\n| Page | Connected Entities | Status | Inbound |\n"
+        "|------|--------------------|--------|---------|\n",
+        encoding="utf-8",
+    )
+    state = ResearchSessionState.create(
+        "sess-synth", "gemm query", {"max_candidates": 5, "max_new_pages": 5, "depth": "shallow"},
+        tmp_path / "state",
+    )
+    quota = QuotaManager(max_candidates=5, max_new_pages=5)
+    audit = FullDummyAudit()
+
+    synthesis_result = json.dumps({
+        "decision": "approve",
+        "rejection_reason": None,
+        "page_draft": {
+            "page_type": "synthesis",
+            "filename": "gemm_approaches",
+            "frontmatter": {
+                "type": "synthesis",
+                "connected_entities": ["alpha", "beta", "gamma"],
+                "synthesis_status": "draft",
+                "tags": ["gemm"],
+            },
+            "content": "# GEMM Approaches\n\n## RAG Summary\n\n" + ("word " * 180) + "\n\n"
+            "## Full Synthesis\n\n[[alpha]] and [[beta]] and [[gamma]] compared.\n\n"
+            "## Open Questions\n\n- What about a fourth approach?\n\n"
+            "## Connected Pages\n\n- [[alpha]]\n- [[beta]]\n- [[gamma]]\n",
+        },
+    })
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_INDEX_MD", index), \
+         patch.object(orchestrator, "_call_subagent", return_value=synthesis_result), \
+         patch.object(orchestrator, "_run_eval_pipeline", return_value=(True, {
+             "layer1_pass": True, "layer2_pass": True, "layer3_triggered": False,
+             "final_decision": "approved",
+         })):
+        filename = orchestrator._generate_synthesis_candidate(
+            state, quota, audit, {"synthesis_gap_min_cluster_size": 3}, set()
+        )
+
+    assert filename == "gemm_approaches.md"
+    written = pages_dir / "synthesis" / "gemm_approaches.md"
+    assert written.exists()
+    assert quota._pages_written == 1
+    # Budget respected: a second call with pages_exceeded should no-op.
+    quota.max_new_pages = 1
+    assert orchestrator._generate_synthesis_candidate(
+        state, quota, audit, {"synthesis_gap_min_cluster_size": 3}, set()
+    ) is None
+
+
+def test_maybe_transition_maturity_only_touches_patched_claude_md(tmp_path):
+    """Regression test: _maybe_transition_maturity() is called from inside
+    _run_research_state() and writes connectivity stats to _CLAUDE_MD (and, on
+    a cold_start -> mature transition, appends to _LOG_MD). Two other tests in
+    this file call _run_research_state() directly and only patched
+    _WIKI_PAGES_DIR, not _CLAUDE_MD/_LOG_MD — so it silently recomputed stats
+    from a throwaway tmp_path page set and wrote them into the real project
+    CLAUDE.md and wiki/log.md on every test run. Assert the function only
+    ever touches the paths it's given.
+    """
+    pages_dir = tmp_path / "wiki" / "_pages" / "entity"
+    pages_dir.mkdir(parents=True)
+    (pages_dir / "a.md").write_text(
+        "---\ntype: entity\ninbound_links: 1\n---\n\n# A\n", encoding="utf-8"
+    )
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text(
+        "```yaml\n[system_state]\ngraph_maturity: false\n```\n", encoding="utf-8"
+    )
+    log_md = tmp_path / "log.md"
+    log_md.write_text("# Log\n", encoding="utf-8")
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md), \
+         patch.object(orchestrator, "_LOG_MD", log_md):
+        orchestrator._maybe_transition_maturity("sess-test")
+
+    text = claude_md.read_text(encoding="utf-8")
+    assert "orphan_fraction: 0.0" in text or "orphan_fraction: 0" in text
+    # This single-page fixture is mature (orphan_fraction 0, median 1), so the
+    # cold_start -> mature transition fires and appends to the patched log.
+    assert "transition | cold_start" in log_md.read_text(encoding="utf-8")
+
+
 def test_approved_resume_writes_once_and_written_resume_skips(tmp_path):
     pages_dir = tmp_path / "wiki" / "_pages"
     log_path = tmp_path / "wiki" / "log.md"
@@ -607,6 +1003,11 @@ def test_approved_resume_writes_once_and_written_resume_skips(tmp_path):
     }]
     state.save("fixture")
 
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text(
+        "```yaml\n[system_state]\ngraph_maturity: false\n```\n", encoding="utf-8"
+    )
+
     with patch.object(orchestrator, "_load_research_config", return_value={
              "qmd_command": ["uv", "run", "--no-sync", "qmd"],
              "research_state_dir": str(tmp_path / "state"),
@@ -615,6 +1016,7 @@ def test_approved_resume_writes_once_and_written_resume_skips(tmp_path):
          patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
          patch.object(orchestrator, "_INDEX_MD", tmp_path / "missing_index.md"), \
          patch.object(orchestrator, "_LOG_MD", log_path), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md), \
          patch.object(orchestrator, "AuditLog", return_value=DummyAudit()), \
          patch.object(orchestrator, "_run_graph_stats"), \
          patch.object(orchestrator, "_check_synthesis_gaps", return_value=[]):
@@ -712,6 +1114,11 @@ def test_mocked_research_run_writes_benchmark_and_updates_hardware_page(tmp_path
     })
     audit = FullDummyAudit()
 
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text(
+        "```yaml\n[system_state]\ngraph_maturity: true\n```\n", encoding="utf-8"
+    )
+
     with patch.object(orchestrator, "_load_research_config", return_value={
              "qmd_command": ["uv", "run", "--no-sync", "qmd"],
              "research_state_dir": str(tmp_path / "state"),
@@ -723,6 +1130,7 @@ def test_mocked_research_run_writes_benchmark_and_updates_hardware_page(tmp_path
          patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
          patch.object(orchestrator, "_INDEX_MD", index), \
          patch.object(orchestrator, "_LOG_MD", log_path), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md), \
          patch.object(orchestrator, "AuditLog", return_value=audit), \
          patch.object(orchestrator, "_run_graph_stats"), \
          patch.object(orchestrator, "_check_synthesis_gaps", return_value=[]), \
