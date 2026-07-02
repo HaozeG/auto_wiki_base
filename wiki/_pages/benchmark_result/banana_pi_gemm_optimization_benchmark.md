@@ -35,8 +35,9 @@ fetched_at: '2026-07-02T03:54:54.399713+00:00'
 type: benchmark_result
 created: '2026-07-02'
 updated: '2026-07-02'
-cold_start: true
+cold_start: false
 inbound_links: 1
+needs_summary_revision: false
 ---
 
 # Banana Pi GEMM Optimization Benchmark

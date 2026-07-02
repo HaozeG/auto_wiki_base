@@ -37,7 +37,7 @@ type: entity
 tags: []
 created: 2023-03-09
 updated: '2026-07-02'
-cold_start: true
+cold_start: false
 inbound_links: 1
 needs_summary_revision: true
 ---

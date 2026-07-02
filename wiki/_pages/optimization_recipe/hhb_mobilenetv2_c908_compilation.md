@@ -42,8 +42,9 @@ fetched_at: '2026-07-02T06:12:25.049872+00:00'
 type: optimization_recipe
 created: '2026-07-02'
 updated: '2026-07-02'
-cold_start: true
+cold_start: false
 inbound_links: 1
+needs_summary_revision: false
 ---
 
 # HHB MobileNetV2 C908 Compilation

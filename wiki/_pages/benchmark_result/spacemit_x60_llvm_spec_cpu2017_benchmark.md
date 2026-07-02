@@ -43,8 +43,9 @@ fetched_at: '2026-07-02T04:33:14.593320+00:00'
 type: benchmark_result
 created: '2026-07-02'
 updated: '2026-07-02'
-cold_start: true
+cold_start: false
 inbound_links: 1
+needs_summary_revision: false
 ---
 
 # SPEC CPU 2017 LLVM Optimization Results on SpacemiT X60

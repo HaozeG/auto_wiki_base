@@ -548,3 +548,15 @@ deferred_for_human:
 - "MERGE: gcc15_clang21_autovectorization_rvv_bananapi_f3.md -> compiler_benchmark_bananapi_f3_gcc15_clang21.md (see report)."
 - "RESTRUCTURE: k230.md and mlir_xdsl_rvv_gemm_codegen_recipe.md — proposed synthesis-page splits (see report); not executed, scoped as future editorial work."
 - "systolic_tensor_units.md (scorecard avg 0.43, weakest page in wiki) — judgment call on keep-as-is vs fold into gemmini.md; not below hard-rejection threshold so not classified DELETE."
+
+## [2026-07-02] lint | retrospective (apply)
+issues_found: 4
+actions_taken:
+- "MERGE executed: gcc15_clang21_autovectorization_rvv_bananapi_f3.md merged into compiler_benchmark_bananapi_f3_gcc15_clang21.md (kept, as the more complete of the two — includes the Qsim quantum-simulator finding the other omitted). Merged aliases, tags, and both source snapshots (arXiv abs + html v2) into the surviving page; redirected the one inbound link from llvm_riscv_target.md; fixed two pre-existing dangling references in the surviving page ([[BananaPi-F3]] -> [[spacemit_x60]], [[workload_kernel]] -> prose reference) and added a reciprocal link from spacemit_x60.md; deleted the source page and its wiki/index.md row; inbound_links resynced to 3. Page count now 100 (was 101)."
+- "cold_start flipped to false on 97 of 100 pages (all CLEARED pages from the 2026-07-02 retrospective report, including the merge target)."
+- "cold_start left true on the 2 RESTRUCTURE candidates (k230.md, mlir_xdsl_rvv_gemm_codegen_recipe.md) pending the proposed synthesis-page splits — not executed this pass (nontrivial editorial work, scoped separately per the report)."
+- "0 DELETE candidates executed (none identified)."
+- "[system_state] updated: retrospective_lint_done: true, cold_start_page_count: 2, mean_inbound_links: 3.2 (page_count 100, orphan_fraction 0.0 — still MATURE)."
+deferred_for_human:
+- "RESTRUCTURE: k230.md and mlir_xdsl_rvv_gemm_codegen_recipe.md still need their proposed synthesis-page splits written (see wiki/retrospective_lint_report.md for titles/scope); left cold_start: true until that happens."
+- "systolic_tensor_units.md (scorecard avg 0.43) — left as a standalone CLEARED page (cold_start: false) per the report's default; still open whether to fold into gemmini.md."

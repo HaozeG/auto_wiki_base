@@ -23,8 +23,9 @@ fetched_at: '2026-07-02T04:53:43.278716+00:00'
 type: entity
 created: '2026-07-02'
 updated: '2026-07-02'
-cold_start: true
+cold_start: false
 inbound_links: 2
+needs_summary_revision: false
 ---
 
 # PULP-NN

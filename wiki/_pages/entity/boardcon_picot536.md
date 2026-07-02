@@ -21,8 +21,9 @@ fetched_at: '2026-07-02T03:50:08.241236+00:00'
 type: entity
 created: '2026-07-02'
 updated: '2026-07-02'
-cold_start: true
+cold_start: false
 inbound_links: 1
+needs_summary_revision: false
 ---
 
 # Boardcon PICOT536

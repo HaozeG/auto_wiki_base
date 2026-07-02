@@ -42,7 +42,7 @@ fetched_at: '2026-07-01T04:19:54.493265+00:00'
 type: hardware_target
 created: '2026-07-01'
 updated: '2026-07-02'
-cold_start: true
+cold_start: false
 inbound_links: 3
 needs_summary_revision: false
 ---

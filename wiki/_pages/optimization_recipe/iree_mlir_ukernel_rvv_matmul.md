@@ -45,8 +45,9 @@ fetched_at: '2026-07-02T05:37:21.789570+00:00'
 type: optimization_recipe
 created: '2026-07-02'
 updated: '2026-07-02'
-cold_start: true
+cold_start: false
 inbound_links: 1
+needs_summary_revision: false
 ---
 
 # IREE MLIR uKernel for RISC-V Vector Extension

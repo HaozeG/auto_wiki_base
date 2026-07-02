@@ -44,8 +44,9 @@ fetched_at: '2026-07-02T04:40:01.003634+00:00'
 type: hardware_target
 created: '2026-07-02'
 updated: '2026-07-02'
-cold_start: true
+cold_start: false
 inbound_links: 10
+needs_summary_revision: false
 ---
 
 # SiFive Performance P570 Gen3

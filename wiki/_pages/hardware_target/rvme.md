@@ -24,7 +24,7 @@ sources:
 - raw/sources/RVME_An_Efficient_Matrix_Engine_Design_Based_on_Matrix_Extension_of_RISC-V.pdf
 created: 2026-07-01
 updated: 2026-07-01
-cold_start: true
+cold_start: false
 inbound_links: 12
 scorecard:
   novelty_delta: 0.9
@@ -32,7 +32,7 @@ scorecard:
   self_containedness: 0.9
   bridge_score: 0.7
   hub_potential: 0.7
-needs_summary_revision: true
+needs_summary_revision: false
 ---
 
 # RVME

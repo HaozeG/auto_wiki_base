@@ -38,8 +38,9 @@ fetched_at: '2026-07-02T04:46:11.151365+00:00'
 type: benchmark_result
 created: '2026-07-02'
 updated: '2026-07-02'
-cold_start: true
+cold_start: false
 inbound_links: 1
+needs_summary_revision: true
 ---
 
 # AraXL 22nm HPC/ML Benchmark

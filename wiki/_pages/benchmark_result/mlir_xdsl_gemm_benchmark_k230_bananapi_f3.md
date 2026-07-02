@@ -48,7 +48,7 @@ fetched_at: '2026-07-01T03:46:09.006884+00:00'
 type: benchmark_result
 created: '2026-07-01'
 updated: '2026-07-01'
-cold_start: true
+cold_start: false
 inbound_links: 1
 needs_summary_revision: true
 ---

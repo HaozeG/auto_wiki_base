@@ -34,7 +34,7 @@ sources:
 - https://www.abhs.in/blog/meta-mtia-chip-roadmap-four-generations-inference-2026
 created: 2026-07-01
 updated: '2026-07-02'
-cold_start: true
+cold_start: false
 inbound_links: 1
 scorecard:
   novelty_delta: 0.75
@@ -42,7 +42,7 @@ scorecard:
   self_containedness: 0.85
   bridge_score: 0.6
   hub_potential: 0.5
-needs_summary_revision: true
+needs_summary_revision: false
 ---
 
 # Meta MTIA

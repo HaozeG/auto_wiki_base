@@ -17,13 +17,13 @@ sources:
 - wiki/_pages/entity/llvm_riscv_target.md
 created: 2026-07-01
 updated: 2026-07-01
-cold_start: true
+cold_start: false
 inbound_links: 1
 scorecard:
   bridge_score: 0.85
   contradiction_potential: 0.7
   cross_domain_connection: 0.75
-needs_summary_revision: true
+needs_summary_revision: false
 ---
 
 # Competing Approaches to Matrix Acceleration on RISC-V

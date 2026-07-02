@@ -33,8 +33,9 @@ fetched_at: '2026-07-02T04:33:14.593320+00:00'
 type: hardware_target
 created: '2026-07-02'
 updated: '2026-07-02'
-cold_start: true
-inbound_links: 3
+cold_start: false
+inbound_links: 4
+needs_summary_revision: false
 ---
 
 # SpacemiT X60
@@ -61,6 +62,7 @@ The SpacemiT X60 is an in-order, 8-core RISC-V processor that implements the RVA
 - [[llvm_riscv_target]]: The LLVM RISC-V backend that received the scheduling model and other patches targeting this processor.
 - [[mlir_xdsl_rvv_gemm_codegen_recipe]]: Another optimization recipe targeting the same Banana Pi F3 board, though with a different code generation approach using MLIR and xDSL for GEMM micro-kernels.
 - [[spacemit_x60_llvm_spec_cpu2017_benchmark]]: The detailed SPEC CPU 2017 measurement results from the LLVM scheduling/vectorization/IPRA work on this core.
+- [[compiler_benchmark_bananapi_f3_gcc15_clang21]]: A GCC 15 vs. Clang 21 autovectorization comparison (SGEMM, DGEMM, Qsim) on this same SoC/board.
 
 ## Sources
 

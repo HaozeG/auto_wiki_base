@@ -38,8 +38,9 @@ fetched_at: '2026-07-02T05:23:54.107226+00:00'
 type: hardware_target
 created: '2026-07-02'
 updated: '2026-07-02'
-cold_start: true
+cold_start: false
 inbound_links: 5
+needs_summary_revision: false
 ---
 
 # Coral NPU Vector Execution Engine

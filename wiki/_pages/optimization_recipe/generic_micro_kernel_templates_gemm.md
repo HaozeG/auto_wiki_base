@@ -52,7 +52,7 @@ fetched_at: '2026-07-01T03:54:15.902442+00:00'
 type: optimization_recipe
 created: '2026-07-01'
 updated: '2026-07-01'
-cold_start: true
+cold_start: false
 inbound_links: 3
 needs_summary_revision: false
 ---

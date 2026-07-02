@@ -38,8 +38,9 @@ fetched_at: '2026-07-02T04:17:55.665890+00:00'
 type: benchmark_result
 created: '2026-07-02'
 updated: '2026-07-02'
-cold_start: true
+cold_start: false
 inbound_links: 1
+needs_summary_revision: false
 ---
 
 # LLM Inference RVV Optimization on BananaPi BPI-F3

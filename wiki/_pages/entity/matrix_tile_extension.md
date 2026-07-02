@@ -18,7 +18,7 @@ fetched_at: '2026-07-01T03:48:09.910417+00:00'
 type: entity
 created: '2026-07-01'
 updated: '2026-07-01'
-cold_start: true
+cold_start: false
 inbound_links: 1
 needs_summary_revision: false
 ---

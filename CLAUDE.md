@@ -19,12 +19,12 @@ Subtypes are **specializations of `entity`**, never new top-level types: a subty
 ```yaml
 [system_state]
 graph_maturity: true
-cold_start_page_count: 30
+cold_start_page_count: 2
 orphan_fraction: 0.0
 median_inbound_links: 1.0
-mean_inbound_links: 3.1485
+mean_inbound_links: 3.2
 linking_debt: 0
-retrospective_lint_done: false
+retrospective_lint_done: true
 ```
 
 ---

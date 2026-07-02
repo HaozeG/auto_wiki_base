@@ -13,7 +13,7 @@ sources:
 - raw/sources/riscv_matrix_extension_proposal.pdf
 created: 2026-07-01
 updated: 2026-07-01
-cold_start: true
+cold_start: false
 inbound_links: 2
 scorecard:
   novelty_delta: 0.9
@@ -21,7 +21,7 @@ scorecard:
   self_containedness: 0.9
   bridge_score: 0.6
   hub_potential: 0.7
-needs_summary_revision: true
+needs_summary_revision: false
 ---
 
 # RISC-V Matrix Specification Proposal

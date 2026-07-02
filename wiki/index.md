@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 101 | Sources: 3
+Last updated: 2026-07-02 | Pages: 100 | Sources: 3
 
 ## Entity Pages
 
@@ -99,7 +99,7 @@ Last updated: 2026-07-02 | Pages: 101 | Sources: 3
 | [xuantie_c908_ai_inference_performance.md](benchmark_result/xuantie_c908_ai_inference_performance.md) | benchmark_result | XuanTie C908 AI Inference Performance | XuanTie C908, AI inference, HHB, SHL, MobileNet, int8 quantization, RVV | 2 | 0 |
 | [hhb_mobilenetv2_c908_compilation.md](optimization_recipe/hhb_mobilenetv2_c908_compilation.md) | optimization_recipe | HHB MobileNetV2 C908 Compilation | compilation, model deployment, HHB, C908, K230 | 2 | 0 |
 | [iree_mlir_ukernel_rvv_matmul.md](optimization_recipe/iree_mlir_ukernel_rvv_matmul.md) | optimization_recipe | IREE MLIR uKernel for RISC-V Vector Extension | IREE, MLIR, RISC-V, RVV, ukernel, matmul, LLVM | 2 | 0 |
-| [compiler_benchmark_bananapi_f3_gcc15_clang21.md](benchmark_result/compiler_benchmark_bananapi_f3_gcc15_clang21.md) | benchmark_result | Compiler Benchmark Comparison on BananaPi-F3 (RVV 1.0) |  | 2 | 0 |
+| [compiler_benchmark_bananapi_f3_gcc15_clang21.md](benchmark_result/compiler_benchmark_bananapi_f3_gcc15_clang21.md) | benchmark_result | Compiler Benchmark Comparison on BananaPi-F3 (RVV 1.0) | RISC-V, RVV, compiler, autovectorization, GCC, LLVM, BananaPi | 4 | 3 |
 | [coral_npu_vector_execution_engine.md](hardware_target/coral_npu_vector_execution_engine.md) | hardware_target | Coral NPU Vector Execution Engine | Coral, Google, RISC-V, RVV, NPU, Zve32x | 2 | 0 |
 | [semidynamics_tensor_unit.md](hardware_target/semidynamics_tensor_unit.md) | hardware_target | Semidynamics Tensor Unit | RISC-V, tensor unit, AI accelerator, Semidynamics, coherent | 2 | 0 |
 | [et_soc_1.md](hardware_target/et_soc_1.md) | hardware_target | ET-SoC-1 |  | 2 | 0 |
@@ -117,7 +117,6 @@ Last updated: 2026-07-02 | Pages: 101 | Sources: 3
 | [spacemit_x60_llvm_spec_cpu2017_benchmark.md](benchmark_result/spacemit_x60_llvm_spec_cpu2017_benchmark.md) | benchmark_result | SPEC CPU 2017 LLVM Optimization Results on SpacemiT X60 | LLVM, RISC-V, SpacemiT X60, SPEC CPU 2017, scheduling, vectorization, IPRA | 2 | 0 |
 | [llvm_optimization_for_risc_v_scheduling_vectorization_ipra.md](optimization_recipe/llvm_optimization_for_risc_v_scheduling_vectorization_ipra.md) | optimization_recipe | LLVM Optimization for RISC-V: Scheduling, Vectorization, and IPRA on SpacemiT X6 | LLVM, RISC-V, scheduling, vectorization, IPRA, SpacemiT X60 | 2 | 0 |
 | [spacemit_x60.md](hardware_target/spacemit_x60.md) | hardware_target | SpacemiT X60 | RISC-V, SpacemiT, LLVM | 2 | 0 |
-| [gcc15_clang21_autovectorization_rvv_bananapi_f3.md](benchmark_result/gcc15_clang21_autovectorization_rvv_bananapi_f3.md) | benchmark_result | GCC 15 vs Clang 21 Autovectorization on BananaPi-F3 (RVV) | RISC-V, RVV, compiler, autovectorization, GCC, LLVM, BananaPi | 2 | 0 |
 | [saturn_vector_unit.md](hardware_target/saturn_vector_unit.md) | hardware_target | Saturn Vector Unit |  | 2 | 0 |
 | [sifive_intelligence_x390.md](hardware_target/sifive_intelligence_x390.md) | hardware_target | SiFive Intelligence X390 | RISC-V, SiFive, AI, ML, vector | 2 | 0 |
 | [sifive_performance_p870.md](hardware_target/sifive_performance_p870.md) | hardware_target | SiFive Performance P870 | RISC-V, SiFive, out-of-order | 2 | 0 |

@@ -4,8 +4,19 @@ aliases:
 - GCC 15 vs Clang 21 on RVV
 - BananaPi-F3 compiler benchmark
 - RVV compiler performance evaluation
+- GCC 15 vs Clang 21 Autovectorization on BananaPi-F3 (RVV)
+- RVV compiler autovectorization benchmark
+- GCC15 vs LLVM21 RVV performance
+- arXiv:2605.10860 benchmark
 subtype: null
-tags: []
+tags:
+- RISC-V
+- RVV
+- compiler
+- autovectorization
+- GCC
+- LLVM
+- BananaPi
 hardware_targets:
 - BananaPi F3
 workloads:
@@ -40,13 +51,16 @@ scorecard:
 sources:
 - raw/cache/48d543e9ad72412e.md
 - https://arxiv.org/html/2605.10860v2
+- raw/cache/53f948c53967f26e.md
+- https://arxiv.org/abs/2605.10860
 source_url: https://arxiv.org/html/2605.10860v2
 fetched_at: '2026-07-02T05:28:25.222253+00:00'
 type: benchmark_result
 created: '2026-07-02'
 updated: '2026-07-02'
-cold_start: true
-inbound_links: 1
+cold_start: false
+inbound_links: 3
+needs_summary_revision: false
 ---
 
 # Compiler Benchmark Comparison on BananaPi-F3 (RVV 1.0)
@@ -73,11 +87,13 @@ This benchmark study evaluates the auto-vectorization capabilities of GCC 15 and
 
 ## Relationships
 
-- The hardware target for this benchmark is [[BananaPi-F3]], an RVV 1.0 platform also used in the [[mlir_xdsl_rvv_gemm_codegen_recipe]] recipe.
+- The hardware target for this benchmark is [[spacemit_x60]] (the SoC on the BananaPi-F3 board), an RVV 1.0 platform also used in the [[mlir_xdsl_rvv_gemm_codegen_recipe]] recipe.
 - Comparable compiler analysis for a different RVV hardware target is available on [[coral_npu_vector_execution_engine]], though that engine uses the Zve32x subset.
 - The SiFive [[sifive_performance_p570_gen3]] core provides a contrasting RVV 1.0 implementation with a 128-bit vector pipeline, serving as another potential target for similar compiler benchmarking.
-- The Qsim RVV backend contributed in this work is a new quantum simulation workload kernel relevant to [[workload_kernel]] pages in the wiki.
+- [[llvm_riscv_target]]: the LLVM RISC-V backend whose Clang 21 autovectorizer is one half of this comparison.
+- The Qsim RVV backend contributed in this work is a new quantum simulation workload relevant to [[xuantie_c908_fp16_gemm_kernel]]-style hand-tuned kernel work, though no dedicated Qsim-on-RVV page exists yet.
 
 ## Sources
 
 - arXiv:2605.10860v2, "Towards Portable Performance on RISC-V Vector Processors" (May 2026).
+- arXiv:2605.10860 (abs), earlier snapshot of the same paper.

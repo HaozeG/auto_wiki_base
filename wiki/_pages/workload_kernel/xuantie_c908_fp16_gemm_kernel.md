@@ -26,7 +26,7 @@ fetched_at: '2026-07-01T02:54:06.948603+00:00'
 type: workload_kernel
 created: '2026-07-01'
 updated: '2026-07-01'
-cold_start: true
+cold_start: false
 inbound_links: 19
 needs_summary_revision: false
 ---
