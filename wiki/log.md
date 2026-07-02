@@ -355,3 +355,11 @@ pages_written: 1
 pipeline_rejection_rate: 10%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_391ada56_2026-07-02.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] research | Tenstorrent RISC-V AI accelerator Grayskull Wormhole Tensix
+session_id: da85dc58
+candidates_evaluated: 10
+pages_written: 2
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_da85dc58_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first

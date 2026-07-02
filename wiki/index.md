@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 63 | Sources: 3
+Last updated: 2026-07-02 | Pages: 65 | Sources: 3
 
 ## Entity Pages
 
@@ -67,6 +67,8 @@ Last updated: 2026-07-02 | Pages: 63 | Sources: 3
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [grayskull_e75_matmul_benchmark.md](benchmark_result/grayskull_e75_matmul_benchmark.md) | benchmark_result | Tenstorrent Grayskull e75 MatMul Benchmark (arXiv:2505.06085) |  | 2 | 0 |
+| [tenstorrent_grayskull_e75.md](hardware_target/tenstorrent_grayskull_e75.md) | hardware_target | Tenstorrent Grayskull e75 |  | 2 | 0 |
 | [ventana_veyron_v2.md](hardware_target/ventana_veyron_v2.md) | hardware_target | Ventana Veyron V2 |  | 2 | 0 |
 | [pulpissimo.md](hardware_target/pulpissimo.md) | hardware_target | PULPissimo | PULP, RISC-V, microcontroller, ultra-low-power | 2 | 0 |
 | [pulp_nn_gap8_cifar10_benchmark.md](benchmark_result/pulp_nn_gap8_cifar10_benchmark.md) | benchmark_result | PULP-NN GAP-8 CIFAR-10 Benchmark |  | 2 | 0 |
