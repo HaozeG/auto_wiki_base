@@ -267,3 +267,11 @@ pages_written: 2
 pipeline_rejection_rate: 11%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/riscv-v2-replication/wiki/audit/research_2dd56364_2026-07-02.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] research | RISC-V verification formal methods hardware fuzzing
+session_id: b67461ea
+candidates_evaluated: 10
+pages_written: 0
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/riscv-v2-replication/wiki/audit/research_b67461ea_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first
