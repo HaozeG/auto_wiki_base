@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 87 | Sources: 214
+Last updated: 2026-07-02 | Pages: 89 | Sources: 218
 
 ## Entity Pages
 
@@ -21,6 +21,7 @@ Last updated: 2026-07-02 | Pages: 87 | Sources: 214
 | [muriscv-nn.md](entity/muriscv-nn.md) | MuRISCV-NN |  | 2 | 0 |
 | [muse-book.md](entity/muse-book.md) | Muse Book |  | 2 | 0 |
 | [nncase.md](entity/nncase.md) | nncase |  | 2 | 10 |
+| [opencv-hal-riscv-rvv.md](entity/opencv-hal-riscv-rvv.md) | OpenCV HAL riscv-rvv |  | 2 | 0 |
 | [opengeem-accelerator-generator.md](entity/opengeem-accelerator-generator.md) | OpenGeMM |  | 6 | 0 |
 | [pulp-platform.md](entity/pulp-platform.md) | PULP Platform |  | 8 | 0 |
 | [risc-v-matrix-project.md](entity/risc-v-matrix-project.md) | RISC-V Matrix Project | RISC-V, matrix extension, prototype, riscv-stc | 2 | 0 |
@@ -30,6 +31,7 @@ Last updated: 2026-07-02 | Pages: 87 | Sources: 214
 | [riscv-vector-primer.md](entity/riscv-vector-primer.md) | RISC-V Vector Primer |  | 2 | 0 |
 | [riscv-vector-tests.md](entity/riscv-vector-tests.md) | riscv-vector-tests | RVV, testing, verification, Spike, RISC-V | 2 | 0 |
 | [rknn-toolkit2.md](entity/rknn-toolkit2.md) | RKNN-Toolkit2 | AI inference, model conversion, Rockchip, NPU, toolkit | 2 | 0 |
+| [rvv-bench.md](entity/rvv-bench.md) | rvv-bench |  | 2 | 0 |
 | [semidynamics.md](entity/semidynamics.md) | Semidynamics |  | 2 | 0 |
 | [shl-heterogeneous-library.md](entity/shl-heterogeneous-library.md) | SHL |  | 8 | 0 |
 | [sifive-intelligence-python.md](entity/sifive-intelligence-python.md) | SiFive Intelligence Python |  | 2 | 0 |
@@ -55,7 +57,7 @@ Flat list of all concepts mentioned across pages (with or without dedicated page
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
-| [ax45mpv-rvv-instruction-throughput.md](benchmark_result/ax45mpv-rvv-instruction-throughput.md) | benchmark_result | AX45MPV RVV Instruction Throughput |  | 2 | 0 |
+| [ax45mpv-rvv-instruction-throughput.md](benchmark_result/ax45mpv-rvv-instruction-throughput.md) | benchmark_result | AX45MPV RVV Instruction Throughput |  | 2 | 1 |
 | [gap9-vs-stm32f7-odtl-benchmark.md](benchmark_result/gap9-vs-stm32f7-odtl-benchmark.md) | benchmark_result | GAP9 vs STM32F7 On-Device Training Benchmark |  | 2 | 2 |
 | [intel-core-ultra-7-256v-resnet50-openvino-benchmark.md](benchmark_result/intel-core-ultra-7-256v-resnet50-openvino-benchmark.md) | benchmark_result | Intel Core Ultra 7 256V ResNet-50 OpenVINO Inference Benchmark |  | 2 | 0 |
 | [jacobi-stencil-grayskull-e150-vs-xeon-platinum.md](benchmark_result/jacobi-stencil-grayskull-e150-vs-xeon-platinum.md) | benchmark_result | Jacobi Stencil on Tenstorrent Grayskull e150 vs Xeon Platinum |  | 2 | 0 |
@@ -71,7 +73,7 @@ Flat list of all concepts mentioned across pages (with or without dedicated page
 | [xpulpnn-benchmark-result.md](benchmark_result/xpulpnn-benchmark-result.md) | benchmark_result | XpulpNN: Benchmark Results on Parallel Cluster in GF22FDX |  | 2 | 0 |
 | [xuantie-c920v1-rvv-instruction-timings.md](benchmark_result/xuantie-c920v1-rvv-instruction-timings.md) | benchmark_result | XuanTie C920v1 RVV Instruction Timings |  | 2 | 0 |
 | [xuantie-c950-specint2006.md](benchmark_result/xuantie-c950-specint2006.md) | benchmark_result | XuanTie C950 SPECint2006 | benchmark, RISC-V, XuanTie, C950, SPEC | 2 | 0 |
-| [andes-ax45mpv.md](hardware_target/andes-ax45mpv.md) | hardware_target | AX45MPV |  | 2 | 1 |
+| [andes-ax45mpv.md](hardware_target/andes-ax45mpv.md) | hardware_target | AX45MPV |  | 2 | 2 |
 | [andes-qilai.md](hardware_target/andes-qilai.md) | hardware_target | Andes QiLai |  | 2 | 1 |
 | [cutie-ternary-accelerator.md](hardware_target/cutie-ternary-accelerator.md) | hardware_target | CUTIE (Ternary Neural Network Accelerator) |  | 2 | 0 |
 | [d1-h.md](hardware_target/d1-h.md) | hardware_target | D1-H |  | 4 | 0 |
@@ -97,8 +99,8 @@ Flat list of all concepts mentioned across pages (with or without dedicated page
 | [xuantie-c910-ice-board.md](hardware_target/xuantie-c910-ice-board.md) | hardware_target | Xuantie C910 / ICE SoC Board |  | 2 | 0 |
 | [xuantie-c920v1.md](hardware_target/xuantie-c920v1.md) | hardware_target | XuanTie C920v1 |  | 2 | 1 |
 | [xuantie-c950.md](hardware_target/xuantie-c950.md) | hardware_target | XuanTie C950 | RISC-V, Alibaba, XuanTie, server, AI | 2 | 15 |
-| [cpa-factored-gemmini-systolic-array.md](optimization_recipe/cpa-factored-gemmini-systolic-array.md) | optimization_recipe | CPA-Factored Gemmini Systolic Array |  | 2 | 28 |
-| [earth-shifting-based-vector-memory-access.md](optimization_recipe/earth-shifting-based-vector-memory-access.md) | optimization_recipe | EARTH Shifting-Based Vector Memory Access Optimization |  | 2 | 18 |
+| [cpa-factored-gemmini-systolic-array.md](optimization_recipe/cpa-factored-gemmini-systolic-array.md) | optimization_recipe | CPA-Factored Gemmini Systolic Array |  | 2 | 29 |
+| [earth-shifting-based-vector-memory-access.md](optimization_recipe/earth-shifting-based-vector-memory-access.md) | optimization_recipe | EARTH Shifting-Based Vector Memory Access Optimization |  | 2 | 19 |
 | [llvm-riscv-fptrunc-narrowing-optimization.md](optimization_recipe/llvm-riscv-fptrunc-narrowing-optimization.md) | optimization_recipe | LLVM RISC-V FPTrunc Narrowing Optimization |  | 2 | 12 |
 | [mlir-xdsl-rvv-lowering-pipeline.md](optimization_recipe/mlir-xdsl-rvv-lowering-pipeline.md) | optimization_recipe | MLIR-xDSL RVV Lowering Pipeline |  | 2 | 3 |
 | [pulp-nn-optimization-recipe.md](optimization_recipe/pulp-nn-optimization-recipe.md) | optimization_recipe | PULP-NN: Accelerating Quantized Neural Networks on Parallel Ultra-Low-Power RISC | RISC-V, quantized neural network, low-power, parallel computing | 2 | 6 |
