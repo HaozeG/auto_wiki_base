@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 91 | Sources: 224
+Last updated: 2026-07-02 | Pages: 94 | Sources: 232
 
 ## Entity Pages
 
@@ -11,6 +11,7 @@ Last updated: 2026-07-02 | Pages: 91 | Sources: 224
 | [banana-pi-bpi-f3.md](entity/banana-pi-bpi-f3.md) | Banana Pi BPI-F3 |  | 6 | 0 |
 | [earth-vector-memory-access-architecture.md](entity/earth-vector-memory-access-architecture.md) | EARTH (Vector Memory Access Architecture) |  | 2 | 0 |
 | [esperanto-technologies.md](entity/esperanto-technologies.md) | Esperanto Technologies |  | 2 | 0 |
+| [gcc-compiler.md](entity/gcc-compiler.md) | GCC |  | 2 | 0 |
 | [gemmini.md](entity/gemmini.md) | Gemmini |  | 2 | 20 |
 | [libxsmm.md](entity/libxsmm.md) | LIBXSMM |  | 2 | 0 |
 | [llama.cpp.md](entity/llama.cpp.md) | llama.cpp |  | 2 | 0 |
@@ -59,15 +60,17 @@ Flat list of all concepts mentioned across pages (with or without dedicated page
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
 | [ax45mpv-rvv-instruction-throughput.md](benchmark_result/ax45mpv-rvv-instruction-throughput.md) | benchmark_result | AX45MPV RVV Instruction Throughput |  | 2 | 1 |
-| [gap9-vs-stm32f7-odtl-benchmark.md](benchmark_result/gap9-vs-stm32f7-odtl-benchmark.md) | benchmark_result | GAP9 vs STM32F7 On-Device Training Benchmark |  | 2 | 2 |
+| [gap9-vs-stm32f7-odtl-benchmark.md](benchmark_result/gap9-vs-stm32f7-odtl-benchmark.md) | benchmark_result | GAP9 vs STM32F7 On-Device Training Benchmark |  | 2 | 3 |
 | [intel-core-ultra-7-256v-resnet50-openvino-benchmark.md](benchmark_result/intel-core-ultra-7-256v-resnet50-openvino-benchmark.md) | benchmark_result | Intel Core Ultra 7 256V ResNet-50 OpenVINO Inference Benchmark |  | 2 | 0 |
 | [jacobi-stencil-grayskull-e150-vs-xeon-platinum.md](benchmark_result/jacobi-stencil-grayskull-e150-vs-xeon-platinum.md) | benchmark_result | Jacobi Stencil on Tenstorrent Grayskull e150 vs Xeon Platinum |  | 2 | 0 |
 | [kendryte-k230-neural-network-benchmarks.md](benchmark_result/kendryte-k230-neural-network-benchmarks.md) | benchmark_result | Kendryte K230 Neural Network Benchmarks |  | 2 | 12 |
 | [nncase-resnet50v2-k230-benchmark.md](benchmark_result/nncase-resnet50v2-k230-benchmark.md) | benchmark_result | nncase ResNet50V2 K230 Benchmark |  | 2 | 0 |
 | [opengemm-benchmark.md](benchmark_result/opengemm-benchmark.md) | benchmark_result | OpenGeMM Benchmark Results |  | 2 | 0 |
 | [rk3588-npu-yolov5-benchmark.md](benchmark_result/rk3588-npu-yolov5-benchmark.md) | benchmark_result | RK3588 NPU YOLOv5 Benchmark |  | 2 | 0 |
+| [sg2042-npb-benchmark.md](benchmark_result/sg2042-npb-benchmark.md) | benchmark_result | SG2042 NAS Parallel Benchmark Performance |  | 4 | 0 |
 | [sg2042-npb-performance-characterisation.md](benchmark_result/sg2042-npb-performance-characterisation.md) | benchmark_result | SG2042 NPB Performance Characterisation |  | 2 | 0 |
 | [sg2042-npb-single-core-performance.md](benchmark_result/sg2042-npb-single-core-performance.md) | benchmark_result | SG2042 NPB Single-Core Performance |  | 2 | 0 |
+| [sophon-sg2042-rajaperf-benchmark-sc23.md](benchmark_result/sophon-sg2042-rajaperf-benchmark-sc23.md) | benchmark_result | Sophon SG2042 RAJAPerf Benchmark (SC'23) | RISC-V, HPC, RAJAPerf, SG2042 | 2 | 0 |
 | [tenstorrent-grayskull-e75-matmul-bf16-benchmark.md](benchmark_result/tenstorrent-grayskull-e75-matmul-bf16-benchmark.md) | benchmark_result | Tenstorrent Grayskull e75 MatMul BF16 Peak Efficiency |  | 2 | 1 |
 | [tenstorrent-wormhole-galaxy-llama-70b-benchmark.md](benchmark_result/tenstorrent-wormhole-galaxy-llama-70b-benchmark.md) | benchmark_result | Tenstorrent Wormhole Galaxy Llama 70B Benchmark |  | 2 | 1 |
 | [tinyllama-11b-inference-banana-pi-f3.md](benchmark_result/tinyllama-11b-inference-banana-pi-f3.md) | benchmark_result | TinyLlama 1.1B Inference on Banana Pi F3 (llama.cpp) |  | 2 | 0 |
@@ -90,7 +93,7 @@ Flat list of all concepts mentioned across pages (with or without dedicated page
 | [sifive-intelligence-x160-gen-2.md](hardware_target/sifive-intelligence-x160-gen-2.md) | hardware_target | SiFive Intelligence X160 Gen 2 |  | 2 | 10 |
 | [sifive-intelligence-x180-gen-2.md](hardware_target/sifive-intelligence-x180-gen-2.md) | hardware_target | SiFive Intelligence X180 Gen 2 |  | 2 | 0 |
 | [sifive-intelligence-x280.md](hardware_target/sifive-intelligence-x280.md) | hardware_target | SiFive Intelligence X280 |  | 8 | 0 |
-| [sophon-sg2042.md](hardware_target/sophon-sg2042.md) | hardware_target | Sophon SG2042 | RISC-V, SOPHON, HPC, 64-core | 12 | 1 |
+| [sophon-sg2042.md](hardware_target/sophon-sg2042.md) | hardware_target | Sophon SG2042 | RISC-V, SOPHON, HPC, 64-core | 16 | 2 |
 | [spacemit-k1.md](hardware_target/spacemit-k1.md) | hardware_target | SpacemiT K1 |  | 8 | 1 |
 | [spacemit-x60-processor.md](hardware_target/spacemit-x60-processor.md) | hardware_target | SpacemiT X60 |  | 2 | 5 |
 | [tenstorrent-grayskull-e75.md](hardware_target/tenstorrent-grayskull-e75.md) | hardware_target | Tenstorrent Grayskull e75 |  | 4 | 1 |
@@ -102,12 +105,12 @@ Flat list of all concepts mentioned across pages (with or without dedicated page
 | [xuantie-c920v1.md](hardware_target/xuantie-c920v1.md) | hardware_target | XuanTie C920v1 |  | 2 | 1 |
 | [xuantie-c950.md](hardware_target/xuantie-c950.md) | hardware_target | XuanTie C950 | RISC-V, Alibaba, XuanTie, server, AI | 2 | 16 |
 | [cpa-factored-gemmini-systolic-array.md](optimization_recipe/cpa-factored-gemmini-systolic-array.md) | optimization_recipe | CPA-Factored Gemmini Systolic Array |  | 2 | 30 |
-| [earth-shifting-based-vector-memory-access.md](optimization_recipe/earth-shifting-based-vector-memory-access.md) | optimization_recipe | EARTH Shifting-Based Vector Memory Access Optimization |  | 2 | 20 |
-| [llvm-riscv-fptrunc-narrowing-optimization.md](optimization_recipe/llvm-riscv-fptrunc-narrowing-optimization.md) | optimization_recipe | LLVM RISC-V FPTrunc Narrowing Optimization |  | 2 | 12 |
+| [earth-shifting-based-vector-memory-access.md](optimization_recipe/earth-shifting-based-vector-memory-access.md) | optimization_recipe | EARTH Shifting-Based Vector Memory Access Optimization |  | 2 | 21 |
+| [llvm-riscv-fptrunc-narrowing-optimization.md](optimization_recipe/llvm-riscv-fptrunc-narrowing-optimization.md) | optimization_recipe | LLVM RISC-V FPTrunc Narrowing Optimization |  | 2 | 13 |
 | [mlir-xdsl-rvv-lowering-pipeline.md](optimization_recipe/mlir-xdsl-rvv-lowering-pipeline.md) | optimization_recipe | MLIR-xDSL RVV Lowering Pipeline |  | 2 | 3 |
 | [pulp-nn-optimization-recipe.md](optimization_recipe/pulp-nn-optimization-recipe.md) | optimization_recipe | PULP-NN: Accelerating Quantized Neural Networks on Parallel Ultra-Low-Power RISC | RISC-V, quantized neural network, low-power, parallel computing | 2 | 6 |
 | [tvm-metaschedule-rvv-integration.md](optimization_recipe/tvm-metaschedule-rvv-integration.md) | optimization_recipe | TVM MetaSchedule RVV Integration |  | 2 | 0 |
-| [vectrans.md](optimization_recipe/vectrans.md) | optimization_recipe | VecTrans: LLM-Assisted Compiler Auto-Vectorization |  | 2 | 2 |
+| [vectrans.md](optimization_recipe/vectrans.md) | optimization_recipe | VecTrans: LLM-Assisted Compiler Auto-Vectorization |  | 2 | 3 |
 | [vindexmac-structured-sparse-matrix-optimization.md](optimization_recipe/vindexmac-structured-sparse-matrix-optimization.md) | optimization_recipe | Structured-Sparse Matrix Multiplication Optimization with vindexmac on RISC-V Ve | RISC-V, structured sparsity, matrix multiplication, vindexmac | 2 | 0 |
 | [risc-v-vector-code-examples.md](workload_kernel/risc-v-vector-code-examples.md) | workload_kernel | RISC-V Vector Code Examples | RISC-V, RVV, vector, assembly | 2 | 0 |
 | [rvv-matrix-multiplication-example-double.md](workload_kernel/rvv-matrix-multiplication-example-double.md) | workload_kernel | RVV Matrix Multiplication Example (Double Precision) | RVV, matrix multiplication, example | 2 | 0 |

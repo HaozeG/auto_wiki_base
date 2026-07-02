@@ -251,3 +251,11 @@ pages_written: 2
 pipeline_rejection_rate: 20%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/riscv-v2-replication/wiki/audit/research_482a0e51_2026-07-02.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] research | XuanTie C920 Sophon SG2042 HPC benchmark
+session_id: 5b423117
+candidates_evaluated: 9
+pages_written: 3
+pipeline_rejection_rate: 33%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/riscv-v2-replication/wiki/audit/research_5b423117_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first

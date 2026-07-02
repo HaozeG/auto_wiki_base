@@ -1616,3 +1616,116 @@ Universal Chiplet Interconnect Express (UCIe) is an open industry standard for d
 - [What Is UCIe? – Semiconductor Engineering](https://semiengineering.com/what-is-ucie/)
 - [UCIe – Wikipedia](https://en.wikipedia.org/wiki/UCIe)
 merge_draft_body -->
+
+## [2026-07-02] merge_pending | sophon-sg2042.md
+target_page: sophon-sg2042.md
+canonical_name: Sophon SG2042
+colliding_name: Sophon SG2042
+source: https://www.research.ed.ac.uk/en/publications/is-risc-v-ready-for-hpc-prime-time-evaluating-the-64-core-sophon-/
+status: pending_review
+<!-- merge_draft_body
+# Sophon SG2042
+
+The Sophon SG2042 is a commodity 64-core RISC-V central processing unit designed for high-performance computing workloads. Released in 2023, it is built around the XuanTie C920 cores developed by T-Head Semiconductor (Alibaba's Damo Academy) and is the first commercially available 64-core RISC-V CPU targeting HPC and data center applications. The chip is designed to evaluate the readiness of RISC-V for HPC prime-time, providing a platform for benchmarking against existing x86 high-performance CPUs and other RISC-V hardware. The SG2042 is available on platforms such as the Milk-V Pioneer, and has been the subject of academic performance evaluations using the RAJAPerf benchmarking suite (Brown et al., SC'23 Workshops). The performance evaluation reported that the SG2042 delivers, per core, five to ten times the performance of the nearest widely available RISC-V hardware, and is outmatched by x86 CPUs by a factor of four to eight on multi-threaded workloads.
+
+## Key Claims
+
+- World's first commodity 64-core RISC-V CPU (as of 2023).
+- Built on XuanTie C920 core technology.
+- Per-core RAJAPerf benchmark performance is 5x to 10x faster than the nearest widely available RISC-V hardware.
+- Multi-threaded performance is 4x to 8x slower than modern x86 high-performance CPUs, though some individual kernels run faster on the SG2042.
+- The system used the RAJAPerf benchmarking suite for performance comparison.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V (with XuanTie-specific extensions; XTheadVector based on RVV 0.7.1 per related documentation).
+- Vector/matrix/accelerator support: Not specified in the available source.
+- Memory/cache/TLB/DMA: Not specified.
+- Compiler/toolchain support: Not specified (RAJAPerf used as benchmark suite).
+
+## Relationships
+
+- [[xuantie-c950]]: Both are high-performance RISC-V CPUs from the Alibaba/Damo Academy ecosystem; the XuanTie C950 is a newer server-class chip built on a 5nm process, while the SG2042 uses the older C920 cores.
+- Insufficient context for additional cross-links to entity pages within the wiki.
+
+## Sources
+
+- [Is RISC-V ready for HPC prime-time: Evaluating the 64-core Sophon SG2042 RISC-V CPU](https://www.research.ed.ac.uk/en/publications/is-risc-v-ready-for-hpc-prime-time-evaluating-the-64-core-sophon-/)
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | sophon-sg2042.md
+target_page: sophon-sg2042.md
+canonical_name: Sophon SG2042
+colliding_name: Sophon SG2042
+source: https://arxiv.org/html/2406.12394
+status: pending_review
+<!-- merge_draft_body
+# Sophon SG2042
+
+The Sophon SG2042 is a 64-core RISC-V CPU designed for high-performance workloads, first released in summer 2023. It is the first mass-produced, commodity-available high-core-count RISC-V processor, developed by Sophon and aimed at HPC applications. The CPU integrates 64 T-Head XuanTie C920 cores organized in clusters of four, each cluster sharing a 1MB L2 cache. The C920 cores implement the RV64GCV instruction set with the 0.7.1 draft version of the RISC-V Vector Extension (RVV) supporting 128-bit vectors. Each core features a 12-stage out-of-order, multiple-issue superscalar pipeline with three decode units, four rename/dispatch units, eight issue/execute units, and two load/store units. The cache hierarchy includes 64KB of L1 instruction and data cache per core, 1MB of L2 cache per quad-core cluster, and a 64MB L3 system cache shared across all cores. The SG2042 provides four DDR4-3200 memory controllers and 32 lanes of PCIe Gen4 for I/O. The CPU is available on the Milk-V Pioneer board, which includes 128GB of DDR4 RAM. Software support relies on T-Head's fork of the GNU Compiler Collection (XuanTie GCC) because mainline GCC and LLVM do not yet support the RVV v0.7.1 extension. The compiler generates Vector Length Specific (VLS) RVV assembly targeting the 128-bit vector width. The SG2042 represents a significant step toward RISC-V adoption in high-performance computing, offering a competitive alternative to x86-64 and AArch64 CPUs for certain workload classes.
+
+## Key Claims
+
+- First mass-produced 64-core RISC-V CPU for high-performance workloads (released summer 2023).
+- C920 cores are 12-stage out-of-order superscalar with four-issue execution.
+- RVV v0.7.1 with 128-bit vector width; requires custom XuanTie GCC for auto-vectorization.
+- Cache hierarchy: 64KB L1 I/D per core, 1MB L2 per cluster, 64MB L3 shared.
+- Memory subsystem: 4x DDR4-3200 controllers; memory bandwidth/latency identified as the primary performance bottleneck.
+- In single-core performance, SG2042 delivers between 2.6x and 16.7x improvement over other RISC-V CPUs (based on NPB benchmarks).
+- Compared to x86-64 and AArch64 desktop CPUs, SG2042 performs competitively on compute-bound algorithms but falls behind on memory-bound or latency-sensitive algorithms.
+
+## Optimization-Relevant Details
+
+- **ISA/profile**: RV64GCV with RVV v0.7.1 (draft version, not final RVV 1.0)
+- **Vector/matrix/accelerator support**: 128-bit vector units; no matrix (tensor) accelerator on chip
+- **Memory/cache/TLB/DMA**: 64KB L1 I/D per core; 1MB L2 per quad-core cluster; 64MB L3 system cache; 4x DDR4-3200 memory controllers; PCIe Gen4 x32; no on-chip DMA engine documented
+- **Compiler/toolchain support**: XuanTie GCC 8.4 (20210618) recommended for best auto-vectorization; mainline GCC and LLVM lack RVV v0.7.1 support
+
+## Relationships
+
+- [[llvm-riscv-fptrunc-narrowing-optimization]]: The LLVM optimization for RISC-V FPTrunc narrowing may indirectly benefit SG2042 if LLVM gains RVV v0.7.1 support in the future.
+- [[tvm-metaschedule-rvv-integration]]: The TVM MetaSchedule RVV integration targets RISC-V vector hardware; though supporting RVV 1.0, its methodology could inform future compiler work for the SG2042.
+- [[saturn-vector-unit]]: The Saturn vector unit implements the full RVV 1.0 ISA, contrasting with the draft RVV v0.7.1 implementation in the SG2042's C920 cores.
+
+## Sources
+
+- [Performance characterisation of the 64-core SG2042 RISC-V CPU for HPC - arXiv](https://arxiv.org/html/2406.12394)
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | sg2042-npb-benchmark.md
+target_page: sg2042-npb-benchmark.md
+canonical_name: SG2042 NAS Parallel Benchmark Performance
+colliding_name: NAS Parallel Benchmark Performance on SG2042
+source: https://arxiv.org/html/2406.12394
+status: pending_review
+<!-- merge_draft_body
+# NAS Parallel Benchmark Performance on SG2042
+
+A performance characterization study using NASA's NAS Parallel Benchmark (NPB) suite evaluated the Sophon SG2042 CPU (released summer 2023) against other RISC-V, x86-64, and AArch64 CPUs. The SG2042 was installed in a Milk-V Pioneer board with 128GB of DDR4 RAM, running at 2GHz. Software compiled with XuanTie GCC 8.4 (20210618 release) at optimization level -O3, which generates Vector Length Specific (VLS) RVV assembly targeting the 128-bit vector width. All results are averages of five runs with exclusive machine access. The study compared single-core performance across multiple NPB benchmarks, providing a detailed characterization of computational versus memory-bound performance characteristics. The source paper is from EPCC at the University of Edinburgh, authored by Nick Brown and Maurice Jamieson.
+
+## Key Claims
+
+- The SG2042 consistently outperforms all other tested RISC-V solutions (e.g., QEMU simulation, single-board RISC-V systems) by a factor of 2.6x to 16.7x in single-core NPB performance.
+- Against x86-64 and AArch64 CPUs common in HPC (specific models not detailed in the available source), the SG2042 performs comparatively well on computationally bound algorithms (e.g., EP, CG) but shows decreasing relative performance on memory bandwidth or latency-bound algorithms (e.g., IS, MG, FT).
+- The performance of the SG2042's memory subsystem is identified as the greatest bottleneck, limiting its suitability for memory-intensive HPC workloads.
+- The SG2042 delivers a considerable performance uplift over earlier commodity RISC-V CPUs (confirmed via RAJAPerf suite in prior work), but it does not match the per-core performance of x86-64 and AArch64 CPUs on memory-bound kernels.
+
+## Measurement Context
+
+- **Hardware version**: Milk-V Pioneer board with Sophon SG2042 CPU (2GHz, 64-core, 128GB DDR4 RAM)
+- **Software/toolchain version**: XuanTie GCC 8.4 (20210618 release), compiled with -O3
+- **Workload shape**: NASA NAS Parallel Benchmark suite (NPB); individual benchmarks: CG, EP, FT, IS, MG; single-core execution mode
+- **Metric**: Speedup ratio (SG2042 vs other RISC-V CPUs); relative performance classification (compute-bound vs memory-bound)
+- **Method**: Each benchmark executed 5 times on exclusive-use machine; results averaged; no error bars reported in source
+- **Evidence strength**: measured
+
+## Relationships
+
+- [[llvm-riscv-fptrunc-narrowing-optimization]]: The LLVM optimization targeting RISC-V FPTrunc narrowing is a compiler-level enhancement that, if ported to the SG2042's toolchain, could improve floating-point division performance for compute-bound NPB benchmarks.
+- [[tvm-metaschedule-rvv-integration]]: The TVM MetaSchedule framework for RVV could potentially be applied to optimize NPB kernel implementations on the SG2042, although the SG2042 uses an older RVV version.
+- [[saturn-vector-unit]]: The Saturn vector unit represents a more modern RVV 1.0 microarchitecture; the SG2042's RVV v0.7.1 implementation contrasts in vector length and instruction support, making performance comparisons informative.
+
+## Sources
+
+- [Performance characterisation of the 64-core SG2042 RISC-V CPU for HPC - arXiv](https://arxiv.org/html/2406.12394)
+merge_draft_body -->

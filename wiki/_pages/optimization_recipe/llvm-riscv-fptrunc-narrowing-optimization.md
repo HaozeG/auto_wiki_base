@@ -34,7 +34,7 @@ type: optimization_recipe
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 12
+inbound_links: 13
 ---
 
 # LLVM RISC-V FPTrunc Narrowing Optimization

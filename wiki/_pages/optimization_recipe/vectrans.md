@@ -36,7 +36,7 @@ type: optimization_recipe
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 2
+inbound_links: 3
 ---
 
 # VecTrans: LLM-Assisted Compiler Auto-Vectorization

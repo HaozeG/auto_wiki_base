@@ -7,6 +7,8 @@ aliases:
 - SG2042 RISC-V CPU
 - Sophgo SG2042
 - T-head C920
+- Sophon 64-core RISC-V CPU
+- Milk-V Pioneer (contains SG2042)
 subtype: null
 tags:
 - RISC-V
@@ -41,13 +43,17 @@ sources:
 - https://link.springer.com/content/pdf/10.1007/978-3-031-73716-9_25
 - raw/cache/28c41456c7807192.md
 - https://milkv.io/docs/pioneer/resources/gcc
+- raw/cache/f027de9f838085f3.md
+- https://www.research.ed.ac.uk/en/publications/is-risc-v-ready-for-hpc-prime-time-evaluating-the-64-core-sophon-/
+- raw/cache/439ac77e161d2083.md
+- https://arxiv.org/html/2406.12394
 source_url: https://www.researchgate.net/publication/381517668_Performance_characterisation_of_the_64-core_SG2042_RISC-V_CPU_for_HPC
 fetched_at: '2026-07-02T10:38:16.305096+00:00'
 type: hardware_target
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 1
+inbound_links: 2
 ---
 
 # Sophon SG2042
