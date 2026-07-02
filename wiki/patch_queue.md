@@ -1781,3 +1781,46 @@ target_section: full
 source: https://vlsifacts.com/esperantos-et-soc-1-chip-integrates-more-than-1000-risc-v-cores-for-energy-efficient-ml-recommendation/
 status: pending_review
 proposed_update: Add details from Hot Chips 33 presentation by Dave Ditzel: present operating frequency ranges (ET-Minion 500 MHz to 1.5 GHz, ET-Maxion 500 MHz to 2 GHz); add transistor count (24 billion); clarify on-die memory (over 160 MB); add interfaces (eMMC FLASH, PCIe x8 Gen4); add Glacier Point v2 accelerator card configuration (up to 6 ET-SoC-1 chips, 192 GB DRAM, 822 GB/s DRAM bandwidth, 120 W limit); add performance per watt estimates (123x for ML recommendation, 25.7x for image classification); note power typically <20 W. Update Key Claims to include these specific numbers.
+
+## [2026-07-02] merge_pending | vindexmac-structured-sparse-matrix-optimization.md
+target_page: vindexmac-structured-sparse-matrix-optimization.md
+canonical_name: vindexmac instruction
+colliding_name: Optimizing Structured-Sparse Matrix Multiplication in RISC-V Vector Processors
+source: https://www.researchgate.net/publication/388180297_Optimizing_Structured-Sparse_Matrix_Multiplication_in_RISC-V_Vector_Processors
+status: pending_review
+<!-- merge_draft_body
+# Structured-Sparse Matrix Multiplication Optimization in RISC-V Vector Processors
+
+This optimization recipe describes how to accelerate structured-sparse matrix multiplication on RISC-V vector processors by exploiting the 2:4 block sparsity pattern and a newly proposed custom instruction called `vindexmac` (vector index-multiply-accumulate). The `vindexmac` instruction performs an indirect read from the vector register file using a scalar register as an index, multiplies that value with the least significant element of a second vector register, and accumulates the result into a destination vector register. The approach also leverages optimized loop unrolling strategies and careful data distribution across scalar and vector register files to reduce instruction count and data movement. According to the proposing research paper (accepted in IEEE Transactions on Computers), when integrated into a decoupled RISC-V vector processor, the `vindexmac` instruction combined with interleaved unrolling yields a runtime improvement of 25% to 33% compared to highly-optimized vectorized kernels using only the currently defined RISC-V instruction set. The optimization targets convolutional neural network workloads with structured sparsity, making it relevant for efficient ML inference and training on vector processors. Evidence strength is classified as reported, based on the paper's experimental results from an RTL implementation with negligible hardware overhead.
+
+## Key Claims
+
+- The addition of the single custom `vindexmac` instruction, combined with interleaved loop unrolling, improves runtime by 25% and 33% over optimized vectorized kernels that use only standard RISC-V vector instructions (source: accepted IEEE Transactions on Computers paper, 2025).
+- The `vindexmac` instruction enables indirect reads from the vector register file without introducing additional dependencies that limit loop unrolling, reducing the number of instructions per matrix multiplication iteration.
+- Critical performance parameters include data distribution across scalar and vector register files, data locality, and loop unrolling effectiveness; the work analyzes these quantitatively.
+- The proposed method scales with the number of cores and with increasing sparsity rates (1:4 pattern shown in evaluations).
+- Hardware cost is reported as negligible for integrating `vindexmac` into a decoupled RISC-V vector processor.
+
+## Transformation
+
+- **Prerequisites**: A RISC-V vector processor that supports the standard V extension (RVV) at any VLEN (vector length) and that allows custom instruction integration (e.g., via a decoupled vector unit). The input workload should involve matrix multiplication with structured sparsity patterns such as 2:4 block sparsity (up to 2 non-zero elements per 4 consecutive elements). A compiler toolchain (Clang) for baseline compilation is available.
+- **Steps**:
+  1. Identify structured-sparse matrix multiplication operations in the target workload (e.g., convolutional neural network layers).
+  2. Represent the sparse matrix in a compact format that encodes the 2:4 pattern (position of non-zeros within each block).
+  3. Implement the vector kernel using standard RISC-V vector loads and multiply-accumulate instructions, with inner and outer loop unrolling factors chosen for the target microarchitecture.
+  4. Replace standard gather/scatter and multiply-accumulate sequences with the `vindexmac` instruction: use a scalar register to address a specific vector register containing the sparse index positions, multiply each indexed element with the corresponding element of a second vector register, and accumulate into the destination.
+  5. Apply interleaved unrolling (inner and outer loop unrolling factors of 16 and 8 are recommended in the paper for Alg-3S) to expose more instruction-level parallelism and reduce loop overhead.
+  6. Tune data placement to keep frequently used vectors in the register file and minimize scalar-to-vector moves.
+- **Expected effect**: Reduction in instruction count per matrix multiplication iteration, elimination of register dependencies that hinder unrolling, and overall runtime improvement of 25% to 33% compared to the best standard-ISA vectorized baseline. Speedups can be higher for workloads with higher sparsity (e.g., 1:4 pattern) and on multi-core systems.
+- **Failure modes**: The optimization relies on the availability of the custom `vindexmac` instruction, which is not part of the ratified RISC-V specification; adoption requires custom hardware extensions. For processors without such support, the standard vectorized baseline (e.g., Alg-3S with interleaved unrolling) still provides some benefit but lacks the indirect indexing capability. The effectiveness depends on the specific microarchitecture and VLEN; results may not generalize to all RISC-V vector processors. No failure modes related to correctness were reported.
+- **Measurements**: On a decoupled RISC-V vector processor running CNN workloads with 2:4 structured sparsity, the proposed approach (inner/outer unrolling factors 8 and 4) achieved a speedup of 25% to 33% over the best standard-ISA baseline (SpMM with fine-grained unrolling factors 16/8) as reported in the paper. For 1:4 sparsity with increasing numbers of cores, the speedup remained consistent. Relative performance analysis shows the proposed algorithms (Alg-3S-FC-FI) outperforming sequential scalar implementations (SPA) by a large margin (figures in original paper). Evidence strength: reported (data from accepted IEEE Transactions on Computers paper, January 2025).
+
+## Relationships
+
+- [[vectrans]]: Both recipes target compiler-level or instruction-level optimization for RISC-V vector execution, but VecTrans uses LLM-assisted code refactoring whereas this recipe introduces a custom hardware instruction to reduce instruction count.
+- [[llvm-auto-re-vectorization-to-riscv]]: That recipe focuses on re-vectorizing existing SIMD intrinsics to RVV; this one provides a specific optimization for structured-sparse matrix operations that could benefit from such re-vectorization as a compilation step before applying the `vindexmac` transformation at the kernel level.
+
+## Sources
+
+- Titopoulos, V., Alexandridis, K., Peltekis, C., Nicopoulos, C., & Dimitrakopoulos, G. (2025). Optimizing Structured-Sparse Matrix Multiplication in RISC-V Vector Processors. IEEE Transactions on Computers (accepted). arXiv:2501.10189. DOI: 10.48550/arXiv.2501.10189.
+merge_draft_body -->

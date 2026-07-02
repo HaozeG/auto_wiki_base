@@ -291,3 +291,11 @@ pages_written: 1
 pipeline_rejection_rate: 11%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/riscv-v2-replication/wiki/audit/research_d1512461_2026-07-02.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] research | RISC-V AI accelerator quantization INT8 FP16 kernel
+session_id: 4d18e42f
+candidates_evaluated: 9
+pages_written: 1
+pipeline_rejection_rate: 22%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/riscv-v2-replication/wiki/audit/research_4d18e42f_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first

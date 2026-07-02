@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 98 | Sources: 242
+Last updated: 2026-07-02 | Pages: 99 | Sources: 246
 
 ## Entity Pages
 
@@ -41,6 +41,7 @@ Last updated: 2026-07-02 | Pages: 98 | Sources: 242
 | [springbok.md](entity/springbok.md) | Springbok |  | 2 | 0 |
 | [stream-computing-risc-v-matrix-extension.md](entity/stream-computing-risc-v-matrix-extension.md) | Stream Computing RISC-V Matrix Extension |  | 2 | 0 |
 | [tenstorrent.md](entity/tenstorrent.md) | Tenstorrent |  | 2 | 0 |
+| [tvm-riscv-vector-matrix-extension-support.md](entity/tvm-riscv-vector-matrix-extension-support.md) | TVM RISC-V Vector/Matrix Extension Support |  | 2 | 0 |
 | [ucie.md](entity/ucie.md) | UCIe |  | 4 | 0 |
 | [vortex-gpgpu.md](entity/vortex-gpgpu.md) | Vortex |  | 2 | 0 |
 | [voyager-development-platform.md](entity/voyager-development-platform.md) | Voyager Development Platform |  | 2 | 0 |
@@ -102,7 +103,7 @@ Flat list of all concepts mentioned across pages (with or without dedicated page
 | [tenstorrent-grayskull-e75.md](hardware_target/tenstorrent-grayskull-e75.md) | hardware_target | Tenstorrent Grayskull e75 |  | 4 | 1 |
 | [ventana-veyron-v2.md](hardware_target/ventana-veyron-v2.md) | hardware_target | Ventana Veyron V2 | RISC-V, Ventana, server, data center, UCIe, DSA | 8 | 0 |
 | [xiangshan-nanhu-vdot.md](hardware_target/xiangshan-nanhu-vdot.md) | hardware_target | XiangShan Nanhu-vdot |  | 2 | 0 |
-| [xuantie-c906.md](hardware_target/xuantie-c906.md) | hardware_target | XuanTie C906 |  | 2 | 1 |
+| [xuantie-c906.md](hardware_target/xuantie-c906.md) | hardware_target | XuanTie C906 |  | 2 | 2 |
 | [xuantie-c908.md](hardware_target/xuantie-c908.md) | hardware_target | XuanTie C908 |  | 2 | 0 |
 | [xuantie-c910-ice-board.md](hardware_target/xuantie-c910-ice-board.md) | hardware_target | Xuantie C910 / ICE SoC Board |  | 2 | 0 |
 | [xuantie-c920v1.md](hardware_target/xuantie-c920v1.md) | hardware_target | XuanTie C920v1 |  | 2 | 1 |
@@ -113,8 +114,8 @@ Flat list of all concepts mentioned across pages (with or without dedicated page
 | [llvm-riscv-fptrunc-narrowing-optimization.md](optimization_recipe/llvm-riscv-fptrunc-narrowing-optimization.md) | optimization_recipe | LLVM RISC-V FPTrunc Narrowing Optimization |  | 2 | 15 |
 | [mlir-xdsl-rvv-lowering-pipeline.md](optimization_recipe/mlir-xdsl-rvv-lowering-pipeline.md) | optimization_recipe | MLIR-xDSL RVV Lowering Pipeline |  | 2 | 3 |
 | [pulp-nn-optimization-recipe.md](optimization_recipe/pulp-nn-optimization-recipe.md) | optimization_recipe | PULP-NN: Accelerating Quantized Neural Networks on Parallel Ultra-Low-Power RISC | RISC-V, quantized neural network, low-power, parallel computing | 2 | 7 |
-| [tvm-metaschedule-rvv-integration.md](optimization_recipe/tvm-metaschedule-rvv-integration.md) | optimization_recipe | TVM MetaSchedule RVV Integration |  | 2 | 0 |
+| [tvm-metaschedule-rvv-integration.md](optimization_recipe/tvm-metaschedule-rvv-integration.md) | optimization_recipe | TVM MetaSchedule RVV Integration |  | 2 | 1 |
 | [vectrans.md](optimization_recipe/vectrans.md) | optimization_recipe | VecTrans: LLM-Assisted Compiler Auto-Vectorization |  | 2 | 6 |
-| [vindexmac-structured-sparse-matrix-optimization.md](optimization_recipe/vindexmac-structured-sparse-matrix-optimization.md) | optimization_recipe | Structured-Sparse Matrix Multiplication Optimization with vindexmac on RISC-V Ve | RISC-V, structured sparsity, matrix multiplication, vindexmac | 2 | 0 |
+| [vindexmac-structured-sparse-matrix-optimization.md](optimization_recipe/vindexmac-structured-sparse-matrix-optimization.md) | optimization_recipe | Structured-Sparse Matrix Multiplication Optimization with vindexmac on RISC-V Ve | RISC-V, structured sparsity, matrix multiplication, vindexmac | 4 | 0 |
 | [risc-v-vector-code-examples.md](workload_kernel/risc-v-vector-code-examples.md) | workload_kernel | RISC-V Vector Code Examples | RISC-V, RVV, vector, assembly | 2 | 0 |
 | [rvv-matrix-multiplication-example-double.md](workload_kernel/rvv-matrix-multiplication-example-double.md) | workload_kernel | RVV Matrix Multiplication Example (Double Precision) | RVV, matrix multiplication, example | 2 | 0 |

@@ -3,6 +3,9 @@ canonical_name: vindexmac instruction
 aliases:
 - vector index-multiply-accumulate
 - vindexmac
+- Optimizing Structured-Sparse Matrix Multiplication in RISC-V Vector Processors
+- structured-sparse RISC-V vector optimization
+- vindexmac optimization recipe
 subtype: null
 tags:
 - RISC-V
@@ -29,6 +32,8 @@ scorecard:
 sources:
 - raw/cache/079aef12a0e140c0.md
 - https://arxiv.org/html/2501.10189v1
+- raw/cache/56687652604bfae2.md
+- https://www.researchgate.net/publication/388180297_Optimizing_Structured-Sparse_Matrix_Multiplication_in_RISC-V_Vector_Processors
 source_url: https://arxiv.org/html/2501.10189v1
 fetched_at: '2026-07-02T09:56:39.387741+00:00'
 type: optimization_recipe
