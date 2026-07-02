@@ -394,3 +394,11 @@ pages_written: 1
 pipeline_rejection_rate: 0%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_d3e4213a_2026-07-02.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] research | RISC-V TVM MLIR IREE compiler backend deep learning codegen
+session_id: b0b9b301
+candidates_evaluated: 10
+pages_written: 2
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_b0b9b301_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first

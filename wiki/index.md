@@ -1,11 +1,12 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 73 | Sources: 3
+Last updated: 2026-07-02 | Pages: 75 | Sources: 3
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [tile_language.md](entity/tile_language.md) | Tile Language |  | 2 | 0 |
 | [rvv-lite.md](entity/rvv-lite.md) | RVV-Lite | risc-v, vector, iot, rvv | 2 | 0 |
 | [rvv_intrinsic_spec.md](entity/rvv_intrinsic_spec.md) | RISC-V Vector (RVV) C Intrinsic Specification | RISC-V, RVV, intrinsics, specification, API | 2 | 0 |
 | [mos2_risc_v_prototype.md](entity/mos2_risc_v_prototype.md) | MoS2 RISC-V Prototype | RISC-V, 2D materials, MoS2, prototype | 2 | 0 |
@@ -71,6 +72,7 @@ Last updated: 2026-07-02 | Pages: 73 | Sources: 3
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [iree_mlir_ukernel_rvv_matmul.md](optimization_recipe/iree_mlir_ukernel_rvv_matmul.md) | optimization_recipe | IREE MLIR uKernel for RISC-V Vector Extension | IREE, MLIR, RISC-V, RVV, ukernel, matmul, LLVM | 2 | 0 |
 | [compiler_benchmark_bananapi_f3_gcc15_clang21.md](benchmark_result/compiler_benchmark_bananapi_f3_gcc15_clang21.md) | benchmark_result | Compiler Benchmark Comparison on BananaPi-F3 (RVV 1.0) |  | 2 | 0 |
 | [coral_npu_vector_execution_engine.md](hardware_target/coral_npu_vector_execution_engine.md) | hardware_target | Coral NPU Vector Execution Engine | Coral, Google, RISC-V, RVV, NPU, Zve32x | 2 | 0 |
 | [semidynamics_tensor_unit.md](hardware_target/semidynamics_tensor_unit.md) | hardware_target | Semidynamics Tensor Unit | RISC-V, tensor unit, AI accelerator, Semidynamics, coherent | 2 | 0 |

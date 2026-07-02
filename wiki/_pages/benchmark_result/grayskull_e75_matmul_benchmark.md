@@ -45,7 +45,7 @@ type: benchmark_result
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 1
+inbound_links: 2
 ---
 
 # Tenstorrent Grayskull e75 MatMul Benchmark (arXiv:2505.06085)
