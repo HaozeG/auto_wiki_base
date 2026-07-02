@@ -339,3 +339,11 @@ pages_written: 6
 pipeline_rejection_rate: 0%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_bf6a774a_2026-07-02.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] research | PULP cluster RISC-V DSP AI accelerator embedded parallel
+session_id: 7a92c384
+candidates_evaluated: 10
+pages_written: 5
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_7a92c384_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first

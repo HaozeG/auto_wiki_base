@@ -749,3 +749,37 @@ The NX27V is a 64-bit RISC-V vector processor core developed by Andes Technology
 
 - https://www.andestech.com/en/products-solutions/andescore-processors/riscv-nx27v/
 merge_draft_body -->
+
+## [2026-07-02] merge_pending | pulp_nn.md
+target_page: pulp_nn.md
+canonical_name: PULP-NN
+colliding_name: PULP-NN
+source: https://github.com/pulp-platform/pulp-nn
+status: pending_review
+<!-- merge_draft_body
+# PULP-NN
+
+PULP-NN is a multicore computing library for quantized neural network (QNN) inference on Parallel-Ultra-Low-Power (PULP) clusters of RISC-V based processors. It adopts the Height-Width-Channel (HWC) data layout for storing neural network weights and activations and implements convolution-based kernels as a matrix multiplication operation, a pattern inspired by ARM's CMSIS-NN open source library. The library fully exploits the Xpulp ISA extension and the cluster's parallelism to achieve high performance and energy efficiency on PULP-based devices. It includes kernels for standard convolution, pointwise convolution, depthwise convolution, and linear layers, supporting both 8-bit quantized and mixed-precision (sub-byte) computation. The library is described in Garofalo et al. (2020) and Bruschi et al. (2020), with the source code maintained on GitHub under the pulp-platform organization.
+
+## Key Claims
+
+- Implements convolution as im2col plus matrix multiplication using HWC data layout.
+- Optimized matrix multiplication kernel (4x2 MatMul) for data reuse at register file level.
+- Supports standard, pointwise, depthwise convolution and linear kernels.
+- Includes both 8-bit quantized and mixed-precision (sub-byte) kernels.
+- Exploits Xpulp ISA SIMD dot-product instructions for high throughput.
+- Depthwise convolution uses CHW data layout for input activations and HWC for outputs.
+- Structured into 8-bit and mixed sub-directories, with mixed precision being a work-in-progress extension.
+
+## Relationships
+
+- [[xuantie_c908]]: A RISC-V processor core that could serve as a target for PULP-NN kernels.
+- [[mlir_xdsl_rvv_gemm_codegen_recipe]]: Describes optimization techniques for GEMM on RISC-V vector hardware, related to the MatMul optimization in PULP-NN.
+- Note: Insufficient context for additional cross-links to entity-type pages; only hardware_target and optimization_recipe pages were available.
+
+## Sources
+
+- https://github.com/pulp-platform/pulp-nn
+- https://arxiv.org/abs/1908.11263 (Garofalo et al. 2020)
+- https://arxiv.org/abs/2007.07759 (Bruschi et al. 2020)
+merge_draft_body -->
