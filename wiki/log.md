@@ -537,3 +537,14 @@ actions_taken:
 - "graph_stats.py now reports orphan_count: 0, orphan_fraction: 0.0, median_inbound_links: 1.0, mean_inbound_links: 3.1485 across 101 pages — MATURE."
 deferred_for_human:
 - "Synthesis gaps persist across sessions (RISC-V, LLVM, RVV tag clusters each have 3+ entity pages without dedicated synthesis coverage per synthesis_gap_min_cluster_size=3); a synthesis page on RISC-V compiler tooling (LLVM/MLIR/RVV intrinsics/xDSL) and one on RISC-V AI accelerator design-space breadth (embedded NPU vs. server vector vs. many-core vs. tensor-unit approaches) would be natural follow-ups but were out of scope for this page-count-focused session."
+
+## [2026-07-02] lint | retrospective
+issues_found: 4
+actions_taken:
+- "Ran tools/eval_summary.py --verbose against all 101 cold_start:true pages (100% of wiki). 101/101 pass Layer 1 (grounding/dangling-ref/word-count) and Layer 2 (density/compression). Layer 3 flagged 49 pages as topic-saturated; each was manually reviewed against file contents rather than auto-classified, since this wiki's optimization_first profile intentionally cross-links hardware_target/optimization_recipe/benchmark_result/workload_kernel subtypes about the same chip (expected shared vocabulary, not duplication)."
+- "Classified: 98 CLEARED, 2 RESTRUCTURE candidates (k230.md, mlir_xdsl_rvv_gemm_codegen_recipe.md — both bridge_score=0.7 with Relationships sections that have grown into cross-page comparisons), 1 MERGE candidate (gcc15_clang21_autovectorization_rvv_bananapi_f3.md into compiler_benchmark_bananapi_f3_gcc15_clang21.md — same source paper, same benchmark, missed by canonical_name string-normalization), 0 DELETE candidates."
+- "Wrote wiki/retrospective_lint_report.md with full findings. No MERGE/DELETE/cold_start flips executed yet — waiting for explicit 'lint apply' command per protocol."
+deferred_for_human:
+- "MERGE: gcc15_clang21_autovectorization_rvv_bananapi_f3.md -> compiler_benchmark_bananapi_f3_gcc15_clang21.md (see report)."
+- "RESTRUCTURE: k230.md and mlir_xdsl_rvv_gemm_codegen_recipe.md — proposed synthesis-page splits (see report); not executed, scoped as future editorial work."
+- "systolic_tensor_units.md (scorecard avg 0.43, weakest page in wiki) — judgment call on keep-as-is vs fold into gemmini.md; not below hard-rejection threshold so not classified DELETE."
