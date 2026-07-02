@@ -2837,7 +2837,7 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
             continue
 
         approved_drafts = []
-        for draft in eval_result.get("page_drafts", []):
+        for draft in (eval_result.get("page_drafts") or []):
             _merge_embedded_frontmatter(draft)
             _apply_scorecard_to_draft(draft, eval_sc)
             # Inject source URL into frontmatter.sources before pipeline checks
@@ -2866,7 +2866,7 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
                 pipeline_rejections += 1
 
         approved_updates = [
-            update for update in eval_result.get("pages_to_update", [])
+            update for update in (eval_result.get("pages_to_update") or [])
             if isinstance(update, dict) and update.get("filename") and update.get("update_description")
         ]
 

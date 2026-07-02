@@ -1032,6 +1032,86 @@ def test_approved_resume_writes_once_and_written_resume_skips(tmp_path):
     assert ResearchSessionState.load("sess2", tmp_path / "state").candidates[0]["state"] == "written"
 
 
+def test_eval_result_with_null_pages_to_update_does_not_crash(tmp_path):
+    """Regression test for a live crash hit during a real v2-replication run
+    (session c7fdcf11, candidate github.com/XUANTIE-RV/riscv-matrix-extension-spec):
+    the eval subagent returned valid JSON with "pages_to_update": null instead
+    of []. validate_output._validate_eval_result() only ever iterates
+    page_drafts, never pages_to_update, so a null pages_to_update sails through
+    schema validation untouched — and orchestrator.py's
+    `eval_result.get("pages_to_update", [])` doesn't protect against an
+    explicit null (the default only applies when the key is *missing*), so
+    `for update in None` raised TypeError and killed the whole research
+    session, not just that one candidate.
+    """
+    pages_dir = tmp_path / "wiki" / "_pages"
+    pages_dir.mkdir(parents=True)
+    index = tmp_path / "wiki" / "index.md"
+    index.write_text(
+        "# Wiki Index\n\nLast updated: 2020-01-01 | Pages: 0 | Sources: 0\n\n"
+        "## Entity Pages\n\n| Page | Summary | Tags | Sources | Inbound |\n"
+        "|------|---------|------|---------|---------|\n\n"
+        "## Synthesis Pages\n\n| Page | Connected Entities | Status | Inbound |\n"
+        "|------|--------------------|--------|---------|\n",
+        encoding="utf-8",
+    )
+    log_path = tmp_path / "wiki" / "log.md"
+    log_path.write_text("", encoding="utf-8")
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text("```yaml\n[system_state]\ngraph_maturity: true\n```\n", encoding="utf-8")
+    state = ResearchSessionState.create(
+        "sess-null-updates", "RVME RISC-V matrix engine extension design",
+        {"max_candidates": 1, "max_new_pages": 3, "depth": "shallow"},
+        tmp_path / "state",
+    )
+    state.set_candidates([
+        {"url": "https://github.com/XUANTIE-RV/riscv-matrix-extension-spec/", "title": "RISC-V Matrix Extension Spec"},
+    ])
+    scorecard = {
+        "novelty_delta": 0.8, "claim_density": 0.8, "self_containedness": 0.9,
+        "bridge_score": 0.5, "hub_potential": 0.5, "gap_fill_score": 0.8,
+        "contradiction_potential": 0.0, "weighted_total": 0.75,
+    }
+    malformed_but_schema_valid_eval = json.dumps({
+        "decision": "approve",
+        "rejection_reason": None,
+        "scorecard": scorecard,
+        "page_drafts": [{
+            "page_type": "entity",
+            "filename": "riscv_matrix_extension_spec",
+            "frontmatter": {"type": "entity", "sources": ["https://github.com/XUANTIE-RV/riscv-matrix-extension-spec/"]},
+            "content": "# RISC-V Matrix Extension Spec\n\n" + ("word " * 120)
+            + "\n\n## Key Claims\n\n- Claim one.\n- Claim two.\n- Claim three.\n",
+        }],
+        "pages_to_update": None,  # <- the actual malformed field from the live crash
+        "contradictions_found": [],
+    })
+
+    with patch.object(orchestrator, "_load_research_config", return_value={
+             "qmd_command": ["uv", "run", "--no-sync", "qmd"],
+             "research_state_dir": str(tmp_path / "state"),
+         }), \
+         patch.object(orchestrator, "QmdRunner", return_value=EmptyQmdRunner()), \
+         patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_INDEX_MD", index), \
+         patch.object(orchestrator, "_LOG_MD", log_path), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md), \
+         patch.object(orchestrator, "AuditLog", return_value=FullDummyAudit()), \
+         patch.object(orchestrator, "_check_synthesis_gaps", return_value=[]), \
+         patch.object(orchestrator, "_wiki_is_mature", return_value=True), \
+         patch.object(orchestrator, "_get_concept_gaps", return_value=[]), \
+         patch.object(orchestrator, "_fetch_smart", return_value="RISC-V Matrix Extension spec content."), \
+         patch.object(orchestrator, "_run_eval_pipeline", return_value=(True, {
+             "layer1_pass": True, "layer2_pass": True, "layer3_triggered": False,
+             "final_decision": "approved",
+         })), \
+         patch.object(orchestrator, "_call_subagent", return_value=malformed_but_schema_valid_eval):
+        result = orchestrator._run_research_state(state)  # must not raise
+
+    assert result["status"] == "complete"
+    assert (pages_dir / "entity" / "riscv_matrix_extension_spec.md").exists()
+
+
 def test_mocked_research_run_writes_benchmark_and_updates_hardware_page(tmp_path):
     pages_dir = tmp_path / "wiki" / "_pages"
     hardware_dir = pages_dir / "hardware_target"
