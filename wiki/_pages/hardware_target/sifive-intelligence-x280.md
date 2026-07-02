@@ -5,6 +5,9 @@ aliases:
 - X280
 - SiFive Intelligence X280 CPU
 - SiFive Intelligence X280 processor
+- SiFive Intelligence X280 Gen 2
+- SiFive X280 Gen 2
+- X280 Gen 2
 subtype: null
 tags: []
 hardware_targets:
@@ -28,6 +31,10 @@ sources:
 - https://ueno-staging.scs-test.sifive.com/cores/intelligence-x280
 - raw/cache/5074cb278ce52a88.md
 - https://www.cnx-software.com/2021/04/27/sifive-intelligence-x280-64-bit-risc-v-processor-integrates-ai-extensions/
+- raw/cache/c53bc4be49df185e.md
+- https://semiiphub.com/ip/multi-core-capable-risc-v-processor-ip-with-vector-extensions-ip-23509
+- raw/cache/6f90249d1ea76f58.md
+- https://riscv.org/blog/sifive-enhances-popular-x280-processor-ip-to-meet-accelerated-demand-for-vector-processing-sifive/
 source_url: https://ueno-staging.scs-test.sifive.com/cores/intelligence-x280
 fetched_at: '2026-07-02T09:49:04.007724+00:00'
 type: hardware_target
