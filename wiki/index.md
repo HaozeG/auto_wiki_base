@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 86 | Sources: 206
+Last updated: 2026-07-02 | Pages: 87 | Sources: 214
 
 ## Entity Pages
 
@@ -31,6 +31,7 @@ Last updated: 2026-07-02 | Pages: 86 | Sources: 206
 | [riscv-vector-tests.md](entity/riscv-vector-tests.md) | riscv-vector-tests | RVV, testing, verification, Spike, RISC-V | 2 | 0 |
 | [rknn-toolkit2.md](entity/rknn-toolkit2.md) | RKNN-Toolkit2 | AI inference, model conversion, Rockchip, NPU, toolkit | 2 | 0 |
 | [semidynamics.md](entity/semidynamics.md) | Semidynamics |  | 2 | 0 |
+| [shl-heterogeneous-library.md](entity/shl-heterogeneous-library.md) | SHL |  | 8 | 0 |
 | [sifive-intelligence-python.md](entity/sifive-intelligence-python.md) | SiFive Intelligence Python |  | 2 | 0 |
 | [spacemit.md](entity/spacemit.md) | SpacemiT |  | 2 | 0 |
 | [springbok.md](entity/springbok.md) | Springbok |  | 2 | 0 |
@@ -58,7 +59,7 @@ Flat list of all concepts mentioned across pages (with or without dedicated page
 | [gap9-vs-stm32f7-odtl-benchmark.md](benchmark_result/gap9-vs-stm32f7-odtl-benchmark.md) | benchmark_result | GAP9 vs STM32F7 On-Device Training Benchmark |  | 2 | 2 |
 | [intel-core-ultra-7-256v-resnet50-openvino-benchmark.md](benchmark_result/intel-core-ultra-7-256v-resnet50-openvino-benchmark.md) | benchmark_result | Intel Core Ultra 7 256V ResNet-50 OpenVINO Inference Benchmark |  | 2 | 0 |
 | [jacobi-stencil-grayskull-e150-vs-xeon-platinum.md](benchmark_result/jacobi-stencil-grayskull-e150-vs-xeon-platinum.md) | benchmark_result | Jacobi Stencil on Tenstorrent Grayskull e150 vs Xeon Platinum |  | 2 | 0 |
-| [kendryte-k230-neural-network-benchmarks.md](benchmark_result/kendryte-k230-neural-network-benchmarks.md) | benchmark_result | Kendryte K230 Neural Network Benchmarks |  | 2 | 11 |
+| [kendryte-k230-neural-network-benchmarks.md](benchmark_result/kendryte-k230-neural-network-benchmarks.md) | benchmark_result | Kendryte K230 Neural Network Benchmarks |  | 2 | 12 |
 | [nncase-resnet50v2-k230-benchmark.md](benchmark_result/nncase-resnet50v2-k230-benchmark.md) | benchmark_result | nncase ResNet50V2 K230 Benchmark |  | 2 | 0 |
 | [opengemm-benchmark.md](benchmark_result/opengemm-benchmark.md) | benchmark_result | OpenGeMM Benchmark Results |  | 2 | 0 |
 | [rk3588-npu-yolov5-benchmark.md](benchmark_result/rk3588-npu-yolov5-benchmark.md) | benchmark_result | RK3588 NPU YOLOv5 Benchmark |  | 2 | 0 |
@@ -87,7 +88,7 @@ Flat list of all concepts mentioned across pages (with or without dedicated page
 | [sifive-intelligence-x280.md](hardware_target/sifive-intelligence-x280.md) | hardware_target | SiFive Intelligence X280 |  | 8 | 0 |
 | [sophon-sg2042.md](hardware_target/sophon-sg2042.md) | hardware_target | Sophon SG2042 | RISC-V, SOPHON, HPC, 64-core | 12 | 1 |
 | [spacemit-k1.md](hardware_target/spacemit-k1.md) | hardware_target | SpacemiT K1 |  | 8 | 1 |
-| [spacemit-x60-processor.md](hardware_target/spacemit-x60-processor.md) | hardware_target | SpacemiT X60 |  | 2 | 4 |
+| [spacemit-x60-processor.md](hardware_target/spacemit-x60-processor.md) | hardware_target | SpacemiT X60 |  | 2 | 5 |
 | [tenstorrent-grayskull-e75.md](hardware_target/tenstorrent-grayskull-e75.md) | hardware_target | Tenstorrent Grayskull e75 |  | 4 | 1 |
 | [ventana-veyron-v2.md](hardware_target/ventana-veyron-v2.md) | hardware_target | Ventana Veyron V2 | RISC-V, Ventana, server, data center, UCIe, DSA | 8 | 0 |
 | [xiangshan-nanhu-vdot.md](hardware_target/xiangshan-nanhu-vdot.md) | hardware_target | XiangShan Nanhu-vdot |  | 2 | 0 |

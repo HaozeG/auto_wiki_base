@@ -1414,3 +1414,107 @@ target_section: Relationships
 source: https://www.researchgate.net/publication/345261170_CUTIE_Beyond_PetaOpsW_Ternary_DNN_Inference_Acceleration_with_Better-than-Binary_Energy_Efficiency
 status: pending_review
 proposed_update: Add link: [[cpa-factored-gemmini-systolic-array]] for comparison of accelerator design approaches (systolic array vs. fully unrolled datapath).
+
+## [2026-07-02] pending | xuantie-c950.md
+target_page: xuantie-c950.md
+target_section: Optimization-Relevant Details
+source: https://github.com/HelenMaryhm/shl
+status: pending_review
+proposed_update: Add under 'Compiler/toolchain support': SHL (Structure of Heterogeneous Library) is a high-performance heterogeneous computing library provided by T-HEAD that uses the CSI-NN2 API for the XuanTie CPU platform and provides optimized binary libraries (source: GitHub HelenMaryhm/shl).
+
+## [2026-07-02] merge_pending | shl-heterogeneous-library.md
+target_page: shl-heterogeneous-library.md
+canonical_name: SHL
+colliding_name: SHL
+source: https://zhangwm-pt.github.io/shl/md_README.html
+status: pending_review
+<!-- merge_draft_body
+# SHL
+
+SHL (Structure of Heterogeneous Library, Chinese name: ShiHulan) is a high-performance heterogeneous computing library provided by T-HEAD for XuanTie CPU platforms. The library implements the CSI-NN2 neural network API and provides optimized binary libraries for XuanTie processors, supporting symmetric and asymmetric quantization, 8-bit, 16-bit, and float16 data types, and both NCHW and NHWC data formats. SHL is designed to be used with HHB (a deployment tool) for automatic API invocation across different architectures including CPU and NPU. The library includes reference C implementations and assembly-optimized implementations specifically for XuanTie CPUs. SHL is open source and references projects like Caffe, TensorFlow, ncnn, MNN, Tengine, CMSIS_5, ONNX, and XNNPACK. The library can be built from source for specific XuanTie cores, such as the C906, using the T-HEAD RISC-V GCC toolchain, and examples for running models like MobileNet-v1 are provided.
+
+## Key Claims
+
+- SHL provides a high-performance heterogeneous computing library for XuanTie CPU platforms using the CSI-NN2 API.
+- Supports both symmetric and asymmetric quantization for neural network inference.
+- Supports 8-bit, 16-bit, and float16 data types.
+- Compatible with NCHW and NHWC data formats.
+- Provides reference C implementation and assembly optimization for XuanTie CPUs.
+- Integrates with HHB for automatic API invocation across CPU and NPU architectures.
+- Can be built from source for specific XuanTie cores (e.g., C906) using the T-HEAD RISC-V GCC toolchain.
+- Includes example deployment of MobileNet-v1 on XuanTie C906 hardware.
+
+## Relationships
+
+- [[spacemit-x60-processor]]: Another RISC-V hardware target that may benefit from SHL-like library support for heterogeneous computing.
+- [[tvm-metaschedule-rvv-integration]]: TVM is used by HHB for model deployment; SHL integration with TVM-based compilers can optimize inference on RISC-V platforms.
+
+## Sources
+
+- [SHL README on GitHub Pages](https://zhangwm-pt.github.io/shl/md_README.html)
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | shl-heterogeneous-library.md
+target_page: shl-heterogeneous-library.md
+canonical_name: SHL
+colliding_name: SHL
+source: https://github.com/openvinotoolkit/shl
+status: pending_review
+<!-- merge_draft_body
+# SHL
+
+SHL (Structure of Heterogeneous Library) is a high-performance heterogeneous computing library provided by T-HEAD, Alibaba's chip design division, for accelerating neural network inference on RISC-V based platforms. The library implements the CSI-NN2 interface, which is T-HEAD's neural network library API for XuanTie CPU platforms, and provides a set of optimized binary libraries that take advantage of the specific microarchitectural features of XuanTie processors. While SHL delivers reference implementations for the XuanTie CPU family, the optimization for each NPU target platform is delegated to the respective vendor, enabling a modular approach to heterogeneous computing. The library integrates with the HHB neural network compilation toolchain, which quantizes and compiles models for RISC-V deployment, and is hosted under the OpenVINO toolkit organization on GitHub, indicating interoperability with Intel's OpenVINO inference framework.
+
+## Key Claims
+
+- SHL provides the reference implementation for XuanTie CPU platform using the CSI-NN2 API.
+- SHL offers a series of optimized binary libraries for neural network inference on XuanTie CPUs.
+- NPU-specific optimization is completed by the vendor of the specific platform, not by SHL itself.
+- SHL is developed by T-HEAD and hosted under the OpenVINO toolkit organization on GitHub.
+
+## Relationships
+
+- [[xuantie-c950]]: SHL is a software library that provides optimized neural network inference for XuanTie CPU platforms, including the C950.
+- Insufficient context for additional cross-links; no existing wiki pages for CSI-NN2 or HHB toolchain are currently present.
+
+## Sources
+
+- [GitHub - openvinotoolkit/shl: An optimized neural network ...](https://github.com/openvinotoolkit/shl)
+merge_draft_body -->
+
+## [2026-07-02] pending | xuantie-c950.md
+target_page: xuantie-c950.md
+target_section: Optimization-Relevant Details
+source: https://github.com/openvinotoolkit/shl
+status: pending_review
+proposed_update: Add SHL (Structure of Heterogeneous Library) as a supported software library for neural network optimization, with CSI-NN2 API support. Source: openvinotoolkit/shl repository.
+
+## [2026-07-02] merge_pending | shl-heterogeneous-library.md
+target_page: shl-heterogeneous-library.md
+canonical_name: SHL
+colliding_name: SHL
+source: https://github.com/BHbean/shl
+status: pending_review
+<!-- merge_draft_body
+# SHL
+
+SHL (Structure of Heterogeneous Library), also known by its Chinese name ShiHulan, is a high-performance heterogeneous computing library provided by T-HEAD, the chip design division of Alibaba Group. It is specifically designed to provide an optimized reference implementation for neural network operators on XuanTie CPU platforms. The library exposes the CSI-NN2 API, which is T-HEAD's neural network library API for XuanTie CPUs, and ships as a set of optimized binary libraries targeting various neural network operations. The library is designed to work in conjunction with HHB, a tool that quantizes and compiles neural network models; during inference, SHL is called automatically by the HHB runtime. While SHL provides the reference implementation for XuanTie CPUs, optimizations for each NPU target platform are handled by the vendor of that specific platform, following a heterogeneous computing architecture that separates CPU and NPU optimization responsibilities.
+
+## Key Claims
+
+- SHL is a heterogeneous computing library provided by T-HEAD for XuanTie CPU platforms.
+- SHL uses the CSI-NN2 API as its interface.
+- SHL provides a series of optimized binary libraries for neural network operators.
+- SHL can be called automatically by HHB after model quantization and compilation.
+- NPU-specific optimizations are not part of SHL; vendors provide their own optimizations.
+
+## Relationships
+
+- [[xuantie-c950]]: SHL targets XuanTie CPU platforms, which include high-performance cores like the XuanTie C950.
+- [[gemmini]]: SHL provides optimized neural network operators that could complement hardware accelerators such as the Gemmini systolic array generator, though direct integration is not documented.
+
+## Sources
+
+- [GitHub - BHbean/shl](https://github.com/BHbean/shl)
+- [Alibaba - Hello from SHL | SHL](https://www.t-head.cn/)
+merge_draft_body -->
