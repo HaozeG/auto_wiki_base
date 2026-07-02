@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 54 | Sources: 132
+Last updated: 2026-07-02 | Pages: 57 | Sources: 138
 
 ## Entity Pages
 
@@ -12,6 +12,7 @@ Last updated: 2026-07-02 | Pages: 54 | Sources: 132
 | [llvm-auto-vectorization.md](entity/llvm-auto-vectorization.md) | LLVM Auto-Vectorization |  | 2 | 0 |
 | [llvm-riscv-target.md](entity/llvm-riscv-target.md) | LLVM RISC-V Target |  | 2 | 0 |
 | [llvm-rv.md](entity/llvm-rv.md) | llvm-rv |  | 4 | 0 |
+| [mlperf-inference-tiny-benchmark.md](entity/mlperf-inference-tiny-benchmark.md) | MLPerf Inference: Tiny |  | 2 | 0 |
 | [muse-book.md](entity/muse-book.md) | Muse Book |  | 2 | 0 |
 | [nncase.md](entity/nncase.md) | nncase |  | 2 | 7 |
 | [pulp-platform.md](entity/pulp-platform.md) | PULP Platform |  | 8 | 0 |
@@ -40,9 +41,10 @@ Flat list of all concepts mentioned across pages (with or without dedicated page
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [gap9-vs-stm32f7-odtl-benchmark.md](benchmark_result/gap9-vs-stm32f7-odtl-benchmark.md) | benchmark_result | GAP9 vs STM32F7 On-Device Training Benchmark |  | 2 | 1 |
 | [intel-core-ultra-7-256v-resnet50-openvino-benchmark.md](benchmark_result/intel-core-ultra-7-256v-resnet50-openvino-benchmark.md) | benchmark_result | Intel Core Ultra 7 256V ResNet-50 OpenVINO Inference Benchmark |  | 2 | 0 |
 | [jacobi-stencil-grayskull-e150-vs-xeon-platinum.md](benchmark_result/jacobi-stencil-grayskull-e150-vs-xeon-platinum.md) | benchmark_result | Jacobi Stencil on Tenstorrent Grayskull e150 vs Xeon Platinum |  | 2 | 0 |
-| [kendryte-k230-neural-network-benchmarks.md](benchmark_result/kendryte-k230-neural-network-benchmarks.md) | benchmark_result | Kendryte K230 Neural Network Benchmarks |  | 2 | 6 |
+| [kendryte-k230-neural-network-benchmarks.md](benchmark_result/kendryte-k230-neural-network-benchmarks.md) | benchmark_result | Kendryte K230 Neural Network Benchmarks |  | 2 | 7 |
 | [nncase-resnet50v2-k230-benchmark.md](benchmark_result/nncase-resnet50v2-k230-benchmark.md) | benchmark_result | nncase ResNet50V2 K230 Benchmark |  | 2 | 0 |
 | [sg2042-npb-performance-characterisation.md](benchmark_result/sg2042-npb-performance-characterisation.md) | benchmark_result | SG2042 NPB Performance Characterisation |  | 2 | 0 |
 | [sg2042-npb-single-core-performance.md](benchmark_result/sg2042-npb-single-core-performance.md) | benchmark_result | SG2042 NPB Single-Core Performance |  | 2 | 0 |
@@ -62,12 +64,13 @@ Flat list of all concepts mentioned across pages (with or without dedicated page
 | [spacemit-x60-processor.md](hardware_target/spacemit-x60-processor.md) | hardware_target | SpacemiT X60 |  | 2 | 2 |
 | [tenstorrent-grayskull-e75.md](hardware_target/tenstorrent-grayskull-e75.md) | hardware_target | Tenstorrent Grayskull e75 |  | 4 | 1 |
 | [xiangshan-nanhu-vdot.md](hardware_target/xiangshan-nanhu-vdot.md) | hardware_target | XiangShan Nanhu-vdot |  | 2 | 0 |
+| [xuantie-c906.md](hardware_target/xuantie-c906.md) | hardware_target | XuanTie C906 |  | 2 | 0 |
 | [xuantie-c908.md](hardware_target/xuantie-c908.md) | hardware_target | XuanTie C908 |  | 2 | 0 |
 | [xuantie-c910-ice-board.md](hardware_target/xuantie-c910-ice-board.md) | hardware_target | Xuantie C910 / ICE SoC Board |  | 2 | 0 |
 | [xuantie-c920v1.md](hardware_target/xuantie-c920v1.md) | hardware_target | XuanTie C920v1 |  | 2 | 1 |
 | [xuantie-c950.md](hardware_target/xuantie-c950.md) | hardware_target | XuanTie C950 | RISC-V, Alibaba, XuanTie, server, AI | 2 | 12 |
 | [cpa-factored-gemmini-systolic-array.md](optimization_recipe/cpa-factored-gemmini-systolic-array.md) | optimization_recipe | CPA-Factored Gemmini Systolic Array |  | 2 | 21 |
-| [earth-shifting-based-vector-memory-access.md](optimization_recipe/earth-shifting-based-vector-memory-access.md) | optimization_recipe | EARTH Shifting-Based Vector Memory Access Optimization |  | 2 | 3 |
+| [earth-shifting-based-vector-memory-access.md](optimization_recipe/earth-shifting-based-vector-memory-access.md) | optimization_recipe | EARTH Shifting-Based Vector Memory Access Optimization |  | 2 | 5 |
 | [llvm-riscv-fptrunc-narrowing-optimization.md](optimization_recipe/llvm-riscv-fptrunc-narrowing-optimization.md) | optimization_recipe | LLVM RISC-V FPTrunc Narrowing Optimization |  | 2 | 5 |
 | [mlir-xdsl-rvv-lowering-pipeline.md](optimization_recipe/mlir-xdsl-rvv-lowering-pipeline.md) | optimization_recipe | MLIR-xDSL RVV Lowering Pipeline |  | 2 | 3 |
 | [pulp-nn-optimization-recipe.md](optimization_recipe/pulp-nn-optimization-recipe.md) | optimization_recipe | PULP-NN: Accelerating Quantized Neural Networks on Parallel Ultra-Low-Power RISC | RISC-V, quantized neural network, low-power, parallel computing | 2 | 0 |

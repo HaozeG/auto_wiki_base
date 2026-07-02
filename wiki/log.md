@@ -131,3 +131,11 @@ pages_written: 2
 pipeline_rejection_rate: 10%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/riscv-v2-replication/wiki/audit/research_0bd0fd68_2026-07-02.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] research | RISC-V AI accelerator benchmark TOPS per watt comparison
+session_id: fe778420
+candidates_evaluated: 10
+pages_written: 3
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/riscv-v2-replication/wiki/audit/research_fe778420_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first
