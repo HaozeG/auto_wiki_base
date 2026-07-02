@@ -1,11 +1,14 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 36 | Sources: 3
+Last updated: 2026-07-02 | Pages: 48 | Sources: 3
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [llvm_rvv_ir_representation.md](entity/llvm_rvv_ir_representation.md) | LLVM RISC-V Vector Extension IR Representation | LLVM, RISC-V, RVV, compiler IR, scalable vectors | 2 | 0 |
+| [riscv_vector_tests_generator.md](entity/riscv_vector_tests_generator.md) | riscv-vector-tests | RISC-V, RVV, testing, test generation | 2 | 0 |
+| [llama_cpp.md](entity/llama_cpp.md) | llama.cpp |  | 2 | 0 |
 | [llvm_ir.md](entity/llvm_ir.md) | LLVM IR | compiler, intermediate representation, SSA | 2 | 0 |
 | [opengemm.md](entity/opengemm.md) | OpenGeMM |  | 2 | 0 |
 | [boardcon_picot536.md](entity/boardcon_picot536.md) | Boardcon PICOT536 |  | 2 | 0 |
@@ -58,6 +61,15 @@ Last updated: 2026-07-02 | Pages: 36 | Sources: 3
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [spacemit_x60_llvm_spec_cpu2017_benchmark.md](benchmark_result/spacemit_x60_llvm_spec_cpu2017_benchmark.md) | benchmark_result | SPEC CPU 2017 LLVM Optimization Results on SpacemiT X60 | LLVM, RISC-V, SpacemiT X60, SPEC CPU 2017, scheduling, vectorization, IPRA | 2 | 0 |
+| [llvm_optimization_for_risc_v_scheduling_vectorization_ipra.md](optimization_recipe/llvm_optimization_for_risc_v_scheduling_vectorization_ipra.md) | optimization_recipe | LLVM Optimization for RISC-V: Scheduling, Vectorization, and IPRA on SpacemiT X6 | LLVM, RISC-V, scheduling, vectorization, IPRA, SpacemiT X60 | 2 | 0 |
+| [spacemit_x60.md](hardware_target/spacemit_x60.md) | hardware_target | SpacemiT X60 | RISC-V, SpacemiT, LLVM | 2 | 0 |
+| [gcc15_clang21_autovectorization_rvv_bananapi_f3.md](benchmark_result/gcc15_clang21_autovectorization_rvv_bananapi_f3.md) | benchmark_result | GCC 15 vs Clang 21 Autovectorization on BananaPi-F3 (RVV) | RISC-V, RVV, compiler, autovectorization, GCC, LLVM, BananaPi | 2 | 0 |
+| [saturn_vector_unit.md](hardware_target/saturn_vector_unit.md) | hardware_target | Saturn Vector Unit |  | 2 | 0 |
+| [sifive_intelligence_x390.md](hardware_target/sifive_intelligence_x390.md) | hardware_target | SiFive Intelligence X390 | RISC-V, SiFive, AI, ML, vector | 2 | 0 |
+| [sifive_performance_p870.md](hardware_target/sifive_performance_p870.md) | hardware_target | SiFive Performance P870 | RISC-V, SiFive, out-of-order | 2 | 0 |
+| [rvv_llama.cpp_optimization_recipe.md](optimization_recipe/rvv_llama.cpp_optimization_recipe.md) | optimization_recipe | RVV Optimization for llama.cpp on BananaPi BPI-F3 |  | 2 | 0 |
+| [bpif3_llm_rvv_inference_benchmark.md](benchmark_result/bpif3_llm_rvv_inference_benchmark.md) | benchmark_result | LLM Inference RVV Optimization on BananaPi BPI-F3 |  | 2 | 0 |
 | [banana_pi_gemm_optimization_benchmark.md](benchmark_result/banana_pi_gemm_optimization_benchmark.md) | benchmark_result | Banana Pi GEMM Optimization Benchmark |  | 2 | 0 |
 | [sgemm_optimization_allwinner_nezha_d1.md](optimization_recipe/sgemm_optimization_allwinner_nezha_d1.md) | optimization_recipe | SGEMM Optimization on Allwinner Nezha D1 | sgemm, riscv, optimization, allwinner, nezha-d1 | 2 | 0 |
 | [xuantie_c907.md](hardware_target/xuantie_c907.md) | hardware_target | XuanTie C907 | risc-v, matrix-extension, mme, xuantie, t-head, ai | 2 | 0 |

@@ -35,11 +35,15 @@ sources:
 - https://reviews.llvm.org/D149710
 - raw/cache/705b81f79d7fcde0.md
 - https://www.sifive.com/press/tenstorrent-selects-sifive-intelligence-x280-for-next-generation1
+- raw/cache/bdb96edcc418d8f4.md
+- https://www.datacenterdynamics.com/en/news/google-deploys-sifives-intelligence-x280-processor-for-ai-workloads/
+- raw/cache/eed8cc37f6bf1af7.md
+- https://diversedaily.com/sifive-intelligence-x280-risc-v-core-optimized-for-ai-workloads/
 source_url: https://www.sifive.com/blog/introducing-the-latest-sifive-intelligence-x280-processor
 fetched_at: '2026-07-01T06:05:01.331347+00:00'
 type: hardware_target
 created: '2026-07-01'
-updated: '2026-07-01'
+updated: '2026-07-02'
 cold_start: true
 inbound_links: 1
 needs_summary_revision: false

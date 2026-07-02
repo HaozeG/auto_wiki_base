@@ -559,3 +559,155 @@ The RISC-V Vector Extension (RVV) is a standard specification that defines vecto
 
 - https://github.com/riscvarchive/riscv-v-spec
 merge_draft_body -->
+
+## [2026-07-02] merge_pending | sifive_intelligence_x280.md
+target_page: sifive_intelligence_x280.md
+canonical_name: SiFive Intelligence X280
+colliding_name: SiFive Intelligence X280
+source: https://www.datacenterdynamics.com/en/news/google-deploys-sifives-intelligence-x280-processor-for-ai-workloads/
+status: pending_review
+<!-- merge_draft_body
+# SiFive Intelligence X280
+
+The SiFive Intelligence X280 is a multi-core capable RISC-V processor designed for AI/ML workloads in data centers. It implements the RISC-V Vector Extension and includes SiFive's custom Intelligence Extensions and the Vector Coprocessor Interface Extension (VCIX) for flexible AI hardware programming. The X280 runs a full RISC-V software stack with hypervisor support, enabling it to serve as an AI compute host. Google has deployed the X280 alongside its Tensor Processing Units (TPUs) to accelerate data feeding to matrix multiplication units, and the processor is also used by organizations including NASA, Tenstorrent, Renesas, Microchip, and Kinara.
+
+## Key Claims
+
+- Multi-core RISC-V processor with vector extension.
+- SiFive Intelligence Extensions provide custom AI/ML instructions.
+- VCIX enables flexible programming of vector coprocessors.
+- Deployed as AI compute host for Google TPU.
+- Runs full RISC-V software stack with hypervisor.
+- Used by NASA, Tenstorrent, Renesas, Microchip, Kinara.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V with Vector Extension, SiFive Intelligence Extensions, VCIX.
+- Vector/matrix/accelerator support: VCIX for custom vector coprocessor attachments.
+- Memory/cache/TLB/DMA: Not publicly documented in available sources.
+- Compiler/toolchain support: GCC/LLVM with VCIX support via SiFive software flow.
+
+## Relationships
+
+- [[xuantie_c908]]: a competing RISC-V core from T-Head targeting AI workloads, using a different microarchitecture with a configurable vector path and no VCIX interface.
+- [[k230]]: an AIoT SoC integrating RISC-V C908 cores, representing a highly integrated edge approach compared to the X280's data-center host role.
+- [[mlir_xdsl_rvv_gemm_codegen_recipe]]: a compiler-based optimization recipe for RISC-V vector hardware that could be adapted to the X280's VCIX and vector capabilities.
+
+## Sources
+
+- https://www.datacenterdynamics.com/en/news/google-deploys-sifives-intelligence-x280-processor-for-ai-workloads/
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | sifive_intelligence_x280.md
+target_page: sifive_intelligence_x280.md
+canonical_name: SiFive Intelligence X280
+colliding_name: SiFive Intelligence X280
+source: https://diversedaily.com/sifive-intelligence-x280-risc-v-core-optimized-for-ai-workloads/
+status: pending_review
+<!-- merge_draft_body
+# SiFive Intelligence X280
+
+The SiFive Intelligence X280 is a multi-core capable RISC-V processor designed for AI/ML workloads at the edge and in the data center. It features a 64-bit RISC-V ISA with an 8-stage dual-issue in-order pipeline, a memory management unit (MMU), and caching support. The processor includes RISC-V Vector Extensions and SiFive Intelligence Extensions, which accelerate machine learning computations. The X280 supports scalable multi-core and multi-cluster designs with up to eight cores, making it suitable for diverse AI applications such as healthcare, autonomous vehicles, and smart cities. It is deployed by Google as an AI Compute Host for data-center AI workloads and is integrated into Microchip's PIC64HX1000 series of MPUs for post-quantum security and edge AI processing.
+
+## Key Claims
+
+- Multi-core capable RISC-V processor with vector extensions and SiFive Intelligence Extensions.
+- Optimized for AI/ML compute at the edge and in the data center.
+- 64-bit RISC-V ISA with 8-stage dual-issue in-order pipeline, MMU, and caching.
+- Scalable multi-core and multi-cluster architecture supporting up to 8 cores.
+- Google deploys the X280 as an AI Compute Host for AI workloads in the data center.
+- Microchip integrates the X280 into the PIC64HX1000 series for post-quantum security and edge AI.
+- Supports a wide range of AI applications across industries including healthcare, autonomous vehicles, and smart cities.
+
+## Optimization-Relevant Details
+
+- ISA/profile: 64-bit RISC-V ISA, 8-stage dual-issue in-order pipeline, MMU, caching, Linux-capable applications processor.
+- Vector/matrix/accelerator support: RISC-V Vector Extensions (standard RVV), SiFive Intelligence Extensions (VCIX interface for custom accelerators).
+- Memory/cache/TLB/DMA: Caching present; exact cache sizes and memory hierarchy not publicly detailed.
+- Compiler/toolchain support: Not specified in available sources; expected to be compatible with standard RISC-V toolchains and SiFive's software flow.
+
+## Relationships
+
+- [[xuantie_c908]]: a comparable RISC-V AI-optimized vector processor from T-Head, sharing RVV support but differing in pipeline depth and vendor-specific extensions.
+- [[mlir_xdsl_rvv_gemm_codegen_recipe]]: a compilation approach for generating RVV GEMM micro-kernels, relevant to the X280's vector capabilities.
+- [[k230]]: a RISC-V AIoT SoC integrating a C908 core, illustrating an alternative hardware platform for similar edge AI workloads.
+
+## Sources
+
+- https://diversedaily.com/sifive-intelligence-x280-risc-v-core-optimized-for-ai-workloads/
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | xuantie-c910.md
+target_page: xuantie-c910.md
+canonical_name: XuanTie C910
+colliding_name: XuanTie C910
+source: https://www.riscvschool.com/2023/03/09/t-head-xuantie-c910-risc-v/
+status: pending_review
+<!-- merge_draft_body
+# XuanTie C910
+
+The XuanTie C910 is a 64-bit high-performance RISC-V processor core developed by T-Head Semiconductor Co., Ltd., a subsidiary of Alibaba Group. Designed for control-flow intensive and computationally demanding workloads, it employs an out-of-order 12-stage pipeline architecture to deliver industry-leading performance in control flow, computing, and frequency. The core is based on the RV64GCV instruction set and implements the XuanTie Instruction Extension (XIE) technology for custom arithmetic, bit manipulation, load/store, and TLB/cache operations. The C910 is an early adopter of the RISC-V Vector Extension, enabling variable-length vector processing for data-parallel workloads. T-Head has released the core design as open-source under the name OpenC910 on GitHub, providing a publicly accessible RTL implementation for academic and commercial use. The processor targets applications requiring high single-thread performance and has been integrated into various SoCs and systems.
+
+## Key Claims
+
+- Based on the RV64GCV instruction set with XuanTie Instruction Extension (XIE).
+- Out-of-order 12-stage pipeline for high single-thread performance.
+- Early adopter of RISC-V Vector Extension for vector processing.
+- Open-source release as OpenC910 on GitHub.
+- Designed for control flow, computing, and frequency efficiency.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RV64GCV with XIE.
+- Vector/matrix/accelerator support: RISC-V Vector Extension (VLEN not specified).
+- Memory/cache/TLB/DMA: (not specified in source).
+- Compiler/toolchain support: (not specified).
+
+## Relationships
+
+- [[xuantie_c908]]: sibling core in the XuanTie family, targeting AIoT with vector extension and instruction fusion.
+- Insufficient context for additional cross-links.
+
+## Sources
+
+- https://www.riscvschool.com/2023/03/09/t-head-xuantie-c910-risc-v/
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | xuantie-c910.md
+target_page: xuantie-c910.md
+canonical_name: XuanTie C910
+colliding_name: XuanTie C910
+source: https://chipsandcheese.com/p/alibabat-heads-xuantie-c910
+status: pending_review
+<!-- merge_draft_body
+# XuanTie C910
+
+The XuanTie C910 is a 64-bit RISC-V out-of-order superscalar processor core developed by T-HEAD Semiconductor (Alibaba Group). It is implemented in clusters of up to four cores, each cluster sharing a unified L2 cache. The core is fabricated on TSMC's 12nm FinFET process and targets clock frequencies between 2 and 2.5 GHz, with a core area of approximately 0.8 mm². The C910 features a configurable Harvard L1 cache (32KB or 64KB each for instructions and data) with cache coherency support. A notable architectural characteristic is the absence of a mid-level cache, leaving L1 misses to directly access the shared L2 cache, which is described as both slow and small. The core's DRAM bandwidth is also noted as lackluster. The C910 is T-HEAD's first out-of-order RISC-V core, distinguishing it from earlier in-order designs like the C906 and C908.
+
+## Key Claims
+
+- First out-of-order RISC-V core from T-HEAD.
+- Fabricated on TSMC 12nm FinFET, target 2-2.5 GHz.
+- Core area 0.8 mm².
+- Cluster of up to 4 cores with shared L2.
+- Configurable 32KB/64KB Harvard L1 I-cache and D-cache with coherency.
+- No mid-level cache; shared L2 is slow and small.
+- DRAM bandwidth is lackluster.
+- CIU (core interconnect unit) provides reasonable inter-core latency, better than P550's >300 ns within quad-core cluster.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V 64-bit out-of-order superscalar (specific extensions not detailed in source).
+- Vector/matrix/accelerator support: Not mentioned; likely no dedicated vector unit or matrix accelerator.
+- Memory/cache/TLB/DMA: 32KB/64KB L1 I-cache, 32KB/64KB L1 D-cache, shared L2 cache per cluster (size not specified), no mid-level cache. DRAM bandwidth unspecified but described as lackluster.
+- Compiler/toolchain support: Not specified in source.
+
+## Relationships
+
+- [[xuantie_c908]]: The C908 is a later in-order core from T-HEAD focusing on AIoT with RISC-V Vector Extension 1.0, offering a contrasting design philosophy versus the C910's out-of-order design.
+- [[k230]]: The K230 SoC integrates dual C908 cores, demonstrating T-HEAD's deployment of its core IP in commercial AIoT platforms, while the C910 targets higher-performance applications.
+
+## Sources
+
+- https://chipsandcheese.com/p/alibabat-heads-xuantie-c910
+merge_draft_body -->
