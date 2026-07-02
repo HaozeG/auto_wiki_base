@@ -3,6 +3,7 @@ canonical_name: nncase
 aliases:
 - Kendryte nncase
 - kendryte/nncase
+- nncase compiler
 subtype: null
 tags: []
 scorecard:

@@ -1518,3 +1518,34 @@ SHL (Structure of Heterogeneous Library), also known by its Chinese name ShiHula
 - [GitHub - BHbean/shl](https://github.com/BHbean/shl)
 - [Alibaba - Hello from SHL | SHL](https://www.t-head.cn/)
 merge_draft_body -->
+
+## [2026-07-02] merge_pending | nncase.md
+target_page: nncase.md
+canonical_name: nncase
+colliding_name: nncase
+source: https://github.com/kendryte/nncase
+status: pending_review
+<!-- merge_draft_body
+# nncase
+
+nncase is an open-source deep learning compiler stack developed by Kendryte for AI accelerators, primarily targeting the Kendryte K230 RISC-V-based system-on-chip. It supports model conversion from TFLite, Caffe, and ONNX formats into optimized code for the K230's neural processing unit (NPU). The toolchain is available as a Python package installable via pip and includes a runtime library for inference deployment. nncase performs quantization (u8/int8) and optimization to achieve high inference throughput while preserving accuracy. Benchmark results for standard models such as MobileNetV2, ResNet50V2, YOLOv5s, and YOLOv8 variants show FPS ranging from approximately 5.5 to 600 on the K230 platform with minimal accuracy loss compared to floating-point baselines.
+
+## Key Claims
+
+- nncase is a neural network compiler for AI accelerators, notably the Kendryte K230.
+- It supports model import from TFLite, Caffe, and ONNX formats.
+- The compiler performs u8/u8 quantization and optimization.
+- It achieves 600.24 FPS for MobileNetV2 at [1,224,224,3] shape on K230 with top-1 accuracy 71.1% vs baseline 71.3%.
+- ResNet50V2 achieves 86.17 FPS with top-1 accuracy 75.11% vs baseline 75.44%.
+- For object detection, YOLOv5s achieves 23.645 FPS with mAP50 0.566 vs baseline 0.567.
+- YOLOv8s segmentation achieves 7.845 FPS with bbox mAP50 0.606 vs baseline 0.606.
+- Pose estimation models (YOLOv8n_pose_320) achieve 36.066 FPS with keypoints mAP50-90 0.359 vs baseline 0.358.
+
+## Relationships
+
+- [[gap9-vs-stm32f7-odtl-benchmark]]: This unrelated benchmark page is the only existing page in the provided wiki context. Insufficient context for additional cross-links; no K230 or Kendryte hardware pages are available in the provided wiki context to link to.
+
+## Sources
+
+- [GitHub README: kendryte/nncase](https://github.com/kendryte/nncase)
+merge_draft_body -->
