@@ -1144,3 +1144,35 @@ OpenGeMM is an open-source acceleration platform for general matrix-matrix multi
 - [OpenGeMM: A High-Utilization GeMM Accelerator Generator with Lightweight RISC-V Control and Tight Memory Coupling](https://arxiv.org/abs/2411.09543) (arXiv preprint, November 2024)
 - [ResearchGate entry for the same preprint](https://www.researchgate.net/publication/385823001_OpenGeMM_A_High-Utilization_GeMM_Accelerator_Generator_with_Lightweight_RISC-V_Control_and_Tight_Memory_Coupling)
 merge_draft_body -->
+
+## [2026-07-02] merge_pending | llvm-riscv-target.md
+target_page: llvm-riscv-target.md
+canonical_name: LLVM RISC-V Target
+colliding_name: LLVM RISC-V Vector Extension
+source: https://github.com/llvm/llvm-project/blob/main/llvm/docs/RISCV/RISCVVectorExtension.rst
+status: pending_review
+<!-- merge_draft_body
+# LLVM RISC-V Vector Extension
+
+The LLVM RISC-V Vector Extension (RVV) implementation models the version 1.0 of the ratified RISC-V Vector Extension specification in the LLVM compiler infrastructure. It maps RVV's 32 vector registers (of parameterized size VLEN) to LLVM's scalable vector types (`<vscale x n x ty>`), where the scaling factor `vscale` is defined as VLEN/64 (requiring VLEN ≥ 64). Each combination of SEW (Standard Element Width) and LMUL (Length Multiplier) maps to a specific scalable vector type: for example, SEW=64 and LMUL=1 corresponds to `<vscale x 1 x i64>`, while SEW=8 and LMUL=8 maps to `<vscale x 64 x i8>`. The implementation supports ELEN=32 or ELEN=64 and provides both regular LLVM IR instructions on vector types and RVV-specific intrinsics that mirror the C intrinsics specification, including unmasked and masked variants with passthru, AVL, and policy operands. This design enables LLVM to target any RVV 1.0 hardware with a single compiler, relying on scalable vector code generation to adapt to runtime VLEN.
+
+## Key Claims
+
+- LLVM models RVV 1.0 registers using scalable vector types `<vscale x n x ty>`, where `vscale = VLEN/64` and `n`/`ty` control LMUL and SEW respectively.
+- Only ELEN=32 or ELEN=64 are supported; VLEN=32 is not supported.
+- Two types with the same SEW/LMUL ratio produce the same mask vector type (e.g., SEW=64/LMUL=2 and SEW=32/LMUL=1 both yield `<vscale x 2 x i1>`).
+- Mask vectors use densely packed bits and are mapped to types `<vscale x k x i1>` for k=1,2,4,8,16,32,64.
+- RVV instructions can be represented as regular LLVM IR instructions (e.g., `add <vscale x 4 x i32>`) or as RVV intrinsics (e.g., `@llvm.riscv.vadd.nxv4i32.nxv4i32`).
+- Intrinsics accept passthru operands for inactive/tail elements, AVL, and policy bits; masked variants add mask and vta/vma operands.
+- The only valid types for RVV intrinsics are scalable vector types.
+
+## Relationships
+
+- [[llvm-riscv-fptrunc-narrowing-optimization]]: This optimization recipe targets RISC-V LLVM code generation and relies on the RVV extension modeling described in this page for its floating-point division improvements.
+- [[tvm-metaschedule-rvv-integration]]: The TVM MetaSchedule integration uses LLVM as a backend toolchain; the LLVM RVV implementation provides the vector extension support that enables the reported performance improvements.
+- Insufficient context for additional cross-links to entity pages; only two optimization recipe pages are available in the wiki context.
+
+## Sources
+
+- [RISC-V Vector Extension - LLVM Documentation](https://github.com/llvm/llvm-project/blob/main/llvm/docs/RISCV/RISCVVectorExtension.rst)
+merge_draft_body -->

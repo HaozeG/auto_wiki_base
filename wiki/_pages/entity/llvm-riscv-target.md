@@ -5,6 +5,11 @@ aliases:
 - RISC-V LLVM
 - LLVM RISC-V Backend
 - LLVM 23.0.0 RISC-V
+- LLVM RISC-V Vector Extension
+- LLVM RVV
+- RVV LLVM implementation
+- RISC-V Vector Extension in LLVM
+- RISCVVectorExtension
 subtype: null
 tags: []
 scorecard:
@@ -16,6 +21,8 @@ scorecard:
 sources:
 - raw/cache/d899f76c1cbbbeda.md
 - https://llvm.org/docs/RISCVUsage.html
+- raw/cache/915ca891a1497a12.md
+- https://github.com/llvm/llvm-project/blob/main/llvm/docs/RISCV/RISCVVectorExtension.rst
 source_url: https://llvm.org/docs/RISCVUsage.html
 fetched_at: '2026-07-02T09:47:03.000700+00:00'
 type: entity

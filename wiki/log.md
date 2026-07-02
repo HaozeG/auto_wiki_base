@@ -171,3 +171,11 @@ pages_written: 3
 pipeline_rejection_rate: 20%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/riscv-v2-replication/wiki/audit/research_629f179b_2026-07-02.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] research | TVM IREE RISC-V compiler AI deployment
+session_id: 170a79f2
+candidates_evaluated: 9
+pages_written: 2
+pipeline_rejection_rate: 11%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/riscv-v2-replication/wiki/audit/research_170a79f2_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first
