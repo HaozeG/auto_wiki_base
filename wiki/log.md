@@ -410,3 +410,11 @@ pages_written: 1
 pipeline_rejection_rate: 0%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_1fa21f0b_2026-07-02.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] research | RISC-V sparse matrix pruning neural network accelerator hard
+session_id: ff4e127a
+candidates_evaluated: 10
+pages_written: 2
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_ff4e127a_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first

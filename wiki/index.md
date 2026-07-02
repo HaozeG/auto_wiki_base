@@ -1,11 +1,13 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 76 | Sources: 3
+Last updated: 2026-07-02 | Pages: 78 | Sources: 3
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [systolic_tensor_units.md](entity/systolic_tensor_units.md) | Systolic Tensor Units | systolic array, tensor unit, TPU, accelerator | 2 | 0 |
+| [risc_v_sparse_dnn_fpga_extensions.md](entity/risc_v_sparse_dnn_fpga_extensions.md) | RISC-V Sparse DNN FPGA Extensions |  | 2 | 0 |
 | [riscv_gem5_fault_injector.md](entity/riscv_gem5_fault_injector.md) | riscv-gem5-fault-injector |  | 2 | 0 |
 | [tile_language.md](entity/tile_language.md) | Tile Language |  | 2 | 0 |
 | [rvv-lite.md](entity/rvv-lite.md) | RVV-Lite | risc-v, vector, iot, rvv | 2 | 0 |
