@@ -1081,3 +1081,66 @@ RK3588 is Rockchip's flagship 8K SoC integrating a quad-core Cortex-A76 cluster 
 
 - [GitHub - choushunn/awesome-RK3588](https://github.com/choushunn/awesome-RK3588)
 merge_draft_body -->
+
+## [2026-07-02] merge_pending | opengeem-accelerator-generator.md
+target_page: opengeem-accelerator-generator.md
+canonical_name: OpenGeMM
+colliding_name: OpenGeMM
+source: https://hub.baai.ac.cn/paper/7fd2589c-86b3-40ee-a921-83653897137e
+status: pending_review
+<!-- merge_draft_body
+# OpenGeMM
+
+OpenGeMM is an open-source accelerator generator for general matrix multiplication (GeMM) designed for high hardware utilization and tight integration with a lightweight RISC-V control processor. It consists of a parameterizable GeMM accelerator written in Chisel, a lightweight RISC-V core, and a tightly coupled multi-bank scratchpad memory. To maximize utilization and system efficiency, OpenGeMM employs three key mechanisms: configuration preload, input prefetch with output buffering, and programmable stride memory access. The generator targets edge devices where computational and data-intensive deep neural networks (DNNs) must be deployed with both flexibility and efficiency. Experimental results reported by Yi et al. (2024) show that OpenGeMM achieves hardware utilization between 81.89% and 99.34% across various CNN and Transformer workloads, and delivers 3.58x to 16.40x normalized throughput improvement over the state-of-the-art open-source Gemmini accelerator, with a system efficiency of 4.68 TOPS/W.
+
+## Key Claims
+
+- OpenGeMM is an open-source, parameterizable GeMM accelerator generator integrating a Chisel-based accelerator, a lightweight RISC-V processor, and tightly coupled multi-bank scratchpad memory.
+- Three optimization mechanisms—configuration preload, input prefetch & output buffering, and programmable stride memory access—improve hardware utilization and system efficiency.
+- Across diverse CNN and Transformer workloads, OpenGeMM achieves hardware utilization ranging from 81.89% to 99.34%.
+- Compared to the Gemmini accelerator, OpenGeMM achieves 3.58x to 16.40x improvement in normalized throughput.
+- System efficiency reaches 4.68 TOPS/W.
+
+## Relationships
+
+- [[earth-shifting-based-vector-memory-access]]: Both OpenGeMM and EARTH target RISC-V-based hardware acceleration for efficient data movement, with EARTH focusing on vector memory access and OpenGeMM on GeMM accelerator generation.
+- [[pulp-nn-optimization-recipe]]: PULP-NN provides software-level optimization for quantized neural networks on RISC-V clusters; OpenGeMM offers a complementary hardware generation approach for GeMM acceleration on edge devices.
+- [[Gemmini]]: OpenGeMM is directly compared against the Gemmini accelerator and claims significant throughput improvements.
+
+## Sources
+
+- OpenGeMM paper on BAAI hub: https://hub.baai.ac.cn/paper/7fd2589c-86b3-40ee-a921-83653897137e
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | opengeem-accelerator-generator.md
+target_page: opengeem-accelerator-generator.md
+canonical_name: OpenGeMM
+colliding_name: OpenGeMM
+source: https://www.researchgate.net/publication/385823001_OpenGeMM_A_High-Utilization_GeMM_Accelerator_Generator_with_Lightweight_RISC-V_Control_and_Tight_Memory_Coupling
+status: pending_review
+<!-- merge_draft_body
+# OpenGeMM
+
+OpenGeMM is an open-source acceleration platform for general matrix-matrix multiplication (GeMM) targeting resource-constrained extreme edge devices. It integrates a parameterized Chisel-coded GeMM accelerator, a lightweight RISC-V processor for control and programmability, and a tightly coupled multi-banked scratchpad memory system. The platform employs three mechanisms to boost hardware utilization and system efficiency: configuration pre-loading, which reduces setup overhead; input pre-fetching with output buffering, which minimizes data movement stalls; and programmable strided memory access, which enables flexible data layout handling. These mechanisms collectively allow OpenGeMM to achieve consistently high hardware utilization ranging from 81.89% to 99.34% across diverse CNN and Transformer workloads. In comparisons with the state-of-the-art open-source Gemmini accelerator, OpenGeMM demonstrates a 3.58x to 16.40x speedup on normalized throughput (GOPS/µm²) and delivers 4.68 TOPS/W system efficiency. The platform is designed to balance reusability, flexibility, and ease of configuration, providing a programmable alternative to fixed-function accelerators.
+
+## Key Claims
+
+- OpenGeMM is an open-source acceleration platform for GeMM with a parameterized Chisel-coded accelerator core.
+- Integrates a lightweight RISC-V processor for flexible control without sacrificing efficiency.
+- Employs tightly coupled multi-banked scratchpad memory for low-latency data access.
+- Achieves hardware utilization of 81.89% to 99.34% across diverse CNN and Transformer workloads through three mechanisms: configuration pre-loading, input pre-fetching with output buffering, and programmable strided memory access.
+- Demonstrates 3.58x to 16.40x speedup on normalized throughput compared to the Gemmini accelerator in both output-stationary and weight-stationary modes.
+- Achieves 4.68 TOPS/W system efficiency.
+- Designed for extreme edge devices with limited resources.
+
+## Relationships
+
+- [[cpa-factored-gemmini-systolic-array]]: Both involve optimization of GeMM-related hardware, with OpenGeMM as a full platform and CPA factoring targeting Gemmini's systolic array.
+- [[earth-shifting-based-vector-memory-access]]: Both platforms explore memory access optimizations for RISC-V based accelerators, with OpenGeMM focusing on GeMM-specific prefetching and strided access.
+- [[pulp-nn-optimization-recipe]]: Both target efficient neural network inference on RISC-V platforms; PULP-NN at the software kernel level and OpenGeMM at the hardware accelerator level.
+
+## Sources
+
+- [OpenGeMM: A High-Utilization GeMM Accelerator Generator with Lightweight RISC-V Control and Tight Memory Coupling](https://arxiv.org/abs/2411.09543) (arXiv preprint, November 2024)
+- [ResearchGate entry for the same preprint](https://www.researchgate.net/publication/385823001_OpenGeMM_A_High-Utilization_GeMM_Accelerator_Generator_with_Lightweight_RISC-V_Control_and_Tight_Memory_Coupling)
+merge_draft_body -->

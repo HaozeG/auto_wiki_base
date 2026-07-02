@@ -155,3 +155,11 @@ pages_written: 4
 pipeline_rejection_rate: 0%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/riscv-v2-replication/wiki/audit/research_a9e3aa6a_2026-07-02.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] research | OpenGEMM RISC-V generic micro-kernel template
+session_id: ad628158
+candidates_evaluated: 10
+pages_written: 4
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/riscv-v2-replication/wiki/audit/research_ad628158_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first
