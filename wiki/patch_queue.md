@@ -868,3 +868,97 @@ The Sophgo SG2042 is a 64-core RISC-V processor designed for high-performance co
 - [SG2042 Newsletter issue 058](https://github.com/sophgocommunity/SG2042-Newsletter/blob/main/newsletters/058.md)
 - [Performance characterisation of SG2042 - Research (snippet in resource)]
 merge_draft_body -->
+
+## [2026-07-02] merge_pending | pulp-platform.md
+target_page: pulp-platform.md
+canonical_name: PULP Platform
+colliding_name: PULP Platform
+source: https://www.pulp-platform.org/
+status: pending_review
+<!-- merge_draft_body
+# PULP Platform
+
+PULP (Parallel Ultra Low Power) is an open-source hardware platform developed by ETH Zurich and the University of Bologna for energy-efficient computing. It provides efficient implementations of RISC-V cores including the 32-bit 1-stage Snitch, 32-bit 4-stage CV32E40P, 64-bit 6-stage CVA6, and 32-bit 2-stage Ibex. The platform also offers complete system-on-chip designs such as single-core microcontrollers (PULPissimo, PULPino), multi-core IoT processors (OpenPULP), and multi-cluster heterogeneous accelerators (Hero). All components are released under a permissive SolderPad open-source license, and the platform includes a rich set of peripherals including I2C, SPI, HyperRAM, and GPIO. PULP has been used in multiple tape-outs and is supported by development boards from third-party vendors like open-isa.org (RV32M1-VEGA) and collaborative efforts such as AI Deck.
+
+## Key Claims
+
+- PULP provides efficient implementations of the Snitch, CV32E40P, CVA6, and Ibex RISC-V cores.
+- Complete system offerings include PULPissimo, PULPino, OpenPULP, and Hero.
+- The platform is released under a permissive SolderPad open-source license.
+- Peripherals include I2C, SPI, HyperRAM, and GPIO.
+- Development boards are available from open-isa.org (RV32M1-VEGA) and the collaborative AI Deck based on the PULP-shield.
+- A recent tape-out (Flamingo) combines the Cheshire platform with Spatz vector units in 22nm.
+
+## Relationships
+
+- [[gemmini]]: Both are open-source hardware platforms for RISC-V-based computing; Gemmini focuses on systolic array acceleration while PULP provides general-purpose energy-efficient cores.
+- [[nncase]]: nncase is a compiler stack for RISC-V AI accelerators and could be used to compile neural network models for PULP-based systems.
+- Insufficient context for additional cross-links.
+
+## Sources
+
+- [PULP Platform Official Site](https://www.pulp-platform.org/)
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | pulp-platform.md
+target_page: pulp-platform.md
+canonical_name: PULP Platform
+colliding_name: PULP
+source: https://github.com/pulp-platform/pulp
+status: pending_review
+<!-- merge_draft_body
+# PULP
+
+PULP (Parallel Ultra-Low-Power) is an open-source multi-core computing platform developed through an ongoing collaboration between ETH Zurich and the University of Bologna, initiated in 2013. The platform targets IoT end-node applications that require flexible processing of data streams from sensors such as accelerometers, low-resolution cameras, microphone arrays, and vital signs monitors. PULP consists of an advanced microcontroller architecture that improves upon the earlier PULPino design by including autonomous I/O via a micro-DMA (uDMA), advanced data pre-processing, external interrupt handling, and a tightly-coupled cluster of processors for offloading compute-intensive kernels. The architecture supports either the RI5CY core or the zero-riscy core as the main processor, alongside components such as a new memory subsystem, support for Hardware Processing Engines (HWPEs), a system DMA, and an event unit. The platform is designed to enhance energy efficiency in ultra-low-power signal processing applications and is accompanied by a dedicated RISC-V GNU toolchain for building and simulating the RTL platform.
+
+## Key Claims
+
+- PULP is an open-source multi-core computing platform targeting IoT edge processing applications.
+- The architecture includes a choice of RI5CY (4-stage, RV32IMCF, with custom ISA extensions) or zero-riscy (2-stage, RV32IMC/E) as the main core.
+- It features an autonomous I/O subsystem via uDMA, reducing core intervention for peripheral communication.
+- PULP supports integration of hardware accelerators (HWPEs) that share memory with the main core and are programmed via the memory map.
+- The platform supports interfaces including SPI, I2S, CPI, I2C, UART, and JTAG.
+- It is developed and maintained by ETH Zurich and the University of Bologna.
+- The PULP toolchain is based on a RISC-V GNU toolchain.
+
+## Relationships
+
+- [[cpa-factored-gemmini-systolic-array]]: Like PULP, this is an open-source RISC-V-related hardware optimization; PULP's HWPE mechanism could potentially host such accelerators.
+- [[earth-shifting-based-vector-memory-access]]: PULP's parallel computing cluster could benefit from vector memory access optimizations, though the EARTH optimization targets a different vector unit.
+- Insufficient context for additional cross-links; no existing entity pages in the wiki context.
+
+## Sources
+
+- [pulp-platform/pulp GitHub Repository](https://github.com/pulp-platform/pulp)
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | pulp-platform.md
+target_page: pulp-platform.md
+canonical_name: PULP Platform
+colliding_name: PULP Platform
+source: https://arxiv.org/html/2412.20391v1
+status: pending_review
+<!-- merge_draft_body
+# PULP Platform
+
+The PULP (Parallel Ultra-Low Power) Platform is an open-source hardware research initiative that began in 2013 and is led by the University of Bologna and ETH Zürich. It provides a portfolio of digital intellectual property (IP) blocks including RISC-V processor cores, network-on-chips, peripherals, SoC templates, and hardware accelerators, all released under open-source licenses. PULP targets low-voltage, low-frequency, highly energy-efficient operation, compensating for performance loss through architectural parallelism and hardware acceleration rather than high-frequency scaling. The central computing block is the PULP cluster, which combines a multi-banked Tightly-Coupled Data Memory (TCDM), a set of RISC-V processors (4–16 cores) with optional ISA extensions for DSP and AI, and one or more Hardware Processing Engines (HWPEs) that share a wide memory port. The Heterogeneous Cluster Interconnect (HCI) arbitrates between core and accelerator accesses. PULP's open-source model aims to reduce non-recurring engineering costs and accelerate development of custom heterogeneous SoCs for AI and edge applications.
+
+## Key Claims
+
+- PULP is an open-source hardware platform started in 2013 by academic institutions (University of Bologna and ETH Zürich).
+- The platform includes IP blocks such as RISC-V cores, network-on-chips, peripherals, SoC templates, and HW accelerators.
+- PULP clusters are built around a multi-banked TCDM (64–256 KiB, 16–64 banks), 4–16 RISC-V cores, and one or more HWPEs.
+- The architecture targets ultra-low-power operation through low-voltage, low-frequency design with parallelism and acceleration.
+- The HCI provides arbitration between core and HWPE memory accesses, with a logarithmic crossbar for cores and a wide router for HWPEs.
+- AI model parameters are scaling at 2× per year, training FLOPs at 4.2× per year; dedicated hardware performance scales at 1.3× per year (citations from resource).
+
+## Relationships
+
+- [[cpa-factored-gemmini-systolic-array]]: The CPA-factored Gemmini optimization targets a systolic array generator, which could be integrated as an HWPE within a PULP cluster for AI acceleration.
+- [[earth-shifting-based-vector-memory-access]]: The EARTH optimization addresses RISC-V vector memory access, relevant to PULP clusters that use RISC-V cores with vector extensions.
+- Insufficient context for additional cross-links; existing wiki pages are limited to optimization recipes rather than entity pages.
+
+## Sources
+
+- [Open-Source Design of Heterogeneous SoCs for AI Acceleration: the PULP Platform Experience](https://arxiv.org/html/2412.20391v1)
+merge_draft_body -->
