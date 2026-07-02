@@ -71,6 +71,7 @@ The Rockchip RK3588 is a flagship system-on-chip (SoC) designed by Rockchip for 
 - The Rockchip RK3588 is a hardware target for the [[yolo26_rknn_export]] optimization recipe, which details how to convert and deploy YOLO26 models.
 - Benchmark results for YOLO26 models on this platform are recorded in [[yolo26_rknn_rockchip_rk3588_benchmark]].
 - Comparable AI SoCs include the [[k230]] (Canaan Kendryte K230) and [[allwinner_v853]], both of which integrate NPUs for edge AI but differ in architecture (RISC-V vs. ARM) and toolchain ecosystems.
+- [[edge_ai_soc_design_space]]: a synthesis page positioning RK3588 as the ARM+proprietary-NPU incumbent against four RISC-V architectural alternatives (K230, ET-SoC-1, Grayskull e75, Semidynamics Tensor Unit).
 
 ## Sources
 

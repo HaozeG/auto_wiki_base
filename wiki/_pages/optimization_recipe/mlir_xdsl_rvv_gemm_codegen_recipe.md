@@ -43,7 +43,7 @@ fetched_at: '2026-07-01T03:46:09.006884+00:00'
 type: optimization_recipe
 created: '2026-07-01'
 updated: '2026-07-01'
-cold_start: true
+cold_start: false
 inbound_links: 43
 needs_summary_revision: true
 ---
@@ -80,6 +80,7 @@ This optimization recipe describes a compilation approach that combines the MLIR
 - [[banana_pi_gemm_optimization_benchmark]]: hand-tuned/auto-vectorized RISC-V GEMM results on similar Banana Pi-class hardware, useful as an independent baseline comparison point.
 - [[generic_micro_kernel_templates_gemm]]: a non-RISC-V (ARM/x86) template-based micro-kernel generation approach, offering a cross-architecture contrast to this RISC-V-specific MLIR+xDSL pipeline.
 - [[mlir]]: the underlying LLVM compiler infrastructure this pipeline builds on, extended here with custom xDSL lowerings for RVV.
+- [[riscv_gemm_optimization_approaches]]: a synthesis page comparing this compiler-generated approach against hand-tuned assembly (XuanTie C908 kernel), dedicated hardware generation (OpenGeMM), and the cross-architecture template-based technique.
 
 ## Sources
 

@@ -46,7 +46,7 @@ OpenGeMM is an open-source generic matrix multiplication (GeMM) accelerator plat
 
 - [[xuantie_c908_fp16_gemm_kernel]] – a related GEMM kernel targeting a different hardware platform (XuanTie C908).
 - [[mlir_xdsl_rvv_gemm_codegen_recipe]] – an alternative approach to optimizing GEMM for RISC-V vector processors using MLIR/xDSL.
-- Insufficient context for additional cross-links to entity pages in the current wiki snapshot.
+- [[riscv_gemm_optimization_approaches]]: a synthesis page comparing this dedicated-hardware-generation approach against compiler-generated RVV code (MLIR+xDSL), hand-tuned assembly (XuanTie C908 kernel), and cross-architecture template-based micro-kernels.
 
 ## Sources
 

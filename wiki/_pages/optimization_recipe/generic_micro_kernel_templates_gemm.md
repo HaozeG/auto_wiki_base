@@ -86,6 +86,7 @@ This optimization recipe describes a method to systematically generate high-perf
 - Related workload kernel: [[xuantie_c908_fp16_gemm_kernel]] (vendor-specific GEMM kernel for a different architecture).
 - Alternative code-generation optimization recipe: [[mlir_xdsl_rvv_gemm_codegen_recipe]] (MLIR/xDSL pipeline for RISC-V vector micro-kernels).
 - Base algorithmic framework: The BLIS family of algorithms (B3A2C0, A3B2C0, etc.) underpins the macro-kernel structure used to integrate these micro-kernels.
+- [[riscv_gemm_optimization_approaches]]: a synthesis page using this ARM/x86 template-based technique as an existence proof for the RISC-V-specific compiler-generated (MLIR+xDSL), hand-tuned (XuanTie C908), and hardware-generated (OpenGeMM) approaches.
 
 ## Sources
 

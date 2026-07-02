@@ -56,6 +56,7 @@ This kernel implements the core GEMM computation used in SHL’s convolution acc
 - Hardware target: [[xuantie_c908]]
 - Optimization recipe: [[xuantie_c908_shl_convolution_acceleration]]
 - Benchmark result: [[xuantie_c908_ai_inference_performance]]
+- [[riscv_gemm_optimization_approaches]]: a synthesis page comparing this hand-tuned assembly approach against compiler-generated RVV code (MLIR+xDSL), dedicated hardware generation (OpenGeMM), and cross-architecture template-based micro-kernels.
 
 ## Sources
 

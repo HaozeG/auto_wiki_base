@@ -560,3 +560,17 @@ actions_taken:
 deferred_for_human:
 - "RESTRUCTURE: k230.md and mlir_xdsl_rvv_gemm_codegen_recipe.md still need their proposed synthesis-page splits written (see wiki/retrospective_lint_report.md for titles/scope); left cold_start: true until that happens."
 - "systolic_tensor_units.md (scorecard avg 0.43) — left as a standalone CLEARED page (cold_start: false) per the report's default; still open whether to fold into gemmini.md."
+
+## [2026-07-02] lint | retrospective (restructure)
+pages_created: [synthesis/edge_ai_soc_design_space.md, synthesis/riscv_gemm_optimization_approaches.md]
+pages_updated: [k230.md, mlir_xdsl_rvv_gemm_codegen_recipe.md, et_soc_1.md, rockchip_rk3588.md, tenstorrent_grayskull_e75.md, semidynamics_tensor_unit.md, opengemm.md, generic_micro_kernel_templates_gemm.md, xuantie_c908_fp16_gemm_kernel.md]
+notes: |
+  Executed the two RESTRUCTURE candidates from the 2026-07-02 retrospective lint report.
+  - synthesis/edge_ai_soc_design_space.md ("Edge AI SoC Design Space: KPU/Fixed-Function vs. Vector-Only vs. Many-Core Approaches"): compares k230, et_soc_1, rockchip_rk3588, tenstorrent_grayskull_e75, semidynamics_tensor_unit. Passes Layer 1/2; Layer 3 self-retrieval fails post-index (needs_summary_revision: true) — soft signal only, not a hard rejection.
+  - synthesis/riscv_gemm_optimization_approaches.md ("Compiler-Generated vs. Hand-Tuned vs. Hardware-Accelerated GEMM on RISC-V"): compares mlir_xdsl_rvv_gemm_codegen_recipe, opengemm, generic_micro_kernel_templates_gemm, xuantie_c908_fp16_gemm_kernel. Passes Layer 1/2/3.
+  - Did not strip k230.md's or mlir_xdsl_rvv_gemm_codegen_recipe.md's existing Relationships bullets: several of those links (cpufp, risc_v_gpu_integration, cab_and_grin_task_scheduling, yolov8, windows_ml_on_amd_npu, mobilenetv2_radxa_a733_t527_npu_benchmark, starfive_visionfive2_jh7110) are each page's *only* inbound link, so removing them would have re-orphaned 7 pages. Instead added a single pointer bullet from each restructured page to its new synthesis page, and reciprocal links from all 9 pages pulled into the two syntheses. Both restructured pages flipped to cold_start: false.
+  - Ran `uv run --no-sync qmd update` after writing the synthesis pages per protocol (2 new, 100 updated, 1 removed from prior merge).
+  - wiki/index.md updated: 2 new synthesis rows, 2 new Concept Index entries, page count 100 -> 102.
+  - [system_state] mean_inbound_links refreshed to 3.2255 (page_count 102, orphan_fraction 0.0, still MATURE). cold_start_page_count stays 2 (now the two new synthesis pages, since the two restructured entity pages were cleared).
+deferred_for_human:
+- "Both new synthesis pages' Open Questions sections flag the same underlying gap: no page in the wiki reports a head-to-head benchmark between competing designs within either design space (edge SoC architectures, or GEMM optimization approaches) on identical hardware/workload — worth prioritizing as a research target if closing that gap matters."

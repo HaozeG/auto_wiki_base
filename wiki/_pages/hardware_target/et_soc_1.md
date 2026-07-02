@@ -56,6 +56,7 @@ The ET-SoC-1 is a custom chip designed by Esperanto Technologies for acceleratin
 
 - [[xuantie_c908]]: another RISC-V processor for AI workloads, though using a smaller number of cores with vector extensions.
 - [[k230]]: a dual-core RISC-V SoC for AIoT, representing a different approach (fewer cores with dedicated NPU) compared to the many-core design of ET-SoC-1.
+- [[edge_ai_soc_design_space]]: a synthesis page comparing ET-SoC-1's many-tiny-core approach against K230's fixed-function KPU, Grayskull's tile grid, Semidynamics' vector extension, and Rockchip RK3588's ARM+NPU alternatives.
 
 ## Sources
 

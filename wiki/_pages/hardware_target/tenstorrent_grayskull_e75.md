@@ -70,6 +70,7 @@ The Tenstorrent Grayskull e75 is a RISC-V based AI accelerator card designed to 
 - [[k230]]: An SoC integrating RISC-V C908 cores with a KPU, offering a different balance of CPU and dedicated AI accelerator for edge AI.
 - [[grayskull_e75_matmul_benchmark]]: the matmul-kernel measurement results (tiling, kernel-compile, data-transfer time breakdown) for this card.
 - [[tile_language]]: a Pythonic, TVM-based DSL for GPU/CPU AI kernel authoring, illustrating a compiler-driven alternative to Grayskull's custom kernel-compilation path.
+- [[edge_ai_soc_design_space]]: a synthesis page comparing Grayskull's tile-grid-with-embedded-RISC-V-control approach against K230's fixed-function KPU, ET-SoC-1's many-core design, Semidynamics' vector extension, and Rockchip RK3588's ARM+NPU alternatives.
 
 ## Sources
 

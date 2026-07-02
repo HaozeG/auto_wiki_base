@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 100 | Sources: 3
+Last updated: 2026-07-02 | Pages: 102 | Sources: 3
 
 ## Entity Pages
 
@@ -54,7 +54,9 @@ Last updated: 2026-07-02 | Pages: 100 | Sources: 3
 
 | Page | Connected Entities | Status | Inbound |
 |------|--------------------|--------|---------|
-| [riscv_matrix_extension_design_space.md](synthesis/riscv_matrix_extension_design_space.md) | integrated_matrix_extension, matrix_tile_extension, riscv_matrix_extension_proposal, riscv_vector_extension, rvme, llvm_riscv_target | draft | 0 |
+| [riscv_matrix_extension_design_space.md](synthesis/riscv_matrix_extension_design_space.md) | integrated_matrix_extension, matrix_tile_extension, riscv_matrix_extension_proposal, riscv_vector_extension, rvme, llvm_riscv_target | draft | 1 |
+| [edge_ai_soc_design_space.md](synthesis/edge_ai_soc_design_space.md) | k230, et_soc_1, rockchip_rk3588, tenstorrent_grayskull_e75, semidynamics_tensor_unit | draft | 5 |
+| [riscv_gemm_optimization_approaches.md](synthesis/riscv_gemm_optimization_approaches.md) | mlir_xdsl_rvv_gemm_codegen_recipe, opengemm, generic_micro_kernel_templates_gemm, xuantie_c908_fp16_gemm_kernel | draft | 4 |
 
 ## Concept Index
 
@@ -82,6 +84,8 @@ Last updated: 2026-07-02 | Pages: 100 | Sources: 3
 - **SiFive Intelligence X280**: → [sifive_intelligence_x280](hardware_target/sifive_intelligence_x280.md)
 - **SiFive Intelligence X200 Series**: → [sifive_intelligence_x200_series](hardware_target/sifive_intelligence_x200_series.md)
 - **Competing Approaches to Matrix Acceleration on RISC-V**: → [riscv_matrix_extension_design_space](synthesis/riscv_matrix_extension_design_space.md)
+- **Edge AI SoC Design Space: KPU/Fixed-Function vs. Vector-Only vs. Many-Core Approaches**: → [edge_ai_soc_design_space](synthesis/edge_ai_soc_design_space.md)
+- **Compiler-Generated vs. Hand-Tuned vs. Hardware-Accelerated GEMM on RISC-V**: → [riscv_gemm_optimization_approaches](synthesis/riscv_gemm_optimization_approaches.md)
 
 ## Optimization Pages
 
