@@ -1005,3 +1005,79 @@ The Allwinner D1 (also known as D1-H, codename sun20iw1p1) is a system-on-chip (
 - CNX Software article referenced in source
 - Allwinner press release
 merge_draft_body -->
+
+## [2026-07-02] merge_pending | rockchip-rk3588.md
+target_page: rockchip-rk3588.md
+canonical_name: Rockchip RK3588
+colliding_name: Rockchip RK3588
+source: https://ieeker.com/rk3588-npu-performance-industrial-edge-ai/
+status: pending_review
+<!-- merge_draft_body
+# Rockchip RK3588
+
+The Rockchip RK3588 is an ARM-based System-on-Chip (SoC) designed for edge AI applications, integrating a dedicated 6 TOPS Neural Processing Unit (NPU) alongside quad-core Cortex-A76 and quad-core Cortex-A55 CPU cores. The NPU supports real-time inference workloads, achieving over 54 frames per second on YOLOv5 object detection. The SoC is positioned as a cost-effective platform for industrial edge AI, leveraging the RKNN-Toolkit2 toolchain for model quantization and deployment. The 6 TOPS performance level is described as a "sweet spot" balancing throughput, power efficiency, and system cost for vision-heavy industrial applications.
+
+## Key Claims
+
+- The RK3588 NPU delivers 6 TOPS of integer performance.
+- YOLOv5 inference achieves over 54 FPS on the NPU using RKNN-Toolkit2 quantization.
+- The NPU is integrated with Cortex-A76/A55 CPU cores in a single SoC.
+- The platform targets industrial edge AI applications, emphasizing power efficiency and I/O completeness.
+- RKNN-Toolkit2 provides quantization tips to optimize model deployment.
+
+## Optimization-Relevant Details
+
+- ISA/profile: ARMv8.2-A (64-bit)
+- Vector/matrix/accelerator support: Dedicated 6 TOPS NPU (neural processing unit), no explicit vector extensions on CPU.
+- Memory/cache/TLB/DMA: Not specified in sources; typical for SoC with DDR4/LPDDR4 memory interface.
+- Compiler/toolchain support: RKNN-Toolkit2 (Rockchip Neural Network Toolkit) for model conversion and quantization.
+
+## Relationships
+
+- [[cpa-factored-gemmini-systolic-array]]: While targeting different architectures (ARM vs RISC-V), both are optimization recipes for AI accelerators; the RK3588 NPU may benefit from similar systolic array optimizations in future designs.
+- [[earth-shifting-based-vector-memory-access]]: This RISC-V vector memory optimization contrasts with the RK3588's fixed-function NPU approach; comparing the two highlights trade-offs between programmability and efficiency.
+- Insufficient context for additional cross-links; no existing hardware target pages for ARM-based SoCs are currently in the wiki.
+
+## Sources
+
+- [Search snippets for: RK3588 NPU Performance: What 6 TOPS Means for Industrial AI ...](https://ieeker.com/rk3588-npu-performance-industrial-edge-ai/)
+- [Rockchip RK3588 NPU Deep Dive: Real-World AI Performance ...](https://example.com) (snippet from search results)
+- [RK3588 NPU: Edge AI Performance in 2026 - accio.com](https://accio.com) (snippet)
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | rockchip-rk3588.md
+target_page: rockchip-rk3588.md
+canonical_name: Rockchip RK3588
+colliding_name: RK3588
+source: https://github.com/choushunn/awesome-RK3588
+status: pending_review
+<!-- merge_draft_body
+# RK3588
+
+RK3588 is Rockchip's flagship 8K SoC integrating a quad-core Cortex-A76 cluster and a quad-core Cortex-A55 cluster in a big.LITTLE configuration, along with a 6 TOPS neural processing unit. It supports 8K video encode and decode, multiple display outputs, and a range of peripherals. The SoC targets edge AI, multimedia, and embedded computing applications. It has an associated software stack including RKNN for NPU programming and RKLLM for edge LLM deployment. Development boards such as the iTOP-RK3588 provide a hardware platform for evaluation. A curated list of development resources is maintained in the awesome-RK3588 repository.
+
+## Key Claims
+
+- Integrates quad Cortex-A76 and quad Cortex-A55 cores.
+- Features a 6 TOPS NPU for AI acceleration.
+- Supports 8K video encode/decode.
+- Targets edge AI, multimedia, and embedded applications.
+- Software support includes RKNN and RKLLM.
+
+## Optimization-Relevant Details
+
+- ISA/profile: ARMv8.2-A (A76, A55).
+- Vector/matrix/accelerator support: 6 TOPS NPU, NEON coprocessor.
+- Memory/cache/TLB/DMA: Not specified in resource.
+- Compiler/toolchain support: RKNN, RKLLM.
+
+## Relationships
+
+- [[gemmini]]: Both target AI acceleration, though Gemmini is a systolic array generator for RISC-V.
+- [[nncase]]: Both are related to neural network compiler tools, though nncase targets RISC-V accelerators.
+- Insufficient context for additional cross-links; no existing entity pages for Rockchip SoCs or ARM-based AI accelerators in the wiki.
+
+## Sources
+
+- [GitHub - choushunn/awesome-RK3588](https://github.com/choushunn/awesome-RK3588)
+merge_draft_body -->
