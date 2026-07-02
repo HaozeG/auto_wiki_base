@@ -45,7 +45,7 @@ type: benchmark_result
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # PULP-NN GAP-8 CIFAR-10 Benchmark

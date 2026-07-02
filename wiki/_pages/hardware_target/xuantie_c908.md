@@ -27,7 +27,7 @@ type: hardware_target
 created: '2026-07-01'
 updated: '2026-07-01'
 cold_start: true
-inbound_links: 35
+inbound_links: 39
 needs_summary_revision: false
 ---
 
@@ -64,6 +64,8 @@ The XuanTie C908 is a RISC-V processor core developed by T-Head Semiconductor, t
 - [[llama_cpp]]: an LLM inference library with explicit RVV/ZVFH support that can target the C908 as a hardware backend.
 - [[saturn_vector_unit]]: an open-source RVV 1.0 short-vector microarchitecture from UC Berkeley, a useful comparison point for the C908's own configurable-VLEN vector unit.
 - [[riscv_vector_tests_generator]]: an automated RVV instruction test generator applicable to validating C908-class vector implementations.
+- [[rv32i_base_integer_instruction_set]]: the mandatory base integer ISA that the C908's RV32GCB[V]/RV64GCB[V] profile extends.
+- [[semidynamics_tensor_unit]]: another RVV1.0-based AI accelerator design that reuses vector registers for matrix storage, a different microarchitectural choice than the C908's instruction-fusion approach.
 
 ## Sources
 

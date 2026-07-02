@@ -1,11 +1,13 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 65 | Sources: 3
+Last updated: 2026-07-02 | Pages: 69 | Sources: 3
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [mos2_risc_v_prototype.md](entity/mos2_risc_v_prototype.md) | MoS2 RISC-V Prototype | RISC-V, 2D materials, MoS2, prototype | 2 | 0 |
+| [rv32i_base_integer_instruction_set.md](entity/rv32i_base_integer_instruction_set.md) | RV32I Base Integer Instruction Set |  | 2 | 0 |
 | [cab_and_grin_task_scheduling.md](entity/cab_and_grin_task_scheduling.md) | CAB and GrIn Task Scheduling | scheduling, heterogeneous, optimal policy | 2 | 0 |
 | [pulp_platform.md](entity/pulp_platform.md) | PULP Platform |  | 2 | 0 |
 | [pulp_nn.md](entity/pulp_nn.md) | PULP-NN |  | 2 | 0 |
@@ -67,6 +69,8 @@ Last updated: 2026-07-02 | Pages: 65 | Sources: 3
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [semidynamics_tensor_unit.md](hardware_target/semidynamics_tensor_unit.md) | hardware_target | Semidynamics Tensor Unit | RISC-V, tensor unit, AI accelerator, Semidynamics, coherent | 2 | 0 |
+| [et_soc_1.md](hardware_target/et_soc_1.md) | hardware_target | ET-SoC-1 |  | 2 | 0 |
 | [grayskull_e75_matmul_benchmark.md](benchmark_result/grayskull_e75_matmul_benchmark.md) | benchmark_result | Tenstorrent Grayskull e75 MatMul Benchmark (arXiv:2505.06085) |  | 2 | 0 |
 | [tenstorrent_grayskull_e75.md](hardware_target/tenstorrent_grayskull_e75.md) | hardware_target | Tenstorrent Grayskull e75 |  | 2 | 0 |
 | [ventana_veyron_v2.md](hardware_target/ventana_veyron_v2.md) | hardware_target | Ventana Veyron V2 |  | 2 | 0 |

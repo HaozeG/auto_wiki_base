@@ -24,7 +24,7 @@ type: entity
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 1
+inbound_links: 2
 ---
 
 # PULP-NN
@@ -46,6 +46,8 @@ PULP-NN is an optimized computing library for quantized neural network inference
 - [[k230]]: Another RISC-V SoC with AI acceleration, representing a different approach to quantized neural network deployment.
 - [[xuantie_c908]]: A RISC-V processor core with vector extensions and instruction fusion, used for similar AI inference workloads.
 - [[mlir_xdsl_rvv_gemm_codegen_recipe]]: A compiler-based optimization recipe for RISC-V GEMM kernels, complementary to PULP-NN's hand-tuned library approach.
+- [[pulp_nn_gap8_cifar10_benchmark]]: the detailed GAP-8/STM32 speedup and energy-efficiency measurements referenced above.
+- [[pulp_platform]]: the parent open-source PULP hardware ecosystem that PULP-NN's target clusters are built on.
 
 ## Sources
 

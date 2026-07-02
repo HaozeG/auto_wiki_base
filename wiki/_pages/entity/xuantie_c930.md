@@ -58,6 +58,7 @@ The XuanTie C930 is Alibaba's first server-grade RISC-V processor, designed for 
 - Predecessor/core in the product family: [[xuantie_c908]]
 - Related research from the same institution (Damo Academy): [[rvme]]
 - The C908X, R908A, and XL200 are announced future chips in the XuanTie lineup but do not yet have wiki pages.
+- [[ventana_veyron_v2]]: a competing data-center-class RISC-V server processor from Ventana Microsystems, offering an open, western-vendor point of comparison to Alibaba's server-grade RISC-V push.
 
 ## Sources
 

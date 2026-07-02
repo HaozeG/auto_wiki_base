@@ -28,7 +28,7 @@ type: entity
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # Andes NX27V
@@ -48,6 +48,7 @@ The Andes NX27V (AndesCore NX27V) is a RISC-V vector processor IP core developed
 - [[xuantie_c908]]: Another RISC-V processor core with RVV 1.0 support, targeting AIoT applications, from T-Head.
 - [[k230]]: SoC integrating RISC-V C908 cores with RVV 1.0, representing an end-product using RVV-enabled cores.
 - [[mlir_xdsl_rvv_gemm_codegen_recipe]]: Compilation pipeline targeting RVV hardware for GEMM micro-kernels, relevant to NX27V as a potential target.
+- [[andestech_ax45mpv]]: a later Andes core with a much wider (1024-bit) Vector Processing Unit, illustrating Andes' vector-core roadmap since the NX27V's initial RVV 1.0 support.
 
 ## Sources
 

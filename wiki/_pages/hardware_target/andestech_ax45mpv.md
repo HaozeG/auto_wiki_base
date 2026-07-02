@@ -32,7 +32,7 @@ type: hardware_target
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # AndesCore AX45MPV
@@ -60,6 +60,7 @@ The AndesCore AX45MPV is a 64-bit in-order dual-issue 8-stage RISC-V CPU core de
 - [[xuantie_c908]]: A comparable RISC-V core with configurable 128/256-bit vector width, representing a different design point in the RISC-V vector processor landscape (smaller vector width, different vendor).
 - [[k230]]: A RISC-V SoC integrating the XuanTie C908 core, serving as an example of how RISC-V vector cores are used in real AIoT products; the AX45MPV targets similar application spaces.
 - [[mlir_xdsl_rvv_gemm_codegen_recipe]]: An optimization recipe for generating vector code using MLIR/xDSL; the AX45MPV's 1024-bit VPU is a potential target for such code generation techniques.
+- [[andes_nx27v]]: Andes' earlier RVV 1.0 vector processor IP, the predecessor design point the AX45MPV's much wider 1024-bit VPU builds on.
 
 ## Sources
 

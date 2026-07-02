@@ -21,7 +21,7 @@ type: entity
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # PULP Platform
@@ -41,7 +41,8 @@ The PULP (Parallel Ultra-Low-Power) Platform is an open-source hardware ecosyste
 - The K230 SoC ([[k230]]) integrates dual RISC-V cores and dedicated AI accelerators, representing a commercial implementation of a heterogeneous AI acceleration approach similar in spirit to PULP clusters.
 - The XuanTie C908 core ([[xuantie_c908]]) exemplifies a RISC-V processor with vector extensions that could be integrated into a PULP cluster as a programmable element.
 - The optimization recipe for MLIR+xDSL RVV code generation ([[mlir_xdsl_rvv_gemm_codegen_recipe]]) targets RISC-V platforms with vector support, relevant for programming PULP clusters equipped with such cores.
-- Insufficient context for additional cross-links to entity pages within the current wiki context.
+- [[pulpissimo]]: the single-core SoC-controller architecture built on this platform, serving as the I/O and control front-end for larger multi-core PULP chips.
+- [[pulp_nn]]: an optimized quantized-neural-network kernel library that targets PULP clusters built on this platform.
 
 ## Sources
 

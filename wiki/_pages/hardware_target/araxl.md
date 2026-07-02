@@ -56,6 +56,7 @@ AraXL is a modular and scalable 64-bit RISC-V V vector processor architecture de
 - [[xuantie_c908]]: another RISC-V V 1.0 processor core with configurable 128/256-bit VLEN, offering a contrast in lane count (2 vs 64) and target market.
 - [[k230]]: an SoC integrating the C908 core, representing a real-world platform for RISC-V vector execution.
 - [[mlir_xdsl_rvv_gemm_codegen_recipe]]: an optimization recipe for generating RVV code that could potentially target AraXL on software simulation or future implementations.
+- [[araxl_hpc_ml_benchmark_22nm]]: the detailed 22nm peak-performance and energy-efficiency measurements for this architecture.
 
 ## Sources
 

@@ -58,6 +58,7 @@ Ara2 is an open-source vector processor compliant with the RISC-V V (RVV) 1.0 fr
 - [[xuantie_c908]]: Another open-source processor implementing RVV 1.0, but with a different microarchitecture and target application domain.
 - [[k230]]: A RISC-V SoC integrating a C908 core with RVV 1.0, serving as a comparison point for open-source vector implementations.
 - [[mlir_xdsl_rvv_gemm_codegen_recipe]]: An optimization recipe for generating RVV code that could be validated on Ara2 hardware.
+- [[ara2_22nm_vector_benchmarks]]: the detailed 22nm measurement results (utilization, energy efficiency, multi-core scaling) for this processor.
 
 ## Sources
 
