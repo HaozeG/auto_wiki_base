@@ -627,19 +627,32 @@ def _title_matches_existing(title: str, extra_stems: set[str] | None = None,
 
 def _synthesis_gap_clusters(min_cluster_size: int = 3) -> list[tuple[str, list[str]]]:
     """
-    Find tag clusters with >= min_cluster_size entity pages that have no
-    synthesis page covering them. Returns [(tag, [uncovered page stems])],
-    sorted by cluster size descending. Shared by _check_synthesis_gaps()
-    (human-readable log strings) and the research loop's synthesis-candidate
-    generation (Phase 3 — see wiki/log.md's repeated "deferred_for_human:
-    Synthesis gaps persist across sessions" notes; this was previously only
-    ever logged, never acted on).
+    Find tag clusters with >= min_cluster_size entity(-subtype) pages that
+    have no synthesis page covering them. Returns [(tag, [uncovered page
+    stems])], sorted by cluster size descending. Shared by
+    _check_synthesis_gaps() (human-readable log strings) and the research
+    loop's synthesis-candidate generation (Phase 3 — see wiki/log.md's
+    repeated "deferred_for_human: Synthesis gaps persist across sessions"
+    notes; this was previously only ever logged, never acted on).
+
+    Deliberately does NOT filter on `fm.get("type") == "entity"`: the design
+    doc says a subtype page (hardware_target/benchmark_result/...) "is still
+    an entity for retrieval, identity, and dedup," but in practice the eval
+    subagent writes the literal subtype name into `type` (e.g.
+    `type: hardware_target`), not `type: entity, subtype: hardware_target` —
+    confirmed against both this run and the original research/riscv-ai-accelerator
+    run's committed pages. An entity-only filter therefore silently excludes
+    most of an optimization_first-profile wiki's actual content (18/61
+    hardware_target + 13 benchmark_result + 6 optimization_recipe pages here,
+    vs. 22 type:entity pages), and those subtype pages are exactly where tags
+    are most consistently populated — this filter was the main reason
+    synthesis-candidate generation never found a real cluster to work with.
     """
     tag_to_pages: dict[str, list[str]] = {}
     for p in _WIKI_PAGES_DIR.rglob("*.md"):
         fm, _ = frontmatter.parse_page(p)
-        if fm.get("type") == "entity":
-            for tag in fm.get("tags", []):
+        if fm.get("type") != "synthesis":
+            for tag in fm.get("tags", []) or []:
                 tag_to_pages.setdefault(tag, []).append(p.stem)
 
     # Collect all entity pages already named in a synthesis connected_entities list

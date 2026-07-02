@@ -870,6 +870,40 @@ def test_synthesis_gap_clusters_finds_uncovered_tag_and_excludes_covered(tmp_pat
     assert sorted(uncovered) == ["page1", "page2"]
 
 
+def test_synthesis_gap_clusters_includes_subtype_pages_not_just_literal_entity_type(tmp_path):
+    """Regression test for a real bug found running the v2 replication test:
+    subtype pages (hardware_target/benchmark_result/...) are written with the
+    literal subtype name in `type` (e.g. type: hardware_target), not
+    `type: entity, subtype: hardware_target` as the design doc describes —
+    confirmed against real pages in both research/riscv-ai-accelerator and the
+    replication run. The old `fm.get("type") == "entity"` filter silently
+    excluded the majority of an optimization_first wiki's pages (subtype pages
+    are also where tags are most consistently populated), so synthesis-gap
+    detection almost never found a real cluster. Only `type: synthesis` pages
+    should be excluded from clustering.
+    """
+    pages_dir = tmp_path / "wiki" / "_pages"
+    hw_dir = pages_dir / "hardware_target"
+    hw_dir.mkdir(parents=True)
+    for name in ("chip_a", "chip_b", "chip_c"):
+        (hw_dir / f"{name}.md").write_text(
+            f"---\ntype: hardware_target\ntags: [RISC-V]\n---\n\n# {name}\n", encoding="utf-8"
+        )
+    entity_dir = pages_dir / "entity"
+    entity_dir.mkdir(parents=True)
+    (entity_dir / "unrelated.md").write_text(
+        "---\ntype: entity\ntags: [software]\n---\n\n# Unrelated\n", encoding="utf-8"
+    )
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir):
+        clusters = orchestrator._synthesis_gap_clusters(min_cluster_size=3)
+
+    assert len(clusters) == 1
+    tag, uncovered = clusters[0]
+    assert tag == "RISC-V"
+    assert sorted(uncovered) == ["chip_a", "chip_b", "chip_c"]
+
+
 def test_generate_synthesis_candidate_writes_page_and_respects_budget(tmp_path):
     """Regression coverage for Phase 3: the research loop previously only
     logged synthesis gaps (_check_synthesis_gaps) without ever acting on them.
