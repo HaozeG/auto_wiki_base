@@ -1226,3 +1226,113 @@ The XuanTie C908 is a RISC-V processor core developed by T-Head Semiconductor (A
 
 - https://riscv.org/blog/xuantie-c908-accelerates-ai-with-software-and-hardware-fusion/
 merge_draft_body -->
+
+## [2026-07-02] merge_pending | xuantie-c910.md
+target_page: xuantie-c910.md
+canonical_name: XuanTie C910
+colliding_name: XuanTie C910
+source: https://arxiv.org/abs/2505.24363
+status: pending_review
+<!-- merge_draft_body
+# XuanTie C910
+
+The XuanTie C910 is an out-of-order superscalar RISC-V processor core developed by T-Head Semiconductor, originally designed with proprietary interfaces and protocols including non-standard AXI extensions, interrupts, and debug support. In the work by Fu et al. (2025), the C910 was modified to achieve full RISC-V standard compliance in its debug, interrupt, and memory interfaces, and integrated into the Cheshire open-source SoC platform implemented in GF22FDX 22nm technology. The core's superscalar out-of-order microarchitecture delivers a 119.5% IPC improvement over the single-issue in-order CVA6 core at the cost of a 75% area increase, and demonstrates competitive energy efficiency (GOPS/W) compared to in-order cores. This challenges the assumption that high performance in superscalar and out-of-order designs inherently incurs significant area and energy efficiency penalties.
+
+## Key Claims
+
+- Originally used proprietary interfaces; modified to full RISC-V standard compliance for debug, interrupt, and memory interfaces.
+- Integrated into the Cheshire open-source SoC platform in GF22FDX 22nm technology.
+- Achieves 119.5% IPC improvement over the single-issue in-order CVA6 core with a 75% area increase.
+- Shows competitive energy efficiency (GOPS/W) relative to in-order cores, contradicting the common belief that OoO superscalar designs are inherently less energy efficient.
+- Area efficiency (GOPS/mm²) is lower than that of CVA6S+ (dual-issue in-order) but the core is competitive on energy efficiency.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V, superscalar out-of-order, with modifications to achieve standard compliance.
+- Vector/matrix/accelerator support: Not specified in available resource.
+- Memory/cache/TLB/DMA: Not specified; relies on Cheshire SoC platform.
+- Compiler/toolchain support: Not specified; uses industrial EDA tool flow for 22nm synthesis.
+
+## Relationships
+
+- [[xuantie_c908]]: sibling core from the same XuanTie family, targeting AIoT with vector extensions, while the C910 targets higher-performance OoO execution.
+- [[xuantie_c906]]: earlier-generation in-order XuanTie core; the C910 represents a significant microarchitectural step forward.
+- [[k230]]: SoC integrating a different XuanTie core (C908), whereas the C910 was integrated into Cheshire SoC.
+- [[mlir_xdsl_rvv_gemm_codegen_recipe]]: an optimization recipe for RVV code generation on other RISC-V hardware; the C910's OoO design would interact differently with such compiler passes.
+- insufficient context for additional cross-links
+
+## Sources
+
+- https://arxiv.org/abs/2505.24363
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | xiangshan.md
+target_page: xiangshan.md
+canonical_name: XiangShan
+colliding_name: XiangShan
+source: https://openxiangshan.github.io/
+status: pending_review
+<!-- merge_draft_body
+# XiangShan
+
+XiangShan is an open-source, industry-competitive, high performance RISC-V processor launched by a research group to raise the performance ceiling of publicly accessible processors and set a competitive groundwork for architecture research. The project, started in June 2020, has developed two major generations codenamed YQH and NH. The latest version achieves the highest performance of open-source RISC-V processors. XiangShan is a superscalar out-of-order processor implementing the RV64GCBK ISA. Its micro-architecture includes a high-throughput frontend with an advanced branch predictor, a six-width aggressive out-of-order execution engine, a high-bandwidth load/store unit, and a highly configurable cache system. The design is written in Chisel, a high-level hardware description language, to maintain readability and maintainability. The project also provides a development infrastructure platform called Minjie, which integrates tools for functional verification and performance evaluation.
+
+## Key Claims
+
+- Open-source RISC-V processor designed for industry-competitive performance.
+- Two major generations: YQH and NH.
+- Superscalar out-of-order micro-architecture with RV64GCBK ISA support.
+- High-throughput frontend with advanced branch predictor.
+- Six-width aggressive out-of-order execution engine.
+- High-bandwidth load/store unit and highly configurable cache system.
+- Written in Chisel for high readability and maintainability.
+- Tape-out status and published performance evaluation (specific figures not disclosed in source).
+- Includes the Minjie development infrastructure platform with tools for verification and evaluation.
+
+## Relationships
+
+- [[xuantie_c908]]: a commercial open-source RISC-V core from T-Head Semiconductor, offering a different design point in the open-source RISC-V ecosystem.
+- [[k230]]: a RISC-V SoC that integrates a C908 core, representing a complete platform contrasting with the XiangShan processor's focus on high-performance core design.
+- [[mlir_xdsl_rvv_gemm_codegen_recipe]]: a compilation pipeline for RISC-V Vector extensions, relevant for optimizing code on RISC-V processors like XiangShan if vector support is added.
+
+## Sources
+
+- XiangShan project tutorial overview (ASPLOS 2023): https://openxiangshan.github.io/
+- Tutorial slides and updates: https://xiangshan-doc.readthedocs.io/zh_CN/latest/tutorials/asplos23/
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | riscv_vector_extension.md
+target_page: riscv_vector_extension.md
+canonical_name: RISC-V Vector Extension (RVV)
+colliding_name: RISC-V
+source: https://en.wikipedia.org/wiki/RISC-V
+status: pending_review
+<!-- merge_draft_body
+# RISC-V
+
+RISC-V (pronounced "risk-five") is a free and open standard instruction set architecture (ISA) based on reduced instruction set computer (RISC) principles. It was originally developed in 2010 at the University of California, Berkeley as the fifth generation of RISC processors from the university, under the direction of Krste Asanović and David Patterson. Unlike proprietary ISAs such as x86 and ARM, the RISC-V specification is released under permissive open-source licenses, allowing implementations without royalty payments. The standard supports 32, 64, and 128-bit address spaces, includes mandatory base integer instructions (RV32I, RV64I, RV128I) and a modular set of optional extensions for multiplication, atomics, floating-point, vector processing, bit manipulation, and compressed instructions. In 2015, stewardship was transferred to the non-profit RISC-V International, which now counts over 4,500 members. RISC-V has become a popular architecture for microcontrollers, embedded systems, and increasingly for mobile, desktop, and server markets, with commercial chips from SiFive, Andes Technology, Alibaba, StarFive, Espressif, and Raspberry Pi. Its vector extension (RVV) is particularly relevant for AI accelerator workloads, as it provides a standardised, scalable SIMD vector processing model that can be implemented across a wide range of hardware targets.
+
+## Key Claims
+
+- RISC-V is a free and open ISA, not a specific processor implementation.
+- Developed at UC Berkeley in 2010 as the fifth generation of Berkeley RISC research.
+- The ISA specification is published under permissive open-source licenses (BSD for CPU designs, Creative Commons Attribution 4.0 for technical reports).
+- RISC-V International, founded in 2015, maintains the standard and has over 4,500 members as of 2025.
+- The base ISA comes in 32-bit, 64-bit, and 128-bit variants, with a fixed set of base integer instructions (RV32I, RV64I, RV128I).
+- Optional extensions include: M (multiply/divide), A (atomics), F/D/Q (floating-point), C (compressed instructions), B (bit manipulation), V (vector operations), Zicsr (control/status registers), Zifencei (load/store fence), and J (interpreted/JIT language support).
+- The ISA is variable-length encoding with a load-store design, little-endian, and 4 KiB page size by default.
+- Major Linux distributions support RISC-V; commercial SoCs are available from SiFive, Andes Technology, Alibaba (DAMO Academy), StarFive, Espressif, Raspberry Pi, SpacemiT, and others.
+- The vector extension (RVV 1.0) defines 32 vector registers, software-configurable vector length, and length-agnostic programming, enabling efficient AI and data-parallel workloads.
+
+## Relationships
+
+- The [[sifive_performance_p570_gen3]] is a commercial RISC-V processor core compliant with the RVA23 profile, implementing the RVV 1.0 vector extension with a 128-bit vector pipeline.
+- The [[coral_npu_vector_execution_engine]] implements the Zve32x subset of RVV 1.0, using a separate SIMD instruction queue and decode unit for edge AI inference.
+- RISC-V's vector extension (RVV) is a key enabler for optimization recipes like [[mlir_xdsl_rvv_gemm_codegen_recipe]], which targets RVV intrinsics for GEMM kernels.
+- The [[llvm_riscv_target]] provides LLVM backend support for RISC-V, including the vector extension, essential for compiling code for RVV hardware targets.
+- Insufficient context for additional cross-links.
+
+## Sources
+
+- https://en.wikipedia.org/wiki/RISC-V
+merge_draft_body -->

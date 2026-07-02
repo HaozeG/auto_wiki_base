@@ -1,11 +1,13 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 88 | Sources: 3
+Last updated: 2026-07-02 | Pages: 90 | Sources: 3
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [earth_vector_memory_architecture.md](entity/earth_vector_memory_architecture.md) | EARTH | RISC-V, vector processor, memory access, shift networks, FPGA, Chisel | 2 | 0 |
+| [xiangshan.md](entity/xiangshan.md) | XiangShan | RISC-V, open-source processor, agile development | 2 | 0 |
 | [yolov8.md](entity/yolov8.md) | YOLOv8 | object detection, computer vision, YOLO, real-time inference | 2 | 0 |
 | [mlir.md](entity/mlir.md) | MLIR | compiler infrastructure, IR, LLVM | 2 | 0 |
 | [xuantie_c900_bugs.md](entity/xuantie_c900_bugs.md) | Xuantie C900 Bugs | Xuantie, C900, bug, security, erratum | 2 | 0 |

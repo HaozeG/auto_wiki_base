@@ -7,6 +7,11 @@ aliases:
 - v-spec
 - RISC-V Vector Extension
 - RISC-V V vector extension
+- RISC-V
+- RISC-V ISA
+- risk-five
+- RISC V
+- RISC-V International
 subtype: null
 tags:
 - riscv
@@ -22,6 +27,8 @@ sources:
 - raw/cache/5012a631903f97a6.md
 - https://github.com/riscvarchive/riscv-v-spec
 - raw/cache/876948b910a3f287.md
+- raw/cache/ac89c67a6b8baf3d.md
+- https://en.wikipedia.org/wiki/RISC-V
 source_url: https://github.com/riscvarchive/riscv-v-spec
 fetched_at: '2026-07-01T03:52:21.482224+00:00'
 type: entity

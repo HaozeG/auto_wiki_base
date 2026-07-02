@@ -11,6 +11,7 @@ aliases:
 - Alibaba Xuantie C910
 - T-Head XuanTie C910
 - T-HEAD Xuantie C910
+- T-Head C910
 subtype: null
 scorecard:
   novelty_delta: 0.85
@@ -28,6 +29,8 @@ sources:
 - raw/cache/eb10b88383dee0c3.md
 - raw/cache/6fb87a3cec8bb808.md
 - raw/cache/7706f0f87d4138ff.md
+- raw/cache/c66d1ffa7723a804.md
+- https://arxiv.org/abs/2505.24363
 source_url: https://www.riscvschool.com/2023/03/09/t-head-xuantie-c910-risc-v/
 fetched_at: '2026-07-01T02:48:58.954759+00:00'
 type: entity
