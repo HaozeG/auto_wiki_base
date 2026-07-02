@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 97 | Sources: 240
+Last updated: 2026-07-02 | Pages: 98 | Sources: 242
 
 ## Entity Pages
 
@@ -108,12 +108,13 @@ Flat list of all concepts mentioned across pages (with or without dedicated page
 | [xuantie-c920v1.md](hardware_target/xuantie-c920v1.md) | hardware_target | XuanTie C920v1 |  | 2 | 1 |
 | [xuantie-c950.md](hardware_target/xuantie-c950.md) | hardware_target | XuanTie C950 | RISC-V, Alibaba, XuanTie, server, AI | 2 | 16 |
 | [cpa-factored-gemmini-systolic-array.md](optimization_recipe/cpa-factored-gemmini-systolic-array.md) | optimization_recipe | CPA-Factored Gemmini Systolic Array |  | 2 | 31 |
-| [earth-shifting-based-vector-memory-access.md](optimization_recipe/earth-shifting-based-vector-memory-access.md) | optimization_recipe | EARTH Shifting-Based Vector Memory Access Optimization |  | 2 | 22 |
-| [llvm-riscv-fptrunc-narrowing-optimization.md](optimization_recipe/llvm-riscv-fptrunc-narrowing-optimization.md) | optimization_recipe | LLVM RISC-V FPTrunc Narrowing Optimization |  | 2 | 14 |
+| [earth-shifting-based-vector-memory-access.md](optimization_recipe/earth-shifting-based-vector-memory-access.md) | optimization_recipe | EARTH Shifting-Based Vector Memory Access Optimization |  | 2 | 23 |
+| [llvm-auto-re-vectorization-to-riscv.md](optimization_recipe/llvm-auto-re-vectorization-to-riscv.md) | optimization_recipe | Auto-Re-Vectorization via LLVM IR Transformation to RISC-V Vector |  | 2 | 0 |
+| [llvm-riscv-fptrunc-narrowing-optimization.md](optimization_recipe/llvm-riscv-fptrunc-narrowing-optimization.md) | optimization_recipe | LLVM RISC-V FPTrunc Narrowing Optimization |  | 2 | 15 |
 | [mlir-xdsl-rvv-lowering-pipeline.md](optimization_recipe/mlir-xdsl-rvv-lowering-pipeline.md) | optimization_recipe | MLIR-xDSL RVV Lowering Pipeline |  | 2 | 3 |
 | [pulp-nn-optimization-recipe.md](optimization_recipe/pulp-nn-optimization-recipe.md) | optimization_recipe | PULP-NN: Accelerating Quantized Neural Networks on Parallel Ultra-Low-Power RISC | RISC-V, quantized neural network, low-power, parallel computing | 2 | 7 |
 | [tvm-metaschedule-rvv-integration.md](optimization_recipe/tvm-metaschedule-rvv-integration.md) | optimization_recipe | TVM MetaSchedule RVV Integration |  | 2 | 0 |
-| [vectrans.md](optimization_recipe/vectrans.md) | optimization_recipe | VecTrans: LLM-Assisted Compiler Auto-Vectorization |  | 2 | 5 |
+| [vectrans.md](optimization_recipe/vectrans.md) | optimization_recipe | VecTrans: LLM-Assisted Compiler Auto-Vectorization |  | 2 | 6 |
 | [vindexmac-structured-sparse-matrix-optimization.md](optimization_recipe/vindexmac-structured-sparse-matrix-optimization.md) | optimization_recipe | Structured-Sparse Matrix Multiplication Optimization with vindexmac on RISC-V Ve | RISC-V, structured sparsity, matrix multiplication, vindexmac | 2 | 0 |
 | [risc-v-vector-code-examples.md](workload_kernel/risc-v-vector-code-examples.md) | workload_kernel | RISC-V Vector Code Examples | RISC-V, RVV, vector, assembly | 2 | 0 |
 | [rvv-matrix-multiplication-example-double.md](workload_kernel/rvv-matrix-multiplication-example-double.md) | workload_kernel | RVV Matrix Multiplication Example (Double Precision) | RVV, matrix multiplication, example | 2 | 0 |
