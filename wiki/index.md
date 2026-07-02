@@ -1,11 +1,12 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 94 | Sources: 3
+Last updated: 2026-07-02 | Pages: 99 | Sources: 3
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [windows_ml_on_amd_npu.md](entity/windows_ml_on_amd_npu.md) | Windows ML on AMD NPU | Windows ML, AMD NPU, ONNX Runtime, AI inference, AMD Ryzen AI | 2 | 0 |
 | [kendryte_k210.md](entity/kendryte_k210.md) | Kendryte K210 | RISC-V, AI accelerator, SoC, Kendryte | 2 | 0 |
 | [sifive_automotive_family.md](entity/sifive_automotive_family.md) | SiFive Automotive Family | automotive, RISC-V, SiFive, safety, ISO 26262 | 2 | 0 |
 | [earth_vector_memory_architecture.md](entity/earth_vector_memory_architecture.md) | EARTH | RISC-V, vector processor, memory access, shift networks, FPGA, Chisel | 2 | 0 |
@@ -86,6 +87,10 @@ Last updated: 2026-07-02 | Pages: 94 | Sources: 3
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [yolo26_rknn_rockchip_rk3588_benchmark.md](benchmark_result/yolo26_rknn_rockchip_rk3588_benchmark.md) | benchmark_result | YOLO26 RKNN on Rockchip RK3588 |  | 2 | 0 |
+| [yolo26_rknn_export.md](optimization_recipe/yolo26_rknn_export.md) | optimization_recipe | YOLO26 to RKNN Export |  | 2 | 0 |
+| [rockchip_rk3588.md](hardware_target/rockchip_rk3588.md) | hardware_target | Rockchip RK3588 |  | 2 | 0 |
+| [mobilenetv2_radxa_a733_t527_npu_benchmark.md](benchmark_result/mobilenetv2_radxa_a733_t527_npu_benchmark.md) | benchmark_result | MobileNetV2 on Radxa A733 and T527 (Vivante VIP9000) | Radxa, A733, T527, Vivante VIP9000, MobileNetV2, NPU, inference | 2 | 0 |
 | [kendryte_k510.md](hardware_target/kendryte_k510.md) | hardware_target | Kendryte K510 | K510, Kendryte, Canaan, RISC-V | 2 | 0 |
 | [xiangshan_kunminghu.md](hardware_target/xiangshan_kunminghu.md) | hardware_target | XiangShan Kunminghu | RISC-V, XiangShan, Kunminghu, FPGA, QEMU | 2 | 0 |
 | [onnx_int8_vs_fp16_jetson_orin_nano_latency_benchmark.md](benchmark_result/onnx_int8_vs_fp16_jetson_orin_nano_latency_benchmark.md) | benchmark_result | ONNX INT8 vs FP16 Latency on Jetson Orin Nano |  | 2 | 0 |

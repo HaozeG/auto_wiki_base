@@ -45,7 +45,7 @@ type: hardware_target
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 7
+inbound_links: 8
 ---
 
 # SiFive Performance P570 Gen3
