@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 95 | Sources: 236
+Last updated: 2026-07-02 | Pages: 97 | Sources: 240
 
 ## Entity Pages
 
@@ -28,6 +28,7 @@ Last updated: 2026-07-02 | Pages: 95 | Sources: 236
 | [risc-v-matrix-project.md](entity/risc-v-matrix-project.md) | RISC-V Matrix Project | RISC-V, matrix extension, prototype, riscv-stc | 2 | 0 |
 | [risc-v-vector-intrinsic-specification.md](entity/risc-v-vector-intrinsic-specification.md) | RISC-V Vector Intrinsic Specification |  | 2 | 0 |
 | [risc-v.md](entity/risc-v.md) | RISC-V |  | 2 | 0 |
+| [riscv-optimization-guide.md](entity/riscv-optimization-guide.md) | RISC-V Optimization Guide |  | 2 | 0 |
 | [riscv-vector-intrinsics.md](entity/riscv-vector-intrinsics.md) | RISC-V Vector Intrinsics |  | 6 | 0 |
 | [riscv-vector-primer.md](entity/riscv-vector-primer.md) | RISC-V Vector Primer |  | 2 | 0 |
 | [riscv-vector-tests.md](entity/riscv-vector-tests.md) | riscv-vector-tests | RVV, testing, verification, Spike, RISC-V | 2 | 0 |
@@ -43,6 +44,7 @@ Last updated: 2026-07-02 | Pages: 95 | Sources: 236
 | [ucie.md](entity/ucie.md) | UCIe |  | 4 | 0 |
 | [vortex-gpgpu.md](entity/vortex-gpgpu.md) | Vortex |  | 2 | 0 |
 | [voyager-development-platform.md](entity/voyager-development-platform.md) | Voyager Development Platform |  | 2 | 0 |
+| [whisper-risc-v-iss.md](entity/whisper-risc-v-iss.md) | Whisper |  | 2 | 0 |
 | [xdsl.md](entity/xdsl.md) | xDSL |  | 2 | 0 |
 | [xuantie.md](entity/xuantie.md) | XuanTie |  | 2 | 0 |
 
@@ -96,7 +98,7 @@ Flat list of all concepts mentioned across pages (with or without dedicated page
 | [sifive-intelligence-x280.md](hardware_target/sifive-intelligence-x280.md) | hardware_target | SiFive Intelligence X280 |  | 8 | 0 |
 | [sophon-sg2042.md](hardware_target/sophon-sg2042.md) | hardware_target | Sophon SG2042 | RISC-V, SOPHON, HPC, 64-core | 16 | 2 |
 | [spacemit-k1.md](hardware_target/spacemit-k1.md) | hardware_target | SpacemiT K1 |  | 8 | 1 |
-| [spacemit-x60-processor.md](hardware_target/spacemit-x60-processor.md) | hardware_target | SpacemiT X60 |  | 2 | 5 |
+| [spacemit-x60-processor.md](hardware_target/spacemit-x60-processor.md) | hardware_target | SpacemiT X60 |  | 2 | 7 |
 | [tenstorrent-grayskull-e75.md](hardware_target/tenstorrent-grayskull-e75.md) | hardware_target | Tenstorrent Grayskull e75 |  | 4 | 1 |
 | [ventana-veyron-v2.md](hardware_target/ventana-veyron-v2.md) | hardware_target | Ventana Veyron V2 | RISC-V, Ventana, server, data center, UCIe, DSA | 8 | 0 |
 | [xiangshan-nanhu-vdot.md](hardware_target/xiangshan-nanhu-vdot.md) | hardware_target | XiangShan Nanhu-vdot |  | 2 | 0 |
@@ -107,11 +109,11 @@ Flat list of all concepts mentioned across pages (with or without dedicated page
 | [xuantie-c950.md](hardware_target/xuantie-c950.md) | hardware_target | XuanTie C950 | RISC-V, Alibaba, XuanTie, server, AI | 2 | 16 |
 | [cpa-factored-gemmini-systolic-array.md](optimization_recipe/cpa-factored-gemmini-systolic-array.md) | optimization_recipe | CPA-Factored Gemmini Systolic Array |  | 2 | 31 |
 | [earth-shifting-based-vector-memory-access.md](optimization_recipe/earth-shifting-based-vector-memory-access.md) | optimization_recipe | EARTH Shifting-Based Vector Memory Access Optimization |  | 2 | 22 |
-| [llvm-riscv-fptrunc-narrowing-optimization.md](optimization_recipe/llvm-riscv-fptrunc-narrowing-optimization.md) | optimization_recipe | LLVM RISC-V FPTrunc Narrowing Optimization |  | 2 | 13 |
+| [llvm-riscv-fptrunc-narrowing-optimization.md](optimization_recipe/llvm-riscv-fptrunc-narrowing-optimization.md) | optimization_recipe | LLVM RISC-V FPTrunc Narrowing Optimization |  | 2 | 14 |
 | [mlir-xdsl-rvv-lowering-pipeline.md](optimization_recipe/mlir-xdsl-rvv-lowering-pipeline.md) | optimization_recipe | MLIR-xDSL RVV Lowering Pipeline |  | 2 | 3 |
 | [pulp-nn-optimization-recipe.md](optimization_recipe/pulp-nn-optimization-recipe.md) | optimization_recipe | PULP-NN: Accelerating Quantized Neural Networks on Parallel Ultra-Low-Power RISC | RISC-V, quantized neural network, low-power, parallel computing | 2 | 7 |
 | [tvm-metaschedule-rvv-integration.md](optimization_recipe/tvm-metaschedule-rvv-integration.md) | optimization_recipe | TVM MetaSchedule RVV Integration |  | 2 | 0 |
-| [vectrans.md](optimization_recipe/vectrans.md) | optimization_recipe | VecTrans: LLM-Assisted Compiler Auto-Vectorization |  | 2 | 3 |
+| [vectrans.md](optimization_recipe/vectrans.md) | optimization_recipe | VecTrans: LLM-Assisted Compiler Auto-Vectorization |  | 2 | 5 |
 | [vindexmac-structured-sparse-matrix-optimization.md](optimization_recipe/vindexmac-structured-sparse-matrix-optimization.md) | optimization_recipe | Structured-Sparse Matrix Multiplication Optimization with vindexmac on RISC-V Ve | RISC-V, structured sparsity, matrix multiplication, vindexmac | 2 | 0 |
 | [risc-v-vector-code-examples.md](workload_kernel/risc-v-vector-code-examples.md) | workload_kernel | RISC-V Vector Code Examples | RISC-V, RVV, vector, assembly | 2 | 0 |
 | [rvv-matrix-multiplication-example-double.md](workload_kernel/rvv-matrix-multiplication-example-double.md) | workload_kernel | RVV Matrix Multiplication Example (Double Precision) | RVV, matrix multiplication, example | 2 | 0 |
