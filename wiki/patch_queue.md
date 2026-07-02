@@ -1365,3 +1365,10 @@ RISC-V (pronounced "risk-five") is a free and open standard instruction set arch
 
 - [RISC-V - Wikipedia](https://en.wikipedia.org/wiki/RISC-V)
 merge_draft_body -->
+
+## [2026-07-02] pending | pulp-nn-optimization-recipe.md
+target_page: pulp-nn-optimization-recipe.md
+target_section: Measurements (under Transformation)
+source: https://arxiv.org/abs/2011.14325
+status: pending_review
+proposed_update: Add the specific measured speedups from the XpulpNN paper: 6x for 4-bit operands, 8x for 2-bit operands, and peak efficiency 2.22 TOPs/s/W from a parallel cluster in GF22FDX. Reference the XpulpNN paper as a source for these hardware-level benchmarks. Also add XpulpNN as an explicit related ISA extension in the constraints list.

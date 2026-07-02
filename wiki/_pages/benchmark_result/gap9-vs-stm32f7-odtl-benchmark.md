@@ -37,7 +37,7 @@ type: benchmark_result
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 1
+inbound_links: 2
 ---
 
 # GAP9 vs STM32F7 On-Device Training Benchmark
