@@ -1549,3 +1549,70 @@ nncase is an open-source deep learning compiler stack developed by Kendryte for 
 
 - [GitHub README: kendryte/nncase](https://github.com/kendryte/nncase)
 merge_draft_body -->
+
+## [2026-07-02] merge_pending | xiangshan-nanhu-vdot.md
+target_page: xiangshan-nanhu-vdot.md
+canonical_name: XiangShan Nanhu-vdot
+colliding_name: XiangShan Nanhu-vdot
+source: https://arxiv.org/abs/2409.00661
+status: pending_review
+<!-- merge_draft_body
+# XiangShan Nanhu-vdot
+
+XiangShan Nanhu-vdot is a specialized instruction set processor for edge AI based on the RISC-V instruction set architecture, extending the open-source XiangShan Nanhu processor core with custom vector dot product instructions and dedicated vector dot product calculation units. It is designed to accelerate large language model (LLM) inference computation on edge devices by enhancing execution efficiency and reducing energy consumption with limited hardware overhead. The Nanhu-vdot adds pipeline processing logic to support vector dot product operations and was validated on an FPGA platform, achieving over four times the speed of scalar methods in vector dot product computation and approximately 30% faster GPT-2 model inference compared to pure software implementation.
+
+## Key Claims
+
+- The Nanhu-vdot extends the XiangShan Nanhu RISC-V processor core with custom vector dot product instructions and dedicated calculation units.
+- FPGA hardware testing demonstrated over 4x speedup in vector dot product computation compared to scalar execution.
+- Hardware-software co-design for GPT-2 inference achieved approximately 30% speed improvement over pure software implementation with negligible additional hardware and power overhead.
+- The design targets edge AI applications, addressing high-performance and low-power requirements.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V base ISA with custom vector dot product extension.
+- Vector/matrix/accelerator support: Custom vector dot product units and pipeline processing logic.
+- Memory/cache/TLB/DMA: Not specified in available source.
+- Compiler/toolchain support: Not specified in available source.
+
+## Relationships
+
+- [[earth-shifting-based-vector-memory-access]]: The EARTH optimization is a complementary microarchitectural technique for vector memory access in RISC-V vector units; Nanhu-vdot's vector dot product hardware could benefit from similar memory access optimizations.
+- [[cpa-factored-gemmini-systolic-array]]: Both designs target AI acceleration on RISC-V platforms; while CPA-factored Gemmini focuses on systolic array optimization, Nanhu-vdot provides a vector dot product approach for LLM inference.
+
+## Sources
+
+- [2409.00661] Research on LLM Acceleration Using the High ... (arXiv)
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | ucie.md
+target_page: ucie.md
+canonical_name: UCIe
+colliding_name: Universal Chiplet Interconnect Express
+source: https://semiengineering.com/what-is-ucie/
+status: pending_review
+<!-- merge_draft_body
+# Universal Chiplet Interconnect Express
+
+Universal Chiplet Interconnect Express (UCIe) is an open industry standard for die-to-die interconnect and serial bus communication between chiplets in a single package. Co-developed by AMD, Arm, ASE Group, Google Cloud, Intel, Meta, Microsoft, Qualcomm, Samsung, and TSMC, UCIe defines a complete protocol stack covering the Physical Layer, Die-to-Die Adapter Layer, and Protocol Layer. The specification supports data rates from 8 Gbps/pin to 16 Gbps/pin with planned extensibility to 32 Gbps/pin, uses clock forwarding with single-ended DDR signaling for power efficiency, and provides a sideband channel for parameter exchange and negotiation between two dies. UCIe maps common protocols such as PCI Express and CXL, enabling developers to leverage existing software stacks and simplifying the adoption of in-package integration using multi-die architectures. The standard is designed for compatibility with various package technologies from organic substrates to advanced silicon interposers.
+
+## Key Claims
+
+- UCIe is an open specification for die-to-die interconnect developed by a consortium of major semiconductor and cloud companies.
+- It defines a three-layer protocol stack: Physical Layer (electrical AFE, clock forwarding, DDR signaling), Die-to-Die Adapter Layer (link initialization, capability discovery, CRC, retry), and Protocol Layer (mapping of PCIe, CXL, and user-defined protocols).
+- Supports data rates from 8 Gbps/pin to 16 Gbps/pin, with planned support up to 32 Gbps/pin for future high-bandwidth applications.
+- Uses data scrambling at the PHY level to reduce power supply disturbances without impacting bandwidth efficiency.
+- Achieves high energy efficiency (pJ/b), high edge usage efficiency (Tbps/mm), and low latency (ns).
+- Supports multiple current and trending use cases, including present and future high-bandwidth networking and data center applications.
+- Interoperability of compliant devices is ensured by the complete stack definition.
+
+## Relationships
+
+- [[cpa-factored-gemmini-systolic-array]]: As a systolic array accelerator, Gemmini can be implemented as a chiplet and communicate with other dies (e.g., memory, I/O) via UCIe in a multi-die package, leveraging the standard's die-to-die interconnect capabilities.
+- [[earth-shifting-based-vector-memory-access]]: This vector memory access optimization targets RISC-V vector units that could be integrated as a chiplet subsystem using UCIe for high-bandwidth communication with other system components.
+
+## Sources
+
+- [What Is UCIe? – Semiconductor Engineering](https://semiengineering.com/what-is-ucie/)
+- [UCIe – Wikipedia](https://en.wikipedia.org/wiki/UCIe)
+merge_draft_body -->

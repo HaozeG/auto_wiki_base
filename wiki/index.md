@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 89 | Sources: 218
+Last updated: 2026-07-02 | Pages: 91 | Sources: 224
 
 ## Entity Pages
 
@@ -11,7 +11,7 @@ Last updated: 2026-07-02 | Pages: 89 | Sources: 218
 | [banana-pi-bpi-f3.md](entity/banana-pi-bpi-f3.md) | Banana Pi BPI-F3 |  | 6 | 0 |
 | [earth-vector-memory-access-architecture.md](entity/earth-vector-memory-access-architecture.md) | EARTH (Vector Memory Access Architecture) |  | 2 | 0 |
 | [esperanto-technologies.md](entity/esperanto-technologies.md) | Esperanto Technologies |  | 2 | 0 |
-| [gemmini.md](entity/gemmini.md) | Gemmini |  | 2 | 19 |
+| [gemmini.md](entity/gemmini.md) | Gemmini |  | 2 | 20 |
 | [libxsmm.md](entity/libxsmm.md) | LIBXSMM |  | 2 | 0 |
 | [llama.cpp.md](entity/llama.cpp.md) | llama.cpp |  | 2 | 0 |
 | [llvm-auto-vectorization.md](entity/llvm-auto-vectorization.md) | LLVM Auto-Vectorization |  | 2 | 0 |
@@ -39,6 +39,7 @@ Last updated: 2026-07-02 | Pages: 89 | Sources: 218
 | [springbok.md](entity/springbok.md) | Springbok |  | 2 | 0 |
 | [stream-computing-risc-v-matrix-extension.md](entity/stream-computing-risc-v-matrix-extension.md) | Stream Computing RISC-V Matrix Extension |  | 2 | 0 |
 | [tenstorrent.md](entity/tenstorrent.md) | Tenstorrent |  | 2 | 0 |
+| [ucie.md](entity/ucie.md) | UCIe |  | 4 | 0 |
 | [vortex-gpgpu.md](entity/vortex-gpgpu.md) | Vortex |  | 2 | 0 |
 | [voyager-development-platform.md](entity/voyager-development-platform.md) | Voyager Development Platform |  | 2 | 0 |
 | [xdsl.md](entity/xdsl.md) | xDSL |  | 2 | 0 |
@@ -75,6 +76,7 @@ Flat list of all concepts mentioned across pages (with or without dedicated page
 | [xuantie-c950-specint2006.md](benchmark_result/xuantie-c950-specint2006.md) | benchmark_result | XuanTie C950 SPECint2006 | benchmark, RISC-V, XuanTie, C950, SPEC | 2 | 0 |
 | [andes-ax45mpv.md](hardware_target/andes-ax45mpv.md) | hardware_target | AX45MPV |  | 2 | 2 |
 | [andes-qilai.md](hardware_target/andes-qilai.md) | hardware_target | Andes QiLai |  | 2 | 1 |
+| [cimr-v.md](hardware_target/cimr-v.md) | hardware_target | CIMR-V |  | 2 | 0 |
 | [cutie-ternary-accelerator.md](hardware_target/cutie-ternary-accelerator.md) | hardware_target | CUTIE (Ternary Neural Network Accelerator) |  | 2 | 0 |
 | [d1-h.md](hardware_target/d1-h.md) | hardware_target | D1-H |  | 4 | 0 |
 | [et-soc-1.md](hardware_target/et-soc-1.md) | hardware_target | ET-SoC-1 |  | 2 | 1 |
@@ -98,9 +100,9 @@ Flat list of all concepts mentioned across pages (with or without dedicated page
 | [xuantie-c908.md](hardware_target/xuantie-c908.md) | hardware_target | XuanTie C908 |  | 2 | 0 |
 | [xuantie-c910-ice-board.md](hardware_target/xuantie-c910-ice-board.md) | hardware_target | Xuantie C910 / ICE SoC Board |  | 2 | 0 |
 | [xuantie-c920v1.md](hardware_target/xuantie-c920v1.md) | hardware_target | XuanTie C920v1 |  | 2 | 1 |
-| [xuantie-c950.md](hardware_target/xuantie-c950.md) | hardware_target | XuanTie C950 | RISC-V, Alibaba, XuanTie, server, AI | 2 | 15 |
-| [cpa-factored-gemmini-systolic-array.md](optimization_recipe/cpa-factored-gemmini-systolic-array.md) | optimization_recipe | CPA-Factored Gemmini Systolic Array |  | 2 | 29 |
-| [earth-shifting-based-vector-memory-access.md](optimization_recipe/earth-shifting-based-vector-memory-access.md) | optimization_recipe | EARTH Shifting-Based Vector Memory Access Optimization |  | 2 | 19 |
+| [xuantie-c950.md](hardware_target/xuantie-c950.md) | hardware_target | XuanTie C950 | RISC-V, Alibaba, XuanTie, server, AI | 2 | 16 |
+| [cpa-factored-gemmini-systolic-array.md](optimization_recipe/cpa-factored-gemmini-systolic-array.md) | optimization_recipe | CPA-Factored Gemmini Systolic Array |  | 2 | 30 |
+| [earth-shifting-based-vector-memory-access.md](optimization_recipe/earth-shifting-based-vector-memory-access.md) | optimization_recipe | EARTH Shifting-Based Vector Memory Access Optimization |  | 2 | 20 |
 | [llvm-riscv-fptrunc-narrowing-optimization.md](optimization_recipe/llvm-riscv-fptrunc-narrowing-optimization.md) | optimization_recipe | LLVM RISC-V FPTrunc Narrowing Optimization |  | 2 | 12 |
 | [mlir-xdsl-rvv-lowering-pipeline.md](optimization_recipe/mlir-xdsl-rvv-lowering-pipeline.md) | optimization_recipe | MLIR-xDSL RVV Lowering Pipeline |  | 2 | 3 |
 | [pulp-nn-optimization-recipe.md](optimization_recipe/pulp-nn-optimization-recipe.md) | optimization_recipe | PULP-NN: Accelerating Quantized Neural Networks on Parallel Ultra-Low-Power RISC | RISC-V, quantized neural network, low-power, parallel computing | 2 | 6 |
