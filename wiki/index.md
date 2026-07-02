@@ -1,22 +1,24 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 69 | Sources: 166
+Last updated: 2026-07-02 | Pages: 72 | Sources: 172
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [auto-vectorization-in-rust.md](entity/auto-vectorization-in-rust.md) | Auto-Vectorization in Rust | auto-vectorization, Rust, SIMD, LLVM, GCC | 2 | 0 |
 | [banana-pi-bpi-f3.md](entity/banana-pi-bpi-f3.md) | Banana Pi BPI-F3 |  | 6 | 0 |
 | [earth-vector-memory-access-architecture.md](entity/earth-vector-memory-access-architecture.md) | EARTH (Vector Memory Access Architecture) |  | 2 | 0 |
-| [gemmini.md](entity/gemmini.md) | Gemmini |  | 2 | 17 |
+| [gemmini.md](entity/gemmini.md) | Gemmini |  | 2 | 18 |
 | [libxsmm.md](entity/libxsmm.md) | LIBXSMM |  | 2 | 0 |
+| [llama.cpp.md](entity/llama.cpp.md) | llama.cpp |  | 2 | 0 |
 | [llvm-auto-vectorization.md](entity/llvm-auto-vectorization.md) | LLVM Auto-Vectorization |  | 2 | 0 |
 | [llvm-riscv-target.md](entity/llvm-riscv-target.md) | LLVM RISC-V Target |  | 2 | 0 |
 | [llvm-rv.md](entity/llvm-rv.md) | llvm-rv |  | 4 | 0 |
 | [mlperf-inference-tiny-benchmark.md](entity/mlperf-inference-tiny-benchmark.md) | MLPerf Inference: Tiny |  | 2 | 0 |
 | [muriscv-nn.md](entity/muriscv-nn.md) | MuRISCV-NN |  | 2 | 0 |
 | [muse-book.md](entity/muse-book.md) | Muse Book |  | 2 | 0 |
-| [nncase.md](entity/nncase.md) | nncase |  | 2 | 9 |
+| [nncase.md](entity/nncase.md) | nncase |  | 2 | 10 |
 | [opengeem-accelerator-generator.md](entity/opengeem-accelerator-generator.md) | OpenGeMM |  | 6 | 0 |
 | [pulp-platform.md](entity/pulp-platform.md) | PULP Platform |  | 8 | 0 |
 | [risc-v-matrix-project.md](entity/risc-v-matrix-project.md) | RISC-V Matrix Project | RISC-V, matrix extension, prototype, riscv-stc | 2 | 0 |
@@ -83,9 +85,10 @@ Flat list of all concepts mentioned across pages (with or without dedicated page
 | [xuantie-c950.md](hardware_target/xuantie-c950.md) | hardware_target | XuanTie C950 | RISC-V, Alibaba, XuanTie, server, AI | 2 | 14 |
 | [cpa-factored-gemmini-systolic-array.md](optimization_recipe/cpa-factored-gemmini-systolic-array.md) | optimization_recipe | CPA-Factored Gemmini Systolic Array |  | 2 | 24 |
 | [earth-shifting-based-vector-memory-access.md](optimization_recipe/earth-shifting-based-vector-memory-access.md) | optimization_recipe | EARTH Shifting-Based Vector Memory Access Optimization |  | 2 | 9 |
-| [llvm-riscv-fptrunc-narrowing-optimization.md](optimization_recipe/llvm-riscv-fptrunc-narrowing-optimization.md) | optimization_recipe | LLVM RISC-V FPTrunc Narrowing Optimization |  | 2 | 8 |
+| [llvm-riscv-fptrunc-narrowing-optimization.md](optimization_recipe/llvm-riscv-fptrunc-narrowing-optimization.md) | optimization_recipe | LLVM RISC-V FPTrunc Narrowing Optimization |  | 2 | 10 |
 | [mlir-xdsl-rvv-lowering-pipeline.md](optimization_recipe/mlir-xdsl-rvv-lowering-pipeline.md) | optimization_recipe | MLIR-xDSL RVV Lowering Pipeline |  | 2 | 3 |
-| [pulp-nn-optimization-recipe.md](optimization_recipe/pulp-nn-optimization-recipe.md) | optimization_recipe | PULP-NN: Accelerating Quantized Neural Networks on Parallel Ultra-Low-Power RISC | RISC-V, quantized neural network, low-power, parallel computing | 2 | 4 |
+| [pulp-nn-optimization-recipe.md](optimization_recipe/pulp-nn-optimization-recipe.md) | optimization_recipe | PULP-NN: Accelerating Quantized Neural Networks on Parallel Ultra-Low-Power RISC | RISC-V, quantized neural network, low-power, parallel computing | 2 | 5 |
+| [vectrans.md](optimization_recipe/vectrans.md) | optimization_recipe | VecTrans: LLM-Assisted Compiler Auto-Vectorization |  | 2 | 1 |
 | [vindexmac-structured-sparse-matrix-optimization.md](optimization_recipe/vindexmac-structured-sparse-matrix-optimization.md) | optimization_recipe | Structured-Sparse Matrix Multiplication Optimization with vindexmac on RISC-V Ve | RISC-V, structured sparsity, matrix multiplication, vindexmac | 2 | 0 |
 | [risc-v-vector-code-examples.md](workload_kernel/risc-v-vector-code-examples.md) | workload_kernel | RISC-V Vector Code Examples | RISC-V, RVV, vector, assembly | 2 | 0 |
 | [rvv-matrix-multiplication-example-double.md](workload_kernel/rvv-matrix-multiplication-example-double.md) | workload_kernel | RVV Matrix Multiplication Example (Double Precision) | RVV, matrix multiplication, example | 2 | 0 |
