@@ -66,7 +66,7 @@ The BananaPi BPI-F3 platform, a RISC-V single-board computer supporting the Vect
 ## Relationships
 
 - The BananaPi BPI-F3 platform is a RISC-V edge device comparable to other AIoT SoCs such as [[k230]] and [[allwinner_v853]], though it differs in detailed architecture and NPU capabilities.
-- The optimization recipe itself is detailed in [[rvv_llama.cpp_optimization_recipe]].
+- The optimization recipe itself is detailed in [[rvv_llama.cpp_optimization_recipe]], which documents the f16 dot-product and layer-normalization RVV rewrites that produced these speedups.
 
 ## Sources
 

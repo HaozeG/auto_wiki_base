@@ -1,11 +1,13 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 48 | Sources: 3
+Last updated: 2026-07-02 | Pages: 51 | Sources: 3
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [cpufp.md](entity/cpufp.md) | cpufp |  | 2 | 0 |
+| [risc_v_gpu_integration.md](entity/risc_v_gpu_integration.md) | RISC-V and GPU Integration | RISC-V, GPU, SoC | 2 | 0 |
 | [llvm_rvv_ir_representation.md](entity/llvm_rvv_ir_representation.md) | LLVM RISC-V Vector Extension IR Representation | LLVM, RISC-V, RVV, compiler IR, scalable vectors | 2 | 0 |
 | [riscv_vector_tests_generator.md](entity/riscv_vector_tests_generator.md) | riscv-vector-tests | RISC-V, RVV, testing, test generation | 2 | 0 |
 | [llama_cpp.md](entity/llama_cpp.md) | llama.cpp |  | 2 | 0 |
@@ -61,6 +63,7 @@ Last updated: 2026-07-02 | Pages: 48 | Sources: 3
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [sifive_performance_p570_gen3.md](hardware_target/sifive_performance_p570_gen3.md) | hardware_target | SiFive Performance P570 Gen3 | SiFive, RISC-V, RVA23, out-of-order | 2 | 0 |
 | [spacemit_x60_llvm_spec_cpu2017_benchmark.md](benchmark_result/spacemit_x60_llvm_spec_cpu2017_benchmark.md) | benchmark_result | SPEC CPU 2017 LLVM Optimization Results on SpacemiT X60 | LLVM, RISC-V, SpacemiT X60, SPEC CPU 2017, scheduling, vectorization, IPRA | 2 | 0 |
 | [llvm_optimization_for_risc_v_scheduling_vectorization_ipra.md](optimization_recipe/llvm_optimization_for_risc_v_scheduling_vectorization_ipra.md) | optimization_recipe | LLVM Optimization for RISC-V: Scheduling, Vectorization, and IPRA on SpacemiT X6 | LLVM, RISC-V, scheduling, vectorization, IPRA, SpacemiT X60 | 2 | 0 |
 | [spacemit_x60.md](hardware_target/spacemit_x60.md) | hardware_target | SpacemiT X60 | RISC-V, SpacemiT, LLVM | 2 | 0 |

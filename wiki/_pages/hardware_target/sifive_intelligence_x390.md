@@ -37,7 +37,7 @@ type: hardware_target
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # SiFive Intelligence X390

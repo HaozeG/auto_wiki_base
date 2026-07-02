@@ -26,7 +26,7 @@ type: entity
 created: '2026-07-01'
 updated: '2026-07-01'
 cold_start: true
-inbound_links: 8
+inbound_links: 10
 needs_summary_revision: false
 ---
 
@@ -47,6 +47,9 @@ LLVM RISC-V Target is the code generation backend for RISC-V processors within t
 
 - [[mlir_xdsl_rvv_gemm_codegen_recipe]] This optimization recipe uses the LLVM toolchain for RISC-V vector code generation, relying on the LLVM RISC-V target for RVV intrinsic support.
 - [[llvm_ir]]: the Static Single Assignment intermediate representation that the LLVM RISC-V target lowers into machine code; the RISC-V backend consumes LLVM IR as its input.
+- [[llvm_rvv_ir_representation]]: the detailed scalable-vector-type model the RISC-V target uses specifically to represent and lower RVV code.
+- [[gcc15_clang21_autovectorization_rvv_bananapi_f3]]: a benchmark comparing this LLVM/Clang RISC-V backend's autovectorization output against GCC on RVV hardware.
+- [[sifive_performance_p570_gen3]]: a contemporary out-of-order RISC-V core that relies on this LLVM RISC-V target (and GCC) for its software ecosystem.
 
 ## Sources
 

@@ -27,7 +27,7 @@ type: hardware_target
 created: '2026-07-01'
 updated: '2026-07-01'
 cold_start: true
-inbound_links: 20
+inbound_links: 22
 needs_summary_revision: false
 ---
 
@@ -61,6 +61,9 @@ The XuanTie C908 is a RISC-V processor core developed by T-Head Semiconductor, t
 - [[xuantie_e907]] and [[allwinner_v851s]]/[[allwinner_t536]]: sibling/embedding XuanTie-family cores integrated into Allwinner AIoT SoCs.
 - [[xuantie_c930]]: server-class XuanTie core targeting AI/HPC workloads, a different market segment from the C908's embedded/AIoT focus.
 - [[mlperf_inference_tiny_benchmark_suite]]: the C906 predecessor to this core was benchmarked on MLPerf Tiny; the C908's cited speedup over the C906 is directly relevant to that benchmark context.
+- [[llama_cpp]]: an LLM inference library with explicit RVV/ZVFH support that can target the C908 as a hardware backend.
+- [[saturn_vector_unit]]: an open-source RVV 1.0 short-vector microarchitecture from UC Berkeley, a useful comparison point for the C908's own configurable-VLEN vector unit.
+- [[riscv_vector_tests_generator]]: an automated RVV instruction test generator applicable to validating C908-class vector implementations.
 
 ## Sources
 
