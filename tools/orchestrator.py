@@ -627,19 +627,25 @@ def _title_matches_existing(title: str, extra_stems: set[str] | None = None,
 
 def _synthesis_gap_clusters(min_cluster_size: int = 3) -> list[tuple[str, list[str]]]:
     """
-    Find tag clusters with >= min_cluster_size entity pages that have no
-    synthesis page covering them. Returns [(tag, [uncovered page stems])],
-    sorted by cluster size descending. Shared by _check_synthesis_gaps()
-    (human-readable log strings) and the research loop's synthesis-candidate
-    generation (Phase 3 — see wiki/log.md's repeated "deferred_for_human:
-    Synthesis gaps persist across sessions" notes; this was previously only
-    ever logged, never acted on).
+    Find tag clusters with >= min_cluster_size entity(-subtype) pages that
+    have no synthesis page covering them. Returns [(tag, [uncovered page
+    stems])], sorted by cluster size descending. Shared by
+    _check_synthesis_gaps() (human-readable log strings) and the research
+    loop's synthesis-candidate generation (Phase 3 — see wiki/log.md's
+    repeated "deferred_for_human: Synthesis gaps persist across sessions"
+    notes; this was previously only ever logged, never acted on).
+
+    Deliberately does NOT filter on `fm.get("type") == "entity"`: subtype
+    pages are written with the literal subtype name in `type` (e.g.
+    `type: hardware_target`), not `type: entity, subtype: hardware_target` —
+    an entity-only filter silently excludes most of an optimization_first
+    wiki's content and the pages where tags are most consistently populated.
     """
     tag_to_pages: dict[str, list[str]] = {}
     for p in _WIKI_PAGES_DIR.rglob("*.md"):
         fm, _ = frontmatter.parse_page(p)
-        if fm.get("type") == "entity":
-            for tag in fm.get("tags", []):
+        if fm.get("type") != "synthesis":
+            for tag in fm.get("tags", []) or []:
                 tag_to_pages.setdefault(tag, []).append(p.stem)
 
     # Collect all entity pages already named in a synthesis connected_entities list
