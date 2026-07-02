@@ -962,3 +962,46 @@ The PULP (Parallel Ultra-Low Power) Platform is an open-source hardware research
 
 - [Open-Source Design of Heterogeneous SoCs for AI Acceleration: the PULP Platform Experience](https://arxiv.org/html/2412.20391v1)
 merge_draft_body -->
+
+## [2026-07-02] merge_pending | d1-h.md
+target_page: d1-h.md
+canonical_name: D1-H
+colliding_name: Allwinner D1
+source: https://linux-sunxi.org/D1
+status: pending_review
+<!-- merge_draft_body
+# Allwinner D1
+
+The Allwinner D1 (also known as D1-H, codename sun20iw1p1) is a system-on-chip (SoC) manufactured by Allwinner Technology. It is the first Allwinner SoC based on a RISC-V core, featuring a single XuanTie C906 core from T-Head Semiconductor (a subsidiary of Alibaba) supporting the RV64IMAFDCVU extensions (RV64GCV with vector extension). The SoC is fabricated on a 22nm process and supports up to 2 GB of DDR2 or DDR3 memory. It includes a video processing unit (VPU) capable of decoding 4K video at 30 FPS (H.265/H.264/MPEG/JPEG/VC1/MJPEG) and encoding 1080p at 60 FPS (JPEG/MJPEG). Additional features include a Tensilica HiFi4 DSP running at 600 MHz, a G2D graphics accelerator, a display engine (DE2.0), and various connectivity options such as HDMI, MIPI, LVDS, LCD, CVBS, 10/100/1000M Ethernet MAC, SDIO 3.0, eMMC 5.0, SPI NOR/NAND Flash, USB 2.0 OTG and Host, and multiple I2C, SPI, UART, PWM, IR, and ADC interfaces.
+
+## Key Claims
+
+- First Allwinner SoC based on a RISC-V core.
+- Single XuanTie C906 core with RV64IMAFDCVU (RV64GCV including vector extension).
+- Fabricated on 22nm process.
+- VPU supports 4K decode at 30 FPS for H.265/H.264/MPEG/JPEG/VC1/MJPEG and 1080p encode at 60 FPS for JPEG/MJPEG.
+- Includes Tensilica HiFi4 DSP operating at 600 MHz.
+- Memory: DDR2/DDR3 up to 2 GB.
+- Connectivity includes HDMI, MIPI, LVDS, LCD, CVBS, 10/100/1000M EMAC, SDIO 3.0, eMMC 5.0, SPI NOR/NAND Flash, USB 2.0 OTG and Host.
+- Released in April 2021.
+- Cooperation announced between Allwinner and T-Head (PingTou) in August 2020.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RV64IMAFDCVU (RV64GCV including vector extension).
+- Vector/matrix/accelerator support: The XuanTie C906 core includes the V vector extension (RVV 0.7.1-based XTheadVector). No dedicated matrix accelerator; DSP (HiFi4) for audio/signal processing.
+- Memory/cache/TLB/DMA: Not detailed in source.
+- Compiler/toolchain support: RISC-V GCC/LLVM toolchains; Allwinner SDK available.
+
+## Relationships
+
+- [[cpa-factored-gemmini-systolic-array]]: Both are hardware targets in the RISC-V ecosystem; the D1 provides a general-purpose RISC-V platform that could benefit from systolic array optimizations for AI workloads.
+- [[earth-shifting-based-vector-memory-access]]: The D1's XuanTie C906 core includes vector extensions, making EARTH's vector memory access optimization relevant for improving performance on vectorized workloads on this hardware.
+- Insufficient context for additional cross-links; no existing entity pages for T-Head C906 or similar SoCs are present in current wiki context.
+
+## Sources
+
+- [linux-sunxi.org D1 page](https://linux-sunxi.org/D1)
+- CNX Software article referenced in source
+- Allwinner press release
+merge_draft_body -->

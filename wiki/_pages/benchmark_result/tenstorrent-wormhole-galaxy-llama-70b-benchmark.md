@@ -27,7 +27,7 @@ evidence_strength: reported
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 scorecard:
   novelty_delta: 0.9
   claim_density: 0.5
