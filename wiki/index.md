@@ -1,11 +1,15 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 80 | Sources: 3
+Last updated: 2026-07-02 | Pages: 86 | Sources: 3
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [mlir.md](entity/mlir.md) | MLIR | compiler infrastructure, IR, LLVM | 2 | 0 |
+| [xuantie_c900_bugs.md](entity/xuantie_c900_bugs.md) | Xuantie C900 Bugs | Xuantie, C900, bug, security, erratum | 2 | 0 |
+| [shl.md](entity/shl.md) | SHL |  | 2 | 0 |
+| [hhb.md](entity/hhb.md) | HHB | toolchain, neural network deployment, T-Head, Xuantie | 2 | 0 |
 | [semidynamics.md](entity/semidynamics.md) | Semidynamics |  | 2 | 0 |
 | [llvm_vcix_scheduling_model.md](entity/llvm_vcix_scheduling_model.md) | VCIX Scheduling Model | VCIX, LLVM, scheduling, RISC-V, SiFive, compiler, vector coprocessor | 2 | 0 |
 | [systolic_tensor_units.md](entity/systolic_tensor_units.md) | Systolic Tensor Units | systolic array, tensor unit, TPU, accelerator | 2 | 0 |
@@ -77,6 +81,8 @@ Last updated: 2026-07-02 | Pages: 80 | Sources: 3
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [xuantie_c908_ai_inference_performance.md](benchmark_result/xuantie_c908_ai_inference_performance.md) | benchmark_result | XuanTie C908 AI Inference Performance | XuanTie C908, AI inference, HHB, SHL, MobileNet, int8 quantization, RVV | 2 | 0 |
+| [hhb_mobilenetv2_c908_compilation.md](optimization_recipe/hhb_mobilenetv2_c908_compilation.md) | optimization_recipe | HHB MobileNetV2 C908 Compilation | compilation, model deployment, HHB, C908, K230 | 2 | 0 |
 | [iree_mlir_ukernel_rvv_matmul.md](optimization_recipe/iree_mlir_ukernel_rvv_matmul.md) | optimization_recipe | IREE MLIR uKernel for RISC-V Vector Extension | IREE, MLIR, RISC-V, RVV, ukernel, matmul, LLVM | 2 | 0 |
 | [compiler_benchmark_bananapi_f3_gcc15_clang21.md](benchmark_result/compiler_benchmark_bananapi_f3_gcc15_clang21.md) | benchmark_result | Compiler Benchmark Comparison on BananaPi-F3 (RVV 1.0) |  | 2 | 0 |
 | [coral_npu_vector_execution_engine.md](hardware_target/coral_npu_vector_execution_engine.md) | hardware_target | Coral NPU Vector Execution Engine | Coral, Google, RISC-V, RVV, NPU, Zve32x | 2 | 0 |

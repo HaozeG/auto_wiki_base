@@ -434,3 +434,19 @@ pages_written: 1
 pipeline_rejection_rate: 0%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_5cad5846_2026-07-02.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] research | RISC-V speech recognition audio ML inference embedded accele
+session_id: 2a1c410d
+candidates_evaluated: 9
+pages_written: 0
+pipeline_rejection_rate: 11%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_2a1c410d_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] research | T-Head XuanTie SHL heterogeneous library HHB toolchain deplo
+session_id: 6a240ef2
+candidates_evaluated: 10
+pages_written: 6
+pipeline_rejection_rate: 10%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_6a240ef2_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first

@@ -44,7 +44,7 @@ type: optimization_recipe
 created: '2026-07-01'
 updated: '2026-07-01'
 cold_start: true
-inbound_links: 38
+inbound_links: 40
 needs_summary_revision: true
 ---
 

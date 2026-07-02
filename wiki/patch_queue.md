@@ -1076,3 +1076,153 @@ Meta MTIA (Meta Training and Inference Accelerator) is a family of custom applic
 
 - https://www.abhs.in/blog/meta-mtia-chip-roadmap-four-generations-inference-2026
 merge_draft_body -->
+
+## [2026-07-02] merge_pending | xuantie_c906.md
+target_page: xuantie_c906.md
+canonical_name: XuanTie C906
+colliding_name: XuanTie C906
+source: https://riscv.org/blog/xuantie-c906-tops-mlperf-tiny-v0-7-benchmark-mengchang-alibaba-cloud/
+status: pending_review
+<!-- merge_draft_body
+# XuanTie C906
+
+XuanTie C906 is a 64-bit high-performance RISC-V processor developed by Alibaba's T-Head division (Cloud). It implements the RISC-V Vector Extension version 0.7.1 with 128-bit vector operation units. The processor features a five- to eight-stage integer pipeline and employs multi-channel and mode data prefetching technologies to optimize data access bandwidth. The C906 silicon chip is deployed in the Allwinner D1 SoC, which powers various development boards available in the open market. The processor achieved top marks across all four categories of the MLPerf Tiny v0.7 benchmark for IoT AI workloads: Visual Wake Words (VWW), Image Classification (IC), Keyword Spotting (KWS), and Anomaly Detection (AD). A software stack consisting of CSI-NN2, HHB, and Sinian was used to deploy and optimize neural network models on the C906.
+
+## Key Claims
+
+- Implements RISC-V Vector Extension V0.7.1 with 128-bit vector units, supporting data formats int8, int16, int32, int64, bf16, fp16, fp32, and fp64. The best benchmark performance was achieved using fp16.
+- Achieved top marks in MLPerf Tiny v0.7 across all four tasks (VWW, IC, KWS, AD), demonstrating competitive AI inference performance for IoT-class devices.
+- The C906 silicon is mass-produced in the Allwinner D1 SoC and is available on development boards in the open market.
+- The neural network software stack includes CSI-NN2 (assembly-level RVV-optimized acceleration library, open source on GitHub), HHB (deployment toolchain based on Apache TVM, open source on GitHub, supporting Caffe, TensorFlow, ONNX, and TensorFlow Lite model formats), and Sinian (model compression platform using network structure search and knowledge distillation, achieving 3–8× computation reduction).
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V 64-bit with Vector Extension V0.7.1.
+- Vector/matrix/accelerator support: 128-bit vector operation units.
+- Memory/cache/TLB/DMA: Multi-channel and mode data prefetching technologies; no specific cache sizes documented in the source.
+- Compiler/toolchain support: CSI-NN2 acceleration library with RVV assembly optimization; HHB deployment tools based on Apache TVM; Sinian for model compression; model formats: Caffe, TensorFlow, ONNX, TensorFlow Lite.
+
+## Relationships
+
+- [[k230]] is a later XuanTie-family processor (C908 cores) integrating the RISC-V Vector Extension 1.0 and a dedicated KPU, representing a higher-performance AIoT design.
+- [[allwinner_v853]] is another Allwinner SoC that includes a Xuantie E907 RISC-V core alongside an Arm Cortex-A7 and a 1 TOPS NPU, targeting similar AI vision applications.
+
+## Sources
+
+- https://riscv.org/blog/xuantie-c906-tops-mlperf-tiny-v0-7-benchmark-mengchang-alibaba-cloud/
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | xuantie-c910.md
+target_page: xuantie-c910.md
+canonical_name: XuanTie C910
+colliding_name: XuanTie C910
+source: https://chipsandcheese.com/p/alibabat-heads-xuantie-c910
+status: pending_review
+<!-- merge_draft_body
+# XuanTie C910
+
+The XuanTie C910 is an out-of-order RISC-V processor core developed by T-HEAD Semiconductor (Alibaba Group). It is T-HEAD’s first out-of-order implementation and is designed to be clustered in groups of up to four cores sharing a unified L2 cache. The core is fabricated on TSMC’s 12nm FinFET process with a target frequency range of 2.0 to 2.5 GHz, and each core occupies approximately 0.8 mm² silicon area. The memory subsystem includes a configurable 32KB/64KB Harvard L1 cache but lacks a mid-level cache, making the cluster’s shared L2 cache a performance bottleneck. The Core Interconnect Unit (CIU) provides inter-core communication with latency significantly lower than the SiFive P550’s quad-cluster latency of over 300 ns. This core represents T-HEAD’s entry into high-performance RISC-V computing, preceding later designs like the C908 and C950.
+
+## Key Claims
+
+- First out-of-order RISC-V core from T-HEAD.
+- Targets 2.0–2.5 GHz on TSMC’s 12nm FinFET process.
+- Core area 0.8 mm².
+- Clusters up to four cores with a shared L2 cache.
+- CIU inter-core latency better than SiFive P550 (which had >300 ns within a quad-core cluster).
+- Cache subsystem described as exceptionally weak: shared L2 is small and slow, with no mid-level cache to insulate L1 misses.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V out-of-order (implied RV64GC).
+- Vector/matrix/accelerator support: Not specified; standard RISC-V base ISA.
+- Memory/cache/TLB/DMA: L1 I-cache and D-cache (32KB/64KB configurable), shared L2 per cluster (small and slow), no mid-level cache.
+- Compiler/toolchain support: Not specified.
+
+## Relationships
+
+- [[xuantie_c908]]: A later-generation XuanTie core with configurable vector extension support and instruction fusion, representing a different microarchitecture (in-order vector processor) compared to the C910’s out-of-order scalar design.
+- [[k230]]: A Kendryte SoC integrating a pair of C908 cores, illustrating the evolution of T-HEAD’s core IP from the C910 to the C908 in AIoT applications.
+
+## Sources
+
+- https://chipsandcheese.com/p/alibabat-heads-xuantie-c910
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | xuantie_c950.md
+target_page: xuantie_c950.md
+canonical_name: XuanTie C950
+colliding_name: XuanTie C950
+source: https://www.eetimes.com/alibaba-launches-xuantie-c950-cpu-for-agentic-ai/
+status: pending_review
+<!-- merge_draft_body
+# XuanTie C950
+
+The XuanTie C950 is a 64-bit multi-core RISC-V CPU developed by Alibaba's DAMO Academy, designed specifically for agentic AI workloads. Unveiled in March 2026, it is fabricated on a 5-nanometer process and leverages the open-standard RISC-V instruction set architecture to offer an alternative to proprietary Western architectures such as x86 and ARM. As the latest generation in the XuanTie family of processor cores, it targets server-class AI inference and autonomous agent applications, building on the foundation established by previous XuanTie cores like the C930 and C908. The processor aims to challenge proprietary architectures with open-source competition, and reflects Alibaba's investment in RISC-V as a strategic platform for AI acceleration.
+
+## Key Claims
+
+- 64-bit multi-core RISC-V CPU for agentic AI workloads.
+- Fabricated on 5nm process.
+- Designed to challenge proprietary Western architectures with open-source competition.
+- Developed by Alibaba's DAMO Academy (Academy for Discovery, Adventure, Momentum and Outlook).
+- Targets server-class AI workloads including autonomous agent systems.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V (specific profile not disclosed).
+- Vector/matrix/accelerator support: Not detailed in public sources.
+- Memory/cache/TLB/DMA: Not disclosed.
+- Compiler/toolchain support: Not specified.
+
+## Relationships
+
+- [[xuantie_c908]]: earlier generation XuanTie core targeting AIoT, with detailed vector extension information and software ecosystem documentation.
+- [[llama_cpp]]: a high-performance LLM inference library that can potentially run on the C950 given its RISC-V support and RVV extensions.
+- [[xuantie_c930]]: server-class XuanTie core also targeting AI/HPC workloads, a predecessor in the same market segment.
+
+## Sources
+
+- https://www.eetimes.com/alibaba-launches-xuantie-c950-cpu-for-agentic-ai/
+- https://www.cnbc.com/2026/03/24/alibaba-reveals-new-ai-cpu-chip-designed-for-agents.html (CNBC)
+- https://www.reuters.com/technology/alibaba-unveils-next-gen-chip-agentic-ai-company-says-2026-03-24/ (Reuters)
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | xuantie_c908.md
+target_page: xuantie_c908.md
+canonical_name: XuanTie C908
+colliding_name: XuanTie C908
+source: https://riscv.org/blog/xuantie-c908-accelerates-ai-with-software-and-hardware-fusion/
+status: pending_review
+<!-- merge_draft_body
+# XuanTie C908
+
+The XuanTie C908 is a RISC-V processor core developed by T-Head Semiconductor (Alibaba Group) designed for AI-focused edge and Internet-of-Things applications. It operates at up to 2 GHz and complies with the RISC-V Vector Extension 1.0, supporting configurable vector register bit widths of 128 or 256 bits. The vector execution unit handles FP16, BFP16, FP32, INT8, INT32, and INT64 operations, with additional INT8 and INT4 vector dot product instructions for neural network acceleration. The processor implements instruction fusion technology to improve pipeline efficiency. Software support includes the Structure of Heterogeneous Library (SHL), a set of neural network library APIs providing optimized implementations for convolution, pooling, activation, and other operators, and the Heterogeneous Honey Badger (HHB) deployment tool for quantization and code generation. The C908 succeeds the XuanTie C906, offering significant AI inference performance improvements through both architectural enhancements and software-hardware co-optimization.
+
+## Key Claims
+
+- Operates at up to 2 GHz and is compliant with RISC-V Vector Extension 1.0.
+- Supports configurable vector register widths of 128 and 256 bits.
+- Vector execution unit handles FP16, BFP16, FP32, INT8, INT32, INT64, and supports INT8 and INT4 vector dot product instructions.
+- Implements instruction fusion technology to reduce instruction overhead.
+- SHL provides optimized implementations for key neural network operators including conv2d, depthwise conv2d, pooling, activation, and fully connected layers.
+- HHB tool supports int8 asymmetric and fp16 quantization and generates C code for inference deployment.
+- Compared to the previous generation XuanTie C906, the C908 achieves 3.75–4.57× AI inference performance improvement.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RV64GCV (RISC-V Vector Extension 1.0)
+- Vector/matrix/accelerator support: 128/256-bit configurable vector registers, vector dot product INT8/INT4, instruction fusion
+- Memory/cache/TLB/DMA: Not detailed in available source.
+- Compiler/toolchain support: SHL (Structure of Heterogeneous Library), HHB (Heterogeneous Honey Badger)
+
+## Relationships
+
+- The C908 is the target processor for dedicated optimization recipes such as [[xuantie_c908_shl_convolution_acceleration]] and micro-kernel implementations like [[xuantie_c908_fp16_gemm_kernel]].
+- The MLIR+xDSL code generation pipeline [[mlir_xdsl_rvv_gemm_codegen_recipe]] targets similar RISC-V vector hardware and provides a complementary software optimization approach.
+- The predecessor core [[xuantie_c906]] is compared in performance benchmarks.
+
+## Sources
+
+- https://riscv.org/blog/xuantie-c908-accelerates-ai-with-software-and-hardware-fusion/
+merge_draft_body -->

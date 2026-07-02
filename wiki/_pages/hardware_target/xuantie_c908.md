@@ -4,6 +4,7 @@ aliases:
 - C908
 - T-Head XuanTie C908
 - XuanTie C908 processor
+- T-Head C908
 hardware_targets:
 - XuanTie C908
 toolchains:
@@ -25,9 +26,9 @@ source_url: https://riscv.org/blog/xuantie-c908-accelerates-ai-with-software-and
 fetched_at: '2026-07-01T02:54:06.948603+00:00'
 type: hardware_target
 created: '2026-07-01'
-updated: '2026-07-01'
+updated: '2026-07-02'
 cold_start: true
-inbound_links: 42
+inbound_links: 43
 needs_summary_revision: false
 ---
 

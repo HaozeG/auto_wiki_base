@@ -33,13 +33,15 @@ sources:
 - raw/cache/4846536b770902d6.md
 - raw/cache/7d46c580f16bec4d.md
 - https://riscv.org/blog/2022/06/xuantie-c906-tops-mlperf-tiny-v0-7-benchmark-mengchang-alibaba-cloud/
+- raw/cache/43eb1940c8335240.md
+- https://riscv.org/blog/xuantie-c906-tops-mlperf-tiny-v0-7-benchmark-mengchang-alibaba-cloud/
 source_url: https://www.riscvschool.com/2023/03/09/t-head-xuantie-c906-risc-v/
 fetched_at: '2026-07-01T04:19:54.493265+00:00'
 type: hardware_target
 created: '2026-07-01'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 2
+inbound_links: 3
 needs_summary_revision: false
 ---
 

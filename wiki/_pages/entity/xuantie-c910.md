@@ -27,6 +27,7 @@ sources:
 - https://chipsandcheese.com/p/alibabat-heads-xuantie-c910
 - raw/cache/eb10b88383dee0c3.md
 - raw/cache/6fb87a3cec8bb808.md
+- raw/cache/7706f0f87d4138ff.md
 source_url: https://www.riscvschool.com/2023/03/09/t-head-xuantie-c910-risc-v/
 fetched_at: '2026-07-01T02:48:58.954759+00:00'
 type: entity
