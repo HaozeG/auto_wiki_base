@@ -51,3 +51,11 @@ audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/
 theme_profile: RISC-V AI accelerator | optimization_first
 coverage_gaps:
   - missing_page_type:workload_kernel
+
+## [2026-07-02] research | K230 Kendryte KPU edge AI SoC RISC-V
+session_id: 85e1e8b1
+candidates_evaluated: 8
+pages_written: 5
+pipeline_rejection_rate: 25%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/riscv-v2-replication/wiki/audit/research_85e1e8b1_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first
