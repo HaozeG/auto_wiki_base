@@ -44,7 +44,7 @@ type: optimization_recipe
 created: '2026-07-01'
 updated: '2026-07-01'
 cold_start: true
-inbound_links: 11
+inbound_links: 14
 needs_summary_revision: true
 ---
 
@@ -76,6 +76,9 @@ This optimization recipe describes a compilation approach that combines the MLIR
 
 - Validated by benchmark results on the same pipeline: [[mlir_xdsl_gemm_benchmark_k230_bananapi_f3]]
 - The micro‑kernel shape follows the GotoBLAS algorithm and relates to workload kernels like [[xuantie_c908_fp16_gemm_kernel]] (note: different hardware).
+- [[opengemm]]: a Chisel-based hardware GeMM accelerator generator for RISC-V edge devices — a hardware-acceleration alternative to this compiler-generated software micro-kernel approach.
+- [[banana_pi_gemm_optimization_benchmark]]: hand-tuned/auto-vectorized RISC-V GEMM results on similar Banana Pi-class hardware, useful as an independent baseline comparison point.
+- [[generic_micro_kernel_templates_gemm]]: a non-RISC-V (ARM/x86) template-based micro-kernel generation approach, offering a cross-architecture contrast to this RISC-V-specific MLIR+xDSL pipeline.
 
 ## Sources
 

@@ -280,3 +280,282 @@ MLPerf Tiny is the first industry-standard benchmark suite for ultra-low-power t
 - https://www.researchgate.net/publication/352397004_MLPerf_Tiny_Benchmark
 - https://github.com/mlcommons/tiny
 merge_draft_body -->
+
+## [2026-07-02] merge_pending | xuantie_c930.md
+target_page: xuantie_c930.md
+canonical_name: XuanTie C930
+colliding_name: XuanTie C930
+source: https://inf.news/en/tech/ba346db5ad34377a23c68be253a11939.html
+status: pending_review
+<!-- merge_draft_body
+# XuanTie C930
+
+The XuanTie C930 is a server-grade RISC-V processor core developed by the XuanTie team within Alibaba's DAMO Academy, targeting AI-HPC workloads. As Alibaba's first server-grade processor design, it operates at a main frequency exceeding 3.4 GHz and achieves a performance score of 15.2/GHz, indicating strong per-cycle performance. The core integrates the XuanTie TITAN vector engine, a large-bit-width vector unit that supports scalable vector length configurations from 512 to 4096 bits, enabling instruction-level parallel acceleration for demanding workloads. The C930 is available for licensing to system-on-chip makers, with initial shipments scheduled to begin in March.
+
+## Key Claims
+
+- Main frequency exceeds 3.4 GHz under typical working scenarios.
+- Performance score of 15.2/GHz (benchmark unspecified).
+- First server-grade processor from the XuanTie / DAMO Academy lineage, targeting AI-HPC workloads.
+- Incorporates the XuanTie TITAN vector engine supporting scalable vector lengths from 512 to 4096 bits.
+- Available for licensing to SoC makers; shipments begin in March.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V (server-class profile with vector extension support).
+- Vector/matrix/accelerator support: XuanTie TITAN vector engine, 512-4096-bit scalable vector length configuration, instruction-level parallel acceleration.
+- Memory/cache/TLB/DMA: Not publicly disclosed.
+- Compiler/toolchain support: Not publicly disclosed; common RISC-V GNU/Linux toolchains expected.
+
+## Relationships
+
+- [[xuantie_c908]]: Earlier-generation XuanTie core targeting AIoT and embedded AI inference, representing a different market segment from the server-class C930.
+- [[xuantie_c950]]: Another server-class XuanTie core from the same family, described as newer-generation; the C930 is positioned as the first server-grade design, potentially overlapping or preceding the C950.
+- [[rvme]]: A matrix engine coprocessor design co-authored by researchers from DAMO Academy and Shanghai Jiao Tong University; while not explicitly confirmed as part of C930, it shares institutional origin and is relevant to the vector/matrix acceleration landscape.
+
+## Sources
+
+- https://inf.news/en/tech/ba346db5ad34377a23c68be253a11939.html (news article snippet compilation)
+- https://www.tomshardware.com (cited within snippets)
+- https://www.benzinga.com (cited within snippets)
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | allwinner_t536.md
+target_page: allwinner_t536.md
+canonical_name: Allwinner T536
+colliding_name: Allwinner T536
+source: https://www.electronics-lab.com/allwinner-t536-octa-core-risc-v-processor-supports-4k-video-ai-acceleration-and-android-linux-os/
+status: pending_review
+<!-- merge_draft_body
+# Allwinner T536
+
+The Allwinner T536 is a system-on-chip (SoC) designed by Allwinner Technology, a Chinese fabless semiconductor company founded in 2007 and headquartered in Zhuhai, Guangdong. Targeting industrial and AIoT applications, the T536 features an octa-core RISC-V processor (though alternative reports from CNX Software describe it as a quad-core Arm Cortex-A55 plus a 600 MHz RISC-V core configuration), an optional neural processing unit (NPU) delivering up to 3 TOPS of AI performance, support for ECC memory up to 6GB, dual Gigabit Ethernet ports, a PCIe 2.1/USB 3.1 DRD combo interface, and display interfaces including MIPI DSI, RGB, and LVDS. Camera interfaces include parallel CSI and MIPI CSI, while industrial I/O encompasses CAN FD, SPI, I2C, UART, ADCs, and PWM. The SoC integrates a G2D hardware graphics accelerator, a hardware image signal processor (ISP), and a video processing unit (VPU) supporting 4K video decoding and encoding. Storage options include SDIO 3.0, eMMC 5.1, SPI NOR/NAND, and raw NAND flash with ECC protection. Security features comprise hardware encryption, hashing algorithms, RSA/ECC signatures, a true random number generator (TRNG), and eFuse. The T536 runs both Android and Linux operating systems.
+
+## Key Claims
+
+- Optionally integrates an NPU with up to 3 TOPS AI performance.
+- Supports ECC memory up to 6GB.
+- Dual Gigabit Ethernet and PCIe 2.1/USB 3.1 DRD combo connectivity.
+- MIPI DSI, RGB, and LVDS display interfaces and parallel/MIPI CSI camera interfaces.
+- Industrial I/Os including CAN FD, SPI, I2C, UART, ADCs, and PWM.
+- Storage: SDIO 3.0, eMMC 5.1, SPI NOR/NAND, raw NAND with ECC.
+- G2D hardware graphics accelerator, hardware ISP, and VPU capable of 4K video decode/encode.
+- Hardware security: encryption, hashing, RSA/ECC, TRNG, eFuse.
+- Supports Android and Linux OS.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V (exact core microarchitecture not specified in source; CNX Software notes a 600 MHz RISC-V core alongside quad Cortex-A55).
+- Vector/matrix/accelerator support: Optional NPU (3 TOPS); no explicit vector extension details.
+- Memory/cache/TLB/DMA: ECC memory controller supporting up to 6GB; no public cache hierarchy details.
+- Compiler/toolchain support: Linux kernel and Android OS support; specific compiler toolchains not detailed.
+
+## Relationships
+
+- [[xuantie_c908]]: The XuanTie C908 page lists the T536 as a sibling SoC integrating a XuanTie-family RISC-V core, relevant for understanding the processor’s architectural lineage.
+- [[mlir_xdsl_rvv_gemm_codegen_recipe]]: This optimization recipe targets RISC-V Vector hardware code generation; the T536’s RISC-V core, while not specified for vector extensions, positions it as a potential target for similar compilation approaches in the RISC-V ecosystem.
+
+## Sources
+
+- https://www.electronics-lab.com/allwinner-t536-octa-core-risc-v-processor-supports-4k-video-ai-acceleration-and-android-linux-os/
+- CNX Software, April 14, 2025: "Allwinner T536 quad-core Arm Cortex-A55 & RISC-V industrial SoC supports ECC RAM, up to 3 TOP AI accelerator"
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | opengemm.md
+target_page: opengemm.md
+canonical_name: OpenGeMM
+colliding_name: RVV GEMM Progressive Optimization Benchmark on Banana Pi F3 (SpaceMit K1)
+source: https://github.com/AlexanderGSC/rvv-gemm
+status: pending_review
+<!-- merge_draft_body
+# RVV GEMM Progressive Optimization Benchmark on Banana Pi F3 (SpaceMit K1)
+
+This benchmark result presents a comprehensive performance analysis of seven progressive GEMM optimization stages running natively on a 64-bit RISC-V architecture with the RVV 1.0 vector extension, executed on a Banana Pi F3 single-board computer powered by the SpaceMit K1 octacore SoC (X60 SoC system). The study measures pure computation time for a single-precision floating-point matrix multiplication of dimensions 2000×3000×100, using the perf stat tool to collect cycles, instructions, branch statistics, and L1 data cache access/miss counts. The optimization stages are: scalar baseline compiled with -O2 (GEMM_O2), compiler auto-vectorization with -O3 (GEMM_O3), manual vector multiply-add with vle32.v/vfmul.vf/vfadd.vv using LMUL=8 (GEMM_vaddmul), fused multiply-accumulate with vfmacc.vv (GEMM_vmacc), loop nest blocking for L1 cache residency (GEMM_tiled), loop unrolling with depth 4 and ILP interleaving using LMUL=4 (GEMM_unroll), and OpenMP multithreading across eight cores (GEMM_omp). The best single-core variant (GEMM_unroll) achieves a 15.02× speedup over the scalar baseline, and the multithreaded version reaches 66.58× speedup, reducing execution time from 2.881 seconds to 0.043 seconds. The results highlight that manual optimization of data movement and instruction scheduling yields substantially better performance than compiler auto-vectorization.
+
+## Key Claims
+
+- GEMM_unroll (single core, loop unrolling with ILP and LMUL=4) achieves a 15.02× speedup over scalar GEMM_O2 baseline (0.192 s vs 2.881 s) and a 4× speedup over compiler auto-vectorized GEMM_O3 (0.768 s).
+- GEMM_tiled (loop nest blocking) achieves ~9× speedup (0.320 s) by keeping submatrices in L1 cache, eliminating costly stores to RAM.
+- GEMM_vmacc (fused multiply-accumulate) reduces instruction count from 793M to 782M compared to separate multiply/add (GEMM_vaddmul), demonstrating operation fusion.
+- GEMM_unroll reduces IPC from 0.37–0.39 of early vector versions to 0.55 while actually increasing overall throughput via ILP exploitation.
+- Numerical drift of order 10⁻⁵ is observed with separate multiplication and addition operations (GEMM_vaddmul), which may affect scientific computing applications.
+- The compiler auto-vectorization uses LMUL=1 (conservative register pressure management), while manual versions achieve better performance with LMUL=4 or 8.
+- The multithreaded version (GEMM_omp) achieves 66.58× speedup (0.043 s) by utilizing all eight cores.
+
+## Measurement Context
+
+- **Hardware version**: Banana BPI-F3 SBC; SpaceMit K1 octacore SoC (X60 SoC system); 8 physical cores; RVV 1.0 vector unit.
+- **Software/toolchain version**: GCC with -O2, -O3 optimization flags; manual RVV 1.0 intrinsics; perf stat for measurement.
+- **Workload shape**: GEMM with M=2000, K=3000, N=100 (result matrix C of size 2000×100); single-precision floating-point (fp32).
+- **Metric**: Computing time (seconds), speedup (relative to GEMM_O2 baseline), CPU cycles, number of instructions, instructions per cycle (IPC), L1-dcache loads, load misses, stores, store misses.
+- **Method**: perf stat command: `perf stat -e cycles,instructions,branches,branch-misses,L1-dcache-loads,L1-dcache-load-misses,L1-dcache-stores,L1-dcache-store-misses ./P3GEMM_version 2000 3000 100`; each stage is a separate executable.
+- **Evidence strength**: measured (perf hardware counters).
+
+## Relationships
+
+- This hand-tuned optimization study can be compared to the code generation approach in [[mlir_xdsl_rvv_gemm_codegen_recipe]], which targets the same Banana Pi F3 platform but uses MLIR/xDSL to automatically generate RVV intrinsics; the hand-tuned approach achieves 66.58× speedup versus the reported 10–35% improvement over OpenBLAS for the generated kernels.
+- The kernel structure (scalar→auto-vectorized→manual intrinsics→tiling→ILP→parallel) is a complementary resource to [[xuantie_c908_fp16_gemm_kernel]], which describes a fp16 GEMM outer-product kernel on a different hardware target (XuanTie C908).
+
+## Sources
+
+- https://github.com/AlexanderGSC/rvv-gemm (README, source code, benchmark tables)
+merge_draft_body -->
+
+## [2026-07-02] pending | mlir_xdsl_rvv_gemm_codegen_recipe.md
+target_page: mlir_xdsl_rvv_gemm_codegen_recipe.md
+target_section: Relationships
+source: https://github.com/AlexanderGSC/rvv-gemm
+status: pending_review
+proposed_update: Add a note comparing the MLIR/xDSL generated kernel performance to the hand-tuned progressive GEMM benchmark on Banana Pi F3 (66.58× speedup vs scalar) to provide a reference point for manual versus automatic vectorization.
+
+## [2026-07-02] merge_pending | xuantie_c930.md
+target_page: xuantie_c930.md
+canonical_name: XuanTie C930
+colliding_name: XuanTie C930
+source: https://zhuanlan.zhihu.com/p/1929835889116288188
+status: pending_review
+<!-- merge_draft_body
+# XuanTie C930
+
+XuanTie C930 is a RISC-V processor core designed by Alibaba T-Head for server-class AI and HPC workloads. It achieves a clock frequency of up to 3.4 GHz and a SPECint2006 performance of 15.2 per GHz. The core includes a 64 KB L1 cache with I-cache coherence, a private L2 cache of up to 1 MB with 64 bytes per cycle access bandwidth, and Parity/ECC support. For AI acceleration, the C930 supports the RVA23 Profile standard with enhanced vector and floating-point compute, and introduces the XuanTie Matrix extension and XuanTie coprocessor extension, providing int8 compute up to 8 TOPS with flexible compute ratio allocation.
+
+## Key Claims
+
+- Clock frequency up to 3.4 GHz.
+- SPECint2006 score of 15.2 per GHz.
+- 64 KB L1 cache with I-cache coherence.
+- Up to 1 MB private L2 cache with 64 B/cycle access bandwidth and Parity/ECC.
+- Supports RVA23 Profile with vector and floating-point compute enhancements.
+- Introduces XuanTie Matrix extension and XuanTie coprocessor extension.
+- Delivers int8 compute up to 8 TOPS with flexible compute ratio.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RVA23 Profile (RISC-V).
+- Vector/matrix/accelerator support: XuanTie Matrix extension, XuanTie coprocessor extension, vector compute, floating-point.
+- Memory/cache/TLB/DMA: 64 KB L1 cache, up to 1 MB private L2 (64 B/cycle), Parity/ECC.
+- Compiler/toolchain support: Not publicly specified in the source.
+
+## Relationships
+
+- [[xuantie_c908]]: earlier-generation XuanTie core targeting embedded AIoT; the C930 is a higher-performance server-class sibling with different market focus.
+- [[xuantie_c950]]: another server-class XuanTie core from the same family; the C930 fills a distinct performance segment.
+- [[xuantie_c906]]: earlier-generation core that served as a baseline for C908 speedup claims; the C930 targets a different workload domain.
+
+## Sources
+
+- https://zhuanlan.zhihu.com/p/1929835889116288188
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | xuantie_c930.md
+target_page: xuantie_c930.md
+canonical_name: XuanTie C930
+colliding_name: XuanTie C930
+source: https://inf.news/en/tech/0099e3834452466e8dc47942e35d6956.html
+status: pending_review
+<!-- merge_draft_body
+# XuanTie C930
+
+The XuanTie C930 is a server-grade RISC-V processor IP developed by Alibaba's DAMO Academy, targeting high-performance server and AI computing workloads. It supports the RVA23 Profile standard, which provides vector computing, floating-point operations, and other high-performance computing capabilities. The C930 also incorporates proprietary Xuantie Matrix extensions and Xuantie coprocessor extensions, enabling an INT8 compute capacity of up to 8 TOPS with flexible compute ratio options. The core operates at a main frequency of up to 3.4 GHz. Launched in 2024 and starting delivery in March 2025, the C930 is positioned as the most powerful server RISC-V processor IP from DAMO Academy, complementing the existing XuanTie family of cores.
+
+## Key Claims
+
+- The XuanTie C930 is a server-grade RISC-V processor IP from Alibaba DAMO Academy, targeting high-performance server and AI workloads.
+- It supports the RVA23 Profile standard, including vector and floating-point computing.
+- It incorporates Xuantie Matrix extension and Xuantie coprocessor extension for enhanced AI compute.
+- INT8 compute capacity up to 8 TOPS with flexible compute ratio.
+- Main frequency up to 3.4 GHz.
+- General computing performance reported at 15/GHz in the SPECint2006 benchmark test (15.2/GHz at 3.4 GHz).
+- Launched in 2024 and delivered from March 2025.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V with RVA23 Profile.
+- Vector/matrix/accelerator support: RVA23 vector and floating-point, Xuantie Matrix extension, Xuantie coprocessor extension.
+- Memory/cache/TLB/DMA: Not specified in available sources.
+- Compiler/toolchain support: Not specified.
+
+## Relationships
+
+- [[xuantie_c908]]: Previous-generation XuanTie core targeting AIoT and embedded applications, contrasting with the server-class C930.
+- [[xuantie_c950]]: Another server-class XuanTie core from the same T-Head family, representing a different model in the XuanTie server line.
+- [[xuantie_c906]]: Earlier-generation XuanTie core; the C930 builds on the XuanTie core family lineage.
+
+## Sources
+
+- [https://inf.news/en/tech/0099e3834452466e8dc47942e35d6956.html](https://inf.news/en/tech/0099e3834452466e8dc47942e35d6956.html)
+merge_draft_body -->
+
+## [2026-07-02] merge_pending | xuantie_c930.md
+target_page: xuantie_c930.md
+canonical_name: XuanTie C930
+colliding_name: XuanTie C930
+source: https://www.eefocus.com/article/1865193.html
+status: pending_review
+<!-- merge_draft_body
+# XuanTie C930
+
+The XuanTie C930 is a high-performance RISC-V processor core developed by Alibaba's T-Head Semiconductor, achieving a clock frequency of 3.4 GHz and a SPECint2006 score of 15.2 per GHz. It supports the RVA23 Profile standard, bringing enhanced vector computation and floating-point performance. The core integrates the XuanTie Matrix extension and XuanTie coprocessor extension, delivering up to 8 TOPS of INT8 AI compute power. Its cache hierarchy includes 64 KB of L1 cache, I-Cache coherence support, and up to 1 MB of private L2 cache with a 64 B/cycle access bandwidth, with Parity/ECC protection.
+
+## Key Claims
+
+- Clock frequency of 3.4 GHz.
+- SPECint2006 score of 15.2 per GHz.
+- Compliant with RVA23 Profile.
+- Integrates XuanTie Matrix extension and XuanTie coprocessor extension.
+- INT8 AI compute up to 8 TOPS.
+- L1 cache: 64 KB with I-Cache coherence.
+- L2 cache: up to 1 MB private, 64 B/cycle bandwidth.
+- Cache supports Parity/ECC.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V, RVA23 Profile.
+- Vector/matrix/accelerator support: XuanTie Matrix extension, XuanTie coprocessor extension, enhanced vector and floating-point.
+- Memory/cache/TLB/DMA: 64 KB L1, up to 1 MB private L2, Parity/ECC.
+- Compiler/toolchain support: Not specified.
+
+## Relationships
+
+- [[xuantie_c908]]: earlier-generation XuanTie core; the C930 targets higher performance and server-class workloads.
+- [[rvme]]: a decoupled matrix-engine coprocessor for RISC-V; the C930's integrated Matrix extension provides a different approach to matrix acceleration.
+
+## Sources
+
+- https://www.eefocus.com/article/1865193.html
+merge_draft_body -->
+
+## [2026-07-02] pending | xuantie_c908.md
+target_page: xuantie_c908.md
+target_section: Relationships
+source: https://www.eefocus.com/article/1865193.html
+status: pending_review
+proposed_update: Update the reference to XuanTie C930 to include a wiki link to the new [[xuantie_c930]] page.
+
+## [2026-07-02] merge_pending | riscv_vector_extension.md
+target_page: riscv_vector_extension.md
+canonical_name: RISC-V Vector Extension (RVV)
+colliding_name: RISC-V Vector Extension
+source: https://github.com/riscvarchive/riscv-v-spec
+status: pending_review
+<!-- merge_draft_body
+# RISC-V Vector Extension
+
+The RISC-V Vector Extension (RVV) is a standard specification that defines vector processing capabilities for the RISC-V instruction set architecture. The working draft of the proposed extension is maintained in the riscvarchive/riscv-v-spec GitHub repository, which is a publicly archived repository. Version 1.0 of the specification has been frozen and undergone public review, while a version 1.1-draft is currently under development. The repository also holds the draft Zawrs (fast-track) extension and is used to make releases for reviews. The specification has evolved through several major versions. Toolchain support includes the RISC-V Proxy Kernel that supports v1.0 binaries and a Binutils port for v0.8.
+
+## Key Claims
+
+- The RVV specification is at version 1.1-draft, with version 1.0 frozen and publicly reviewed.
+- The riscvarchive/riscv-v-spec repository serves as the authoritative working draft for the proposed RISC-V V vector extension.
+- The repository also contains the draft Zawrs (fast-track) extension.
+- Toolchain support: the RISC-V Proxy Kernel supports v1.0 binaries; Binutils supports v0.8.
+
+## Relationships
+
+- [[xuantie_c908]]: Implements RISC-V Vector Extension 1.0 as part of its ISA profile.
+- [[rvme]]: The RVME matrix engine is compared against an RVV-based vector engine at matched datapath width.
+
+## Sources
+
+- https://github.com/riscvarchive/riscv-v-spec
+merge_draft_body -->

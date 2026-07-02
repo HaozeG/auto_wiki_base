@@ -3,6 +3,9 @@ canonical_name: XuanTie C930
 aliases:
 - C930
 - Alibaba XuanTie C930
+- T-Head XuanTie C930
+- Xuantie C930
+- 阿里玄铁C930
 subtype: null
 tags:
 - risc-v
@@ -18,11 +21,19 @@ scorecard:
 sources:
 - raw/cache/56c7513807ca9a30.md
 - https://www.tomshardware.com/pc-components/cpus/alibaba-launches-risc-v-based-xuantie-c930-server-cpu-ai-hpc-chip-ships-this-month-more-designs-to-follow
+- raw/cache/dbadde57b015b121.md
+- https://inf.news/en/tech/ba346db5ad34377a23c68be253a11939.html
+- raw/cache/f70732c7a31b0603.md
+- https://zhuanlan.zhihu.com/p/1929835889116288188
+- raw/cache/76cc167548ac5289.md
+- https://inf.news/en/tech/0099e3834452466e8dc47942e35d6956.html
+- raw/cache/5f43b5fb0daca44b.md
+- https://www.eefocus.com/article/1865193.html
 source_url: https://www.tomshardware.com/pc-components/cpus/alibaba-launches-risc-v-based-xuantie-c930-server-cpu-ai-hpc-chip-ships-this-month-more-designs-to-follow
 fetched_at: '2026-07-01T04:24:12.051811+00:00'
 type: entity
 created: '2026-07-01'
-updated: '2026-07-01'
+updated: '2026-07-02'
 cold_start: true
 inbound_links: 1
 needs_summary_revision: false

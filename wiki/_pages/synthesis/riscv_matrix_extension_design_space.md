@@ -18,7 +18,7 @@ sources:
 created: 2026-07-01
 updated: 2026-07-01
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 scorecard:
   bridge_score: 0.85
   contradiction_potential: 0.7

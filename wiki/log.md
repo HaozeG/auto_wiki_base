@@ -237,3 +237,50 @@ issues_found: 1
 actions_taken: []
 deferred_for_human:
 - "workload_kernel/xuantie_c908_fp16_gemm_kernel.md Relationships section links to [[xuantie_c908_shl_convolution_acceleration]] and [[xuantie_c908_ai_inference_performance]], neither of which exists as a page. Found during the manual 30-page quality evaluation; not yet removed/fixed, deferred for human decision (remove vs. create the missing pages)."
+
+## [2026-07-02] research | T-Head AME xtheadmatmul matrix engine ISA register model til
+session_id: 04abb916
+candidates_evaluated: 0
+pages_written: 0
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_04abb916_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] research | T-Head AME xtheadmatmul matrix engine ISA register model til
+session_id: 3cd3512a
+candidates_evaluated: 10
+pages_written: 1
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_3cd3512a_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] research | SHL CSINN2 AME gemm attention kernel implementation
+session_id: ec8fae95
+candidates_evaluated: 10
+pages_written: 5
+pipeline_rejection_rate: 20%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_ec8fae95_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] research | XuanTie C930 AME INT8 GEMM throughput latency
+session_id: 2c57f9f5
+candidates_evaluated: 10
+pages_written: 1
+pipeline_rejection_rate: 10%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_2c57f9f5_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] research | RVV GEMV vector dot product memory bandwidth decode LLM
+session_id: 8394a524
+candidates_evaluated: 9
+pages_written: 1
+pipeline_rejection_rate: 11%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/wiki/audit/research_8394a524_2026-07-02.json
+theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-02] lint | routine (linking debt pass)
+issues_found: 10
+actions_taken:
+- "Closed all 10 orphan pages accrued from research sessions 04abb916/3cd3512a/ec8fae95/2c57f9f5/8394a524 by adding reciprocal [[wikilink]] Relationships entries from related hub pages and incrementing target inbound_links: xuantie_c907 (from xuantie_c908), opengemm/banana_pi_gemm_optimization_benchmark/generic_micro_kernel_templates_gemm (from mlir_xdsl_rvv_gemm_codegen_recipe), sgemm_optimization_allwinner_nezha_d1 (from xuantie_c906), boardcon_picot536 (from allwinner_t536), llvm_ir (from llvm_riscv_target), riscv_matrix_extension_design_space (from riscv_matrix_extension_proposal), meta_mtia (from gemmini), starfive_visionfive2_jh7110 (from k230)."
+- "graph_stats.py now reports orphan_count: 0, orphan_fraction: 0.0, median_inbound_links: 1.0, mean_inbound_links: 2.5 across 36 pages — MATURE."
+deferred_for_human: []

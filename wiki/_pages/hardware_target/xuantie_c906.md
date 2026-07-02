@@ -60,6 +60,7 @@ The XuanTie C906 is a RISC-V processor core developed by T-Head Semiconductor, a
 
 - [[xuantie_c908]]: The newer generation core in the same XuanTie family with enhanced vector capabilities and higher performance.
 - [[mlir_xdsl_rvv_gemm_codegen_recipe]]: The code generation recipe for RISC-V Vector GEMM micro-kernels that can be applied to the C906 as a target platform.
+- [[sgemm_optimization_allwinner_nezha_d1]]: a hand-tuned SGEMM optimization case study run directly on the Allwinner Nezha D1 board, which uses this C906 core with RVV support.
 
 ## Sources
 

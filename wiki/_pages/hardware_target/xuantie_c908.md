@@ -27,7 +27,7 @@ type: hardware_target
 created: '2026-07-01'
 updated: '2026-07-01'
 cold_start: true
-inbound_links: 14
+inbound_links: 15
 needs_summary_revision: false
 ---
 
@@ -54,6 +54,7 @@ The XuanTie C908 is a RISC-V processor core developed by T-Head Semiconductor, t
 ## Relationships
 
 - GEMM kernel: [[xuantie_c908_fp16_gemm_kernel]]
+- [[xuantie_c907]]: the first XuanTie IP to add a decoupled matrix extension (MME), offering a matrix-register alternative to the C908's vector-only approach to GEMM acceleration.
 - Related DNN accelerator generator: [[gemmini]]
 - [[xuantie_c906]]: earlier-generation XuanTie core; the C908's Key Claims cite a 3.75-4.57x AI inference speedup over the C906.
 - [[xuantie_c950]]: newer-generation, server-class XuanTie core from the same T-Head family.

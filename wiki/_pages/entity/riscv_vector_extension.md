@@ -5,6 +5,8 @@ aliases:
 - RVV
 - vector extension
 - v-spec
+- RISC-V Vector Extension
+- RISC-V V vector extension
 subtype: null
 tags:
 - riscv
@@ -19,11 +21,12 @@ scorecard:
 sources:
 - raw/cache/5012a631903f97a6.md
 - https://github.com/riscvarchive/riscv-v-spec
+- raw/cache/876948b910a3f287.md
 source_url: https://github.com/riscvarchive/riscv-v-spec
 fetched_at: '2026-07-01T03:52:21.482224+00:00'
 type: entity
 created: '2026-07-01'
-updated: '2026-07-01'
+updated: '2026-07-02'
 cold_start: true
 inbound_links: 1
 needs_summary_revision: false

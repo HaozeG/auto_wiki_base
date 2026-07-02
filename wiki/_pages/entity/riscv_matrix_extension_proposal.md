@@ -41,7 +41,7 @@ The RISC-V Matrix Specification Proposal is a draft RISC-V ISA extension (versio
 ## Relationships
 
 - [[xuantie_c908]]: XuanTie C908 implements the standard RISC-V Vector Extension 1.0 rather than this decoupled matrix extension, illustrating an alternative vector-only approach to matrix acceleration on RISC-V.
-- Insufficient context for additional cross-links; a synthesis page comparing decoupled matrix-register extensions (this proposal) against vector-register-based matrix acceleration (e.g. XuanTie IME-style outer-product approaches) would be a natural follow-up once more hardware_target pages exist.
+- [[riscv_matrix_extension_design_space]]: a synthesis page comparing this proposal against the Integrated Matrix Extension and Matrix Tile Extension, the two other competing (unratified, non-interoperating) RISC-V matrix-acceleration ISA designs.
 
 ## Sources
 

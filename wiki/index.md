@@ -1,11 +1,14 @@
 # Wiki Index
 
-Last updated: 2026-07-01 | Pages: 30 | Sources: 3
+Last updated: 2026-07-02 | Pages: 36 | Sources: 3
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [llvm_ir.md](entity/llvm_ir.md) | LLVM IR | compiler, intermediate representation, SSA | 2 | 0 |
+| [opengemm.md](entity/opengemm.md) | OpenGeMM |  | 2 | 0 |
+| [boardcon_picot536.md](entity/boardcon_picot536.md) | Boardcon PICOT536 |  | 2 | 0 |
 | [mlperf_inference_tiny_benchmark_suite.md](entity/mlperf_inference_tiny_benchmark_suite.md) | MLPerf Inference: Tiny | benchmark, MLPerf, TinyML | 2 | 0 |
 | [llvm_riscv_target.md](entity/llvm_riscv_target.md) | LLVM RISC-V Target | LLVM, RISC-V, compiler | 2 | 1 |
 | [sifive_intelligence_family.md](entity/sifive_intelligence_family.md) | SiFive Intelligence Family |  | 2 | 0 |
@@ -55,6 +58,9 @@ Last updated: 2026-07-01 | Pages: 30 | Sources: 3
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
+| [banana_pi_gemm_optimization_benchmark.md](benchmark_result/banana_pi_gemm_optimization_benchmark.md) | benchmark_result | Banana Pi GEMM Optimization Benchmark |  | 2 | 0 |
+| [sgemm_optimization_allwinner_nezha_d1.md](optimization_recipe/sgemm_optimization_allwinner_nezha_d1.md) | optimization_recipe | SGEMM Optimization on Allwinner Nezha D1 | sgemm, riscv, optimization, allwinner, nezha-d1 | 2 | 0 |
+| [xuantie_c907.md](hardware_target/xuantie_c907.md) | hardware_target | XuanTie C907 | risc-v, matrix-extension, mme, xuantie, t-head, ai | 2 | 0 |
 | [allwinner_v853.md](hardware_target/allwinner_v853.md) | hardware_target | Allwinner V853 |  | 2 | 0 |
 | [allwinner_t536.md](hardware_target/allwinner_t536.md) | hardware_target | Allwinner T536 | allwinner, risc-v, arm, npu, industrial | 2 | 1 |
 | [allwinner_v851s.md](hardware_target/allwinner_v851s.md) | hardware_target | Allwinner V851s | allwinner, ip-camera, risc-v, arm-cortex-a7, npu | 2 | 0 |

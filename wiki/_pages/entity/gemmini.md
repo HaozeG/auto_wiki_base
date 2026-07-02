@@ -41,7 +41,7 @@ Gemmini is an open-source, full-stack DNN accelerator generator developed at UC 
 
 ## Relationships
 
-No existing wiki pages to link; future relationships include compatibility with RISC-V ecosystem, comparison with other DNN accelerator generators (e.g., NVDLA, VTA), and connections to deep-learning workloads (insufficient context for additional cross-links).
+- [[meta_mtia]]: a production, data-center-scale AI accelerator (Meta's Training and Inference Accelerator) that, unlike Gemmini's research/generator model, reaches RISC-V only as a Triton compiler codegen target rather than as a native accelerator ISA.
 
 ## Sources
 

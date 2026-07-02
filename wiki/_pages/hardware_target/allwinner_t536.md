@@ -5,6 +5,7 @@ aliases:
 - FET536-C
 - FET536-C SoM
 - Allwinner T536 industrial processor
+- Allwinner T536 SoC
 subtype: null
 tags:
 - allwinner
@@ -36,11 +37,13 @@ scorecard:
 sources:
 - raw/cache/4732299fa1005290.md
 - https://www.forlinx.net/industrial-news/allwinner-t536-industrial-embedded-riscv-mcu-669.html
+- raw/cache/da4d1d05522d4f0f.md
+- https://www.electronics-lab.com/allwinner-t536-octa-core-risc-v-processor-supports-4k-video-ai-acceleration-and-android-linux-os/
 source_url: https://www.forlinx.net/industrial-news/allwinner-t536-industrial-embedded-riscv-mcu-669.html
 fetched_at: '2026-07-01T06:50:50.458710+00:00'
 type: hardware_target
 created: '2026-07-01'
-updated: '2026-07-01'
+updated: '2026-07-02'
 cold_start: true
 inbound_links: 1
 needs_summary_revision: false
@@ -73,6 +76,7 @@ The Allwinner T536 is an industrial-grade system-on-chip (SoC) that integrates a
 ## Relationships
 
 - Xuantie E907 is a sibling core from T-Head Semiconductor, related to the higher-performance [[xuantie_c908]] core.
+- [[boardcon_picot536]]: a system-on-module built directly around this Allwinner T536 SoC, exposing its Cortex-A55/XuanTie E907/E902/NPU combination through a 314-pin MXM 3.0 connector for industrial and edge-AI carrier boards.
 - As an industrial RISC-V-Arm hybrid SoC, the T536 targets similar application domains as other heterogeneous platforms, e.g., the K230-based designs referenced in the RISC-V AI accelerator ecosystem, linking conceptually to designs like [[rvme]] for broader context on RISC-V matrix acceleration.
 - The primary module implementation is the FET536-C system-on-module by Forlinx Embedded.
 
