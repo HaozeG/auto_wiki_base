@@ -488,3 +488,124 @@ xDSL is a Python-native framework for building compiler infrastructure. It provi
 
 - https://github.com/xdslproject
 merge_draft_body -->
+
+## [2026-07-03] merge_pending | v851s-yuzukilizard.md
+target_page: v851s-yuzukilizard.md
+canonical_name: Allwinner V851S
+colliding_name: Allwinner V851S
+source: https://github.com/Jebumon/v851s
+status: pending_review
+<!-- merge_draft_body
+# Allwinner V851S
+
+The Allwinner V851S is a heterogeneous System-on-Chip (SoC) designed for IP camera and intelligent vision applications. It integrates a single ARM Cortex-A7 core clocked at 900MHz, a RISC-V E907GC core running at 600MHz, and a 0.5 TOPS INT8 neural processing unit (NPU). The SoC includes 64MB of on-package DDR2 memory and connects to a 128MB SPI NAND flash. Peripheral interfaces include MIPI DSI (2-lane, up to 1280x720@60fps), MIPI CSI (2-lane), USB, SDIO, Ethernet, and an on-board XR829 WiFi/BT module. The SoC also features a hardware H.264/H.265 decoder capable of 4096x4096 resolution and an encoder supporting 3840x2160@20fps at 400MHz. The Yuzukilizard development board implements this SoC and runs the Tina Linux operating system, which is based on OpenWrt. A Docker image with a prebuilt SDK is available for development.
+
+## Key Claims
+
+- Cortex-A7 core at 900MHz
+- RISC-V E907GC core at 600MHz
+- NPU: 0.5 TOPS at INT8 precision
+- On-package 64MB DDR2 memory
+- 128MB SPI NAND storage
+- MIPI DSI 2-lane up to 1280x720@60fps
+- MIPI CSI 2-lane
+- H.264/H.265 decode 4096x4096
+- H.264/H.265 encode 3840x2160@20fps@400MHz
+- On-board XR829 WiFi/BT up to 150Mbps
+- Runs Tina Linux (OpenWrt-based)
+- Docker development image available
+
+## Optimization-Relevant Details
+
+- ISA/profile: Cortex-A7 (ARMv7) + RISC-V (E907GC, likely RV32IMAFC)
+- Vector/matrix/accelerator support: NPU with 0.5 TOPS INT8; no vector extension on RISC-V core
+- Memory/cache/TLB/DMA: 64MB on-chip DDR2; 128MB SPI NAND; no cache details
+- Compiler/toolchain support: Tina Linux; Docker with prebuilt SDK
+
+## Relationships
+
+No specific relationship to visible context pages in this wiki.
+
+## Sources
+
+- https://github.com/Jebumon/v851s
+merge_draft_body -->
+
+## [2026-07-03] merge_pending | v851s-yuzukilizard.md
+target_page: v851s-yuzukilizard.md
+canonical_name: Allwinner V851S
+colliding_name: Allwinner V851s
+source: https://github.com/Jebumon/v851s/blob/master/README.md
+status: pending_review
+<!-- merge_draft_body
+# Allwinner V851s
+
+The Allwinner V851s is a high-performance H.264/H.265 encoding SoC targeting IP camera applications, integrating a single Cortex-A7 core at 900 MHz, a RISC-V E907GC core at 600 MHz, and a 0.5 TOPS int8 NPU for AI inference. The SoC includes 64 MB of built-in DDR2 memory, supports 128 MB SPI NAND flash, and provides interfaces for TF card, XR829 WiFi/BT, MIPI DSI (up to 1280×720@60fps), MIPI CSI, and an ISP with maximum resolution of 2560×1440. Video encoding and decoding capabilities include H.264/H.265 at up to 4096×4096 for decoding and 3840×2160@20fps for encoding. The V851s is used in the Yuzukilizard development board, which runs Tina Linux (based on OpenWrt). A Docker image is provided for SDK development, and the hardware design files are licensed under CERN Open Hardware Licence Version 2 - Strongly Reciprocal.
+
+## Key Claims
+
+- SoC includes a Cortex-A7 application core at 900 MHz and a RISC-V E907GC coprocessor at 600 MHz.
+- Integrated NPU delivers 0.5 TOPS for int8 inference workloads.
+- Built-in 64 MB DDR2 memory and 128 MB SPI NAND storage.
+- XR829 WiFi and Bluetooth module supports up to 150 Mbps.
+- MIPI DSI supports display up to 1280×720 at 60 fps.
+- MIPI CSI with ISP supports camera input up to 2560×1440.
+- H.264/H.265 decoder handles 4096×4096 resolution.
+- H.264/H.265 encoder handles 3840×2160 at 20 fps (400 MHz).
+- Software support via Tina Linux (OpenWrt-based) and a Docker image for development.
+
+## Optimization-Relevant Details
+
+- ISA/profile: Cortex-A7 (ARMv7-A) and RISC-V E907GC (RV32IMAFC, no vector extension confirmed).
+- Vector/matrix/accelerator support: Dedicated 0.5 TOPS int8 NPU, no RISC-V vector extension.
+- Memory/cache/TLB/DMA: 64 MB DDR2 (integrated), 128 MB SPI NAND; no detailed cache hierarchy provided.
+- Compiler/toolchain support: Tina Linux SDK; a Docker image with prebuilt environment is available.
+
+## Relationships
+
+- [[baby-llama2-milkv-duo-benchmark]] – Both the Yuzukilizard (Allwinner V851s) and Milk-V Duo integrate a RISC-V core for coprocessing, but they use different core implementations: the V851s uses the Allwinner E907GC at 600 MHz paired with a dedicated 0.5 TOPS int8 NPU, whereas the Milk-V Duo uses the XuanTie C906 at 1 GHz with RVV 0.7 and no on-chip NPU, relying on software-optimized inference for comparable AI tasks.
+
+## Sources
+
+- https://github.com/Jebumon/v851s/blob/master/README.md
+merge_draft_body -->
+
+## [2026-07-03] merge_pending | v851s-yuzukilizard.md
+target_page: v851s-yuzukilizard.md
+canonical_name: Allwinner V851S
+colliding_name: Allwinner V851s
+source: https://linux-sunxi.org/V851s
+status: pending_review
+<!-- merge_draft_body
+# Allwinner V851s
+
+The Allwinner V851s is a system-on-chip (SoC) designed for the IP-camera market, integrating an ARM Cortex-A7 CPU core clocked at 900MHz with NEON and VFPv4 extensions, a RISC-V CPU core running at 600MHz (ISA extensions unknown), a 0.5 TOPS NPU (reportedly Vivante IP), and 64MB of SiP DDR2 memory. It also includes a Cedar Engine VPU for video processing, connectivity interfaces such as RGB, MIPI-DSI, MIPI-CSI, audio interfaces including I2S and DMIC, and storage support for SD Card 3.0 and eMMC 4.5. The V851s is recommended by Allwinner as a replacement for the NRND V3s. A variant, the V851SE, integrates an Ethernet PHY but differs in pin-muxing. Currently, there is no mainline Linux kernel or U-Boot support for this chip, though bootloaders awboot and xboot provide support. The pinctrl is reportedly similar to the D1 pinctrl, and the chip contains two clock control units (CCUs). The V851s is manufactured by Allwinner and targets the embedded Linux camera segment.
+
+## Key Claims
+
+- Contains ARM Cortex-A7 processor at 900MHz with NEON and VFPv4 co-processors.
+- Contains a RISC-V core at 600MHz with unknown ISA extensions.
+- NPU rated at 0.5 TOPS, believed to be Vivante IP.
+- 64MB of SiP DDR2 memory.
+- Cedar Engine VPU for video encode/decode.
+- No mainline Linux kernel or U-Boot support as of the source date.
+- V851SE variant adds an integrated Ethernet PHY with different pin-muxing.
+- Pinctrl is very similar to D1 pinctrl but with different muxing.
+- Two CCUs: a regular one and a PRCM for the RISC-V core.
+- Peripheral driver compatibility documented for various blocks (e.g., RTC, USB, SPI, MMC).
+
+## Optimization-Relevant Details
+
+- ISA/profile: ARM Cortex-A7 (ARMv7-A) with NEON, VFPv4; RISC-V (unspecified, likely RV64 with unknown vector support)
+- Vector/matrix/accelerator support: NEON on ARM side; NPU (Vivante IP) for AI workloads
+- Memory/cache/TLB/DMA: 64MB SiP DDR2; no further cache hierarchy details provided
+- Compiler/toolchain support: No mainline Linux; awboot and xboot support boot; driver compatibility documented for mainline U-Boot and kernel drivers (e.g., sun20i-d1-dma, sun20i-d1-mmc)
+
+## Relationships
+
+No specific relationship to visible context pages in this wiki. The V851s is a distinct Allwinner SoC with an ARM/RISC-V/NPU architecture, not directly comparable to the existing XuanTie C906-based Milk-V Duo benchmark page.
+
+## Sources
+
+- https://linux-sunxi.org/V851s
+merge_draft_body -->

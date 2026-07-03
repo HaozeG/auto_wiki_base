@@ -43,7 +43,7 @@ type: benchmark_result
 created: '2026-07-03'
 updated: '2026-07-03'
 cold_start: true
-inbound_links: 0
+inbound_links: 2
 ---
 
 # Baby LLama2 Benchmark on Milk-V Duo
