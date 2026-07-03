@@ -143,9 +143,13 @@ def find_bridge_candidates(pages_dir: Path, max_candidates: int = 5) -> list[dic
     guardrail below watches for, just introduced by this function instead of
     a linking pass). Each small component now gets its own giant-side anchor,
     chosen by tag overlap with that component among the giant component's
-    best-connected nodes, falling back to degree only when no tag signal
-    exists — so bridges are topically motivated and the anchor varies across
-    pairs instead of concentrating on one node.
+    best-connected nodes. Found live in a second pass that most small
+    components are single orphan pages with sparse/no tag overlap against
+    anything, so a plain "fall back to top-degree" default still collapsed
+    onto one node for the majority of pairs — the round-robin fallback below
+    (index into the pool keyed by the component's own sorted position) keeps
+    the anchor varying across pairs even when there's no tag signal at all,
+    rather than only when tags happen to line up.
     """
     graph = build_graph(pages_dir).to_undirected()
     components = sorted(nx.connected_components(graph), key=len, reverse=True)
@@ -158,7 +162,7 @@ def find_bridge_candidates(pages_dir: Path, max_candidates: int = 5) -> list[dic
         pool_size = min(len(largest), max(5, max_candidates * 2))
         anchor_pool = sorted(largest, key=lambda n: graph.degree(n), reverse=True)[:pool_size]
 
-        def pick_anchor(component: set) -> str | None:
+        def pick_anchor(component: set, fallback_index: int) -> str | None:
             if not anchor_pool:
                 return None
             component_tags: set[str] = set()
@@ -171,7 +175,8 @@ def find_bridge_candidates(pages_dir: Path, max_candidates: int = 5) -> list[dic
                     # among tied-best overlap, prefer higher degree (stable, deterministic)
                     tied = [a for overlap, a in scored if overlap == best_overlap]
                     return max(tied, key=lambda n: graph.degree(n))
-            return anchor_pool[0]  # no tag signal: fall back to top-degree
+            # no tag signal: rotate through the pool instead of always the top node
+            return anchor_pool[fallback_index % len(anchor_pool)]
 
         def representative(component: set) -> str | None:
             if not component:
@@ -179,9 +184,9 @@ def find_bridge_candidates(pages_dir: Path, max_candidates: int = 5) -> list[dic
             return max(component, key=lambda n: graph.degree(n))
 
         candidates = []
-        for component in reversed(components[1:]):  # smallest components first
+        for idx, component in enumerate(reversed(components[1:])):  # smallest components first
             rep = representative(component)
-            anchor = pick_anchor(component)
+            anchor = pick_anchor(component, idx)
             if rep is None or anchor is None:
                 continue
             candidates.append({
