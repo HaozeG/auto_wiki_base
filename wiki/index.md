@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-03 | Pages: 54 | Sources: 146
+Last updated: 2026-07-03 | Pages: 56 | Sources: 154
 
 ## Entity Pages
 
@@ -15,6 +15,7 @@ Last updated: 2026-07-03 | Pages: 54 | Sources: 146
 | [llamacpp-quantization-methods.md](entity/llamacpp-quantization-methods.md) | llama.cpp Quantization Methods | quantization, llama.cpp, GGML, LLM inference, post-training quantization | 4 | 0 |
 | [meta-andes.md](entity/meta-andes.md) | meta-andes | RISC-V, BSP, Yocto, Andes Technology | 2 | 0 |
 | [mlir-compiler-infrastructure.md](entity/mlir-compiler-infrastructure.md) | MLIR | compiler, LLVM, intermediate representation | 2 | 0 |
+| [nncase.md](entity/nncase.md) | nncase |  | 6 | 0 |
 | [opengemm.md](entity/opengemm.md) | OpenGeMM | GeMM accelerator, RISC-V, open-source hardware, Chisel, accelerator generator | 4 | 0 |
 | [riscv-matrix-extension-specification.md](entity/riscv-matrix-extension-specification.md) | RISC-V Matrix Extension Specification | risc-v, isa, matrix, extension | 8 | 0 |
 | [riscv-v-extension.md](entity/riscv-v-extension.md) | RISC-V V Extension |  | 2 | 0 |
@@ -92,6 +93,8 @@ Last updated: 2026-07-03 | Pages: 54 | Sources: 146
 - **GGML quantization techniques**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
 - **Gemma-2-2B Llama-3.1-8B RVV BPI-F3**: → [bpi-f3-rvv-llm-benchmark](benchmark_result/bpi-f3-rvv-llm-benchmark.md)
 - **GreenWaves GAP9**: → [gap9](hardware_target/gap9.md)
+- **HHB-onnxruntime YOLOX Deployment on Xuantie C920**: → [hhb-onnxruntime-yolox-deployment-xuantie-c920](optimization_recipe/hhb-onnxruntime-yolox-deployment-xuantie-c920.md)
+- **HHB-onnxruntime YOLOX inference**: → [hhb-onnxruntime-yolox-deployment-xuantie-c920](optimization_recipe/hhb-onnxruntime-yolox-deployment-xuantie-c920.md)
 - **IME**: → [integrated-matrix-extension](entity/integrated-matrix-extension.md)
 - **IREE MLIR Ukernels for RVV**: → [iree-rvv-mlir-ukernel](entity/iree-rvv-mlir-ukernel.md)
 - **IREE MLIR-based uKernel for RVV**: → [iree-rvv-mlir-ukernel](entity/iree-rvv-mlir-ukernel.md)
@@ -114,9 +117,11 @@ Last updated: 2026-07-03 | Pages: 54 | Sources: 146
 - **K230**: → [k230-soc](hardware_target/k230-soc.md)
 - **K230 CanMV**: → [k230-soc](hardware_target/k230-soc.md)
 - **K230 SoC**: → [k230-soc](hardware_target/k230-soc.md)
+- **K230 nncase**: → [nncase](entity/nncase.md)
 - **K3**: → [spacemit-k3-hardware-target](hardware_target/spacemit-k3-hardware-target.md)
 - **Kendryte K230**: → [k230-soc](hardware_target/k230-soc.md)
 - **Kendryte K230 CanMV**: → [k230-soc](hardware_target/k230-soc.md)
+- **Kendryte nncase**: → [nncase](entity/nncase.md)
 - **Key Stone K1**: → [spacemit-k1](hardware_target/spacemit-k1.md)
 - **LLM inference in C/C++**: → [llama-cpp](entity/llama-cpp.md)
 - **Llama.cpp GGML RVV Optimization**: → [rise-project-rp014-llamacpp-ggml-rvv](entity/rise-project-rp014-llamacpp-ggml-rvv.md)
@@ -212,6 +217,7 @@ Last updated: 2026-07-03 | Pages: 54 | Sources: 146
 - **T-Head XuanTie**: → [xuantie](entity/xuantie.md)
 - **T-Head XuanTie C908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **T1**: → [t1](hardware_target/t1.md)
+- **TH1520 YOLOX tutorial**: → [hhb-onnxruntime-yolox-deployment-xuantie-c920](optimization_recipe/hhb-onnxruntime-yolox-deployment-xuantie-c920.md)
 - **TVM**: → [apache-tvm](entity/apache-tvm.md)
 - **Terapines ZCC**: → [zcc-compiler](entity/zcc-compiler.md)
 - **Torrent-1**: → [t1](hardware_target/t1.md)
@@ -251,18 +257,23 @@ Last updated: 2026-07-03 | Pages: 54 | Sources: 146
 - **Xuantie RV Matrix Extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **Xuantie zero stage boot**: → [xuantie-zero-stage-boot-entity](entity/xuantie-zero-stage-boot-entity.md)
 - **Xuantie-RV Matrix Extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
+- **YOLOX on LPi4A**: → [hhb-onnxruntime-yolox-deployment-xuantie-c920](optimization_recipe/hhb-onnxruntime-yolox-deployment-xuantie-c920.md)
 - **Yuzukilizard**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
 - **ZCC**: → [zcc-compiler](entity/zcc-compiler.md)
 - **ZCC 4.x**: → [zcc-compiler](entity/zcc-compiler.md)
 - **ZSB**: → [xuantie-zero-stage-boot-entity](entity/xuantie-zero-stage-boot-entity.md)
 - **block-based quantization in llama.cpp**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
 - **chipsalliance/t1**: → [t1](hardware_target/t1.md)
+- **kendryte/nncase**: → [nncase](entity/nncase.md)
 - **llama-cpp**: → [llama-cpp](entity/llama-cpp.md)
 - **llama.cpp**: → [llama-cpp](entity/llama-cpp.md)
 - **llama.cpp Quantization Methods**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
 - **llama.cpp quantization**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
 - **llama.cpp quantization types**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
 - **meta-andes**: → [meta-andes](entity/meta-andes.md)
+- **nncase**: → [nncase](entity/nncase.md)
+- **nncase compiler**: → [nncase](entity/nncase.md)
+- **nncase neural network compiler**: → [nncase](entity/nncase.md)
 - **riscv-matrix-extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **riscv-matrix-extension-spec**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **rvspoc-s2311-llama2**: → [baby-llama2-milkv-duo-benchmark](benchmark_result/baby-llama2-milkv-duo-benchmark.md)
@@ -286,6 +297,7 @@ Last updated: 2026-07-03 | Pages: 54 | Sources: 146
 - **玄铁C906**: → [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
 - **香山**: → [xiangshan-overview](entity/xiangshan-overview.md)
 - **xuantie-c908-gcc-tuning**: mentioned in [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md) — *no dedicated page*
+
 
 
 
@@ -345,6 +357,7 @@ Last updated: 2026-07-03 | Pages: 54 | Sources: 146
 | [xuantie-c906-hardware-target.md](hardware_target/xuantie-c906-hardware-target.md) | hardware_target | XuanTie C906 |  | 2 | 5 |
 | [xuantie-c908.md](hardware_target/xuantie-c908.md) | hardware_target | XuanTie C908 |  | 12 | 1 |
 | [c908-wino-gemm-optimization.md](optimization_recipe/c908-wino-gemm-optimization.md) | optimization_recipe | C908 Winograd and GEMM Optimization in SHL |  | 2 | 11 |
+| [hhb-onnxruntime-yolox-deployment-xuantie-c920.md](optimization_recipe/hhb-onnxruntime-yolox-deployment-xuantie-c920.md) | optimization_recipe | HHB-onnxruntime YOLOX Deployment on Xuantie C920 |  | 2 | 0 |
 | [iree-riscv-microkernel-support.md](optimization_recipe/iree-riscv-microkernel-support.md) | optimization_recipe | IREE RISC-V Microkernel Support |  | 2 | 2 |
 | [mlir-xdsl-rvv-codegen-pipeline.md](optimization_recipe/mlir-xdsl-rvv-codegen-pipeline.md) | optimization_recipe | MLIR-xDSL RVV Code Generation Pipeline |  | 2 | 5 |
 | [v-seek-llm-inference-optimization-sg2042.md](optimization_recipe/v-seek-llm-inference-optimization-sg2042.md) | optimization_recipe | V-Seek LLM Inference Optimization on Sophon SG2042 |  | 2 | 0 |
@@ -383,6 +396,7 @@ Last updated: 2026-07-03 | Pages: 54 | Sources: 146
 *Transformation recipes: prerequisites, expected effect, failure modes.*
 
 - [c908-wino-gemm-optimization](optimization_recipe/c908-wino-gemm-optimization.md)
+- [hhb-onnxruntime-yolox-deployment-xuantie-c920](optimization_recipe/hhb-onnxruntime-yolox-deployment-xuantie-c920.md)
 - [iree-riscv-microkernel-support](optimization_recipe/iree-riscv-microkernel-support.md)
 - [mlir-xdsl-rvv-codegen-pipeline](optimization_recipe/mlir-xdsl-rvv-codegen-pipeline.md)
 - [v-seek-llm-inference-optimization-sg2042](optimization_recipe/v-seek-llm-inference-optimization-sg2042.md)
@@ -400,6 +414,7 @@ Last updated: 2026-07-03 | Pages: 54 | Sources: 146
 - [maestro-gesture-recognition](benchmark_result/maestro-gesture-recognition.md)
 - [mlir-xdsl-gemm-benchmark-k230-banana-pi](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md)
 - [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
+
 
 
 

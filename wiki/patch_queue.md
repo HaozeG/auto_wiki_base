@@ -1171,3 +1171,67 @@ target_section: Relationships
 source: https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg406313.html
 status: pending_review
 proposed_update: Update outbound_links target from 'gcc-tuning-c908-canmv-k230' to 'xuantie-c908-gcc-tuning' and refine relationship reason to emphasize that both GCC tuning patches model in-order scalar pipelines but the X60 tuning also includes dual-issue and RVV 1.0 vector support, while the C908 tuning is purely scalar and single-issue.
+
+## [2026-07-03] merge_pending | nncase.md
+target_page: nncase.md
+canonical_name: nncase
+colliding_name: nncase
+source: https://github.com/kendryte/k230_docs/blob/main/en/01_software/board/ai/K230_nncase_Development_Guide.md
+status: pending_review
+<!-- merge_draft_body
+# nncase
+
+nncase is a neural network compiler developed by Canaan Creative for AI accelerators, supporting targets including CPU, K210, K510, and K230. It compiles neural network models from TFLite and ONNX formats into kmodel files that can be executed on supported hardware. The compiler provides static memory allocation (no heap memory required), operator fusion and optimization, and support for both float and uint8/int8 quantized inference. Post-training quantization (PTQ) is supported using floating-point models and quantization calibration sets. The nncase software stack consists of a compiler component, which runs on a PC to produce kmodels, and a runtime library that integrates into user applications to load models, set input data, execute KPU inference, and retrieve outputs.
+
+## Key Claims
+
+- Supports multi-input multi-output networks and multi-branch structures.
+- Static memory allocation, no heap memory required.
+- Operator fusion and optimization.
+- Supports float and uint8/int8 quantized inference.
+- Post-training quantization using floating-point models and calibration sets.
+- Flat model format supporting zero-copy loading.
+- Supports neural network model formats: TFLite and ONNX.
+- Compiler modules include: Importer, IR (Neutral IR and Target IR), Evaluator, Quantize, Transform optimization, Tiling, Partition, Schedule, and Codegen.
+- Runtime provides kmodel loading, input setting, KPU execution, and output retrieval.
+- Currently supported targets: CPU, K210, K510, K230.
+
+## Relationships
+
+No specific relationship to visible context pages ([[andes-ax45mpv-hardware-target]] does not share direct architectural or toolchain connection with nncase).
+
+## Sources
+
+- https://github.com/kendryte/k230_docs/blob/main/en/01_software/board/ai/K230_nncase_Development_Guide.md
+merge_draft_body -->
+
+## [2026-07-03] merge_pending | nncase.md
+target_page: nncase.md
+canonical_name: nncase
+colliding_name: nncase
+source: https://gitee.com/kendryte/nncase
+status: pending_review
+<!-- merge_draft_body
+# nncase
+
+nncase is an open-source deep learning compiler stack designed specifically for Kendryte AI accelerators, developed by kendryte (a Canaan Creative subsidiary). Licensed under Apache-2.0, nncase takes neural network models from frontends such as TFLite, ONNX, and Caffe and compiles them into optimized executables for Kendryte's hardware, with a primary target being the K230 SoC. The toolchain is available as a Python package (`pip install nncase nncase-kpu`) and includes a runtime library that integrates with the K230 SDK. nncase supports 8-bit quantization for both weights and activations, achieving inference performance that matches the accuracy of reference frameworks on standard benchmarks. For example, on the K230 platform with u8/u8 quantization, nncase achieves 600.24 FPS on MobileNetV2 (ImageNet top-1 accuracy 71.1% vs reference 71.3%) and 86.17 FPS on ResNet50V2 (top-1 accuracy 75.11% vs reference 75.44%). The project maintains versioned releases with active development across multiple branches (release/3.0, release/2.0, and various feature branches).
+
+## Key Claims
+
+- nncase is an open deep learning compiler stack for Kendryte AI accelerators, licensed under Apache-2.0.
+- It supports model import from TFLite, ONNX, and Caffe, with detailed operator support documented for each frontend.
+- The compiler targets the K230 SoC and is integrated with the K230 SDK, with a documented version mapping between nncase releases and SDK versions.
+- nncase is installed via pip for both Linux and Windows; the Windows package requires a separate wheel file for the KPU runtime.
+- Quantization uses u8 for both input features and weights; accuracy matches reference frameworks within 0.1–0.3% on ImageNet top-1.
+- Benchmark results on K230 with u8/u8 quantization: MobileNetV2 at 600.24 FPS, ResNet50V2 at 86.17 FPS, YOLOv5s detection at 23.645 FPS, YOLOv8s detection at 9.373 FPS, YOLOv8s segmentation at 7.845 FPS, and YOLOv8n pose estimation at 36.066 FPS (320x320).
+- The repository has 246 branches and 77 tags, indicating active development.
+
+## Relationships
+
+No specific relationship to pages in the current wiki context.
+
+## Sources
+
+- https://gitee.com/kendryte/nncase
+- https://github.com/kendryte/nncase
+merge_draft_body -->
