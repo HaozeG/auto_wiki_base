@@ -287,6 +287,12 @@ def _serializable_theme_profile(profile: dict) -> dict:
         "source_preferences": profile.get("source_preferences", []),
         "coverage_priorities": profile.get("coverage_priorities", []),
         "lint_priorities": profile.get("lint_priorities", []),
+        # Deliberate top-level hub concepts (optional; absent for themes/
+        # profiles that don't declare any). Grouping key for the "Hub
+        # Hierarchy" section in rebuild_index_from_frontmatter() — see
+        # domain_analysis._risc_v_hub_hierarchy() docstring for why this is
+        # a derived index view, not a forced page-creation step.
+        "hub_hierarchy": profile.get("hub_hierarchy", []),
     }
 
 
@@ -1632,6 +1638,13 @@ def rebuild_index_from_frontmatter() -> None:
     resolved_concepts: dict[str, str] = {}   # display name -> "[stem](folder/stem.md)"
     page_stems: dict[str, tuple[str, str]] = {}  # stem -> (folder, filename)
     mentions: dict[str, tuple[str, str, str]] = {}  # target -> (folder, filename, first mentioning page link)
+    # Hub Hierarchy inputs: pages grouped by their subtype (subagents write
+    # the literal subtype into `type`, e.g. type: hardware_target, not
+    # type: entity/subtype: hardware_target -- see the "type" vs "subtype"
+    # note in Phase 1's audit). Grouped against [theme_profile].hub_hierarchy
+    # at render time, not stored per-page -- see domain_analysis.py's
+    # _risc_v_hub_hierarchy() docstring for why this is a derived view.
+    pages_by_subtype: dict[str, list[str]] = {}
 
     for path in sorted(_WIKI_PAGES_DIR.rglob("*.md")):
         fm, body = frontmatter.parse_page(path)
@@ -1640,6 +1653,7 @@ def rebuild_index_from_frontmatter() -> None:
         page_type = fm.get("type", "entity")
         folder = path.parent.name
         filename = path.name
+        pages_by_subtype.setdefault(page_type, []).append(f"[{path.stem}]({folder}/{filename})")
         tags = ", ".join(fm.get("tags", []) or [])
         sources = fm.get("sources", []) or []
         source_count = str(len(sources))
@@ -1757,6 +1771,27 @@ def rebuild_index_from_frontmatter() -> None:
         return "\n".join(new_lines)
 
     text = _replace_section(text, "## Concept Index", concept_index_lines)
+
+    hub_hierarchy = _load_claude_md_block("theme_profile").get("hub_hierarchy") or []
+    if hub_hierarchy:
+        hub_lines: list[str] = []
+        for hub in hub_hierarchy:
+            label = hub.get("label", hub.get("hub_id", "?"))
+            subtype = hub.get("subtype", "")
+            children = pages_by_subtype.get(subtype, [])
+            hub_lines.append(f"### {label}")
+            hub_lines.append("")
+            if hub.get("description"):
+                hub_lines.append(f"*{hub['description']}*")
+                hub_lines.append("")
+            if children:
+                hub_lines.extend(f"- {c}" for c in sorted(children))
+            else:
+                hub_lines.append("*(no pages under this hub yet)*")
+            hub_lines.append("")
+        if hub_lines and hub_lines[-1] == "":
+            hub_lines.pop()
+        text = _replace_section(text, "## Hub Hierarchy", hub_lines)
 
     page_count = len(list(_WIKI_PAGES_DIR.rglob("*.md")))
     text = re.sub(r"Last updated: \S+", f"Last updated: {_now_date()}", text)

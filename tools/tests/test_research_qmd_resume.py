@@ -941,6 +941,60 @@ def test_rebuild_index_populates_concept_gaps_from_dangling_outbound_links(tmp_p
     assert "some_unwritten_concept" in gaps
 
 
+def test_rebuild_index_renders_hub_hierarchy_from_theme_profile(tmp_path):
+    """Phase 2: deliberate hub concepts, declared in [theme_profile].hub_hierarchy
+    at theme setup, are a *derived* index view -- grouping existing pages by
+    subtype under the hub's label -- not a forced synthesis page (which would
+    violate its own "connected_entities non-empty" rejection criteria at cold
+    start). A hub with zero matching pages yet still renders, honestly, as
+    empty rather than being silently omitted."""
+    pages_dir = tmp_path / "wiki" / "_pages"
+    hw_dir = pages_dir / "hardware_target"
+    hw_dir.mkdir(parents=True)
+    (hw_dir / "chip-a.md").write_text(
+        "---\ntype: hardware_target\ncanonical_name: Chip A\nsources: []\ninbound_links: 0\n---\n\n# Chip A\n\nBody.\n",
+        encoding="utf-8",
+    )
+    (hw_dir / "chip-b.md").write_text(
+        "---\ntype: hardware_target\ncanonical_name: Chip B\nsources: []\ninbound_links: 0\n---\n\n# Chip B\n\nBody.\n",
+        encoding="utf-8",
+    )
+    index = tmp_path / "wiki" / "index.md"
+    index.write_text(
+        "# Wiki Index\n\nLast updated: 2020-01-01 | Pages: 0 | Sources: 0\n\n"
+        "## Entity Pages\n\n| Page | Summary | Tags | Sources | Inbound |\n"
+        "|------|---------|------|---------|---------|\n\n"
+        "## Synthesis Pages\n\n| Page | Connected Entities | Status | Inbound |\n"
+        "|------|--------------------|--------|---------|\n\n"
+        "## Concept Index\n\n\n"
+        "## Optimization Pages\n\n| Page | Type | Summary | Tags | Sources | Inbound |\n"
+        "|------|------|---------|------|---------|---------|\n",
+        encoding="utf-8",
+    )
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text(
+        "```yaml\n[theme_profile]\ntheme: RISC-V AI accelerator\nhub_hierarchy:\n"
+        "- hub_id: vendor_core_families\n  label: Vendor RISC-V Core Families\n"
+        "  subtype: hardware_target\n  description: Cores and SoCs by vendor.\n"
+        "- hub_id: workload_landscape\n  label: Workload and Kernel Landscape\n"
+        "  subtype: workload_kernel\n  description: Kernel shapes and baselines.\n```\n",
+        encoding="utf-8",
+    )
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_INDEX_MD", index), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md):
+        orchestrator.rebuild_index_from_frontmatter()
+
+    text = index.read_text(encoding="utf-8")
+    assert "## Hub Hierarchy" in text
+    assert "### Vendor RISC-V Core Families" in text
+    assert "[chip-a](hardware_target/chip-a.md)" in text
+    assert "[chip-b](hardware_target/chip-b.md)" in text
+    assert "### Workload and Kernel Landscape" in text
+    assert "*(no pages under this hub yet)*" in text  # honest, not omitted
+
+
 def test_synthesis_gap_clusters_finds_uncovered_tag_and_excludes_covered(tmp_path):
     pages_dir = tmp_path / "wiki" / "_pages"
     entity_dir = pages_dir / "entity"

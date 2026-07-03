@@ -70,6 +70,47 @@ def _profile_page_types(*specialized: str) -> dict[str, dict[str, Any]]:
     return page_types
 
 
+def _risc_v_hub_hierarchy() -> list[dict[str, str]]:
+    """Deliberate top-level hub concepts for a RISC-V AI accelerator theme,
+    declared at theme setup rather than left to emerge accidentally.
+
+    Found live (2026-07-03): without deliberate hubs, hub concentration
+    happened on whichever `hardware_target` page got created first and
+    happened to accumulate lucky citations — an incidental chip page, not
+    a genuine organizing concept. `rebuild_index_from_frontmatter()` groups
+    existing pages under these labels by `subtype`/`type` (no frontmatter
+    schema change, no forced page creation at cold start — a synthesis page
+    with zero `connected_entities` would violate its own hard-rejection
+    criteria, so hubs here are a derived index view, materializing real
+    content only once pages exist to group)."""
+    return [
+        {
+            "hub_id": "vendor_core_families",
+            "label": "Vendor RISC-V Core Families",
+            "subtype": "hardware_target",
+            "description": "Hardware/ISA targets: cores, SoCs, and accelerators by vendor.",
+        },
+        {
+            "hub_id": "workload_landscape",
+            "label": "Workload and Kernel Landscape",
+            "subtype": "workload_kernel",
+            "description": "Kernel/workload shapes, datatypes, and baseline implementations.",
+        },
+        {
+            "hub_id": "optimization_techniques",
+            "label": "Optimization Techniques",
+            "subtype": "optimization_recipe",
+            "description": "Transformation recipes: prerequisites, expected effect, failure modes.",
+        },
+        {
+            "hub_id": "benchmark_evidence",
+            "label": "Benchmark Evidence",
+            "subtype": "benchmark_result",
+            "description": "Measured or reported results with hardware/software version context.",
+        },
+    ]
+
+
 def _theme_matches(theme_l: str, terms: tuple[str, ...]) -> bool:
     """Word-boundary keyword match, not naive substring containment.
 
@@ -110,6 +151,7 @@ def propose_theme_profiles(theme: str) -> list[dict[str, Any]]:
                 "page_types": _profile_page_types("hardware_target", "benchmark_result"),
                 "source_preferences": ["official documentation", "ISA specification", "compiler documentation", "paper"],
                 "coverage_priorities": ["ISA/profile coverage", "core and accelerator pages", "memory and toolchain support"],
+                "hub_hierarchy": _risc_v_hub_hierarchy(),
             },
             {
                 **base,
@@ -135,6 +177,7 @@ def propose_theme_profiles(theme: str) -> list[dict[str, Any]]:
                     "benchmark measurement context",
                     "hardware-target/workload/recipe relationship coverage",
                 ],
+                "hub_hierarchy": _risc_v_hub_hierarchy(),
             },
             {
                 **base,
@@ -144,6 +187,7 @@ def propose_theme_profiles(theme: str) -> list[dict[str, Any]]:
                 "page_types": _profile_page_types("company", "product", "hardware_target", "benchmark_result"),
                 "source_preferences": ["official documentation", "standards documents", "project repository", "benchmark repository"],
                 "coverage_priorities": ["vendors and projects", "standards and software stacks", "benchmark families"],
+                "hub_hierarchy": _risc_v_hub_hierarchy(),
             },
         ]
 
