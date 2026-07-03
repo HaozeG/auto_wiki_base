@@ -9,6 +9,7 @@ aliases:
 - V-Seek benchmark
 - SG2042 LLM benchmark
 - DeepSeek on SG2042
+- Sophon SG2042 CPU
 subtype: null
 tags: []
 hardware_targets:
@@ -31,6 +32,10 @@ sources:
 - https://ar5iv.labs.arxiv.org/html/2309.00381
 - raw/cache/5756ea94463b1961.md
 - https://arxiv.org/abs/2503.17422
+- raw/cache/b8ccce9b3180873d.md
+- https://arxiv.org/html/2406.12394v1
+- raw/cache/5b1c2c5ef89a99ef.md
+- https://arxiv.org/abs/2406.12394
 source_url: https://milkv.io/docs/pioneer/getting-started/processor
 fetched_at: '2026-07-03T14:18:06.914938+00:00'
 type: hardware_target

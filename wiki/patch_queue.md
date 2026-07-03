@@ -1272,3 +1272,112 @@ The K230 is an AI-capable SoC developed by Canaan (Kendryte) featuring two Xuant
 
 - https://owhinata.github.io/canmv-k230/en/
 merge_draft_body -->
+
+## [2026-07-03] merge_pending | sophon-sg2042.md
+target_page: sophon-sg2042.md
+canonical_name: SOPHON SG2042
+colliding_name: Sophon SG2042
+source: https://arxiv.org/html/2406.12394v1
+status: pending_review
+<!-- merge_draft_body
+# Sophon SG2042
+
+The Sophon SG2042 is a 64-core RISC-V CPU designed by Sophon (SOPHGO) for high-performance workloads, first mass-produced and released in summer 2023. Built with T-Head XuanTie C920 cores organized in clusters of four, each core implements a 12-stage out-of-order multiple-issue superscalar pipeline with three decode, four rename/dispatch, eight issue/execute, and two load/store execution units. The chip runs at 2 GHz and supports the RV64GCV instruction set including version 0.7.1 of the RISC-V Vector Extension (RVV) with a 128-bit vector width. Each core has 64 KB L1 instruction and data caches, with 1 MB of L2 cache shared per four-core cluster and 64 MB of L3 system cache shared across all cores. The SG2042 provides four DDR4-3200 memory controllers and 32 lanes of PCI-E Gen4. The CPU is commonly available in the Milk-V Pioneer Box with 128 GB of DDR4 RAM. Because the C920 core supports only the pre-ratification RVV v0.7.1, mainline GCC and LLVM cannot target the vector unit; T-Head provides a custom XuanTie GCC compiler fork, with GCC 8.4 from the June 2021 release giving the best auto-vectorization results.
+
+## Key Claims
+
+- The SG2042 is a 64-core RISC-V CPU with 2 GHz clock, using T-Head XuanTie C920 cores with a 12-stage out-of-order superscalar pipeline.
+- It supports RV64GCV ISA including RVV v0.7.1 with a fixed 128-bit vector width.
+- Cache hierarchy: 64 KB L1 I/D per core, 1 MB L2 per four-core cluster, 64 MB L3 system cache.
+- Memory: four DDR4-3200 controllers; I/O: 32 PCI-E Gen4 lanes.
+- The vector unit requires a vendor-specific compiler fork (XuanTie GCC 20210618) for auto-vectorization; mainline compilers do not support RVV v0.7.1.
+- In NAS Parallel Benchmark evaluation, the SG2042 outperformed other RISC-V CPUs by 2.6x to 16.7x at the single-core level, but its memory subsystem was identified as the primary bottleneck for memory-bound HPC workloads.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RV64GCV with RVV v0.7.1 (128-bit VLEN)
+- Vector/matrix/accelerator support: 128-bit vector unit per core, RVV v0.7.1
+- Memory/cache/TLB/DMA: 64 KB L1 I/D, 1 MB L2 per 4-core cluster, 64 MB L3; DDR4-3200; PCI-E Gen4
+- Compiler/toolchain support: XuanTie GCC fork (20210618, GCC 8.4) for auto-vectorization; no mainline GCC/LLVM support for RVV v0.7.1
+
+## Relationships
+
+- [[sophon-sg2044-hardware-target]]: SG2044 is the successor to SG2042, featuring C920v2 cores with ratified RVV v1.0 and an enhanced memory subsystem that addresses the SG2042's main bottleneck.
+- [[xuantie-c906-hardware-target]]: Both are T-Head XuanTie cores; the C920 in the SG2042 is a 12-stage out-of-order multiple-issue core with RVV v0.7.1, while the C906 is a 5-stage in-order single-issue core with a custom 128-bit SIMD unit.
+- [[andes-nx27v-hardware-target]]: Both implement RISC-V vector extensions; the C920 uses the pre-ratification RVV v0.7.1 with 128-bit VLEN, while the NX27V uses the ratified RVV v1.0 with up to 512-bit VLEN and out-of-order vector processing.
+
+## Sources
+
+- https://arxiv.org/html/2406.12394v1
+merge_draft_body -->
+
+## [2026-07-03] merge_pending | sophon-sg2042.md
+target_page: sophon-sg2042.md
+canonical_name: SOPHON SG2042
+colliding_name: Sophon SG2042
+source: https://arxiv.org/abs/2406.12394
+status: pending_review
+<!-- merge_draft_body
+# Sophon SG2042
+
+The Sophon SG2042 is a 64-core RISC-V CPU designed for high-performance workloads, first released in summer 2023 by Sophon. It is the first mass-produced, commodity-available high-core-count RISC-V processor targeting HPC applications. The chip integrates 64 XuanTie C920 cores designed by T-Head, each a 64-bit in-order core, running at 2 GHz. Cores are organized in clusters of four, sharing an unspecified L2 cache (the memory subsystem is identified as the primary performance bottleneck). The SG2042 implements the RISC-V ISA with vector extensions (RVV 1.0), though the specific extension set is not fully detailed in available sources. The chip is notable for its high core density and commodity availability, enabling RISC-V-based HPC exploration and benchmarking. Initial performance characterization using the NAS Parallel Benchmark (NPB) suite shows that the SG2042 outperforms other RISC-V CPUs by a factor of 2.6 to 16.7 at the single-core level, but its memory bandwidth and latency limit performance on memory-bound algorithms relative to x86-64 and AArch64 CPUs.
+
+## Key Claims
+
+- First mass-produced 64-core RISC-V CPU for HPC, released summer 2023.
+- Contains 64 XuanTie C920 cores at 2 GHz, organized in clusters of four.
+- Memory subsystem is the primary performance bottleneck, as identified by NPB benchmarking.
+- Outperforms other RISC-V CPUs by 2.6–16.7× at single-core level.
+- Competes well with x86-64 and AArch64 CPUs on compute-bound workloads but lags on memory-bound workloads.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V with RVV 1.0 (vector), 64-bit cores.
+- Vector/matrix/accelerator support: RVV (specific VLEN not disclosed).
+- Memory/cache/TLB/DMA: Memory subsystem bottleneck; no detailed cache hierarchy published in this source.
+- Compiler/toolchain support: Not specified; benchmarks likely used standard GCC/LLVM with RISC-V backend.
+
+## Relationships
+
+No specific relationship to visible context pages.
+
+## Sources
+
+- https://arxiv.org/abs/2406.12394
+merge_draft_body -->
+
+## [2026-07-03] merge_pending | sophon-sg2042-npb-performance-benchmark-result.md
+target_page: sophon-sg2042-npb-performance-benchmark-result.md
+canonical_name: SG2042 NAS Parallel Benchmark Performance
+colliding_name: NPB Performance of the Sophon SG2042
+source: https://arxiv.org/abs/2406.12394
+status: pending_review
+<!-- merge_draft_body
+# NPB Performance of the Sophon SG2042
+
+The Sophon SG2042 64-core RISC-V CPU was characterized using the NASA NAS Parallel Benchmark (NPB) suite to evaluate its suitability for HPC workloads. The study compared the SG2042 against CPUs implementing RISC-V, x86-64, and AArch64 ISAs. Key findings include that the SG2042 delivers a 2.6 to 16.7 times performance improvement at the single-core level over other RISC-V CPUs. Against x86-64 and AArch64 CPUs, the SG2042 performs well on compute-bound algorithms but degrades on memory-bandwidth- or latency-bound algorithms, identifying the SG2042's memory subsystem as the primary bottleneck. The benchmark results were obtained using the NPB suite, which includes kernels such as Integer Sort (IS), Multi Grid (MG), Embarrassingly Parallel (EP), Conjugate Gradient (CG), and Fast Fourier Transform (FT), along with pseudo-applications. The measurement context is comparative across ISAs, with no specific version numbers for hardware or software reported in the excerpt. The evidence strength is measured, as actual execution on hardware was performed.
+
+## Key Claims
+
+- SG2042 outperforms all other tested RISC-V CPUs by 2.6–16.7× at single core in NPB.
+- On compute-bound algorithms, SG2042 competes well with x86-64 and AArch64 CPUs.
+- Memory-bound algorithms show reduced relative performance; the memory subsystem is the primary bottleneck.
+- The study used the NPB suite with kernels: IS, MG, EP, CG, FT, and pseudo-applications.
+
+## Measurement Context
+
+- Hardware version: Sophon SG2042 (2 GHz, 64-core, XuanTie C920). Comparison CPUs: unspecified RISC-V, x86-64, AArch64.
+- Software/toolchain version: NPB suite (version not specified).
+- Workload shape: NPB kernels (IS, MG, EP, CG, FT) and pseudo-applications.
+- Metric: single-core performance improvement (factor), qualitative compute/memory-bound classification.
+- Method: Comparative benchmarks run on SG2042 and other CPUs; single-core results reported.
+- Evidence strength: measured (actual hardware runs).
+
+## Relationships
+
+No specific relationship to visible context pages.
+
+## Sources
+
+- https://arxiv.org/abs/2406.12394
+merge_draft_body -->

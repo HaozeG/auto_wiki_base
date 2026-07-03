@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-03 | Pages: 58 | Sources: 158
+Last updated: 2026-07-03 | Pages: 60 | Sources: 164
 
 ## Entity Pages
 
@@ -15,6 +15,7 @@ Last updated: 2026-07-03 | Pages: 58 | Sources: 158
 | [llamacpp-quantization-methods.md](entity/llamacpp-quantization-methods.md) | llama.cpp Quantization Methods | quantization, llama.cpp, GGML, LLM inference, post-training quantization | 4 | 0 |
 | [meta-andes.md](entity/meta-andes.md) | meta-andes | RISC-V, BSP, Yocto, Andes Technology | 2 | 0 |
 | [mlir-compiler-infrastructure.md](entity/mlir-compiler-infrastructure.md) | MLIR | compiler, LLVM, intermediate representation | 2 | 0 |
+| [monte-cimone-cluster.md](entity/monte-cimone-cluster.md) | Monte Cimone |  | 2 | 0 |
 | [nncase.md](entity/nncase.md) | nncase |  | 6 | 0 |
 | [opengemm.md](entity/opengemm.md) | OpenGeMM | GeMM accelerator, RISC-V, open-source hardware, Chisel, accelerator generator | 4 | 0 |
 | [riscv-matrix-extension-specification.md](entity/riscv-matrix-extension-specification.md) | RISC-V Matrix Extension Specification | risc-v, isa, matrix, extension | 8 | 0 |
@@ -130,6 +131,7 @@ Last updated: 2026-07-03 | Pages: 58 | Sources: 158
 - **Key Stone K1**: → [spacemit-k1](hardware_target/spacemit-k1.md)
 - **LLM inference in C/C++**: → [llama-cpp](entity/llama-cpp.md)
 - **Llama.cpp GGML RVV Optimization**: → [rise-project-rp014-llamacpp-ggml-rvv](entity/rise-project-rp014-llamacpp-ggml-rvv.md)
+- **MCv2**: → [monte-cimone-cluster](entity/monte-cimone-cluster.md)
 - **MLIR**: → [mlir-compiler-infrastructure](entity/mlir-compiler-infrastructure.md)
 - **MLIR project**: → [mlir-compiler-infrastructure](entity/mlir-compiler-infrastructure.md)
 - **MLIR-based RVV ukernels in IREE**: → [iree-rvv-mlir-ukernel](entity/iree-rvv-mlir-ukernel.md)
@@ -146,7 +148,11 @@ Last updated: 2026-07-03 | Pages: 58 | Sources: 158
 - **Maestro gesture recognition benchmark**: → [maestro-gesture-recognition](benchmark_result/maestro-gesture-recognition.md)
 - **Maestro ultrasound gesture recognition**: → [maestro-gesture-recognition](benchmark_result/maestro-gesture-recognition.md)
 - **Matrix Extension Specification**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
+- **Monte Cimone**: → [monte-cimone-cluster](entity/monte-cimone-cluster.md)
+- **Monte Cimone v2**: → [monte-cimone-cluster](entity/monte-cimone-cluster.md)
 - **Multi-Level Intermediate Representation**: → [mlir-compiler-infrastructure](entity/mlir-compiler-infrastructure.md)
+- **NAS Parallel Benchmarks on SG2042**: → [sophon-sg2042-npb-performance-benchmark-result](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md)
+- **NPB Performance of the Sophon SG2042**: → [sophon-sg2042-npb-performance-benchmark-result](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md)
 - **NX27V**: → [andes-nx27v-hardware-target](hardware_target/andes-nx27v-hardware-target.md)
 - **OpenC906**: → [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
 - **OpenGeMM**: → [opengemm](entity/opengemm.md)
@@ -187,8 +193,11 @@ Last updated: 2026-07-03 | Pages: 58 | Sources: 158
 - **RVV compiler evaluation 2026**: → [gcc15-vs-clang21-banana-pi-f3-rvv10](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md)
 - **SC23 Auto-Generated GEMM on C906 and C910**: → [auto-gemm-micro-kernel-c906-c910-benchmark](benchmark_result/auto-gemm-micro-kernel-c906-c910-benchmark.md)
 - **SG2042**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
+- **SG2042 HPC benchmarking**: → [sophon-sg2042-npb-performance-benchmark-result](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md)
 - **SG2042 LLM benchmark**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
 - **SG2042 LLM optimization**: → [v-seek-llm-inference-optimization-sg2042](optimization_recipe/v-seek-llm-inference-optimization-sg2042.md)
+- **SG2042 NAS Parallel Benchmark Performance**: → [sophon-sg2042-npb-performance-benchmark-result](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md)
+- **SG2042 NPB results**: → [sophon-sg2042-npb-performance-benchmark-result](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md)
 - **SG2044**: → [sophon-sg2044-hardware-target](hardware_target/sophon-sg2044-hardware-target.md)
 - **SHL**: → [shl](entity/shl.md)
 - **SOPHGO SG2044**: → [sophon-sg2044-hardware-target](hardware_target/sophon-sg2044-hardware-target.md)
@@ -204,6 +213,7 @@ Last updated: 2026-07-03 | Pages: 58 | Sources: 158
 - **SoCXin V851S**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
 - **Sophgo SG2042**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
 - **Sophon SG2042**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
+- **Sophon SG2042 CPU**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
 - **Sophon SG2042 SoC**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
 - **Sophon SG2044**: → [sophon-sg2044-hardware-target](hardware_target/sophon-sg2044-hardware-target.md)
 - **SpacemiT K1**: → [spacemit-k1](hardware_target/spacemit-k1.md)
@@ -303,7 +313,9 @@ Last updated: 2026-07-03 | Pages: 58 | Sources: 158
 - **zsb**: → [xuantie-zero-stage-boot-entity](entity/xuantie-zero-stage-boot-entity.md)
 - **玄铁C906**: → [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
 - **香山**: → [xiangshan-overview](entity/xiangshan-overview.md)
+- **sophon-sg2042-hardware-target**: mentioned in [sophon-sg2042-npb-performance-benchmark-result](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md) — *no dedicated page*
 - **xuantie-c908-gcc-tuning**: mentioned in [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md) — *no dedicated page*
+
 
 
 
@@ -348,6 +360,7 @@ Last updated: 2026-07-03 | Pages: 58 | Sources: 158
 | [iree-riscv-benchmark-milkv-jupiter.md](benchmark_result/iree-riscv-benchmark-milkv-jupiter.md) | benchmark_result | IREE RISC-V Microkernel Benchmark on MILK-V Jupiter |  | 2 | 0 |
 | [maestro-gesture-recognition.md](benchmark_result/maestro-gesture-recognition.md) | benchmark_result | Maestro gesture recognition benchmark |  | 2 | 0 |
 | [mlir-xdsl-gemm-benchmark-k230-banana-pi.md](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md) | benchmark_result | MLIR-xDSL GEMM Benchmark on K230 and BananaPi F3 |  | 2 | 4 |
+| [sophon-sg2042-npb-performance-benchmark-result.md](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md) | benchmark_result | SG2042 NAS Parallel Benchmark Performance |  | 4 | 0 |
 | [spacemit-k1-benchmark-2026-04-14.md](benchmark_result/spacemit-k1-benchmark-2026-04-14.md) | benchmark_result | SpacemiT K1 AI Benchmark Report (2026-04-14) |  | 2 | 0 |
 | [andes-ax45mpv-hardware-target.md](hardware_target/andes-ax45mpv-hardware-target.md) | hardware_target | AndesCore AX45MPV |  | 2 | 0 |
 | [andes-nx27v-hardware-target.md](hardware_target/andes-nx27v-hardware-target.md) | hardware_target | AndesCore NX27V |  | 2 | 2 |
@@ -357,8 +370,8 @@ Last updated: 2026-07-03 | Pages: 58 | Sources: 158
 | [k230-soc.md](hardware_target/k230-soc.md) | hardware_target | K230 |  | 8 | 0 |
 | [maestro.md](hardware_target/maestro.md) | hardware_target | Maestro |  | 2 | 1 |
 | [opennanhu-v5.md](hardware_target/opennanhu-v5.md) | hardware_target | OpenNanhu-V5 |  | 2 | 0 |
-| [sophon-sg2042.md](hardware_target/sophon-sg2042.md) | hardware_target | SOPHON SG2042 |  | 6 | 0 |
-| [sophon-sg2044-hardware-target.md](hardware_target/sophon-sg2044-hardware-target.md) | hardware_target | Sophon SG2044 |  | 2 | 0 |
+| [sophon-sg2042.md](hardware_target/sophon-sg2042.md) | hardware_target | SOPHON SG2042 |  | 10 | 0 |
+| [sophon-sg2044-hardware-target.md](hardware_target/sophon-sg2044-hardware-target.md) | hardware_target | Sophon SG2044 |  | 2 | 1 |
 | [spacemit-k1.md](hardware_target/spacemit-k1.md) | hardware_target | SpacemiT K1 |  | 4 | 2 |
 | [spacemit-k3-hardware-target.md](hardware_target/spacemit-k3-hardware-target.md) | hardware_target | SpacemiT K3 | RISC-V, SpacemiT, AI CPU, big.LITTLE, RVV 1.0 | 2 | 0 |
 | [spacemit-x60-hardware-target.md](hardware_target/spacemit-x60-hardware-target.md) | hardware_target | SpacemiT X60 | RISC-V, GCC tuning, SpacemiT, in-order, RVV 1.0 | 2 | 3 |
@@ -426,7 +439,9 @@ Last updated: 2026-07-03 | Pages: 58 | Sources: 158
 - [iree-riscv-benchmark-milkv-jupiter](benchmark_result/iree-riscv-benchmark-milkv-jupiter.md)
 - [maestro-gesture-recognition](benchmark_result/maestro-gesture-recognition.md)
 - [mlir-xdsl-gemm-benchmark-k230-banana-pi](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md)
+- [sophon-sg2042-npb-performance-benchmark-result](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md)
 - [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
+
 
 
 
