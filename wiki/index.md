@@ -1,11 +1,12 @@
 # Wiki Index
 
-Last updated: 2026-07-03 | Pages: 44 | Sources: 122
+Last updated: 2026-07-03 | Pages: 45 | Sources: 124
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
+| [apache-tvm.md](entity/apache-tvm.md) | Apache TVM |  | 2 | 0 |
 | [integrated-matrix-extension.md](entity/integrated-matrix-extension.md) | Integrated Matrix Extension |  | 4 | 0 |
 | [iree-microkernel-library.md](entity/iree-microkernel-library.md) | IREE Microkernel Library |  | 2 | 0 |
 | [iree-rvv-mlir-ukernel.md](entity/iree-rvv-mlir-ukernel.md) | IREE MLIR-based uKernel for RVV | RISC-V, RVV, IREE, MLIR, uKernel, Matmul | 2 | 0 |
@@ -41,6 +42,7 @@ Last updated: 2026-07-03 | Pages: 44 | Sources: 122
 - **Allwinner V851S SoC**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
 - **Allwinner V851SE**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
 - **Allwinner V851s**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
+- **Apache TVM**: → [apache-tvm](entity/apache-tvm.md)
 - **Auto-Generated GEMM Micro-Kernels on C906 and C910**: → [auto-gemm-micro-kernel-c906-c910-benchmark](benchmark_result/auto-gemm-micro-kernel-c906-c910-benchmark.md)
 - **BPI-F3 RVV LLM benchmark**: → [bpi-f3-rvv-llm-benchmark](benchmark_result/bpi-f3-rvv-llm-benchmark.md)
 - **BPI-F3 RVV llama.cpp**: → [bpi-f3-rvv-llm-benchmark](benchmark_result/bpi-f3-rvv-llm-benchmark.md)
@@ -174,6 +176,7 @@ Last updated: 2026-07-03 | Pages: 44 | Sources: 122
 - **T-Head XuanTie**: → [xuantie](entity/xuantie.md)
 - **T-Head XuanTie C908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **T1**: → [t1](hardware_target/t1.md)
+- **TVM**: → [apache-tvm](entity/apache-tvm.md)
 - **Terapines ZCC**: → [zcc-compiler](entity/zcc-compiler.md)
 - **Torrent-1**: → [t1](hardware_target/t1.md)
 - **V851S**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
@@ -239,6 +242,7 @@ Last updated: 2026-07-03 | Pages: 44 | Sources: 122
 - **玄铁C906**: → [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
 - **香山**: → [xiangshan-overview](entity/xiangshan-overview.md)
 - **xuantie-c908-gcc-tuning**: mentioned in [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md) — *no dedicated page*
+
 
 
 
@@ -334,6 +338,7 @@ Last updated: 2026-07-03 | Pages: 44 | Sources: 122
 - [maestro-gesture-recognition](benchmark_result/maestro-gesture-recognition.md)
 - [mlir-xdsl-gemm-benchmark-k230-banana-pi](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md)
 - [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
+
 
 
 

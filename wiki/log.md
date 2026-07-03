@@ -205,3 +205,13 @@ audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/
 theme_profile: RISC-V AI accelerator | workflow_first
 coverage_gaps:
   - missing_page_type:workload_kernel
+
+## [2026-07-03] research | TVM IREE RISC-V compiler AI deployment
+session_id: 74889af4
+candidates_evaluated: 9
+pages_written: 1
+pipeline_rejection_rate: 11%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/riscv-phase2/wiki/audit/research_74889af4_2026-07-03.json
+theme_profile: RISC-V AI accelerator | workflow_first
+coverage_gaps:
+  - missing_page_type:workload_kernel
