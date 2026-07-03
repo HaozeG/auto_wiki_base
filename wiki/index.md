@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-03 | Pages: 77 | Sources: 208
+Last updated: 2026-07-03 | Pages: 80 | Sources: 214
 
 ## Entity Pages
 
@@ -11,6 +11,7 @@ Last updated: 2026-07-03 | Pages: 77 | Sources: 208
 | [esperanto-technologies.md](entity/esperanto-technologies.md) | Esperanto Technologies |  | 2 | 0 |
 | [gap9shield.md](entity/gap9shield.md) | GAP9Shield |  | 4 | 0 |
 | [hbm3-entity.md](entity/hbm3-entity.md) | HBM3 |  | 2 | 0 |
+| [hightec-edv-systeme-entity.md](entity/hightec-edv-systeme-entity.md) | HighTec EDV-Systeme | compiler, safety, riscv | 2 | 0 |
 | [integrated-matrix-extension.md](entity/integrated-matrix-extension.md) | Integrated Matrix Extension |  | 4 | 0 |
 | [iree-microkernel-library.md](entity/iree-microkernel-library.md) | IREE Microkernel Library |  | 2 | 0 |
 | [iree-rvv-mlir-ukernel.md](entity/iree-rvv-mlir-ukernel.md) | IREE MLIR-based uKernel for RVV | RISC-V, RVV, IREE, MLIR, uKernel, Matmul | 2 | 0 |
@@ -20,6 +21,7 @@ Last updated: 2026-07-03 | Pages: 77 | Sources: 208
 | [mlir-compiler-infrastructure.md](entity/mlir-compiler-infrastructure.md) | MLIR | compiler, LLVM, intermediate representation | 2 | 0 |
 | [monte-cimone-cluster.md](entity/monte-cimone-cluster.md) | Monte Cimone |  | 2 | 0 |
 | [nncase.md](entity/nncase.md) | nncase |  | 6 | 0 |
+| [nuclei-system-technology.md](entity/nuclei-system-technology.md) | Nuclei System Technology |  | 2 | 0 |
 | [opengemm.md](entity/opengemm.md) | OpenGeMM | GeMM accelerator, RISC-V, open-source hardware, Chisel, accelerator generator | 4 | 0 |
 | [riscv-international-technical-committees.md](entity/riscv-international-technical-committees.md) | RISC-V International Technical Committees |  | 2 | 0 |
 | [riscv-matrix-extension-specification.md](entity/riscv-matrix-extension-specification.md) | RISC-V Matrix Extension Specification | risc-v, isa, matrix, extension | 10 | 0 |
@@ -136,6 +138,9 @@ Last updated: 2026-07-03 | Pages: 77 | Sources: 208
 - **HHB-onnxruntime YOLOX Deployment on Xuantie C920**: → [hhb-onnxruntime-yolox-deployment-xuantie-c920](optimization_recipe/hhb-onnxruntime-yolox-deployment-xuantie-c920.md)
 - **HHB-onnxruntime YOLOX inference**: → [hhb-onnxruntime-yolox-deployment-xuantie-c920](optimization_recipe/hhb-onnxruntime-yolox-deployment-xuantie-c920.md)
 - **High Bandwidth Memory 3**: → [hbm3-entity](entity/hbm3-entity.md)
+- **HighTec**: → [hightec-edv-systeme-entity](entity/hightec-edv-systeme-entity.md)
+- **HighTec EDV-Systeme**: → [hightec-edv-systeme-entity](entity/hightec-edv-systeme-entity.md)
+- **Hightec EDV-Systeme GmbH**: → [hightec-edv-systeme-entity](entity/hightec-edv-systeme-entity.md)
 - **IME**: → [integrated-matrix-extension](entity/integrated-matrix-extension.md)
 - **IREE MLIR Ukernels for RVV**: → [iree-rvv-mlir-ukernel](entity/iree-rvv-mlir-ukernel.md)
 - **IREE MLIR-based uKernel for RVV**: → [iree-rvv-mlir-ukernel](entity/iree-rvv-mlir-ukernel.md)
@@ -188,11 +193,16 @@ Last updated: 2026-07-03 | Pages: 77 | Sources: 208
 - **Monte Cimone**: → [monte-cimone-cluster](entity/monte-cimone-cluster.md)
 - **Monte Cimone v2**: → [monte-cimone-cluster](entity/monte-cimone-cluster.md)
 - **Multi-Level Intermediate Representation**: → [mlir-compiler-infrastructure](entity/mlir-compiler-infrastructure.md)
+- **NA900**: → [nuclei-na900-hardware-target](hardware_target/nuclei-na900-hardware-target.md)
 - **NAS Parallel Benchmark characterization of Sophon SG2042**: → [npb-characterization-sg2042](benchmark_result/npb-characterization-sg2042.md)
 - **NAS Parallel Benchmarks on SG2042**: → [sophon-sg2042-npb-performance-benchmark-result](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md)
 - **NPB Performance of the Sophon SG2042**: → [sophon-sg2042-npb-performance-benchmark-result](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md)
 - **NPB on SG2042**: → [npb-characterization-sg2042](benchmark_result/npb-characterization-sg2042.md)
 - **NX27V**: → [andes-nx27v-hardware-target](hardware_target/andes-nx27v-hardware-target.md)
+- **Nuclei**: → [nuclei-system-technology](entity/nuclei-system-technology.md)
+- **Nuclei NA900**: → [nuclei-na900-hardware-target](hardware_target/nuclei-na900-hardware-target.md)
+- **Nuclei NA900 processor**: → [nuclei-na900-hardware-target](hardware_target/nuclei-na900-hardware-target.md)
+- **Nuclei System Technology**: → [nuclei-system-technology](entity/nuclei-system-technology.md)
 - **OpenC906**: → [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
 - **OpenGeMM**: → [opengemm](entity/opengemm.md)
 - **OpenGeMM Accelerator Generator**: → [opengemm](entity/opengemm.md)
@@ -453,6 +463,7 @@ Last updated: 2026-07-03 | Pages: 77 | Sources: 208
 
 
 
+
 ## Optimization Pages
 
 | Page | Type | Summary | Tags | Sources | Inbound |
@@ -470,13 +481,14 @@ Last updated: 2026-07-03 | Pages: 77 | Sources: 208
 | [semidynamics-all-in-one-llama2-7b-tensor-utilization.md](benchmark_result/semidynamics-all-in-one-llama2-7b-tensor-utilization.md) | benchmark_result | Semidynamics All-In-One LLaMA-2 7B Tensor Utilization |  | 2 | 0 |
 | [sophon-sg2042-npb-performance-benchmark-result.md](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md) | benchmark_result | SG2042 NAS Parallel Benchmark Performance |  | 4 | 0 |
 | [spacemit-k1-benchmark-2026-04-14.md](benchmark_result/spacemit-k1-benchmark-2026-04-14.md) | benchmark_result | SpacemiT K1 AI Benchmark Report (2026-04-14) |  | 2 | 0 |
-| [andes-ax45mpv-hardware-target.md](hardware_target/andes-ax45mpv-hardware-target.md) | hardware_target | AndesCore AX45MPV |  | 2 | 2 |
+| [andes-ax45mpv-hardware-target.md](hardware_target/andes-ax45mpv-hardware-target.md) | hardware_target | AndesCore AX45MPV |  | 2 | 4 |
 | [andes-nx27v-hardware-target.md](hardware_target/andes-nx27v-hardware-target.md) | hardware_target | AndesCore NX27V |  | 2 | 2 |
 | [chiplet-based-risc-v-soc.md](hardware_target/chiplet-based-risc-v-soc.md) | hardware_target | Chiplet-Based RISC-V SoC |  | 2 | 0 |
 | [et-soc-1-hardware-target.md](hardware_target/et-soc-1-hardware-target.md) | hardware_target | ET-SoC-1 |  | 2 | 1 |
 | [gap9.md](hardware_target/gap9.md) | hardware_target | GAP9 |  | 2 | 3 |
 | [k230-soc.md](hardware_target/k230-soc.md) | hardware_target | K230 |  | 8 | 0 |
 | [maestro.md](hardware_target/maestro.md) | hardware_target | Maestro |  | 2 | 1 |
+| [nuclei-na900-hardware-target.md](hardware_target/nuclei-na900-hardware-target.md) | hardware_target | Nuclei NA900 |  | 2 | 0 |
 | [opennanhu-v5.md](hardware_target/opennanhu-v5.md) | hardware_target | OpenNanhu-V5 |  | 2 | 0 |
 | [semidynamics-all-in-one-ai-ip.md](hardware_target/semidynamics-all-in-one-ai-ip.md) | hardware_target | Semidynamics All-In-One AI IP |  | 2 | 1 |
 | [sophon-sg2042.md](hardware_target/sophon-sg2042.md) | hardware_target | SOPHON SG2042 |  | 12 | 0 |
@@ -510,6 +522,7 @@ Last updated: 2026-07-03 | Pages: 77 | Sources: 208
 - [gap9](hardware_target/gap9.md)
 - [k230-soc](hardware_target/k230-soc.md)
 - [maestro](hardware_target/maestro.md)
+- [nuclei-na900-hardware-target](hardware_target/nuclei-na900-hardware-target.md)
 - [opennanhu-v5](hardware_target/opennanhu-v5.md)
 - [semidynamics-all-in-one-ai-ip](hardware_target/semidynamics-all-in-one-ai-ip.md)
 - [sophon-sg2042](hardware_target/sophon-sg2042.md)
@@ -558,6 +571,7 @@ Last updated: 2026-07-03 | Pages: 77 | Sources: 208
 - [semidynamics-all-in-one-llama2-7b-tensor-utilization](benchmark_result/semidynamics-all-in-one-llama2-7b-tensor-utilization.md)
 - [sophon-sg2042-npb-performance-benchmark-result](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md)
 - [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
+
 
 
 
