@@ -1402,3 +1402,10 @@ target_section: optimization_details
 source: https://vlsifacts.com/esperantos-et-soc-1-chip-integrates-more-than-1000-risc-v-cores-for-energy-efficient-ml-recommendation/
 status: pending_review
 proposed_update: Update Optimization-Relevant Details: 'Vector/matrix/accelerator support: Each ET-Minion core includes a vector/tensor unit (specific ISA extensions not detailed).', 'Memory/cache/TLB/DMA: Over 160 MB on-die SRAM for caches and scratchpad; interfaces to LPDDR4x DRAM and eMMC FLASH; PCIe x8 Gen4.', 'Compiler/toolchain support: Not specified in this source.'
+
+## [2026-07-03] pending | spacemit-x60-hardware-target.md
+target_page: spacemit-x60-hardware-target.md
+target_section: Optimization-Relevant Details
+source: https://arxiv.org/abs/2605.10860
+status: pending_review
+proposed_update: Add a bullet point under Optimization-Relevant Details about the RVV predication overhead and stride load performance bottlenecks identified in the GCC 15/Clang 21 auto-vectorization study (arXiv:2605.10860). These are issues not yet fully captured by current compiler cost models and affect in-order RVV 1.0 implementations such as the X60.

@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-03 | Pages: 63 | Sources: 170
+Last updated: 2026-07-03 | Pages: 64 | Sources: 172
 
 ## Entity Pages
 
@@ -98,8 +98,10 @@ Last updated: 2026-07-03 | Pages: 63 | Sources: 170
 - **GAP9Shield**: → [gap9shield](entity/gap9shield.md)
 - **GAP9Shield module**: → [gap9shield](entity/gap9shield.md)
 - **GAP9Shield nano-drone module**: → [gap9shield](entity/gap9shield.md)
+- **GCC 15 vs Clang 21 Auto-vectorization on SpacemiT X60**: → [gcc15-clang21-autovec-benchmark-spacemit-x60](benchmark_result/gcc15-clang21-autovec-benchmark-spacemit-x60.md)
 - **GCC 15 vs Clang 21 on BananaPi-F3 (RVV 1.0)**: → [gcc15-vs-clang21-banana-pi-f3-rvv10](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md)
 - **GCC Tuning Benchmark on XuanTie C908**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
+- **GCC15 Clang21 RVV benchmark**: → [gcc15-clang21-autovec-benchmark-spacemit-x60](benchmark_result/gcc15-clang21-autovec-benchmark-spacemit-x60.md)
 - **GGML Quantization**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
 - **GGML quantization**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
 - **GGML quantization techniques**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
@@ -199,6 +201,7 @@ Last updated: 2026-07-03 | Pages: 63 | Sources: 170
 - **RVV Intrinsic API**: → [rvv-intrinsic-api](entity/rvv-intrinsic-api.md)
 - **RVV MLIR Dialect**: → [rvv-dialect-mlir](entity/rvv-dialect-mlir.md)
 - **RVV MLIR ukernel**: → [iree-rvv-mlir-ukernel](entity/iree-rvv-mlir-ukernel.md)
+- **RVV compiler auto-vectorization comparison**: → [gcc15-clang21-autovec-benchmark-spacemit-x60](benchmark_result/gcc15-clang21-autovec-benchmark-spacemit-x60.md)
 - **RVV compiler evaluation 2026**: → [gcc15-vs-clang21-banana-pi-f3-rvv10](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md)
 - **SC23 Auto-Generated GEMM on C906 and C910**: → [auto-gemm-micro-kernel-c906-c910-benchmark](benchmark_result/auto-gemm-micro-kernel-c906-c910-benchmark.md)
 - **SG2042**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
@@ -364,6 +367,7 @@ Last updated: 2026-07-03 | Pages: 63 | Sources: 170
 
 
 
+
 ## Optimization Pages
 
 | Page | Type | Summary | Tags | Sources | Inbound |
@@ -372,6 +376,7 @@ Last updated: 2026-07-03 | Pages: 63 | Sources: 170
 | [baby-llama2-milkv-duo-benchmark.md](benchmark_result/baby-llama2-milkv-duo-benchmark.md) | benchmark_result | Baby LLama2 Benchmark on Milk-V Duo |  | 2 | 2 |
 | [bpi-f3-rvv-llm-benchmark.md](benchmark_result/bpi-f3-rvv-llm-benchmark.md) | benchmark_result | BananaPi BPI-F3 LLM Inference (RVV optimized) |  | 2 | 0 |
 | [gcc-tuning-c908-canmv-k230.md](benchmark_result/gcc-tuning-c908-canmv-k230.md) | benchmark_result | GCC Tuning Benchmark on XuanTie C908 |  | 6 | 5 |
+| [gcc15-clang21-autovec-benchmark-spacemit-x60.md](benchmark_result/gcc15-clang21-autovec-benchmark-spacemit-x60.md) | benchmark_result | GCC 15 vs Clang 21 Auto-vectorization on SpacemiT X60 | SpacemiT X60, GCC 15, Clang 21, LLVM 21, RVV 1.0 | 2 | 0 |
 | [gcc15-vs-clang21-banana-pi-f3-rvv10.md](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md) | benchmark_result | GCC 15 vs Clang 21 on BananaPi-F3 (RVV 1.0) | RVV, compiler, GCC, Clang | 2 | 0 |
 | [iree-riscv-benchmark-milkv-jupiter.md](benchmark_result/iree-riscv-benchmark-milkv-jupiter.md) | benchmark_result | IREE RISC-V Microkernel Benchmark on MILK-V Jupiter |  | 2 | 0 |
 | [maestro-gesture-recognition.md](benchmark_result/maestro-gesture-recognition.md) | benchmark_result | Maestro gesture recognition benchmark |  | 2 | 0 |
@@ -387,10 +392,10 @@ Last updated: 2026-07-03 | Pages: 63 | Sources: 170
 | [maestro.md](hardware_target/maestro.md) | hardware_target | Maestro |  | 2 | 1 |
 | [opennanhu-v5.md](hardware_target/opennanhu-v5.md) | hardware_target | OpenNanhu-V5 |  | 2 | 0 |
 | [sophon-sg2042.md](hardware_target/sophon-sg2042.md) | hardware_target | SOPHON SG2042 |  | 10 | 0 |
-| [sophon-sg2044-hardware-target.md](hardware_target/sophon-sg2044-hardware-target.md) | hardware_target | Sophon SG2044 |  | 2 | 2 |
+| [sophon-sg2044-hardware-target.md](hardware_target/sophon-sg2044-hardware-target.md) | hardware_target | Sophon SG2044 |  | 2 | 3 |
 | [spacemit-k1.md](hardware_target/spacemit-k1.md) | hardware_target | SpacemiT K1 |  | 4 | 2 |
 | [spacemit-k3-hardware-target.md](hardware_target/spacemit-k3-hardware-target.md) | hardware_target | SpacemiT K3 | RISC-V, SpacemiT, AI CPU, big.LITTLE, RVV 1.0 | 2 | 0 |
-| [spacemit-x60-hardware-target.md](hardware_target/spacemit-x60-hardware-target.md) | hardware_target | SpacemiT X60 | RISC-V, GCC tuning, SpacemiT, in-order, RVV 1.0 | 2 | 4 |
+| [spacemit-x60-hardware-target.md](hardware_target/spacemit-x60-hardware-target.md) | hardware_target | SpacemiT X60 | RISC-V, GCC tuning, SpacemiT, in-order, RVV 1.0 | 2 | 5 |
 | [t1.md](hardware_target/t1.md) | hardware_target | T1 |  | 2 | 0 |
 | [v851s-yuzukilizard.md](hardware_target/v851s-yuzukilizard.md) | hardware_target | Allwinner V851S / Yuzukilizard | allwinner, v851s, yuzukilizard, risc-v, npu | 8 | 0 |
 | [xuantie-c906-hardware-target.md](hardware_target/xuantie-c906-hardware-target.md) | hardware_target | XuanTie C906 |  | 2 | 6 |
@@ -451,12 +456,14 @@ Last updated: 2026-07-03 | Pages: 63 | Sources: 170
 - [baby-llama2-milkv-duo-benchmark](benchmark_result/baby-llama2-milkv-duo-benchmark.md)
 - [bpi-f3-rvv-llm-benchmark](benchmark_result/bpi-f3-rvv-llm-benchmark.md)
 - [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
+- [gcc15-clang21-autovec-benchmark-spacemit-x60](benchmark_result/gcc15-clang21-autovec-benchmark-spacemit-x60.md)
 - [gcc15-vs-clang21-banana-pi-f3-rvv10](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md)
 - [iree-riscv-benchmark-milkv-jupiter](benchmark_result/iree-riscv-benchmark-milkv-jupiter.md)
 - [maestro-gesture-recognition](benchmark_result/maestro-gesture-recognition.md)
 - [mlir-xdsl-gemm-benchmark-k230-banana-pi](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md)
 - [sophon-sg2042-npb-performance-benchmark-result](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md)
 - [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
+
 
 
 
