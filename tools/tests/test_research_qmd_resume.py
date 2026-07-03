@@ -498,6 +498,7 @@ def test_keyword_manifest_includes_theme_and_previous_queries(monkeypatch):
     monkeypatch.setattr(orchestrator, "_get_repo_research_theme", lambda: "ProjectNimbus theme")
     monkeypatch.setattr(orchestrator, "_get_wiki_topic_summary", lambda: "Current coverage")
     monkeypatch.setattr(orchestrator, "_get_concept_gaps", lambda: ["Missing API"])
+    monkeypatch.setattr(orchestrator, "_bridge_candidates_for_manifest", lambda: [])
 
     orchestrator._build_keyword_plan(
         "ProjectNimbus latency",
@@ -510,6 +511,7 @@ def test_keyword_manifest_includes_theme_and_previous_queries(monkeypatch):
     assert captured["previous_search_keywords"] == ["ProjectNimbus docs"]
     assert captured["wiki_topic_summary"] == "Current coverage"
     assert captured["concept_gaps"] == ["Missing API"]
+    assert captured["bridge_candidates"] == []
 
 
 def test_load_research_config_merges_selected_theme_profile(tmp_path, monkeypatch):
@@ -1083,6 +1085,39 @@ def test_maybe_transition_maturity_only_touches_patched_claude_md(tmp_path):
     # This single-page fixture is mature (orphan_fraction 0, median 1), so the
     # cold_start -> mature transition fires and appends to the patched log.
     assert "transition | cold_start" in log_md.read_text(encoding="utf-8")
+    # Additive small-world topology fields (Phase 3b) are also refreshed, but
+    # do not gate the transition above — a single-page, edgeless fixture has
+    # no outbound_links, so clustering_coefficient is 0 and avg_path_length
+    # stays null (undefined for a single isolated node).
+    assert "clustering_coefficient: 0.0" in text
+    assert "avg_path_length" in text
+
+
+def test_maybe_transition_maturity_survives_graph_topology_failure(tmp_path, monkeypatch):
+    """graph_topology stats are informational-only per the Phase 3b scope
+    guardrail: a failure there must not block the authoritative orphan_fraction/
+    median_inbound_links maturity transition."""
+    pages_dir = tmp_path / "wiki" / "_pages" / "entity"
+    pages_dir.mkdir(parents=True)
+    (pages_dir / "a.md").write_text(
+        "---\ntype: entity\ninbound_links: 1\n---\n\n# A\n", encoding="utf-8"
+    )
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text("```yaml\n[system_state]\ngraph_maturity: false\n```\n", encoding="utf-8")
+    log_md = tmp_path / "log.md"
+    log_md.write_text("# Log\n", encoding="utf-8")
+
+    def boom(*args, **kwargs):
+        raise RuntimeError("networkx blew up")
+
+    monkeypatch.setattr(orchestrator.graph_topology, "compute_topology_stats", boom)
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md), \
+         patch.object(orchestrator, "_LOG_MD", log_md):
+        orchestrator._maybe_transition_maturity("sess-test")  # must not raise
+
+    assert "graph_maturity: true" in claude_md.read_text(encoding="utf-8")
 
 
 def test_approved_resume_writes_once_and_written_resume_skips(tmp_path):
@@ -1346,3 +1381,71 @@ def test_mocked_research_run_writes_benchmark_and_updates_hardware_page(tmp_path
     assert "reported GEMM throughput context" in patch_queue_text
     assert "evidence_extraction" in audit.invocations[0]["manifest"]
     assert audit.invocations[0]["manifest"]["wiki_context"]["gap_manifest"]["page_count"] >= 1
+
+
+def test_write_page_populates_outbound_links_from_relationships_section(tmp_path):
+    pages_dir = tmp_path / "_pages"
+    pages_dir.mkdir()
+    draft = {
+        "page_type": "entity",
+        "filename": "gemmini.md",
+        "frontmatter": {"canonical_name": "Gemmini"},
+        "content": (
+            "\n# Gemmini\n\nA systolic-array accelerator.\n\n"
+            "## Key Claims\n\n- claim one\n\n"
+            "## Relationships\n\n"
+            "- [[k230]]: alternative edge AI accelerator target.\n\n"
+            "## Sources\n\ncite\n"
+        ),
+    }
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir):
+        page_path = orchestrator._write_page(draft)
+
+    fm = frontmatter.parse_frontmatter(page_path)
+    assert fm["outbound_links"] == [
+        {"target": "k230", "reason": "alternative edge AI accelerator target"}
+    ]
+
+
+def test_write_page_omits_outbound_links_when_no_relationships_section(tmp_path):
+    pages_dir = tmp_path / "_pages"
+    pages_dir.mkdir()
+    draft = {
+        "page_type": "entity",
+        "filename": "plain.md",
+        "frontmatter": {"canonical_name": "Plain"},
+        "content": "\n# Plain\n\nNo relationships section here.\n",
+    }
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir):
+        page_path = orchestrator._write_page(draft)
+
+    fm = frontmatter.parse_frontmatter(page_path)
+    assert "outbound_links" not in fm
+
+
+def test_bridge_candidates_for_manifest_reports_distant_topics(tmp_path):
+    pages_dir = tmp_path / "_pages" / "entity"
+    pages_dir.mkdir(parents=True)
+    frontmatter.write_page(
+        pages_dir / "a.md",
+        {"type": "entity", "canonical_name": "Topic A", "outbound_links": [{"target": "b", "reason": "r"}]},
+        "\n# a\n",
+    )
+    frontmatter.write_page(pages_dir / "b.md", {"type": "entity", "canonical_name": "Topic B"}, "\n# b\n")
+    frontmatter.write_page(pages_dir / "x.md", {"type": "entity", "canonical_name": "Topic X"}, "\n# x\n")
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir.parent):
+        candidates = orchestrator._bridge_candidates_for_manifest()
+
+    assert len(candidates) == 1
+    assert {candidates[0]["topic_a"], candidates[0]["topic_b"]} <= {"Topic A", "Topic B", "Topic X"}
+    assert "separate connected components" in candidates[0]["reason"]
+
+
+def test_bridge_candidates_for_manifest_swallows_errors(tmp_path):
+    def boom(*args, **kwargs):
+        raise RuntimeError("networkx blew up")
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", tmp_path), \
+         patch.object(orchestrator.graph_topology, "find_bridge_candidates", side_effect=boom):
+        assert orchestrator._bridge_candidates_for_manifest() == []

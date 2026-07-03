@@ -67,6 +67,12 @@ You will receive a JSON object with:
   rejected and the session wrote zero pages, with their candidate/rejection
   counts — a stronger signal than a single rejected URL that the query's whole
   angle is unproductive, not just one source
+- bridge_candidates: pairs of existing wiki topics (topic_a, topic_b) that
+  currently sit in separate, disconnected parts of the wiki graph, with a
+  reason. These are POSITIVE signals, the opposite of zero_yield_queries: a
+  source that substantively connects topic_a and topic_b (compares them,
+  builds on both, or is used by both) would shorten the graph and is a good
+  research angle, when it fits base_query/repo_research_theme.
 - depth: shallow or deep
 - max_keywords: maximum number of query recommendations
 - gap_manifest: structured coverage gaps by page type and frontmatter field
@@ -102,6 +108,12 @@ Rules:
 - Favor concrete domain terms from the manifest: named projects, standards,
   datasets, methods, products, papers, benchmarks, APIs, SDKs, and tooling. Do
   not reuse examples from prior sessions unless they are relevant to this query.
+- When bridge_candidates is non-empty and a pair fits base_query/theme, prefer
+  recommending at least one query that could surface a source connecting
+  topic_a and topic_b over one that only deepens an already well-connected
+  area — but do not force a bridge query that is off-theme or unnatural; a
+  good bridge candidate names both topics or a concept that plausibly spans
+  both, it does not just juxtapose them.
 """
 
 PROFILE_ARCHITECT_SYSTEM_PROMPT = """\

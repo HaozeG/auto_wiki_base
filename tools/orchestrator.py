@@ -35,6 +35,8 @@ sys.path.insert(0, str(_TOOLS_DIR))
 
 import frontmatter
 import graph_stats
+import graph_topology
+import relationship_links
 import identity
 from audit import AuditLog
 from context_selector import select_context_pages
@@ -450,6 +452,19 @@ def _maybe_transition_maturity(session_id: str) -> None:
     state["orphan_fraction"] = stats.get("orphan_fraction", 1.0)
     state["median_inbound_links"] = stats.get("median_inbound_links", 0.0)
     state["mean_inbound_links"] = stats.get("mean_inbound_links", 0.0)
+
+    # Additive small-world topology metrics (Graph Topology Philosophy). Do not
+    # gate graph_maturity on these yet — see the Phase 3b scope guardrail in
+    # the harness improvement plan; they're informational until at least one
+    # real run has produced before/after numbers to calibrate thresholds.
+    try:
+        topology = graph_topology.compute_topology_stats(_WIKI_PAGES_DIR)
+        state["clustering_coefficient"] = topology.get("clustering_coefficient", 0.0)
+        state["avg_path_length"] = topology.get("avg_path_length")
+        state["connected_components"] = topology.get("connected_components", 0)
+    except Exception as e:
+        logger.warning("graph_topology stats failed (non-fatal, informational only): %s", e)
+
     transitioned = False
     if not state.get("graph_maturity") and stats.get("mature"):
         state["graph_maturity"] = True
@@ -1277,6 +1292,34 @@ def _call_keyword_recommender(manifest: dict, research_config: dict) -> dict:
         )
 
 
+def _canonical_label(page_path: Path) -> str:
+    fm = frontmatter.parse_frontmatter(page_path)
+    return str(fm.get("canonical_name") or page_path.stem)
+
+
+def _bridge_candidates_for_manifest(max_candidates: int = 5) -> list[dict]:
+    """Distant connected-component pairs (see graph_topology.find_bridge_candidates),
+    with human-readable topic labels, for the keyword recommender manifest —
+    the research-time half of the Graph Topology Philosophy: surface
+    topologically distant clusters as candidate research angles, rather than
+    only linking pages that already exist after the fact."""
+    try:
+        raw = graph_topology.find_bridge_candidates(_WIKI_PAGES_DIR, max_candidates=max_candidates)
+    except Exception as e:
+        logger.warning("bridge-candidate detection failed: %s", e)
+        return []
+    enriched = []
+    for c in raw:
+        page_a = _find_page_by_filename(c["page_a"])
+        page_b = _find_page_by_filename(c["page_b"])
+        enriched.append({
+            "topic_a": _canonical_label(page_a) if page_a else c["page_a"],
+            "topic_b": _canonical_label(page_b) if page_b else c["page_b"],
+            "reason": c["reason"],
+        })
+    return enriched
+
+
 def _build_keyword_plan(query: str, research_config: dict, depth: str,
                         discovery_history: dict, gap_manifest: dict | None = None) -> dict:
     concept_gaps = _get_concept_gaps()
@@ -1292,6 +1335,7 @@ def _build_keyword_plan(query: str, research_config: dict, depth: str,
         "repeated_results": discovery_history.get("repeated_results", []),
         "rejected_results": discovery_history.get("rejected_results", []),
         "zero_yield_queries": discovery_history.get("zero_yield_queries", []),
+        "bridge_candidates": _bridge_candidates_for_manifest(),
         "depth": depth,
         "max_keywords": int(research_config.get("keyword_recommendation_limit", 5) or 5),
     }
@@ -1349,6 +1393,12 @@ def _write_page(draft: dict) -> Path:
         fm["connected_entities"] = list(dict.fromkeys(
             re.findall(r"\[\[([^\]]+)\]\]", content)
         ))
+
+    # Graph Topology Philosophy: every link carries a reason, kept in frontmatter
+    # alongside the edge so it's searchable/analyzable (see relationship_links.py).
+    outbound_links = relationship_links.extract_outbound_links(content)
+    if outbound_links:
+        fm["outbound_links"] = outbound_links
 
     frontmatter.write_page(page_path, fm, content)
     return page_path

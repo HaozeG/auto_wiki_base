@@ -39,6 +39,9 @@ median_inbound_links: 1.0
 mean_inbound_links: 3.2255
 linking_debt: 0
 retrospective_lint_done: true
+clustering_coefficient: 0.1965
+avg_path_length: 2.9437
+connected_components: 19
 ```
 
 ---
@@ -293,10 +296,19 @@ deferred_for_human: [list with reason]
 Only runs when `[system_state].graph_maturity = true`. For every page with `cold_start: true`:
 
 1. Run: `python tools/eval_summary.py <page_path> --type <entity|synthesis> --verbose`
-2. Compute structural metrics (bridge_score, hub_potential) against current graph
+2. Compute structural metrics against the current graph:
+   - Read the page's subjective, LLM-assigned `bridge_score`/`hub_potential` from its scorecard.
+   - Run `python tools/graph_topology.py wiki/_pages/ --verbose` (or call
+     `graph_topology.compute_topology_stats()` directly) to get this page's real
+     degree centrality and betweenness centrality from the `outbound_links` graph —
+     a deterministic counterpart to the subjective scores above, not derived from
+     any single page's content in isolation.
 3. Classify result:
    - `CLEARED` → scorecard passes; set `cold_start: false`
-   - `RESTRUCTURE` → entity page should split into entity + synthesis; flag for rewrite
+   - `RESTRUCTURE` → only when **both** signals agree: subjective `bridge_score`
+     is high AND real betweenness centrality is high. Agreement between an
+     LLM's judgment and the graph's actual shape is a harder, less gameable bar
+     than either alone — entity page should split into entity + synthesis; flag for rewrite
    - `MERGE` → content already covered by mature pages; propose merge target
    - `DELETE` → all metrics below threshold; no salvageable content
 
