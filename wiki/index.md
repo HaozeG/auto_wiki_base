@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-03 | Pages: 51 | Sources: 136
+Last updated: 2026-07-03 | Pages: 53 | Sources: 140
 
 ## Entity Pages
 
@@ -62,6 +62,7 @@ Last updated: 2026-07-03 | Pages: 51 | Sources: 136
 - **Baby LLama2 optimization C906**: → [baby-llama2-milkv-duo-benchmark](benchmark_result/baby-llama2-milkv-duo-benchmark.md)
 - **BananaPi BPI-F3 LLM Inference (RVV optimized)**: → [bpi-f3-rvv-llm-benchmark](benchmark_result/bpi-f3-rvv-llm-benchmark.md)
 - **BananaPi-F3 GCC Clang comparison**: → [gcc15-vs-clang21-banana-pi-f3-rvv10](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md)
+- **Bianbu K3**: → [spacemit-k3-hardware-target](hardware_target/spacemit-k3-hardware-target.md)
 - **C906**: → [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
 - **C906 C910 Auto-Generated GEMM Benchmark**: → [auto-gemm-micro-kernel-c906-c910-benchmark](benchmark_result/auto-gemm-micro-kernel-c906-c910-benchmark.md)
 - **C908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
@@ -107,6 +108,7 @@ Last updated: 2026-07-03 | Pages: 51 | Sources: 136
 - **K230**: → [k230-soc](hardware_target/k230-soc.md)
 - **K230 CanMV**: → [k230-soc](hardware_target/k230-soc.md)
 - **K230 SoC**: → [k230-soc](hardware_target/k230-soc.md)
+- **K3**: → [spacemit-k3-hardware-target](hardware_target/spacemit-k3-hardware-target.md)
 - **Kendryte K230**: → [k230-soc](hardware_target/k230-soc.md)
 - **Kendryte K230 CanMV**: → [k230-soc](hardware_target/k230-soc.md)
 - **Key Stone K1**: → [spacemit-k1](hardware_target/spacemit-k1.md)
@@ -168,7 +170,9 @@ Last updated: 2026-07-03 | Pages: 51 | Sources: 136
 - **SG2042**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
 - **SG2042 LLM benchmark**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
 - **SG2042 LLM optimization**: → [v-seek-llm-inference-optimization-sg2042](optimization_recipe/v-seek-llm-inference-optimization-sg2042.md)
+- **SG2044**: → [sophon-sg2044-hardware-target](hardware_target/sophon-sg2044-hardware-target.md)
 - **SHL**: → [shl](entity/shl.md)
+- **SOPHGO SG2044**: → [sophon-sg2044-hardware-target](hardware_target/sophon-sg2044-hardware-target.md)
 - **SOPHON SG2042**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
 - **ShiHulan**: → [shl](entity/shl.md)
 - **SiFive 2nd Gen Intelligence**: → [sifive-intelligence-2nd-gen](entity/sifive-intelligence-2nd-gen.md)
@@ -182,9 +186,12 @@ Last updated: 2026-07-03 | Pages: 51 | Sources: 136
 - **Sophgo SG2042**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
 - **Sophon SG2042**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
 - **Sophon SG2042 SoC**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
+- **Sophon SG2044**: → [sophon-sg2044-hardware-target](hardware_target/sophon-sg2044-hardware-target.md)
 - **SpacemiT K1**: → [spacemit-k1](hardware_target/spacemit-k1.md)
 - **SpacemiT K1 AI Benchmark Report (2026-04-14)**: → [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
 - **SpacemiT K1 MUSE Pi Pro**: → [spacemit-k1](hardware_target/spacemit-k1.md)
+- **SpacemiT K3**: → [spacemit-k3-hardware-target](hardware_target/spacemit-k3-hardware-target.md)
+- **SpacemiT K3 SoC**: → [spacemit-k3-hardware-target](hardware_target/spacemit-k3-hardware-target.md)
 - **SpacemiT Key Stone K1**: → [spacemit-k1](hardware_target/spacemit-k1.md)
 - **SpacemiT RISC-V IME**: → [integrated-matrix-extension](entity/integrated-matrix-extension.md)
 - **SpacemiT X60**: → [spacemit-x60-hardware-target](hardware_target/spacemit-x60-hardware-target.md)
@@ -297,6 +304,7 @@ Last updated: 2026-07-03 | Pages: 51 | Sources: 136
 
 
 
+
 ## Optimization Pages
 
 | Page | Type | Summary | Tags | Sources | Inbound |
@@ -311,18 +319,20 @@ Last updated: 2026-07-03 | Pages: 51 | Sources: 136
 | [mlir-xdsl-gemm-benchmark-k230-banana-pi.md](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md) | benchmark_result | MLIR-xDSL GEMM Benchmark on K230 and BananaPi F3 |  | 2 | 4 |
 | [spacemit-k1-benchmark-2026-04-14.md](benchmark_result/spacemit-k1-benchmark-2026-04-14.md) | benchmark_result | SpacemiT K1 AI Benchmark Report (2026-04-14) |  | 2 | 0 |
 | [andes-ax45mpv-hardware-target.md](hardware_target/andes-ax45mpv-hardware-target.md) | hardware_target | AndesCore AX45MPV |  | 2 | 0 |
-| [andes-nx27v-hardware-target.md](hardware_target/andes-nx27v-hardware-target.md) | hardware_target | AndesCore NX27V |  | 2 | 1 |
+| [andes-nx27v-hardware-target.md](hardware_target/andes-nx27v-hardware-target.md) | hardware_target | AndesCore NX27V |  | 2 | 2 |
 | [et-soc-1-hardware-target.md](hardware_target/et-soc-1-hardware-target.md) | hardware_target | ET-SoC-1 |  | 2 | 0 |
 | [gap9.md](hardware_target/gap9.md) | hardware_target | GAP9 |  | 2 | 2 |
 | [k230-soc.md](hardware_target/k230-soc.md) | hardware_target | K230 |  | 8 | 0 |
 | [maestro.md](hardware_target/maestro.md) | hardware_target | Maestro |  | 2 | 1 |
 | [opennanhu-v5.md](hardware_target/opennanhu-v5.md) | hardware_target | OpenNanhu-V5 |  | 2 | 0 |
 | [sophon-sg2042.md](hardware_target/sophon-sg2042.md) | hardware_target | SOPHON SG2042 |  | 6 | 0 |
+| [sophon-sg2044-hardware-target.md](hardware_target/sophon-sg2044-hardware-target.md) | hardware_target | Sophon SG2044 |  | 2 | 0 |
 | [spacemit-k1.md](hardware_target/spacemit-k1.md) | hardware_target | SpacemiT K1 |  | 4 | 2 |
-| [spacemit-x60-hardware-target.md](hardware_target/spacemit-x60-hardware-target.md) | hardware_target | SpacemiT X60 | RISC-V, GCC tuning, SpacemiT, in-order, RVV 1.0 | 2 | 2 |
+| [spacemit-k3-hardware-target.md](hardware_target/spacemit-k3-hardware-target.md) | hardware_target | SpacemiT K3 | RISC-V, SpacemiT, AI CPU, big.LITTLE, RVV 1.0 | 2 | 0 |
+| [spacemit-x60-hardware-target.md](hardware_target/spacemit-x60-hardware-target.md) | hardware_target | SpacemiT X60 | RISC-V, GCC tuning, SpacemiT, in-order, RVV 1.0 | 2 | 3 |
 | [t1.md](hardware_target/t1.md) | hardware_target | T1 |  | 2 | 0 |
 | [v851s-yuzukilizard.md](hardware_target/v851s-yuzukilizard.md) | hardware_target | Allwinner V851S / Yuzukilizard | allwinner, v851s, yuzukilizard, risc-v, npu | 8 | 0 |
-| [xuantie-c906-hardware-target.md](hardware_target/xuantie-c906-hardware-target.md) | hardware_target | XuanTie C906 |  | 2 | 4 |
+| [xuantie-c906-hardware-target.md](hardware_target/xuantie-c906-hardware-target.md) | hardware_target | XuanTie C906 |  | 2 | 5 |
 | [xuantie-c908.md](hardware_target/xuantie-c908.md) | hardware_target | XuanTie C908 |  | 10 | 1 |
 | [c908-wino-gemm-optimization.md](optimization_recipe/c908-wino-gemm-optimization.md) | optimization_recipe | C908 Winograd and GEMM Optimization in SHL |  | 2 | 11 |
 | [iree-riscv-microkernel-support.md](optimization_recipe/iree-riscv-microkernel-support.md) | optimization_recipe | IREE RISC-V Microkernel Support |  | 2 | 2 |
@@ -343,7 +353,9 @@ Last updated: 2026-07-03 | Pages: 51 | Sources: 136
 - [maestro](hardware_target/maestro.md)
 - [opennanhu-v5](hardware_target/opennanhu-v5.md)
 - [sophon-sg2042](hardware_target/sophon-sg2042.md)
+- [sophon-sg2044-hardware-target](hardware_target/sophon-sg2044-hardware-target.md)
 - [spacemit-k1](hardware_target/spacemit-k1.md)
+- [spacemit-k3-hardware-target](hardware_target/spacemit-k3-hardware-target.md)
 - [spacemit-x60-hardware-target](hardware_target/spacemit-x60-hardware-target.md)
 - [t1](hardware_target/t1.md)
 - [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
@@ -378,6 +390,7 @@ Last updated: 2026-07-03 | Pages: 51 | Sources: 136
 - [maestro-gesture-recognition](benchmark_result/maestro-gesture-recognition.md)
 - [mlir-xdsl-gemm-benchmark-k230-banana-pi](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md)
 - [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
+
 
 
 
