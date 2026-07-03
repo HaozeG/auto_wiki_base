@@ -6,6 +6,20 @@ You are the maintainer of this wiki. You create pages, update them on ingest, ma
 
 ---
 
+## Graph Topology Philosophy
+
+The wiki's target shape is a **small-world network**: high clustering (tightly connected topical neighborhoods) combined with low average path length (few hops between any two pages, even across distant topics) — the "six degrees of separation" property (Watts–Strogatz). This is design philosophy, not a mechanism; implementation is intentionally flexible and may evolve.
+
+- **Clustering** should emerge organically from topical similarity. qmd search/BM25 similarity between pages is the natural signal for "this neighborhood is well-connected." Tools like `networkx` (clustering coefficient, average shortest path length) are candidate ways to measure this quantitatively — a richer alternative to the current count-based maturity gate (`orphan_fraction`/`median_inbound_links`), which a single heuristic linking pass can satisfy without improving real structure.
+- **Path-length reduction is a research-time concern, not a post-hoc linking pass.** The intended mechanism is to surface orphaned or topologically-distant pages as *context for the discovery/research step itself*, so that newly generated pages are chosen to bridge distant clusters — not to mechanically insert links between pages that already exist after the fact. Reactively wiring up existing orphans by shallow token/tag overlap satisfies the connectivity metric without adding genuine bridging value — a Goodhart failure to avoid repeating.
+- **Bridges should be few, deliberate, and reasoned**, not numerous and shallow. A bridge earns its place by measurably shortening the path between two genuinely distant clusters, not by sharing a generic tag or token.
+- **Every link or relationship should carry a reason**, kept alongside the edge so it is searchable and analyzable later (e.g. "related via shared RVV 1.0 support" vs. an unlabeled link). Obsidian body syntax stays plain `[[page]]` per the Constraints section below; structured edge metadata, if promoted beyond prose Relationships bullets, belongs in frontmatter, not body markup.
+- Obsidian's native graph view already visualizes the resulting topology; this philosophy does not require new tooling by itself, only that page-generation and linking decisions be made with this target shape in mind.
+
+This section states intent, not a mechanism. `bridge_score`/`hub_potential` in the existing scorecards are the current (subjective, LLM-assigned) proxies for this idea; a future revision may replace or supplement them with a quantitative graph-topology metric.
+
+---
+
 ## Theme Setup
 
 The wiki is domain-agnostic. Its organization is **not** hand-coded. At theme setup a **profile-architect subagent** reads the theme string and a guided prompt and proposes 2–4 candidate organization profiles, each specifying: an organizing principle, `entity` **subtypes** (e.g. `hardware_target`, `optimization_recipe`) with their `structured_fields`, source preferences, and coverage/lint priorities. The human selects and edits one; the chosen profile is written below as a `[theme_profile]` block (absent until setup runs). A deterministic fallback profile is used only when the agent is unavailable.
@@ -25,6 +39,9 @@ median_inbound_links: 0       # median inbound across all pages — primary matu
 mean_inbound_links: 0.0       # secondary signal only (gameable by a few hub pages)
 linking_debt: 0               # pages created this session still at 0 inbound (autonomous loop)
 retrospective_lint_done: false
+clustering_coefficient: ~   # informational small-world metric (tools/graph_topology.py); does not gate graph_maturity
+avg_path_length: ~          # avg shortest path within the largest connected component; null until enough outbound_links exist
+connected_components: ~     # count of disconnected topical clusters in the outbound_links graph
 ```
 
 ---
@@ -279,10 +296,19 @@ deferred_for_human: [list with reason]
 Only runs when `[system_state].graph_maturity = true`. For every page with `cold_start: true`:
 
 1. Run: `python tools/eval_summary.py <page_path> --type <entity|synthesis> --verbose`
-2. Compute structural metrics (bridge_score, hub_potential) against current graph
+2. Compute structural metrics against the current graph:
+   - Read the page's subjective, LLM-assigned `bridge_score`/`hub_potential` from its scorecard.
+   - Run `python tools/graph_topology.py wiki/_pages/ --verbose` (or call
+     `graph_topology.compute_topology_stats()` directly) to get this page's real
+     degree centrality and betweenness centrality from the `outbound_links` graph —
+     a deterministic counterpart to the subjective scores above, not derived from
+     any single page's content in isolation.
 3. Classify result:
    - `CLEARED` → scorecard passes; set `cold_start: false`
-   - `RESTRUCTURE` → entity page should split into entity + synthesis; flag for rewrite
+   - `RESTRUCTURE` → only when **both** signals agree: subjective `bridge_score`
+     is high AND real betweenness centrality is high. Agreement between an
+     LLM's judgment and the graph's actual shape is a harder, less gameable bar
+     than either alone — entity page should split into entity + synthesis; flag for rewrite
    - `MERGE` → content already covered by mature pages; propose merge target
    - `DELETE` → all metrics below threshold; no salvageable content
 
@@ -426,7 +452,7 @@ spacy_model: en_core_web_sm
 max_candidates_per_session: 20
 max_new_pages_per_session: 10
 max_linking_debt: 5                  # autonomous loop stops creating when this many session pages remain at 0 inbound
-max_eval_subagent_tokens: 16000
+max_eval_subagent_tokens: 16000      # higher than a first-pass 3000 default: the eval subagent runs on a thinking model that needs headroom for its reasoning trace before the JSON verdict — do not lower this back down without switching the eval subagent's model
 max_discovery_subagent_tokens: 3000
 max_retries_on_fetch_failure: 2
 discovery_search_queries_limit: 5
@@ -442,6 +468,7 @@ near_duplicate_score: 0.90
 topic_saturation_hit_threshold: 2   # pre-eval skip if qmd returns this many similar pages
 title_overlap_threshold: 0.8        # pre-eval skip for hard title duplicates, not broad shared stack/vendor terms
 synthesis_gap_min_cluster_size: 3   # log synthesis gap if tag cluster has >= this many entity pages
+early_exit_after_escalation_failures: 5   # after adaptive depth escalation, stop the session if this many more candidates fail evaluation with 0 pages written (query angle is likely off-theme; see zero_yield_queries feedback to the keyword recommender)
 domain_stopwords: []                # optional domain terms ignored by duplicate/saturation token overlap
 preferred_source_types:
   - official documentation

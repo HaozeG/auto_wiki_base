@@ -35,6 +35,8 @@ sys.path.insert(0, str(_TOOLS_DIR))
 
 import frontmatter
 import graph_stats
+import graph_topology
+import relationship_links
 import identity
 from audit import AuditLog
 from context_selector import select_context_pages
@@ -57,6 +59,7 @@ from subagent_prompts import (
     EVALUATION_SYSTEM_PROMPT,
     KEYWORD_RECOMMENDER_SYSTEM_PROMPT,
     PROFILE_ARCHITECT_SYSTEM_PROMPT,
+    SYNTHESIS_SYSTEM_PROMPT,
 )
 from validate_output import extract_json_block, validate_and_parse
 
@@ -149,6 +152,20 @@ def _load_research_config() -> dict:
             config["lint_priorities"] = list(theme_profile["lint_priorities"])
         if theme_profile.get("coverage_priorities"):
             config["coverage_priorities"] = list(theme_profile["coverage_priorities"])
+        # Theme-specific overrides for domain_analysis.extract_evidence()/
+        # build_gap_manifest() (see the note atop domain_analysis._MEASUREMENT_RE):
+        # a theme profile may declare these so a non-hardware theme gets real
+        # evidence extraction and coverage-gap detection instead of the
+        # RISC-V-shaped defaults quietly no-oping. Not yet auto-proposed by
+        # the profile-architect subagent/deterministic fallback — add them by
+        # hand to [theme_profile] in CLAUDE.md when setting up a new theme,
+        # the same way page_types is hand-edited after profile selection.
+        if theme_profile.get("extraction_patterns"):
+            config["extraction_patterns"] = theme_profile["extraction_patterns"]
+        if theme_profile.get("coverage_tracked_page_types"):
+            config["coverage_tracked_page_types"] = list(theme_profile["coverage_tracked_page_types"])
+        if theme_profile.get("coverage_required_fields"):
+            config["coverage_required_fields"] = list(theme_profile["coverage_required_fields"])
     return config
 
 
@@ -340,6 +357,7 @@ def _load_recent_discovery_history(research_config: dict) -> dict:
     previous_queries: list[str] = []
     repeated_results: list[dict] = []
     rejected_results: list[dict] = []
+    zero_yield_queries: list[dict] = []
     seen_repeated: set[str] = set()
     seen_queries: set[str] = set()
 
@@ -348,6 +366,20 @@ def _load_recent_discovery_history(research_config: dict) -> dict:
             data = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError):
             continue
+        summary = data.get("session_summary") or {}
+        query = data.get("query")
+        # A session can evaluate a full candidate budget and write nothing —
+        # e.g. session e545ec7c ("RISC-V verification formal methods hardware
+        # bug fuzzing test...") evaluated 10 candidates, all rejected, even
+        # after depth escalation. Surface these so the keyword recommender can
+        # steer away from repeating a query shape that's already proven
+        # unproductive, instead of re-spending a full candidate budget on it.
+        if query and summary.get("candidates_evaluated", 0) >= 3 and summary.get("pages_written", 0) == 0:
+            zero_yield_queries.append({
+                "query": str(query)[:240],
+                "candidates_evaluated": summary.get("candidates_evaluated"),
+                "pages_rejected_by_subagent": summary.get("pages_rejected_by_subagent"),
+            })
         candidate_queries = [data.get("query")]
         candidate_queries.extend(data.get("discovery_queries_used", []) or [])
         candidate_queries.extend(
@@ -386,6 +418,7 @@ def _load_recent_discovery_history(research_config: dict) -> dict:
         "previous_queries": previous_queries[:40],
         "repeated_results": repeated_results[:20],
         "rejected_results": rejected_results[:20],
+        "zero_yield_queries": zero_yield_queries[:20],
     }
 
 
@@ -419,6 +452,19 @@ def _maybe_transition_maturity(session_id: str) -> None:
     state["orphan_fraction"] = stats.get("orphan_fraction", 1.0)
     state["median_inbound_links"] = stats.get("median_inbound_links", 0.0)
     state["mean_inbound_links"] = stats.get("mean_inbound_links", 0.0)
+
+    # Additive small-world topology metrics (Graph Topology Philosophy). Do not
+    # gate graph_maturity on these yet — see the Phase 3b scope guardrail in
+    # the harness improvement plan; they're informational until at least one
+    # real run has produced before/after numbers to calibrate thresholds.
+    try:
+        topology = graph_topology.compute_topology_stats(_WIKI_PAGES_DIR)
+        state["clustering_coefficient"] = topology.get("clustering_coefficient", 0.0)
+        state["avg_path_length"] = topology.get("avg_path_length")
+        state["connected_components"] = topology.get("connected_components", 0)
+    except Exception as e:
+        logger.warning("graph_topology stats failed (non-fatal, informational only): %s", e)
+
     transitioned = False
     if not state.get("graph_maturity") and stats.get("mature"):
         state["graph_maturity"] = True
@@ -594,16 +640,34 @@ def _title_matches_existing(title: str, extra_stems: set[str] | None = None,
     return None
 
 
-def _check_synthesis_gaps() -> list[str]:
+def _synthesis_gap_clusters(min_cluster_size: int = 3) -> list[tuple[str, list[str]]]:
     """
-    Find tag clusters with 3+ entity pages that have no synthesis page covering them.
-    Returns a list of human-readable gap descriptions for the log.
+    Find tag clusters with >= min_cluster_size entity(-subtype) pages that
+    have no synthesis page covering them. Returns [(tag, [uncovered page
+    stems])], sorted by cluster size descending. Shared by
+    _check_synthesis_gaps() (human-readable log strings) and the research
+    loop's synthesis-candidate generation (Phase 3 — see wiki/log.md's
+    repeated "deferred_for_human: Synthesis gaps persist across sessions"
+    notes; this was previously only ever logged, never acted on).
+
+    Deliberately does NOT filter on `fm.get("type") == "entity"`: the design
+    doc says a subtype page (hardware_target/benchmark_result/...) "is still
+    an entity for retrieval, identity, and dedup," but in practice the eval
+    subagent writes the literal subtype name into `type` (e.g.
+    `type: hardware_target`), not `type: entity, subtype: hardware_target` —
+    confirmed against both this run and the original research/riscv-ai-accelerator
+    run's committed pages. An entity-only filter therefore silently excludes
+    most of an optimization_first-profile wiki's actual content (18/61
+    hardware_target + 13 benchmark_result + 6 optimization_recipe pages here,
+    vs. 22 type:entity pages), and those subtype pages are exactly where tags
+    are most consistently populated — this filter was the main reason
+    synthesis-candidate generation never found a real cluster to work with.
     """
     tag_to_pages: dict[str, list[str]] = {}
     for p in _WIKI_PAGES_DIR.rglob("*.md"):
         fm, _ = frontmatter.parse_page(p)
-        if fm.get("type") == "entity":
-            for tag in fm.get("tags", []):
+        if fm.get("type") != "synthesis":
+            for tag in fm.get("tags", []) or []:
                 tag_to_pages.setdefault(tag, []).append(p.stem)
 
     # Collect all entity pages already named in a synthesis connected_entities list
@@ -613,16 +677,178 @@ def _check_synthesis_gaps() -> list[str]:
         if fm.get("type") == "synthesis":
             covered.update(fm.get("connected_entities", []))
 
-    gaps = []
+    clusters = []
     for tag, pages in sorted(tag_to_pages.items(), key=lambda x: -len(x[1])):
         uncovered = [pg for pg in pages if pg not in covered]
-        if len(uncovered) >= 3:
-            sample = ", ".join(uncovered[:3])
-            gaps.append(
-                f"tag='{tag}': {len(uncovered)} entity pages without synthesis coverage "
-                f"(e.g. {sample}{'...' if len(uncovered) > 3 else ''})"
-            )
+        if len(uncovered) >= min_cluster_size:
+            clusters.append((tag, uncovered))
+    return clusters
+
+
+def _check_synthesis_gaps() -> list[str]:
+    """
+    Find tag clusters with 3+ entity pages that have no synthesis page covering them.
+    Returns a list of human-readable gap descriptions for the log.
+    """
+    gaps = []
+    for tag, uncovered in _synthesis_gap_clusters():
+        sample = ", ".join(uncovered[:3])
+        gaps.append(
+            f"tag='{tag}': {len(uncovered)} entity pages without synthesis coverage "
+            f"(e.g. {sample}{'...' if len(uncovered) > 3 else ''})"
+        )
     return gaps
+
+
+def _extract_section(body: str, heading: str) -> str:
+    """Return the text under a '## heading' section, up to the next '## '."""
+    pattern = re.compile(rf"^##\s+{re.escape(heading)}\s*\n(.*?)(?=^##\s|\Z)", re.MULTILINE | re.DOTALL)
+    match = pattern.search(body)
+    return match.group(1).strip() if match else ""
+
+
+def _summarize_page_for_synthesis(path: Path) -> dict:
+    fm, body = frontmatter.parse_page(path)
+    lines = [line for line in body.split("\n") if line.strip()]
+    summary = ""
+    for line in lines:
+        stripped = line.strip()
+        if stripped.startswith("#"):
+            continue
+        summary = stripped
+        break
+    return {
+        "filename": path.stem,
+        "canonical_name": fm.get("canonical_name") or path.stem,
+        "tags": fm.get("tags", []) or [],
+        "summary": summary[:400],
+        "key_claims": _extract_section(body, "Key Claims")[:800],
+        "structured_fields": fm.get("structured_fields") or {},
+    }
+
+
+def _build_synthesis_manifest(tag: str, page_stems: list[str], research_config: dict) -> dict:
+    cluster_pages = []
+    for stem in page_stems[:8]:
+        page = _find_page_by_filename(stem)
+        if page is not None:
+            cluster_pages.append(_summarize_page_for_synthesis(page))
+    existing_titles = []
+    for p in _WIKI_PAGES_DIR.rglob("*.md"):
+        fm, body = frontmatter.parse_page(p)
+        if fm.get("type") == "synthesis":
+            for line in body.split("\n"):
+                if line.strip().startswith("# "):
+                    existing_titles.append(line.strip().lstrip("#").strip())
+                    break
+    return {
+        "gap_tag": tag,
+        "cluster_pages": cluster_pages,
+        "existing_synthesis_titles": existing_titles,
+        "synthesis_template": _build_page_templates().get("synthesis_template", ""),
+        "page_type_taxonomy": research_config.get("page_type_taxonomy", {}),
+    }
+
+
+def _generate_synthesis_candidate(
+    session_state: ResearchSessionState,
+    quota: QuotaManager,
+    audit: AuditLog,
+    research_config: dict,
+    session_written_stems: set[str],
+) -> str | None:
+    """
+    Attempt to fill one synthesis-coverage gap per session, gated by the same
+    budget as entity pages. The research loop previously only ever *logged*
+    synthesis gaps (see _check_synthesis_gaps, called every session) without
+    acting on them — wiki/log.md repeatedly deferred this to a human
+    ("Synthesis gaps persist across sessions... out of scope for this
+    page-count-focused session"), and of the 3 synthesis pages that existed
+    before this change, 2 were written manually during a one-off retrospective
+    lint pass, not by the research loop itself. This closes that gap without
+    a new subagent-orchestration pattern: same call/validate/pipeline/write
+    flow as an entity draft, just sourced from existing wiki content instead
+    of a freshly fetched external candidate.
+    """
+    if quota.pages_exceeded() or quota.api_calls_exceeded():
+        return None
+    clusters = _synthesis_gap_clusters(
+        min_cluster_size=int(research_config.get("synthesis_gap_min_cluster_size", 3) or 3)
+    )
+    if not clusters:
+        return None
+    tag, page_stems = clusters[0]
+    manifest = _build_synthesis_manifest(tag, page_stems, research_config)
+    if len(manifest["cluster_pages"]) < 2:
+        return None
+    ev_idx = audit.record_invocation("synthesis", manifest)
+    try:
+        time.sleep(MIN_SECONDS_BETWEEN_CALLS)
+        quota.record_api_call()
+        raw = _call_subagent("synthesis", manifest, research_config)
+    except Exception as e:
+        logger.warning("Synthesis subagent call failed for tag=%r: %s", tag, e)
+        audit.record_response(ev_idx, str(e), schema_valid=False)
+        return None
+    result = validate_and_parse(raw, "SynthesisResult")
+    audit.record_response(ev_idx, raw, schema_valid=(result is not None))
+    if result is None or result.get("decision") != "approve":
+        reason = (result or {}).get("rejection_reason") or "malformed_or_rejected"
+        audit.record_skip(ev_idx, f"synthesis_reject: {reason}")
+        print(f"[{session_state.session_id}] Synthesis candidate for tag={tag!r} rejected: {reason}")
+        return None
+    draft = result["page_draft"]
+    # Backfill frontmatter.sources from the cluster pages' own paths (a synthesis
+    # page draws from existing, already-grounded wiki content rather than a
+    # freshly fetched external source). Not in the literal CLAUDE.md synthesis
+    # template, but eval_summary.py's Layer 1 EMPTY_SOURCES check applies to
+    # every page type unconditionally, and the original run's manually-written
+    # synthesis pages all populate this the same way (paths to their
+    # connected_entities' page files) — confirmed against
+    # wiki/_pages/synthesis/edge_ai_soc_design_space.md on research/riscv-ai-accelerator.
+    # Without this, every synthesis draft fails Layer 1 with EMPTY_SOURCES and
+    # _generate_synthesis_candidate() can never actually write a page — this was
+    # caught live testing the v2 replication run after the type-filter fix made
+    # gap-detection work again.
+    draft_fm = draft.setdefault("frontmatter", {})
+    if not draft_fm.get("sources"):
+        # Relative to _WIKI_PAGES_DIR's grandparent (the wiki root), not the
+        # module-level _PROJECT_ROOT constant, so this stays correct when
+        # _WIKI_PAGES_DIR is patched elsewhere (tests) or the wiki root ever
+        # differs from _PROJECT_ROOT.
+        wiki_root = _WIKI_PAGES_DIR.parent.parent
+        cluster_paths = []
+        for stem in page_stems:
+            page = _find_page_by_filename(stem)
+            if page is None:
+                continue
+            try:
+                cluster_paths.append(str(page.relative_to(wiki_root)))
+            except ValueError:
+                cluster_paths.append(str(page))
+        if cluster_paths:
+            draft_fm["sources"] = cluster_paths
+    passes, pipeline_result = _run_eval_pipeline(draft)
+    audit.record_pipeline_result(
+        ev_idx,
+        filename=draft.get("filename", "unknown"),
+        layer1_pass=pipeline_result.get("layer1_pass", False),
+        layer2_pass=pipeline_result.get("layer2_pass", True),
+        layer3_triggered=pipeline_result.get("layer3_triggered", False),
+        final_decision=pipeline_result.get("final_decision", "rejected"),
+        rejection_detail=pipeline_result.get("rejection_detail"),
+    )
+    if not passes:
+        print(f"[{session_state.session_id}] Synthesis draft for tag={tag!r} failed eval pipeline: "
+              f"{pipeline_result.get('rejection_detail')}")
+        return None
+    synthetic_source_key = f"synthesis-gap:{tag}"
+    page_path = _write_draft_once(draft, synthetic_source_key, session_state, quota, session_written_stems)
+    if page_path is None:
+        return None
+    audit.record_page_written(ev_idx, page_path.name)
+    print(f"[{session_state.session_id}] Synthesis page generated for gap tag={tag!r}: {page_path.name}")
+    return page_path.name
 
 
 def fetch_resource(url: str, retries: int = 2) -> str | None:
@@ -897,6 +1123,10 @@ def _call_subagent(subagent_type: str, manifest: dict, research_config: dict) ->
     model = _clean_model_name(model) or "claude-haiku-4-5-20251001"
 
     if subagent_type == "discovery":
+        # No current caller passes subagent_type="discovery" — _ddg_discover()
+        # ranks/filters candidates deterministically instead. Branch kept for
+        # if/when an LLM ranking pass over DDG results is wired back in; see
+        # the note atop DISCOVERY_SYSTEM_PROMPT in subagent_prompts.py.
         system = DISCOVERY_SYSTEM_PROMPT
         max_tokens = research_config.get("max_discovery_subagent_tokens", 3000)
     elif subagent_type == "content_merge":
@@ -904,6 +1134,9 @@ def _call_subagent(subagent_type: str, manifest: dict, research_config: dict) ->
         max_tokens = research_config.get("max_eval_subagent_tokens", 6000)
     elif subagent_type == "profile_architect":
         system = PROFILE_ARCHITECT_SYSTEM_PROMPT
+        max_tokens = research_config.get("max_eval_subagent_tokens", 6000)
+    elif subagent_type == "synthesis":
+        system = SYNTHESIS_SYSTEM_PROMPT
         max_tokens = research_config.get("max_eval_subagent_tokens", 6000)
     else:
         system = EVALUATION_SYSTEM_PROMPT
@@ -1059,6 +1292,34 @@ def _call_keyword_recommender(manifest: dict, research_config: dict) -> dict:
         )
 
 
+def _canonical_label(page_path: Path) -> str:
+    fm = frontmatter.parse_frontmatter(page_path)
+    return str(fm.get("canonical_name") or page_path.stem)
+
+
+def _bridge_candidates_for_manifest(max_candidates: int = 5) -> list[dict]:
+    """Distant connected-component pairs (see graph_topology.find_bridge_candidates),
+    with human-readable topic labels, for the keyword recommender manifest —
+    the research-time half of the Graph Topology Philosophy: surface
+    topologically distant clusters as candidate research angles, rather than
+    only linking pages that already exist after the fact."""
+    try:
+        raw = graph_topology.find_bridge_candidates(_WIKI_PAGES_DIR, max_candidates=max_candidates)
+    except Exception as e:
+        logger.warning("bridge-candidate detection failed: %s", e)
+        return []
+    enriched = []
+    for c in raw:
+        page_a = _find_page_by_filename(c["page_a"])
+        page_b = _find_page_by_filename(c["page_b"])
+        enriched.append({
+            "topic_a": _canonical_label(page_a) if page_a else c["page_a"],
+            "topic_b": _canonical_label(page_b) if page_b else c["page_b"],
+            "reason": c["reason"],
+        })
+    return enriched
+
+
 def _build_keyword_plan(query: str, research_config: dict, depth: str,
                         discovery_history: dict, gap_manifest: dict | None = None) -> dict:
     concept_gaps = _get_concept_gaps()
@@ -1073,6 +1334,8 @@ def _build_keyword_plan(query: str, research_config: dict, depth: str,
         "previous_search_keywords": discovery_history.get("previous_queries", []),
         "repeated_results": discovery_history.get("repeated_results", []),
         "rejected_results": discovery_history.get("rejected_results", []),
+        "zero_yield_queries": discovery_history.get("zero_yield_queries", []),
+        "bridge_candidates": _bridge_candidates_for_manifest(),
         "depth": depth,
         "max_keywords": int(research_config.get("keyword_recommendation_limit", 5) or 5),
     }
@@ -1132,6 +1395,12 @@ def _write_page(draft: dict) -> Path:
         fm["connected_entities"] = list(dict.fromkeys(
             re.findall(r"\[\[([^\]]+)\]\]", content)
         ))
+
+    # Graph Topology Philosophy: every link carries a reason, kept in frontmatter
+    # alongside the edge so it's searchable/analyzable (see relationship_links.py).
+    outbound_links = relationship_links.extract_outbound_links(content)
+    if outbound_links:
+        fm["outbound_links"] = outbound_links
 
     frontmatter.write_page(page_path, fm, content)
     return page_path
@@ -1305,6 +1574,122 @@ def _update_index(draft: dict) -> None:
     page_count = len(list(_WIKI_PAGES_DIR.rglob("*.md")))
     text = re.sub(r"Last updated: \S+", f"Last updated: {_now_date()}", text)
     text = re.sub(r"Pages: \d+", f"Pages: {page_count}", text)
+    _INDEX_MD.write_text(text, encoding="utf-8")
+
+
+def _page_summary(body: str) -> str:
+    """First non-empty line of a page body, stripped of a leading '#', truncated."""
+    for line in body.split("\n"):
+        stripped = line.strip()
+        if stripped:
+            return stripped.lstrip("#").strip()[:80]
+    return ""
+
+
+def rebuild_index_from_frontmatter() -> None:
+    """
+    Regenerate the Entity/Synthesis/Optimization tables and header stats in
+    wiki/index.md directly from on-disk page frontmatter.
+
+    _update_index() only appends a row at write time, embedding that page's
+    inbound_links/sources count as of creation — it never revisits that row
+    when a *later* page/lint pass changes the target's frontmatter (e.g. the
+    linking-debt passes that increment a target's inbound_links). Over a long
+    research run this silently drifts every row except the most recently
+    touched one. This function is the full-rebuild source of truth; call it
+    after any change that can affect inbound_links/sources counts elsewhere
+    in the graph (end of a research session, lint apply).
+    """
+    if not _INDEX_MD.exists():
+        return
+
+    entity_rows: list[str] = []
+    synthesis_rows: list[str] = []
+    optimization_rows: list[str] = []
+    distinct_sources: set[str] = set()
+
+    for path in sorted(_WIKI_PAGES_DIR.rglob("*.md")):
+        fm, body = frontmatter.parse_page(path)
+        if not fm:
+            continue
+        page_type = fm.get("type", "entity")
+        folder = path.parent.name
+        filename = path.name
+        tags = ", ".join(fm.get("tags", []) or [])
+        sources = fm.get("sources", []) or []
+        source_count = str(len(sources))
+        for src in sources:
+            distinct_sources.add(str(src))
+        inbound = str(fm.get("inbound_links", 0))
+
+        if page_type == "synthesis":
+            connected = ", ".join(fm.get("connected_entities", []) or [])
+            status = fm.get("synthesis_status", "draft")
+            synthesis_rows.append(
+                f"| [{filename}](synthesis/{filename}) | {connected} | {status} | {inbound} |"
+            )
+        elif folder == "entity":
+            summary = _page_summary(body)
+            entity_rows.append(
+                f"| [{filename}](entity/{filename}) | {summary} | {tags} | {source_count} | {inbound} |"
+            )
+        else:
+            summary = _page_summary(body)
+            optimization_rows.append(
+                f"| [{filename}]({folder}/{filename}) | {folder} | {summary} | {tags} | "
+                f"{source_count} | {inbound} |"
+            )
+
+    text = _INDEX_MD.read_text(encoding="utf-8")
+
+    def _replace_table(text: str, header: str, column_line: str, rows: list[str]) -> str:
+        """Replace the table under `header` with freshly built rows.
+
+        Line-based rather than a single greedy regex: a DOTALL regex spanning
+        "all row lines" can't tell one table's rows from the next table's rows
+        (both start with '|'), so it risks swallowing an adjacent table.
+        """
+        lines = text.split("\n")
+        try:
+            header_idx = lines.index(header)
+        except ValueError:
+            new_block = [header, "", column_line] + rows
+            return text.rstrip("\n") + "\n\n" + "\n".join(new_block) + "\n"
+
+        # Skip header, blank line, and the two column-definition lines.
+        row_start = header_idx + 1
+        while row_start < len(lines) and not lines[row_start].strip().startswith("|"):
+            row_start += 1
+        # First "|" line is the column-name row, second is the separator row.
+        row_start += 2
+        row_end = row_start
+        while row_end < len(lines) and lines[row_end].strip().startswith("|"):
+            row_end += 1
+
+        new_block = [header, "", column_line] + rows
+        new_lines = lines[:header_idx] + new_block + lines[row_end:]
+        return "\n".join(new_lines)
+
+    text = _replace_table(
+        text, "## Entity Pages",
+        "| Page | Summary | Tags | Sources | Inbound |\n|------|---------|------|---------|---------|",
+        entity_rows,
+    )
+    text = _replace_table(
+        text, "## Synthesis Pages",
+        "| Page | Connected Entities | Status | Inbound |\n|------|--------------------|--------|---------|",
+        synthesis_rows,
+    )
+    text = _replace_table(
+        text, "## Optimization Pages",
+        "| Page | Type | Summary | Tags | Sources | Inbound |\n|------|------|---------|------|---------|---------|",
+        optimization_rows,
+    )
+
+    page_count = len(list(_WIKI_PAGES_DIR.rglob("*.md")))
+    text = re.sub(r"Last updated: \S+", f"Last updated: {_now_date()}", text)
+    text = re.sub(r"Pages: \d+", f"Pages: {page_count}", text)
+    text = re.sub(r"Sources: \d+", f"Sources: {len(distinct_sources)}", text)
     _INDEX_MD.write_text(text, encoding="utf-8")
 
 
@@ -2148,9 +2533,64 @@ def apply_patch_queue(call_subagent=_call_subagent) -> dict:
         failed += int(not ok)
         out_blocks.append(new_block)
     path.write_text("".join(out_blocks), encoding="utf-8")
+    if applied:
+        rebuild_index_from_frontmatter()
     summary = {"applied": applied, "skipped": skipped, "failed": failed}
     print(f"patch apply: {summary}")
     return summary
+
+
+def _probable_duplicate_by_similarity(
+    canonical: str,
+    draft: dict,
+    qmd_matches: list[dict],
+    research_config: dict,
+) -> "identity.PageRef | None":
+    """Secondary duplicate-detection pass for a ``create`` that
+    ``identity.resolve()`` let through because canonical_name strings didn't
+    match exactly.
+
+    Exact-key matching missed a real duplicate in production: two
+    benchmark_result pages generated from the same paper/hardware/result under
+    different generated canonical_name strings (see the MERGE candidate in
+    wiki/retrospective_lint_report.md — arXiv:2605.10860, same BananaPi-F3
+    GCC15/Clang21 comparison, under "GCC 15 vs Clang 21 Autovectorization on
+    BananaPi-F3 (RVV)" vs "Compiler Benchmark Comparison on BananaPi-F3 (RVV
+    1.0)"). Deliberately reuses the qmd BM25 matches already computed and
+    persisted during this candidate's pre-eval similarity check (entry
+    ``qmd_matches``) rather than issuing a fresh qmd search here: the write
+    phase must stay qmd-free so an interrupted-and-resumed session writes the
+    exact same page deterministically (see
+    test_approved_resume_writes_once_and_written_resume_skips). Only flags a
+    match when BOTH the BM25 score clears ``near_duplicate_score`` AND the two
+    pages share a source snapshot — ordinary same-family cross-references
+    (shared vendor/hardware) don't share raw/ source files, so requiring both
+    keeps this far less prone to false positives than Layer 3's saturation
+    flag. This is advisory, not a hard block: it routes to the same
+    human-reviewed patch_queue.md merge path as an exact identity collision,
+    it doesn't silently drop the draft.
+    """
+    fm = draft.get("frontmatter", {}) or {}
+    near_dup = float(research_config.get("near_duplicate_score", 0.90))
+    draft_sources = {str(s) for s in (fm.get("sources") or [])}
+    if not draft_sources:
+        return None
+    for match in qmd_matches:
+        score = match.get("score")
+        if score is None or score < near_dup:
+            continue
+        label = match.get("title") or match.get("file") or ""
+        if hard_title_duplicate_score(canonical, label) >= 0.8:
+            continue  # already caught by the title-based pre-eval/identity checks
+        page = _find_page_by_filename(match.get("file") or "")
+        if page is None:
+            continue
+        existing_fm, _ = frontmatter.parse_page(page)
+        existing_sources = {str(s) for s in (existing_fm.get("sources") or [])}
+        if draft_sources & existing_sources:
+            ref_canonical = str(existing_fm.get("canonical_name") or page.stem)
+            return identity.PageRef(canonical_name=ref_canonical, filename=page.name, path=page)
+    return None
 
 
 def _write_approved_entry(
@@ -2164,7 +2604,8 @@ def _write_approved_entry(
     url = _candidate_url(entry)
     written_files = list(entry.get("written_files", []))
     registry = _session_registry(session_state)
-    max_debt = _max_linking_debt(_load_research_config())
+    research_config = _load_research_config()
+    max_debt = _max_linking_debt(research_config)
     handled_any = False
     for draft in entry.get("drafts", []):
         _apply_provenance(draft, entry)
@@ -2172,6 +2613,15 @@ def _write_approved_entry(
         # Authoritative, deterministic identity check (overrides the subagent's
         # advisory identity_action). A collision hard-blocks page creation.
         action, ref = identity.resolve(canonical, registry, aliases)
+        if action == "create":
+            probable = _probable_duplicate_by_similarity(
+                canonical, draft, entry.get("qmd_matches") or [], research_config
+            )
+            if probable is not None:
+                action, ref = "upsert", probable
+                print(f"[{session_state.session_id}] Probable duplicate detected via BM25 + "
+                      f"shared sources (canonical_name strings didn't match): "
+                      f"{canonical!r} → upsert {probable.filename}")
         if action == "upsert" and ref is not None:
             _queue_identity_upsert(draft, ref, url, session_state, quota)
             handled_any = True
@@ -2258,6 +2708,14 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
     effective_depth = session_state.effective_depth or scope.get("depth", "shallow")
     halfway = max(1, (scope.get("max_candidates", 20) + 1) // 2)
     gap_manifest = build_gap_manifest(_WIKI_PAGES_DIR, research_config)
+    # Adaptive depth escalation alone doesn't stop a demonstrably unproductive
+    # query from burning its whole candidate budget — e.g. session e545ec7c
+    # ("RISC-V verification formal methods...") escalated at candidate 5 and
+    # still went on to evaluate all 10 with 0 pages written. Once escalated,
+    # if the deep-depth candidates keep failing too, stop early rather than
+    # spending the remaining budget on a query whose angle is off-theme.
+    escalated_at: int | None = None
+    early_exit_after = int(research_config.get("early_exit_after_escalation_failures", 5) or 5)
 
     ok, error = _run_qmd_update(qmd_runner)
     if not ok:
@@ -2269,6 +2727,19 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
     for entry in session_state.candidates:
         if quota.any_exceeded():
             print(f"[{session_id}] Quota exceeded, stopping early")
+            break
+        if (escalated_at is not None and quota._pages_written == 0
+                and (quota._candidates_evaluated - escalated_at) >= early_exit_after):
+            print(
+                f"[{session_id}] Early exit: {quota._candidates_evaluated - escalated_at} "
+                f"candidates evaluated since depth escalation with 0 pages written; "
+                f"query angle likely unproductive, stopping rather than spending the "
+                f"remaining candidate budget."
+            )
+            session_state.save("early_exit_after_escalation", {
+                "escalated_at": escalated_at,
+                "candidates_evaluated": quota._candidates_evaluated,
+            })
             break
         if entry.get("state") in {"skipped_similarity", "fetch_failed", "eval_rejected", "pipeline_rejected", "written"}:
             continue
@@ -2421,6 +2892,7 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
                 and effective_depth == "shallow"):
             effective_depth = "deep"
             session_state.effective_depth = effective_depth
+            escalated_at = quota._candidates_evaluated
             session_state.save("depth_escalated", {"at_candidate": halfway})
             print(f"[{session_id}] Adaptive escalation: 0 pages after {halfway} candidates -> depth=deep")
             audit.log_escalation(halfway)
@@ -2460,7 +2932,7 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
             continue
 
         approved_drafts = []
-        for draft in eval_result.get("page_drafts", []):
+        for draft in (eval_result.get("page_drafts") or []):
             _merge_embedded_frontmatter(draft)
             _apply_scorecard_to_draft(draft, eval_sc)
             # Inject source URL into frontmatter.sources before pipeline checks
@@ -2489,7 +2961,7 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
                 pipeline_rejections += 1
 
         approved_updates = [
-            update for update in eval_result.get("pages_to_update", [])
+            update for update in (eval_result.get("pages_to_update") or [])
             if isinstance(update, dict) and update.get("filename") and update.get("update_description")
         ]
 
@@ -2515,13 +2987,26 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
             )
 
     audit.set_candidates_evaluated(quota._candidates_evaluated)
-    _run_graph_stats()
 
     synthesis_gaps = _check_synthesis_gaps()
     if synthesis_gaps:
         print(f"[{session_id}] Synthesis gaps detected ({len(synthesis_gaps)}):")
         for gap in synthesis_gaps[:5]:
             print(f"  {gap}")
+        # Only after the wiki has graduated cold-start bootstrapping (entity
+        # pages take priority there per the ingest protocol) and only if this
+        # session still has page budget left, after entity candidates for
+        # this query are exhausted — one synthesis draft per session, so it
+        # doesn't compete with page-count-focused sessions for budget.
+        if _wiki_is_mature():
+            synthesis_filename = _generate_synthesis_candidate(
+                session_state, quota, audit, research_config, session_written_stems
+            )
+            if synthesis_filename:
+                written_filenames = list(set(written_filenames) | {synthesis_filename})
+
+    _run_graph_stats()
+    rebuild_index_from_frontmatter()
 
     session_state.status = "complete"
     session_state.save("session_complete")
@@ -2672,6 +3157,14 @@ def main():
         help="Apply human-approved merge_pending patches (status: approved) via the content-merge subagent",
     )
 
+    index_parser = subparsers.add_parser("index", help="Operate on wiki/index.md")
+    index_subparsers = index_parser.add_subparsers(dest="index_command")
+    index_subparsers.add_parser(
+        "rebuild",
+        help="Regenerate wiki/index.md tables and header stats from page frontmatter "
+             "(fixes drift left by manual edits, e.g. retrospective lint MERGE/DELETE/RESTRUCTURE)",
+    )
+
     args = parser.parse_args()
     if args.command == "setup":
         if args.setup_command != "theme":
@@ -2719,6 +3212,12 @@ def main():
         logging.basicConfig(level=logging.WARNING)
         summary = apply_patch_queue()
         sys.exit(0 if summary.get("failed", 0) == 0 else 1)
+    if args.command == "index":
+        if args.index_command != "rebuild":
+            index_parser.print_help()
+            sys.exit(1)
+        rebuild_index_from_frontmatter()
+        sys.exit(0)
     else:
         parser.print_help()
         sys.exit(1)
