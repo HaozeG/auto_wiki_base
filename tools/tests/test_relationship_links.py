@@ -69,3 +69,26 @@ def test_stops_at_next_heading():
     )
     links = extract_outbound_links(body)
     assert links == [{"target": "gemmini", "reason": "real edge"}]
+
+
+def test_extracts_with_hyphen_and_dash_separators():
+    """Regression: found live via a real replication run that the subagent
+    does not consistently use a colon separator — CLAUDE.md's page template
+    only specifies "a one-line description," not punctuation. Every
+    Relationships bullet actually written in that run used a plain hyphen,
+    en-dash, or em-dash instead of a colon, e.g.
+    "- [[k230]] – The K230 integrates two XuanTie C908 cores...". The
+    colon-only regex silently matched zero of them, leaving outbound_links
+    empty on every page in the run."""
+    body = (
+        "## Relationships\n\n"
+        "- [[xuantie_c908]] – The K230 integrates two XuanTie C908 cores; provides core details.\n"
+        "- [[allwinner_d1]] - The Allwinner D1 integrates the XuanTie C906 core.\n"
+        "- [[visionfive2]] — A different RISC-V core family used in other SBCs.\n"
+    )
+    links = extract_outbound_links(body)
+    assert links == [
+        {"target": "xuantie_c908", "reason": "The K230 integrates two XuanTie C908 cores; provides core details"},
+        {"target": "allwinner_d1", "reason": "The Allwinner D1 integrates the XuanTie C906 core"},
+        {"target": "visionfive2", "reason": "A different RISC-V core family used in other SBCs"},
+    ]

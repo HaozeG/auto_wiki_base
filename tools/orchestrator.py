@@ -1321,7 +1321,8 @@ def _bridge_candidates_for_manifest(max_candidates: int = 5) -> list[dict]:
 
 
 def _build_keyword_plan(query: str, research_config: dict, depth: str,
-                        discovery_history: dict, gap_manifest: dict | None = None) -> dict:
+                        discovery_history: dict, gap_manifest: dict | None = None,
+                        audit: "AuditLog | None" = None) -> dict:
     concept_gaps = _get_concept_gaps()
     gap_manifest = gap_manifest or build_gap_manifest(_WIKI_PAGES_DIR, research_config)
     manifest = {
@@ -1339,7 +1340,17 @@ def _build_keyword_plan(query: str, research_config: dict, depth: str,
         "depth": depth,
         "max_keywords": int(research_config.get("keyword_recommendation_limit", 5) or 5),
     }
-    return _call_keyword_recommender(manifest, research_config)
+    # Record the full input manifest (including bridge_candidates/concept_gaps)
+    # for post-hoc audit/replay, same pattern as "synthesis"/"evaluation"
+    # invocations below -- previously only the recommender's *output*
+    # (keyword_plan) was ever saved via audit.set_keyword_plan(), so there was
+    # no way to inspect what it actually saw. Optional: tests and other
+    # internal callers of _build_keyword_plan don't always have an AuditLog.
+    inv_idx = audit.record_invocation("keyword_recommender", manifest) if audit else None
+    plan = _call_keyword_recommender(manifest, research_config)
+    if audit and inv_idx is not None:
+        audit.record_response(inv_idx, json.dumps(plan, ensure_ascii=False), schema_valid=True)
+    return plan
 
 
 # ---------------------------------------------------------------------------
@@ -1608,6 +1619,20 @@ def rebuild_index_from_frontmatter() -> None:
     optimization_rows: list[str] = []
     distinct_sources: set[str] = set()
 
+    # Concept Index inputs. Resolved: canonical_name/aliases -> the page that
+    # defines them. Gaps: outbound_links targets that don't resolve to any
+    # existing page stem, i.e. concepts other pages mention but that have no
+    # dedicated page of their own yet -- the signal _get_concept_gaps() reads,
+    # via the "**Name**: ... no dedicated page" pattern. This has never been
+    # populated by the autonomous research loop (only ever specified in
+    # CLAUDE.md's template text, going back to the harness's original Phase 6
+    # implementation) -- _get_concept_gaps() has always returned [] as a
+    # result, silently. Fed to Discovery/keyword-recommender manifests as
+    # concept_gaps, so this was dead input on every prior session.
+    resolved_concepts: dict[str, str] = {}   # display name -> "[stem](folder/stem.md)"
+    page_stems: dict[str, tuple[str, str]] = {}  # stem -> (folder, filename)
+    mentions: dict[str, tuple[str, str, str]] = {}  # target -> (folder, filename, first mentioning page link)
+
     for path in sorted(_WIKI_PAGES_DIR.rglob("*.md")):
         fm, body = frontmatter.parse_page(path)
         if not fm:
@@ -1621,6 +1646,7 @@ def rebuild_index_from_frontmatter() -> None:
         for src in sources:
             distinct_sources.add(str(src))
         inbound = str(fm.get("inbound_links", 0))
+        page_stems[path.stem] = (folder, filename)
 
         if page_type == "synthesis":
             connected = ", ".join(fm.get("connected_entities", []) or [])
@@ -1639,6 +1665,31 @@ def rebuild_index_from_frontmatter() -> None:
                 f"| [{filename}]({folder}/{filename}) | {folder} | {summary} | {tags} | "
                 f"{source_count} | {inbound} |"
             )
+
+        canonical = fm.get("canonical_name")
+        link = f"[{path.stem}]({folder}/{filename})"
+        for name in ([canonical] if canonical else []) + list(fm.get("aliases", []) or []):
+            name = str(name).strip()
+            if name:
+                resolved_concepts[name] = link
+
+        for edge in (fm.get("outbound_links") or []):
+            if not isinstance(edge, dict):
+                continue
+            target = str(edge.get("target", "")).strip()
+            if target and target not in mentions:
+                mentions[target] = (folder, filename, f"[{path.stem}]({folder}/{filename})")
+
+    concept_index_lines: list[str] = []
+    for name in sorted(resolved_concepts):
+        concept_index_lines.append(f"- **{name}**: → {resolved_concepts[name]}")
+    for target in sorted(mentions):
+        if target in page_stems:
+            continue  # resolved by another page's own canonical_name/aliases; not a gap
+        _, _, mention_link = mentions[target]
+        concept_index_lines.append(
+            f"- **{target}**: mentioned in {mention_link} — *no dedicated page*"
+        )
 
     text = _INDEX_MD.read_text(encoding="utf-8")
 
@@ -1685,6 +1736,27 @@ def rebuild_index_from_frontmatter() -> None:
         "| Page | Type | Summary | Tags | Sources | Inbound |\n|------|------|---------|------|---------|---------|",
         optimization_rows,
     )
+
+    def _replace_section(text: str, header: str, lines: list[str]) -> str:
+        """Replace a plain bullet-list section (no table header) with `lines`,
+        up to the next '## ' heading or EOF."""
+        all_lines = text.split("\n")
+        try:
+            header_idx = all_lines.index(header)
+        except ValueError:
+            new_block = [header, ""] + lines
+            return text.rstrip("\n") + "\n\n" + "\n".join(new_block) + "\n"
+        end_idx = header_idx + 1
+        while end_idx < len(all_lines) and not all_lines[end_idx].startswith("## "):
+            end_idx += 1
+        # Trim to exactly one blank line before the next heading (or EOF).
+        while end_idx > header_idx + 1 and all_lines[end_idx - 1].strip() == "":
+            end_idx -= 1
+        new_block = [header, ""] + lines + [""]
+        new_lines = all_lines[:header_idx] + new_block + all_lines[end_idx:]
+        return "\n".join(new_lines)
+
+    text = _replace_section(text, "## Concept Index", concept_index_lines)
 
     page_count = len(list(_WIKI_PAGES_DIR.rglob("*.md")))
     text = re.sub(r"Last updated: \S+", f"Last updated: {_now_date()}", text)
@@ -3062,7 +3134,7 @@ def run_research_session(query: str, max_candidates: int, max_new_pages: int,
     discovery_history = _load_recent_discovery_history(research_config)
     gap_manifest = build_gap_manifest(_WIKI_PAGES_DIR, research_config)
     keyword_plan = _build_keyword_plan(
-        query, research_config, depth, discovery_history, gap_manifest=gap_manifest
+        query, research_config, depth, discovery_history, gap_manifest=gap_manifest, audit=audit
     )
     session_state.set_keyword_plan(keyword_plan)
     audit.set_keyword_plan(keyword_plan)
