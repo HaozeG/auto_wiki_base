@@ -4,6 +4,9 @@ aliases:
 - RVV MLIR ukernel
 - IREE RVV uKernel
 - MLIR-based uKernel for RVV
+- IREE MLIR Ukernels for RVV
+- IREE RVV ukernel
+- MLIR-based RVV ukernels in IREE
 subtype: null
 tags:
 - RISC-V

@@ -37,7 +37,7 @@ type: hardware_target
 created: '2026-07-03'
 updated: '2026-07-03'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 outbound_links:
 - target: gcc-tuning-c908-canmv-k230
   reason: Both the XuanTie C906 and C908 are in-order single-issue RISC-V cores from

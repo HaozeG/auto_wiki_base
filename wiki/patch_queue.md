@@ -886,3 +886,76 @@ No specific relationship to visible context pages in this wiki. The IME extensio
 - https://github.com/spacemit-com/riscv-ime-extension-spec
 - https://deepwiki.com/spacemit-com/riscv-ime-extension-spec
 merge_draft_body -->
+
+## [2026-07-03] merge_pending | opengemm.md
+target_page: opengemm.md
+canonical_name: OpenGeMM
+colliding_name: OpenGeMM
+source: https://www.researchgate.net/publication/385823001_OpenGeMM_A_High-Utilization_GeMM_Accelerator_Generator_with_Lightweight_RISC-V_Control_and_Tight_Memory_Coupling
+status: pending_review
+<!-- merge_draft_body
+# OpenGeMM
+
+OpenGeMM is an open-source acceleration platform for General Matrix Multiplication (GeMM) designed for edge AI applications. It combines a parameterized Chisel-coded GeMM hardware accelerator with a lightweight RISC-V processor and a tightly coupled multi-banked scratchpad memory system. To achieve high hardware utilization, OpenGeMM introduces three system-level mechanisms: configuration pre-loading, input pre-fetching with output buffering, and programmable strided memory access. The accelerator is designed to be configurable and programmable, targeting diverse CNN and Transformer workloads. Experimental results reported in the paper demonstrate sustained hardware utilization ranging from 81.89% to 99.34% across these workloads, though specific hardware targets and measurement conditions are not detailed in available excerpts. The platform is open-source and aims to fill the gap between efficiency, utilization, configurability, and programmability in GeMM accelerators for RISC-V based edge systems.
+
+## Key Claims
+
+- OpenGeMM is an open-source acceleration platform for GeMM with a Chisel-based accelerator generator.
+- It incorporates a lightweight RISC-V processor for control and a tightly coupled multi-banked scratchpad memory.
+- Three system-level mechanisms enhance utilization: configuration pre-loading, input pre-fetching with output buffering, and programmable strided memory access.
+- The accelerator can be parameterized and configured at design time and runtime.
+- Reported hardware utilization ranges from 81.89% to 99.34% across diverse CNN and Transformer workloads, demonstrating high efficiency.
+- The platform is suitable for edge AI applications requiring both high performance and programmability.
+
+## Relationships
+
+- [[mlir-xdsl-rvv-codegen-pipeline]]: OpenGeMM implements GEMM acceleration in hardware using a Chisel-based generator with a lightweight RISC-V control core, whereas the MLIR-xDSL pipeline uses compiler-driven code generation to produce RVV software kernels for GEMM on RISC-V platforms, representing a hardware-software design trade-off.
+
+## Sources
+
+- https://arxiv.org/abs/2411.09543
+- https://www.researchgate.net/publication/385823001_OpenGeMM_A_High-Utilization_GeMM_Accelerator_Generator_with_Lightweight_RISC-V_Control_and_Tight_Memory_Coupling
+merge_draft_body -->
+
+## [2026-07-03] merge_pending | iree-rvv-mlir-ukernel.md
+target_page: iree-rvv-mlir-ukernel.md
+canonical_name: IREE MLIR-based uKernel for RVV
+colliding_name: IREE MLIR Ukernels for RVV
+source: https://github.com/iree-org/iree/issues/22720
+status: pending_review
+<!-- merge_draft_body
+# IREE MLIR Ukernels for RVV
+
+The IREE MLIR Ukernels for RVV is a proposed compiler transformation within the IREE project to implement micro-kernels (ukernels) for the RISC-V Vector (RVV) extension using the MLIR `vector` dialect. The approach follows the GPU backend's precedent of declarative, tensor-based ukernels. Prerequisites include a working MLIR toolchain with RVV support in LLVM, the IREE compiler with CPU target support, and a RISC-V platform implementing RVV with vector length 128 and the `zfh` half-precision floating-point extension. The expected effect is to enable automatic producer/consumer fusion (e.g., matrix multiply followed by bias addition and activation) via standard MLIR passes, while delegating instruction selection to the LLVM backend. Failure modes are not documented; the design is contingent on the correctness of the MLIR-to-LLVM-IR conversion for vector operations targeting RVV. No performance measurements are yet available as the implementation is currently proposed and not built or run.
+
+## Key Claims
+
+- The MVP is a single f16*f16->f32 mixed-precision matmul ukernel for vlen=128 RVV with zfh extension.
+- The implementation uses generic MLIR `vector` dialect operations (`vector.fma`, `vector.load`, `vector.store`, `vector.broadcast`) rather than introducing a target-specific dialect.
+- Data tiling is specified via a proposed `#iree_cpu.data_tiled_layout` attribute with tile sizes [8,8,1] and inner blocking order [0,1,2].
+- Ukernel matching is constrained by a `cpu_feature` requirement (`+v`, `+zfh`).
+- The design enables compiler fusion: bias addition and activation can be fused with the matmul via the `%init` accumulator argument.
+- The LLVM backend is responsible for generating optimal RVV instructions (e.g., `vfmacc.vf`, `vle16.v`, `vse32.v`).
+
+## Transformation
+
+- Prerequisites:
+  - MLIR toolchain with full support for RVV lowering (verification needed).
+  - IREE compiler with CPU target backend and support for declarative ukernel attributes.
+  - RISC-V hardware platform implementing RVV 1.0 with vlen=128 and the `zfh` extension.
+- Steps:
+  1. Verify that MLIR `vector` dialect operations (`vector.fma`, `vector.broadcast`, `vector.load`, `vector.store`) are correctly lowered to efficient RVV instructions by the LLVM backend. If gaps exist, contribute missing lowering patterns to upstream MLIR/LLVM.
+  2. Implement IREE infrastructure for CPU ukernel declaration: create the `#iree_cpu.data_tiled_layout` MLIR attribute to describe optimal data tiling, and implement a `cpu_feature` constraint for ukernel matching.
+  3. Define and implement the RVV matmul ukernel as a self-contained `.mlir` file (`iree_uk_riscv_dt_matmul_f16f16f32.mlir`) with declarative metadata and implementation using generic `vector` ops.
+- Expected effect: Automatic fusion of matmul with bias and activation operations via standard MLIR compiler passes, enabling portable, target-specific RVV code generation without hand-tuned assembly.
+- Failure modes: Not documented; the approach assumes that the MLIR-to-LLVM-IR conversion and LLVM instruction selector correctly lower the generic vector operations to performant RVV instructions.
+- Measurements: None yet; the work is a proposal and has not been implemented or benchmarked.
+
+## Relationships
+
+- [[mlir-xdsl-rvv-codegen-pipeline]]: Both address the missing lowering path for RVV code generation from MLIR, but the IREE ukernel approach uses the MLIR `vector` dialect and relies on LLVM's backend for instruction selection, whereas the MLIR-xDSL pipeline implements custom lowering stages using xDSL to emit C code with RVV intrinsics.
+
+## Sources
+
+- https://github.com/iree-org/iree/issues/22720
+merge_draft_body -->
