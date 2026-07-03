@@ -1,12 +1,13 @@
 # Wiki Index
 
-Last updated: 2026-07-03 | Pages: 64 | Sources: 172
+Last updated: 2026-07-03 | Pages: 66 | Sources: 180
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
 | [apache-tvm.md](entity/apache-tvm.md) | Apache TVM |  | 2 | 0 |
+| [chips-alliance-entity.md](entity/chips-alliance-entity.md) | CHIPS Alliance | risc-v, open-source-hardware, consortium | 4 | 0 |
 | [esperanto-technologies.md](entity/esperanto-technologies.md) | Esperanto Technologies |  | 2 | 0 |
 | [gap9shield.md](entity/gap9shield.md) | GAP9Shield |  | 4 | 0 |
 | [hbm3-entity.md](entity/hbm3-entity.md) | HBM3 |  | 2 | 0 |
@@ -20,8 +21,9 @@ Last updated: 2026-07-03 | Pages: 64 | Sources: 172
 | [monte-cimone-cluster.md](entity/monte-cimone-cluster.md) | Monte Cimone |  | 2 | 0 |
 | [nncase.md](entity/nncase.md) | nncase |  | 6 | 0 |
 | [opengemm.md](entity/opengemm.md) | OpenGeMM | GeMM accelerator, RISC-V, open-source hardware, Chisel, accelerator generator | 4 | 0 |
+| [riscv-international-technical-committees.md](entity/riscv-international-technical-committees.md) | RISC-V International Technical Committees |  | 2 | 0 |
 | [riscv-matrix-extension-specification.md](entity/riscv-matrix-extension-specification.md) | RISC-V Matrix Extension Specification | risc-v, isa, matrix, extension | 8 | 0 |
-| [riscv-v-extension.md](entity/riscv-v-extension.md) | RISC-V V Extension |  | 2 | 0 |
+| [riscv-v-extension.md](entity/riscv-v-extension.md) | RISC-V V Extension |  | 4 | 0 |
 | [rise-project-rp014-llamacpp-ggml-rvv.md](entity/rise-project-rp014-llamacpp-ggml-rvv.md) | RP014 - Optimizing Llama.cpp and GGML for RVV | llama.cpp, GGML, RVV, RISC-V, quantization, optimization | 2 | 0 |
 | [rvv-dialect-mlir.md](entity/rvv-dialect-mlir.md) | RVV Dialect (MLIR) | MLIR, RVV, RISC-V, dialect, compiler | 2 | 0 |
 | [rvv-intrinsic-api.md](entity/rvv-intrinsic-api.md) | RISC-V Vector Extension Intrinsic API |  | 2 | 0 |
@@ -77,6 +79,12 @@ Last updated: 2026-07-03 | Pages: 64 | Sources: 172
 - **C908 GCC tuning benchmark**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
 - **C908 scheduler model**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
 - **C908V**: → [xuantie-c908](hardware_target/xuantie-c908.md)
+- **CHIPS**: → [chips-alliance-entity](entity/chips-alliance-entity.md)
+- **CHIPS Alliance**: → [chips-alliance-entity](entity/chips-alliance-entity.md)
+- **CHIPS Alliance - GitHub**: → [chips-alliance-entity](entity/chips-alliance-entity.md)
+- **CORE-V**: → [riscv-v-extension](entity/riscv-v-extension.md)
+- **CORE-V Family**: → [riscv-v-extension](entity/riscv-v-extension.md)
+- **CORE-V cores**: → [riscv-v-extension](entity/riscv-v-extension.md)
 - **CanMV K230**: → [k230-soc](hardware_target/k230-soc.md)
 - **CanMV K230 development board**: → [k230-soc](hardware_target/k230-soc.md)
 - **CanMV K230 v1.1**: → [k230-soc](hardware_target/k230-soc.md)
@@ -84,6 +92,7 @@ Last updated: 2026-07-03 | Pages: 64 | Sources: 172
 - **Chiplet-Based RISC-V SoC**: → [chiplet-based-risc-v-soc](hardware_target/chiplet-based-risc-v-soc.md)
 - **Chiplet-Based RISC-V SoC with Modular AI Acceleration**: → [chiplet-based-risc-v-soc](hardware_target/chiplet-based-risc-v-soc.md)
 - **Codebook-based Q4X**: → [q4x-quantization-llamacpp-rvv](optimization_recipe/q4x-quantization-llamacpp-rvv.md)
+- **Common Hardware for Interfaces, Processors and Systems Alliance**: → [chips-alliance-entity](entity/chips-alliance-entity.md)
 - **CoreMark C908 0.8%**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
 - **DeepSeek on SG2042**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
 - **ET-SOC-1**: → [et-soc-1-hardware-target](hardware_target/et-soc-1-hardware-target.md)
@@ -169,6 +178,7 @@ Last updated: 2026-07-03 | Pages: 64 | Sources: 172
 - **OpenGeMM**: → [opengemm](entity/opengemm.md)
 - **OpenGeMM Accelerator Generator**: → [opengemm](entity/opengemm.md)
 - **OpenGeMM platform**: → [opengemm](entity/opengemm.md)
+- **OpenHW CORE-V**: → [riscv-v-extension](entity/riscv-v-extension.md)
 - **OpenNanhu-V5**: → [opennanhu-v5](hardware_target/opennanhu-v5.md)
 - **OpenXiangShan**: → [xiangshan-overview](entity/xiangshan-overview.md)
 - **Project RP014**: → [rise-project-rp014-llamacpp-ggml-rvv](entity/rise-project-rp014-llamacpp-ggml-rvv.md)
@@ -178,17 +188,28 @@ Last updated: 2026-07-03 | Pages: 64 | Sources: 172
 - **Q4_0**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
 - **Q4_1**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
 - **Q8_0**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
+- **RISC-V Certification Steering Committee**: → [riscv-international-technical-committees](entity/riscv-international-technical-committees.md)
+- **RISC-V Horizontal Committees**: → [riscv-international-technical-committees](entity/riscv-international-technical-committees.md)
 - **RISC-V IME Extension**: → [integrated-matrix-extension](entity/integrated-matrix-extension.md)
+- **RISC-V ISA Committees**: → [riscv-international-technical-committees](entity/riscv-international-technical-committees.md)
+- **RISC-V International Technical Committees**: → [riscv-international-technical-committees](entity/riscv-international-technical-committees.md)
+- **RISC-V International Technical Steering Committee**: → [riscv-international-technical-committees](entity/riscv-international-technical-committees.md)
 - **RISC-V Matrix Extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RISC-V Matrix Extension Proposal V0.6.0**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RISC-V Matrix Extension Specification**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
+- **RISC-V Special Interest Groups**: → [riscv-international-technical-committees](entity/riscv-international-technical-committees.md)
+- **RISC-V TSC**: → [riscv-international-technical-committees](entity/riscv-international-technical-committees.md)
+- **RISC-V Task Groups**: → [riscv-international-technical-committees](entity/riscv-international-technical-committees.md)
+- **RISC-V Technical Committees**: → [riscv-international-technical-committees](entity/riscv-international-technical-committees.md)
 - **RISC-V V Extension**: → [riscv-v-extension](entity/riscv-v-extension.md)
 - **RISC-V Vector Extension**: → [riscv-v-extension](entity/riscv-v-extension.md)
 - **RISC-V Vector Extension Dialect**: → [rvv-dialect-mlir](entity/rvv-dialect-mlir.md)
 - **RISC-V Vector Extension Intrinsic API**: → [rvv-intrinsic-api](entity/rvv-intrinsic-api.md)
 - **RISC-V Vector Intrinsic API**: → [rvv-intrinsic-api](entity/rvv-intrinsic-api.md)
+- **RISC-V Working Groups**: → [riscv-international-technical-committees](entity/riscv-international-technical-committees.md)
 - **RISC-V XuanTie C908 tuning**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
 - **RISC-V matrix extension spec**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
+- **RISC-V technical governance**: → [riscv-international-technical-committees](entity/riscv-international-technical-committees.md)
 - **RISCV IME**: → [integrated-matrix-extension](entity/integrated-matrix-extension.md)
 - **RISE RP014**: → [rise-project-rp014-llamacpp-ggml-rvv](entity/rise-project-rp014-llamacpp-ggml-rvv.md)
 - **RP014**: → [rise-project-rp014-llamacpp-ggml-rvv](entity/rise-project-rp014-llamacpp-ggml-rvv.md)
@@ -295,6 +316,7 @@ Last updated: 2026-07-03 | Pages: 64 | Sources: 172
 - **ZCC 4.x**: → [zcc-compiler](entity/zcc-compiler.md)
 - **ZSB**: → [xuantie-zero-stage-boot-entity](entity/xuantie-zero-stage-boot-entity.md)
 - **block-based quantization in llama.cpp**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
+- **chipsalliance**: → [chips-alliance-entity](entity/chips-alliance-entity.md)
 - **chipsalliance/t1**: → [t1](hardware_target/t1.md)
 - **kendryte/nncase**: → [nncase](entity/nncase.md)
 - **llama-cpp**: → [llama-cpp](entity/llama-cpp.md)
@@ -331,6 +353,7 @@ Last updated: 2026-07-03 | Pages: 64 | Sources: 172
 - **香山**: → [xiangshan-overview](entity/xiangshan-overview.md)
 - **sophon-sg2042-hardware-target**: mentioned in [sophon-sg2042-npb-performance-benchmark-result](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md) — *no dedicated page*
 - **xuantie-c908-gcc-tuning**: mentioned in [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md) — *no dedicated page*
+
 
 
 
@@ -464,6 +487,7 @@ Last updated: 2026-07-03 | Pages: 64 | Sources: 172
 - [mlir-xdsl-gemm-benchmark-k230-banana-pi](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md)
 - [sophon-sg2042-npb-performance-benchmark-result](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md)
 - [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
+
 
 
 

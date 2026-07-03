@@ -4,6 +4,10 @@ aliases:
 - RVV
 - RISC-V Vector Extension
 - V extension
+- CORE-V
+- CORE-V Family
+- OpenHW CORE-V
+- CORE-V cores
 subtype: null
 tags: []
 scorecard:
@@ -15,6 +19,8 @@ scorecard:
 sources:
 - raw/cache/0f909339888951bc.md
 - https://opensecura.googlesource.com/docs/+/fabd959628cc5cfdeaed81c784222fa3d4869125/RiscVVectorSpecDoc.md
+- raw/cache/a71b0e3b12c36de7.md
+- https://github.com/openhwgroup/core-v-cores
 source_url: https://opensecura.googlesource.com/docs/+/fabd959628cc5cfdeaed81c784222fa3d4869125/RiscVVectorSpecDoc.md
 fetched_at: '2026-07-03T15:51:28.357627+00:00'
 type: entity

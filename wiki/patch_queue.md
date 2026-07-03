@@ -1409,3 +1409,62 @@ target_section: Optimization-Relevant Details
 source: https://arxiv.org/abs/2605.10860
 status: pending_review
 proposed_update: Add a bullet point under Optimization-Relevant Details about the RVV predication overhead and stride load performance bottlenecks identified in the GCC 15/Clang 21 auto-vectorization study (arXiv:2605.10860). These are issues not yet fully captured by current compiler cost models and affect in-order RVV 1.0 implementations such as the X60.
+
+## [2026-07-03] merge_pending | riscv-v-extension.md
+target_page: riscv-v-extension.md
+canonical_name: RISC-V V Extension
+colliding_name: CORE-V
+source: https://github.com/openhwgroup/core-v-cores
+status: pending_review
+<!-- merge_draft_body
+# CORE-V Family
+
+The CORE-V family is a collection of permissively licensed open-source RISC-V cores curated by the OpenHW Foundation, which operates under the Eclipse Foundation. The family is designed to support a broad range of applications from embedded control to Linux-capable systems, with industrial-grade verification. The RTL for each core is highly configurable, enabling multiple unique core configurations from a single repository. The family includes several sub-families: CVA6 (6-stage, single/dual-issue in-order cores supporting RV32IMACF or RV64GC with three privilege levels M, S, U for Unix-like operating systems), CVW/Wally (5-stage cores for education, supporting RV32I/E and RV64I with optional caches and branch prediction), CVE4 (4-stage cores derived from the PULP RI5CY core, with variants targeting DSP, security, and compute-intensive applications through custom extensions and the CORE-V eXtension Interface), CVE2 (2-stage low-power cores for control-oriented tasks), and CVA5 (5-stage cores for FPGAs supporting RV32IMA). Each member is maintained in its own GitHub repository, and the project aims to provide industrial-grade, community-driven RISC-V processor IP.
+
+## Key Claims
+
+- CORE-V is a family of permissively licensed open-source RISC-V cores curated by the OpenHW Foundation, part of the Eclipse Foundation.
+- CVA6 (formerly PULP Ariane) implements a 6-stage in-order pipeline, supports RV32IMACF or RV64GC, and includes configurable TLBs, hardware PTW, and branch prediction for Unix-like OS support.
+- CVA6 variants include CV32A60AX (32-bit single-issue application class with CV-X-IF), CV32A60X (32-bit embedded class targeting TRL5 in early 2025), and CV64A60AX (64-bit application class targeting TRL4 in 2026).
+- CVW (Wally) provides 5-stage cores for education with optional caches, branch prediction, virtual memory, and peripherals.
+- CVE4 cores are 4-stage in-order cores derived from PULP RI5CY, with variants CV32E40P (DSP custom extensions including hardware loops, SIMD, bit manipulation), CV32E40S (security-focused with enhanced PMP and anti-tampering), CV32E40X (compute-intensive with CV-X-IF), and CV32E41P (prototype for Zce and Zfinx extensions).
+- CVE2 is a low-complexity 2-stage core derived from lowRISC Ibex, targeting high energy efficiency for control-oriented tasks.
+- CVA5 is a 32-bit FPGA-optimized core derived from the Taiga Project, supporting parallel variable-latency execution units.
+- All cores are open-source with permissive licensing and are verified to industrial grade.
+
+## Relationships
+
+No specific relationship to visible context pages.
+
+## Sources
+
+- https://github.com/openhwgroup/core-v-cores
+merge_draft_body -->
+
+## [2026-07-03] merge_pending | chips-alliance-entity.md
+target_page: chips-alliance-entity.md
+canonical_name: CHIPS Alliance
+colliding_name: CHIPS Alliance
+source: https://github.com/chipsalliance
+status: pending_review
+<!-- merge_draft_body
+# CHIPS Alliance
+
+CHIPS Alliance is an open-source consortium that develops high-quality hardware designs and tools relevant to ASICs and FPGAs. It hosts multiple open-source projects, including Chisel (a hardware design language written in Scala), Rocket Chip (a System-on-Chip generator), Verible (a suite of SystemVerilog developer tools covering parsing, linting, formatting, and language server support), riscv-dv (a random instruction generator for RISC-V processor verification), Cores-VeeR-EH1 (a VeeR EH1 core), FIRRTL (a Flexible Intermediate Representation for RTL), and the Caliptra subsystem (including Root of Trust IP, RTL, firmware, and software). By creating an open and collaborative environment, the alliance aims to lower the cost of hardware development through shared resources. The repositories are primarily licensed under Apache-2.0, with some under ISC.
+
+## Key Claims
+
+- CHIPS Alliance develops high-quality open source hardware designs and tools for ASICs and FPGAs.
+- The alliance hosts projects such as Chisel, Rocket Chip, Verible, riscv-dv, Cores-VeeR-EH1, FIRRTL, and Caliptra.
+- The mission is to lower development costs through open collaboration among companies and individuals.
+- Repositories are predominantly Apache-2.0 licensed.
+- The alliance has over 122 repositories, including VeeR EL2 core, Caliptra subsystem software, and Verilator (forked).
+
+## Relationships
+
+No specific relationship to visible context pages.
+
+## Sources
+
+- https://github.com/chipsalliance
+merge_draft_body -->
