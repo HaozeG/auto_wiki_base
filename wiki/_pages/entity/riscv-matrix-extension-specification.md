@@ -14,6 +14,7 @@ aliases:
 - RVM extension
 - RV matrix extension
 - RISC-V matrix extension spec
+- RVME
 subtype: null
 tags:
 - risc-v
@@ -35,6 +36,8 @@ sources:
 - https://github.com/XUANTIE-RV/riscv-matrix-extension-spec/tree/v0.4.0
 - raw/cache/03efd9e471335133.md
 - https://github.com/XUANTIE-RV/riscv-matrix-extension-spec/blob/master/demos/README.md
+- raw/cache/4a3d1a40a7af9a4e.md
+- https://github.com/XUANTIE-RV/riscv-matrix-extension-spec/
 source_url: https://deepwiki.com/riscv-stc/riscv-matrix-project/4.1-matrix-extension-specification
 fetched_at: '2026-07-03T13:51:11.299731+00:00'
 type: entity

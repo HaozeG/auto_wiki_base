@@ -1733,3 +1733,32 @@ target_section: Relationships
 source: https://www.rt-rk.com/gcc-tuning-for-spacemit-x60-building-an-in-order-dual-issue-scheduler-model-part-i/
 status: pending_review
 proposed_update: Add a relationship entry linking to the new optimization_recipe page: 'Describes the GCC tuning recipe that implements the instruction scheduling model documented in [[spacemit-x60-gcc-tuning]].'
+
+## [2026-07-03] merge_pending | riscv-matrix-extension-specification.md
+target_page: riscv-matrix-extension-specification.md
+canonical_name: RISC-V Matrix Extension Specification
+colliding_name: RISC-V Matrix Extension Specification
+source: https://github.com/XUANTIE-RV/riscv-matrix-extension-spec/
+status: pending_review
+<!-- merge_draft_body
+# RISC-V Matrix Extension Specification
+
+The RISC-V Matrix Extension Specification is a proposed matrix extension for AI applications under the RISC-V architecture, developed by T-HEAD (XUANTIE-RV). The specification is currently at version 0.6.0 and introduces a tile register file separated from accumulation registers, flexible register shapes not limited to rows = RLEN/32, and additional element-wise instructions for operator fusion. The project includes a specification document, an SHL neural networks library, an ABI manual, an intrinsic API reference manual, a QEMU emulator, a GNU toolchain with compiler and assembler, and demonstration applications for ResNet50 and GEMM. The extension is under construction and provided as a preview demo project, with build instructions and submodule dependencies for evaluation.
+
+## Key Claims
+
+- The specification proposes a matrix extension for RISC-V AI applications, currently at version 0.6.0, developed by T-HEAD (XUANTIE-RV).
+- Source and accumulation registers are separated into tile and accumulation registers, supporting different source/destination sizes.
+- Matrix register shapes are adjustable, no longer limited to rows = RLEN/32, enabling full coverage from pure outer products to pure inner products.
+- New element-wise instructions have been added to facilitate operator fusion.
+- The project includes an SHL neural networks library, an ABI manual, an intrinsic API reference manual, a QEMU emulator, and a GNU toolchain with GCC compiler and assembler.
+- The specification is under construction and provided as a preview demo project.
+
+## Relationships
+
+No specific relationship to visible context pages in the wiki.
+
+## Sources
+
+- https://github.com/XUANTIE-RV/riscv-matrix-extension-spec/
+merge_draft_body -->

@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-03 | Pages: 73 | Sources: 194
+Last updated: 2026-07-03 | Pages: 76 | Sources: 202
 
 ## Entity Pages
 
@@ -22,15 +22,18 @@ Last updated: 2026-07-03 | Pages: 73 | Sources: 194
 | [nncase.md](entity/nncase.md) | nncase |  | 6 | 0 |
 | [opengemm.md](entity/opengemm.md) | OpenGeMM | GeMM accelerator, RISC-V, open-source hardware, Chisel, accelerator generator | 4 | 0 |
 | [riscv-international-technical-committees.md](entity/riscv-international-technical-committees.md) | RISC-V International Technical Committees |  | 2 | 0 |
-| [riscv-matrix-extension-specification.md](entity/riscv-matrix-extension-specification.md) | RISC-V Matrix Extension Specification | risc-v, isa, matrix, extension | 8 | 0 |
+| [riscv-matrix-extension-specification.md](entity/riscv-matrix-extension-specification.md) | RISC-V Matrix Extension Specification | risc-v, isa, matrix, extension | 10 | 0 |
 | [riscv-v-extension.md](entity/riscv-v-extension.md) | RISC-V V Extension |  | 4 | 0 |
 | [rise-project-rp014-llamacpp-ggml-rvv.md](entity/rise-project-rp014-llamacpp-ggml-rvv.md) | RP014 - Optimizing Llama.cpp and GGML for RVV | llama.cpp, GGML, RVV, RISC-V, quantization, optimization | 2 | 0 |
+| [rv-sparse-project.md](entity/rv-sparse-project.md) | rv-sparse |  | 2 | 0 |
 | [rvv-dialect-mlir.md](entity/rvv-dialect-mlir.md) | RVV Dialect (MLIR) | MLIR, RVV, RISC-V, dialect, compiler | 2 | 0 |
 | [rvv-intrinsic-api.md](entity/rvv-intrinsic-api.md) | RISC-V Vector Extension Intrinsic API |  | 2 | 0 |
 | [semidynamics-tensor-unit.md](entity/semidynamics-tensor-unit.md) | Semidynamics Tensor Unit |  | 2 | 0 |
 | [semidynamics.md](entity/semidynamics.md) | Semidynamics | RISC-V, AI, AIPU, European | 2 | 0 |
 | [shl.md](entity/shl.md) | SHL |  | 4 | 1 |
 | [sifive-intelligence-2nd-gen.md](entity/sifive-intelligence-2nd-gen.md) | SiFive Intelligence 2nd Gen |  | 2 | 0 |
+| [spmv-rvv-benchmark.md](entity/spmv-rvv-benchmark.md) | SpMV-RVV |  | 2 | 0 |
+| [vindexmac.md](entity/vindexmac.md) | vindexmac |  | 2 | 0 |
 | [whisper-risc-v-iss-entity.md](entity/whisper-risc-v-iss-entity.md) | Whisper | RISC-V, instruction set simulator, ISS, Tenstorrent | 2 | 0 |
 | [xdsl-compiler-toolkit.md](entity/xdsl-compiler-toolkit.md) | xDSL |  | 8 | 0 |
 | [xiangshan-overview.md](entity/xiangshan-overview.md) | XiangShan |  | 6 | 0 |
@@ -207,6 +210,7 @@ Last updated: 2026-07-03 | Pages: 73 | Sources: 194
 - **RISC-V Matrix Extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RISC-V Matrix Extension Proposal V0.6.0**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RISC-V Matrix Extension Specification**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
+- **RISC-V Sparse**: → [rv-sparse-project](entity/rv-sparse-project.md)
 - **RISC-V Special Interest Groups**: → [riscv-international-technical-committees](entity/riscv-international-technical-committees.md)
 - **RISC-V TSC**: → [riscv-international-technical-committees](entity/riscv-international-technical-committees.md)
 - **RISC-V Task Groups**: → [riscv-international-technical-committees](entity/riscv-international-technical-committees.md)
@@ -227,6 +231,7 @@ Last updated: 2026-07-03 | Pages: 73 | Sources: 194
 - **RV Matrix Extension v0.4.0**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RV matrix extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RVM extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
+- **RVME**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RVV**: → [riscv-v-extension](entity/riscv-v-extension.md)
 - **RVV Dialect (MLIR)**: → [rvv-dialect-mlir](entity/rvv-dialect-mlir.md)
 - **RVV Intrinsic API**: → [rvv-intrinsic-api](entity/rvv-intrinsic-api.md)
@@ -271,6 +276,8 @@ Last updated: 2026-07-03 | Pages: 73 | Sources: 194
 - **Sophon SG2042 CPU**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
 - **Sophon SG2042 SoC**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
 - **Sophon SG2044**: → [sophon-sg2044-hardware-target](hardware_target/sophon-sg2044-hardware-target.md)
+- **SpMV-RVV**: → [spmv-rvv-benchmark](entity/spmv-rvv-benchmark.md)
+- **SpMV-RVV benchmark**: → [spmv-rvv-benchmark](entity/spmv-rvv-benchmark.md)
 - **SpacemiT K1**: → [spacemit-k1](hardware_target/spacemit-k1.md)
 - **SpacemiT K1 AI Benchmark Report (2026-04-14)**: → [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
 - **SpacemiT K1 MUSE Pi Pro**: → [spacemit-k1](hardware_target/spacemit-k1.md)
@@ -343,23 +350,29 @@ Last updated: 2026-07-03 | Pages: 73 | Sources: 194
 - **chipsalliance**: → [chips-alliance-entity](entity/chips-alliance-entity.md)
 - **chipsalliance/t1**: → [t1](hardware_target/t1.md)
 - **kendryte/nncase**: → [nncase](entity/nncase.md)
+- **laspp/SpMV-RVV**: → [spmv-rvv-benchmark](entity/spmv-rvv-benchmark.md)
 - **llama-cpp**: → [llama-cpp](entity/llama-cpp.md)
 - **llama.cpp**: → [llama-cpp](entity/llama-cpp.md)
 - **llama.cpp Quantization Methods**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
 - **llama.cpp quantization**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
 - **llama.cpp quantization types**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
+- **merledu/rv-sparse**: → [rv-sparse-project](entity/rv-sparse-project.md)
 - **meta-andes**: → [meta-andes](entity/meta-andes.md)
 - **nncase**: → [nncase](entity/nncase.md)
 - **nncase compiler**: → [nncase](entity/nncase.md)
 - **nncase neural network compiler**: → [nncase](entity/nncase.md)
 - **riscv-matrix-extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **riscv-matrix-extension-spec**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
+- **rv-sparse**: → [rv-sparse-project](entity/rv-sparse-project.md)
 - **rvspoc-s2311-llama2**: → [baby-llama2-milkv-duo-benchmark](benchmark_result/baby-llama2-milkv-duo-benchmark.md)
 - **rvv-intrinsic-api**: → [rvv-intrinsic-api](entity/rvv-intrinsic-api.md)
 - **spacemit-x60**: → [spacemit-x60-hardware-target](hardware_target/spacemit-x60-hardware-target.md)
 - **spacemit-x60 gcc tuning**: → [spacemit-x60-gcc-tuning](optimization_recipe/spacemit-x60-gcc-tuning.md)
 - **tenstorrent/whisper**: → [whisper-risc-v-iss-entity](entity/whisper-risc-v-iss-entity.md)
 - **ukernel**: → [iree-microkernel-library](entity/iree-microkernel-library.md)
+- **vector index-multiply-accumulate**: → [vindexmac](entity/vindexmac.md)
+- **vindexmac**: → [vindexmac](entity/vindexmac.md)
+- **vindexmac instruction**: → [vindexmac](entity/vindexmac.md)
 - **xDSL**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
 - **xDSL Python Compiler Framework**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
 - **xDSL RVV lowerings**: → [mlir-xdsl-rvv-codegen-pipeline](optimization_recipe/mlir-xdsl-rvv-codegen-pipeline.md)
@@ -380,6 +393,7 @@ Last updated: 2026-07-03 | Pages: 73 | Sources: 194
 - **香山**: → [xiangshan-overview](entity/xiangshan-overview.md)
 - **sophon-sg2042-hardware-target**: mentioned in [npb-characterization-sg2042](benchmark_result/npb-characterization-sg2042.md) — *no dedicated page*
 - **xuantie-c908-gcc-tuning**: mentioned in [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md) — *no dedicated page*
+
 
 
 
@@ -450,14 +464,14 @@ Last updated: 2026-07-03 | Pages: 73 | Sources: 194
 | [opennanhu-v5.md](hardware_target/opennanhu-v5.md) | hardware_target | OpenNanhu-V5 |  | 2 | 0 |
 | [semidynamics-all-in-one-ai-ip.md](hardware_target/semidynamics-all-in-one-ai-ip.md) | hardware_target | Semidynamics All-In-One AI IP |  | 2 | 1 |
 | [sophon-sg2042.md](hardware_target/sophon-sg2042.md) | hardware_target | SOPHON SG2042 |  | 10 | 0 |
-| [sophon-sg2044-hardware-target.md](hardware_target/sophon-sg2044-hardware-target.md) | hardware_target | Sophon SG2044 |  | 2 | 3 |
+| [sophon-sg2044-hardware-target.md](hardware_target/sophon-sg2044-hardware-target.md) | hardware_target | Sophon SG2044 |  | 2 | 4 |
 | [spacemit-k1.md](hardware_target/spacemit-k1.md) | hardware_target | SpacemiT K1 |  | 4 | 4 |
 | [spacemit-k3-hardware-target.md](hardware_target/spacemit-k3-hardware-target.md) | hardware_target | SpacemiT K3 | RISC-V, SpacemiT, AI CPU, big.LITTLE, RVV 1.0 | 2 | 0 |
-| [spacemit-x60-hardware-target.md](hardware_target/spacemit-x60-hardware-target.md) | hardware_target | SpacemiT X60 | RISC-V, GCC tuning, SpacemiT, in-order, RVV 1.0 | 2 | 6 |
+| [spacemit-x60-hardware-target.md](hardware_target/spacemit-x60-hardware-target.md) | hardware_target | SpacemiT X60 | RISC-V, GCC tuning, SpacemiT, in-order, RVV 1.0 | 2 | 7 |
 | [starfive-jh7110-hardware-target.md](hardware_target/starfive-jh7110-hardware-target.md) | hardware_target | StarFive JH-7110 |  | 2 | 0 |
 | [t1.md](hardware_target/t1.md) | hardware_target | T1 |  | 2 | 0 |
 | [v851s-yuzukilizard.md](hardware_target/v851s-yuzukilizard.md) | hardware_target | Allwinner V851S / Yuzukilizard | allwinner, v851s, yuzukilizard, risc-v, npu | 8 | 0 |
-| [xuantie-c906-hardware-target.md](hardware_target/xuantie-c906-hardware-target.md) | hardware_target | XuanTie C906 |  | 2 | 6 |
+| [xuantie-c906-hardware-target.md](hardware_target/xuantie-c906-hardware-target.md) | hardware_target | XuanTie C906 |  | 2 | 7 |
 | [xuantie-c908.md](hardware_target/xuantie-c908.md) | hardware_target | XuanTie C908 |  | 14 | 1 |
 | [c908-wino-gemm-optimization.md](optimization_recipe/c908-wino-gemm-optimization.md) | optimization_recipe | C908 Winograd and GEMM Optimization in SHL |  | 2 | 11 |
 | [hhb-onnxruntime-yolox-deployment-xuantie-c920.md](optimization_recipe/hhb-onnxruntime-yolox-deployment-xuantie-c920.md) | optimization_recipe | HHB-onnxruntime YOLOX Deployment on Xuantie C920 |  | 2 | 0 |
@@ -528,6 +542,7 @@ Last updated: 2026-07-03 | Pages: 73 | Sources: 194
 - [semidynamics-all-in-one-llama2-7b-tensor-utilization](benchmark_result/semidynamics-all-in-one-llama2-7b-tensor-utilization.md)
 - [sophon-sg2042-npb-performance-benchmark-result](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md)
 - [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
+
 
 
 
