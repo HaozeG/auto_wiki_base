@@ -111,9 +111,20 @@ def compute_topology_stats(pages_dir: Path, verbose: bool = False) -> dict:
     }
 
 
+def _build_tag_index(pages_dir: Path) -> dict[str, set[str]]:
+    """stem -> set of lowercased tags, for topical (not just degree-based)
+    anchor selection in find_bridge_candidates."""
+    tags: dict[str, set[str]] = {}
+    for f in pages_dir.rglob("*.md"):
+        fm = parse_frontmatter(f)
+        page_tags = fm.get("tags") or []
+        tags[f.stem] = {str(t).strip().lower() for t in page_tags if str(t).strip()}
+    return tags
+
+
 def find_bridge_candidates(pages_dir: Path, max_candidates: int = 5) -> list[dict]:
-    """Identify pairs of topologically distant pages — in separate connected
-    components — as candidate bridge topics for the research/discovery step.
+    """Identify pairs of topologically distant pages as candidate bridge
+    topics for the research/discovery step.
 
     This is the proactive half of the Graph Topology Philosophy: surface
     distant clusters as research *context* so new pages are chosen to bridge
@@ -121,42 +132,115 @@ def find_bridge_candidates(pages_dir: Path, max_candidates: int = 5) -> list[dic
     fact (the pattern that produced hub inflation in close_linking_debt.py).
 
     Returns up to max_candidates ``{page_a, page_b, component_size_a,
-    component_size_b, reason}`` dicts. The largest component's best-connected
-    page is paired against a representative of each smaller component,
-    smallest components first (most orphaned, so most worth bridging).
+    component_size_b, reason}`` dicts.
+
+    Anchor selection is topic-aware, not just max-degree: found live that
+    always picking the single highest-degree node in the largest component
+    as the anchor for every pair created a preferential-attachment loop —
+    every suggested bridge pointed at the same hub, which then gained more
+    edges from the resulting research and became an even bigger hub next
+    time (the same rich-get-richer/hub-inflation failure the Goodharting
+    guardrail below watches for, just introduced by this function instead of
+    a linking pass). Each small component now gets its own giant-side anchor,
+    chosen by tag overlap with that component among the giant component's
+    best-connected nodes, falling back to degree only when no tag signal
+    exists — so bridges are topically motivated and the anchor varies across
+    pairs instead of concentrating on one node.
     """
     graph = build_graph(pages_dir).to_undirected()
     components = sorted(nx.connected_components(graph), key=len, reverse=True)
-    if len(components) < 2:
+
+    if len(components) >= 2:
+        tags = _build_tag_index(pages_dir)
+        largest = components[0]
+        # candidate pool: the giant component's best-connected nodes, so the
+        # anchor is still a reasonably central page, just not always the same one
+        pool_size = min(len(largest), max(5, max_candidates * 2))
+        anchor_pool = sorted(largest, key=lambda n: graph.degree(n), reverse=True)[:pool_size]
+
+        def pick_anchor(component: set) -> str | None:
+            if not anchor_pool:
+                return None
+            component_tags: set[str] = set()
+            for n in component:
+                component_tags |= tags.get(n, set())
+            if component_tags:
+                scored = [(len(tags.get(a, set()) & component_tags), a) for a in anchor_pool]
+                best_overlap = max(scored)[0]
+                if best_overlap > 0:
+                    # among tied-best overlap, prefer higher degree (stable, deterministic)
+                    tied = [a for overlap, a in scored if overlap == best_overlap]
+                    return max(tied, key=lambda n: graph.degree(n))
+            return anchor_pool[0]  # no tag signal: fall back to top-degree
+
+        def representative(component: set) -> str | None:
+            if not component:
+                return None
+            return max(component, key=lambda n: graph.degree(n))
+
+        candidates = []
+        for component in reversed(components[1:]):  # smallest components first
+            rep = representative(component)
+            anchor = pick_anchor(component)
+            if rep is None or anchor is None:
+                continue
+            candidates.append({
+                "page_a": anchor,
+                "page_b": rep,
+                "component_size_a": len(largest),
+                "component_size_b": len(component),
+                "reason": (
+                    f"separate connected components ({len(largest)} vs {len(component)} "
+                    f"pages) — no path between them in the current graph"
+                ),
+            })
+            if len(candidates) >= max_candidates:
+                break
+        return candidates
+
+    # Single connected component (graph_maturity territory): distant-component
+    # bridging goes silent right when it matters most, since there's nothing
+    # left to connect at the component level. Fall back to within-component
+    # path-length reduction: surface the most topologically distant pairs
+    # (graph periphery) so research-time bridging keeps working past maturity
+    # instead of self-extinguishing.
+    if graph.number_of_nodes() < 2:
         return []
-
-    def representative(component: set) -> str | None:
-        if not component:
-            return None
-        return max(component, key=lambda n: graph.degree(n))
-
-    largest = components[0]
-    anchor = representative(largest)
-    if anchor is None:
+    try:
+        eccentricity = nx.eccentricity(graph)
+    except nx.NetworkXError:
+        return []  # disconnected/degenerate graph shape eccentricity can't handle
+    periphery = sorted(eccentricity, key=lambda n: eccentricity[n], reverse=True)
+    if len(periphery) < 2:
         return []
 
     candidates = []
-    for component in reversed(components[1:]):  # smallest components first
-        rep = representative(component)
-        if rep is None:
-            continue
-        candidates.append({
-            "page_a": anchor,
-            "page_b": rep,
-            "component_size_a": len(largest),
-            "component_size_b": len(component),
-            "reason": (
-                f"separate connected components ({len(largest)} vs {len(component)} "
-                f"pages) — no path between them in the current graph"
-            ),
-        })
+    used: set[str] = set()
+    for i, a in enumerate(periphery):
         if len(candidates) >= max_candidates:
             break
+        if a in used:
+            continue
+        # farthest-from-a periphery node not yet used, for path-length diversity
+        remaining = [n for n in periphery[i + 1:] if n not in used]
+        if not remaining:
+            continue
+        b = max(remaining, key=lambda n: nx.shortest_path_length(graph, a, n))
+        dist = nx.shortest_path_length(graph, a, b)
+        if dist < 2:
+            continue  # already close; not a meaningful bridge target
+        used.add(a)
+        used.add(b)
+        candidates.append({
+            "page_a": a,
+            "page_b": b,
+            "component_size_a": graph.number_of_nodes(),
+            "component_size_b": graph.number_of_nodes(),
+            "reason": (
+                f"graph periphery pair, {dist} hops apart in a single connected "
+                f"component — a source connecting both would shorten avg_path_length"
+            ),
+        })
     return candidates
 
 

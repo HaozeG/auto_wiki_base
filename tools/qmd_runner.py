@@ -180,6 +180,16 @@ def _parse_match(rec: dict[str, Any], rank: int) -> QmdMatch:
         score = float(score) if score is not None else None
     except (TypeError, ValueError):
         score = None
+    # Found live: with no embeddings populated (the harness's deliberate default —
+    # see CLAUDE.md Constraints), qmd search returns a real 0.0 for every query
+    # except a near-exact title match, not a graded low-relevance score. A literal
+    # 0.0 satisfies neither the `>= threshold` buckets nor the `is None` rank-only
+    # fallback in assess_candidate_similarity, so genuinely-related-but-differently
+    # -worded candidates silently skip every score-based duplicate signal. Treat
+    # 0.0 as "score not meaningful" (same as None) so the rank/overlap fallback,
+    # which manual verification confirmed still orders results correctly, applies.
+    if score == 0.0:
+        score = None
     return QmdMatch(
         rank=rank,
         file=str(rec.get("file") or rec.get("path") or ""),
