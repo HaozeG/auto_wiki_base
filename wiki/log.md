@@ -315,3 +315,13 @@ audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/
 theme_profile: RISC-V AI accelerator | workflow_first
 coverage_gaps:
   - missing_page_type:workload_kernel
+
+## [2026-07-03] research | RISC-V AI accelerator memory bandwidth HBM DDR chiplet
+session_id: a4e38b7d
+candidates_evaluated: 10
+pages_written: 3
+pipeline_rejection_rate: 10%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/riscv-phase2/wiki/audit/research_a4e38b7d_2026-07-03.json
+theme_profile: RISC-V AI accelerator | workflow_first
+coverage_gaps:
+  - missing_page_type:workload_kernel

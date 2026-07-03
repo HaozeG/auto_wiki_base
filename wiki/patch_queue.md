@@ -1381,3 +1381,24 @@ No specific relationship to visible context pages.
 
 - https://arxiv.org/abs/2406.12394
 merge_draft_body -->
+
+## [2026-07-03] pending | et-soc-1-hardware-target.md
+target_page: et-soc-1-hardware-target.md
+target_section: opening_paragraph
+source: https://vlsifacts.com/esperantos-et-soc-1-chip-integrates-more-than-1000-risc-v-cores-for-energy-efficient-ml-recommendation/
+status: pending_review
+proposed_update: Replace the first paragraph with a more detailed self-contained description: 'The ET-SoC-1 (Esperanto Technologies Supercomputer-on-Chip 1) is a RISC-V AI inference accelerator chip fabricated on TSMC's 7nm process, integrating 1088 energy-efficient ET-Minion 64-bit in-order RISC-V cores each with a vector/tensor unit, 4 high-performance ET-Maxion 64-bit out-of-order RISC-V cores, and 1 RISC-V service processor. With 24 billion transistors on a 570 mm² die, it delivers peak compute rates of 100 to 200 TOPS while consuming typically less than 20 watts. It is designed for energy-efficient ML recommendation inference in large data centers and is packaged on a Glacier Point v2 accelerator card that houses up to six chips, providing up to 192 GB of DRAM with 822 GB/s bandwidth.'
+
+## [2026-07-03] pending | et-soc-1-hardware-target.md
+target_page: et-soc-1-hardware-target.md
+target_section: key_claims
+source: https://vlsifacts.com/esperantos-et-soc-1-chip-integrates-more-than-1000-risc-v-cores-for-energy-efficient-ml-recommendation/
+status: pending_review
+proposed_update: Add the following specific claims to the Key Claims list: 'Integrates 1088 ET-Minion 64-bit in-order RISC-V cores (500 MHz to 1.5 GHz) and 4 ET-Maxion 64-bit out-of-order RISC-V cores (500 MHz to 2 GHz).', 'Contains 24 billion transistors on a 570 mm² die.', 'Peak compute rates of 100 to 200 TOPS.', 'Typical power consumption less than 20 watts.', 'Inclusion of over 160 million bytes of on-die SRAM for caches and scratchpad.', 'Memory interfaces include low-power LPDDR4x DRAM and eMMC FLASH; PCIe x8 Gen4 and other common I/O interfaces.', 'Glacier Point v2 accelerator card integrates up to six chips, offering up to 192 GB DRAM and 822 GB/s bandwidth.', 'Claims 123x better performance per watt for ML Recommendation and 25.7x better performance per watt for Image Classification compared to an unspecified baseline.'
+
+## [2026-07-03] pending | et-soc-1-hardware-target.md
+target_page: et-soc-1-hardware-target.md
+target_section: optimization_details
+source: https://vlsifacts.com/esperantos-et-soc-1-chip-integrates-more-than-1000-risc-v-cores-for-energy-efficient-ml-recommendation/
+status: pending_review
+proposed_update: Update Optimization-Relevant Details: 'Vector/matrix/accelerator support: Each ET-Minion core includes a vector/tensor unit (specific ISA extensions not detailed).', 'Memory/cache/TLB/DMA: Over 160 MB on-die SRAM for caches and scratchpad; interfaces to LPDDR4x DRAM and eMMC FLASH; PCIe x8 Gen4.', 'Compiler/toolchain support: Not specified in this source.'

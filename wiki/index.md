@@ -1,13 +1,15 @@
 # Wiki Index
 
-Last updated: 2026-07-03 | Pages: 60 | Sources: 164
+Last updated: 2026-07-03 | Pages: 62 | Sources: 168
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
 | [apache-tvm.md](entity/apache-tvm.md) | Apache TVM |  | 2 | 0 |
+| [esperanto-technologies.md](entity/esperanto-technologies.md) | Esperanto Technologies |  | 2 | 0 |
 | [gap9shield.md](entity/gap9shield.md) | GAP9Shield |  | 4 | 0 |
+| [hbm3-entity.md](entity/hbm3-entity.md) | HBM3 |  | 2 | 0 |
 | [integrated-matrix-extension.md](entity/integrated-matrix-extension.md) | Integrated Matrix Extension |  | 4 | 0 |
 | [iree-microkernel-library.md](entity/iree-microkernel-library.md) | IREE Microkernel Library |  | 2 | 0 |
 | [iree-rvv-mlir-ukernel.md](entity/iree-rvv-mlir-ukernel.md) | IREE MLIR-based uKernel for RVV | RISC-V, RVV, IREE, MLIR, uKernel, Matmul | 2 | 0 |
@@ -85,7 +87,10 @@ Last updated: 2026-07-03 | Pages: 60 | Sources: 164
 - **DeepSeek on SG2042**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
 - **ET-SOC-1**: → [et-soc-1-hardware-target](hardware_target/et-soc-1-hardware-target.md)
 - **ET-SoC-1**: → [et-soc-1-hardware-target](hardware_target/et-soc-1-hardware-target.md)
+- **Esperanto AI**: → [esperanto-technologies](entity/esperanto-technologies.md)
+- **Esperanto Technologies**: → [esperanto-technologies](entity/esperanto-technologies.md)
 - **Esperanto Technologies Supercomputer-on-Chip 1**: → [et-soc-1-hardware-target](hardware_target/et-soc-1-hardware-target.md)
+- **Esperanto Technologies, Inc.**: → [esperanto-technologies](entity/esperanto-technologies.md)
 - **GAP9**: → [gap9](hardware_target/gap9.md)
 - **GAP9 Shield**: → [gap9shield](entity/gap9shield.md)
 - **GAP9 SoC**: → [gap9](hardware_target/gap9.md)
@@ -99,8 +104,11 @@ Last updated: 2026-07-03 | Pages: 60 | Sources: 164
 - **GGML quantization techniques**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
 - **Gemma-2-2B Llama-3.1-8B RVV BPI-F3**: → [bpi-f3-rvv-llm-benchmark](benchmark_result/bpi-f3-rvv-llm-benchmark.md)
 - **GreenWaves GAP9**: → [gap9](hardware_target/gap9.md)
+- **HBM3**: → [hbm3-entity](entity/hbm3-entity.md)
+- **HBM3 specification**: → [hbm3-entity](entity/hbm3-entity.md)
 - **HHB-onnxruntime YOLOX Deployment on Xuantie C920**: → [hhb-onnxruntime-yolox-deployment-xuantie-c920](optimization_recipe/hhb-onnxruntime-yolox-deployment-xuantie-c920.md)
 - **HHB-onnxruntime YOLOX inference**: → [hhb-onnxruntime-yolox-deployment-xuantie-c920](optimization_recipe/hhb-onnxruntime-yolox-deployment-xuantie-c920.md)
+- **High Bandwidth Memory 3**: → [hbm3-entity](entity/hbm3-entity.md)
 - **IME**: → [integrated-matrix-extension](entity/integrated-matrix-extension.md)
 - **IREE MLIR Ukernels for RVV**: → [iree-rvv-mlir-ukernel](entity/iree-rvv-mlir-ukernel.md)
 - **IREE MLIR-based uKernel for RVV**: → [iree-rvv-mlir-ukernel](entity/iree-rvv-mlir-ukernel.md)
@@ -348,6 +356,7 @@ Last updated: 2026-07-03 | Pages: 60 | Sources: 164
 
 
 
+
 ## Optimization Pages
 
 | Page | Type | Summary | Tags | Sources | Inbound |
@@ -362,10 +371,10 @@ Last updated: 2026-07-03 | Pages: 60 | Sources: 164
 | [mlir-xdsl-gemm-benchmark-k230-banana-pi.md](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md) | benchmark_result | MLIR-xDSL GEMM Benchmark on K230 and BananaPi F3 |  | 2 | 4 |
 | [sophon-sg2042-npb-performance-benchmark-result.md](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md) | benchmark_result | SG2042 NAS Parallel Benchmark Performance |  | 4 | 0 |
 | [spacemit-k1-benchmark-2026-04-14.md](benchmark_result/spacemit-k1-benchmark-2026-04-14.md) | benchmark_result | SpacemiT K1 AI Benchmark Report (2026-04-14) |  | 2 | 0 |
-| [andes-ax45mpv-hardware-target.md](hardware_target/andes-ax45mpv-hardware-target.md) | hardware_target | AndesCore AX45MPV |  | 2 | 0 |
+| [andes-ax45mpv-hardware-target.md](hardware_target/andes-ax45mpv-hardware-target.md) | hardware_target | AndesCore AX45MPV |  | 2 | 1 |
 | [andes-nx27v-hardware-target.md](hardware_target/andes-nx27v-hardware-target.md) | hardware_target | AndesCore NX27V |  | 2 | 2 |
 | [chiplet-based-risc-v-soc.md](hardware_target/chiplet-based-risc-v-soc.md) | hardware_target | Chiplet-Based RISC-V SoC |  | 2 | 0 |
-| [et-soc-1-hardware-target.md](hardware_target/et-soc-1-hardware-target.md) | hardware_target | ET-SoC-1 |  | 2 | 0 |
+| [et-soc-1-hardware-target.md](hardware_target/et-soc-1-hardware-target.md) | hardware_target | ET-SoC-1 |  | 2 | 1 |
 | [gap9.md](hardware_target/gap9.md) | hardware_target | GAP9 |  | 2 | 3 |
 | [k230-soc.md](hardware_target/k230-soc.md) | hardware_target | K230 |  | 8 | 0 |
 | [maestro.md](hardware_target/maestro.md) | hardware_target | Maestro |  | 2 | 1 |
@@ -441,6 +450,7 @@ Last updated: 2026-07-03 | Pages: 60 | Sources: 164
 - [mlir-xdsl-gemm-benchmark-k230-banana-pi](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md)
 - [sophon-sg2042-npb-performance-benchmark-result](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md)
 - [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
+
 
 
 
