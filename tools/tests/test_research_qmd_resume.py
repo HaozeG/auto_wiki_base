@@ -6,6 +6,7 @@ from unittest.mock import MagicMock, patch
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
+import frontmatter
 import orchestrator
 from qmd_runner import QmdMatch, QmdRunner, assess_candidate_similarity
 from quota import QuotaManager
@@ -974,6 +975,80 @@ def test_generate_synthesis_candidate_writes_page_and_respects_budget(tmp_path):
     assert orchestrator._generate_synthesis_candidate(
         state, quota, audit, {"synthesis_gap_min_cluster_size": 3}, set()
     ) is None
+
+
+def test_generate_synthesis_candidate_backfills_sources_for_real_eval_pipeline(tmp_path):
+    """Regression test for a live bug found running the v2 replication test:
+    the subagent's page_draft has no frontmatter.sources (a synthesis page
+    draws from existing wiki content, not a freshly fetched external source),
+    but eval_summary.py's Layer 1 EMPTY_SOURCES check applies unconditionally
+    to every page type. Without backfilling sources from the cluster pages'
+    own paths, every synthesis draft failed Layer 1 and
+    _generate_synthesis_candidate() could never actually write a page — this
+    test does NOT mock _run_eval_pipeline, so it exercises the real
+    eval_summary.py subprocess the way the earlier
+    test_generate_synthesis_candidate_writes_page_and_respects_budget test
+    (which does mock it) could not have caught this.
+    """
+    pages_dir = tmp_path / "wiki" / "_pages"
+    entity_dir = pages_dir / "entity"
+    entity_dir.mkdir(parents=True)
+    for name, tag in [("alpha", "gemm"), ("beta", "gemm"), ("gamma", "gemm")]:
+        (entity_dir / f"{name}.md").write_text(
+            f"---\ntype: entity\ntags: [{tag}]\ncanonical_name: {name.title()}\nsources: [https://example.com/{name}]\n---\n\n"
+            f"# {name.title()}\n\nA GEMM optimization approach with real grounded content here.\n\n"
+            f"## Key Claims\n\n- {name.title()} claims something specific.\n",
+            encoding="utf-8",
+        )
+    index = tmp_path / "wiki" / "index.md"
+    index.write_text(
+        "# Wiki Index\n\nLast updated: 2020-01-01 | Pages: 3 | Sources: 0\n\n"
+        "## Entity Pages\n\n| Page | Summary | Tags | Sources | Inbound |\n"
+        "|------|---------|------|---------|---------|\n\n"
+        "## Synthesis Pages\n\n| Page | Connected Entities | Status | Inbound |\n"
+        "|------|--------------------|--------|---------|\n",
+        encoding="utf-8",
+    )
+    state = ResearchSessionState.create(
+        "sess-synth-sources", "gemm query", {"max_candidates": 5, "max_new_pages": 5, "depth": "shallow"},
+        tmp_path / "state",
+    )
+    quota = QuotaManager(max_candidates=5, max_new_pages=5)
+    audit = FullDummyAudit()
+
+    rag_summary = "GEMM optimization on RISC-V spans compiler-driven and hand-tuned approaches. " * 20
+    synthesis_result = json.dumps({
+        "decision": "approve",
+        "rejection_reason": None,
+        "page_draft": {
+            "page_type": "synthesis",
+            "filename": "gemm_approaches_no_sources",
+            "frontmatter": {
+                "type": "synthesis",
+                "connected_entities": ["alpha", "beta", "gamma"],
+                "synthesis_status": "draft",
+                "tags": ["gemm"],
+                # Deliberately no "sources" field, matching real subagent output.
+            },
+            "content": f"# GEMM Approaches\n\n## RAG Summary\n\n{rag_summary}\n\n"
+            "## Full Synthesis\n\n[[alpha]] and [[beta]] and [[gamma]] compared.\n\n"
+            "## Open Questions\n\n- What about a fourth approach?\n\n"
+            "## Connected Pages\n\n- [[alpha]]\n- [[beta]]\n- [[gamma]]\n",
+        },
+    })
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_INDEX_MD", index), \
+         patch.object(orchestrator, "_call_subagent", return_value=synthesis_result):
+        filename = orchestrator._generate_synthesis_candidate(
+            state, quota, audit, {"synthesis_gap_min_cluster_size": 3}, set()
+        )
+
+    assert filename == "gemm_approaches_no_sources.md"
+    written = pages_dir / "synthesis" / "gemm_approaches_no_sources.md"
+    assert written.exists()
+    fm, _ = frontmatter.parse_page(written)
+    assert fm.get("sources")  # backfilled, not empty
 
 
 def test_maybe_transition_maturity_only_touches_patched_claude_md(tmp_path):
