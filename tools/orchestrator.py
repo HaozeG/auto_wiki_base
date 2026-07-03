@@ -776,6 +776,32 @@ def _generate_synthesis_candidate(
         print(f"[{session_state.session_id}] Synthesis candidate for tag={tag!r} rejected: {reason}")
         return None
     draft = result["page_draft"]
+    # Backfill frontmatter.sources from the cluster pages' own paths (a synthesis
+    # page draws from existing, already-grounded wiki content rather than a
+    # freshly fetched external source). Not in the literal CLAUDE.md synthesis
+    # template, but eval_summary.py's Layer 1 EMPTY_SOURCES check applies to
+    # every page type unconditionally, and the original run's manually-written
+    # synthesis pages all populate this the same way (paths to their
+    # connected_entities' page files) — confirmed against
+    # wiki/_pages/synthesis/edge_ai_soc_design_space.md on research/riscv-ai-accelerator.
+    draft_fm = draft.setdefault("frontmatter", {})
+    if not draft_fm.get("sources"):
+        # Relative to _WIKI_PAGES_DIR's grandparent (the wiki root), not the
+        # module-level _PROJECT_ROOT constant, so this stays correct when
+        # _WIKI_PAGES_DIR is patched elsewhere (tests) or the wiki root ever
+        # differs from _PROJECT_ROOT.
+        wiki_root = _WIKI_PAGES_DIR.parent.parent
+        cluster_paths = []
+        for stem in page_stems:
+            page = _find_page_by_filename(stem)
+            if page is None:
+                continue
+            try:
+                cluster_paths.append(str(page.relative_to(wiki_root)))
+            except ValueError:
+                cluster_paths.append(str(page))
+        if cluster_paths:
+            draft_fm["sources"] = cluster_paths
     passes, pipeline_result = _run_eval_pipeline(draft)
     audit.record_pipeline_result(
         ev_idx,

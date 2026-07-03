@@ -46,7 +46,7 @@ type: workload_kernel
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 1
+inbound_links: 2
 ---
 
 # RISC-V Vector Code Examples

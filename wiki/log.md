@@ -307,3 +307,10 @@ pages_written: 1
 pipeline_rejection_rate: 0%
 audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/riscv-v2-replication/wiki/audit/research_020ee5da_2026-07-02.json
 theme_profile: RISC-V AI accelerator | optimization_first
+
+## [2026-07-03] transition | cold_start → mature
+session_id: manual-check
+pages_at_transition: 100
+orphan_fraction: 0.19
+median_inbound_links: 1.0
+mean_inbound_links: 2.35

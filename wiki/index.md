@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-02 | Pages: 100 | Sources: 248
+Last updated: 2026-07-03 | Pages: 101 | Sources: 248
 
 ## Entity Pages
 
@@ -54,6 +54,7 @@ Last updated: 2026-07-02 | Pages: 100 | Sources: 248
 
 | Page | Connected Entities | Status | Inbound |
 |------|--------------------|--------|---------|
+| [risc-v_ecosystem_diversity_and_vector_extension_fragmentation.md](synthesis/risc-v_ecosystem_diversity_and_vector_extension_fragmentation.md) | xuantie-c950, k230, ventana-veyron-v2, sophon-sg2042, riscv-vector-tests, risc-v-matrix-project, risc-v-vector-code-examples, vindexmac-structured-sparse-matrix-optimization | draft | 0 |
 
 ## Concept Index
 
