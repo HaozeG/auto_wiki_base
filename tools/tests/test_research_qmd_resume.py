@@ -514,6 +514,43 @@ def test_keyword_manifest_includes_theme_and_previous_queries(monkeypatch):
     assert captured["bridge_candidates"] == []
 
 
+def test_keyword_plan_records_full_manifest_to_audit_when_provided(monkeypatch):
+    """Regression: previously only the recommender's *output* (keyword_plan)
+    was ever saved (audit.set_keyword_plan()) -- there was no way to inspect
+    what input it actually received (concept_gaps, bridge_candidates,
+    gap_manifest, etc.) after the fact. Record the full manifest the same way
+    "synthesis"/"evaluation" invocations already are."""
+    from audit import AuditLog
+
+    def fake_call(manifest, research_config):
+        return {"recommended_keywords": [{"query": "q", "reason": "r"}], "avoid_patterns": [],
+                "model": "test", "source": "test"}
+
+    monkeypatch.setattr(orchestrator, "_call_keyword_recommender", fake_call)
+    monkeypatch.setattr(orchestrator, "_get_repo_research_theme", lambda: "theme")
+    monkeypatch.setattr(orchestrator, "_get_wiki_topic_summary", lambda: "summary")
+    monkeypatch.setattr(orchestrator, "_get_concept_gaps", lambda: [])
+    monkeypatch.setattr(orchestrator, "_bridge_candidates_for_manifest",
+                        lambda: [{"topic_a": "A", "topic_b": "B", "reason": "distant"}])
+
+    audit = AuditLog("sess-audit-test", "q", {})
+    audit.path.unlink(missing_ok=True)
+
+    orchestrator._build_keyword_plan(
+        "q", {}, "shallow", {}, audit=audit,
+    )
+
+    assert len(audit._invocations) == 1
+    inv = audit._invocations[0]
+    assert inv["subagent_type"] == "keyword_recommender"
+    assert inv["input_manifest"]["bridge_candidates"] == [
+        {"topic_a": "A", "topic_b": "B", "reason": "distant"}
+    ]
+    assert inv["schema_valid"] is True
+    assert "recommended_keywords" in inv["raw_response"]
+    audit.path.unlink(missing_ok=True)
+
+
 def test_load_research_config_merges_selected_theme_profile(tmp_path, monkeypatch):
     claude = tmp_path / "CLAUDE.md"
     claude.write_text(

@@ -1321,7 +1321,8 @@ def _bridge_candidates_for_manifest(max_candidates: int = 5) -> list[dict]:
 
 
 def _build_keyword_plan(query: str, research_config: dict, depth: str,
-                        discovery_history: dict, gap_manifest: dict | None = None) -> dict:
+                        discovery_history: dict, gap_manifest: dict | None = None,
+                        audit: "AuditLog | None" = None) -> dict:
     concept_gaps = _get_concept_gaps()
     gap_manifest = gap_manifest or build_gap_manifest(_WIKI_PAGES_DIR, research_config)
     manifest = {
@@ -1339,7 +1340,17 @@ def _build_keyword_plan(query: str, research_config: dict, depth: str,
         "depth": depth,
         "max_keywords": int(research_config.get("keyword_recommendation_limit", 5) or 5),
     }
-    return _call_keyword_recommender(manifest, research_config)
+    # Record the full input manifest (including bridge_candidates/concept_gaps)
+    # for post-hoc audit/replay, same pattern as "synthesis"/"evaluation"
+    # invocations below -- previously only the recommender's *output*
+    # (keyword_plan) was ever saved via audit.set_keyword_plan(), so there was
+    # no way to inspect what it actually saw. Optional: tests and other
+    # internal callers of _build_keyword_plan don't always have an AuditLog.
+    inv_idx = audit.record_invocation("keyword_recommender", manifest) if audit else None
+    plan = _call_keyword_recommender(manifest, research_config)
+    if audit and inv_idx is not None:
+        audit.record_response(inv_idx, json.dumps(plan, ensure_ascii=False), schema_valid=True)
+    return plan
 
 
 # ---------------------------------------------------------------------------
@@ -3123,7 +3134,7 @@ def run_research_session(query: str, max_candidates: int, max_new_pages: int,
     discovery_history = _load_recent_discovery_history(research_config)
     gap_manifest = build_gap_manifest(_WIKI_PAGES_DIR, research_config)
     keyword_plan = _build_keyword_plan(
-        query, research_config, depth, discovery_history, gap_manifest=gap_manifest
+        query, research_config, depth, discovery_history, gap_manifest=gap_manifest, audit=audit
     )
     session_state.set_keyword_plan(keyword_plan)
     audit.set_keyword_plan(keyword_plan)
