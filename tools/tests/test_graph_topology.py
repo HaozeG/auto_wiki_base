@@ -7,10 +7,10 @@ import frontmatter
 import graph_topology
 
 
-def _write(pages_dir: Path, subdir: str, stem: str, outbound_links=None):
+def _write(pages_dir: Path, subdir: str, stem: str, outbound_links=None, tags=None):
     d = pages_dir / subdir
     d.mkdir(parents=True, exist_ok=True)
-    fm = {"type": "entity", "outbound_links": outbound_links or []}
+    fm = {"type": "entity", "outbound_links": outbound_links or [], "tags": tags or []}
     frontmatter.write_page(d / f"{stem}.md", fm, f"\n# {stem}\n\nBody.\n")
 
 
@@ -134,3 +134,39 @@ def test_check_for_goodharting_silent_when_orphan_drop_is_small():
     before = {"topologically_orphaned_fraction": 0.30, "clustering_coefficient": 0.10, "avg_path_length": 4.0}
     after = {"topologically_orphaned_fraction": 0.25, "clustering_coefficient": 0.05, "avg_path_length": 4.0}
     assert graph_topology.check_for_goodharting(before, after) is None
+
+
+def test_generic_tags_filters_near_universal_tags():
+    # Found live: a domain-wide tag like "risc-v" appearing on ~all pages
+    # carries no discriminating signal and must be excluded.
+    tags_index = {
+        "a": {"risc-v", "vector-core"},
+        "b": {"risc-v"},
+        "c": {"risc-v"},
+        "d": {"risc-v"},
+    }
+    generic = graph_topology._generic_tags(tags_index, threshold=0.4)
+    assert "risc-v" in generic  # 4/4 pages — universal, filtered
+    assert "vector-core" not in generic  # 1/4 pages — discriminating, kept
+
+
+def test_find_bridge_candidates_anchor_selection_ignores_generic_shared_tag(tmp_path):
+    # Reproduces the live xuantie-c910 pattern: every page shares a generic
+    # domain tag ("risc-v"), which would make every anchor-pool candidate
+    # tie on "overlap" if the tag weren't filtered — defeating tag-based
+    # anchor selection and silently falling back to a single highest-degree
+    # node every time. h1 has *lower* degree than h2/h3 but is the only
+    # anchor-pool node sharing the *specific* tag ("vector-core") with the
+    # orphan component — it must be picked precisely because of that
+    # specific match, not despite it.
+    pages_dir = tmp_path / "_pages"
+    _write(pages_dir, "entity", "h1", [{"target": "h2", "reason": "r"}], tags=["risc-v", "vector-core"])
+    _write(pages_dir, "entity", "h2", [{"target": "h1", "reason": "r"}, {"target": "h3", "reason": "r"}], tags=["risc-v"])
+    _write(pages_dir, "entity", "h3", [{"target": "h2", "reason": "r"}, {"target": "h4", "reason": "r"}], tags=["risc-v"])
+    _write(pages_dir, "entity", "h4", [{"target": "h3", "reason": "r"}], tags=["risc-v"])
+    _write(pages_dir, "entity", "orphan-a", [], tags=["risc-v", "vector-core"])
+    _write(pages_dir, "entity", "orphan-b", [], tags=["risc-v"])
+
+    candidates = graph_topology.find_bridge_candidates(pages_dir, max_candidates=5)
+    by_orphan = {c["page_b"]: c["page_a"] for c in candidates}
+    assert by_orphan["orphan-a"] == "h1"  # specific tag match, not the top-degree node

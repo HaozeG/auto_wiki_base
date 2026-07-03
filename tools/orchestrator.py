@@ -2796,6 +2796,13 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
             written_filenames, pipeline_rejections,
         )
 
+    # Per-session injection cap: how many times each page has been shown to
+    # the drafting subagent as wiki_context so far this session. Found live
+    # that unbounded injection of the same page (previously biased toward
+    # whichever page already had the most inbound_links) creates a
+    # preferential-attachment loop — see context_selector.py's docstring.
+    context_injection_counts: dict[str, int] = {}
+
     for entry in session_state.candidates:
         if quota.any_exceeded():
             print(f"[{session_id}] Quota exceeded, stopping early")
@@ -2898,7 +2905,12 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
             content[:content_limit],
             qmd_runner=qmd_runner,
             structured_terms=structured_terms,
+            injection_counts=context_injection_counts,
+            injection_cap=int(research_config.get("context_injection_cap", 3) or 3),
         )
+        for injected in injected_pages:
+            stem = Path(injected["filename"]).stem
+            context_injection_counts[stem] = context_injection_counts.get(stem, 0) + 1
         is_cold_start = not _wiki_is_mature()
         eval_config = _load_claude_md_block("eval_thresholds")
         eval_manifest = {

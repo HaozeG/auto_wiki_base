@@ -3,7 +3,24 @@ Wiki page context selector for EvalManifest injection.
 
 Uses qmd for similarity search to find the most relevant wiki pages
 for a given resource, then greedily selects within a token budget.
-Falls back to inbound_links-based ranking when qmd is unavailable.
+Falls back to a neutral (non-hub-biased) ranking when qmd is unavailable.
+
+Found live (2026-07-03): ranking candidate pages by `inbound_links` — as a
+tie-break nudge here, and as the sole sort key in the qmd-unavailable
+fallback — is a preferential-attachment loop, not a legitimate relevance
+signal. A page with many inbound links gets shown to the drafting subagent
+more often as "context," so new pages cite it more, so its inbound_links
+grows further. Measured on two independent replication runs: a single
+incidental hardware-target page was injected into 59-76% of all evaluation
+invocations, and ~75% of the resulting Relationships citations were generic
+"for comparison" boilerplate rather than specific reasoned relationships —
+this is design-doc-specified behavior (§12.7: "rank ... by inbound_links,
+hub pages first"), not a regression, but it directly violates CLAUDE.md's
+Graph Topology Philosophy ("bridges should be few, deliberate, and
+reasoned, not numerous and shallow"). `inbound_links` no longer influences
+ranking anywhere in this module; injection is additionally capped per page
+per session (`injection_counts`/`injection_cap`) so even a genuinely
+relevant page can't dominate every drafting context in a row.
 """
 
 import re
@@ -84,15 +101,14 @@ def _qmd_search(query_text: str, top: int = 20, qmd_runner: QmdRunner | None = N
     return ranked
 
 
-def _fallback_rank_by_inbound(pages: list[Path]) -> list[tuple[Path, float]]:
-    """Rank pages by inbound_links when qmd is unavailable."""
-    ranked = []
-    for page in pages:
-        fm, _ = _parse_frontmatter(page)
-        inbound = float(fm.get("inbound_links", 0))
-        ranked.append((page, inbound))
-    ranked.sort(key=lambda x: x[1], reverse=True)
-    return ranked
+def _fallback_rank_neutral(pages: list[Path]) -> list[tuple[Path, float]]:
+    """Rank pages when qmd is unavailable and no structured terms matched.
+
+    No topical signal exists at this point, so use a stable, bias-free
+    order (filename) rather than `inbound_links` — sorting by inbound count
+    here was the purest form of the preferential-attachment loop documented
+    at module level, with no relevance signal at all to justify it."""
+    return [(page, 0.0) for page in sorted(pages, key=lambda p: p.name)]
 
 
 def _as_terms(value) -> set[str]:
@@ -136,8 +152,7 @@ def _structured_rank(
             if overlap:
                 score += len(overlap)
         if score > 0:
-            inbound = float(fm.get("inbound_links", 0))
-            ranked.append((page, score + inbound * 0.001))
+            ranked.append((page, score))
     ranked.sort(key=lambda x: x[1], reverse=True)
     return ranked
 
@@ -154,17 +169,22 @@ def get_topic_hit_count(query_text: str, min_score: float = 0.5,
 
 def select_context_pages(resource_content: str, max_tokens: int = 4000,
                          qmd_runner: QmdRunner | None = None,
-                         structured_terms: dict | None = None) -> list[dict]:
+                         structured_terms: dict | None = None,
+                         injection_counts: dict[str, int] | None = None,
+                         injection_cap: int = 3) -> list[dict]:
     """
     Select wiki pages relevant to resource_content, within max_tokens budget.
 
     Algorithm:
     1. Shell out: qmd search <resource_content[:500]> -c _pages -n 20 --format json
-    2. Parse ranked results with real similarity scores; re-rank ties by inbound_links
-    3. Greedily include pages until token budget reached
-    4. Return list of {filename, type, content} dicts
+    2. Parse ranked results with real similarity scores (no inbound_links nudge —
+       see module docstring)
+    3. Deprioritize (not exclude) pages that have already hit `injection_cap`
+       injections this session, per `injection_counts`
+    4. Greedily include pages until token budget reached
+    5. Return list of {filename, type, content} dicts
 
-    Falls back to inbound_links ranking if qmd is unavailable.
+    Falls back to a neutral, bias-free ranking if qmd is unavailable.
     """
     all_pages = _list_all_pages()
     if not all_pages:
@@ -181,9 +201,7 @@ def select_context_pages(resource_content: str, max_tokens: int = 4000,
             seen.add(str(page))
         for page, score in qmd_results:
             if str(page) not in seen:
-                fm, _ = _parse_frontmatter(page)
-                inbound = float(fm.get("inbound_links", 0))
-                ranked_paths.append((page, score + inbound * 0.001))
+                ranked_paths.append((page, score))
                 seen.add(str(page))
         for pg in all_pages:
             if str(pg) not in seen:
@@ -193,20 +211,32 @@ def select_context_pages(resource_content: str, max_tokens: int = 4000,
         ranked_paths: list[tuple[Path, float]] = []
         for page, score in qmd_results:
             if str(page) not in seen:
-                fm, _ = _parse_frontmatter(page)
-                inbound = float(fm.get("inbound_links", 0))
-                # Break score ties with inbound_links (small nudge)
-                ranked_paths.append((page, score + inbound * 0.001))
+                ranked_paths.append((page, score))
                 seen.add(str(page))
         # Include any pages not returned by qmd (score=0) after the ranked ones
         for pg in all_pages:
             if str(pg) not in seen:
                 ranked_paths.append((pg, 0.0))
     else:
-        # qmd unavailable or no results — rank by inbound_links
-        ranked_paths = _fallback_rank_by_inbound(all_pages)
+        # qmd unavailable or no results — rank neutrally, not by inbound_links
+        ranked_paths = _fallback_rank_neutral(all_pages)
 
     ranked_paths.sort(key=lambda x: x[1], reverse=True)
+
+    # Deprioritize (stable-partition, don't drop) pages already at/over the
+    # per-session injection cap — keeps them eligible as a last resort if
+    # nothing else is topically relevant, but stops them from crowding out
+    # other candidates purely because they were shown before. Only reorder
+    # within the positive-score prefix: zero-score filler pages must stay
+    # last regardless of cap state, or they'd trip the "stop at first
+    # zero-score page" rule below before a legitimately relevant but capped
+    # page ever gets a chance.
+    if injection_counts:
+        positive = [rp for rp in ranked_paths if rp[1] > 0]
+        zero = [rp for rp in ranked_paths if rp[1] <= 0]
+        under_cap = [rp for rp in positive if injection_counts.get(rp[0].stem, 0) < injection_cap]
+        at_cap = [rp for rp in positive if injection_counts.get(rp[0].stem, 0) >= injection_cap]
+        ranked_paths = under_cap + at_cap + zero
 
     selected: list[dict] = []
     token_count = 0

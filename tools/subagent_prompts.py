@@ -287,11 +287,22 @@ Constraints:
 - For benchmark_result and optimization_recipe pages, when those page types are
   available, ground Key Claims in evidence_extraction and source_grounded_snippets
   from the manifest so later optimizer agents can cite evidence.
-- Relationships section of entity pages MUST include at least 2 [[wiki_page_name]]
-  wiki-link references to entity pages visible in wiki_context.relevant_pages.
-  Use the exact filename stem (no path, no extension) inside [[...]].
-  If fewer than 2 suitable related pages exist in wiki_context, include what you
-  can and note "insufficient context for additional cross-links" in the scorecard.
+- Relationships section entries must each state a specific, reasoned relationship
+  to the linked page — a concrete shared fact (e.g. "shares the XuanTie E907
+  vector microarchitecture", "targets the same RVV 1.0 extension version",
+  "SHL is the inference library XuanTie C906 uses for quantized kernels"), not
+  a generic same-category comparison. Forbidden patterns: "for comparison with
+  another [category]", "another AI-relevant [category]", "see [[x]] for a
+  similar/comparable core" — these describe two things being in the same
+  bucket, not a real relationship, and are exactly the shallow-edge pattern
+  this system's Graph Topology Philosophy prohibits ("bridges should be few,
+  deliberate, and reasoned, not numerous and shallow").
+- Do not pad the Relationships section to hit a link-count target. Link only
+  pages in wiki_context.relevant_pages you can state a specific relationship
+  to, using the exact filename stem (no path, no extension) inside
+  [[wiki_page_name]]. Zero or one genuine relationship is correct and
+  preferred over a second link invented to meet a count; note "no specific
+  relationship to visible context pages" in the scorecard if that's the case.
 
 Identity (REQUIRED for every page draft):
 - Set frontmatter.canonical_name to the concept's stable proper name (the chip,

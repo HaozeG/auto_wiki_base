@@ -122,6 +122,25 @@ def _build_tag_index(pages_dir: Path) -> dict[str, set[str]]:
     return tags
 
 
+def _generic_tags(tags_index: dict[str, set[str]], threshold: float = 0.4) -> set[str]:
+    """Tags shared by more than `threshold` of pages carry no discriminating
+    signal for anchor selection. Found live: a domain-wide tag like "risc-v"
+    or "vector-extension" ties nearly every candidate against the giant
+    component's already-highest-degree node, defeating the tag-overlap
+    anchor-diversity logic below and silently reproducing the single-anchor
+    bug it was meant to fix (measured: 30/31 keyword-recommender manifests
+    still named the same page as anchor even with tag-overlap selection
+    active, because the "overlap" was just the universal tags)."""
+    if not tags_index:
+        return set()
+    counts: dict[str, int] = {}
+    for page_tags in tags_index.values():
+        for t in page_tags:
+            counts[t] = counts.get(t, 0) + 1
+    n = len(tags_index)
+    return {t for t, c in counts.items() if c / n > threshold}
+
+
 def find_bridge_candidates(pages_dir: Path, max_candidates: int = 5) -> list[dict]:
     """Identify pairs of topologically distant pages as candidate bridge
     topics for the research/discovery step.
@@ -156,6 +175,7 @@ def find_bridge_candidates(pages_dir: Path, max_candidates: int = 5) -> list[dic
 
     if len(components) >= 2:
         tags = _build_tag_index(pages_dir)
+        generic = _generic_tags(tags)
         largest = components[0]
         # candidate pool: the giant component's best-connected nodes, so the
         # anchor is still a reasonably central page, just not always the same one
@@ -167,15 +187,20 @@ def find_bridge_candidates(pages_dir: Path, max_candidates: int = 5) -> list[dic
                 return None
             component_tags: set[str] = set()
             for n in component:
-                component_tags |= tags.get(n, set())
+                component_tags |= tags.get(n, set()) - generic
             if component_tags:
-                scored = [(len(tags.get(a, set()) & component_tags), a) for a in anchor_pool]
+                scored = [(len((tags.get(a, set()) - generic) & component_tags), a) for a in anchor_pool]
                 best_overlap = max(scored)[0]
                 if best_overlap > 0:
-                    # among tied-best overlap, prefer higher degree (stable, deterministic)
+                    # among tied-best overlap, rotate rather than always taking
+                    # the highest-degree tie — ties are common (small tag
+                    # vocabularies), and degree-based tie-break silently
+                    # reintroduces the single-anchor bug this function exists
+                    # to prevent.
                     tied = [a for overlap, a in scored if overlap == best_overlap]
-                    return max(tied, key=lambda n: graph.degree(n))
-            # no tag signal: rotate through the pool instead of always the top node
+                    return tied[fallback_index % len(tied)]
+            # no non-generic tag signal: rotate through the pool instead of
+            # always the top node
             return anchor_pool[fallback_index % len(anchor_pool)]
 
         def representative(component: set) -> str | None:
