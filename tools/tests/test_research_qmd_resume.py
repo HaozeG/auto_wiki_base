@@ -6,6 +6,7 @@ from unittest.mock import MagicMock, patch
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
+import frontmatter
 import orchestrator
 from qmd_runner import QmdMatch, QmdRunner, assess_candidate_similarity
 from quota import QuotaManager
@@ -377,6 +378,115 @@ def test_recent_discovery_history_collects_previous_queries(tmp_path):
     ]
 
 
+def test_recent_discovery_history_flags_zero_yield_sessions(tmp_path):
+    """Regression coverage for the zero-yield feedback loop: sessions that
+    evaluated a real candidate budget but wrote 0 pages (e.g. session
+    e545ec7c in wiki/log.md, query drifted off-theme into formal verification)
+    should surface in zero_yield_queries so the keyword recommender can steer
+    away from repeating that query's angle.
+    """
+    audit_dir = tmp_path / "audit"
+    audit_dir.mkdir()
+    (audit_dir / "research_zero_2026-01-01.json").write_text(json.dumps({
+        "query": "RISC-V verification formal methods hardware bug fuzzing",
+        "session_summary": {
+            "candidates_evaluated": 10,
+            "pages_written": 0,
+            "pages_rejected_by_subagent": 10,
+        },
+        "invocations": [],
+    }), encoding="utf-8")
+    (audit_dir / "research_ok_2026-01-02.json").write_text(json.dumps({
+        "query": "ProjectNimbus GEMM benchmark",
+        "session_summary": {"candidates_evaluated": 5, "pages_written": 2},
+        "invocations": [],
+    }), encoding="utf-8")
+    # Below the 3-candidate threshold: a tiny/aborted session shouldn't count
+    # as a confirmed unproductive angle.
+    (audit_dir / "research_tiny_2026-01-03.json").write_text(json.dumps({
+        "query": "ProjectNimbus tiny probe",
+        "session_summary": {"candidates_evaluated": 1, "pages_written": 0},
+        "invocations": [],
+    }), encoding="utf-8")
+
+    with patch.object(orchestrator, "_audit_dir", return_value=audit_dir):
+        history = orchestrator._load_recent_discovery_history({
+            "recent_audit_sessions_for_discovery": 10,
+        })
+
+    queries = [z["query"] for z in history["zero_yield_queries"]]
+    assert queries == ["RISC-V verification formal methods hardware bug fuzzing"]
+    assert history["zero_yield_queries"][0]["candidates_evaluated"] == 10
+
+
+def test_early_exit_stops_after_escalation_keeps_failing(tmp_path):
+    """After adaptive depth escalation, if candidates keep failing evaluation
+    with 0 pages written, the session should stop rather than spend its whole
+    candidate budget (see wiki/audit/research_e545ec7c_2026-07-02.json: 10/10
+    candidates rejected, escalated at candidate 5, no early exit existed).
+    """
+    pages_dir = tmp_path / "wiki" / "_pages"
+    pages_dir.mkdir(parents=True)
+    index = tmp_path / "wiki" / "index.md"
+    index.write_text(
+        "# Wiki Index\n\nLast updated: 2020-01-01 | Pages: 0 | Sources: 0\n\n"
+        "## Entity Pages\n\n| Page | Summary | Tags | Sources | Inbound |\n"
+        "|------|---------|------|---------|---------|\n\n"
+        "## Synthesis Pages\n\n| Page | Connected Entities | Status | Inbound |\n"
+        "|------|--------------------|--------|---------|\n",
+        encoding="utf-8",
+    )
+    log_path = tmp_path / "wiki" / "log.md"
+    log_path.write_text("", encoding="utf-8")
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text("```yaml\n[system_state]\ngraph_maturity: true\n```\n", encoding="utf-8")
+
+    # 8 candidates so escalation (halfway=4) fires, then early_exit_after=3
+    # more rejections should stop the loop before candidate 8 is evaluated.
+    candidates = [{"url": f"https://example.com/{i}", "title": f"Candidate {i}"} for i in range(8)]
+    state = ResearchSessionState.create(
+        "sess-early-exit", "unproductive query",
+        {"max_candidates": 8, "max_new_pages": 5, "depth": "shallow"},
+        tmp_path / "state",
+    )
+    state.set_candidates(candidates)
+
+    reject_eval = json.dumps({
+        "decision": "reject",
+        "rejection_reason": "not relevant",
+        "scorecard": {"weighted_total": 0.1},
+        "page_drafts": [],
+        "pages_to_update": [],
+        "contradictions_found": [],
+    })
+
+    with patch.object(orchestrator, "_load_research_config", return_value={
+             "qmd_command": ["uv", "run", "--no-sync", "qmd"],
+             "research_state_dir": str(tmp_path / "state"),
+             "early_exit_after_escalation_failures": 3,
+         }), \
+         patch.object(orchestrator, "QmdRunner", return_value=EmptyQmdRunner()), \
+         patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_INDEX_MD", index), \
+         patch.object(orchestrator, "_LOG_MD", log_path), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md), \
+         patch.object(orchestrator, "AuditLog", return_value=FullDummyAudit()), \
+         patch.object(orchestrator, "_check_synthesis_gaps", return_value=[]), \
+         patch.object(orchestrator, "_wiki_is_mature", return_value=True), \
+         patch.object(orchestrator, "_get_concept_gaps", return_value=[]), \
+         patch.object(orchestrator, "_fetch_smart", return_value="some content about the candidate"), \
+         patch.object(orchestrator, "_call_subagent", return_value=reject_eval):
+        result = orchestrator._run_research_state(state)
+
+    assert result["status"] == "complete"
+    # 4 (halfway, triggers escalation) + 3 (early-exit threshold) = 7 evaluated,
+    # the 8th candidate should never have been reached.
+    assert result["candidates_evaluated"] == 7
+    evaluated_states = {c["state"] for c in state.candidates}
+    assert "eval_rejected" in evaluated_states
+    assert any(c["state"] == "discovered" for c in state.candidates)
+
+
 def test_keyword_manifest_includes_theme_and_previous_queries(monkeypatch):
     captured = {}
 
@@ -388,6 +498,7 @@ def test_keyword_manifest_includes_theme_and_previous_queries(monkeypatch):
     monkeypatch.setattr(orchestrator, "_get_repo_research_theme", lambda: "ProjectNimbus theme")
     monkeypatch.setattr(orchestrator, "_get_wiki_topic_summary", lambda: "Current coverage")
     monkeypatch.setattr(orchestrator, "_get_concept_gaps", lambda: ["Missing API"])
+    monkeypatch.setattr(orchestrator, "_bridge_candidates_for_manifest", lambda: [])
 
     orchestrator._build_keyword_plan(
         "ProjectNimbus latency",
@@ -400,6 +511,7 @@ def test_keyword_manifest_includes_theme_and_previous_queries(monkeypatch):
     assert captured["previous_search_keywords"] == ["ProjectNimbus docs"]
     assert captured["wiki_topic_summary"] == "Current coverage"
     assert captured["concept_gaps"] == ["Missing API"]
+    assert captured["bridge_candidates"] == []
 
 
 def test_load_research_config_merges_selected_theme_profile(tmp_path, monkeypatch):
@@ -438,6 +550,49 @@ def test_load_research_config_merges_selected_theme_profile(tmp_path, monkeypatc
     assert "hardware_target" in config["page_type_taxonomy"]
     assert "benchmark_result" in config["page_type_taxonomy"]
     assert config["preferred_source_types"] == ["official documentation", "benchmark repository"]
+
+
+def test_literature_theme_profile_extraction_patterns_flow_end_to_end(tmp_path, monkeypatch):
+    """Phase 4c dry-run check: a non-hardware theme's extraction_patterns,
+    hand-added to [theme_profile] the same way page_types already is, must
+    actually reach extract_evidence() through _load_research_config() — not
+    just work when called directly with a literal config dict (unit-tested
+    separately in test_domain_analysis.py).
+    """
+    from domain_analysis import extract_evidence
+
+    claude = tmp_path / "CLAUDE.md"
+    claude.write_text(
+        "```yaml\n[research_config]\n```\n\n"
+        "```yaml\n"
+        "[theme_profile]\n"
+        "theme: Victorian novel\n"
+        "organization_choice: character_first\n"
+        "page_types:\n"
+        "  entity: General entity page\n"
+        "  synthesis: Cross-page synthesis\n"
+        "  character: Person or character with traits, relationships, and arc\n"
+        "extraction_patterns:\n"
+        "  hardware: ['[A-Z][a-z]+ [A-Z][a-z]+']\n"
+        "  workloads: ['marriage', 'inheritance']\n"
+        "  metrics: ['reputation']\n"
+        "```\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(orchestrator, "_CLAUDE_MD", claude)
+
+    config = orchestrator._load_research_config()
+    assert config["extraction_patterns"]["workloads"] == ["marriage", "inheritance"]
+
+    evidence = extract_evidence(
+        "Elizabeth Bennet weighs marriage and inheritance against reputation.",
+        {"title": "Reading notes"},
+        config,
+    )
+    assert "Elizabeth Bennet" in evidence["hardware_names"]
+    assert "marriage" in [w.lower() for w in evidence["workload_names"]]
+    assert "reputation" in evidence["metrics"]
+    assert "GEMM" not in evidence["workload_names"]
 
 
 def test_write_theme_profile_inserts_selected_profile(tmp_path, monkeypatch):
@@ -580,6 +735,391 @@ def test_session_checkpoint_pending_skips_terminal_candidates(tmp_path):
     assert loaded.candidates[0]["qmd_matches"][0]["file"] == "a.md"
 
 
+def test_probable_duplicate_by_similarity_catches_mismatched_canonical_names(tmp_path):
+    """Regression test for the MERGE candidate identity.resolve() missed in
+    production: two benchmark_result pages from the same paper/hardware under
+    different canonical_name strings. High BM25 score + shared source
+    snapshot should flag it even though exact-key matching wouldn't.
+    """
+    pages_dir = tmp_path / "wiki" / "_pages" / "benchmark_result"
+    pages_dir.mkdir(parents=True)
+    existing = pages_dir / "compiler_benchmark_bananapi_f3_gcc15_clang21.md"
+    existing.write_text(
+        "---\ntype: benchmark_result\n"
+        "canonical_name: Compiler Benchmark Comparison on BananaPi-F3 (RVV 1.0)\n"
+        "sources: [raw/cache/deadbeef.md]\n---\n\n# Compiler Benchmark\n",
+        encoding="utf-8",
+    )
+    draft = {
+        "frontmatter": {"sources": ["raw/cache/deadbeef.md"]},
+        "content": "# GCC 15 vs Clang 21 Autovectorization on BananaPi-F3 (RVV)\n",
+    }
+    qmd_matches = [{
+        "rank": 1,
+        "file": existing.name,
+        "title": "Compiler Benchmark Comparison on BananaPi-F3 (RVV 1.0)",
+        "score": 0.95,
+    }]
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir.parent):
+        result = orchestrator._probable_duplicate_by_similarity(
+            "GCC 15 vs Clang 21 Autovectorization on BananaPi-F3 (RVV)",
+            draft, qmd_matches, {"near_duplicate_score": 0.90},
+        )
+
+    assert result is not None
+    assert result.filename == "compiler_benchmark_bananapi_f3_gcc15_clang21.md"
+
+
+def test_probable_duplicate_by_similarity_ignores_low_score_or_no_shared_source(tmp_path):
+    pages_dir = tmp_path / "wiki" / "_pages" / "entity"
+    pages_dir.mkdir(parents=True)
+    existing = pages_dir / "other_page.md"
+    existing.write_text(
+        "---\ntype: entity\ncanonical_name: Other Page\nsources: [raw/cache/other.md]\n---\n\n# Other\n",
+        encoding="utf-8",
+    )
+    draft = {"frontmatter": {"sources": ["raw/cache/deadbeef.md"]}, "content": "# Draft\n"}
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir.parent):
+        # High score but no shared source snapshot -> not flagged.
+        assert orchestrator._probable_duplicate_by_similarity(
+            "Some New Concept", draft,
+            [{"rank": 1, "file": existing.name, "title": "Other Page", "score": 0.95}],
+            {"near_duplicate_score": 0.90},
+        ) is None
+        # Shared source but score below near_duplicate_score -> not flagged.
+        draft["frontmatter"]["sources"] = ["raw/cache/other.md"]
+        assert orchestrator._probable_duplicate_by_similarity(
+            "Some New Concept", draft,
+            [{"rank": 1, "file": existing.name, "title": "Other Page", "score": 0.5}],
+            {"near_duplicate_score": 0.90},
+        ) is None
+
+
+def test_rebuild_index_from_frontmatter_resyncs_stale_rows(tmp_path):
+    """_update_index() only appends a row at page-creation time, embedding
+    inbound_links as of then; it never revisits that row when a later page
+    links to it. rebuild_index_from_frontmatter() must be the full-rebuild
+    source of truth: every row's Sources/Inbound must match current
+    frontmatter, and the header Sources/Pages counts must be recomputed too.
+    """
+    pages_dir = tmp_path / "wiki" / "_pages"
+    entity_dir = pages_dir / "entity"
+    entity_dir.mkdir(parents=True)
+    (entity_dir / "alpha.md").write_text(
+        "---\ntype: entity\ntags: [x]\nsources: [raw/cache/a.md, raw/cache/b.md]\n"
+        "inbound_links: 3\n---\n\n# Alpha\n\nAlpha body.\n",
+        encoding="utf-8",
+    )
+    synthesis_dir = pages_dir / "synthesis"
+    synthesis_dir.mkdir(parents=True)
+    (synthesis_dir / "beta.md").write_text(
+        "---\ntype: synthesis\nconnected_entities: [alpha]\nsynthesis_status: draft\n"
+        "sources: []\ninbound_links: 0\n---\n\n# Beta\n",
+        encoding="utf-8",
+    )
+    index = tmp_path / "wiki" / "index.md"
+    index.write_text(
+        "# Wiki Index\n\nLast updated: 2020-01-01 | Pages: 1 | Sources: 1\n\n"
+        "## Entity Pages\n\n| Page | Summary | Tags | Sources | Inbound |\n"
+        "|------|---------|------|---------|---------|\n"
+        "| [alpha.md](entity/alpha.md) | Alpha | x | 2 | 0 |\n\n"
+        "## Synthesis Pages\n\n| Page | Connected Entities | Status | Inbound |\n"
+        "|------|--------------------|--------|---------|\n\n"
+        "## Concept Index\n\n- **Alpha**: → [alpha](entity/alpha.md)\n\n"
+        "## Optimization Pages\n\n| Page | Type | Summary | Tags | Sources | Inbound |\n"
+        "|------|------|---------|------|---------|---------|\n",
+        encoding="utf-8",
+    )
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_INDEX_MD", index):
+        orchestrator.rebuild_index_from_frontmatter()
+
+    text = index.read_text(encoding="utf-8")
+    assert "Pages: 2" in text
+    assert "Sources: 2" in text
+    assert "| [alpha.md](entity/alpha.md) | Alpha | x | 2 | 3 |" in text
+    assert "| [beta.md](synthesis/beta.md) | alpha | draft | 0 |" in text
+    # Concept Index is untouched by the rebuild (not row-based like the tables).
+    assert "**Alpha**: → [alpha](entity/alpha.md)" in text
+
+
+def test_synthesis_gap_clusters_finds_uncovered_tag_and_excludes_covered(tmp_path):
+    pages_dir = tmp_path / "wiki" / "_pages"
+    entity_dir = pages_dir / "entity"
+    entity_dir.mkdir(parents=True)
+    for i in range(3):
+        (entity_dir / f"page{i}.md").write_text(
+            f"---\ntype: entity\ntags: [gemm]\n---\n\n# Page {i}\n", encoding="utf-8"
+        )
+    (entity_dir / "other.md").write_text(
+        "---\ntype: entity\ntags: [unrelated]\n---\n\n# Other\n", encoding="utf-8"
+    )
+    synthesis_dir = pages_dir / "synthesis"
+    synthesis_dir.mkdir(parents=True)
+    (synthesis_dir / "existing.md").write_text(
+        "---\ntype: synthesis\nconnected_entities: [page0]\n---\n\n# Existing\n", encoding="utf-8"
+    )
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir):
+        clusters = orchestrator._synthesis_gap_clusters(min_cluster_size=2)
+
+    assert len(clusters) == 1
+    tag, uncovered = clusters[0]
+    assert tag == "gemm"
+    # page0 is already covered by the existing synthesis page's connected_entities.
+    assert sorted(uncovered) == ["page1", "page2"]
+
+
+def test_synthesis_gap_clusters_includes_subtype_pages_not_just_literal_entity_type(tmp_path):
+    """Regression test for a real bug found running the v2 replication test:
+    subtype pages (hardware_target/benchmark_result/...) are written with the
+    literal subtype name in `type` (e.g. type: hardware_target), not
+    `type: entity, subtype: hardware_target` as the design doc describes —
+    confirmed against real pages in both research/riscv-ai-accelerator and the
+    replication run. The old `fm.get("type") == "entity"` filter silently
+    excluded the majority of an optimization_first wiki's pages (subtype pages
+    are also where tags are most consistently populated), so synthesis-gap
+    detection almost never found a real cluster. Only `type: synthesis` pages
+    should be excluded from clustering.
+    """
+    pages_dir = tmp_path / "wiki" / "_pages"
+    hw_dir = pages_dir / "hardware_target"
+    hw_dir.mkdir(parents=True)
+    for name in ("chip_a", "chip_b", "chip_c"):
+        (hw_dir / f"{name}.md").write_text(
+            f"---\ntype: hardware_target\ntags: [RISC-V]\n---\n\n# {name}\n", encoding="utf-8"
+        )
+    entity_dir = pages_dir / "entity"
+    entity_dir.mkdir(parents=True)
+    (entity_dir / "unrelated.md").write_text(
+        "---\ntype: entity\ntags: [software]\n---\n\n# Unrelated\n", encoding="utf-8"
+    )
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir):
+        clusters = orchestrator._synthesis_gap_clusters(min_cluster_size=3)
+
+    assert len(clusters) == 1
+    tag, uncovered = clusters[0]
+    assert tag == "RISC-V"
+    assert sorted(uncovered) == ["chip_a", "chip_b", "chip_c"]
+
+
+def test_generate_synthesis_candidate_writes_page_and_respects_budget(tmp_path):
+    """Regression coverage for Phase 3: the research loop previously only
+    logged synthesis gaps (_check_synthesis_gaps) without ever acting on them.
+    This exercises the full call -> validate -> pipeline -> write path.
+    """
+    pages_dir = tmp_path / "wiki" / "_pages"
+    entity_dir = pages_dir / "entity"
+    entity_dir.mkdir(parents=True)
+    for name, tag in [("alpha", "gemm"), ("beta", "gemm"), ("gamma", "gemm")]:
+        (entity_dir / f"{name}.md").write_text(
+            f"---\ntype: entity\ntags: [{tag}]\ncanonical_name: {name.title()}\n---\n\n"
+            f"# {name.title()}\n\nA GEMM optimization approach.\n\n"
+            f"## Key Claims\n\n- {name.title()} claims something specific.\n",
+            encoding="utf-8",
+        )
+    index = tmp_path / "wiki" / "index.md"
+    index.write_text(
+        "# Wiki Index\n\nLast updated: 2020-01-01 | Pages: 3 | Sources: 0\n\n"
+        "## Entity Pages\n\n| Page | Summary | Tags | Sources | Inbound |\n"
+        "|------|---------|------|---------|---------|\n\n"
+        "## Synthesis Pages\n\n| Page | Connected Entities | Status | Inbound |\n"
+        "|------|--------------------|--------|---------|\n",
+        encoding="utf-8",
+    )
+    state = ResearchSessionState.create(
+        "sess-synth", "gemm query", {"max_candidates": 5, "max_new_pages": 5, "depth": "shallow"},
+        tmp_path / "state",
+    )
+    quota = QuotaManager(max_candidates=5, max_new_pages=5)
+    audit = FullDummyAudit()
+
+    synthesis_result = json.dumps({
+        "decision": "approve",
+        "rejection_reason": None,
+        "page_draft": {
+            "page_type": "synthesis",
+            "filename": "gemm_approaches",
+            "frontmatter": {
+                "type": "synthesis",
+                "connected_entities": ["alpha", "beta", "gamma"],
+                "synthesis_status": "draft",
+                "tags": ["gemm"],
+            },
+            "content": "# GEMM Approaches\n\n## RAG Summary\n\n" + ("word " * 180) + "\n\n"
+            "## Full Synthesis\n\n[[alpha]] and [[beta]] and [[gamma]] compared.\n\n"
+            "## Open Questions\n\n- What about a fourth approach?\n\n"
+            "## Connected Pages\n\n- [[alpha]]\n- [[beta]]\n- [[gamma]]\n",
+        },
+    })
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_INDEX_MD", index), \
+         patch.object(orchestrator, "_call_subagent", return_value=synthesis_result), \
+         patch.object(orchestrator, "_run_eval_pipeline", return_value=(True, {
+             "layer1_pass": True, "layer2_pass": True, "layer3_triggered": False,
+             "final_decision": "approved",
+         })):
+        filename = orchestrator._generate_synthesis_candidate(
+            state, quota, audit, {"synthesis_gap_min_cluster_size": 3}, set()
+        )
+
+    assert filename == "gemm_approaches.md"
+    written = pages_dir / "synthesis" / "gemm_approaches.md"
+    assert written.exists()
+    assert quota._pages_written == 1
+    # Budget respected: a second call with pages_exceeded should no-op.
+    quota.max_new_pages = 1
+    assert orchestrator._generate_synthesis_candidate(
+        state, quota, audit, {"synthesis_gap_min_cluster_size": 3}, set()
+    ) is None
+
+
+def test_generate_synthesis_candidate_backfills_sources_for_real_eval_pipeline(tmp_path):
+    """Regression test for a live bug found running the v2 replication test:
+    the subagent's page_draft has no frontmatter.sources (a synthesis page
+    draws from existing wiki content, not a freshly fetched external source),
+    but eval_summary.py's Layer 1 EMPTY_SOURCES check applies unconditionally
+    to every page type. Without backfilling sources from the cluster pages'
+    own paths, every synthesis draft failed Layer 1 and
+    _generate_synthesis_candidate() could never actually write a page — this
+    test does NOT mock _run_eval_pipeline, so it exercises the real
+    eval_summary.py subprocess the way the earlier
+    test_generate_synthesis_candidate_writes_page_and_respects_budget test
+    (which does mock it) could not have caught this.
+    """
+    pages_dir = tmp_path / "wiki" / "_pages"
+    entity_dir = pages_dir / "entity"
+    entity_dir.mkdir(parents=True)
+    for name, tag in [("alpha", "gemm"), ("beta", "gemm"), ("gamma", "gemm")]:
+        (entity_dir / f"{name}.md").write_text(
+            f"---\ntype: entity\ntags: [{tag}]\ncanonical_name: {name.title()}\nsources: [https://example.com/{name}]\n---\n\n"
+            f"# {name.title()}\n\nA GEMM optimization approach with real grounded content here.\n\n"
+            f"## Key Claims\n\n- {name.title()} claims something specific.\n",
+            encoding="utf-8",
+        )
+    index = tmp_path / "wiki" / "index.md"
+    index.write_text(
+        "# Wiki Index\n\nLast updated: 2020-01-01 | Pages: 3 | Sources: 0\n\n"
+        "## Entity Pages\n\n| Page | Summary | Tags | Sources | Inbound |\n"
+        "|------|---------|------|---------|---------|\n\n"
+        "## Synthesis Pages\n\n| Page | Connected Entities | Status | Inbound |\n"
+        "|------|--------------------|--------|---------|\n",
+        encoding="utf-8",
+    )
+    state = ResearchSessionState.create(
+        "sess-synth-sources", "gemm query", {"max_candidates": 5, "max_new_pages": 5, "depth": "shallow"},
+        tmp_path / "state",
+    )
+    quota = QuotaManager(max_candidates=5, max_new_pages=5)
+    audit = FullDummyAudit()
+
+    rag_summary = "GEMM optimization on RISC-V spans compiler-driven and hand-tuned approaches. " * 20
+    synthesis_result = json.dumps({
+        "decision": "approve",
+        "rejection_reason": None,
+        "page_draft": {
+            "page_type": "synthesis",
+            "filename": "gemm_approaches_no_sources",
+            "frontmatter": {
+                "type": "synthesis",
+                "connected_entities": ["alpha", "beta", "gamma"],
+                "synthesis_status": "draft",
+                "tags": ["gemm"],
+                # Deliberately no "sources" field, matching real subagent output.
+            },
+            "content": f"# GEMM Approaches\n\n## RAG Summary\n\n{rag_summary}\n\n"
+            "## Full Synthesis\n\n[[alpha]] and [[beta]] and [[gamma]] compared.\n\n"
+            "## Open Questions\n\n- What about a fourth approach?\n\n"
+            "## Connected Pages\n\n- [[alpha]]\n- [[beta]]\n- [[gamma]]\n",
+        },
+    })
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_INDEX_MD", index), \
+         patch.object(orchestrator, "_call_subagent", return_value=synthesis_result):
+        filename = orchestrator._generate_synthesis_candidate(
+            state, quota, audit, {"synthesis_gap_min_cluster_size": 3}, set()
+        )
+
+    assert filename == "gemm_approaches_no_sources.md"
+    written = pages_dir / "synthesis" / "gemm_approaches_no_sources.md"
+    assert written.exists()
+    fm, _ = frontmatter.parse_page(written)
+    assert fm.get("sources")  # backfilled, not empty
+
+
+def test_maybe_transition_maturity_only_touches_patched_claude_md(tmp_path):
+    """Regression test: _maybe_transition_maturity() is called from inside
+    _run_research_state() and writes connectivity stats to _CLAUDE_MD (and, on
+    a cold_start -> mature transition, appends to _LOG_MD). Two other tests in
+    this file call _run_research_state() directly and only patched
+    _WIKI_PAGES_DIR, not _CLAUDE_MD/_LOG_MD — so it silently recomputed stats
+    from a throwaway tmp_path page set and wrote them into the real project
+    CLAUDE.md and wiki/log.md on every test run. Assert the function only
+    ever touches the paths it's given.
+    """
+    pages_dir = tmp_path / "wiki" / "_pages" / "entity"
+    pages_dir.mkdir(parents=True)
+    (pages_dir / "a.md").write_text(
+        "---\ntype: entity\ninbound_links: 1\n---\n\n# A\n", encoding="utf-8"
+    )
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text(
+        "```yaml\n[system_state]\ngraph_maturity: false\n```\n", encoding="utf-8"
+    )
+    log_md = tmp_path / "log.md"
+    log_md.write_text("# Log\n", encoding="utf-8")
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md), \
+         patch.object(orchestrator, "_LOG_MD", log_md):
+        orchestrator._maybe_transition_maturity("sess-test")
+
+    text = claude_md.read_text(encoding="utf-8")
+    assert "orphan_fraction: 0.0" in text or "orphan_fraction: 0" in text
+    # This single-page fixture is mature (orphan_fraction 0, median 1), so the
+    # cold_start -> mature transition fires and appends to the patched log.
+    assert "transition | cold_start" in log_md.read_text(encoding="utf-8")
+    # Additive small-world topology fields (Phase 3b) are also refreshed, but
+    # do not gate the transition above — a single-page, edgeless fixture has
+    # no outbound_links, so clustering_coefficient is 0 and avg_path_length
+    # stays null (undefined for a single isolated node).
+    assert "clustering_coefficient: 0.0" in text
+    assert "avg_path_length" in text
+
+
+def test_maybe_transition_maturity_survives_graph_topology_failure(tmp_path, monkeypatch):
+    """graph_topology stats are informational-only per the Phase 3b scope
+    guardrail: a failure there must not block the authoritative orphan_fraction/
+    median_inbound_links maturity transition."""
+    pages_dir = tmp_path / "wiki" / "_pages" / "entity"
+    pages_dir.mkdir(parents=True)
+    (pages_dir / "a.md").write_text(
+        "---\ntype: entity\ninbound_links: 1\n---\n\n# A\n", encoding="utf-8"
+    )
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text("```yaml\n[system_state]\ngraph_maturity: false\n```\n", encoding="utf-8")
+    log_md = tmp_path / "log.md"
+    log_md.write_text("# Log\n", encoding="utf-8")
+
+    def boom(*args, **kwargs):
+        raise RuntimeError("networkx blew up")
+
+    monkeypatch.setattr(orchestrator.graph_topology, "compute_topology_stats", boom)
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md), \
+         patch.object(orchestrator, "_LOG_MD", log_md):
+        orchestrator._maybe_transition_maturity("sess-test")  # must not raise
+
+    assert "graph_maturity: true" in claude_md.read_text(encoding="utf-8")
+
+
 def test_approved_resume_writes_once_and_written_resume_skips(tmp_path):
     pages_dir = tmp_path / "wiki" / "_pages"
     log_path = tmp_path / "wiki" / "log.md"
@@ -607,6 +1147,11 @@ def test_approved_resume_writes_once_and_written_resume_skips(tmp_path):
     }]
     state.save("fixture")
 
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text(
+        "```yaml\n[system_state]\ngraph_maturity: false\n```\n", encoding="utf-8"
+    )
+
     with patch.object(orchestrator, "_load_research_config", return_value={
              "qmd_command": ["uv", "run", "--no-sync", "qmd"],
              "research_state_dir": str(tmp_path / "state"),
@@ -615,6 +1160,7 @@ def test_approved_resume_writes_once_and_written_resume_skips(tmp_path):
          patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
          patch.object(orchestrator, "_INDEX_MD", tmp_path / "missing_index.md"), \
          patch.object(orchestrator, "_LOG_MD", log_path), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md), \
          patch.object(orchestrator, "AuditLog", return_value=DummyAudit()), \
          patch.object(orchestrator, "_run_graph_stats"), \
          patch.object(orchestrator, "_check_synthesis_gaps", return_value=[]):
@@ -628,6 +1174,86 @@ def test_approved_resume_writes_once_and_written_resume_skips(tmp_path):
     assert second["status"] == "complete"
     assert first_text == second_text
     assert ResearchSessionState.load("sess2", tmp_path / "state").candidates[0]["state"] == "written"
+
+
+def test_eval_result_with_null_pages_to_update_does_not_crash(tmp_path):
+    """Regression test for a live crash hit during a real v2-replication run
+    (session c7fdcf11, candidate github.com/XUANTIE-RV/riscv-matrix-extension-spec):
+    the eval subagent returned valid JSON with "pages_to_update": null instead
+    of []. validate_output._validate_eval_result() only ever iterates
+    page_drafts, never pages_to_update, so a null pages_to_update sails through
+    schema validation untouched — and orchestrator.py's
+    `eval_result.get("pages_to_update", [])` doesn't protect against an
+    explicit null (the default only applies when the key is *missing*), so
+    `for update in None` raised TypeError and killed the whole research
+    session, not just that one candidate.
+    """
+    pages_dir = tmp_path / "wiki" / "_pages"
+    pages_dir.mkdir(parents=True)
+    index = tmp_path / "wiki" / "index.md"
+    index.write_text(
+        "# Wiki Index\n\nLast updated: 2020-01-01 | Pages: 0 | Sources: 0\n\n"
+        "## Entity Pages\n\n| Page | Summary | Tags | Sources | Inbound |\n"
+        "|------|---------|------|---------|---------|\n\n"
+        "## Synthesis Pages\n\n| Page | Connected Entities | Status | Inbound |\n"
+        "|------|--------------------|--------|---------|\n",
+        encoding="utf-8",
+    )
+    log_path = tmp_path / "wiki" / "log.md"
+    log_path.write_text("", encoding="utf-8")
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text("```yaml\n[system_state]\ngraph_maturity: true\n```\n", encoding="utf-8")
+    state = ResearchSessionState.create(
+        "sess-null-updates", "RVME RISC-V matrix engine extension design",
+        {"max_candidates": 1, "max_new_pages": 3, "depth": "shallow"},
+        tmp_path / "state",
+    )
+    state.set_candidates([
+        {"url": "https://github.com/XUANTIE-RV/riscv-matrix-extension-spec/", "title": "RISC-V Matrix Extension Spec"},
+    ])
+    scorecard = {
+        "novelty_delta": 0.8, "claim_density": 0.8, "self_containedness": 0.9,
+        "bridge_score": 0.5, "hub_potential": 0.5, "gap_fill_score": 0.8,
+        "contradiction_potential": 0.0, "weighted_total": 0.75,
+    }
+    malformed_but_schema_valid_eval = json.dumps({
+        "decision": "approve",
+        "rejection_reason": None,
+        "scorecard": scorecard,
+        "page_drafts": [{
+            "page_type": "entity",
+            "filename": "riscv_matrix_extension_spec",
+            "frontmatter": {"type": "entity", "sources": ["https://github.com/XUANTIE-RV/riscv-matrix-extension-spec/"]},
+            "content": "# RISC-V Matrix Extension Spec\n\n" + ("word " * 120)
+            + "\n\n## Key Claims\n\n- Claim one.\n- Claim two.\n- Claim three.\n",
+        }],
+        "pages_to_update": None,  # <- the actual malformed field from the live crash
+        "contradictions_found": [],
+    })
+
+    with patch.object(orchestrator, "_load_research_config", return_value={
+             "qmd_command": ["uv", "run", "--no-sync", "qmd"],
+             "research_state_dir": str(tmp_path / "state"),
+         }), \
+         patch.object(orchestrator, "QmdRunner", return_value=EmptyQmdRunner()), \
+         patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_INDEX_MD", index), \
+         patch.object(orchestrator, "_LOG_MD", log_path), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md), \
+         patch.object(orchestrator, "AuditLog", return_value=FullDummyAudit()), \
+         patch.object(orchestrator, "_check_synthesis_gaps", return_value=[]), \
+         patch.object(orchestrator, "_wiki_is_mature", return_value=True), \
+         patch.object(orchestrator, "_get_concept_gaps", return_value=[]), \
+         patch.object(orchestrator, "_fetch_smart", return_value="RISC-V Matrix Extension spec content."), \
+         patch.object(orchestrator, "_run_eval_pipeline", return_value=(True, {
+             "layer1_pass": True, "layer2_pass": True, "layer3_triggered": False,
+             "final_decision": "approved",
+         })), \
+         patch.object(orchestrator, "_call_subagent", return_value=malformed_but_schema_valid_eval):
+        result = orchestrator._run_research_state(state)  # must not raise
+
+    assert result["status"] == "complete"
+    assert (pages_dir / "entity" / "riscv_matrix_extension_spec.md").exists()
 
 
 def test_mocked_research_run_writes_benchmark_and_updates_hardware_page(tmp_path):
@@ -712,6 +1338,11 @@ def test_mocked_research_run_writes_benchmark_and_updates_hardware_page(tmp_path
     })
     audit = FullDummyAudit()
 
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text(
+        "```yaml\n[system_state]\ngraph_maturity: true\n```\n", encoding="utf-8"
+    )
+
     with patch.object(orchestrator, "_load_research_config", return_value={
              "qmd_command": ["uv", "run", "--no-sync", "qmd"],
              "research_state_dir": str(tmp_path / "state"),
@@ -723,6 +1354,7 @@ def test_mocked_research_run_writes_benchmark_and_updates_hardware_page(tmp_path
          patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
          patch.object(orchestrator, "_INDEX_MD", index), \
          patch.object(orchestrator, "_LOG_MD", log_path), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md), \
          patch.object(orchestrator, "AuditLog", return_value=audit), \
          patch.object(orchestrator, "_run_graph_stats"), \
          patch.object(orchestrator, "_check_synthesis_gaps", return_value=[]), \
@@ -749,3 +1381,71 @@ def test_mocked_research_run_writes_benchmark_and_updates_hardware_page(tmp_path
     assert "reported GEMM throughput context" in patch_queue_text
     assert "evidence_extraction" in audit.invocations[0]["manifest"]
     assert audit.invocations[0]["manifest"]["wiki_context"]["gap_manifest"]["page_count"] >= 1
+
+
+def test_write_page_populates_outbound_links_from_relationships_section(tmp_path):
+    pages_dir = tmp_path / "_pages"
+    pages_dir.mkdir()
+    draft = {
+        "page_type": "entity",
+        "filename": "gemmini.md",
+        "frontmatter": {"canonical_name": "Gemmini"},
+        "content": (
+            "\n# Gemmini\n\nA systolic-array accelerator.\n\n"
+            "## Key Claims\n\n- claim one\n\n"
+            "## Relationships\n\n"
+            "- [[k230]]: alternative edge AI accelerator target.\n\n"
+            "## Sources\n\ncite\n"
+        ),
+    }
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir):
+        page_path = orchestrator._write_page(draft)
+
+    fm = frontmatter.parse_frontmatter(page_path)
+    assert fm["outbound_links"] == [
+        {"target": "k230", "reason": "alternative edge AI accelerator target"}
+    ]
+
+
+def test_write_page_omits_outbound_links_when_no_relationships_section(tmp_path):
+    pages_dir = tmp_path / "_pages"
+    pages_dir.mkdir()
+    draft = {
+        "page_type": "entity",
+        "filename": "plain.md",
+        "frontmatter": {"canonical_name": "Plain"},
+        "content": "\n# Plain\n\nNo relationships section here.\n",
+    }
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir):
+        page_path = orchestrator._write_page(draft)
+
+    fm = frontmatter.parse_frontmatter(page_path)
+    assert "outbound_links" not in fm
+
+
+def test_bridge_candidates_for_manifest_reports_distant_topics(tmp_path):
+    pages_dir = tmp_path / "_pages" / "entity"
+    pages_dir.mkdir(parents=True)
+    frontmatter.write_page(
+        pages_dir / "a.md",
+        {"type": "entity", "canonical_name": "Topic A", "outbound_links": [{"target": "b", "reason": "r"}]},
+        "\n# a\n",
+    )
+    frontmatter.write_page(pages_dir / "b.md", {"type": "entity", "canonical_name": "Topic B"}, "\n# b\n")
+    frontmatter.write_page(pages_dir / "x.md", {"type": "entity", "canonical_name": "Topic X"}, "\n# x\n")
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir.parent):
+        candidates = orchestrator._bridge_candidates_for_manifest()
+
+    assert len(candidates) == 1
+    assert {candidates[0]["topic_a"], candidates[0]["topic_b"]} <= {"Topic A", "Topic B", "Topic X"}
+    assert "separate connected components" in candidates[0]["reason"]
+
+
+def test_bridge_candidates_for_manifest_swallows_errors(tmp_path):
+    def boom(*args, **kwargs):
+        raise RuntimeError("networkx blew up")
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", tmp_path), \
+         patch.object(orchestrator.graph_topology, "find_bridge_candidates", side_effect=boom):
+        assert orchestrator._bridge_candidates_for_manifest() == []

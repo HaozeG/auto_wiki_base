@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 import re
 from dataclasses import dataclass
 from pathlib import Path
@@ -69,6 +70,20 @@ def _profile_page_types(*specialized: str) -> dict[str, dict[str, Any]]:
     return page_types
 
 
+def _theme_matches(theme_l: str, terms: tuple[str, ...]) -> bool:
+    """Word-boundary keyword match, not naive substring containment.
+
+    Plain `term in theme_l` false-positives on short acronym keywords: "soc"
+    (system-on-chip) matches inside the ordinary English word "social", so a
+    theme like "Victorian literature and its social themes" was misclassified
+    into the hardware/architecture_first profile via "soc" before the
+    correctly-matching "literature" keyword (checked in a later branch) ever
+    got a chance — branches return early, first match wins. Caught live via
+    Phase 4c's second-theme verification, not by the existing unit tests
+    (which happened not to use a term with this collision)."""
+    return any(re.search(rf"\b{re.escape(term)}\b", theme_l) for term in terms)
+
+
 def propose_theme_profiles(theme: str) -> list[dict[str, Any]]:
     """Return deterministic first-run organization profiles for a broad wiki theme."""
     theme_l = theme.lower()
@@ -85,7 +100,7 @@ def propose_theme_profiles(theme: str) -> list[dict[str, Any]]:
         ],
     }
 
-    if any(term in theme_l for term in ("risc-v", "riscv", "accelerator", "hardware", "ai chip", "soc")):
+    if _theme_matches(theme_l, ("risc-v", "riscv", "accelerator", "hardware", "ai chip", "soc")):
         return [
             {
                 **base,
@@ -132,7 +147,7 @@ def propose_theme_profiles(theme: str) -> list[dict[str, Any]]:
             },
         ]
 
-    if any(term in theme_l for term in ("book", "novel", "story", "film", "series", "literature")):
+    if _theme_matches(theme_l, ("book", "novel", "story", "film", "series", "literature")):
         return [
             {
                 **base,
@@ -154,7 +169,7 @@ def propose_theme_profiles(theme: str) -> list[dict[str, Any]]:
             },
         ]
 
-    if any(term in theme_l for term in ("competitive", "competitor", "market", "company", "product")):
+    if _theme_matches(theme_l, ("competitive", "competitor", "market", "company", "product")):
         return [
             {
                 **base,
@@ -205,6 +220,15 @@ DEFAULT_REQUIRED_MEASUREMENT_FIELDS = (
 )
 
 _VERSION_RE = re.compile(r"\b(?:v?\d+\.\d+(?:\.\d+)?|[A-Z][A-Za-z0-9_-]*\s+\d+(?:\.\d+)*)\b")
+# These four regexes and _DEFAULT_METRIC_TERMS are RISC-V/hardware-benchmark
+# shaped defaults. For a non-hardware theme (literature, market/competitive)
+# they structurally can't match anything, so extract_evidence() would quietly
+# return empty evidence every session instead of adapting. A theme profile can
+# override any of them via [research_config].extraction_patterns (a dict of
+# field_name -> list of regex fragments, or for "metrics", plain words) set at
+# theme setup time; extract_evidence() falls back to these when absent, so the
+# current RISC-V wiki's behavior is unchanged (its theme_profile doesn't set
+# extraction_patterns).
 _MEASUREMENT_RE = re.compile(
     r"\b\d+(?:\.\d+)?\s*(?:"
     r"ns|us|ms|s|cycles?|ops/s|op/s|TOPS|TFLOPS|GFLOPS|GOPS|GB/s|MB/s|"
@@ -226,6 +250,37 @@ _HARDWARE_RE = re.compile(
     r"\b(?:[A-Z][A-Za-z]+[ -]?\d+[A-Za-z0-9-]*|[A-Z]{2,}[A-Za-z0-9_-]*|"
     r"[A-Za-z]+[A-Za-z-]*(?:CPU|GPU|NPU|TPU|DSP|SoC|FPGA|ASIC))\b"
 )
+_DEFAULT_METRIC_TERMS = (
+    "latency", "throughput", "bandwidth", "speedup", "utilization", "power", "energy", "accuracy",
+)
+
+
+def _pattern_from_config(
+    patterns: list[str] | str | None, default: re.Pattern[str], flags: int = re.IGNORECASE
+) -> re.Pattern[str]:
+    """Compile a theme-supplied list of regex fragments into one alternation
+    pattern, falling back to `default` when the theme doesn't supply any.
+
+    Accepts a bare string as a single fragment: [theme_profile].extraction_patterns
+    is authored by an LLM (profile-architect subagent) or a human editing
+    CLAUDE.md's YAML, and a single string where a one-item list was intended is
+    an easy, plausible mistake — without this guard, iterating a raw string
+    walks it character-by-character, building a garbage regex that fails to
+    compile and silently falls back to `default` with only a log warning."""
+    if not patterns:
+        return default
+    if isinstance(patterns, str):
+        patterns = [patterns]
+    fragments = [str(p).strip() for p in patterns if str(p).strip()]
+    if not fragments:
+        return default
+    try:
+        return re.compile(r"\b(?:" + "|".join(fragments) + r")\b", flags)
+    except re.error:
+        logging.getLogger(__name__).warning(
+            "extraction_patterns: invalid regex in theme config, falling back to default"
+        )
+        return default
 
 
 @dataclass
@@ -300,18 +355,28 @@ def build_gap_manifest(pages_dir: Path, config: dict | None = None) -> dict[str,
                 missing_structured_fields[field] += 1
 
     coverage = {field: _coverage_values(records, field) for field in fields}
+    # coverage_tracked_page_types/coverage_required_fields default to the
+    # RISC-V-shaped OPTIMIZATION_PAGE_TYPES constant for backward compatibility,
+    # but a theme profile can declare its own subtypes here (e.g. a literature
+    # theme's "character"/"event") — otherwise this whole gap-detection block
+    # silently no-ops for any theme whose subtypes don't happen to be named
+    # hardware_target/workload_kernel/optimization_recipe/benchmark_result.
+    tracked_page_types = config.get("coverage_tracked_page_types") or OPTIMIZATION_PAGE_TYPES
     optimization_counts = {
         page_type: page_type_counts.get(page_type, 0)
         for page_type in taxonomy
-        if page_type in OPTIMIZATION_PAGE_TYPES
+        if page_type in tracked_page_types
     }
+    required_coverage_fields = config.get("coverage_required_fields") or (
+        "hardware_targets", "workloads", "metrics", "toolchains"
+    )
 
     gap_types: list[str] = []
     for page_type, count in optimization_counts.items():
         if count == 0:
             gap_types.append(f"missing_page_type:{page_type}")
     if optimization_counts:
-        for field in ("hardware_targets", "workloads", "metrics", "toolchains"):
+        for field in required_coverage_fields:
             if field in coverage and not coverage[field]:
                 gap_types.append(f"missing_structured_field:{field}")
 
@@ -355,21 +420,35 @@ def build_structured_query(candidate: dict, evidence: dict | None = None) -> str
 
 
 def extract_evidence(content: str, candidate: dict | None = None, config: dict | None = None) -> dict[str, Any]:
-    """Extract lightweight evidence signals from fetched source text."""
+    """Extract lightweight evidence signals from fetched source text.
+
+    config.extraction_patterns (set via the active theme profile) overrides
+    the hardware/benchmark-shaped defaults per field; see the module-level
+    note above _MEASUREMENT_RE for why this matters for non-hardware themes.
+    """
     candidate = candidate or {}
+    config = config or {}
+    patterns = config.get("extraction_patterns") or {}
     text = f"{candidate.get('title', '')}\n{candidate.get('snippet', '')}\n{content or ''}"
-    measurements = sorted(set(_MEASUREMENT_RE.findall(text, re.IGNORECASE)))
+
+    measurement_re = _pattern_from_config(patterns.get("measurements"), _MEASUREMENT_RE)
+    hardware_re = _pattern_from_config(patterns.get("hardware"), _HARDWARE_RE, flags=0)
+    workload_re = _pattern_from_config(patterns.get("workloads"), _WORKLOAD_RE)
+    toolchain_re = _pattern_from_config(patterns.get("toolchains"), _TOOLCHAIN_RE)
+    metric_terms = [str(m).strip() for m in patterns.get("metrics") or _DEFAULT_METRIC_TERMS if str(m).strip()]
+
+    measurements = sorted(set(measurement_re.findall(text)))
     metric_names = []
-    for metric in ("latency", "throughput", "bandwidth", "speedup", "utilization", "power", "energy", "accuracy"):
-        if re.search(rf"\b{metric}\b", text, re.IGNORECASE):
+    for metric in metric_terms:
+        if re.search(rf"\b{re.escape(metric)}\b", text, re.IGNORECASE):
             metric_names.append(metric)
 
     return {
         "candidate_measurements": measurements[:20],
         "metrics": metric_names[:12],
-        "hardware_names": sorted(set(_HARDWARE_RE.findall(text)))[:20],
-        "workload_names": sorted({m.group(0) for m in _WORKLOAD_RE.finditer(text)})[:20],
-        "toolchain_names": sorted({m.group(0) for m in _TOOLCHAIN_RE.finditer(text)})[:20],
+        "hardware_names": sorted(set(hardware_re.findall(text)))[:20],
+        "workload_names": sorted({m.group(0) for m in workload_re.finditer(text)})[:20],
+        "toolchain_names": sorted({m.group(0) for m in toolchain_re.finditer(text)})[:20],
         "version_strings": sorted(set(_VERSION_RE.findall(text)))[:20],
     }
 
