@@ -70,6 +70,20 @@ def _profile_page_types(*specialized: str) -> dict[str, dict[str, Any]]:
     return page_types
 
 
+def _theme_matches(theme_l: str, terms: tuple[str, ...]) -> bool:
+    """Word-boundary keyword match, not naive substring containment.
+
+    Plain `term in theme_l` false-positives on short acronym keywords: "soc"
+    (system-on-chip) matches inside the ordinary English word "social", so a
+    theme like "Victorian literature and its social themes" was misclassified
+    into the hardware/architecture_first profile via "soc" before the
+    correctly-matching "literature" keyword (checked in a later branch) ever
+    got a chance — branches return early, first match wins. Caught live via
+    Phase 4c's second-theme verification, not by the existing unit tests
+    (which happened not to use a term with this collision)."""
+    return any(re.search(rf"\b{re.escape(term)}\b", theme_l) for term in terms)
+
+
 def propose_theme_profiles(theme: str) -> list[dict[str, Any]]:
     """Return deterministic first-run organization profiles for a broad wiki theme."""
     theme_l = theme.lower()
@@ -86,7 +100,7 @@ def propose_theme_profiles(theme: str) -> list[dict[str, Any]]:
         ],
     }
 
-    if any(term in theme_l for term in ("risc-v", "riscv", "accelerator", "hardware", "ai chip", "soc")):
+    if _theme_matches(theme_l, ("risc-v", "riscv", "accelerator", "hardware", "ai chip", "soc")):
         return [
             {
                 **base,
@@ -133,7 +147,7 @@ def propose_theme_profiles(theme: str) -> list[dict[str, Any]]:
             },
         ]
 
-    if any(term in theme_l for term in ("book", "novel", "story", "film", "series", "literature")):
+    if _theme_matches(theme_l, ("book", "novel", "story", "film", "series", "literature")):
         return [
             {
                 **base,
@@ -155,7 +169,7 @@ def propose_theme_profiles(theme: str) -> list[dict[str, Any]]:
             },
         ]
 
-    if any(term in theme_l for term in ("competitive", "competitor", "market", "company", "product")):
+    if _theme_matches(theme_l, ("competitive", "competitor", "market", "company", "product")):
         return [
             {
                 **base,
@@ -242,12 +256,21 @@ _DEFAULT_METRIC_TERMS = (
 
 
 def _pattern_from_config(
-    patterns: list[str] | None, default: re.Pattern[str], flags: int = re.IGNORECASE
+    patterns: list[str] | str | None, default: re.Pattern[str], flags: int = re.IGNORECASE
 ) -> re.Pattern[str]:
     """Compile a theme-supplied list of regex fragments into one alternation
-    pattern, falling back to `default` when the theme doesn't supply any."""
+    pattern, falling back to `default` when the theme doesn't supply any.
+
+    Accepts a bare string as a single fragment: [theme_profile].extraction_patterns
+    is authored by an LLM (profile-architect subagent) or a human editing
+    CLAUDE.md's YAML, and a single string where a one-item list was intended is
+    an easy, plausible mistake — without this guard, iterating a raw string
+    walks it character-by-character, building a garbage regex that fails to
+    compile and silently falls back to `default` with only a log warning."""
     if not patterns:
         return default
+    if isinstance(patterns, str):
+        patterns = [patterns]
     fragments = [str(p).strip() for p in patterns if str(p).strip()]
     if not fragments:
         return default

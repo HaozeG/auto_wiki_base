@@ -143,6 +143,21 @@ def test_book_theme_profiles_do_not_leak_optimization_types():
     assert "optimization_recipe" not in all_page_types
 
 
+def test_theme_keyword_matching_does_not_substring_collide():
+    """Regression: "soc" (system-on-chip) is a keyword-list entry for the
+    hardware branch, but naive `term in theme_l` also matches inside the
+    ordinary word "social" — misclassifying a literature theme into the
+    hardware/architecture_first profile before the correctly-matching
+    "literature" keyword (checked in a later branch) ever got a chance, since
+    branches return early on first match. Caught live via a real second-theme
+    verification run, not by test_book_theme_profiles_do_not_leak_optimization_types
+    above (which happens not to contain "soc" as a substring)."""
+    profiles = propose_theme_profiles("Victorian literature and its social themes")
+    assert profiles[0]["id"] == "character_first"
+    all_page_types = set().union(*(set(profile["page_types"]) for profile in profiles))
+    assert "hardware_target" not in all_page_types
+
+
 def test_benchmark_claim_validation_requires_measurement_context():
     ok = validate_benchmark_claim({
         "hardware_targets": ["ProjectNimbus X9"],
@@ -217,6 +232,19 @@ def test_evidence_extractor_uses_theme_supplied_extraction_patterns():
     assert "reputation" in evidence["metrics"]
     # RISC-V-shaped defaults must not leak through when the theme overrides a field.
     assert "GEMM" not in evidence["workload_names"]
+
+
+def test_evidence_extractor_accepts_bare_string_extraction_pattern():
+    """Regression: extraction_patterns is authored by an LLM (profile-architect
+    subagent) or a human editing CLAUDE.md's YAML, and a bare string where a
+    one-item list was intended is a plausible mistake. _pattern_from_config
+    used to iterate a raw string character-by-character, building a garbage
+    regex that failed to compile and silently fell back to the RISC-V default
+    (only a log warning, no visible error) — caught live via a real
+    second-theme verification run."""
+    config = {"extraction_patterns": {"measurements": r"\bChapter \d+\b"}}  # bare string, not a list
+    evidence = extract_evidence("Chapter 12 begins with a long description.", config=config)
+    assert "Chapter 12" in evidence["candidate_measurements"]
 
 
 def test_gap_manifest_respects_theme_supplied_coverage_tracked_page_types(tmp_path):
