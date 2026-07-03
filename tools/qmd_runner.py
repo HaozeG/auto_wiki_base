@@ -65,7 +65,48 @@ class QmdRunner:
         self.cwd = Path(cwd)
         self.timeout = timeout
 
+    def _ensure_collection_points_here(self, name: str = "_pages") -> None:
+        """qmd collections are a single global, name-keyed registry (stored in
+        ~/.cache/qmd/index.sqlite), not scoped per git worktree or cwd — `qmd
+        update` and `qmd search -c _pages` silently operate on whatever
+        absolute directory "_pages" was last pointed at, which may belong to
+        a different worktree/branch entirely (found live: after running
+        research in one worktree, "_pages" still pointed at a different
+        worktree's wiki/_pages, so duplicate/saturation checks were silently
+        comparing new candidates against the wrong branch's pages instead of
+        this project's own). Re-point the collection to this project's own
+        wiki/_pages before every update, so results never depend on which
+        worktree last touched qmd."""
+        expected = str((self.cwd / "wiki" / "_pages").resolve())
+        try:
+            show = subprocess.run(
+                [*self.command, "collection", "show", name],
+                capture_output=True,
+                text=True,
+                cwd=str(self.cwd),
+                timeout=self.timeout,
+            )
+        except (FileNotFoundError, subprocess.TimeoutExpired):
+            return  # let update() surface the real error
+        current_path = None
+        if show.returncode == 0:
+            match = re.search(r"Path:\s*(\S+)", show.stdout)
+            if match:
+                current_path = match.group(1).strip()
+        if current_path == expected:
+            return
+        if current_path is not None:
+            subprocess.run(
+                [*self.command, "collection", "remove", name],
+                capture_output=True, text=True, cwd=str(self.cwd), timeout=self.timeout,
+            )
+        subprocess.run(
+            [*self.command, "collection", "add", expected, "--name", name],
+            capture_output=True, text=True, cwd=str(self.cwd), timeout=self.timeout,
+        )
+
     def update(self) -> tuple[bool, str | None]:
+        self._ensure_collection_points_here()
         try:
             result = subprocess.run(
                 [*self.command, "update"],
