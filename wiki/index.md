@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-03 | Pages: 40 | Sources: 112
+Last updated: 2026-07-03 | Pages: 44 | Sources: 122
 
 ## Entity Pages
 
@@ -9,9 +9,12 @@ Last updated: 2026-07-03 | Pages: 40 | Sources: 112
 | [integrated-matrix-extension.md](entity/integrated-matrix-extension.md) | Integrated Matrix Extension |  | 4 | 0 |
 | [iree-microkernel-library.md](entity/iree-microkernel-library.md) | IREE Microkernel Library |  | 2 | 0 |
 | [iree-rvv-mlir-ukernel.md](entity/iree-rvv-mlir-ukernel.md) | IREE MLIR-based uKernel for RVV | RISC-V, RVV, IREE, MLIR, uKernel, Matmul | 2 | 0 |
+| [llama-cpp.md](entity/llama-cpp.md) | llama.cpp | LLM inference, C/C++, GGML, local inference | 2 | 0 |
+| [llamacpp-quantization-methods.md](entity/llamacpp-quantization-methods.md) | llama.cpp Quantization Methods | quantization, llama.cpp, GGML, LLM inference, post-training quantization | 4 | 0 |
 | [mlir-compiler-infrastructure.md](entity/mlir-compiler-infrastructure.md) | MLIR | compiler, LLVM, intermediate representation | 2 | 0 |
 | [opengemm.md](entity/opengemm.md) | OpenGeMM | GeMM accelerator, RISC-V, open-source hardware, Chisel, accelerator generator | 4 | 0 |
 | [riscv-matrix-extension-specification.md](entity/riscv-matrix-extension-specification.md) | RISC-V Matrix Extension Specification | risc-v, isa, matrix, extension | 8 | 0 |
+| [rise-project-rp014-llamacpp-ggml-rvv.md](entity/rise-project-rp014-llamacpp-ggml-rvv.md) | RP014 - Optimizing Llama.cpp and GGML for RVV | llama.cpp, GGML, RVV, RISC-V, quantization, optimization | 2 | 0 |
 | [rvv-dialect-mlir.md](entity/rvv-dialect-mlir.md) | RVV Dialect (MLIR) | MLIR, RVV, RISC-V, dialect, compiler | 2 | 0 |
 | [rvv-intrinsic-api.md](entity/rvv-intrinsic-api.md) | RISC-V Vector Extension Intrinsic API |  | 2 | 0 |
 | [shl.md](entity/shl.md) | SHL |  | 4 | 1 |
@@ -39,10 +42,13 @@ Last updated: 2026-07-03 | Pages: 40 | Sources: 112
 - **Allwinner V851SE**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
 - **Allwinner V851s**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
 - **Auto-Generated GEMM Micro-Kernels on C906 and C910**: → [auto-gemm-micro-kernel-c906-c910-benchmark](benchmark_result/auto-gemm-micro-kernel-c906-c910-benchmark.md)
+- **BPI-F3 RVV LLM benchmark**: → [bpi-f3-rvv-llm-benchmark](benchmark_result/bpi-f3-rvv-llm-benchmark.md)
+- **BPI-F3 RVV llama.cpp**: → [bpi-f3-rvv-llm-benchmark](benchmark_result/bpi-f3-rvv-llm-benchmark.md)
 - **Baby LLama2 Benchmark on Milk-V Duo**: → [baby-llama2-milkv-duo-benchmark](benchmark_result/baby-llama2-milkv-duo-benchmark.md)
 - **Baby LLama2 Milk-V Duo 24 tok/s**: → [baby-llama2-milkv-duo-benchmark](benchmark_result/baby-llama2-milkv-duo-benchmark.md)
 - **Baby LLama2 Optimization for Milk-V Duo**: → [baby-llama2-milkv-duo-benchmark](benchmark_result/baby-llama2-milkv-duo-benchmark.md)
 - **Baby LLama2 optimization C906**: → [baby-llama2-milkv-duo-benchmark](benchmark_result/baby-llama2-milkv-duo-benchmark.md)
+- **BananaPi BPI-F3 LLM Inference (RVV optimized)**: → [bpi-f3-rvv-llm-benchmark](benchmark_result/bpi-f3-rvv-llm-benchmark.md)
 - **BananaPi-F3 GCC Clang comparison**: → [gcc15-vs-clang21-banana-pi-f3-rvv10](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md)
 - **C906**: → [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
 - **C906 C910 Auto-Generated GEMM Benchmark**: → [auto-gemm-micro-kernel-c906-c910-benchmark](benchmark_result/auto-gemm-micro-kernel-c906-c910-benchmark.md)
@@ -58,6 +64,10 @@ Last updated: 2026-07-03 | Pages: 40 | Sources: 112
 - **GAP9 SoC**: → [gap9](hardware_target/gap9.md)
 - **GCC 15 vs Clang 21 on BananaPi-F3 (RVV 1.0)**: → [gcc15-vs-clang21-banana-pi-f3-rvv10](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md)
 - **GCC Tuning Benchmark on XuanTie C908**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
+- **GGML Quantization**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
+- **GGML quantization**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
+- **GGML quantization techniques**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
+- **Gemma-2-2B Llama-3.1-8B RVV BPI-F3**: → [bpi-f3-rvv-llm-benchmark](benchmark_result/bpi-f3-rvv-llm-benchmark.md)
 - **GreenWaves GAP9**: → [gap9](hardware_target/gap9.md)
 - **IME**: → [integrated-matrix-extension](entity/integrated-matrix-extension.md)
 - **IREE MLIR Ukernels for RVV**: → [iree-rvv-mlir-ukernel](entity/iree-rvv-mlir-ukernel.md)
@@ -74,6 +84,7 @@ Last updated: 2026-07-03 | Pages: 40 | Sources: 112
 - **IREE ukernel library**: → [iree-microkernel-library](entity/iree-microkernel-library.md)
 - **Integrated Matrix Extension**: → [integrated-matrix-extension](entity/integrated-matrix-extension.md)
 - **Intelligent Matrix Engine**: → [integrated-matrix-extension](entity/integrated-matrix-extension.md)
+- **K-quant**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
 - **K1**: → [spacemit-k1](hardware_target/spacemit-k1.md)
 - **K1 AI Benchmark 2026-04-14**: → [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
 - **K1 SpacemiT Benchmark Report v3**: → [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
@@ -83,6 +94,8 @@ Last updated: 2026-07-03 | Pages: 40 | Sources: 112
 - **Kendryte K230**: → [k230-soc](hardware_target/k230-soc.md)
 - **Kendryte K230 CanMV**: → [k230-soc](hardware_target/k230-soc.md)
 - **Key Stone K1**: → [spacemit-k1](hardware_target/spacemit-k1.md)
+- **LLM inference in C/C++**: → [llama-cpp](entity/llama-cpp.md)
+- **Llama.cpp GGML RVV Optimization**: → [rise-project-rp014-llamacpp-ggml-rvv](entity/rise-project-rp014-llamacpp-ggml-rvv.md)
 - **MLIR**: → [mlir-compiler-infrastructure](entity/mlir-compiler-infrastructure.md)
 - **MLIR project**: → [mlir-compiler-infrastructure](entity/mlir-compiler-infrastructure.md)
 - **MLIR-based RVV ukernels in IREE**: → [iree-rvv-mlir-ukernel](entity/iree-rvv-mlir-ukernel.md)
@@ -106,7 +119,11 @@ Last updated: 2026-07-03 | Pages: 40 | Sources: 112
 - **OpenGeMM platform**: → [opengemm](entity/opengemm.md)
 - **OpenNanhu-V5**: → [opennanhu-v5](hardware_target/opennanhu-v5.md)
 - **OpenXiangShan**: → [xiangshan-overview](entity/xiangshan-overview.md)
+- **Project RP014**: → [rise-project-rp014-llamacpp-ggml-rvv](entity/rise-project-rp014-llamacpp-ggml-rvv.md)
 - **Python-native SSA Compiler Framework**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
+- **Q4_0**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
+- **Q4_1**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
+- **Q8_0**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
 - **RISC-V IME Extension**: → [integrated-matrix-extension](entity/integrated-matrix-extension.md)
 - **RISC-V Matrix Extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RISC-V Matrix Extension Proposal V0.6.0**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
@@ -116,6 +133,9 @@ Last updated: 2026-07-03 | Pages: 40 | Sources: 112
 - **RISC-V Vector Intrinsic API**: → [rvv-intrinsic-api](entity/rvv-intrinsic-api.md)
 - **RISC-V matrix extension spec**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RISCV IME**: → [integrated-matrix-extension](entity/integrated-matrix-extension.md)
+- **RISE RP014**: → [rise-project-rp014-llamacpp-ggml-rvv](entity/rise-project-rp014-llamacpp-ggml-rvv.md)
+- **RP014**: → [rise-project-rp014-llamacpp-ggml-rvv](entity/rise-project-rp014-llamacpp-ggml-rvv.md)
+- **RP014 - Optimizing Llama.cpp and GGML for RVV**: → [rise-project-rp014-llamacpp-ggml-rvv](entity/rise-project-rp014-llamacpp-ggml-rvv.md)
 - **RV Matrix Extension v0.4.0**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RV matrix extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RVM extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
@@ -190,7 +210,13 @@ Last updated: 2026-07-03 | Pages: 40 | Sources: 112
 - **ZCC**: → [zcc-compiler](entity/zcc-compiler.md)
 - **ZCC 4.x**: → [zcc-compiler](entity/zcc-compiler.md)
 - **ZSB**: → [xuantie-zero-stage-boot-entity](entity/xuantie-zero-stage-boot-entity.md)
+- **block-based quantization in llama.cpp**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
 - **chipsalliance/t1**: → [t1](hardware_target/t1.md)
+- **llama-cpp**: → [llama-cpp](entity/llama-cpp.md)
+- **llama.cpp**: → [llama-cpp](entity/llama-cpp.md)
+- **llama.cpp Quantization Methods**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
+- **llama.cpp quantization**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
+- **llama.cpp quantization types**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
 - **riscv-matrix-extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **riscv-matrix-extension-spec**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **rvspoc-s2311-llama2**: → [baby-llama2-milkv-duo-benchmark](benchmark_result/baby-llama2-milkv-duo-benchmark.md)
@@ -234,24 +260,26 @@ Last updated: 2026-07-03 | Pages: 40 | Sources: 112
 
 
 
+
 ## Optimization Pages
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
 | [auto-gemm-micro-kernel-c906-c910-benchmark.md](benchmark_result/auto-gemm-micro-kernel-c906-c910-benchmark.md) | benchmark_result | Auto-Generated GEMM Micro-Kernels on C906 and C910 |  | 2 | 0 |
 | [baby-llama2-milkv-duo-benchmark.md](benchmark_result/baby-llama2-milkv-duo-benchmark.md) | benchmark_result | Baby LLama2 Benchmark on Milk-V Duo |  | 2 | 2 |
+| [bpi-f3-rvv-llm-benchmark.md](benchmark_result/bpi-f3-rvv-llm-benchmark.md) | benchmark_result | BananaPi BPI-F3 LLM Inference (RVV optimized) |  | 2 | 0 |
 | [gcc-tuning-c908-canmv-k230.md](benchmark_result/gcc-tuning-c908-canmv-k230.md) | benchmark_result | GCC Tuning Benchmark on XuanTie C908 |  | 4 | 4 |
 | [gcc15-vs-clang21-banana-pi-f3-rvv10.md](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md) | benchmark_result | GCC 15 vs Clang 21 on BananaPi-F3 (RVV 1.0) | RVV, compiler, GCC, Clang | 2 | 0 |
 | [iree-riscv-benchmark-milkv-jupiter.md](benchmark_result/iree-riscv-benchmark-milkv-jupiter.md) | benchmark_result | IREE RISC-V Microkernel Benchmark on MILK-V Jupiter |  | 2 | 0 |
 | [maestro-gesture-recognition.md](benchmark_result/maestro-gesture-recognition.md) | benchmark_result | Maestro gesture recognition benchmark |  | 2 | 0 |
-| [mlir-xdsl-gemm-benchmark-k230-banana-pi.md](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md) | benchmark_result | MLIR-xDSL GEMM Benchmark on K230 and BananaPi F3 |  | 2 | 3 |
+| [mlir-xdsl-gemm-benchmark-k230-banana-pi.md](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md) | benchmark_result | MLIR-xDSL GEMM Benchmark on K230 and BananaPi F3 |  | 2 | 4 |
 | [spacemit-k1-benchmark-2026-04-14.md](benchmark_result/spacemit-k1-benchmark-2026-04-14.md) | benchmark_result | SpacemiT K1 AI Benchmark Report (2026-04-14) |  | 2 | 0 |
 | [gap9.md](hardware_target/gap9.md) | hardware_target | GAP9 |  | 2 | 2 |
 | [k230-soc.md](hardware_target/k230-soc.md) | hardware_target | K230 |  | 8 | 0 |
 | [maestro.md](hardware_target/maestro.md) | hardware_target | Maestro |  | 2 | 1 |
 | [opennanhu-v5.md](hardware_target/opennanhu-v5.md) | hardware_target | OpenNanhu-V5 |  | 2 | 0 |
 | [sophon-sg2042.md](hardware_target/sophon-sg2042.md) | hardware_target | SOPHON SG2042 |  | 4 | 0 |
-| [spacemit-k1.md](hardware_target/spacemit-k1.md) | hardware_target | SpacemiT K1 |  | 4 | 1 |
+| [spacemit-k1.md](hardware_target/spacemit-k1.md) | hardware_target | SpacemiT K1 |  | 4 | 2 |
 | [spacemit-x60-hardware-target.md](hardware_target/spacemit-x60-hardware-target.md) | hardware_target | SpacemiT X60 | RISC-V, GCC tuning, SpacemiT, in-order, RVV 1.0 | 2 | 1 |
 | [t1.md](hardware_target/t1.md) | hardware_target | T1 |  | 2 | 0 |
 | [v851s-yuzukilizard.md](hardware_target/v851s-yuzukilizard.md) | hardware_target | Allwinner V851S / Yuzukilizard | allwinner, v851s, yuzukilizard, risc-v, npu | 8 | 0 |
@@ -259,7 +287,7 @@ Last updated: 2026-07-03 | Pages: 40 | Sources: 112
 | [xuantie-c908.md](hardware_target/xuantie-c908.md) | hardware_target | XuanTie C908 |  | 10 | 1 |
 | [c908-wino-gemm-optimization.md](optimization_recipe/c908-wino-gemm-optimization.md) | optimization_recipe | C908 Winograd and GEMM Optimization in SHL |  | 2 | 11 |
 | [iree-riscv-microkernel-support.md](optimization_recipe/iree-riscv-microkernel-support.md) | optimization_recipe | IREE RISC-V Microkernel Support |  | 2 | 2 |
-| [mlir-xdsl-rvv-codegen-pipeline.md](optimization_recipe/mlir-xdsl-rvv-codegen-pipeline.md) | optimization_recipe | MLIR-xDSL RVV Code Generation Pipeline |  | 2 | 4 |
+| [mlir-xdsl-rvv-codegen-pipeline.md](optimization_recipe/mlir-xdsl-rvv-codegen-pipeline.md) | optimization_recipe | MLIR-xDSL RVV Code Generation Pipeline |  | 2 | 5 |
 
 ## Hub Hierarchy
 
@@ -299,12 +327,14 @@ Last updated: 2026-07-03 | Pages: 40 | Sources: 112
 
 - [auto-gemm-micro-kernel-c906-c910-benchmark](benchmark_result/auto-gemm-micro-kernel-c906-c910-benchmark.md)
 - [baby-llama2-milkv-duo-benchmark](benchmark_result/baby-llama2-milkv-duo-benchmark.md)
+- [bpi-f3-rvv-llm-benchmark](benchmark_result/bpi-f3-rvv-llm-benchmark.md)
 - [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
 - [gcc15-vs-clang21-banana-pi-f3-rvv10](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md)
 - [iree-riscv-benchmark-milkv-jupiter](benchmark_result/iree-riscv-benchmark-milkv-jupiter.md)
 - [maestro-gesture-recognition](benchmark_result/maestro-gesture-recognition.md)
 - [mlir-xdsl-gemm-benchmark-k230-banana-pi](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md)
 - [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
+
 
 
 

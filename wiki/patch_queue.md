@@ -959,3 +959,37 @@ The IREE MLIR Ukernels for RVV is a proposed compiler transformation within the 
 
 - https://github.com/iree-org/iree/issues/22720
 merge_draft_body -->
+
+## [2026-07-03] pending | spacemit-k1.md
+target_page: spacemit-k1.md
+target_section: Relationships
+source: https://link.springer.com/chapter/10.1007/978-981-96-9869-1_43
+status: pending_review
+proposed_update: Add relationship link to [[bpi-f3-rvv-llm-benchmark]]: 'The BPI-F3 LLM inference benchmark with RVV-optimized llama.cpp validates the practical performance of the SpacemiT K1 RVV 1.0 extensions on representative LLM workloads.'
+
+## [2026-07-03] merge_pending | llamacpp-quantization-methods.md
+target_page: llamacpp-quantization-methods.md
+canonical_name: llama.cpp Quantization Methods
+colliding_name: GGML Quantization
+source: https://deepwiki.com/ggml-org/llama.cpp/7.3-quantization-techniques
+status: pending_review
+<!-- merge_draft_body
+# GGML Quantization
+
+GGML Quantization refers to the block-based quantization system implemented in the GGML tensor library and used by llama.cpp for compressing neural network model weights. Instead of quantizing each weight independently, GGML divides tensors into small blocks, and each block is assigned its own scale factor and optionally a minimum value to minimize precision loss. This approach allows representing high-precision 16-bit or 32-bit floating-point weights in lower-bit formats such as 4-bit, 2-bit, or even ternary representations, significantly reducing memory footprint and accelerating inference on consumer hardware. The quantization system supports multiple formats ranging from Q40 to importance quantization, providing a spectrum of compression levels and accuracy trade-offs. This page describes the architectural design and supported quantization formats within the GGML/llama.cpp ecosystem.
+
+## Key Claims
+
+- Quantization in llama.cpp is built upon the GGML tensor library.
+- The quantization approach is block-based: tensors are divided into small chunks, and each block has its own scale and optionally minimum value.
+- Supported quantization formats range from Q40 to importance quantization.
+- The primary goal is to reduce memory footprint and accelerate inference by compressing 16-bit or 32-bit floats into 4-bit, 2-bit, or ternary representations.
+
+## Relationships
+
+- [[auto-gemm-micro-kernel-c906-c910-benchmark]]: Both pages are part of the llama.cpp inference ecosystem; quantization reduces model weight precision to enable efficient LLM inference on the same RISC-V cores (C906, C910) that the auto-generated GEMM micro-kernels target.
+
+## Sources
+
+- https://deepwiki.com/ggml-org/llama.cpp/7.3-quantization-techniques
+merge_draft_body -->
