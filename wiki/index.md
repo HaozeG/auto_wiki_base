@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-03 | Pages: 67 | Sources: 184
+Last updated: 2026-07-03 | Pages: 68 | Sources: 186
 
 ## Entity Pages
 
@@ -137,6 +137,8 @@ Last updated: 2026-07-03 | Pages: 67 | Sources: 184
 - **IREE ukernel library**: → [iree-microkernel-library](entity/iree-microkernel-library.md)
 - **Integrated Matrix Extension**: → [integrated-matrix-extension](entity/integrated-matrix-extension.md)
 - **Intelligent Matrix Engine**: → [integrated-matrix-extension](entity/integrated-matrix-extension.md)
+- **JH-7110**: → [starfive-jh7110-hardware-target](hardware_target/starfive-jh7110-hardware-target.md)
+- **JH7110**: → [starfive-jh7110-hardware-target](hardware_target/starfive-jh7110-hardware-target.md)
 - **K-quant**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
 - **K1**: → [spacemit-k1](hardware_target/spacemit-k1.md)
 - **K1 AI Benchmark 2026-04-14**: → [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
@@ -263,6 +265,7 @@ Last updated: 2026-07-03 | Pages: 67 | Sources: 184
 - **SpacemiT X60**: → [spacemit-x60-hardware-target](hardware_target/spacemit-x60-hardware-target.md)
 - **SpacemiT X60 core**: → [spacemit-x60-hardware-target](hardware_target/spacemit-x60-hardware-target.md)
 - **Spacemit K1**: → [spacemit-k1](hardware_target/spacemit-k1.md)
+- **StarFive JH-7110**: → [starfive-jh7110-hardware-target](hardware_target/starfive-jh7110-hardware-target.md)
 - **Structure of Heterogeneous Library**: → [shl](entity/shl.md)
 - **SweRV-ISS (derived)**: → [whisper-risc-v-iss-entity](entity/whisper-risc-v-iss-entity.md)
 - **T-HEAD XuanTie C908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
@@ -397,6 +400,7 @@ Last updated: 2026-07-03 | Pages: 67 | Sources: 184
 
 
 
+
 ## Optimization Pages
 
 | Page | Type | Summary | Tags | Sources | Inbound |
@@ -412,7 +416,7 @@ Last updated: 2026-07-03 | Pages: 67 | Sources: 184
 | [mlir-xdsl-gemm-benchmark-k230-banana-pi.md](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md) | benchmark_result | MLIR-xDSL GEMM Benchmark on K230 and BananaPi F3 |  | 2 | 4 |
 | [sophon-sg2042-npb-performance-benchmark-result.md](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md) | benchmark_result | SG2042 NAS Parallel Benchmark Performance |  | 4 | 0 |
 | [spacemit-k1-benchmark-2026-04-14.md](benchmark_result/spacemit-k1-benchmark-2026-04-14.md) | benchmark_result | SpacemiT K1 AI Benchmark Report (2026-04-14) |  | 2 | 0 |
-| [andes-ax45mpv-hardware-target.md](hardware_target/andes-ax45mpv-hardware-target.md) | hardware_target | AndesCore AX45MPV |  | 2 | 1 |
+| [andes-ax45mpv-hardware-target.md](hardware_target/andes-ax45mpv-hardware-target.md) | hardware_target | AndesCore AX45MPV |  | 2 | 2 |
 | [andes-nx27v-hardware-target.md](hardware_target/andes-nx27v-hardware-target.md) | hardware_target | AndesCore NX27V |  | 2 | 2 |
 | [chiplet-based-risc-v-soc.md](hardware_target/chiplet-based-risc-v-soc.md) | hardware_target | Chiplet-Based RISC-V SoC |  | 2 | 0 |
 | [et-soc-1-hardware-target.md](hardware_target/et-soc-1-hardware-target.md) | hardware_target | ET-SoC-1 |  | 2 | 1 |
@@ -425,6 +429,7 @@ Last updated: 2026-07-03 | Pages: 67 | Sources: 184
 | [spacemit-k1.md](hardware_target/spacemit-k1.md) | hardware_target | SpacemiT K1 |  | 4 | 2 |
 | [spacemit-k3-hardware-target.md](hardware_target/spacemit-k3-hardware-target.md) | hardware_target | SpacemiT K3 | RISC-V, SpacemiT, AI CPU, big.LITTLE, RVV 1.0 | 2 | 0 |
 | [spacemit-x60-hardware-target.md](hardware_target/spacemit-x60-hardware-target.md) | hardware_target | SpacemiT X60 | RISC-V, GCC tuning, SpacemiT, in-order, RVV 1.0 | 2 | 5 |
+| [starfive-jh7110-hardware-target.md](hardware_target/starfive-jh7110-hardware-target.md) | hardware_target | StarFive JH-7110 |  | 2 | 0 |
 | [t1.md](hardware_target/t1.md) | hardware_target | T1 |  | 2 | 0 |
 | [v851s-yuzukilizard.md](hardware_target/v851s-yuzukilizard.md) | hardware_target | Allwinner V851S / Yuzukilizard | allwinner, v851s, yuzukilizard, risc-v, npu | 8 | 0 |
 | [xuantie-c906-hardware-target.md](hardware_target/xuantie-c906-hardware-target.md) | hardware_target | XuanTie C906 |  | 2 | 6 |
@@ -455,6 +460,7 @@ Last updated: 2026-07-03 | Pages: 67 | Sources: 184
 - [spacemit-k1](hardware_target/spacemit-k1.md)
 - [spacemit-k3-hardware-target](hardware_target/spacemit-k3-hardware-target.md)
 - [spacemit-x60-hardware-target](hardware_target/spacemit-x60-hardware-target.md)
+- [starfive-jh7110-hardware-target](hardware_target/starfive-jh7110-hardware-target.md)
 - [t1](hardware_target/t1.md)
 - [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
 - [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
@@ -492,6 +498,7 @@ Last updated: 2026-07-03 | Pages: 67 | Sources: 184
 - [mlir-xdsl-gemm-benchmark-k230-banana-pi](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md)
 - [sophon-sg2042-npb-performance-benchmark-result](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md)
 - [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
+
 
 
 
