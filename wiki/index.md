@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-03 | Pages: 28 | Sources: 68
+Last updated: 2026-07-03 | Pages: 32 | Sources: 78
 
 ## Entity Pages
 
@@ -8,10 +8,12 @@ Last updated: 2026-07-03 | Pages: 28 | Sources: 68
 |------|---------|------|---------|---------|
 | [integrated-matrix-extension.md](entity/integrated-matrix-extension.md) | Integrated Matrix Extension |  | 2 | 0 |
 | [iree-rvv-mlir-ukernel.md](entity/iree-rvv-mlir-ukernel.md) | IREE MLIR-based uKernel for RVV | RISC-V, RVV, IREE, MLIR, uKernel, Matmul | 2 | 0 |
+| [mlir-compiler-infrastructure.md](entity/mlir-compiler-infrastructure.md) | MLIR | compiler, LLVM, intermediate representation | 2 | 0 |
 | [riscv-matrix-extension-specification.md](entity/riscv-matrix-extension-specification.md) | RISC-V Matrix Extension Specification | risc-v, isa, matrix, extension | 2 | 0 |
 | [rvv-dialect-mlir.md](entity/rvv-dialect-mlir.md) | RVV Dialect (MLIR) | MLIR, RVV, RISC-V, dialect, compiler | 2 | 0 |
 | [rvv-intrinsic-api.md](entity/rvv-intrinsic-api.md) | RISC-V Vector Extension Intrinsic API |  | 2 | 0 |
 | [shl.md](entity/shl.md) | SHL |  | 4 | 1 |
+| [xdsl-compiler-toolkit.md](entity/xdsl-compiler-toolkit.md) | xDSL |  | 4 | 0 |
 | [xiangshan-overview.md](entity/xiangshan-overview.md) | XiangShan |  | 6 | 0 |
 | [xuantie-ai-benchmark-suite.md](entity/xuantie-ai-benchmark-suite.md) | XuanTie AI Benchmark Suite |  | 2 | 3 |
 | [xuantie-gnu-toolchain.md](entity/xuantie-gnu-toolchain.md) | XuanTie GNU Compiler Toolchain |  | 2 | 0 |
@@ -26,7 +28,12 @@ Last updated: 2026-07-03 | Pages: 28 | Sources: 68
 
 ## Concept Index
 
+- **Baby LLama2 Benchmark on Milk-V Duo**: → [baby-llama2-milkv-duo-benchmark](benchmark_result/baby-llama2-milkv-duo-benchmark.md)
+- **Baby LLama2 Milk-V Duo 24 tok/s**: → [baby-llama2-milkv-duo-benchmark](benchmark_result/baby-llama2-milkv-duo-benchmark.md)
+- **Baby LLama2 Optimization for Milk-V Duo**: → [baby-llama2-milkv-duo-benchmark](benchmark_result/baby-llama2-milkv-duo-benchmark.md)
+- **Baby LLama2 optimization C906**: → [baby-llama2-milkv-duo-benchmark](benchmark_result/baby-llama2-milkv-duo-benchmark.md)
 - **BananaPi-F3 GCC Clang comparison**: → [gcc15-vs-clang21-banana-pi-f3-rvv10](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md)
+- **C906**: → [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
 - **C908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **C908 GCC tuning benchmark**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
 - **CanMV K230**: → [k230-soc](hardware_target/k230-soc.md)
@@ -51,6 +58,8 @@ Last updated: 2026-07-03 | Pages: 28 | Sources: 68
 - **Kendryte K230**: → [k230-soc](hardware_target/k230-soc.md)
 - **Kendryte K230 CanMV**: → [k230-soc](hardware_target/k230-soc.md)
 - **Key Stone K1**: → [spacemit-k1](hardware_target/spacemit-k1.md)
+- **MLIR**: → [mlir-compiler-infrastructure](entity/mlir-compiler-infrastructure.md)
+- **MLIR project**: → [mlir-compiler-infrastructure](entity/mlir-compiler-infrastructure.md)
 - **MLIR-based uKernel for RVV**: → [iree-rvv-mlir-ukernel](entity/iree-rvv-mlir-ukernel.md)
 - **MLIR-xDSL BananaPi F3 GEMM**: → [mlir-xdsl-gemm-benchmark-k230-banana-pi](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md)
 - **MLIR-xDSL GEMM Benchmark on K230 and BananaPi F3**: → [mlir-xdsl-gemm-benchmark-k230-banana-pi](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md)
@@ -64,8 +73,11 @@ Last updated: 2026-07-03 | Pages: 28 | Sources: 68
 - **Maestro gesture recognition benchmark**: → [maestro-gesture-recognition](benchmark_result/maestro-gesture-recognition.md)
 - **Maestro ultrasound gesture recognition**: → [maestro-gesture-recognition](benchmark_result/maestro-gesture-recognition.md)
 - **Matrix Extension Specification**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
+- **Multi-Level Intermediate Representation**: → [mlir-compiler-infrastructure](entity/mlir-compiler-infrastructure.md)
+- **OpenC906**: → [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
 - **OpenNanhu-V5**: → [opennanhu-v5](hardware_target/opennanhu-v5.md)
 - **OpenXiangShan**: → [xiangshan-overview](entity/xiangshan-overview.md)
+- **Python-native SSA Compiler Framework**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
 - **RISC-V Matrix Extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RISC-V Matrix Extension Specification**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RISC-V Vector Extension Dialect**: → [rvv-dialect-mlir](entity/rvv-dialect-mlir.md)
@@ -90,6 +102,7 @@ Last updated: 2026-07-03 | Pages: 28 | Sources: 68
 - **Spacemit K1**: → [spacemit-k1](hardware_target/spacemit-k1.md)
 - **Structure of Heterogeneous Library**: → [shl](entity/shl.md)
 - **T-HEAD XuanTie C908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
+- **T-Head C906**: → [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
 - **T-Head XuanTie**: → [xuantie](entity/xuantie.md)
 - **T-Head XuanTie C908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **T1**: → [t1](hardware_target/t1.md)
@@ -104,27 +117,37 @@ Last updated: 2026-07-03 | Pages: 28 | Sources: 68
 - **XiangShan project**: → [xiangshan-overview](entity/xiangshan-overview.md)
 - **XuanTie**: → [xuantie](entity/xuantie.md)
 - **XuanTie AI Benchmark Suite**: → [xuantie-ai-benchmark-suite](entity/xuantie-ai-benchmark-suite.md)
+- **XuanTie C906**: → [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
 - **XuanTie C908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **XuanTie GNU Compiler Toolchain**: → [xuantie-gnu-toolchain](entity/xuantie-gnu-toolchain.md)
 - **XuanTie MME**: → [xuantie-mme](entity/xuantie-mme.md)
 - **XuanTie MME instruction set**: → [xuantie-mme](entity/xuantie-mme.md)
 - **XuanTie Matrix Multiply Extension**: → [xuantie-mme](entity/xuantie-mme.md)
 - **XuanTie processor**: → [xuantie](entity/xuantie.md)
+- **Xuantie C906**: → [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
 - **Xuantie C908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **Xuantie GNU Toolchain**: → [xuantie-gnu-toolchain](entity/xuantie-gnu-toolchain.md)
 - **ZCC**: → [zcc-compiler](entity/zcc-compiler.md)
 - **ZCC 4.x**: → [zcc-compiler](entity/zcc-compiler.md)
 - **chipsalliance/t1**: → [t1](hardware_target/t1.md)
 - **riscv-matrix-extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
+- **rvspoc-s2311-llama2**: → [baby-llama2-milkv-duo-benchmark](benchmark_result/baby-llama2-milkv-duo-benchmark.md)
 - **rvv-intrinsic-api**: → [rvv-intrinsic-api](entity/rvv-intrinsic-api.md)
 - **spacemit-x60**: → [spacemit-x60-hardware-target](hardware_target/spacemit-x60-hardware-target.md)
+- **xDSL**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
+- **xDSL Python Compiler Framework**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
 - **xDSL RVV lowerings**: → [mlir-xdsl-rvv-codegen-pipeline](optimization_recipe/mlir-xdsl-rvv-codegen-pipeline.md)
+- **xDSL project**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
+- **xdsl**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
+- **xdslproject**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
 - **xt-c908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **xtai-benchmark**: → [xuantie-ai-benchmark-suite](entity/xuantie-ai-benchmark-suite.md)
 - **xuantie-c908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **xuantie-gnu-toolchain**: → [xuantie-gnu-toolchain](entity/xuantie-gnu-toolchain.md)
+- **玄铁C906**: → [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
 - **香山**: → [xiangshan-overview](entity/xiangshan-overview.md)
 - **xuantie-c908-gcc-tuning**: mentioned in [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md) — *no dedicated page*
+
 
 
 
@@ -144,10 +167,11 @@ Last updated: 2026-07-03 | Pages: 28 | Sources: 68
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
-| [gcc-tuning-c908-canmv-k230.md](benchmark_result/gcc-tuning-c908-canmv-k230.md) | benchmark_result | GCC Tuning Benchmark on XuanTie C908 |  | 2 | 2 |
+| [baby-llama2-milkv-duo-benchmark.md](benchmark_result/baby-llama2-milkv-duo-benchmark.md) | benchmark_result | Baby LLama2 Benchmark on Milk-V Duo |  | 2 | 0 |
+| [gcc-tuning-c908-canmv-k230.md](benchmark_result/gcc-tuning-c908-canmv-k230.md) | benchmark_result | GCC Tuning Benchmark on XuanTie C908 |  | 2 | 3 |
 | [gcc15-vs-clang21-banana-pi-f3-rvv10.md](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md) | benchmark_result | GCC 15 vs Clang 21 on BananaPi-F3 (RVV 1.0) | RVV, compiler, GCC, Clang | 2 | 0 |
 | [maestro-gesture-recognition.md](benchmark_result/maestro-gesture-recognition.md) | benchmark_result | Maestro gesture recognition benchmark |  | 2 | 0 |
-| [mlir-xdsl-gemm-benchmark-k230-banana-pi.md](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md) | benchmark_result | MLIR-xDSL GEMM Benchmark on K230 and BananaPi F3 |  | 2 | 0 |
+| [mlir-xdsl-gemm-benchmark-k230-banana-pi.md](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md) | benchmark_result | MLIR-xDSL GEMM Benchmark on K230 and BananaPi F3 |  | 2 | 1 |
 | [spacemit-k1-benchmark-2026-04-14.md](benchmark_result/spacemit-k1-benchmark-2026-04-14.md) | benchmark_result | SpacemiT K1 AI Benchmark Report (2026-04-14) |  | 2 | 0 |
 | [gap9.md](hardware_target/gap9.md) | hardware_target | GAP9 |  | 2 | 2 |
 | [k230-soc.md](hardware_target/k230-soc.md) | hardware_target | K230 |  | 8 | 0 |
@@ -155,11 +179,12 @@ Last updated: 2026-07-03 | Pages: 28 | Sources: 68
 | [opennanhu-v5.md](hardware_target/opennanhu-v5.md) | hardware_target | OpenNanhu-V5 |  | 2 | 0 |
 | [sophon-sg2042.md](hardware_target/sophon-sg2042.md) | hardware_target | SOPHON SG2042 |  | 4 | 0 |
 | [spacemit-k1.md](hardware_target/spacemit-k1.md) | hardware_target | SpacemiT K1 |  | 4 | 1 |
-| [spacemit-x60-hardware-target.md](hardware_target/spacemit-x60-hardware-target.md) | hardware_target | SpacemiT X60 | RISC-V, GCC tuning, SpacemiT, in-order, RVV 1.0 | 2 | 0 |
+| [spacemit-x60-hardware-target.md](hardware_target/spacemit-x60-hardware-target.md) | hardware_target | SpacemiT X60 | RISC-V, GCC tuning, SpacemiT, in-order, RVV 1.0 | 2 | 1 |
 | [t1.md](hardware_target/t1.md) | hardware_target | T1 |  | 2 | 0 |
+| [xuantie-c906-hardware-target.md](hardware_target/xuantie-c906-hardware-target.md) | hardware_target | XuanTie C906 |  | 2 | 0 |
 | [xuantie-c908.md](hardware_target/xuantie-c908.md) | hardware_target | XuanTie C908 |  | 8 | 1 |
 | [c908-wino-gemm-optimization.md](optimization_recipe/c908-wino-gemm-optimization.md) | optimization_recipe | C908 Winograd and GEMM Optimization in SHL |  | 2 | 8 |
-| [mlir-xdsl-rvv-codegen-pipeline.md](optimization_recipe/mlir-xdsl-rvv-codegen-pipeline.md) | optimization_recipe | MLIR-xDSL RVV Code Generation Pipeline |  | 2 | 0 |
+| [mlir-xdsl-rvv-codegen-pipeline.md](optimization_recipe/mlir-xdsl-rvv-codegen-pipeline.md) | optimization_recipe | MLIR-xDSL RVV Code Generation Pipeline |  | 2 | 2 |
 
 ## Hub Hierarchy
 
@@ -175,6 +200,7 @@ Last updated: 2026-07-03 | Pages: 28 | Sources: 68
 - [spacemit-k1](hardware_target/spacemit-k1.md)
 - [spacemit-x60-hardware-target](hardware_target/spacemit-x60-hardware-target.md)
 - [t1](hardware_target/t1.md)
+- [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
 - [xuantie-c908](hardware_target/xuantie-c908.md)
 
 ### Workload and Kernel Landscape
@@ -194,11 +220,13 @@ Last updated: 2026-07-03 | Pages: 28 | Sources: 68
 
 *Measured or reported results with hardware/software version context.*
 
+- [baby-llama2-milkv-duo-benchmark](benchmark_result/baby-llama2-milkv-duo-benchmark.md)
 - [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
 - [gcc15-vs-clang21-banana-pi-f3-rvv10](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md)
 - [maestro-gesture-recognition](benchmark_result/maestro-gesture-recognition.md)
 - [mlir-xdsl-gemm-benchmark-k230-banana-pi](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md)
 - [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
+
 
 
 

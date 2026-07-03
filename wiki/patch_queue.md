@@ -411,3 +411,80 @@ No specific relationship to visible context pages.
 - https://deepwiki.com/OpenXiangShan/XiangShan
 - https://github.com/OpenXiangShan/XiangShan
 merge_draft_body -->
+
+## [2026-07-03] merge_pending | baby-llama2-milkv-duo-benchmark.md
+target_page: baby-llama2-milkv-duo-benchmark.md
+canonical_name: Baby LLama2 Benchmark on Milk-V Duo
+colliding_name: Baby LLama2 Optimization for Milk-V Duo
+source: https://github.com/chamchamgo/rvspoc-s2311-llama2
+status: pending_review
+<!-- merge_draft_body
+# Baby LLama2 Optimization for Milk-V Duo
+
+This optimization recipe documents the transformations applied to the Baby LLama2 inference engine to run LLM inference on the Milk-V Duo board, a RISC-V platform with a T-Head C906 core at 1GHz, RVV 0.7 vector extension, and 64MB SDRAM. The recipe consists of five optimizations: int8 quantization to reduce memory footprint, partial on-fly dequantization to further reduce memory and improve file I/O cache, RVV intrinsic for the time-consuming matrix multiplication, a fast approximation for the exponential function, and OpenMP directives for auto-vectorization of small loops (effective only with Clang). The expected effect is a story generation speed of 24 tokens/s on the official Milk-V Duo system with 55MB memory configuration. A known failure mode is that the official Milk-V Duo GCC toolchain (version V2.6.1) cannot compile the RVV intrinsic code; the Xuantie-900-gcc-linux-5.10.4-musl32 V2.8.1 toolchain is required instead. The GCC-compiled binary is about 10% slower than Clang but smaller.
+
+## Key Claims
+
+- Int8 quantization reduces memory footprint and improves performance.
+- Partial on-fly dequantization dramatically reduces memory footprint and improves file I/O cache performance.
+- RVV intrisic instructions optimize the matrix multiplication (matmul) function.
+- Fast exponential approximation replaces the standard exp() call.
+- OpenMP directives enable auto-vectorization of small loops when compiled with Clang.
+- The optimized binary achieves 24 tokens/s story generation speed with 55MB memory configuration.
+
+## Transformation
+
+- Prerequisites:
+  - Milk-V Duo board with T-Head C906 core and RVV 0.7 support.
+  - Linux system with free memory above 25MB (official image needs recompilation per Milk-V FAQ).
+  - Xuantie-900-gcc-linux-5.10.4-musl32 V2.8.1 or Xuantie-900-llvm-linux-5.10.4-glibc V1.0.0-beta toolchain (official V2.6.1 toolchain fails on RVV intrinsics).
+- Steps:
+  1. Use int8 quantized model (download or convert from stories15M.pt via export.py).
+  2. Modify runq.c to implement partial on-fly dequantization.
+  3. Replace matmul implementation with RVV intrinsics.
+  4. Replace exp() with fast approximation.
+  5. Add OpenMP directives for auto-vectorization.
+  6. Compile with `make runfast` (default GCC) or `COMPILER=clang make runfast`.
+  7. Upload binary runq-fast and int8 model (stories15M_q80.bin) to board.
+- Expected effect: 24 tokens/s story generation speed on official Milk-V Duo system with 55MB memory.
+- Failure modes:
+  - Official Milk-V GCC V2.6.1 cannot compile RVV intrinsic code; use V2.8.1 or Clang.
+  - Clang binary is about 10% faster but larger than GCC binary.
+- Measurements: 24 tokens/s reported; no further run count or statistical variation provided.
+
+## Relationships
+
+No specific relationship to visible context pages in this wiki. This optimization recipe targets the Milk-V Duo board with the XuanTie C906 core (RVV 0.7), which is not yet represented in existing pages for SpacemiT X60 (RVV 1.0) or C908 GCC tuning (scalar core).
+
+## Sources
+
+- https://github.com/chamchamgo/rvspoc-s2311-llama2
+merge_draft_body -->
+
+## [2026-07-03] merge_pending | xdsl-compiler-toolkit.md
+target_page: xdsl-compiler-toolkit.md
+canonical_name: xDSL
+colliding_name: xDSL
+source: https://github.com/xdslproject
+status: pending_review
+<!-- merge_draft_body
+# xDSL
+
+xDSL is a Python-native framework for building compiler infrastructure. It provides SSA-based intermediate representations (IRs) and Pythonic APIs to define, analyze, and transform programs. Originally developed as a research and teaching tool, xDSL has grown into a full-featured compiler design toolkit with support for multiple backends and integration with the MLIR ecosystem. The project is organized under the xdslproject GitHub organization, which hosts over 30 repositories covering a range of compiler-related domains: xdsl (the core toolkit), xdsl-jax (extending JAX with xDSL), xdsl-quantum (quantum compiler utilities), xdsl-torch (a reimplementation of torch-mlir), xdsl-webgpu (WebGPU support), xdsl-clang (interoperability with Clang via CIR), xdsl-asl (integrating Arm ASL in the xDSL/MLIR ecosystem), and xdsl-bench (benchmarking infrastructure for the xDSL compiler framework). The project is licensed under Apache-2.0 and is actively maintained with several hundred stars on GitHub.
+
+## Key Claims
+
+- xDSL is a Python-native framework for building compiler infrastructure, providing SSA-based IRs and Pythonic APIs.
+- The xdslproject organization hosts over 30 repositories, including sub-projects for JAX integration, quantum computing, PyTorch, WebGPU, Clang/CIR, and benchmarking.
+- xDSL is used in research to implement missing lowering stages for RISC-V Vector (RVV) code generation in the MLIR ecosystem.
+- The project has active community contributions and is licensed under Apache-2.0.
+
+## Relationships
+
+- [[mlir-xdsl-rvv-codegen-pipeline]]: This pipeline uses custom dialects and transformation passes implemented in xDSL to bridge missing lowering stages for RVV code generation, demonstrating xDSL's role as a compiler design toolkit.
+- [[mlir-xdsl-gemm-benchmark-k230-banana-pi]]: This benchmark evaluates GEMM kernels generated by the MLIR-xDSL pipeline, which relies on xDSL's infrastructure for defining and transforming intermediate representations.
+
+## Sources
+
+- https://github.com/xdslproject
+merge_draft_body -->

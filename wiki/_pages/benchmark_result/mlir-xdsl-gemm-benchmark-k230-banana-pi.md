@@ -40,7 +40,7 @@ type: benchmark_result
 created: '2026-07-03'
 updated: '2026-07-03'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 outbound_links:
 - target: c908-wino-gemm-optimization
   reason: Both benchmarks measure GEMM performance on RISC-V platforms, but this benchmark
