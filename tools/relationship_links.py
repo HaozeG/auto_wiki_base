@@ -3,12 +3,11 @@
 
 Implements the "every link should carry a reason, kept alongside the edge, so
 it is searchable and analyzable" requirement in CLAUDE.md's Graph Topology
-Philosophy. Edges are read from body markdown (the existing authoring surface —
-"[[target]]: reason." bullets already match this shape in every page template
-and in prior linking passes like close_linking_debt.py) and written back into
-frontmatter as ``outbound_links: [{target, reason}, ...]``, so frontmatter stays
-the source of truth for graph structure per the existing Constraints section,
-while the body stays plain Obsidian-compatible ``[[page]]`` markup.
+Philosophy. Edges are read from body markdown (the existing authoring surface)
+and written back into frontmatter as ``outbound_links: [{target, reason}, ...]``,
+so frontmatter stays the source of truth for graph structure per the existing
+Constraints section, while the body stays plain Obsidian-compatible ``[[page]]``
+markup.
 
 Only lines inside the Relationships/Connected Pages section are treated as
 edges — an inline ``[[mention]]`` elsewhere in prose (e.g. a synthesis RAG
@@ -22,13 +21,23 @@ import re
 
 _SECTION_RE = re.compile(r"^##\s+(Relationships|Connected Pages)\s*$", re.MULTILINE)
 _HEADING_RE = re.compile(r"^##\s+", re.MULTILINE)
-_LINK_LINE_RE = re.compile(r"^-\s*\[\[([^\]]+)\]\](?:\s*:\s*(.+))?$")
+# The subagent's [[target]]-to-reason separator is not consistent across
+# sessions/models: found live in a real replication run that every page
+# actually written used an em/en-dash or plain hyphen ("[[x]] – reason.",
+# "[[x]] - reason."), never the colon the original regex required
+# ("[[x]]: reason.") — CLAUDE.md's page template only asks for "a one-line
+# description," it never specifies punctuation. The colon-only regex silently
+# matched zero real Relationships bullets across an entire 50+ page run,
+# leaving outbound_links empty on every page and graph_topology.py reporting
+# every page as its own isolated component. Accept colon or any dash variant.
+_LINK_LINE_RE = re.compile(r"^-\s*\[\[([^\]]+)\]\](?:\s*[:\-–—]\s*(.+))?$")
 
 
 def extract_outbound_links(body: str) -> list[dict]:
-    """Parse ``[[target]]: reason.`` bullets out of a page's Relationships /
-    Connected Pages section. Returns ``[]`` if the section is absent or has no
-    link-shaped bullets. Order-preserving, de-duplicated by target."""
+    """Parse ``[[target]] <sep> reason.`` bullets (sep is ``:``, ``-``, ``–``,
+    or ``—``) out of a page's Relationships / Connected Pages section. Returns
+    ``[]`` if the section is absent or has no link-shaped bullets.
+    Order-preserving, de-duplicated by target."""
     match = _SECTION_RE.search(body)
     if not match:
         return []
