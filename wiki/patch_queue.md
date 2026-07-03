@@ -1235,3 +1235,40 @@ No specific relationship to pages in the current wiki context.
 - https://gitee.com/kendryte/nncase
 - https://github.com/kendryte/nncase
 merge_draft_body -->
+
+## [2026-07-03] merge_pending | k230-soc.md
+target_page: k230-soc.md
+canonical_name: K230
+colliding_name: K230
+source: https://owhinata.github.io/canmv-k230/en/
+status: pending_review
+<!-- merge_draft_body
+# K230
+
+The K230 is an AI-capable SoC developed by Canaan (Kendryte) featuring two Xuantie C908 RISC-V 64-bit cores in a heterogeneous configuration, a KPU (neural network accelerator) supporting INT8/INT16 inference, and 512 MB LPDDR3 RAM. The dual-core architecture assigns a big core (CPU1) clocked at 1.6 GHz running RT-Smart for AI inference and media processing, while the little core (CPU0) runs Linux 5.10.4 at 800 MHz for system control, networking, and user interaction, communicating via a shared filesystem (/sharefs). The board variant CanMV K230 v1.1 includes Broadcom WiFi (2.4 GHz only) and USB serial at 115200 baud. Models in ONNX or TFLite format are compiled to the kmodel format using the nncase compiler; operators unsupported by the KPU (e.g., softmax) are executed efficiently on the big core using RISC-V Vector Extension 1.0 with 128-bit vectors. The SoC targets embedded AI applications including computer vision and media processing on RISC-V platforms.
+
+## Key Claims
+
+- Heterogeneous dual-core Xuantie C908: big core at 1.6 GHz (RT-Smart), little core at 800 MHz (Linux 5.10.4).
+- Each core implements RISC-V Vector Extension 1.0 with 128-bit vectors.
+- Integrated KPU supports INT8/INT16 inference using compiled kmodel format.
+- Model compilation pipeline: ONNX/TFLite → nncase → kmodel.
+- Unsupported KPU operators (e.g., softmax) fall back to big-core RVV execution.
+- 512 MB LPDDR3 memory, Broadcom 2.4 GHz WiFi, USB serial at 115200 baud.
+- Board variant: CanMV K230 v1.1.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RVV 1.0 with 128-bit vector length (VLEN).
+- Vector/matrix/accelerator support: Xuantie C908 vector processing unit (128-bit), KPU for INT8/INT16 tensor operations.
+- Memory/cache/TLB/DMA: 512 MB LPDDR3; L1 cache and TLB details not specified in source.
+- Compiler/toolchain support: nncase compiler for model conversion, TFLite and ONNX as source formats, Linux 5.10.4 SDK.
+
+## Relationships
+
+- [[andes-ax45mpv-hardware-target]]: Both the K230's Xuantie C908 and the AndesCore AX45MPV implement RISC-V vector extensions; however, the C908 implements RVV 1.0 with 128-bit vectors as a small embedded core, while the AX45MPV supports up to 1024-bit VLEN/DLEN as a multicore IP core targeting high-throughput workloads.
+
+## Sources
+
+- https://owhinata.github.io/canmv-k230/en/
+merge_draft_body -->

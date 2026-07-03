@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-03 | Pages: 57 | Sources: 156
+Last updated: 2026-07-03 | Pages: 58 | Sources: 158
 
 ## Entity Pages
 
@@ -42,6 +42,7 @@ Last updated: 2026-07-03 | Pages: 57 | Sources: 156
 
 - **10x-IREE**: → [iree-riscv-microkernel-support](optimization_recipe/iree-riscv-microkernel-support.md)
 - **10x-IREE Llama-3.2-1B Benchmark**: → [iree-riscv-benchmark-milkv-jupiter](benchmark_result/iree-riscv-benchmark-milkv-jupiter.md)
+- **2509.18355**: → [chiplet-based-risc-v-soc](hardware_target/chiplet-based-risc-v-soc.md)
 - **AX45MPV**: → [andes-ax45mpv-hardware-target](hardware_target/andes-ax45mpv-hardware-target.md)
 - **Allwinner V851S**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
 - **Allwinner V851S SoC**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
@@ -74,7 +75,10 @@ Last updated: 2026-07-03 | Pages: 57 | Sources: 156
 - **C908V**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **CanMV K230**: → [k230-soc](hardware_target/k230-soc.md)
 - **CanMV K230 development board**: → [k230-soc](hardware_target/k230-soc.md)
+- **CanMV K230 v1.1**: → [k230-soc](hardware_target/k230-soc.md)
 - **CanMV-K230**: → [k230-soc](hardware_target/k230-soc.md)
+- **Chiplet-Based RISC-V SoC**: → [chiplet-based-risc-v-soc](hardware_target/chiplet-based-risc-v-soc.md)
+- **Chiplet-Based RISC-V SoC with Modular AI Acceleration**: → [chiplet-based-risc-v-soc](hardware_target/chiplet-based-risc-v-soc.md)
 - **Codebook-based Q4X**: → [q4x-quantization-llamacpp-rvv](optimization_recipe/q4x-quantization-llamacpp-rvv.md)
 - **CoreMark C908 0.8%**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
 - **DeepSeek on SG2042**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
@@ -331,6 +335,7 @@ Last updated: 2026-07-03 | Pages: 57 | Sources: 156
 
 
 
+
 ## Optimization Pages
 
 | Page | Type | Summary | Tags | Sources | Inbound |
@@ -346,6 +351,7 @@ Last updated: 2026-07-03 | Pages: 57 | Sources: 156
 | [spacemit-k1-benchmark-2026-04-14.md](benchmark_result/spacemit-k1-benchmark-2026-04-14.md) | benchmark_result | SpacemiT K1 AI Benchmark Report (2026-04-14) |  | 2 | 0 |
 | [andes-ax45mpv-hardware-target.md](hardware_target/andes-ax45mpv-hardware-target.md) | hardware_target | AndesCore AX45MPV |  | 2 | 0 |
 | [andes-nx27v-hardware-target.md](hardware_target/andes-nx27v-hardware-target.md) | hardware_target | AndesCore NX27V |  | 2 | 2 |
+| [chiplet-based-risc-v-soc.md](hardware_target/chiplet-based-risc-v-soc.md) | hardware_target | Chiplet-Based RISC-V SoC |  | 2 | 0 |
 | [et-soc-1-hardware-target.md](hardware_target/et-soc-1-hardware-target.md) | hardware_target | ET-SoC-1 |  | 2 | 0 |
 | [gap9.md](hardware_target/gap9.md) | hardware_target | GAP9 |  | 2 | 3 |
 | [k230-soc.md](hardware_target/k230-soc.md) | hardware_target | K230 |  | 8 | 0 |
@@ -375,6 +381,7 @@ Last updated: 2026-07-03 | Pages: 57 | Sources: 156
 
 - [andes-ax45mpv-hardware-target](hardware_target/andes-ax45mpv-hardware-target.md)
 - [andes-nx27v-hardware-target](hardware_target/andes-nx27v-hardware-target.md)
+- [chiplet-based-risc-v-soc](hardware_target/chiplet-based-risc-v-soc.md)
 - [et-soc-1-hardware-target](hardware_target/et-soc-1-hardware-target.md)
 - [gap9](hardware_target/gap9.md)
 - [k230-soc](hardware_target/k230-soc.md)
@@ -420,6 +427,7 @@ Last updated: 2026-07-03 | Pages: 57 | Sources: 156
 - [maestro-gesture-recognition](benchmark_result/maestro-gesture-recognition.md)
 - [mlir-xdsl-gemm-benchmark-k230-banana-pi](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md)
 - [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
+
 
 
 

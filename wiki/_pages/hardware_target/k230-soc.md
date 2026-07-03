@@ -8,6 +8,7 @@ aliases:
 - K230 CanMV
 - Kendryte K230 CanMV
 - CanMV K230 development board
+- CanMV K230 v1.1
 subtype: hardware_target
 type: hardware_target
 tags: []
