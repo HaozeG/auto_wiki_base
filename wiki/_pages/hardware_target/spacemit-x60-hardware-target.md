@@ -42,7 +42,7 @@ type: hardware_target
 created: '2026-07-03'
 updated: '2026-07-03'
 cold_start: true
-inbound_links: 5
+inbound_links: 6
 outbound_links:
 - target: gcc-tuning-c908-canmv-k230
   reason: Both the XuanTie C908 and SpacemiT X60 have GCC tuning patches that model

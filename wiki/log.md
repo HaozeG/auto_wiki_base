@@ -405,3 +405,13 @@ audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/
 theme_profile: RISC-V AI accelerator | workflow_first
 coverage_gaps:
   - missing_page_type:workload_kernel
+
+## [2026-07-03] research | MobileNetV2 RISC-V NPU benchmark deployment
+session_id: c5738ff8
+candidates_evaluated: 8
+pages_written: 6
+pipeline_rejection_rate: 0%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/riscv-phase2/wiki/audit/research_c5738ff8_2026-07-03.json
+theme_profile: RISC-V AI accelerator | workflow_first
+coverage_gaps:
+  - missing_page_type:workload_kernel

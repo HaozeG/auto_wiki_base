@@ -10,6 +10,7 @@ aliases:
 - SG2042 LLM benchmark
 - DeepSeek on SG2042
 - Sophon SG2042 CPU
+- Sophon SG2042 (Pioneer Box)
 subtype: null
 tags: []
 hardware_targets:

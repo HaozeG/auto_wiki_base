@@ -1653,3 +1653,83 @@ xDSL is an open-source Python-native compiler framework that provides MLIR-based
 
 - https://xdsl.readthedocs.io/stable/marimo/
 merge_draft_body -->
+
+## [2026-07-03] merge_pending | sophon-sg2042.md
+target_page: sophon-sg2042.md
+canonical_name: SOPHON SG2042
+colliding_name: Sophon SG2042
+source: https://arxiv.org/html/2406.12394v1
+status: pending_review
+<!-- merge_draft_body
+# Sophon SG2042
+
+The Sophon SG2042 is a 64-core RISC-V CPU designed for high-performance workloads, produced by Sophon (SOPHGO) and first released in summer 2023. It is organized in clusters of four XuanTie C920 cores, each a 64-bit out-of-order superscalar processor implementing RV64GCV with the RVV v0.7.1 vector extension supporting a 128-bit vector width. The SG2042 features a 12-stage pipeline, 64KB L1 instruction and data cache per core, 1MB L2 cache shared per four-core cluster, and a 64MB L3 system cache shared across all cores. It contains four DDR4-3200 memory controllers and 32 lanes of PCI-E Gen4, and is available in the Milk-V Pioneer Box with 128GB of DDR4 RAM. The C920 core's RVV v0.7.1 is not supported by mainline GCC or LLVM, requiring T-Head's XuanTie GCC (20210618 release, GCC 8.4) for auto-vectorization. The SG2042 is the first mass-produced high-core-count RISC-V CPU and targets HPC workloads, but its memory subsystem is identified as the primary performance bottleneck.
+
+## Key Claims
+
+- The SG2042 has 64 XuanTie C920 cores running at 2GHz, organized in quad-core clusters.
+- Implements RV64GCV with RVV v0.7.1, 128-bit vector width.
+- Memory hierarchy: 64KB L1 I/D per core, 1MB L2 per cluster, 64MB L3 shared.
+- Four DDR4-3200 memory controllers, 32 lanes PCI-E Gen4.
+- Requires XuanTie GCC (GCC 8.4 from 20210618 release) for vectorization; mainline compilers do not support RVV v0.7.1.
+- Outperforms other commodity RISC-V CPUs by 2.6x to 16.7x at single-core level in NPB suite.
+- Performs well on compute-bound algorithms but is memory bandwidth/latency bound relative to x86-64 and AArch64 CPUs.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RV64GCV with RVV v0.7.1 (draft)
+- Vector/matrix/accelerator support: 128-bit vector unit per core, RVV v0.7.1
+- Memory/cache/TLB/DMA: 64KB L1 I/D, 1MB L2 (per 4-core cluster), 64MB L3, DDR4-3200, 32x PCIe Gen4
+- Compiler/toolchain support: XuanTie GCC (GCC 8.4 from 20210618 release) required for RVV; mainline GCC/LLVM do not support RVV v0.7.1
+
+## Relationships
+
+- [[sophon-sg2044-hardware-target]]: The SG2044 is the successor to the SG2042, employing C920v2 cores with RVV v1.0 and an enhanced memory subsystem; the SG2042 uses C920v1 cores with RVV v0.7.1 and its memory subsystem is identified as the primary performance bottleneck.
+- [[xuantie-c906-hardware-target]]: The XuanTie C906 is an in-order single-issue RISC-V core with a custom 128-bit SIMD unit, while the SG2042 uses out-of-order C920 cores with RVV v0.7.1; both are T-Head cores but target different performance segments.
+
+## Sources
+
+- https://arxiv.org/html/2406.12394v1
+merge_draft_body -->
+
+## [2026-07-03] merge_pending | sophon-sg2042.md
+target_page: sophon-sg2042.md
+canonical_name: SOPHON SG2042
+colliding_name: Sophon SG2042
+source: https://arxiv.org/abs/2406.12394
+status: pending_review
+<!-- merge_draft_body
+# Sophon SG2042
+
+The Sophon SG2042 is a 64-core RISC-V CPU designed for high performance workloads, first released in summer 2023. It is the first mass-produced, commodity-available high-core-count RISC-V processor targeting HPC applications. Each core is a T-Head XuanTie C920, a 64-bit high-performance design, organized in clusters of four cores running at 2 GHz. The processor supports the RISC-V ISA with the standard extensions (G, C, V) and is built for high throughput. Initial performance characterization using the NASA NAS Parallel Benchmark suite shows that the SG2042 delivers a 2.6× to 16.7× single-core performance improvement over other commodity RISC-V CPUs. Against x86-64 and AArch64 CPUs common in HPC, it performs competitively on compute-bound algorithms but falls behind on memory bandwidth- or latency-bound workloads, identifying the memory subsystem as the primary bottleneck. The SG2042 represents a significant milestone for RISC-V in HPC, providing a platform for open-ISA supercomputing research.
+
+## Key Claims
+
+- The SG2042 is the first mass-produced 64-core RISC-V CPU for HPC, released in summer 2023.
+- Cores are T-Head XuanTie C920, 64-bit, 2 GHz, organized in 4-core clusters.
+- Single-core performance improvement of 2.6× to 16.7× over other RISC-V CPUs, as measured by the NAS Parallel Benchmark suite.
+- Performs well on compute-bound algorithms relative to x86-64 and AArch64 HPC CPUs.
+- Memory subsystem (bandwidth and latency) is the greatest performance bottleneck.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V with standard extensions (G, C, V); no vendor-specific matrix extensions documented.
+- Vector/matrix/accelerator support: Supports RISC-V Vector Extension (RVV) 1.0 per XuanTie C920 specification (not detailed in this source).
+- Memory/cache/TLB/DMA: 64-core design with memory subsystem bottleneck; no detailed cache hierarchy provided in the source.
+- Compiler/toolchain support: Not specified; general GCC/LLVM RISC-V toolchains apply.
+
+## Relationships
+
+No specific relationships to existing wiki pages can be derived from the source material. The SG2042 is a distinct hardware target not directly related to the Milk-V Jupiter or its Q4X quantization optimization.
+
+## Sources
+
+- Brown, N. and Jamieson, M. (2024). "Performance characterisation of the 64-core SG2042 RISC-V CPU for HPC." arXiv:2406.12394. https://arxiv.org/abs/2406.12394
+merge_draft_body -->
+
+## [2026-07-03] pending | spacemit-x60-hardware-target.md
+target_page: spacemit-x60-hardware-target.md
+target_section: Relationships
+source: https://www.rt-rk.com/gcc-tuning-for-spacemit-x60-building-an-in-order-dual-issue-scheduler-model-part-i/
+status: pending_review
+proposed_update: Add a relationship entry linking to the new optimization_recipe page: 'Describes the GCC tuning recipe that implements the instruction scheduling model documented in [[spacemit-x60-gcc-tuning]].'
