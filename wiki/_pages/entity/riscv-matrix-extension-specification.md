@@ -4,6 +4,16 @@ aliases:
 - RISC-V Matrix Extension
 - riscv-matrix-extension
 - Matrix Extension Specification
+- Xuantie Matrix Extension
+- Xuantie-RV Matrix Extension
+- RISC-V Matrix Extension Proposal V0.6.0
+- Xuantie RV Matrix Extension
+- riscv-matrix-extension-spec
+- RV Matrix Extension v0.4.0
+- T-Head Matrix Extension
+- RVM extension
+- RV matrix extension
+- RISC-V matrix extension spec
 subtype: null
 tags:
 - risc-v
@@ -19,6 +29,12 @@ scorecard:
 sources:
 - raw/cache/69ba79650d1c86b5.md
 - https://deepwiki.com/riscv-stc/riscv-matrix-project/4.1-matrix-extension-specification
+- raw/cache/9425b98e97b53c45.md
+- https://github.com/XUANTIE-RV/riscv-matrix-extension-spec
+- raw/cache/b852143582393cff.md
+- https://github.com/XUANTIE-RV/riscv-matrix-extension-spec/tree/v0.4.0
+- raw/cache/03efd9e471335133.md
+- https://github.com/XUANTIE-RV/riscv-matrix-extension-spec/blob/master/demos/README.md
 source_url: https://deepwiki.com/riscv-stc/riscv-matrix-project/4.1-matrix-extension-specification
 fetched_at: '2026-07-03T13:51:11.299731+00:00'
 type: entity

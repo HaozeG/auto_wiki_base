@@ -609,3 +609,98 @@ No specific relationship to visible context pages in this wiki. The V851s is a d
 
 - https://linux-sunxi.org/V851s
 merge_draft_body -->
+
+## [2026-07-03] merge_pending | riscv-matrix-extension-specification.md
+target_page: riscv-matrix-extension-specification.md
+canonical_name: RISC-V Matrix Extension Specification
+colliding_name: RISC-V Matrix Extension Specification
+source: https://github.com/XUANTIE-RV/riscv-matrix-extension-spec
+status: pending_review
+<!-- merge_draft_body
+# RISC-V Matrix Extension Specification
+
+The RISC-V Matrix Extension Specification is a proposal for a matrix computation extension to the RISC-V architecture, targeting AI applications. Developed by Alibaba's T-Head (Xuantie) and currently at version 0.6.0, it introduces new register types and instructions for matrix operations. Key features include separated source (tile) and accumulation registers of different sizes, adjustable matrix register shapes (rows and columns are no longer limited to RLEN/32), and additional element-wise instructions to support operator fusion. The specification is accompanied by a software ecosystem that includes the SHL 2.0 neural network library, the HHB deployment toolkit, a QEMU emulator with matrix extension support, and a GNU toolchain with compiler and assembler support. The project also provides evaluation demos for ResNet50 and GEMM kernels. The extension remains under active development, with this repository serving as a preview demo project; the specification documents are built using AsciiDoctor and can be generated as PDFs. The simulator GEM5-RVME provides a detailed microarchitectural model of the extension.
+
+## Key Claims
+
+- The RISC-V Matrix Extension is at version 0.6.0 and is a proposal for AI-focused matrix operations under the RISC-V architecture.
+- It introduces a separation between source tile registers and accumulation registers, allowing source and destination registers of different sizes.
+- The matrix register shape is flexible: the number of rows and columns can be adjusted independently, supporting configurations from pure outer products to pure inner products.
+- New element-wise instructions have been added to facilitate operator fusion.
+- The extension is supported by a software stack including SHL 2.0 (a neural network library), HHB (a model deployment toolkit), a QEMU emulator with matrix extension support, and a GNU toolchain (GCC, binutils).
+- Evaluation demos for ResNet50 and GEMM are provided to demonstrate performance.
+- The specification is still under construction; this repository is a preview demo project.
+- The GEM5-RVME simulator provides a detailed microarchitectural model for the extension.
+
+## Relationships
+
+- [[xuantie-c906-hardware-target]]: The XuanTie C906 core uses custom SIMD instructions but does not implement the RISC-V Matrix Extension; the Matrix Extension is a separate proposal that may target future XuanTie cores for matrix-intensive AI workloads.
+- [[mlir-xdsl-rvv-codegen-pipeline]]: Both target AI computation on RISC-V; the MLIR-xDSL pipeline generates RVV code for GEMM kernels, while the Matrix Extension proposes dedicated matrix instructions that could complement or replace vector-based approaches for similar workloads.
+- [[spacemit-x60-hardware-target]]: The SpacemiT X60 implements RVV 1.0 for vector operations; the Matrix Extension proposes a complementary matrix-level instruction set not yet supported on the X60, representing a different approach to AI acceleration on RISC-V.
+
+## Sources
+
+- https://github.com/XUANTIE-RV/riscv-matrix-extension-spec
+merge_draft_body -->
+
+## [2026-07-03] merge_pending | riscv-matrix-extension-specification.md
+target_page: riscv-matrix-extension-specification.md
+canonical_name: RISC-V Matrix Extension Specification
+colliding_name: RISC-V Matrix Extension Specification
+source: https://github.com/XUANTIE-RV/riscv-matrix-extension-spec/tree/v0.4.0
+status: pending_review
+<!-- merge_draft_body
+# RISC-V Matrix Extension Specification
+
+The RISC-V Matrix Extension Specification is a matrix extension proposal for AI applications under the RISC-V architecture, developed by T-Head (Xuantie RV). It defines scalable register sizes ranging from 64 bytes to 2048 bytes with peak performance varying from 0.125 Tops/GHz to 32 Tops/GHz. The extension supports multiple data types including int4, int8, int16, fp16, bf16, and fp32, and is designed for binary portability across implementations. It is strongly inspired by the RISC-V Vector extension but maintains a decoupled architecture, allowing independent evolution. The specification is extensible for future data types such as fp8 and fp4. As of v0.4.0, the specification is under active development and includes supporting tooling: a neural network library (SHL 2.0), a model deployment toolkit (HHB), an emulator (QEMU with matrix extension support), a GNU toolchain with matrix extension support, and an intrinsic API reference manual. The project is hosted on GitHub under the XUANTIE-RV organization and is licensed under Apache-2.0.
+
+## Key Claims
+
+- The RISC-V Matrix Extension is a matrix extension proposal for AI workloads under the RISC-V ISA, developed by T-Head.
+- Register sizes are scalable from 64 bytes to 2048 bytes.
+- Peak performance ranges from 0.125 Tops/GHz to 32 Tops/Ghz, depending on register size.
+- Supported data types include int4, int8, int16, fp16, bf16, and fp32, with planned extensibility for fp8, fp4, and future types.
+- The extension is binary portable across implementations.
+- It is decoupled from the RISC-V Vector extension, though inspired by it, allowing independent feature evolution.
+- The specification includes a tool ecosystem: SHL 2.0 (neural network library), HHB (deployment toolkit), QEMU emulator with matrix support, and a GNU toolchain with matrix intrinsics.
+- As of v0.4.0, the extension is under construction and provided as a preview demo project.
+- The specification also defines a Matrix Extension ABI Manual, an intrinsic API Reference Manual, and includes demos for GEMM and ResNet50 evaluation.
+
+## Relationships
+
+No specific relationship to visible context pages.
+
+## Sources
+
+- https://github.com/XUANTIE-RV/riscv-matrix-extension-spec/tree/v0.4.0
+merge_draft_body -->
+
+## [2026-07-03] merge_pending | riscv-matrix-extension-specification.md
+target_page: riscv-matrix-extension-specification.md
+canonical_name: RISC-V Matrix Extension Specification
+colliding_name: RISC-V Matrix Extension
+source: https://github.com/XUANTIE-RV/riscv-matrix-extension-spec/blob/master/demos/README.md
+status: pending_review
+<!-- merge_draft_body
+# RISC-V Matrix Extension
+
+The RISC-V Matrix Extension is an ISA extension for RISC-V processors that introduces matrix multiply-accumulate (MMA) instructions and associated intrinsic functions for efficient execution of dense linear algebra and neural network workloads. The extension is defined in the riscv-matrix-extension-spec repository maintained by XUANTIE-RV, the RISC-V processor team of Alibaba Group's T-Head business. It provides instructions for matrix multiplication with integer (int8) and floating-point (fp16) data types, and is designed to accelerate general matrix multiply (GEMM) and convolution operations common in deep learning inference. The extension is complementary to the RISC-V Vector Extension (RVV) and targets higher computational density for matrix operations by leveraging specialized matrix register files and execution units. Complete C code model implementations and intrinsic demos are provided in the specification repository to facilitate evaluation and adoption.
+
+## Key Claims
+
+- The RISC-V Matrix Extension defines matrix multiply-accumulate instructions for int8 and fp16 datatypes.
+- The specification includes C code models and intrinsic-based demos for GEMM and matrix multiplication.
+- Demo applications include gemm_int8, gemm_fp16, resnet50_int8, resnet50_fp16, and matmul.
+- Benchmarks against the RISC-V Vector Extension (RVV) 1.0 show speedups of 5.28x–7.36x on ResNet50 and 9.76x–15.44x on GEMM (160x160x160).
+- The extension is maintained by XUANTIE-RV (T-Head / Alibaba) and is available as open source under the riscv-matrix-extension-spec repository.
+
+## Relationships
+
+- [[risc-v-matrix-extension-demo-benchmarks]]: The entity defines the ISA extension whose performance is evaluated in the demo benchmark results.
+- [[mlir-xdsl-rvv-codegen-pipeline]]: Both are RISC-V optimization approaches for matrix workloads; the Matrix Extension provides an ISA-level solution, while the MLIR-xDSL pipeline is a compiler-driven approach targeting RVV.
+- [[c908-wino-gemm-optimization]]: Both address GEMM acceleration on RISC-V; the extension offers a hardware-level matrix instruction set, in contrast to the library-level algorithmic optimizations in SHL for the XuanTie C908.
+
+## Sources
+
+- https://github.com/XUANTIE-RV/riscv-matrix-extension-spec/blob/master/demos/README.md
+merge_draft_body -->

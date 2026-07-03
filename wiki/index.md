@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-03 | Pages: 34 | Sources: 88
+Last updated: 2026-07-03 | Pages: 34 | Sources: 94
 
 ## Entity Pages
 
@@ -9,7 +9,7 @@ Last updated: 2026-07-03 | Pages: 34 | Sources: 88
 | [integrated-matrix-extension.md](entity/integrated-matrix-extension.md) | Integrated Matrix Extension |  | 2 | 0 |
 | [iree-rvv-mlir-ukernel.md](entity/iree-rvv-mlir-ukernel.md) | IREE MLIR-based uKernel for RVV | RISC-V, RVV, IREE, MLIR, uKernel, Matmul | 2 | 0 |
 | [mlir-compiler-infrastructure.md](entity/mlir-compiler-infrastructure.md) | MLIR | compiler, LLVM, intermediate representation | 2 | 0 |
-| [riscv-matrix-extension-specification.md](entity/riscv-matrix-extension-specification.md) | RISC-V Matrix Extension Specification | risc-v, isa, matrix, extension | 2 | 0 |
+| [riscv-matrix-extension-specification.md](entity/riscv-matrix-extension-specification.md) | RISC-V Matrix Extension Specification | risc-v, isa, matrix, extension | 8 | 0 |
 | [rvv-dialect-mlir.md](entity/rvv-dialect-mlir.md) | RVV Dialect (MLIR) | MLIR, RVV, RISC-V, dialect, compiler | 2 | 0 |
 | [rvv-intrinsic-api.md](entity/rvv-intrinsic-api.md) | RISC-V Vector Extension Intrinsic API |  | 2 | 0 |
 | [shl.md](entity/shl.md) | SHL |  | 4 | 1 |
@@ -84,10 +84,15 @@ Last updated: 2026-07-03 | Pages: 34 | Sources: 88
 - **OpenXiangShan**: → [xiangshan-overview](entity/xiangshan-overview.md)
 - **Python-native SSA Compiler Framework**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
 - **RISC-V Matrix Extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
+- **RISC-V Matrix Extension Proposal V0.6.0**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RISC-V Matrix Extension Specification**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RISC-V Vector Extension Dialect**: → [rvv-dialect-mlir](entity/rvv-dialect-mlir.md)
 - **RISC-V Vector Extension Intrinsic API**: → [rvv-intrinsic-api](entity/rvv-intrinsic-api.md)
 - **RISC-V Vector Intrinsic API**: → [rvv-intrinsic-api](entity/rvv-intrinsic-api.md)
+- **RISC-V matrix extension spec**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
+- **RV Matrix Extension v0.4.0**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
+- **RV matrix extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
+- **RVM extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RVV Dialect (MLIR)**: → [rvv-dialect-mlir](entity/rvv-dialect-mlir.md)
 - **RVV Intrinsic API**: → [rvv-intrinsic-api](entity/rvv-intrinsic-api.md)
 - **RVV MLIR Dialect**: → [rvv-dialect-mlir](entity/rvv-dialect-mlir.md)
@@ -116,6 +121,7 @@ Last updated: 2026-07-03 | Pages: 34 | Sources: 88
 - **Structure of Heterogeneous Library**: → [shl](entity/shl.md)
 - **T-HEAD XuanTie C908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **T-Head C906**: → [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
+- **T-Head Matrix Extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **T-Head XuanTie**: → [xuantie](entity/xuantie.md)
 - **T-Head XuanTie C908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **T1**: → [t1](hardware_target/t1.md)
@@ -143,11 +149,15 @@ Last updated: 2026-07-03 | Pages: 34 | Sources: 88
 - **Xuantie C906**: → [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
 - **Xuantie C908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **Xuantie GNU Toolchain**: → [xuantie-gnu-toolchain](entity/xuantie-gnu-toolchain.md)
+- **Xuantie Matrix Extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
+- **Xuantie RV Matrix Extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
+- **Xuantie-RV Matrix Extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **Yuzukilizard**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
 - **ZCC**: → [zcc-compiler](entity/zcc-compiler.md)
 - **ZCC 4.x**: → [zcc-compiler](entity/zcc-compiler.md)
 - **chipsalliance/t1**: → [t1](hardware_target/t1.md)
 - **riscv-matrix-extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
+- **riscv-matrix-extension-spec**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **rvspoc-s2311-llama2**: → [baby-llama2-milkv-duo-benchmark](benchmark_result/baby-llama2-milkv-duo-benchmark.md)
 - **rvv-intrinsic-api**: → [rvv-intrinsic-api](entity/rvv-intrinsic-api.md)
 - **spacemit-x60**: → [spacemit-x60-hardware-target](hardware_target/spacemit-x60-hardware-target.md)
@@ -164,6 +174,7 @@ Last updated: 2026-07-03 | Pages: 34 | Sources: 88
 - **玄铁C906**: → [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
 - **香山**: → [xiangshan-overview](entity/xiangshan-overview.md)
 - **xuantie-c908-gcc-tuning**: mentioned in [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md) — *no dedicated page*
+
 
 
 
@@ -246,6 +257,7 @@ Last updated: 2026-07-03 | Pages: 34 | Sources: 88
 - [maestro-gesture-recognition](benchmark_result/maestro-gesture-recognition.md)
 - [mlir-xdsl-gemm-benchmark-k230-banana-pi](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md)
 - [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
+
 
 
 
