@@ -1056,6 +1056,78 @@ def test_synthesis_gap_clusters_includes_subtype_pages_not_just_literal_entity_t
     assert sorted(uncovered) == ["chip_a", "chip_b", "chip_c"]
 
 
+def test_hub_member_pages_resolves_declared_subtype_membership(tmp_path):
+    pages_dir = tmp_path / "wiki" / "_pages"
+    hw_dir = pages_dir / "hardware_target"
+    hw_dir.mkdir(parents=True)
+    (hw_dir / "chip-a.md").write_text("---\ntype: hardware_target\n---\n\n# Chip A\n", encoding="utf-8")
+    entity_dir = pages_dir / "entity"
+    entity_dir.mkdir(parents=True)
+    (entity_dir / "unrelated.md").write_text("---\ntype: entity\n---\n\n# Unrelated\n", encoding="utf-8")
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text(
+        "```yaml\n[theme_profile]\nhub_hierarchy:\n"
+        "- hub_id: vendor_core_families\n  subtype: hardware_target\n```\n",
+        encoding="utf-8",
+    )
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md):
+        assert orchestrator._hub_member_pages() == {"chip-a"}
+
+
+def test_hub_promotion_candidates_finds_cluster_within_declared_hub(tmp_path):
+    """Phase 2c: a tag cluster within a declared hub's subtype, large enough
+    to warrant its own sub-hub, is surfaced for human review -- never
+    auto-applied (same principle as retrospective lint's MERGE/DELETE)."""
+    pages_dir = tmp_path / "wiki" / "_pages"
+    hw_dir = pages_dir / "hardware_target"
+    hw_dir.mkdir(parents=True)
+    for name in ("xuantie-c906", "xuantie-c908", "xuantie-c910"):
+        (hw_dir / f"{name}.md").write_text(
+            f"---\ntype: hardware_target\ntags: [xuantie, risc-v]\n---\n\n# {name}\n",
+            encoding="utf-8",
+        )
+    (hw_dir / "sifive-x280.md").write_text(
+        "---\ntype: hardware_target\ntags: [sifive, risc-v]\n---\n\n# SiFive X280\n",
+        encoding="utf-8",
+    )
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text(
+        "```yaml\n[theme_profile]\nhub_hierarchy:\n"
+        "- hub_id: vendor_core_families\n  label: Vendor RISC-V Core Families\n"
+        "  subtype: hardware_target\n```\n"
+        "```yaml\n[research_config]\nsynthesis_gap_min_cluster_size: 3\n```\n",
+        encoding="utf-8",
+    )
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md):
+        candidates = orchestrator._hub_promotion_candidates()
+
+    xuantie_candidates = [c for c in candidates if c["tag"] == "xuantie"]
+    assert len(xuantie_candidates) == 1
+    c = xuantie_candidates[0]
+    assert c["parent_hub_id"] == "vendor_core_families"
+    assert sorted(c["member_pages"]) == ["xuantie-c906", "xuantie-c908", "xuantie-c910"]
+    # "risc-v" is shared by all 4 pages, including sifive-x280 -- also a
+    # valid, separate cluster candidate under the same hub.
+    assert any(c["tag"] == "risc-v" and len(c["member_pages"]) == 4 for c in candidates)
+    # "sifive" alone only has 1 page -- below threshold, not proposed.
+    assert not any(c["tag"] == "sifive" for c in candidates)
+
+
+def test_hub_promotion_candidates_empty_when_no_hub_hierarchy_declared(tmp_path):
+    pages_dir = tmp_path / "wiki" / "_pages"
+    pages_dir.mkdir(parents=True)
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text("```yaml\n[theme_profile]\ntheme: x\n```\n", encoding="utf-8")
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md):
+        assert orchestrator._hub_promotion_candidates() == []
+
+
 def test_generate_synthesis_candidate_writes_page_and_respects_budget(tmp_path):
     """Regression coverage for Phase 3: the research loop previously only
     logged synthesis gaps (_check_synthesis_gaps) without ever acting on them.

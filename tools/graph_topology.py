@@ -141,7 +141,9 @@ def _generic_tags(tags_index: dict[str, set[str]], threshold: float = 0.4) -> se
     return {t for t, c in counts.items() if c / n > threshold}
 
 
-def find_bridge_candidates(pages_dir: Path, max_candidates: int = 5) -> list[dict]:
+def find_bridge_candidates(
+    pages_dir: Path, max_candidates: int = 5, hub_pages: set[str] | None = None
+) -> list[dict]:
     """Identify pairs of topologically distant pages as candidate bridge
     topics for the research/discovery step.
 
@@ -169,6 +171,17 @@ def find_bridge_candidates(pages_dir: Path, max_candidates: int = 5) -> list[dic
     (index into the pool keyed by the component's own sorted position) keeps
     the anchor varying across pairs even when there's no tag signal at all,
     rather than only when tags happen to line up.
+
+    ``hub_pages`` (Phase 2d): stems of pages belonging to *any* subtype
+    [theme_profile].hub_hierarchy declared as a top-level hub (2a/2b
+    deliberately has no per-page `is_hub` frontmatter flag — a hub is a
+    derived grouping by subtype, not a seeded page, so this is the set of
+    pages that already belong to an organizationally-meaningful category,
+    not a single "the hub page" identity). When any such page is present in
+    the largest component, the anchor pool is narrowed to just those pages
+    first — a page the theme has deliberately classified into a declared
+    hub concept is a better bridge anchor than an arbitrary unclassified
+    page, even before considering tags/degree.
     """
     graph = build_graph(pages_dir).to_undirected()
     components = sorted(nx.connected_components(graph), key=len, reverse=True)
@@ -180,7 +193,13 @@ def find_bridge_candidates(pages_dir: Path, max_candidates: int = 5) -> list[dic
         # candidate pool: the giant component's best-connected nodes, so the
         # anchor is still a reasonably central page, just not always the same one
         pool_size = min(len(largest), max(5, max_candidates * 2))
-        anchor_pool = sorted(largest, key=lambda n: graph.degree(n), reverse=True)[:pool_size]
+        hub_in_largest = (hub_pages or set()) & largest
+        if hub_in_largest:
+            # A declared hub beats inferred centrality — narrow the pool to
+            # deliberate anchors, still capped and degree-sorted for stability.
+            anchor_pool = sorted(hub_in_largest, key=lambda n: graph.degree(n), reverse=True)[:pool_size]
+        else:
+            anchor_pool = sorted(largest, key=lambda n: graph.degree(n), reverse=True)[:pool_size]
 
         def pick_anchor(component: set, fallback_index: int) -> str | None:
             if not anchor_pool:

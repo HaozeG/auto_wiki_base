@@ -706,6 +706,77 @@ def _check_synthesis_gaps() -> list[str]:
     return gaps
 
 
+def _hub_promotion_candidates(min_cluster_size: int | None = None) -> list[dict]:
+    """Phase 2c: propose promoting a tag cluster *within* a declared top-level
+    hub into a named sub-hub nested under it, once the cluster grows to
+    `synthesis_gap_min_cluster_size` (reused, same threshold as
+    _synthesis_gap_clusters — a cluster large enough to deserve its own
+    synthesis page is also large enough to deserve its own sub-hub label).
+
+    This is the "continuously build subtype hierarchy along the exploration"
+    mechanism: hub_hierarchy in [theme_profile] declares only the top level
+    at theme setup; finer structure (e.g. "XuanTie C9-series cores" under
+    "Vendor RISC-V Core Families") emerges from real page-tag clustering as
+    the wiki grows, surfaced here for human review during routine lint —
+    never auto-applied, same principle as retrospective lint's MERGE/DELETE
+    gate. Returns [{parent_hub_id, parent_label, tag, member_pages}], not
+    persisted anywhere until a human confirms and a real synthesis page
+    materializes the sub-hub (mirrors 2a/2b: no forced page creation)."""
+    hub_hierarchy = _load_claude_md_block("theme_profile").get("hub_hierarchy") or []
+    if not hub_hierarchy:
+        return []
+    threshold = min_cluster_size or int(
+        _load_claude_md_block("research_config").get("synthesis_gap_min_cluster_size", 3) or 3
+    )
+
+    pages_by_subtype: dict[str, list[Path]] = {}
+    for p in _WIKI_PAGES_DIR.rglob("*.md"):
+        fm, _ = frontmatter.parse_page(p)
+        pages_by_subtype.setdefault(fm.get("type", "entity"), []).append(p)
+
+    covered: set[str] = set()
+    for p in _WIKI_PAGES_DIR.rglob("*.md"):
+        fm, _ = frontmatter.parse_page(p)
+        if fm.get("type") == "synthesis":
+            covered.update(fm.get("connected_entities", []))
+
+    candidates = []
+    for hub in hub_hierarchy:
+        subtype = hub.get("subtype", "")
+        members = pages_by_subtype.get(subtype, [])
+        if len(members) < threshold:
+            continue
+        tag_to_pages: dict[str, list[str]] = {}
+        for p in members:
+            fm, _ = frontmatter.parse_page(p)
+            for tag in fm.get("tags", []) or []:
+                tag_to_pages.setdefault(tag, []).append(p.stem)
+        for tag, stems in sorted(tag_to_pages.items(), key=lambda x: -len(x[1])):
+            uncovered = [s for s in stems if s not in covered]
+            if len(uncovered) >= threshold:
+                candidates.append({
+                    "parent_hub_id": hub.get("hub_id", ""),
+                    "parent_label": hub.get("label", ""),
+                    "tag": tag,
+                    "member_pages": uncovered,
+                })
+    return candidates
+
+
+def _check_hub_promotions() -> list[str]:
+    """Human-readable sub-hub promotion candidates for the routine lint log
+    (same pairing as _synthesis_gap_clusters/_check_synthesis_gaps)."""
+    lines = []
+    for c in _hub_promotion_candidates():
+        sample = ", ".join(c["member_pages"][:3])
+        more = "..." if len(c["member_pages"]) > 3 else ""
+        lines.append(
+            f"hub='{c['parent_label']}' tag='{c['tag']}': {len(c['member_pages'])} pages "
+            f"could form a sub-hub (e.g. {sample}{more})"
+        )
+    return lines
+
+
 def _extract_section(body: str, heading: str) -> str:
     """Return the text under a '## heading' section, up to the next '## '."""
     pattern = re.compile(rf"^##\s+{re.escape(heading)}\s*\n(.*?)(?=^##\s|\Z)", re.MULTILINE | re.DOTALL)
@@ -1303,6 +1374,25 @@ def _canonical_label(page_path: Path) -> str:
     return str(fm.get("canonical_name") or page_path.stem)
 
 
+def _hub_member_pages() -> set[str]:
+    """Phase 2d: stems of pages belonging to any subtype declared as a
+    top-level hub in [theme_profile].hub_hierarchy — see
+    graph_topology.find_bridge_candidates' hub_pages docstring for why this
+    is a subtype-membership set, not a per-page is_hub flag."""
+    hub_hierarchy = _load_claude_md_block("theme_profile").get("hub_hierarchy") or []
+    if not hub_hierarchy:
+        return set()
+    hub_subtypes = {h.get("subtype", "") for h in hub_hierarchy if h.get("subtype")}
+    if not hub_subtypes:
+        return set()
+    members: set[str] = set()
+    for p in _WIKI_PAGES_DIR.rglob("*.md"):
+        fm, _ = frontmatter.parse_page(p)
+        if fm.get("type", "entity") in hub_subtypes:
+            members.add(p.stem)
+    return members
+
+
 def _bridge_candidates_for_manifest(max_candidates: int = 5) -> list[dict]:
     """Distant connected-component pairs (see graph_topology.find_bridge_candidates),
     with human-readable topic labels, for the keyword recommender manifest —
@@ -1310,7 +1400,9 @@ def _bridge_candidates_for_manifest(max_candidates: int = 5) -> list[dict]:
     topologically distant clusters as candidate research angles, rather than
     only linking pages that already exist after the fact."""
     try:
-        raw = graph_topology.find_bridge_candidates(_WIKI_PAGES_DIR, max_candidates=max_candidates)
+        raw = graph_topology.find_bridge_candidates(
+            _WIKI_PAGES_DIR, max_candidates=max_candidates, hub_pages=_hub_member_pages()
+        )
     except Exception as e:
         logger.warning("bridge-candidate detection failed: %s", e)
         return []
