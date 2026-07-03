@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-03 | Pages: 25 | Sources: 64
+Last updated: 2026-07-03 | Pages: 28 | Sources: 68
 
 ## Entity Pages
 
@@ -33,8 +33,11 @@ Last updated: 2026-07-03 | Pages: 25 | Sources: 64
 - **CanMV K230 development board**: → [k230-soc](hardware_target/k230-soc.md)
 - **CanMV-K230**: → [k230-soc](hardware_target/k230-soc.md)
 - **CoreMark C908 0.8%**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
+- **GAP9**: → [gap9](hardware_target/gap9.md)
+- **GAP9 SoC**: → [gap9](hardware_target/gap9.md)
 - **GCC 15 vs Clang 21 on BananaPi-F3 (RVV 1.0)**: → [gcc15-vs-clang21-banana-pi-f3-rvv10](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md)
 - **GCC Tuning Benchmark on XuanTie C908**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
+- **GreenWaves GAP9**: → [gap9](hardware_target/gap9.md)
 - **IME**: → [integrated-matrix-extension](entity/integrated-matrix-extension.md)
 - **IREE MLIR-based uKernel for RVV**: → [iree-rvv-mlir-ukernel](entity/iree-rvv-mlir-ukernel.md)
 - **IREE RVV uKernel**: → [iree-rvv-mlir-ukernel](entity/iree-rvv-mlir-ukernel.md)
@@ -55,6 +58,11 @@ Last updated: 2026-07-03 | Pages: 25 | Sources: 64
 - **MLIR-xDSL K230 GEMM Benchmark**: → [mlir-xdsl-gemm-benchmark-k230-banana-pi](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md)
 - **MLIR-xDSL RVV Code Generation Pipeline**: → [mlir-xdsl-rvv-codegen-pipeline](optimization_recipe/mlir-xdsl-rvv-codegen-pipeline.md)
 - **MME**: → [xuantie-mme](entity/xuantie-mme.md)
+- **Maestro**: → [maestro](hardware_target/maestro.md)
+- **Maestro SoC**: → [maestro](hardware_target/maestro.md)
+- **Maestro WUS pipeline**: → [maestro-gesture-recognition](benchmark_result/maestro-gesture-recognition.md)
+- **Maestro gesture recognition benchmark**: → [maestro-gesture-recognition](benchmark_result/maestro-gesture-recognition.md)
+- **Maestro ultrasound gesture recognition**: → [maestro-gesture-recognition](benchmark_result/maestro-gesture-recognition.md)
 - **Matrix Extension Specification**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **OpenNanhu-V5**: → [opennanhu-v5](hardware_target/opennanhu-v5.md)
 - **OpenXiangShan**: → [xiangshan-overview](entity/xiangshan-overview.md)
@@ -131,15 +139,19 @@ Last updated: 2026-07-03 | Pages: 25 | Sources: 64
 
 
 
+
 ## Optimization Pages
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
 | [gcc-tuning-c908-canmv-k230.md](benchmark_result/gcc-tuning-c908-canmv-k230.md) | benchmark_result | GCC Tuning Benchmark on XuanTie C908 |  | 2 | 2 |
 | [gcc15-vs-clang21-banana-pi-f3-rvv10.md](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md) | benchmark_result | GCC 15 vs Clang 21 on BananaPi-F3 (RVV 1.0) | RVV, compiler, GCC, Clang | 2 | 0 |
+| [maestro-gesture-recognition.md](benchmark_result/maestro-gesture-recognition.md) | benchmark_result | Maestro gesture recognition benchmark |  | 2 | 0 |
 | [mlir-xdsl-gemm-benchmark-k230-banana-pi.md](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md) | benchmark_result | MLIR-xDSL GEMM Benchmark on K230 and BananaPi F3 |  | 2 | 0 |
 | [spacemit-k1-benchmark-2026-04-14.md](benchmark_result/spacemit-k1-benchmark-2026-04-14.md) | benchmark_result | SpacemiT K1 AI Benchmark Report (2026-04-14) |  | 2 | 0 |
+| [gap9.md](hardware_target/gap9.md) | hardware_target | GAP9 |  | 2 | 2 |
 | [k230-soc.md](hardware_target/k230-soc.md) | hardware_target | K230 |  | 8 | 0 |
+| [maestro.md](hardware_target/maestro.md) | hardware_target | Maestro |  | 2 | 1 |
 | [opennanhu-v5.md](hardware_target/opennanhu-v5.md) | hardware_target | OpenNanhu-V5 |  | 2 | 0 |
 | [sophon-sg2042.md](hardware_target/sophon-sg2042.md) | hardware_target | SOPHON SG2042 |  | 4 | 0 |
 | [spacemit-k1.md](hardware_target/spacemit-k1.md) | hardware_target | SpacemiT K1 |  | 4 | 1 |
@@ -155,7 +167,9 @@ Last updated: 2026-07-03 | Pages: 25 | Sources: 64
 
 *Hardware/ISA targets: cores, SoCs, and accelerators by vendor.*
 
+- [gap9](hardware_target/gap9.md)
 - [k230-soc](hardware_target/k230-soc.md)
+- [maestro](hardware_target/maestro.md)
 - [opennanhu-v5](hardware_target/opennanhu-v5.md)
 - [sophon-sg2042](hardware_target/sophon-sg2042.md)
 - [spacemit-k1](hardware_target/spacemit-k1.md)
@@ -182,8 +196,10 @@ Last updated: 2026-07-03 | Pages: 25 | Sources: 64
 
 - [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
 - [gcc15-vs-clang21-banana-pi-f3-rvv10](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md)
+- [maestro-gesture-recognition](benchmark_result/maestro-gesture-recognition.md)
 - [mlir-xdsl-gemm-benchmark-k230-banana-pi](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md)
 - [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
+
 
 
 
