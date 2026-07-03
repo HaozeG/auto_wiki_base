@@ -1561,3 +1561,95 @@ No specific relationship to visible context pages. The only context page ([[q4x-
 
 - https://www.cnx-software.com/2022/11/04/t-head-xuantie-c908-risc-v-core-targets-aiot-applications/
 merge_draft_body -->
+
+## [2026-07-03] merge_pending | xdsl-compiler-toolkit.md
+target_page: xdsl-compiler-toolkit.md
+canonical_name: xDSL
+colliding_name: xDSL
+source: https://xdsl.dev/
+status: pending_review
+<!-- merge_draft_body
+# xDSL
+
+xDSL is a Python-native compiler framework for building compiler infrastructure, centered on SSA-based intermediate representations (IRs). It is MLIR-compatible, using the same textual MLIR format for IR and enabling interoperability with the MLIR ecosystem. The framework provides a library of predefined domain-specific IRs and allows users to define custom IRs for their specific compilation tasks. xDSL is cross-platform, running on any system that supports Python, and is open source under the Apache License v2.0 with LLVM Exceptions. It is maintained by the xDSL project community on GitHub.
+
+## Key Claims
+
+- xDSL is a Python-native compiler framework that uses SSA-based intermediate representations.
+- It is MLIR-compatible, sharing the same textual IR format as MLIR, which allows integration with MLIR-based tools.
+- The framework includes a library of predefined domain-specific IRs and supports the definition of custom IRs.
+- xDSL is cross-platform (runs on any platform with Python) and is open source under the Apache License v2.0 with LLVM Exceptions.
+- The project is hosted on GitHub under the xdslproject/xdsl repository.
+
+## Relationships
+
+- [[sophon-sg2044-hardware-target]]: Both xDSL and the Sophon SG2044 are part of the LLVM/MLIR compiler ecosystem; xDSL can produce MLIR that is lowered through LLVM to target the SG2044's C920v2 cores with RVV 1.0 acceleration.
+
+## Sources
+
+- https://xdsl.dev/
+- https://github.com/xdslproject/xdsl
+merge_draft_body -->
+
+## [2026-07-03] merge_pending | xdsl-compiler-toolkit.md
+target_page: xdsl-compiler-toolkit.md
+canonical_name: xDSL
+colliding_name: xDSL
+source: https://github.com/xdslproject/xdsl
+status: pending_review
+<!-- merge_draft_body
+# xDSL
+
+xDSL is a Python-native SSA compiler framework for building compiler infrastructure. It provides SSA-based intermediate representations (IRs) and Pythonic APIs to define, assemble, and optimize custom IRs, with seamless compatibility with MLIR from the LLVM project. Inspired by MLIR, xDSL enables smooth translation of programs and abstractions between frameworks, allowing users to prototype compilers entirely in Python while accessing MLIR's powerful optimization and code generation pipeline. All IRs in xDSL employ a unified SSA data structure with regions and basic blocks, making it easy to write generic analyses and transformation passes. xDSL supports assembling compilers from predefined or custom IRs, and organizing transformations across a multi-level IR stack, similar to the architecture of projects like Devito, PSyclone, and Firedrake.
+
+## Key Claims
+
+- xDSL is a Python-native SSA compiler framework that provides SSA-based intermediate representations (IRs) and Pythonic APIs to define, assemble, and optimize custom IRs.
+- It offers seamless compatibility with MLIR from the LLVM project, enabling translation of programs between frameworks.
+- Users can prototype compilers entirely in Python while accessing MLIR's optimization and code generation pipeline.
+- All IRs in xDSL use a unified SSA data structure with regions and basic blocks, simplifying generic analyses and transformations.
+- It supports assembling compilers from predefined or custom IRs and organizing transformations across a multi-level IR stack.
+- The framework is used by projects like Devito, PSyclone, and Firedrake.
+- xDSL supports subprojects with extra dependencies for GUI, JAX, and RISC-V (via `xdsl[riscv]`).
+- The version is validated against MLIR version 22.1.2.
+
+## Relationships
+
+- [[sophon-sg2044-hardware-target]]: xDSL can compile code for the Sophon SG2044 through its MLIR compatibility, enabling targeting of the SG2044's XuanTie C920v2 cores and RVV v1.0 vector unit.
+- [[andes-nx27v-hardware-target]]: xDSL's MLIR interoperation allows it to target the AndesCore NX27V's RVV 1.0 vector processing unit, supporting the development of optimizations for this out-of-order VPU.
+- [[xuantie-c906-hardware-target]]: xDSL can be used to design and optimize compilers for the XuanTie C906 through the MLIR infrastructure, leveraging its support for custom RISC-V IRs and transformations.
+
+## Sources
+
+- https://github.com/xdslproject/xdsl
+merge_draft_body -->
+
+## [2026-07-03] merge_pending | xdsl-compiler-toolkit.md
+target_page: xdsl-compiler-toolkit.md
+canonical_name: xDSL
+colliding_name: xDSL
+source: https://xdsl.readthedocs.io/stable/marimo/
+status: pending_review
+<!-- merge_draft_body
+# xDSL
+
+xDSL is an open-source Python-native compiler framework that provides MLIR-based intermediate representation (IR) manipulation, dialect definitions, pattern rewriting, and code generation capabilities. Developed as a pure Python library, it enables compiler development directly within Python environments without requiring C++ infrastructure. xDSL uses Marimo notebooks for interactive exploration, allowing users to work with IR nodes, define custom dialects, and apply transformations in a reactive notebook environment. The framework supports multiple assembly-level dialects including RISC-V, LLVM, MPS (Metal Performance Shaders), WGSL (WebGPU Shading Language), and x86, and includes frontends for Python AST and the Pattern Description Language (PDL). It also provides tools for shape inference, equality saturation, and dialect conversion, making it suitable for research and prototyping of compiler optimizations.
+
+## Key Claims
+
+- xDSL is a Python-native compiler framework that operates on MLIR-based IR.
+- It uses Marimo notebooks for interactive compiler development with automatic dependency tracking between cells.
+- Supports multiple assembly-level dialects: RISC-V, LLVM, MPS, WGSL, and x86.
+- Includes frontends for Python AST and PDL (Pattern Description Language).
+- Provides rewriting infrastructure and shape inference patterns.
+- Supports equality saturation as an optimization technique.
+- Has a RISC-V dialect series that includes compiling linalg to Snitch.
+
+## Relationships
+
+- [[xuantie-c906-hardware-target]]: xDSL's RISC-V MLIR dialect provides a compiler-level representation that can target RISC-V cores such as the XuanTie C906, enabling dialect-level analysis and optimization before code generation.
+
+## Sources
+
+- https://xdsl.readthedocs.io/stable/marimo/
+merge_draft_body -->

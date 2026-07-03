@@ -6,6 +6,9 @@ aliases:
 - Python-native SSA Compiler Framework
 - xdslproject
 - xdsl
+- xdslproject/xdsl
+- xDSL compiler framework
+- Python-native compiler framework
 subtype: null
 tags: []
 scorecard:
@@ -19,6 +22,10 @@ sources:
 - https://github.com/xdslproject/xdsl
 - raw/cache/24631a4f1ece9250.md
 - https://github.com/xdslproject
+- raw/cache/2a2c38803b5d26e2.md
+- https://xdsl.dev/
+- raw/cache/256a47515edbb2ed.md
+- https://xdsl.readthedocs.io/stable/marimo/
 source_url: https://github.com/xdslproject/xdsl
 fetched_at: '2026-07-03T14:52:11.255030+00:00'
 type: entity

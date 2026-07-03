@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-03 | Pages: 68 | Sources: 186
+Last updated: 2026-07-03 | Pages: 68 | Sources: 190
 
 ## Entity Pages
 
@@ -31,7 +31,7 @@ Last updated: 2026-07-03 | Pages: 68 | Sources: 186
 | [shl.md](entity/shl.md) | SHL |  | 4 | 1 |
 | [sifive-intelligence-2nd-gen.md](entity/sifive-intelligence-2nd-gen.md) | SiFive Intelligence 2nd Gen |  | 2 | 0 |
 | [whisper-risc-v-iss-entity.md](entity/whisper-risc-v-iss-entity.md) | Whisper | RISC-V, instruction set simulator, ISS, Tenstorrent | 2 | 0 |
-| [xdsl-compiler-toolkit.md](entity/xdsl-compiler-toolkit.md) | xDSL |  | 4 | 0 |
+| [xdsl-compiler-toolkit.md](entity/xdsl-compiler-toolkit.md) | xDSL |  | 8 | 0 |
 | [xiangshan-overview.md](entity/xiangshan-overview.md) | XiangShan |  | 6 | 0 |
 | [xuantie-ai-benchmark-suite.md](entity/xuantie-ai-benchmark-suite.md) | XuanTie AI Benchmark Suite |  | 2 | 3 |
 | [xuantie-gnu-toolchain.md](entity/xuantie-gnu-toolchain.md) | XuanTie GNU Compiler Toolchain |  | 2 | 0 |
@@ -186,6 +186,7 @@ Last updated: 2026-07-03 | Pages: 68 | Sources: 186
 - **OpenXiangShan**: → [xiangshan-overview](entity/xiangshan-overview.md)
 - **Project RP014**: → [rise-project-rp014-llamacpp-ggml-rvv](entity/rise-project-rp014-llamacpp-ggml-rvv.md)
 - **Python-native SSA Compiler Framework**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
+- **Python-native compiler framework**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
 - **Q4X**: → [q4x-quantization-llamacpp-rvv](optimization_recipe/q4x-quantization-llamacpp-rvv.md)
 - **Q4X quantization**: → [q4x-quantization-llamacpp-rvv](optimization_recipe/q4x-quantization-llamacpp-rvv.md)
 - **Q4_0**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
@@ -345,9 +346,11 @@ Last updated: 2026-07-03 | Pages: 68 | Sources: 186
 - **xDSL**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
 - **xDSL Python Compiler Framework**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
 - **xDSL RVV lowerings**: → [mlir-xdsl-rvv-codegen-pipeline](optimization_recipe/mlir-xdsl-rvv-codegen-pipeline.md)
+- **xDSL compiler framework**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
 - **xDSL project**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
 - **xdsl**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
 - **xdslproject**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
+- **xdslproject/xdsl**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
 - **xt-c908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **xt-c908 GCC tuning**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
 - **xt-c908 tuning**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
@@ -360,6 +363,7 @@ Last updated: 2026-07-03 | Pages: 68 | Sources: 186
 - **香山**: → [xiangshan-overview](entity/xiangshan-overview.md)
 - **sophon-sg2042-hardware-target**: mentioned in [sophon-sg2042-npb-performance-benchmark-result](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md) — *no dedicated page*
 - **xuantie-c908-gcc-tuning**: mentioned in [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md) — *no dedicated page*
+
 
 
 
@@ -498,6 +502,7 @@ Last updated: 2026-07-03 | Pages: 68 | Sources: 186
 - [mlir-xdsl-gemm-benchmark-k230-banana-pi](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md)
 - [sophon-sg2042-npb-performance-benchmark-result](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md)
 - [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
+
 
 
 
