@@ -23,6 +23,8 @@ sources:
 - https://gcc.gnu.org/pipermail/gcc-patches/2026-June/719208.html
 - raw/cache/17dddb797b6e11ae.md
 - https://github.com/FreeRTOS/FreeRTOS-Community-Supported-Demos/blob/main/RISC-V_XUANTIE_C908_GCC/README.md
+- raw/cache/25ef1a75fb2012c6.md
+- https://gcc.gnu.org/pipermail/gcc-patches/2026-June/719234.html
 hardware_targets:
 - XuanTie C908
 toolchains:

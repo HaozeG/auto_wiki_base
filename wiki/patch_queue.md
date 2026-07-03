@@ -1034,3 +1034,87 @@ target_section: all
 source: https://github.com/10x-Engineers/et-soc1-docs/blob/main/01_esperanto_soc_overview.md
 status: pending_review
 proposed_update: Overwrite the page with detailed architectural information from official Esperanto ET-SoC-1 documentation (10x-Engineers/et-soc1-docs). Add precise core counts: 1,088 ET-Minion 64-bit RISC-V dual-threaded in-order scalar cores with custom vector/tensor units, 4 ET-Maxion 64-bit RISC-V single-threaded superscalar out-of-order cores, and 1 ET-Minion-based Service Processor. Include memory hierarchy: 140 MB on-die SRAM distributed across chip, each 1 MB block configurable as local L2 cache, part of chip-wide L3, or globally accessible scratchpad. Add PCI Express Gen4 x8 interface delivering peak throughput 128 Gbps. Add sixteen 16-bit LPDDR4X controllers at 4,266 MT/s (133 GB/s). Describe SoC hierarchy: Neighborhood (8 ET-Minion cores + 32 KB shared I-cache), Shire (4 Neighborhoods, 4 MB shared L2/L3 cache, mesh stop interface), 34 Minion Shires (1,088 cores total) plus PCI Shire and I/O Shire (ET-Maxion cores, Service Processor, Root of Trust, USB, I2C, SPI, UARTs). Add ET-Minion privileged architecture deviations: performance counters moved to shared PMU, minstret/mcycle always return 0, satp CSR shared between harts, mtvec/stvec alignment to 4 KB, WFI behavior. Update constraints field with: '1,093 RISC-V cores (1,088 Minion + 4 Maxion + 1 service)', '140 MB on-die SRAM', 'PCIe Gen4 x8 128 Gbps', 'LPDDR4X 16-channel 4,266 MT/s', 'TSMC 7nm'. Add source URL https://github.com/10x-Engineers/et-soc1-docs/blob/main/01_esperanto_soc_overview.md.
+
+## [2026-07-03] merge_pending | xuantie-c908.md
+target_page: xuantie-c908.md
+canonical_name: XuanTie C908
+colliding_name: XuanTie C908
+source: https://gcc.gnu.org/pipermail/gcc-patches/2026-June/719234.html
+status: pending_review
+<!-- merge_draft_body
+# XuanTie C908
+
+The XuanTie C908 is a 64-bit RISC-V core from T-Head Semiconductor, designed for embedded applications. A GCC tuning patch submitted to the GCC mailing list introduces a scalar scheduler model for the C908, based on the XuanTie C908 R1S0 User Manual. The scheduler models the scalar integer, load/store, multiply, divide, and floating-point pipeline resources. Long-latency reservations are clamped to 7 cycles, following the existing RISC-V scheduler modeling approach established in a prior GCC commit. Vector scheduling is not included in this patch and is left for future work under the identifier xt-c908v. The tuning was validated on a CanMV-K230-V1.1 board using CoreMark and a set of instruction throughput tests consisting of unrolled loops with independent register groups. These tests achieved approximately 0.8% improvement in CoreMark score and 5-17% cycle-count improvements on the throughput benchmarks, measured after 20 warm-up runs and 200 measured executions per test.
+
+## Key Claims
+
+- The GCC tuning model for the XuanTie C908 is based on the official XuanTie C908 R1S0 User Manual.
+- The scheduler explicitly models scalar integer, load/store, multiply, divide, and floating-point pipeline resources.
+- Long-latency reservation cycles are capped at 7, consistent with the existing RISC-V scheduler modeling convention.
+- The tuning was tested on a CanMV-K230-V1.1 board; CoreMark score improves by approximately 0.8% compared to the generic tuning model.
+- Instruction throughput tests (unrolled loops with independent registers for add, fadd, etc.) show cycle-count reductions of 5-17%.
+- Vector scheduling is deliberately excluded from this patch and deferred to future xt-c908v work.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V (specific extension set not detailed in the patch)
+- Vector/matrix/accelerator support: None in this scalar tuning; vector scheduling is not modeled.
+- Memory/cache/TLB/DMA: Not specified in the patch.
+- Compiler/toolchain support: GCC, via a patch that introduces the xt-c908 tuning in riscv-cores.def, riscv-opts.h, riscv.cc, riscv.md, and a new file xt-c908.md. The tuning is merged into GCC trunk.
+
+## Relationships
+
+- [[xuantie-c906-hardware-target]]: Both the XuanTie C908 and C906 are in-order single-issue RISC-V cores from T-Head; the C906 includes a 128-bit SIMD vector unit, while the C908 tuning models only scalar pipelines and does not expose vector capabilities.
+- [[spacemit-x60-hardware-target]]: Both the XuanTie C908 and SpacemiT X60 have GCC tuning patches that model in-order scalar pipelines; the X60 tuning additionally models dual-issue and RVV 1.0 vector capabilities, while the C908 tuning is single-issue scalar only.
+- [[sophon-sg2044-hardware-target]]: The SG2044 uses XuanTie C920v2 cores, a more advanced member of the T-Head XuanTie family with RVV 1.0 vector support, whereas the C908 is a simpler embedded core with only scalar scheduling currently modeled.
+
+## Sources
+
+- https://gcc.gnu.org/pipermail/gcc-patches/2026-June/719234.html
+merge_draft_body -->
+
+## [2026-07-03] pending | gap9.md
+target_page: gap9.md
+target_section: Key Claims
+source: https://arxiv.org/abs/2603.08725
+status: pending_review
+proposed_update: Add a claim from arXiv:2603.08725: GAP9 offers the best energy efficiency within microcontroller-class power budgets when running a 336M MAC segmentation model (PicoSAM2), as benchmarked against STM32N6 and IMX500. This is a comparative finding from a 2026 IEEE I2MTC paper.
+
+## [2026-07-03] merge_pending | gap9shield.md
+target_page: gap9shield.md
+canonical_name: GAP9Shield
+colliding_name: GAP9Shield
+source: https://github.com/pulp-platform/gap9-shield
+status: pending_review
+<!-- merge_draft_body
+# GAP9Shield
+
+The GAP9Shield is an ultra-low-power hardware module designed to enhance nano-drones with advanced AI, vision, and ranging capabilities. It is built around the GAP9 System-on-Chip (SoC), a 9-core RISC-V cluster with a dedicated NE16 AI accelerator, and integrates a 5 MP OV5647 camera, a 5-directional VL53L1 Time-of-Flight ranging array (covering front, back, left, right, and upward), and a NINA-W102 Wi-Fi/BLE module for wireless connectivity. The module achieves 15.6 GOPs for DSP workloads and 32.2 GMACs for ML tasks, with an energy efficiency of 330 µW/GOP and a sleep power as low as 45 µW. It operates at frequencies up to 370 MHz and consumes under 100 mW for most AI workloads. The GAP9Shield measures 50 mm × 27 mm, weighs approximately 6 grams, and is designed to mount on a Crazyflie 2.1 nano-drone, enabling real-time object detection (YOLO), SLAM, and obstacle avoidance in indoor and cluttered environments.
+
+## Key Claims
+
+- The GAP9Shield uses a 9-core RISC-V cluster with NE16 AI accelerator (15.6 GOPs DSP, 32.2 GMACs ML).
+- Energy efficiency is 330 µW/GOP, with sleep power as low as 45 µW and frequency up to 370 MHz.
+- Memory includes 1.6 MB L2 RAM, 2 MB embedded non-volatile memory, plus 256 Mbit PSRAM and 512 Mbit Flash.
+- Camera: OV5647 5 MP sensor supporting QSXGA to QVGA, up to 120 fps at QVGA, via CSI2 interface.
+- Ranging system: 5D VL53L1 ToF array covering right, left, front, back, and upward directions, range up to 400 cm at 60 Hz.
+- Wireless: NINA-W102 module (ESP32, 2.4 GHz Wi-Fi/BLE, up to 12 Mbps UDP).
+- Physical: 50 mm × 27 mm, approx. 6 g, 6-layer PCB.
+- Achieves 20% higher frame rate for RGB images compared to conventional AI-decks (e.g., based on GAP8).
+- Optimized for AI workloads including YOLO object detection, MCL localization, and SLAM.
+
+## Relationships
+
+- [[gap9]]: The GAP9Shield integrates the GAP9 SoC as its core processor; the module inherits the GAP9's RISC-V PULP architecture and AI acceleration capabilities.
+
+## Sources
+
+- https://github.com/pulp-platform/gap9-shield
+merge_draft_body -->
+
+## [2026-07-03] pending | gap9.md
+target_page: gap9.md
+target_section: Key Claims
+source: https://github.com/pulp-platform/gap9-shield
+status: pending_review
+proposed_update: The GAP9 page states an 8-core architecture, but the GAP9Shield README describes a 9-core RISC-V cluster (likely 8 general-purpose cores + 1 NE16 accelerator core). Consider clarifying the core count and noting the NE16 accelerator. Also consider adding a reference to the GAP9Shield module and its integrated components.

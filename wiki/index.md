@@ -1,12 +1,13 @@
 # Wiki Index
 
-Last updated: 2026-07-03 | Pages: 53 | Sources: 140
+Last updated: 2026-07-03 | Pages: 54 | Sources: 144
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
 | [apache-tvm.md](entity/apache-tvm.md) | Apache TVM |  | 2 | 0 |
+| [gap9shield.md](entity/gap9shield.md) | GAP9Shield |  | 4 | 0 |
 | [integrated-matrix-extension.md](entity/integrated-matrix-extension.md) | Integrated Matrix Extension |  | 4 | 0 |
 | [iree-microkernel-library.md](entity/iree-microkernel-library.md) | IREE Microkernel Library |  | 2 | 0 |
 | [iree-rvv-mlir-ukernel.md](entity/iree-rvv-mlir-ukernel.md) | IREE MLIR-based uKernel for RVV | RISC-V, RVV, IREE, MLIR, uKernel, Matmul | 2 | 0 |
@@ -78,7 +79,11 @@ Last updated: 2026-07-03 | Pages: 53 | Sources: 140
 - **ET-SoC-1**: → [et-soc-1-hardware-target](hardware_target/et-soc-1-hardware-target.md)
 - **Esperanto Technologies Supercomputer-on-Chip 1**: → [et-soc-1-hardware-target](hardware_target/et-soc-1-hardware-target.md)
 - **GAP9**: → [gap9](hardware_target/gap9.md)
+- **GAP9 Shield**: → [gap9shield](entity/gap9shield.md)
 - **GAP9 SoC**: → [gap9](hardware_target/gap9.md)
+- **GAP9Shield**: → [gap9shield](entity/gap9shield.md)
+- **GAP9Shield module**: → [gap9shield](entity/gap9shield.md)
+- **GAP9Shield nano-drone module**: → [gap9shield](entity/gap9shield.md)
 - **GCC 15 vs Clang 21 on BananaPi-F3 (RVV 1.0)**: → [gcc15-vs-clang21-banana-pi-f3-rvv10](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md)
 - **GCC Tuning Benchmark on XuanTie C908**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
 - **GGML Quantization**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
@@ -305,6 +310,7 @@ Last updated: 2026-07-03 | Pages: 53 | Sources: 140
 
 
 
+
 ## Optimization Pages
 
 | Page | Type | Summary | Tags | Sources | Inbound |
@@ -321,7 +327,7 @@ Last updated: 2026-07-03 | Pages: 53 | Sources: 140
 | [andes-ax45mpv-hardware-target.md](hardware_target/andes-ax45mpv-hardware-target.md) | hardware_target | AndesCore AX45MPV |  | 2 | 0 |
 | [andes-nx27v-hardware-target.md](hardware_target/andes-nx27v-hardware-target.md) | hardware_target | AndesCore NX27V |  | 2 | 2 |
 | [et-soc-1-hardware-target.md](hardware_target/et-soc-1-hardware-target.md) | hardware_target | ET-SoC-1 |  | 2 | 0 |
-| [gap9.md](hardware_target/gap9.md) | hardware_target | GAP9 |  | 2 | 2 |
+| [gap9.md](hardware_target/gap9.md) | hardware_target | GAP9 |  | 2 | 3 |
 | [k230-soc.md](hardware_target/k230-soc.md) | hardware_target | K230 |  | 8 | 0 |
 | [maestro.md](hardware_target/maestro.md) | hardware_target | Maestro |  | 2 | 1 |
 | [opennanhu-v5.md](hardware_target/opennanhu-v5.md) | hardware_target | OpenNanhu-V5 |  | 2 | 0 |
@@ -333,7 +339,7 @@ Last updated: 2026-07-03 | Pages: 53 | Sources: 140
 | [t1.md](hardware_target/t1.md) | hardware_target | T1 |  | 2 | 0 |
 | [v851s-yuzukilizard.md](hardware_target/v851s-yuzukilizard.md) | hardware_target | Allwinner V851S / Yuzukilizard | allwinner, v851s, yuzukilizard, risc-v, npu | 8 | 0 |
 | [xuantie-c906-hardware-target.md](hardware_target/xuantie-c906-hardware-target.md) | hardware_target | XuanTie C906 |  | 2 | 5 |
-| [xuantie-c908.md](hardware_target/xuantie-c908.md) | hardware_target | XuanTie C908 |  | 10 | 1 |
+| [xuantie-c908.md](hardware_target/xuantie-c908.md) | hardware_target | XuanTie C908 |  | 12 | 1 |
 | [c908-wino-gemm-optimization.md](optimization_recipe/c908-wino-gemm-optimization.md) | optimization_recipe | C908 Winograd and GEMM Optimization in SHL |  | 2 | 11 |
 | [iree-riscv-microkernel-support.md](optimization_recipe/iree-riscv-microkernel-support.md) | optimization_recipe | IREE RISC-V Microkernel Support |  | 2 | 2 |
 | [mlir-xdsl-rvv-codegen-pipeline.md](optimization_recipe/mlir-xdsl-rvv-codegen-pipeline.md) | optimization_recipe | MLIR-xDSL RVV Code Generation Pipeline |  | 2 | 5 |
@@ -390,6 +396,7 @@ Last updated: 2026-07-03 | Pages: 53 | Sources: 140
 - [maestro-gesture-recognition](benchmark_result/maestro-gesture-recognition.md)
 - [mlir-xdsl-gemm-benchmark-k230-banana-pi](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md)
 - [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
+
 
 
 
