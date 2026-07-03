@@ -808,7 +808,8 @@ def test_rebuild_index_from_frontmatter_resyncs_stale_rows(tmp_path):
     entity_dir = pages_dir / "entity"
     entity_dir.mkdir(parents=True)
     (entity_dir / "alpha.md").write_text(
-        "---\ntype: entity\ntags: [x]\nsources: [raw/cache/a.md, raw/cache/b.md]\n"
+        "---\ntype: entity\ncanonical_name: Alpha\ntags: [x]\n"
+        "sources: [raw/cache/a.md, raw/cache/b.md]\n"
         "inbound_links: 3\n---\n\n# Alpha\n\nAlpha body.\n",
         encoding="utf-8",
     )
@@ -827,7 +828,7 @@ def test_rebuild_index_from_frontmatter_resyncs_stale_rows(tmp_path):
         "| [alpha.md](entity/alpha.md) | Alpha | x | 2 | 0 |\n\n"
         "## Synthesis Pages\n\n| Page | Connected Entities | Status | Inbound |\n"
         "|------|--------------------|--------|---------|\n\n"
-        "## Concept Index\n\n- **Alpha**: → [alpha](entity/alpha.md)\n\n"
+        "## Concept Index\n\n- **Stale Concept**: → [nowhere](entity/nowhere.md)\n\n"
         "## Optimization Pages\n\n| Page | Type | Summary | Tags | Sources | Inbound |\n"
         "|------|------|---------|------|---------|---------|\n",
         encoding="utf-8",
@@ -842,8 +843,65 @@ def test_rebuild_index_from_frontmatter_resyncs_stale_rows(tmp_path):
     assert "Sources: 2" in text
     assert "| [alpha.md](entity/alpha.md) | Alpha | x | 2 | 3 |" in text
     assert "| [beta.md](synthesis/beta.md) | alpha | draft | 0 |" in text
-    # Concept Index is untouched by the rebuild (not row-based like the tables).
+    # Concept Index is rebuilt from current frontmatter (canonical_name/aliases),
+    # same full-rebuild-is-truth pattern as the tables above — stale hand-written
+    # entries that no longer correspond to any page's canonical_name are dropped.
     assert "**Alpha**: → [alpha](entity/alpha.md)" in text
+    assert "Stale Concept" not in text
+
+
+def test_rebuild_index_populates_concept_gaps_from_dangling_outbound_links(tmp_path):
+    """Regression: _get_concept_gaps() reads wiki/index.md's Concept Index
+    section for "**Name**: ... no dedicated page" entries, but nothing ever
+    wrote that pattern — rebuild_index_from_frontmatter() only rebuilt the
+    Entity/Synthesis/Optimization tables, so _get_concept_gaps() had returned
+    [] on every session since the autonomous research harness was first
+    built (found live, via a real replication run's audit logs). A page's
+    outbound_links target that doesn't resolve to any existing page stem is
+    exactly a "mentioned but no dedicated page" concept — use it as the gap
+    source instead of leaving the section permanently empty."""
+    pages_dir = tmp_path / "wiki" / "_pages"
+    entity_dir = pages_dir / "entity"
+    entity_dir.mkdir(parents=True)
+    (entity_dir / "gemmini.md").write_text(
+        "---\ntype: entity\ncanonical_name: Gemmini\nsources: [raw/cache/a.md]\n"
+        "inbound_links: 0\noutbound_links:\n"
+        "- target: systolic_tensor_units\n  reason: related concept\n"
+        "- target: some_unwritten_concept\n  reason: mentioned but no page yet\n"
+        "---\n\n# Gemmini\n\nBody.\n",
+        encoding="utf-8",
+    )
+    (entity_dir / "systolic_tensor_units.md").write_text(
+        "---\ntype: entity\ncanonical_name: Systolic Tensor Units\nsources: [raw/cache/b.md]\n"
+        "inbound_links: 1\n---\n\n# Systolic Tensor Units\n\nBody.\n",
+        encoding="utf-8",
+    )
+    index = tmp_path / "wiki" / "index.md"
+    index.write_text(
+        "# Wiki Index\n\nLast updated: 2020-01-01 | Pages: 0 | Sources: 0\n\n"
+        "## Entity Pages\n\n| Page | Summary | Tags | Sources | Inbound |\n"
+        "|------|---------|------|---------|---------|\n\n"
+        "## Synthesis Pages\n\n| Page | Connected Entities | Status | Inbound |\n"
+        "|------|--------------------|--------|---------|\n\n"
+        "## Concept Index\n\n\n"
+        "## Optimization Pages\n\n| Page | Type | Summary | Tags | Sources | Inbound |\n"
+        "|------|------|---------|------|---------|---------|\n",
+        encoding="utf-8",
+    )
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_INDEX_MD", index):
+        orchestrator.rebuild_index_from_frontmatter()
+        gaps = orchestrator._get_concept_gaps()
+
+    text = index.read_text(encoding="utf-8")
+    # systolic_tensor_units is resolved (has its own page) -> not a gap.
+    assert "**Systolic Tensor Units**: → [systolic_tensor_units](entity/systolic_tensor_units.md)" in text
+    assert "systolic_tensor_units" not in gaps
+    # some_unwritten_concept has no page anywhere -> a real gap, and now
+    # actually discoverable by _get_concept_gaps() for the first time.
+    assert "**some_unwritten_concept**: mentioned in [gemmini](entity/gemmini.md) — *no dedicated page*" in text
+    assert "some_unwritten_concept" in gaps
 
 
 def test_synthesis_gap_clusters_finds_uncovered_tag_and_excludes_covered(tmp_path):
