@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-03 | Pages: 62 | Sources: 168
+Last updated: 2026-07-03 | Pages: 63 | Sources: 170
 
 ## Entity Pages
 
@@ -27,6 +27,7 @@ Last updated: 2026-07-03 | Pages: 62 | Sources: 168
 | [rvv-intrinsic-api.md](entity/rvv-intrinsic-api.md) | RISC-V Vector Extension Intrinsic API |  | 2 | 0 |
 | [shl.md](entity/shl.md) | SHL |  | 4 | 1 |
 | [sifive-intelligence-2nd-gen.md](entity/sifive-intelligence-2nd-gen.md) | SiFive Intelligence 2nd Gen |  | 2 | 0 |
+| [whisper-risc-v-iss-entity.md](entity/whisper-risc-v-iss-entity.md) | Whisper | RISC-V, instruction set simulator, ISS, Tenstorrent | 2 | 0 |
 | [xdsl-compiler-toolkit.md](entity/xdsl-compiler-toolkit.md) | xDSL |  | 4 | 0 |
 | [xiangshan-overview.md](entity/xiangshan-overview.md) | XiangShan |  | 6 | 0 |
 | [xuantie-ai-benchmark-suite.md](entity/xuantie-ai-benchmark-suite.md) | XuanTie AI Benchmark Suite |  | 2 | 3 |
@@ -235,6 +236,7 @@ Last updated: 2026-07-03 | Pages: 62 | Sources: 168
 - **SpacemiT X60 core**: → [spacemit-x60-hardware-target](hardware_target/spacemit-x60-hardware-target.md)
 - **Spacemit K1**: → [spacemit-k1](hardware_target/spacemit-k1.md)
 - **Structure of Heterogeneous Library**: → [shl](entity/shl.md)
+- **SweRV-ISS (derived)**: → [whisper-risc-v-iss-entity](entity/whisper-risc-v-iss-entity.md)
 - **T-HEAD XuanTie C908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **T-Head C906**: → [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
 - **T-Head C908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
@@ -255,6 +257,8 @@ Last updated: 2026-07-03 | Pages: 62 | Sources: 168
 - **V851S**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
 - **V851SE**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
 - **V851s**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
+- **Whisper**: → [whisper-risc-v-iss-entity](entity/whisper-risc-v-iss-entity.md)
+- **Whisper ISS**: → [whisper-risc-v-iss-entity](entity/whisper-risc-v-iss-entity.md)
 - **X60**: → [spacemit-x60-hardware-target](hardware_target/spacemit-x60-hardware-target.md)
 - **XT**: → [xuantie](entity/xuantie.md)
 - **XUANTIE-RV/xtai-benchmark**: → [xuantie-ai-benchmark-suite](entity/xuantie-ai-benchmark-suite.md)
@@ -304,6 +308,7 @@ Last updated: 2026-07-03 | Pages: 62 | Sources: 168
 - **rvspoc-s2311-llama2**: → [baby-llama2-milkv-duo-benchmark](benchmark_result/baby-llama2-milkv-duo-benchmark.md)
 - **rvv-intrinsic-api**: → [rvv-intrinsic-api](entity/rvv-intrinsic-api.md)
 - **spacemit-x60**: → [spacemit-x60-hardware-target](hardware_target/spacemit-x60-hardware-target.md)
+- **tenstorrent/whisper**: → [whisper-risc-v-iss-entity](entity/whisper-risc-v-iss-entity.md)
 - **ukernel**: → [iree-microkernel-library](entity/iree-microkernel-library.md)
 - **xDSL**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
 - **xDSL Python Compiler Framework**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
@@ -323,6 +328,7 @@ Last updated: 2026-07-03 | Pages: 62 | Sources: 168
 - **香山**: → [xiangshan-overview](entity/xiangshan-overview.md)
 - **sophon-sg2042-hardware-target**: mentioned in [sophon-sg2042-npb-performance-benchmark-result](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md) — *no dedicated page*
 - **xuantie-c908-gcc-tuning**: mentioned in [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md) — *no dedicated page*
+
 
 
 
@@ -381,13 +387,13 @@ Last updated: 2026-07-03 | Pages: 62 | Sources: 168
 | [maestro.md](hardware_target/maestro.md) | hardware_target | Maestro |  | 2 | 1 |
 | [opennanhu-v5.md](hardware_target/opennanhu-v5.md) | hardware_target | OpenNanhu-V5 |  | 2 | 0 |
 | [sophon-sg2042.md](hardware_target/sophon-sg2042.md) | hardware_target | SOPHON SG2042 |  | 10 | 0 |
-| [sophon-sg2044-hardware-target.md](hardware_target/sophon-sg2044-hardware-target.md) | hardware_target | Sophon SG2044 |  | 2 | 1 |
+| [sophon-sg2044-hardware-target.md](hardware_target/sophon-sg2044-hardware-target.md) | hardware_target | Sophon SG2044 |  | 2 | 2 |
 | [spacemit-k1.md](hardware_target/spacemit-k1.md) | hardware_target | SpacemiT K1 |  | 4 | 2 |
 | [spacemit-k3-hardware-target.md](hardware_target/spacemit-k3-hardware-target.md) | hardware_target | SpacemiT K3 | RISC-V, SpacemiT, AI CPU, big.LITTLE, RVV 1.0 | 2 | 0 |
-| [spacemit-x60-hardware-target.md](hardware_target/spacemit-x60-hardware-target.md) | hardware_target | SpacemiT X60 | RISC-V, GCC tuning, SpacemiT, in-order, RVV 1.0 | 2 | 3 |
+| [spacemit-x60-hardware-target.md](hardware_target/spacemit-x60-hardware-target.md) | hardware_target | SpacemiT X60 | RISC-V, GCC tuning, SpacemiT, in-order, RVV 1.0 | 2 | 4 |
 | [t1.md](hardware_target/t1.md) | hardware_target | T1 |  | 2 | 0 |
 | [v851s-yuzukilizard.md](hardware_target/v851s-yuzukilizard.md) | hardware_target | Allwinner V851S / Yuzukilizard | allwinner, v851s, yuzukilizard, risc-v, npu | 8 | 0 |
-| [xuantie-c906-hardware-target.md](hardware_target/xuantie-c906-hardware-target.md) | hardware_target | XuanTie C906 |  | 2 | 5 |
+| [xuantie-c906-hardware-target.md](hardware_target/xuantie-c906-hardware-target.md) | hardware_target | XuanTie C906 |  | 2 | 6 |
 | [xuantie-c908.md](hardware_target/xuantie-c908.md) | hardware_target | XuanTie C908 |  | 12 | 1 |
 | [c908-wino-gemm-optimization.md](optimization_recipe/c908-wino-gemm-optimization.md) | optimization_recipe | C908 Winograd and GEMM Optimization in SHL |  | 2 | 11 |
 | [hhb-onnxruntime-yolox-deployment-xuantie-c920.md](optimization_recipe/hhb-onnxruntime-yolox-deployment-xuantie-c920.md) | optimization_recipe | HHB-onnxruntime YOLOX Deployment on Xuantie C920 |  | 2 | 0 |
@@ -451,6 +457,7 @@ Last updated: 2026-07-03 | Pages: 62 | Sources: 168
 - [mlir-xdsl-gemm-benchmark-k230-banana-pi](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md)
 - [sophon-sg2042-npb-performance-benchmark-result](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md)
 - [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
+
 
 
 
