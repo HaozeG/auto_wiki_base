@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-03 | Pages: 56 | Sources: 154
+Last updated: 2026-07-03 | Pages: 57 | Sources: 156
 
 ## Entity Pages
 
@@ -75,6 +75,7 @@ Last updated: 2026-07-03 | Pages: 56 | Sources: 154
 - **CanMV K230**: → [k230-soc](hardware_target/k230-soc.md)
 - **CanMV K230 development board**: → [k230-soc](hardware_target/k230-soc.md)
 - **CanMV-K230**: → [k230-soc](hardware_target/k230-soc.md)
+- **Codebook-based Q4X**: → [q4x-quantization-llamacpp-rvv](optimization_recipe/q4x-quantization-llamacpp-rvv.md)
 - **CoreMark C908 0.8%**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
 - **DeepSeek on SG2042**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
 - **ET-SOC-1**: → [et-soc-1-hardware-target](hardware_target/et-soc-1-hardware-target.md)
@@ -151,6 +152,8 @@ Last updated: 2026-07-03 | Pages: 56 | Sources: 154
 - **OpenXiangShan**: → [xiangshan-overview](entity/xiangshan-overview.md)
 - **Project RP014**: → [rise-project-rp014-llamacpp-ggml-rvv](entity/rise-project-rp014-llamacpp-ggml-rvv.md)
 - **Python-native SSA Compiler Framework**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
+- **Q4X**: → [q4x-quantization-llamacpp-rvv](optimization_recipe/q4x-quantization-llamacpp-rvv.md)
+- **Q4X quantization**: → [q4x-quantization-llamacpp-rvv](optimization_recipe/q4x-quantization-llamacpp-rvv.md)
 - **Q4_0**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
 - **Q4_1**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
 - **Q8_0**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
@@ -327,6 +330,7 @@ Last updated: 2026-07-03 | Pages: 56 | Sources: 154
 
 
 
+
 ## Optimization Pages
 
 | Page | Type | Summary | Tags | Sources | Inbound |
@@ -360,6 +364,7 @@ Last updated: 2026-07-03 | Pages: 56 | Sources: 154
 | [hhb-onnxruntime-yolox-deployment-xuantie-c920.md](optimization_recipe/hhb-onnxruntime-yolox-deployment-xuantie-c920.md) | optimization_recipe | HHB-onnxruntime YOLOX Deployment on Xuantie C920 |  | 2 | 0 |
 | [iree-riscv-microkernel-support.md](optimization_recipe/iree-riscv-microkernel-support.md) | optimization_recipe | IREE RISC-V Microkernel Support |  | 2 | 2 |
 | [mlir-xdsl-rvv-codegen-pipeline.md](optimization_recipe/mlir-xdsl-rvv-codegen-pipeline.md) | optimization_recipe | MLIR-xDSL RVV Code Generation Pipeline |  | 2 | 5 |
+| [q4x-quantization-llamacpp-rvv.md](optimization_recipe/q4x-quantization-llamacpp-rvv.md) | optimization_recipe | Q4X Quantization for LLM Inference on RISC‑V Vector CPUs | quantization, codebook, llama.cpp, RVV | 2 | 0 |
 | [v-seek-llm-inference-optimization-sg2042.md](optimization_recipe/v-seek-llm-inference-optimization-sg2042.md) | optimization_recipe | V-Seek LLM Inference Optimization on Sophon SG2042 |  | 2 | 0 |
 
 ## Hub Hierarchy
@@ -399,6 +404,7 @@ Last updated: 2026-07-03 | Pages: 56 | Sources: 154
 - [hhb-onnxruntime-yolox-deployment-xuantie-c920](optimization_recipe/hhb-onnxruntime-yolox-deployment-xuantie-c920.md)
 - [iree-riscv-microkernel-support](optimization_recipe/iree-riscv-microkernel-support.md)
 - [mlir-xdsl-rvv-codegen-pipeline](optimization_recipe/mlir-xdsl-rvv-codegen-pipeline.md)
+- [q4x-quantization-llamacpp-rvv](optimization_recipe/q4x-quantization-llamacpp-rvv.md)
 - [v-seek-llm-inference-optimization-sg2042](optimization_recipe/v-seek-llm-inference-optimization-sg2042.md)
 
 ### Benchmark Evidence
@@ -414,6 +420,7 @@ Last updated: 2026-07-03 | Pages: 56 | Sources: 154
 - [maestro-gesture-recognition](benchmark_result/maestro-gesture-recognition.md)
 - [mlir-xdsl-gemm-benchmark-k230-banana-pi](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md)
 - [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
+
 
 
 
