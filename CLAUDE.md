@@ -6,6 +6,20 @@ You are the maintainer of this wiki. You create pages, update them on ingest, ma
 
 ---
 
+## Graph Topology Philosophy
+
+The wiki's target shape is a **small-world network**: high clustering (tightly connected topical neighborhoods) combined with low average path length (few hops between any two pages, even across distant topics) — the "six degrees of separation" property (Watts–Strogatz). This is design philosophy, not a mechanism; implementation is intentionally flexible and may evolve.
+
+- **Clustering** should emerge organically from topical similarity. qmd search/BM25 similarity between pages is the natural signal for "this neighborhood is well-connected." Tools like `networkx` (clustering coefficient, average shortest path length) are candidate ways to measure this quantitatively — a richer alternative to the current count-based maturity gate (`orphan_fraction`/`median_inbound_links`), which a single heuristic linking pass can satisfy without improving real structure.
+- **Path-length reduction is a research-time concern, not a post-hoc linking pass.** The intended mechanism is to surface orphaned or topologically-distant pages as *context for the discovery/research step itself*, so that newly generated pages are chosen to bridge distant clusters — not to mechanically insert links between pages that already exist after the fact. Reactively wiring up existing orphans by shallow token/tag overlap satisfies the connectivity metric without adding genuine bridging value — a Goodhart failure to avoid repeating.
+- **Bridges should be few, deliberate, and reasoned**, not numerous and shallow. A bridge earns its place by measurably shortening the path between two genuinely distant clusters, not by sharing a generic tag or token.
+- **Every link or relationship should carry a reason**, kept alongside the edge so it is searchable and analyzable later (e.g. "related via shared RVV 1.0 support" vs. an unlabeled link). Obsidian body syntax stays plain `[[page]]` per the Constraints section below; structured edge metadata, if promoted beyond prose Relationships bullets, belongs in frontmatter, not body markup.
+- Obsidian's native graph view already visualizes the resulting topology; this philosophy does not require new tooling by itself, only that page-generation and linking decisions be made with this target shape in mind.
+
+This section states intent, not a mechanism. `bridge_score`/`hub_potential` in the existing scorecards are the current (subjective, LLM-assigned) proxies for this idea; a future revision may replace or supplement them with a quantitative graph-topology metric.
+
+---
+
 ## Theme Setup
 
 The wiki is domain-agnostic. Its organization is **not** hand-coded. At theme setup a **profile-architect subagent** reads the theme string and a guided prompt and proposes 2–4 candidate organization profiles, each specifying: an organizing principle, `entity` **subtypes** (e.g. `hardware_target`, `optimization_recipe`) with their `structured_fields`, source preferences, and coverage/lint priorities. The human selects and edits one; the chosen profile is written below as a `[theme_profile]` block (absent until setup runs). A deterministic fallback profile is used only when the agent is unavailable.
