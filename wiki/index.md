@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-03 | Pages: 45 | Sources: 124
+Last updated: 2026-07-03 | Pages: 49 | Sources: 132
 
 ## Entity Pages
 
@@ -12,9 +12,11 @@ Last updated: 2026-07-03 | Pages: 45 | Sources: 124
 | [iree-rvv-mlir-ukernel.md](entity/iree-rvv-mlir-ukernel.md) | IREE MLIR-based uKernel for RVV | RISC-V, RVV, IREE, MLIR, uKernel, Matmul | 2 | 0 |
 | [llama-cpp.md](entity/llama-cpp.md) | llama.cpp | LLM inference, C/C++, GGML, local inference | 2 | 0 |
 | [llamacpp-quantization-methods.md](entity/llamacpp-quantization-methods.md) | llama.cpp Quantization Methods | quantization, llama.cpp, GGML, LLM inference, post-training quantization | 4 | 0 |
+| [meta-andes.md](entity/meta-andes.md) | meta-andes | RISC-V, BSP, Yocto, Andes Technology | 2 | 0 |
 | [mlir-compiler-infrastructure.md](entity/mlir-compiler-infrastructure.md) | MLIR | compiler, LLVM, intermediate representation | 2 | 0 |
 | [opengemm.md](entity/opengemm.md) | OpenGeMM | GeMM accelerator, RISC-V, open-source hardware, Chisel, accelerator generator | 4 | 0 |
 | [riscv-matrix-extension-specification.md](entity/riscv-matrix-extension-specification.md) | RISC-V Matrix Extension Specification | risc-v, isa, matrix, extension | 8 | 0 |
+| [riscv-v-extension.md](entity/riscv-v-extension.md) | RISC-V V Extension |  | 2 | 0 |
 | [rise-project-rp014-llamacpp-ggml-rvv.md](entity/rise-project-rp014-llamacpp-ggml-rvv.md) | RP014 - Optimizing Llama.cpp and GGML for RVV | llama.cpp, GGML, RVV, RISC-V, quantization, optimization | 2 | 0 |
 | [rvv-dialect-mlir.md](entity/rvv-dialect-mlir.md) | RVV Dialect (MLIR) | MLIR, RVV, RISC-V, dialect, compiler | 2 | 0 |
 | [rvv-intrinsic-api.md](entity/rvv-intrinsic-api.md) | RISC-V Vector Extension Intrinsic API |  | 2 | 0 |
@@ -38,10 +40,18 @@ Last updated: 2026-07-03 | Pages: 45 | Sources: 124
 
 - **10x-IREE**: → [iree-riscv-microkernel-support](optimization_recipe/iree-riscv-microkernel-support.md)
 - **10x-IREE Llama-3.2-1B Benchmark**: → [iree-riscv-benchmark-milkv-jupiter](benchmark_result/iree-riscv-benchmark-milkv-jupiter.md)
+- **AX45MPV**: → [andes-ax45mpv-hardware-target](hardware_target/andes-ax45mpv-hardware-target.md)
 - **Allwinner V851S**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
 - **Allwinner V851S SoC**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
 - **Allwinner V851SE**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
 - **Allwinner V851s**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
+- **Andes AX45MPV**: → [andes-ax45mpv-hardware-target](hardware_target/andes-ax45mpv-hardware-target.md)
+- **Andes BSP Layer**: → [meta-andes](entity/meta-andes.md)
+- **Andes NX27V**: → [andes-nx27v-hardware-target](hardware_target/andes-nx27v-hardware-target.md)
+- **Andes OpenEmbedded Layer**: → [meta-andes](entity/meta-andes.md)
+- **Andes Yocto Layer**: → [meta-andes](entity/meta-andes.md)
+- **AndesCore AX45MPV**: → [andes-ax45mpv-hardware-target](hardware_target/andes-ax45mpv-hardware-target.md)
+- **AndesCore NX27V**: → [andes-nx27v-hardware-target](hardware_target/andes-nx27v-hardware-target.md)
 - **Apache TVM**: → [apache-tvm](entity/apache-tvm.md)
 - **Auto-Generated GEMM Micro-Kernels on C906 and C910**: → [auto-gemm-micro-kernel-c906-c910-benchmark](benchmark_result/auto-gemm-micro-kernel-c906-c910-benchmark.md)
 - **BPI-F3 RVV LLM benchmark**: → [bpi-f3-rvv-llm-benchmark](benchmark_result/bpi-f3-rvv-llm-benchmark.md)
@@ -115,6 +125,7 @@ Last updated: 2026-07-03 | Pages: 45 | Sources: 124
 - **Maestro ultrasound gesture recognition**: → [maestro-gesture-recognition](benchmark_result/maestro-gesture-recognition.md)
 - **Matrix Extension Specification**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **Multi-Level Intermediate Representation**: → [mlir-compiler-infrastructure](entity/mlir-compiler-infrastructure.md)
+- **NX27V**: → [andes-nx27v-hardware-target](hardware_target/andes-nx27v-hardware-target.md)
 - **OpenC906**: → [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
 - **OpenGeMM**: → [opengemm](entity/opengemm.md)
 - **OpenGeMM Accelerator Generator**: → [opengemm](entity/opengemm.md)
@@ -130,6 +141,8 @@ Last updated: 2026-07-03 | Pages: 45 | Sources: 124
 - **RISC-V Matrix Extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RISC-V Matrix Extension Proposal V0.6.0**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RISC-V Matrix Extension Specification**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
+- **RISC-V V Extension**: → [riscv-v-extension](entity/riscv-v-extension.md)
+- **RISC-V Vector Extension**: → [riscv-v-extension](entity/riscv-v-extension.md)
 - **RISC-V Vector Extension Dialect**: → [rvv-dialect-mlir](entity/rvv-dialect-mlir.md)
 - **RISC-V Vector Extension Intrinsic API**: → [rvv-intrinsic-api](entity/rvv-intrinsic-api.md)
 - **RISC-V Vector Intrinsic API**: → [rvv-intrinsic-api](entity/rvv-intrinsic-api.md)
@@ -141,6 +154,7 @@ Last updated: 2026-07-03 | Pages: 45 | Sources: 124
 - **RV Matrix Extension v0.4.0**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RV matrix extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RVM extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
+- **RVV**: → [riscv-v-extension](entity/riscv-v-extension.md)
 - **RVV Dialect (MLIR)**: → [rvv-dialect-mlir](entity/rvv-dialect-mlir.md)
 - **RVV Intrinsic API**: → [rvv-intrinsic-api](entity/rvv-intrinsic-api.md)
 - **RVV MLIR Dialect**: → [rvv-dialect-mlir](entity/rvv-dialect-mlir.md)
@@ -179,6 +193,7 @@ Last updated: 2026-07-03 | Pages: 45 | Sources: 124
 - **TVM**: → [apache-tvm](entity/apache-tvm.md)
 - **Terapines ZCC**: → [zcc-compiler](entity/zcc-compiler.md)
 - **Torrent-1**: → [t1](hardware_target/t1.md)
+- **V extension**: → [riscv-v-extension](entity/riscv-v-extension.md)
 - **V851S**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
 - **V851SE**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
 - **V851s**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
@@ -220,6 +235,7 @@ Last updated: 2026-07-03 | Pages: 45 | Sources: 124
 - **llama.cpp Quantization Methods**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
 - **llama.cpp quantization**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
 - **llama.cpp quantization types**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
+- **meta-andes**: → [meta-andes](entity/meta-andes.md)
 - **riscv-matrix-extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **riscv-matrix-extension-spec**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **rvspoc-s2311-llama2**: → [baby-llama2-milkv-duo-benchmark](benchmark_result/baby-llama2-milkv-duo-benchmark.md)
@@ -265,6 +281,7 @@ Last updated: 2026-07-03 | Pages: 45 | Sources: 124
 
 
 
+
 ## Optimization Pages
 
 | Page | Type | Summary | Tags | Sources | Inbound |
@@ -278,6 +295,8 @@ Last updated: 2026-07-03 | Pages: 45 | Sources: 124
 | [maestro-gesture-recognition.md](benchmark_result/maestro-gesture-recognition.md) | benchmark_result | Maestro gesture recognition benchmark |  | 2 | 0 |
 | [mlir-xdsl-gemm-benchmark-k230-banana-pi.md](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md) | benchmark_result | MLIR-xDSL GEMM Benchmark on K230 and BananaPi F3 |  | 2 | 4 |
 | [spacemit-k1-benchmark-2026-04-14.md](benchmark_result/spacemit-k1-benchmark-2026-04-14.md) | benchmark_result | SpacemiT K1 AI Benchmark Report (2026-04-14) |  | 2 | 0 |
+| [andes-ax45mpv-hardware-target.md](hardware_target/andes-ax45mpv-hardware-target.md) | hardware_target | AndesCore AX45MPV |  | 2 | 0 |
+| [andes-nx27v-hardware-target.md](hardware_target/andes-nx27v-hardware-target.md) | hardware_target | AndesCore NX27V |  | 2 | 1 |
 | [gap9.md](hardware_target/gap9.md) | hardware_target | GAP9 |  | 2 | 2 |
 | [k230-soc.md](hardware_target/k230-soc.md) | hardware_target | K230 |  | 8 | 0 |
 | [maestro.md](hardware_target/maestro.md) | hardware_target | Maestro |  | 2 | 1 |
@@ -287,7 +306,7 @@ Last updated: 2026-07-03 | Pages: 45 | Sources: 124
 | [spacemit-x60-hardware-target.md](hardware_target/spacemit-x60-hardware-target.md) | hardware_target | SpacemiT X60 | RISC-V, GCC tuning, SpacemiT, in-order, RVV 1.0 | 2 | 1 |
 | [t1.md](hardware_target/t1.md) | hardware_target | T1 |  | 2 | 0 |
 | [v851s-yuzukilizard.md](hardware_target/v851s-yuzukilizard.md) | hardware_target | Allwinner V851S / Yuzukilizard | allwinner, v851s, yuzukilizard, risc-v, npu | 8 | 0 |
-| [xuantie-c906-hardware-target.md](hardware_target/xuantie-c906-hardware-target.md) | hardware_target | XuanTie C906 |  | 2 | 1 |
+| [xuantie-c906-hardware-target.md](hardware_target/xuantie-c906-hardware-target.md) | hardware_target | XuanTie C906 |  | 2 | 3 |
 | [xuantie-c908.md](hardware_target/xuantie-c908.md) | hardware_target | XuanTie C908 |  | 10 | 1 |
 | [c908-wino-gemm-optimization.md](optimization_recipe/c908-wino-gemm-optimization.md) | optimization_recipe | C908 Winograd and GEMM Optimization in SHL |  | 2 | 11 |
 | [iree-riscv-microkernel-support.md](optimization_recipe/iree-riscv-microkernel-support.md) | optimization_recipe | IREE RISC-V Microkernel Support |  | 2 | 2 |
@@ -299,6 +318,8 @@ Last updated: 2026-07-03 | Pages: 45 | Sources: 124
 
 *Hardware/ISA targets: cores, SoCs, and accelerators by vendor.*
 
+- [andes-ax45mpv-hardware-target](hardware_target/andes-ax45mpv-hardware-target.md)
+- [andes-nx27v-hardware-target](hardware_target/andes-nx27v-hardware-target.md)
 - [gap9](hardware_target/gap9.md)
 - [k230-soc](hardware_target/k230-soc.md)
 - [maestro](hardware_target/maestro.md)
@@ -338,6 +359,7 @@ Last updated: 2026-07-03 | Pages: 45 | Sources: 124
 - [maestro-gesture-recognition](benchmark_result/maestro-gesture-recognition.md)
 - [mlir-xdsl-gemm-benchmark-k230-banana-pi](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md)
 - [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
+
 
 
 
