@@ -34,14 +34,14 @@ Subtypes are **specializations of `entity`**, never new top-level types: a subty
 [system_state]
 graph_maturity: false
 cold_start_page_count: 0
-orphan_fraction: 1.0          # fraction of pages with 0 inbound links — primary maturity signal
-median_inbound_links: 0       # median inbound across all pages — primary maturity signal
-mean_inbound_links: 0.0       # secondary signal only (gameable by a few hub pages)
-linking_debt: 0               # pages created this session still at 0 inbound (autonomous loop)
+orphan_fraction: 0.7391
+median_inbound_links: 0.0
+mean_inbound_links: 0.6957
+linking_debt: 0
 retrospective_lint_done: false
-clustering_coefficient: ~   # informational small-world metric (tools/graph_topology.py); does not gate graph_maturity
-avg_path_length: ~          # avg shortest path within the largest connected component; null until enough outbound_links exist
-connected_components: ~     # count of disconnected topical clusters in the outbound_links graph
+clustering_coefficient: 0.0
+avg_path_length: 2.6833
+connected_components: 7
 ```
 
 ---
@@ -444,6 +444,92 @@ spacy_model: en_core_web_sm
 ```
 
 ---
+
+## Theme Profile
+
+```yaml
+[theme_profile]
+theme: RISC-V AI accelerator
+organization_choice: workflow_first
+organization_name: Workflow-first
+page_types:
+  entity:
+    description: Specific entity or concept page
+  synthesis:
+    description: Cross-page synthesis or comparison
+  source_note:
+    description: Source-grounded note used when a source is useful but not yet page-worthy
+  hardware_target:
+    description: Hardware or ISA target with memory hierarchy, accelerator, and compiler
+      details
+    structured_fields:
+    - hardware_targets
+    - toolchains
+    - constraints
+  workload_kernel:
+    description: Kernel/workload shape, datatype, layout, sparsity, and baseline implementation
+    structured_fields:
+    - workloads
+    - datatypes
+    - constraints
+  optimization_recipe:
+    description: Transformation, prerequisites, expected effect, failure modes, and
+      measurements
+    structured_fields:
+    - hardware_targets
+    - workloads
+    - datatypes
+    - metrics
+    - toolchains
+  benchmark_result:
+    description: Measured or reported result with hardware/software versions and measurement
+      context
+    structured_fields:
+    - hardware_targets
+    - workloads
+    - datatypes
+    - metrics
+    - toolchains
+    - evidence_strength
+relationship_rules:
+- Prefer explicit bidirectional relationships between specialized pages and their
+  related entity/synthesis pages.
+- Use synthesis pages for cross-page comparisons, contradictions, and landscape-level
+  claims.
+source_preferences:
+- official documentation
+- benchmark repository
+- compiler documentation
+- SDK guide
+- paper
+coverage_priorities:
+- hardware/software/workload coverage
+- measurement context for benchmark results
+- optimization prerequisites and failure modes
+lint_priorities:
+- self-contained opening paragraphs
+- grounded sources for major claims
+- missing cross-references after enough pages accumulate
+- benchmark measurement context
+- hardware-target/workload/recipe relationship coverage
+hub_hierarchy:
+- hub_id: vendor_core_families
+  label: Vendor RISC-V Core Families
+  subtype: hardware_target
+  description: 'Hardware/ISA targets: cores, SoCs, and accelerators by vendor.'
+- hub_id: workload_landscape
+  label: Workload and Kernel Landscape
+  subtype: workload_kernel
+  description: Kernel/workload shapes, datatypes, and baseline implementations.
+- hub_id: optimization_techniques
+  label: Optimization Techniques
+  subtype: optimization_recipe
+  description: 'Transformation recipes: prerequisites, expected effect, failure modes.'
+- hub_id: benchmark_evidence
+  label: Benchmark Evidence
+  subtype: benchmark_result
+  description: Measured or reported results with hardware/software version context.
+```
 
 ## Research Configuration
 
