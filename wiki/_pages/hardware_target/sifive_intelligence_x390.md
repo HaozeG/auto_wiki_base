@@ -39,6 +39,9 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: xuantie_c907
+  reason: Another RISC-V core with matrix extension for AI workloads
 ---
 
 # SiFive Intelligence X390

@@ -47,6 +47,14 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: semidynamics
+  reason: the RISC-V IP vendor that designs this tensor unit as part of its broader
+    configurable core/vector/tensor IP portfolio
+- target: edge_ai_soc_design_space
+  reason: a synthesis page comparing this vector-pipeline-extension approach against
+    K230's fixed-function KPU, ET-SoC-1's many-core design, Grayskull's tile grid,
+    and Rockchip RK3588's ARM+NPU alternatives
 ---
 
 # Semidynamics Tensor Unit

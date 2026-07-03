@@ -30,6 +30,19 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: xuantie_c908
+  reason: Another RISC-V processor core with RVV 1.0 support, targeting AIoT applications,
+    from T-Head
+- target: k230
+  reason: SoC integrating RISC-V C908 cores with RVV 1.0, representing an end-product
+    using RVV-enabled cores
+- target: mlir_xdsl_rvv_gemm_codegen_recipe
+  reason: Compilation pipeline targeting RVV hardware for GEMM micro-kernels, relevant
+    to NX27V as a potential target
+- target: andestech_ax45mpv
+  reason: a later Andes core with a much wider (1024-bit) Vector Processing Unit,
+    illustrating Andes' vector-core roadmap since the NX27V's initial RVV 1.0 support
 ---
 
 # Andes NX27V

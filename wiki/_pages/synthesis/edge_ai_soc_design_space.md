@@ -22,6 +22,17 @@ scorecard:
   contradiction_potential: 0.4
   cross_domain_connection: 0.8
 needs_summary_revision: true
+outbound_links:
+- target: k230
+  reason: unlabeled
+- target: et_soc_1
+  reason: unlabeled
+- target: rockchip_rk3588
+  reason: unlabeled
+- target: tenstorrent_grayskull_e75
+  reason: unlabeled
+- target: semidynamics_tensor_unit
+  reason: unlabeled
 ---
 
 # Edge AI SoC Design Space: KPU/Fixed-Function vs. Vector-Only vs. Many-Core Approaches

@@ -41,6 +41,15 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: xuantie_c908
+  reason: another RISC-V core targeting AIoT, contrasting the Veyron V2's data-center
+    focus
+- target: k230
+  reason: a RISC-V SoC integrating the C908 core, showing a lower-end RISC-V platform
+- target: mlir_xdsl_rvv_gemm_codegen_recipe
+  reason: a compiler optimization recipe for RISC-V vector code generation, relevant
+    to the Veyron V2's vector extension support
 ---
 
 # Ventana Veyron V2

@@ -43,6 +43,11 @@ scorecard:
   bridge_score: 0.6
   hub_potential: 0.5
 needs_summary_revision: false
+outbound_links:
+- target: rvme
+  reason: RVME extends a RISC-V host CPU with dedicated matrix registers/instructions,
+    a third distinct model (ISA extension) for coupling RISC-V to matrix/DNN acceleration,
+    compared to MTIA's separate-accelerator-with-RISC-V-codegen approach
 ---
 
 # Meta MTIA

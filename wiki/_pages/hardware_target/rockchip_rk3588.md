@@ -44,6 +44,11 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 2
 needs_summary_revision: false
+outbound_links:
+- target: edge_ai_soc_design_space
+  reason: a synthesis page positioning RK3588 as the ARM+proprietary-NPU incumbent
+    against four RISC-V architectural alternatives (K230, ET-SoC-1, Grayskull e75,
+    Semidynamics Tensor Unit)
 ---
 
 # Rockchip RK3588

@@ -22,6 +22,10 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: mos2_risc_v_prototype
+  reason: a 2D-material (MoS2) 32-bit microprocessor that implements this full RV32I
+    instruction set as its target ISA
 ---
 
 # RV32I Base Integer Instruction Set

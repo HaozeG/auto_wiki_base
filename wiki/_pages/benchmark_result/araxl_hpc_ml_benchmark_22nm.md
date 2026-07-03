@@ -41,6 +41,15 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: true
+outbound_links:
+- target: araxl
+  reason: the hardware target under test
+- target: xuantie_c908
+  reason: a RISC-V vector processor with configurable VLEN 128/256, offering a contrast
+    for smaller-scale vector implementations
+- target: k230
+  reason: an SoC integrating the XuanTie C908 with RVV 1.0, representing a comparable
+    RISC-V vector platform
 ---
 
 # AraXL 22nm HPC/ML Benchmark

@@ -33,6 +33,14 @@ scorecard:
   bridge_score: 0.7
   hub_potential: 0.7
 needs_summary_revision: false
+outbound_links:
+- target: riscv_matrix_extension_proposal
+  reason: RVME's own matrix ISA extension is described as conforming to the design
+    principles of the "Attached Matrix Extension (AME)" proposal, a separate decoupled
+    tile/accumulator-register RISC-V matrix extension in the same design family as
+    the RISC-V Matrix Specification Proposal (tile registers + accumulation registers,
+    `mcfg`/`mmacc`-style instructions); the two are related but not confirmed identical
+    from this source alone
 ---
 
 # RVME

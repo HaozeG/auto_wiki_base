@@ -47,6 +47,11 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: boardcon_picot536
+  reason: a system-on-module built directly around this Allwinner T536 SoC, exposing
+    its Cortex-A55/XuanTie E907/E902/NPU combination through a 314-pin MXM 3.0 connector
+    for industrial and edge-AI carrier boards
 ---
 
 # Allwinner T536

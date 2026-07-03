@@ -45,6 +45,20 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 3
 needs_summary_revision: false
+outbound_links:
+- target: xuantie_c908
+  reason: The newer generation core in the same XuanTie family with enhanced vector
+    capabilities and higher performance
+- target: mlir_xdsl_rvv_gemm_codegen_recipe
+  reason: The code generation recipe for RISC-V Vector GEMM micro-kernels that can
+    be applied to the C906 as a target platform
+- target: sgemm_optimization_allwinner_nezha_d1
+  reason: a hand-tuned SGEMM optimization case study run directly on the Allwinner
+    Nezha D1 board, which uses this C906 core with RVV support
+- target: xuantie_c900_bugs
+  reason: documented errata affecting the C900-series family, including a C906-specific
+    halt sequence in the XTheadMemIdx extension and the GhostWrite MMU-bypass vulnerability
+    on sibling C910/C920 cores
 ---
 
 # XuanTie C906

@@ -27,6 +27,14 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: gemmini
+  reason: An open-source framework for generating systolic array-based DNN accelerators,
+    closely related to the systolic tensor unit concept
+- target: xuantie_c908_fp16_gemm_kernel
+  reason: A GEMM micro-kernel that can be mapped to systolic array hardware, demonstrating
+    the connection between systolic tensor units and optimized matrix multiplication
+    kernels
 ---
 
 # Systolic Tensor Units

@@ -20,6 +20,15 @@ scorecard:
   contradiction_potential: 0.3
   cross_domain_connection: 0.75
 needs_summary_revision: false
+outbound_links:
+- target: mlir_xdsl_rvv_gemm_codegen_recipe
+  reason: unlabeled
+- target: opengemm
+  reason: unlabeled
+- target: generic_micro_kernel_templates_gemm
+  reason: unlabeled
+- target: xuantie_c908_fp16_gemm_kernel
+  reason: unlabeled
 ---
 
 # Compiler-Generated vs. Hand-Tuned vs. Hardware-Accelerated GEMM on RISC-V

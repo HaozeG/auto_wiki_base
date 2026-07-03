@@ -41,6 +41,15 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: ara2
+  reason: The hardware target implementing these benchmarks
+- target: xuantie_c908
+  reason: A comparable RVV 1.0 processor with different microarchitecture and performance
+    targets
+- target: mlir_xdsl_rvv_gemm_codegen_recipe
+  reason: An optimization recipe targeting RVV hardware that could be evaluated against
+    these Ara2 benchmarks
 ---
 
 # Ara2 22nm Vector Processing Benchmarks

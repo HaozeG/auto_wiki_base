@@ -36,6 +36,10 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: kendryte_k210
+  reason: the predecessor SoC this chip succeeds, offering a dual-core RISC-V design
+    with a 1 TOPS NPU versus the K510's tri-core, 3 TOPS design
 ---
 
 # Kendryte K510

@@ -24,6 +24,19 @@ scorecard:
   contradiction_potential: 0.7
   cross_domain_connection: 0.75
 needs_summary_revision: false
+outbound_links:
+- target: integrated_matrix_extension
+  reason: unlabeled
+- target: matrix_tile_extension
+  reason: unlabeled
+- target: riscv_matrix_extension_proposal
+  reason: unlabeled
+- target: riscv_vector_extension
+  reason: unlabeled
+- target: rvme
+  reason: unlabeled
+- target: llvm_riscv_target
+  reason: unlabeled
 ---
 
 # Competing Approaches to Matrix Acceleration on RISC-V

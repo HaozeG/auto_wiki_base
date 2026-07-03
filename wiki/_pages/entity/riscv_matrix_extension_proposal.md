@@ -22,6 +22,15 @@ scorecard:
   bridge_score: 0.6
   hub_potential: 0.7
 needs_summary_revision: false
+outbound_links:
+- target: xuantie_c908
+  reason: XuanTie C908 implements the standard RISC-V Vector Extension 1.0 rather
+    than this decoupled matrix extension, illustrating an alternative vector-only
+    approach to matrix acceleration on RISC-V
+- target: riscv_matrix_extension_design_space
+  reason: a synthesis page comparing this proposal against the Integrated Matrix Extension
+    and Matrix Tile Extension, the two other competing (unratified, non-interoperating)
+    RISC-V matrix-acceleration ISA designs
 ---
 
 # RISC-V Matrix Specification Proposal

@@ -27,6 +27,16 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: k230
+  reason: A RISC-V-based edge AI SoC with NPU, representing a different hardware ecosystem
+    (RISC-V vs x86) for comparison of NPU deployment approaches
+- target: allwinner_v853
+  reason: Another edge AI SoC with NPU and support for ONNX model deployment, contrastable
+    with the AMD+Windows approach
+- target: onnx_int8_vs_fp16_jetson_orin_nano_latency_benchmark
+  reason: A benchmark of ONNX Runtime on NVIDIA Jetson Orin Nano, illustrating performance
+    tradeoffs on competing hardware that can inform evaluation of AMD NPU inference
 ---
 
 # Windows ML on AMD NPU

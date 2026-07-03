@@ -47,6 +47,13 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 2
 needs_summary_revision: true
+outbound_links:
+- target: tenstorrent_grayskull_e75
+  reason: The hardware target under test
+- target: k230
+  reason: Another RISC-V AI accelerator with benchmark data (if any exists in wiki;
+    but we only have the hardware_target page for k230, not a benchmark). We can still
+    link as a comparable hardware target
 ---
 
 # Tenstorrent Grayskull e75 MatMul Benchmark (arXiv:2505.06085)

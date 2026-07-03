@@ -22,6 +22,17 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: xuantie_c908
+  reason: a RISC-V processor core with vector extension support; the FPGA-based extensions
+    could complement or be compared against such custom functional units
+- target: k230
+  reason: a RISC-V SoC integrating the C908 core; its architecture provides a relevant
+    platform for evaluating sparse DNN acceleration techniques
+- target: mlir_xdsl_rvv_gemm_codegen_recipe
+  reason: a complementary approach that generates optimized GEMM micro-kernels for
+    RISC-V vector engines, applicable to dense matrix operations in contrast to the
+    sparse-focused extensions described here
 ---
 
 # RISC-V Sparse DNN FPGA Extensions

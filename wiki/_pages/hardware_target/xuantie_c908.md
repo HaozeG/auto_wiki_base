@@ -30,6 +30,46 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 50
 needs_summary_revision: false
+outbound_links:
+- target: xuantie_c907
+  reason: the first XuanTie IP to add a decoupled matrix extension (MME), offering
+    a matrix-register alternative to the C908's vector-only approach to GEMM acceleration
+- target: xuantie_c906
+  reason: earlier-generation XuanTie core; the C908's Key Claims cite a 3.75-4.57x
+    AI inference speedup over the C906
+- target: xuantie_c950
+  reason: newer-generation, server-class XuanTie core from the same T-Head family
+- target: xuantie_c930
+  reason: server-class XuanTie core targeting AI/HPC workloads, a different market
+    segment from the C908's embedded/AIoT focus
+- target: mlperf_inference_tiny_benchmark_suite
+  reason: the C906 predecessor to this core was benchmarked on MLPerf Tiny; the C908's
+    cited speedup over the C906 is directly relevant to that benchmark context
+- target: llama_cpp
+  reason: an LLM inference library with explicit RVV/ZVFH support that can target
+    the C908 as a hardware backend
+- target: saturn_vector_unit
+  reason: an open-source RVV 1.0 short-vector microarchitecture from UC Berkeley,
+    a useful comparison point for the C908's own configurable-VLEN vector unit
+- target: riscv_vector_tests_generator
+  reason: an automated RVV instruction test generator applicable to validating C908-class
+    vector implementations
+- target: rv32i_base_integer_instruction_set
+  reason: the mandatory base integer ISA that the C908's RV32GCB[V]/RV64GCB[V] profile
+    extends
+- target: semidynamics_tensor_unit
+  reason: another RVV1.0-based AI accelerator design that reuses vector registers
+    for matrix storage, a different microarchitectural choice than the C908's instruction-fusion
+    approach
+- target: xuantie_c908_ai_inference_performance
+  reason: the detailed HHB/SHL benchmark data behind this page's cited INT8 dot-product
+    and VLEN128-vs-256 speedup figures
+- target: risc_v_sparse_dnn_fpga_extensions
+  reason: a research proposal for custom sparsity-aware instruction extensions that
+    could complement the C908's dense-GEMM-oriented vector dot-product path
+- target: riscv_gem5_fault_injector
+  reason: a gem5-based single-bit fault injector applicable to soft-error resiliency
+    studies on RISC-V cores such as the C908
 ---
 
 # XuanTie C908

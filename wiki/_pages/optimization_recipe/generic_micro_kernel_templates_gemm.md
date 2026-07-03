@@ -55,6 +55,11 @@ updated: '2026-07-01'
 cold_start: false
 inbound_links: 3
 needs_summary_revision: false
+outbound_links:
+- target: riscv_gemm_optimization_approaches
+  reason: a synthesis page using this ARM/x86 template-based technique as an existence
+    proof for the RISC-V-specific compiler-generated (MLIR+xDSL), hand-tuned (XuanTie
+    C908), and hardware-generated (OpenGeMM) approaches
 ---
 
 # Template-Based Micro-kernel Generation for GEMM

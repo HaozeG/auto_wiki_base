@@ -29,6 +29,19 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: llvm_riscv_target
+  reason: The broader LLVM RISC-V target backend that includes this vector extension
+    support as a key component, providing code generation for the full set of RISC-V
+    extensions
+- target: mlir_xdsl_rvv_gemm_codegen_recipe
+  reason: An optimization recipe that uses LLVM RVV intrinsic code generation for
+    GEMM micro-kernels, relying on the type mapping and intrinsic representation documented
+    here
+- target: spacemit_x60
+  reason: A RISC-V hardware target implementing RVV 1.0 with 256-bit vectors; the
+    LLVM RVV IR model is the compilation path for generating code for this and similar
+    platforms
 ---
 
 # LLVM RISC-V Vector Extension IR Representation

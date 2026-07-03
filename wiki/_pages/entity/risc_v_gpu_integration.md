@@ -26,6 +26,16 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: xuantie_c908
+  reason: A RISC-V AIoT processor with vector extension, representing the CPU side
+    of RISC-V accelerated computing
+- target: llvm_riscv_target
+  reason: The LLVM compiler backend for RISC-V, which supports GPU-related extensions
+    and code generation for RISC-V hardware
+- target: mlir_xdsl_rvv_gemm_codegen_recipe
+  reason: An optimization recipe for RISC-V vector code generation, relevant to GPGPU
+    workloads on RVV
 ---
 
 # RISC-V and GPU Integration

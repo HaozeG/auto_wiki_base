@@ -40,6 +40,17 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 2
 needs_summary_revision: false
+outbound_links:
+- target: k230
+  reason: A RISC-V-based edge AI SoC with a dedicated KPU, serving as a competing
+    platform for low-power AI inference; comparison of latency and accuracy profiles
+    between the Jetson Orin Nano and the K230 could inform hardware selection for
+    edge deployments
+- target: llama_cpp
+  reason: An LLM inference framework with support for multiple quantization formats
+    and hardware backends; while focused on LLMs, it represents a parallel inference
+    optimization approach that can be contrasted with the ONNX-based YOLOv8n benchmark
+    on edge hardware
 ---
 
 # ONNX INT8 vs FP16 Latency on Jetson Orin Nano

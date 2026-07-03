@@ -47,6 +47,15 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: pulp_nn
+  reason: The library that produced these benchmark results
+- target: k230
+  reason: A RISC-V AI SoC that could serve as an alternative target for similar quantized
+    neural network benchmarks
+- target: xuantie_c908
+  reason: Another RISC-V core with vector extensions, relevant for comparison of RISC-V
+    AI inference performance
 ---
 
 # PULP-NN GAP-8 CIFAR-10 Benchmark

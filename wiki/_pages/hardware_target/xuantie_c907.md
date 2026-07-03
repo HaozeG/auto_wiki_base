@@ -39,6 +39,16 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 3
 needs_summary_revision: false
+outbound_links:
+- target: xuantie_c908
+  reason: a different XuanTie core that relies on the RISC-V Vector Extension; the
+    C907 offers an alternative matrix-oriented path
+- target: rvme
+  reason: a research matrix engine design also aligned with the AME proposal; both
+    explore decoupled matrix acceleration for RISC-V
+- target: xuantie_c908_fp16_gemm_kernel
+  reason: a vector-based GEMM kernel on the C908 provides a contrast to the matrix-based
+    approach on the C907
 ---
 
 # XuanTie C907

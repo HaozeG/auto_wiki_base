@@ -32,6 +32,19 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: xuantie_c908
+  reason: Another open-source processor implementing RVV 1.0, but with a different
+    microarchitecture and target application domain
+- target: k230
+  reason: A RISC-V SoC integrating a C908 core with RVV 1.0, serving as a comparison
+    point for open-source vector implementations
+- target: mlir_xdsl_rvv_gemm_codegen_recipe
+  reason: An optimization recipe for generating RVV code that could be validated on
+    Ara2 hardware
+- target: ara2_22nm_vector_benchmarks
+  reason: the detailed 22nm measurement results (utilization, energy efficiency, multi-core
+    scaling) for this processor
 ---
 
 # Ara2

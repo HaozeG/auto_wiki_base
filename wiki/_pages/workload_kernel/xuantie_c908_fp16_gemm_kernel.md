@@ -29,6 +29,11 @@ updated: '2026-07-01'
 cold_start: false
 inbound_links: 19
 needs_summary_revision: false
+outbound_links:
+- target: riscv_gemm_optimization_approaches
+  reason: a synthesis page comparing this hand-tuned assembly approach against compiler-generated
+    RVV code (MLIR+xDSL), dedicated hardware generation (OpenGeMM), and cross-architecture
+    template-based micro-kernels
 ---
 
 # XuanTie C908 FP16 GEMM Outer Product Kernel

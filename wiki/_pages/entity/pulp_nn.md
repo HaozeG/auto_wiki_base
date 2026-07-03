@@ -26,6 +26,22 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 2
 needs_summary_revision: false
+outbound_links:
+- target: k230
+  reason: Another RISC-V SoC with AI acceleration, representing a different approach
+    to quantized neural network deployment
+- target: xuantie_c908
+  reason: A RISC-V processor core with vector extensions and instruction fusion, used
+    for similar AI inference workloads
+- target: mlir_xdsl_rvv_gemm_codegen_recipe
+  reason: A compiler-based optimization recipe for RISC-V GEMM kernels, complementary
+    to PULP-NN's hand-tuned library approach
+- target: pulp_nn_gap8_cifar10_benchmark
+  reason: the detailed GAP-8/STM32 speedup and energy-efficiency measurements referenced
+    above
+- target: pulp_platform
+  reason: the parent open-source PULP hardware ecosystem that PULP-NN's target clusters
+    are built on
 ---
 
 # PULP-NN

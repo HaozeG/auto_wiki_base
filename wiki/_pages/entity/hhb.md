@@ -26,6 +26,10 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: hhb_mobilenetv2_c908_compilation
+  reason: a step-by-step recipe applying this toolset to compile a quantized MobileNetV2
+    model for the XuanTie C908 core on K230
 ---
 
 # HHB

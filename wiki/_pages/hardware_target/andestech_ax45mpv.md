@@ -34,6 +34,21 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: xuantie_c908
+  reason: A comparable RISC-V core with configurable 128/256-bit vector width, representing
+    a different design point in the RISC-V vector processor landscape (smaller vector
+    width, different vendor)
+- target: k230
+  reason: A RISC-V SoC integrating the XuanTie C908 core, serving as an example of
+    how RISC-V vector cores are used in real AIoT products; the AX45MPV targets similar
+    application spaces
+- target: mlir_xdsl_rvv_gemm_codegen_recipe
+  reason: An optimization recipe for generating vector code using MLIR/xDSL; the AX45MPV's
+    1024-bit VPU is a potential target for such code generation techniques
+- target: andes_nx27v
+  reason: Andes' earlier RVV 1.0 vector processor IP, the predecessor design point
+    the AX45MPV's much wider 1024-bit VPU builds on
 ---
 
 # AndesCore AX45MPV

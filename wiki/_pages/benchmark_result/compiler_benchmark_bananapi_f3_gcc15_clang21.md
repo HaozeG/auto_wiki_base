@@ -61,6 +61,10 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 3
 needs_summary_revision: false
+outbound_links:
+- target: llvm_riscv_target
+  reason: the LLVM RISC-V backend whose Clang 21 autovectorizer is one half of this
+    comparison
 ---
 
 # Compiler Benchmark Comparison on BananaPi-F3 (RVV 1.0)

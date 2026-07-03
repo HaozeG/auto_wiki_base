@@ -46,6 +46,16 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: spacemit_x60
+  reason: The hardware target for these benchmarks
+- target: llvm_optimization_for_risc_v_scheduling_vectorization_ipra
+  reason: The optimization recipe that produced these measured improvements
+- target: llvm_riscv_target
+  reason: The LLVM RISC-V backend used
+- target: mlir_xdsl_rvv_gemm_codegen_recipe
+  reason: A related optimization for the same board, targeting GEMM workloads with
+    different techniques
 ---
 
 # SPEC CPU 2017 LLVM Optimization Results on SpacemiT X60

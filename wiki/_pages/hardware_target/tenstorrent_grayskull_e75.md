@@ -43,6 +43,23 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: xuantie_c908
+  reason: A RISC-V core with vector extensions for AI inference, representing an alternative
+    microarchitecture compared to Grayskull's Tensix grid approach
+- target: k230
+  reason: An SoC integrating RISC-V C908 cores with a KPU, offering a different balance
+    of CPU and dedicated AI accelerator for edge AI
+- target: grayskull_e75_matmul_benchmark
+  reason: the matmul-kernel measurement results (tiling, kernel-compile, data-transfer
+    time breakdown) for this card
+- target: tile_language
+  reason: a Pythonic, TVM-based DSL for GPU/CPU AI kernel authoring, illustrating
+    a compiler-driven alternative to Grayskull's custom kernel-compilation path
+- target: edge_ai_soc_design_space
+  reason: a synthesis page comparing Grayskull's tile-grid-with-embedded-RISC-V-control
+    approach against K230's fixed-function KPU, ET-SoC-1's many-core design, Semidynamics'
+    vector extension, and Rockchip RK3588's ARM+NPU alternatives
 ---
 
 # Tenstorrent Grayskull e75

@@ -28,6 +28,13 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: xuantie_c908
+  reason: a commercial RISC-V core from T-Head, representing a silicon-based contrast
+    to the MoS2 prototype's materials approach
+- target: k230
+  reason: a RISC-V SoC integrating the C908 core, serving as an example of a production
+    RISC-V hardware target with similar ISA but conventional silicon fabrication
 ---
 
 # MoS2 RISC-V Prototype

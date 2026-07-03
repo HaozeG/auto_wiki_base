@@ -38,6 +38,13 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: k230
+  reason: An SoC integrating a different RISC-V core (C908) for AIoT, providing a
+    contrast in target application
+- target: xuantie_c907
+  reason: Another RISC-V core with matrix extension, offering an alternative approach
+    to vector acceleration
 ---
 
 # SiFive Performance P870

@@ -27,6 +27,17 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: xuantie_c908
+  reason: a RISC-V AI accelerator core that can execute YOLOv8 inference workloads,
+    leveraging vector extensions for convolutional operations
+- target: k230
+  reason: a RISC-V SoC integrating the C908 core and a Knowledge Process Unit (KPU)
+    capable of running YOLO-family models, relevant for YOLOv8 deployment on edge
+    devices
+- target: llama_cpp
+  reason: an inference library supporting GGML quantization and RVV instructions,
+    potentially applicable to running YOLOv8 inference on RISC-V hardware
 ---
 
 # YOLOv8

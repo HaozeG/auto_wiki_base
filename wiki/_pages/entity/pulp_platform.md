@@ -23,6 +23,13 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: pulpissimo
+  reason: the single-core SoC-controller architecture built on this platform, serving
+    as the I/O and control front-end for larger multi-core PULP chips
+- target: pulp_nn
+  reason: an optimized quantized-neural-network kernel library that targets PULP clusters
+    built on this platform
 ---
 
 # PULP Platform

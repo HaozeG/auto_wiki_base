@@ -23,6 +23,16 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: mlir_xdsl_rvv_gemm_codegen_recipe
+  reason: A compiler-driven GEMM optimization using MLIR and xDSL for RISC-V, contrasting
+    with tile-lang's TVM-based approach targeting GPUs and CPUs
+- target: xuantie_c908_fp16_gemm_kernel
+  reason: A hand-tuned RISC-V GEMM kernel for a specific CPU, whereas tile-lang uses
+    DSL compilation for cross-platform kernel generation
+- target: grayskull_e75_matmul_benchmark
+  reason: A benchmark result for a different hardware platform, providing complementary
+    performance data for matrix multiplication
 ---
 
 # Tile Language

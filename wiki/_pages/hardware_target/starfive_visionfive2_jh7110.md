@@ -42,6 +42,14 @@ updated: '2026-07-01'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: xuantie_c908
+  reason: Another RISC-V hardware target with AI acceleration features; contrasts
+    with the general-purpose orientation of the VisionFive2
+- target: rvme
+  reason: A RISC-V matrix engine coprocessor design; shows how RISC-V platforms can
+    incorporate custom accelerators, whereas the VisionFive2 relies on software-based
+    workloads
 ---
 
 # StarFive VisionFive2

@@ -42,6 +42,16 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: spacemit_x60
+  reason: The hardware target that these optimizations were designed for
+- target: llvm_riscv_target
+  reason: The LLVM RISC-V backend that received the patches for scheduling, vectorization,
+    and IPRA
+- target: mlir_xdsl_rvv_gemm_codegen_recipe
+  reason: Another optimization targeting the same board, focused on GEMM via MLIR/xDSL
+- target: spacemit_x60_llvm_spec_cpu2017_benchmark
+  reason: Benchmark result page with more detailed measurements
 ---
 
 # LLVM Optimization for RISC-V: Scheduling, Vectorization, and IPRA on SpacemiT X60

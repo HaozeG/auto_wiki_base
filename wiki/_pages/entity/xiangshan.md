@@ -38,6 +38,19 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: k230
+  reason: a RISC-V SoC that integrates a different core (XuanTie C908), contrasting
+    with XiangShan's in-house processor design
+- target: xuantie_c908
+  reason: another open-source RISC-V processor core, representing a different design
+    philosophy (commercial IP vs academic open-source) and target application space
+- target: mlir_xdsl_rvv_gemm_codegen_recipe
+  reason: a compiler optimization recipe for RVV that could potentially target XiangShan's
+    Kunminghu micro-architecture if it supports the RISC-V Vector Extension
+- target: xiangshan_kunminghu
+  reason: the current-generation micro-architecture under active development within
+    this project, implementing the RV64GCBSUHV ISA with vector and hypervisor extensions
 ---
 
 # XiangShan

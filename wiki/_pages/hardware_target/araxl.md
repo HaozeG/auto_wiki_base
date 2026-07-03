@@ -31,6 +31,19 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: xuantie_c908
+  reason: another RISC-V V 1.0 processor core with configurable 128/256-bit VLEN,
+    offering a contrast in lane count (2 vs 64) and target market
+- target: k230
+  reason: an SoC integrating the C908 core, representing a real-world platform for
+    RISC-V vector execution
+- target: mlir_xdsl_rvv_gemm_codegen_recipe
+  reason: an optimization recipe for generating RVV code that could potentially target
+    AraXL on software simulation or future implementations
+- target: araxl_hpc_ml_benchmark_22nm
+  reason: the detailed 22nm peak-performance and energy-efficiency measurements for
+    this architecture
 ---
 
 # AraXL

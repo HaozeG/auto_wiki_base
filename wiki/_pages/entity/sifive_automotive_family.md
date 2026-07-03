@@ -35,6 +35,13 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: xuantie_c908
+  reason: another RISC-V core family from T-Head, primarily targeting AIoT rather
+    than automotive functional safety
+- target: k230
+  reason: a system-on-chip integrating RISC-V cores for AIoT, contrasting with SiFive's
+    automotive-focused cores
 ---
 
 # SiFive Automotive Family

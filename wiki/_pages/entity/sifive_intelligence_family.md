@@ -24,6 +24,15 @@ updated: '2026-07-01'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: xuantie_c908
+  reason: Another RISC-V processor core targeting AI inference with vector extensions,
+    developed by T-Head Semiconductor, representing a different vendor approach in
+    the same market space
+- target: rvme
+  reason: A matrix engine coprocessor design for RISC-V, representing a research-oriented
+    approach to accelerating GEMM for deep learning, complementary to SiFive's commercial
+    IP
 ---
 
 # SiFive Intelligence Family

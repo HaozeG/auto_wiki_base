@@ -27,6 +27,19 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: k230
+  reason: The K230 SoC integrates a RISC-V vector core (C908) that can benefit from
+    EARTH's memory access optimizations, as vector memory efficiency is critical for
+    the KPU's data supply
+- target: xuantie_c908
+  reason: The XuanTie C908 is a RISC-V vector processor core that supports RVV 1.0;
+    EARTH's shifting-based memory access techniques are directly applicable to improving
+    its const-stride and segment load/store performance
+- target: mlir_xdsl_rvv_gemm_codegen_recipe
+  reason: This optimization recipe targets RVV code generation, and EARTH's memory
+    access improvements complement software-level optimizations by ensuring efficient
+    data movement
 ---
 
 # EARTH

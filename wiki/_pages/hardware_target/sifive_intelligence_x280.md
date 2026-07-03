@@ -47,6 +47,15 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: sifive_intelligence_family
+  reason: the product family this core belongs to
+- target: sifive_intelligence_x390
+  reason: the successor core, claiming a fourfold vector-performance improvement via
+    doubled VLEN (1024-bit) over the X280
+- target: sifive_automotive_family
+  reason: SiFive's separate, ISO 26262-certified core family for automotive functional-safety
+    workloads, contrasting with the X280's AI/datacenter focus
 ---
 
 # SiFive Intelligence X280

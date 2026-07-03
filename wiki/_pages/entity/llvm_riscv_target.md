@@ -28,6 +28,19 @@ updated: '2026-07-01'
 cold_start: false
 inbound_links: 15
 needs_summary_revision: false
+outbound_links:
+- target: llvm_ir
+  reason: the Static Single Assignment intermediate representation that the LLVM RISC-V
+    target lowers into machine code; the RISC-V backend consumes LLVM IR as its input
+- target: llvm_rvv_ir_representation
+  reason: the detailed scalable-vector-type model the RISC-V target uses specifically
+    to represent and lower RVV code
+- target: compiler_benchmark_bananapi_f3_gcc15_clang21
+  reason: a benchmark comparing this LLVM/Clang RISC-V backend's autovectorization
+    output against GCC on RVV hardware
+- target: sifive_performance_p570_gen3
+  reason: a contemporary out-of-order RISC-V core that relies on this LLVM RISC-V
+    target (and GCC) for its software ecosystem
 ---
 
 # LLVM RISC-V Target

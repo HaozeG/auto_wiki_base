@@ -43,6 +43,21 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: xuantie_c908
+  reason: Another open-source RISC-V processor core with a different design philosophy
+    and target market, also supported by QEMU and serving as a comparable RISC-V hardware
+    target for AI acceleration workloads
+- target: k230
+  reason: A system-on-chip integrating a different RISC-V core (XuanTie C908) with
+    dedicated AI accelerators; contrasts with the XiangShan Kunminghu's approach of
+    a general-purpose high-performance core with FPGA prototyping
+- target: mlir_xdsl_rvv_gemm_codegen_recipe
+  reason: An optimization recipe for generating RISC-V Vector code, potentially applicable
+    to the Kunminghu's vector extension for GEMM optimization
+- target: xiangshan
+  reason: the parent open-source RISC-V processor project; Kunminghu is its third-generation
+    micro-architecture
 ---
 
 # XiangShan Kunminghu

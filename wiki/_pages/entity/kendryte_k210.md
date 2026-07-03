@@ -27,6 +27,17 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: k230
+  reason: The K230 is Canaan's next-generation SoC that succeeded the K210/K510 family,
+    integrating dual XuanTie C908 cores and a dedicated KPU
+- target: xuantie_c908
+  reason: A RISC-V processor core from T-Head Semiconductor that powers the K230;
+    the K210 and K510 use different, earlier-generation Canaan core designs but share
+    the same target edge AI application space
+- target: kendryte_k510
+  reason: the direct successor SoC, doubling clock speed and tripling NPU throughput
+    over the K210
 ---
 
 # Kendryte K210

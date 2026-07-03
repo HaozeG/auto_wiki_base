@@ -36,6 +36,19 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 4
 needs_summary_revision: false
+outbound_links:
+- target: llvm_riscv_target
+  reason: The LLVM RISC-V backend that received the scheduling model and other patches
+    targeting this processor
+- target: mlir_xdsl_rvv_gemm_codegen_recipe
+  reason: Another optimization recipe targeting the same Banana Pi F3 board, though
+    with a different code generation approach using MLIR and xDSL for GEMM micro-kernels
+- target: spacemit_x60_llvm_spec_cpu2017_benchmark
+  reason: The detailed SPEC CPU 2017 measurement results from the LLVM scheduling/vectorization/IPRA
+    work on this core
+- target: compiler_benchmark_bananapi_f3_gcc15_clang21
+  reason: A GCC 15 vs. Clang 21 autovectorization comparison (SGEMM, DGEMM, Qsim)
+    on this same SoC/board
 ---
 
 # SpacemiT X60

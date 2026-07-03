@@ -37,6 +37,16 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: k230
+  reason: Both are RISC-V-based SoCs; K230 integrates C908 cores while PULPissimo
+    uses RI5CY/Ibex and serves as controller for larger PULP systems
+- target: xuantie_c908
+  reason: The RI5CY core in PULPissimo is another RISC-V in-order core, offering a
+    contrast to the C908's vector-enabled design; PULPissimo targets ultra-low-power
+    MCU applications rather than AI acceleration. Insufficient context for additional
+    cross-links – closely related PULP platform pages (e.g., pulpino, pulp) are not
+    yet present in the wiki
 ---
 
 # PULPissimo

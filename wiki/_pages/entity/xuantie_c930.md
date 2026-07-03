@@ -37,6 +37,11 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: ventana_veyron_v2
+  reason: a competing data-center-class RISC-V server processor from Ventana Microsystems,
+    offering an open, western-vendor point of comparison to Alibaba's server-grade
+    RISC-V push
 ---
 
 # XuanTie C930

@@ -56,6 +56,10 @@ scorecard:
   bridge_score: 0.6
   hub_potential: 0.55
 needs_summary_revision: false
+outbound_links:
+- target: rvme
+  reason: this benchmark comparison is measured on the RVME hardware design described
+    in that page
 ---
 
 # RVME GEMM benchmark comparison

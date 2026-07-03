@@ -28,6 +28,11 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: riscv_gemm_optimization_approaches
+  reason: a synthesis page comparing this dedicated-hardware-generation approach against
+    compiler-generated RVV code (MLIR+xDSL), hand-tuned assembly (XuanTie C908 kernel),
+    and cross-architecture template-based micro-kernels
 ---
 
 # OpenGeMM

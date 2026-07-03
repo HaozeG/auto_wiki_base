@@ -20,6 +20,18 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: xuantie_c908
+  reason: the XuanTie C908 is another RISC-V processor core targeting AI workloads
+    with vector extensions, representing a competitive design approach to Semidynamics'
+    integrated tensor units
+- target: k230
+  reason: the Canaan Kendryte K230 SoC integrates C908 cores and is a hardware target
+    for RISC-V AI inference, relevant for understanding the market context into which
+    Semidynamics IP is deployed
+- target: llama_cpp
+  reason: the LLM inference library can target RISC-V platforms, and Semidynamics'
+    high-bandwidth cores are potential hardware backends for such workloads
 ---
 
 # Semidynamics

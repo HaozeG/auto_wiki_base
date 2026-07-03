@@ -47,6 +47,14 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 10
 needs_summary_revision: false
+outbound_links:
+- target: llvm_vcix_scheduling_model
+  reason: the LLVM scheduling model mechanism for SiFive Vector Coprocessor Interface
+    (VCIX) instructions, applicable to this core's SiFive 7-family scheduling
+- target: compiler_benchmark_bananapi_f3_gcc15_clang21
+  reason: a GCC-vs-Clang RVV 1.0 autovectorization comparison on a different (in-order)
+    core, offering a contrasting compiler-quality data point to this out-of-order
+    design
 ---
 
 # SiFive Performance P570 Gen3

@@ -28,6 +28,13 @@ source_url: https://www.sifive.com/cores/intelligence-x200-series
 fetched_at: '2026-07-01T06:08:25.891404+00:00'
 type: hardware_target
 needs_summary_revision: false
+outbound_links:
+- target: xuantie_c908
+  reason: Another RISC-V AI-oriented processor core with vector extensions, suitable
+    for comparison
+- target: rvme
+  reason: A RISC-V matrix engine coprocessor design, representing an alternative AI
+    acceleration approach
 ---
 
 # SiFive Intelligence X200 Series

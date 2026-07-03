@@ -34,6 +34,23 @@ updated: '2026-07-02'
 cold_start: false
 inbound_links: 1
 needs_summary_revision: false
+outbound_links:
+- target: xuantie_c908
+  reason: Another RVV 1.0 compliant hardware target with configurable VLEN 128/256;
+    comparison point for short-vector RISC-V vector implementations
+- target: k230
+  reason: An SoC that integrates the XuanTie C908 core and validates RVV code generation;
+    relevant platform for understanding short-vector deployment
+- target: mlir_xdsl_rvv_gemm_codegen_recipe
+  reason: An optimization recipe for generating RVV micro-kernels, relevant to short-vector
+    execution models like Saturn
+- target: xuantie_c908_fp16_gemm_kernel
+  reason: A workload kernel for RVV VLEN128, illustrating the type of GEMM kernel
+    optimizable on short-vector units
+- target: earth_vector_memory_architecture
+  reason: an FPGA-implemented vector memory access optimization built directly on
+    top of this open-source vector unit, adding shift-network-based strided/segment
+    access support
 ---
 
 # Saturn Vector Unit
