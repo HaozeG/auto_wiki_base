@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-03 | Pages: 66 | Sources: 180
+Last updated: 2026-07-03 | Pages: 67 | Sources: 184
 
 ## Entity Pages
 
@@ -27,6 +27,7 @@ Last updated: 2026-07-03 | Pages: 66 | Sources: 180
 | [rise-project-rp014-llamacpp-ggml-rvv.md](entity/rise-project-rp014-llamacpp-ggml-rvv.md) | RP014 - Optimizing Llama.cpp and GGML for RVV | llama.cpp, GGML, RVV, RISC-V, quantization, optimization | 2 | 0 |
 | [rvv-dialect-mlir.md](entity/rvv-dialect-mlir.md) | RVV Dialect (MLIR) | MLIR, RVV, RISC-V, dialect, compiler | 2 | 0 |
 | [rvv-intrinsic-api.md](entity/rvv-intrinsic-api.md) | RISC-V Vector Extension Intrinsic API |  | 2 | 0 |
+| [semidynamics.md](entity/semidynamics.md) | Semidynamics | RISC-V, AI, AIPU, European | 2 | 0 |
 | [shl.md](entity/shl.md) | SHL |  | 4 | 1 |
 | [sifive-intelligence-2nd-gen.md](entity/sifive-intelligence-2nd-gen.md) | SiFive Intelligence 2nd Gen |  | 2 | 0 |
 | [whisper-risc-v-iss-entity.md](entity/whisper-risc-v-iss-entity.md) | Whisper | RISC-V, instruction set simulator, ISS, Tenstorrent | 2 | 0 |
@@ -235,6 +236,9 @@ Last updated: 2026-07-03 | Pages: 66 | Sources: 180
 - **SHL**: → [shl](entity/shl.md)
 - **SOPHGO SG2044**: → [sophon-sg2044-hardware-target](hardware_target/sophon-sg2044-hardware-target.md)
 - **SOPHON SG2042**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
+- **Semidynamics**: → [semidynamics](entity/semidynamics.md)
+- **Semidynamics AIPU**: → [semidynamics](entity/semidynamics.md)
+- **Semidynamics RISC-V**: → [semidynamics](entity/semidynamics.md)
 - **ShiHulan**: → [shl](entity/shl.md)
 - **SiFive 2nd Gen Intelligence**: → [sifive-intelligence-2nd-gen](entity/sifive-intelligence-2nd-gen.md)
 - **SiFive Intelligence 2nd Gen**: → [sifive-intelligence-2nd-gen](entity/sifive-intelligence-2nd-gen.md)
@@ -392,6 +396,7 @@ Last updated: 2026-07-03 | Pages: 66 | Sources: 180
 
 
 
+
 ## Optimization Pages
 
 | Page | Type | Summary | Tags | Sources | Inbound |
@@ -423,7 +428,7 @@ Last updated: 2026-07-03 | Pages: 66 | Sources: 180
 | [t1.md](hardware_target/t1.md) | hardware_target | T1 |  | 2 | 0 |
 | [v851s-yuzukilizard.md](hardware_target/v851s-yuzukilizard.md) | hardware_target | Allwinner V851S / Yuzukilizard | allwinner, v851s, yuzukilizard, risc-v, npu | 8 | 0 |
 | [xuantie-c906-hardware-target.md](hardware_target/xuantie-c906-hardware-target.md) | hardware_target | XuanTie C906 |  | 2 | 6 |
-| [xuantie-c908.md](hardware_target/xuantie-c908.md) | hardware_target | XuanTie C908 |  | 12 | 1 |
+| [xuantie-c908.md](hardware_target/xuantie-c908.md) | hardware_target | XuanTie C908 |  | 14 | 1 |
 | [c908-wino-gemm-optimization.md](optimization_recipe/c908-wino-gemm-optimization.md) | optimization_recipe | C908 Winograd and GEMM Optimization in SHL |  | 2 | 11 |
 | [hhb-onnxruntime-yolox-deployment-xuantie-c920.md](optimization_recipe/hhb-onnxruntime-yolox-deployment-xuantie-c920.md) | optimization_recipe | HHB-onnxruntime YOLOX Deployment on Xuantie C920 |  | 2 | 0 |
 | [iree-riscv-microkernel-support.md](optimization_recipe/iree-riscv-microkernel-support.md) | optimization_recipe | IREE RISC-V Microkernel Support |  | 2 | 2 |
@@ -487,6 +492,7 @@ Last updated: 2026-07-03 | Pages: 66 | Sources: 180
 - [mlir-xdsl-gemm-benchmark-k230-banana-pi](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md)
 - [sophon-sg2042-npb-performance-benchmark-result](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md)
 - [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
+
 
 
 

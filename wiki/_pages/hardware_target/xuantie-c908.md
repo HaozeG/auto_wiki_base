@@ -25,6 +25,8 @@ sources:
 - https://github.com/FreeRTOS/FreeRTOS-Community-Supported-Demos/blob/main/RISC-V_XUANTIE_C908_GCC/README.md
 - raw/cache/25ef1a75fb2012c6.md
 - https://gcc.gnu.org/pipermail/gcc-patches/2026-June/719234.html
+- raw/cache/97c99da680dadacf.md
+- https://www.cnx-software.com/2022/11/04/t-head-xuantie-c908-risc-v-core-targets-aiot-applications/
 hardware_targets:
 - XuanTie C908
 toolchains:

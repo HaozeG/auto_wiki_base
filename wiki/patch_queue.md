@@ -1468,3 +1468,96 @@ No specific relationship to visible context pages.
 
 - https://github.com/chipsalliance
 merge_draft_body -->
+
+## [2026-07-03] merge_pending | xuantie-c908.md
+target_page: xuantie-c908.md
+canonical_name: XuanTie C908
+colliding_name: XuanTie C908
+source: https://riscv.org/blog/xuantie-c908-accelerates-ai-with-software-and-hardware-fusion/
+status: pending_review
+<!-- merge_draft_body
+# XuanTie C908
+
+The XuanTie C908 is a RISC-V processor core released by T-Head Semiconductor (Alibaba Group) that implements the RISC-V Vector Extension (RVV) 1.0 and targets AI inference workloads in visual AI, intelligent interaction, and other advanced technologies. It operates at a frequency of up to 2 GHz and supports configurable vector register bit widths of 128 or 256 bits (VLEN). The core's vector execution unit handles FP16, BFP16, FP32, INT8, INT32, and INT64 integer operations, and additionally provides INT8 and INT4 vector dot product instructions for quantized neural network inference. The micro-architecture includes instruction fusion technology to improve instruction throughput and reduce pipeline stalls. The XuanTie C908 is the successor to the XuanTie C906 and delivers significantly higher AI performance through both hardware enhancements (vector dot product extensions, wider vector options) and software optimization via the Structure of Heterogeneous Library (SHL) and the Heterogeneous Honey Badger (HHB) deployment tool. The core is compliant with the standard RISC-V vector extension 1.0, ensuring compatibility with the broader RISC-V software ecosystem.
+
+## Key Claims
+
+- Implements RVV 1.0 with 128/256-bit configurable VLEN.
+- Supports INT8/INT4 vector dot product operations.
+- Features instruction fusion technology for improved instruction-level parallelism.
+- Vector unit supports FP16, BFP16, FP32, INT8, INT32, INT64 operations.
+- Operates at up to 2 GHz.
+- SHL library provides inference acceleration with fp32, fp16, and int8 data types.
+- HHB deployment tool supports int8 asymmetric quantization and fp16 quantization.
+- Provides 3.75 to 4.57 times AI performance improvement over the previous generation XuanTie C906 (@vlen128).
+- With int8 vector dot product instructions, achieves 3.35x speedup on MobileNet relative to baseline without dot product.
+- Expanding VLEN to 256 yields an additional 1.55x–1.68x speedup.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V with RVV 1.0
+- Vector/matrix/accelerator support: 128/256-bit VLEN, INT8/INT4 dot product, FP16/BFP16/FP32 vector
+- Memory/cache/TLB/DMA: High-speed cache technology (details not specified in source)
+- Compiler/toolchain support: SHL (Structure of Heterogeneous Library), HHB (Heterogeneous Honey Badger)
+
+## Relationships
+
+- [[c908-wino-gemm-optimization]]: The XuanTie C908 is the hardware target for the Winograd and GEMM optimization techniques implemented in the SHL library, which uses the core's vector dot product instructions and register blocking scheme for convolution acceleration.
+- [[mlir-xdsl-rvv-codegen-pipeline]]: Both target RVV 1.0 hardware, but the MLIR-xDSL pipeline aims at portable compiler-driven code generation for RISC-V platforms while the C908's SHL optimizations are hand-tuned library routines specific to the XuanTie C908 microarchitecture.
+
+## Sources
+
+- https://riscv.org/blog/xuantie-c908-accelerates-ai-with-software-and-hardware-fusion/
+merge_draft_body -->
+
+## [2026-07-03] pending | c908-wino-gemm-optimization.md
+target_page: c908-wino-gemm-optimization.md
+target_section: Relationships
+source: https://riscv.org/blog/xuantie-c908-accelerates-ai-with-software-and-hardware-fusion/
+status: pending_review
+proposed_update: Add a relationship to the XuanTie C908 AI inference benchmark page: '[[xuantie-c908-ai-inference-benchmark]]: This page provides the quantitative performance results (MobileNet speedups, VLEN 256 scaling, comparison with C906) that result from the optimization recipes described here; the benchmark uses SHL and HHB on the XuanTie C908 target.'
+
+## [2026-07-03] merge_pending | xuantie-c908.md
+target_page: xuantie-c908.md
+canonical_name: XuanTie C908
+colliding_name: XuanTie C908
+source: https://www.cnx-software.com/2022/11/04/t-head-xuantie-c908-risc-v-core-targets-aiot-applications/
+status: pending_review
+<!-- merge_draft_body
+# XuanTie C908
+
+The XuanTie C908 is a 64-bit RISC-V core designed by Alibaba's T-Head Semiconductor, targeting mid-range AIoT applications. It implements the RV64GCB[V] instruction set architecture with the RVA22 profile for Android and rich OS compatibility, and supports the optional RISC-V Vector Extension 1.0 (RVV 1.0) to accelerate AI inference workloads. The core features a 9-stage dual-issue in-order pipeline, supports clusters of 1 to 4 cores, and integrates a two-level cache system with hardware cache coherency and optional ECC. Enhanced physical memory protection (ePMP) provides up to 64 regions, and the platform-level interrupt controller (PLIC) handles up to 1023 sources. Performance-wise, the C908 sits between the earlier single-issue in-order C906 and the higher-end out-of-order C910, offering a 24–64% improvement over the C906 in synthetic benchmarks (Coremark, Dhrystone, Whetstone, Linkpacks) and 2–3.5× faster AI inference on MLPerf Tiny benchmarks using INT4 data types. The core can operate at up to 2 GHz on TSMC's 12 nm process, consuming a dynamic power of 52.8 mW/GHz per core, delivering over 20% better energy efficiency than the C906 under identical frequency and process conditions.
+
+## Key Claims
+
+- Supports RV64GCB[V] instruction set with Bit manipulation (B) and optional Vector extension (V).
+- Complies with the RVA22 profile for interoperability with Android and other rich operating systems.
+- 9-stage dual-issue in-order pipeline; can be configured in clusters of 1–4 cores.
+- Two-level cache subsystem with hardware cache coherency and optional ECC.
+- Bus interface: AXI4/ACE with optional device coherence port (DCP) and low-latency port (LLP).
+- Enhanced physical memory protection (ePMP) with up to 64 regions.
+- Programmable platform-level interrupt controller (PLIC) supporting up to 1023 interrupt sources.
+- Maximum operating frequency: 2 GHz on TSMC 12 nm process.
+- Dynamic power consumption: 52.8 mW/GHz per core on TSMC 12 nm.
+- Energy efficiency improvement: >20% over XuanTie C906 under equivalent frequency and process.
+- Performance: 24–64% gain over C906 in synthetic benchmarks (Coremark, Dhrystone, Whetstone, Linkpacks) under unspecified test conditions.
+- AI inference speedup: 2–3.5× over C906 on MLPerf Tiny v0.7 benchmarks (wake word detection, image classification, keyword spotting, anomaly detection) using INT4 data.
+- Includes RV32 COMPAT mode enabling 64-bit CPUs to run 32-bit binaries; merged into Linux 5.19.
+- Xuantie custom extensions include Instruction and Memory Attributes Extension (XMAE).
+- Virtual address systems: Sv39/Sv48.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RV64GCB[V]; RVA22 profile; Xuantie custom extensions (XMAE).
+- Vector/matrix/accelerator support: RISC-V Vector Extension 1.0 (optional, RVV 1.0).
+- Memory/cache/TLB/DMA: Two-level cache (L1/L2) with hardware cache coherency and optional ECC; Sv39/Sv48 virtual addressing; AXI4/ACE bus with DCP and LLP interfaces.
+- Compiler/toolchain support: Not specified in the source; Xuantie GCC toolchains historically used for earlier XuanTie cores.
+
+## Relationships
+
+No specific relationship to visible context pages. The only context page ([[q4x-quantization-llamacpp-rvv]]) is an optimization recipe for RISC-V vector CPUs, but it was validated on a Milk-V Jupiter (SpacemiT K1) platform, not on the XuanTie C908. Both involve RVV 1.0, but no direct verification or shared evidence links them. The C908 is positioned as a mid-range AIoT core between the C906 and C910, and supports the same RVV 1.0 extension version that the Q4X recipe targets, suggesting potential compatibility, but this remains unconfirmed.
+
+## Sources
+
+- https://www.cnx-software.com/2022/11/04/t-head-xuantie-c908-risc-v-core-targets-aiot-applications/
+merge_draft_body -->
