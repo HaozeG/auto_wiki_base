@@ -22,7 +22,7 @@ type: entity
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # TVM RISC-V Vector/Matrix Extension Support
@@ -39,6 +39,16 @@ The TVM RISC-V Vector/Matrix Extension Support refers to the proposed integratio
 - There are common problems with both methods: inability to handle variable vector lengths, and issues with non-divisible tensor shapes.
 
 ## Relationships
+
+- [[risc-v-vector-intrinsic-specification]]: related via shared risc, vector.
+
+- [[riscv-vector-primer]]: related via shared risc, vector.
+
+- [[riscv-vector-intrinsics]]: related via shared risc, vector.
+
+- [[stream-computing-risc-v-matrix-extension]]: related via shared extension, matrix, risc.
+
+- [[risc-v-matrix-project]]: related via shared matrix, risc.
 
 - [[tvm-metaschedule-rvv-integration]]: An existing optimization recipe that integrates RVV into TVM's MetaSchedule autotuning, complementing the codegen-level support discussed in this RFC.
 - [[xuantie-c906]]: A RISC-V processor with RVV v0.7.1 support that could benefit from TVM's vector extension support.

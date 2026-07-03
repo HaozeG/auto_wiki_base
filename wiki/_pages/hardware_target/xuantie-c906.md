@@ -57,6 +57,8 @@ XuanTie C906 is a 64-bit high-energy processor developed by Alibaba Cloud based 
 
 ## Relationships
 
+- [[apache-tvm]]: related via shared tvm.
+
 - [[kendryte-k230-neural-network-benchmarks]]: Another RISC-V AI benchmark result for comparison of different hardware platforms.
 - Insufficient context for additional cross-links; no other XuanTie family pages are present in the current wiki context.
 

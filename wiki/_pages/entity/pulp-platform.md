@@ -30,7 +30,7 @@ type: entity
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # PULP Platform
@@ -49,6 +49,8 @@ PULP (Parallel Ultra-Low-Power) is an open-source multi-core computing platform 
 - The project provides a full simulation platform with JTAG emulation, support for SPI, I2C, I2S peripheral models, and a RISC-V GNU toolchain.
 
 ## Relationships
+
+- [[voyager-development-platform]]: related via shared platform.
 
 - [[cpa-factored-gemmini-systolic-array]]: Both are open-source RISC-V-based projects; Gemmini is a systolic array generator for machine learning, while PULP is a general-purpose IoT platform.
 - [[earth-shifting-based-vector-memory-access]]: This optimization targets the Saturn RISC-V vector unit, another open-source RISC-V hardware project; PULP and Saturn are both part of the open RISC-V ecosystem.

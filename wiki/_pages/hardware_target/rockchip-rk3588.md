@@ -33,7 +33,7 @@ type: hardware_target
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # Rockchip RK3588
@@ -55,6 +55,10 @@ The Rockchip RK3588 is an ARM-based system-on-chip (SoC) that integrates a neura
 - Compiler/toolchain support: RKNN-Toolkit2 for model conversion and quantization
 
 ## Relationships
+
+- [[rk3588-npu-yolov5-benchmark]]: related via shared rk3588, rknn-toolkit2, rockchip rk3588.
+
+- [[rknn-toolkit2]]: related via shared rockchip.
 
 - [[gemmini]]: Both are hardware accelerators for AI, though Gemmini is a systolic array generator and the RK3588 NPU is a fixed-function NPU.
 - [[nncase]]: Both have compiler stacks for neural network inference (RKNN-Toolkit2 vs nncase).

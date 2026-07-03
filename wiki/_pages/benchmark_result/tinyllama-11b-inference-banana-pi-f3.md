@@ -42,7 +42,7 @@ type: benchmark_result
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # TinyLlama 1.1B Inference on Banana Pi F3 (llama.cpp)
@@ -67,6 +67,12 @@ On a Banana Pi F3 single-board computer (SpacemiT K1 SoC, 8-core 1.6 GHz RISC-V 
 - Evidence strength: measured (real-world execution on physical hardware).
 
 ## Relationships
+
+- [[mlperf-inference-tiny-benchmark]]: related via shared inference.
+
+- [[llama.cpp]]: related via shared cpp, llama.
+
+- [[banana-pi-bpi-f3]]: related via shared banana.
 
 - [[spacemit-x60-processor]]: The benchmark runs on the SpacemiT X60 processor integrated in the K1 SoC.
 - [[llvm-risc-v-fptrunc-narrowing-optimization]]: Compiler optimizations for RISC-V floating-point operations may affect inference performance on this hardware.

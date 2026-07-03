@@ -25,7 +25,7 @@ type: entity
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # Auto-Vectorization in Rust
@@ -41,6 +41,10 @@ Auto-vectorization in Rust is the process by which the Rust compiler, which uses
 - The specific pattern discussed is `a[i] & !b[i] != 0` over `Vec<i64>`, but the limitation applies generally to any loop with an early-return condition.
 
 ## Relationships
+
+- [[llvm-auto-vectorization]]: related via shared auto, llvm, vectorization.
+
+- [[saturn-vector-unit]]: related via shared gcc, llvm.
 
 - [[vectrans]]: VecTrans is an LLM-assisted framework for enhancing compiler auto-vectorization, which could help transform code to avoid the early-exit pattern that LLVM cannot vectorize.
 - [[llvm-riscv-fptrunc-narrowing-optimization]]: This is another LLVM optimization recipe that demonstrates how compiler passes can be patched to improve code generation, related to the broader topic of compiler auto-vectorization capabilities.

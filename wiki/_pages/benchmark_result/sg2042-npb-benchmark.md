@@ -41,7 +41,7 @@ type: benchmark_result
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # SG2042 NAS Parallel Benchmark Performance
@@ -64,6 +64,8 @@ The SG2042 NAS Parallel Benchmark Performance result characterizes the 64-core S
 - Evidence strength: reported (conference paper)
 
 ## Relationships
+
+- [[sg2042-npb-performance-characterisation]]: related via shared nas parallel benchmark (npb) suite, performance, sg2042, sophon sg2042.
 
 - [[gap9-vs-stm32f7-odtl-benchmark]]: This benchmark also evaluates RISC-V hardware (GAP9) for performance-critical workloads, providing another data point for RISC-V in HPC-like scenarios.
 - [[earth-shifting-based-vector-memory-access]]: The memory bottleneck identified in this benchmark highlights the need for optimization recipes targeting memory access patterns in RISC-V vector units.

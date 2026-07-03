@@ -38,6 +38,8 @@ Gemmini is an open-source, agile systolic array generator that enables systemati
 
 ## Relationships
 
+- [[opengemm-benchmark]]: related via shared gemmini.
+
 - [[Rocket Chip]]: Gemmini is integrated within the Rocket Chip RISC-V platform.
 - [[RISC-V]]: The generated accelerators interface with RISC-V cores.
 

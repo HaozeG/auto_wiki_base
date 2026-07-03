@@ -43,7 +43,7 @@ constraints:
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 scorecard:
   novelty_delta: 0.9
   claim_density: 0.7
@@ -78,6 +78,8 @@ The Ventana Veyron V2 is a RISC-V data center processor designed by Ventana Micr
 - Compiler/toolchain support: Not specified in available sources.
 
 ## Relationships
+
+- [[ucie]]: related via shared ucie.
 
 - [[gemmini]]: Both the Ventana Veyron V2 and Gemmini are part of the broader RISC-V ecosystem; Gemmini provides an agile systolic array generator for AI acceleration, while Veyron V2 targets general-purpose and DSA workloads in the data center.
 - [[xuantie-c950]]: The XuanTie C950 is a competing RISC-V server processor from Alibaba's Damo Academy, offering a 5nm 64-bit multi-core design for AI and cloud computing; both represent the push of RISC-V into high-performance server-class computing.

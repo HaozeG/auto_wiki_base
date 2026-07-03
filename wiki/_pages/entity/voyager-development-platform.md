@@ -21,7 +21,7 @@ type: entity
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # Voyager Development Platform
@@ -39,6 +39,8 @@ The Voyager Development Platform is a micro-ATX motherboard developed by Andes T
 - Software: OpenSUSE Linux, AndeSight tools, AndesAIRE NN SDK.
 
 ## Relationships
+
+- [[pulp-platform]]: related via shared platform.
 
 - [[andes-qilai]]: The SoC that powers the Voyager platform.
 - [[kendryte-k230-neural-network-benchmarks]]: A benchmark page for a different RISC-V AI SoC, provides performance comparison context for AI workloads on development boards.

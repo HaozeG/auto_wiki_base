@@ -60,6 +60,8 @@ Tenstorrent's Wormhole Galaxy system, comprising 32 Wormhole processors, achieve
 
 ## Relationships
 
+- [[intel-core-ultra-7-256v-resnet50-openvino-benchmark]]: related via shared benchmark, onnx.
+
 - [[kendryte-k230-neural-network-benchmarks]]: Another RISC-V AI acceleration benchmark; provides a contrasting point for throughput on a smaller SoC.
 
 Insufficient context for additional cross-links.

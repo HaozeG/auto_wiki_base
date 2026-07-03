@@ -31,7 +31,7 @@ type: hardware_target
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # Saturn Vector Unit
@@ -55,6 +55,8 @@ The Saturn Vector Unit is a compact, short-vector RISC-V vector unit microarchit
 - **Compiler/toolchain support**: Standard RISC-V toolchain (GCC, LLVM) supporting RVV 1.0
 
 ## Relationships
+
+- [[llvm-rv]]: related via shared llvm.
 
 - [[earth-shifting-based-vector-memory-access]]: The EARTH optimization is implemented on top of the Saturn vector unit, providing a 4x–8x speedup for const-stride memory access patterns.
 - [[cpa-factored-gemmini-systolic-array]]: Both Saturn and CPA-factored Gemmini are open-source RISC-V accelerator designs from the Berkeley research community; they represent different approaches to data-parallel acceleration (vector vs. systolic array).

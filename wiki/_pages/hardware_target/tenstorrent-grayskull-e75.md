@@ -52,6 +52,8 @@ Tenstorrent Grayskull e75 is a commercial RISC-V-based accelerator designed for 
 
 ## Relationships
 
+- [[tenstorrent]]: related via shared tenstorrent.
+
 - [[cpa-factored-gemmini-systolic-array]]: Comparison architecture for systolic array-based acceleration; both target ML workloads with different design philosophies.
 - [[tenstorrent-grayskull-e75-matmul-bf16-benchmark]]: Benchmark result page for the peak efficiency measurement.
 

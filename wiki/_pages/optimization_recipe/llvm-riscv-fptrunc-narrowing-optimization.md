@@ -59,6 +59,10 @@ The LLVM RISC-V FPTrunc narrowing optimization is a compiler transformation that
 
 ## Relationships
 
+- [[llvm-riscv-target]]: related via shared llvm, risc.
+
+- [[riscv-optimization-guide]]: related via shared optimization, risc.
+
 - [[gemmini]]: As a RISC-V AI accelerator, Gemmini may leverage similar floating-point divisions in its compute kernels; this optimization recipe could be relevant for improving LLVM code generation for Gemmini workloads.
 - [[nncase]]: As a compiler stack for RISC-V AI accelerators, nncase could incorporate LLVM optimizations, including this FPTrunc narrowing, to improve inference performance on RISC-V hardware.
 - Insufficient context for additional cross-links to entity pages; only two entity pages are available in the wiki.

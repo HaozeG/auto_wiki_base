@@ -56,6 +56,12 @@ The XuanTie C950 is a 64-bit multi-core central processing unit designed by Alib
 
 ## Relationships
 
+- [[xuantie-c950-specint2006]]: related via shared c950, risc-v, xuantie, xuantie c950.
+
+- [[ventana-veyron-v2]]: related via shared risc-v, server.
+
+- [[xuantie-c910-ice-board]]: related via shared xuantie.
+
 - [[xuantie-c950-specint2006]]: The SPECint2006 benchmark result for this hardware target.
 - [[cpa-factored-gemmini-systolic-array]]: A related optimization recipe for an AI accelerator, though not directly connected to the C950 architecture.
 - Insufficient context for additional cross-links to entity pages within the wiki.

@@ -58,6 +58,8 @@ The Tenstorrent Grayskull e75 RISC-V accelerator achieves a peak efficiency of 1
 
 ## Relationships
 
+- [[tenstorrent-grayskull-e75-matmul-benchmark]]: related via shared bf16, e75, grayskull, matmul, tenstorrent, tenstorrent grayskull e75.
+
 - [[tenstorrent-grayskull-e75]]: Hardware target page for the Grayskull e75 accelerator.
 - [[cpa-factored-gemmini-systolic-array]]: Related optimization recipe for systolic array acceleration; both pages address ML acceleration in the RISC-V ecosystem.
 

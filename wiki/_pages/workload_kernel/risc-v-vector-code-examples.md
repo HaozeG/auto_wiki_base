@@ -46,7 +46,7 @@ type: workload_kernel
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # RISC-V Vector Code Examples
@@ -114,6 +114,10 @@ This page documents vector assembly code examples extracted from the non-normati
 - Baseline implementation: not provided; the code uses a 16*VLMAX block of C held in vector registers
 
 ## Relationships
+
+- [[xuantie-c920v1-rvv-instruction-timings]]: related via shared float32, int16, int32, int8, rvv.
+
+- [[riscv-vector-tests]]: related via shared risc-v, rvv, vector.
 
 - [[sifive-intelligence-x160-gen-2]]: This hardware target supports RVV 1.0 and can execute these vector code examples.
 - [[gemmini]]: The SGEMM kernel represents a software-vectorized alternative to the systolic matrix multiplication approach implemented in Gemmini accelerators.

@@ -44,7 +44,7 @@ type: benchmark_result
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # SG2042 NPB Performance Characterisation
@@ -68,6 +68,10 @@ This page summarises the NAS Parallel Benchmark (NPB) performance characterisati
 - Evidence strength: measured (empirical results from a research paper with documented methodology).
 
 ## Relationships
+
+- [[sg2042-npb-single-core-performance]]: related via shared npb, performance, sg2042, sophon sg2042.
+
+- [[sg2042-npb-benchmark]]: related via shared nas parallel benchmark (npb) suite, performance, sg2042, sophon sg2042.
 
 - [[sophcon-sg2042]]: The hardware target that these benchmark results characterise.
 - [[llvm-riscv-fptrunc-narrowing-optimization]]: A compiler optimisation that could potentially improve performance on the SG2042, though not directly connected by the paper.

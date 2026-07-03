@@ -21,7 +21,7 @@ type: entity
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # llama.cpp
@@ -38,6 +38,8 @@ llama.cpp is an open source software library that performs inference on various 
 - Runs on both local and cloud environments.
 
 ## Relationships
+
+- [[tinyllama-11b-inference-banana-pi-f3]]: related via shared cpp, llama.
 
 - [[gemmini]]: Both llama.cpp and Gemmini are tools for AI acceleration, though Gemmini is a hardware generator while llama.cpp is a software inference library.
 - [[nncase]]: Both are open-source software projects for AI inference, with nncase targeting RISC-V accelerators and llama.cpp providing general LLM inference.

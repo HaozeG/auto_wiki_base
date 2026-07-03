@@ -21,7 +21,7 @@ type: entity
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # Stream Computing RISC-V Matrix Extension
@@ -39,6 +39,8 @@ The Stream Computing RISC-V Matrix Extension is an open-source proposal for a ma
 - The project collaborates with academia: Dr. Tianyu Jia of Peking University adopted SCOOP into a graduate SOC design course in Fall 2024.
 
 ## Relationships
+
+- [[tvm-riscv-vector-matrix-extension-support]]: related via shared extension, matrix, risc.
 
 - [[cpa-factored-gemmini-systolic-array]]: Both projects target RISC-V matrix/vector acceleration; the Gemmini systolic array is a separate hardware generator while Stream Computing focuses on ISA extension and open-source tooling.
 - Insufficient context for additional cross-links; no existing entity pages for Stream Computing, SCOOP, or related matrix extension projects are present in the wiki.

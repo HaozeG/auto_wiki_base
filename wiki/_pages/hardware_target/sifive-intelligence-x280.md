@@ -41,7 +41,7 @@ type: hardware_target
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # SiFive Intelligence X280
@@ -65,6 +65,8 @@ The SiFive Intelligence X280 is a 64-bit multi-core RISC-V processor core introd
 - Compiler/toolchain support: Optimized TensorFlow Lite implementation; expected support from RISC-V GCC/LLVM with vector extension support.
 
 ## Relationships
+
+- [[sifive-intelligence-python]]: related via shared intelligence, sifive.
 
 - [[sifive-intelligence-x160-gen-2]]: A 32-bit sibling core in the same SiFive Intelligence family, targeting similar AIoT workloads with narrower vector width.
 - [[gemmini]]: An open-source systolic array generator for RISC-V-based AI accelerators, representing a complementary approach to the X280's vector-based compute.

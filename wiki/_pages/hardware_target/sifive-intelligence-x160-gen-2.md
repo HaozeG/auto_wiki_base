@@ -69,6 +69,10 @@ The SiFive Intelligence X160 Gen 2 is a 32-bit RISC-V CPU core from SiFive's 2nd
 
 ## Relationships
 
+- [[sifive-intelligence-x180-gen-2]]: related via shared gen, intelligence, sifive.
+
+- [[sifive-intelligence-x280]]: related via shared intelligence, sifive.
+
 - [[sifive-intelligence-x180-gen-2]]: The 64-bit counterpart in the same 2nd Generation Intelligence family.
 - [[cpa-factored-gemmini-systolic-array]]: A related RISC-V AI accelerator optimization, though targeting a different hardware platform.
 

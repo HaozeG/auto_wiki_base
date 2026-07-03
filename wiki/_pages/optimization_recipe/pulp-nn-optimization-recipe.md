@@ -73,6 +73,8 @@ PULP-NN is a multicore computing library for quantized neural network (QNN) infe
 
 ## Relationships
 
+- [[vindexmac-structured-sparse-matrix-optimization]]: related via shared matrix multiplication, risc-v.
+
 - [[earth-shifting-based-vector-memory-access]]: Both PULP-NN and EARTH target performance optimization for data movement on RISC-V architectures, with PULP-NN focusing on NN inference data layouts and EARTH on vector memory access hardware.
 - [[cpa-factored-gemmini-systolic-array]]: Both are optimization recipes for accelerating machine learning workloads on RISC-V platforms; PULP-NN addresses software-level kernel optimization while CPA-factored Gemmini targets hardware systolic array efficiency.
 

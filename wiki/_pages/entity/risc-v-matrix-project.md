@@ -25,7 +25,7 @@ type: entity
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # RISC-V Matrix Project
@@ -40,6 +40,8 @@ The RISC-V Matrix Project is a demonstration and prototype implementation of mat
 - The project's TODO indicates plans to update modules to support the latest version of the proposal and add Chipyard simulation, verification, and prototype documentation.
 
 ## Relationships
+
+- [[risc-v]]: related via shared risc.
 
 - [[gemmini]]: Both Gemmini and the RISC-V Matrix Project target efficient matrix operations on RISC-V, though Gemmini is a hardware generator and this project focuses on an ISA extension.
 - [[nncase]]: nncase is a compiler stack for RISC-V AI accelerators; the RISC-V Matrix Project's DNN library and toolchain support complement compiler-based optimization for matrix operations.

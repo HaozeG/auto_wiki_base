@@ -36,7 +36,7 @@ type: benchmark_result
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # RK3588 NPU YOLOv5 Benchmark
@@ -59,6 +59,8 @@ The RK3588 NPU achieves 54+ frames per second (FPS) on the YOLOv5 object detecti
 - Evidence strength: reported
 
 ## Relationships
+
+- [[rockchip-rk3588]]: related via shared rk3588, rknn-toolkit2, rockchip rk3588.
 
 - [[gemmini]]: As a hardware accelerator, Gemmini represents a different approach to AI inference acceleration.
 - [[nncase]]: Both target efficient AI inference, with nncase providing benchmarks on RISC-V platforms.

@@ -41,7 +41,7 @@ type: benchmark_result
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # OpenGeMM Benchmark Results
@@ -65,6 +65,8 @@ The OpenGeMM benchmark result reports normalized throughput and system efficienc
 - Evidence strength: reported (from preprint, not independently reproduced).
 
 ## Relationships
+
+- [[opengeem-accelerator-generator]]: related via shared opengemm.
 
 - [[opengemm]]: This benchmark is the primary performance characterization of the OpenGeMM platform.
 - [[cpa-factored-gemmini-systolic-array]]: Both involve performance comparisons to Gemmini; the CPA factoring is an orthogonal optimization applicable to Gemmini architecture.

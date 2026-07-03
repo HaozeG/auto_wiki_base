@@ -65,6 +65,8 @@ This page summarizes reported neural network inference throughput for the Kendry
 
 ## Relationships
 
+- [[k230]]: related via shared k230, kendryte.
+
 - [[kendryte-k230]]: The hardware target on which these benchmarks were measured.
 - [[xuantie-c950]]: A higher-performance RISC-V SoC with different benchmark metrics (SPECint2006); comparison may highlight trade-offs between general-purpose CPU and dedicated NPU performance.
 - [[sifive-intelligence-x160-gen-2]]: Another RISC-V AI core; its vector and DSP capabilities provide context for contrasting KPU-based inference.

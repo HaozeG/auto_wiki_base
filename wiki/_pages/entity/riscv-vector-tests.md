@@ -26,7 +26,7 @@ type: entity
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # riscv-vector-tests
@@ -45,6 +45,10 @@ riscv-vector-tests is an open-source unit test generator for the RISC-V Vector E
 - Licensed under Apache License Version 2.0.
 
 ## Relationships
+
+- [[rvv-bench]]: related via shared rvv.
+
+- [[opencv-hal-riscv-rvv]]: related via shared riscv, rvv.
 
 - [[llvm-riscv-fptrunc-narrowing-optimization]]: As an optimization recipe that targets RISC-V hardware, this LLVM transformation may be tested or validated using the test suites produced by riscv-vector-tests on relevant platforms.
 - [[spacemit-x60-processor]]: The SpacemiT X60 is a RISC-V processor that supports the RVA22 profile and AI acceleration; riscv-vector-tests could be used to verify RVV correctness on such hardware targets.

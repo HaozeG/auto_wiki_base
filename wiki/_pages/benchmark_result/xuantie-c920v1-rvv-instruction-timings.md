@@ -44,7 +44,7 @@ type: benchmark_result
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # XuanTie C920v1 RVV Instruction Timings
@@ -70,6 +70,10 @@ This page presents measured instruction timings for the XuanTie C920v1 core (wit
 - Evidence strength: measured (run on actual hardware)
 
 ## Relationships
+
+- [[rvv-matrix-multiplication-example-double]]: related via shared float64, rvv.
+
+- [[risc-v-vector-code-examples]]: related via shared float32, int16, int32, int8, rvv.
 
 - [[xuantie-c920v1]]: Hardware target providing the core specifications.
 - [[xuantie-c920v1-rvv-performance-observations]]: Optimization strategies derived from these instruction timings.

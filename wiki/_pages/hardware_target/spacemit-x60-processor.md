@@ -61,6 +61,10 @@ The SpacemiT X60 is a RISC-V processor designed for AI acceleration and high-spe
 
 ## Relationships
 
+- [[spacemit]]: related via shared spacemit.
+
+- [[gcc-compiler]]: related via shared gcc.
+
 - [[cpa-factored-gemmini-systolic-array]]: As a RISC-V AI accelerator, Gemmini may be compared or integrated with the SpacemiT X60 for machine learning workloads.
 - [[llvm-risc-v-fptrunc-narrowing-optimization]]: The SpacemiT X60, as a RISC-V target, could benefit from LLVM compiler optimizations including floating-point narrowing passes.
 

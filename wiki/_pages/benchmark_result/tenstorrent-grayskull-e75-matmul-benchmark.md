@@ -40,7 +40,7 @@ type: benchmark_result
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # Tenstorrent Grayskull e75 MatMul Performance
@@ -66,6 +66,8 @@ The Tenstorrent Grayskull e75 is a RISC-V based accelerator card fabricated on a
 - Evidence strength: measured (experimental characterization from a peer-reviewed research paper).
 
 ## Relationships
+
+- [[jacobi-stencil-grayskull-e150-vs-xeon-platinum]]: related via shared bf16, grayskull, tenstorrent.
 
 - [[pulp-nn-optimization-recipe]]: Both this benchmark and PULP-NN address MatMul efficiency on RISC-V platforms, with Grayskull focusing on hardware acceleration and PULP-NN on software-level kernel optimization for quantized neural networks.
 - [[cpa-factored-gemmini-systolic-array]]: While CPA-factored Gemmini optimizes systolic array hardware for RISC-V, the Grayskull accelerator employs a different architecture (Tensix cores) but targets similar AI workloads, providing complementary performance data.

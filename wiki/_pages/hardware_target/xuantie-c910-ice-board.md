@@ -28,7 +28,7 @@ type: hardware_target
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # Xuantie C910 / ICE SoC Board
@@ -54,6 +54,10 @@ The Xuantie C910 is a 64-bit RISC-V CPU core developed by T-Head Semiconductor, 
 - **Compiler/toolchain support:** riscv64-unknown-linux-gnu cross-compiler, Buildroot build system
 
 ## Relationships
+
+- [[xuantie]]: related via shared xuantie.
+
+- [[xuantie-c908]]: related via shared xuantie.
 
 - [[cpa-factored-gemmini-systolic-array]]: This optimization recipe targets the Gemmini systolic array generator; the Xuantie C910 is a different hardware target but both belong to the RISC-V AI accelerator ecosystem. Further cross-links are not possible due to insufficient context in the wiki.
 

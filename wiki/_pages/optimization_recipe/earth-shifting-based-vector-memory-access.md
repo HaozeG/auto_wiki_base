@@ -60,6 +60,8 @@ EARTH (Efficient Architecture for RISC-V Vector Memory Access) is a microarchite
 
 ## Relationships
 
+- [[earth-vector-memory-access-architecture]]: related via shared access, earth, memory, vector.
+
 - [[cpa-factored-gemmini-systolic-array]]: Both recipes target hardware efficiency improvements in RISC-V related designs, with EARTH focusing on vector memory access and the CPA factoring focusing on systolic array PE optimization.
 - [[llvm-riscv-fptrunc-narrowing-optimization]]: This compiler optimization targets floating-point performance on RISC-V; combined with EARTH's memory access improvements, vectorized workloads could benefit synergistically.
 

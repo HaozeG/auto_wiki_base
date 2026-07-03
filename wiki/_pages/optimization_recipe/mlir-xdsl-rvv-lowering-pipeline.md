@@ -57,6 +57,8 @@ This optimization recipe describes a compilation approach that combines MLIR wit
 
 ## Relationships
 
+- [[xdsl]]: related via shared xdsl.
+
 - [[kendryte-k230-neural-network-benchmarks]]: Related benchmark results for K230 covering different workloads (Resnet50, Mobilenet_v2, YoloV5S) on the KPU, providing additional performance context.
 - Insufficient context for additional cross-links.
 

@@ -77,6 +77,8 @@ The Sophon SG2042 is a 64-core RISC-V central processing unit designed by SOPHON
 
 ## Relationships
 
+- [[sophon-sg2042-rajaperf-benchmark-sc23]]: related via shared hpc, risc-v, sg2042, sophon, sophon sg2042.
+
 - [[xuantie-c950]]: A high-performance RISC-V core from the same ecosystem (T-Head/Alibaba), representing a later generation than the C920.
 - [[nncase]]: An open-source neural network compiler for RISC-V AI accelerators; relevant for software support on RISC-V platforms like the SG2042.
 - Insufficient context for additional cross-links; no existing entity pages for XuanTie C920 or other Sophon products in the wiki.

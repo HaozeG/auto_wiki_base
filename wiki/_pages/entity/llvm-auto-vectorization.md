@@ -21,7 +21,7 @@ type: entity
 created: '2026-07-02'
 updated: '2026-07-02'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # LLVM Auto-Vectorization
@@ -41,6 +41,10 @@ LLVM Auto-Vectorization refers to the automatic transformation of scalar code in
 - The Loop Vectorizer detects reductions (addition, multiplication, XOR, AND, OR) and vectorizes them.
 
 ## Relationships
+
+- [[llvm-auto-re-vectorization-to-riscv]]: related via shared auto, llvm, vectorization.
+
+- [[auto-vectorization-in-rust]]: related via shared auto, llvm, vectorization.
 
 - [[xuantie-c950]]: The XuanTie C950 RISC-V core can benefit from LLVM auto-vectorization for optimized code generation, especially when targeting AI workloads.
 - [[sifive-intelligence-x160-gen-2]]: The SiFive Intelligence X160 Gen 2 supports the RISC-V Vector Extension v1.0, which can be directly targeted by LLVM's Loop Vectorizer for improved performance.
