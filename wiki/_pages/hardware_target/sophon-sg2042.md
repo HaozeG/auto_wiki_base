@@ -3,6 +3,12 @@ canonical_name: SOPHON SG2042
 aliases:
 - SG2042
 - Sophon SG2042
+- Sophon SG2042 SoC
+- Sophgo SG2042
+- V-Seek LLM Inference Benchmark on Sophon SG2042
+- V-Seek benchmark
+- SG2042 LLM benchmark
+- DeepSeek on SG2042
 subtype: null
 tags: []
 hardware_targets:
@@ -23,6 +29,8 @@ sources:
 - https://milkv.io/docs/pioneer/getting-started/processor
 - raw/cache/17712147076f7c6c.md
 - https://ar5iv.labs.arxiv.org/html/2309.00381
+- raw/cache/5756ea94463b1961.md
+- https://arxiv.org/abs/2503.17422
 source_url: https://milkv.io/docs/pioneer/getting-started/processor
 fetched_at: '2026-07-03T14:18:06.914938+00:00'
 type: hardware_target

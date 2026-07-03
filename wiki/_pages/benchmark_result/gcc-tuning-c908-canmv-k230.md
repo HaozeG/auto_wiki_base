@@ -43,7 +43,7 @@ type: benchmark_result
 created: '2026-07-03'
 updated: '2026-07-03'
 cold_start: true
-inbound_links: 4
+inbound_links: 5
 outbound_links:
 - target: xuantie-c908-gcc-tuning
   reason: This benchmark result is the direct performance validation of the GCC scheduler

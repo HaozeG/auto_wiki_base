@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-03 | Pages: 49 | Sources: 132
+Last updated: 2026-07-03 | Pages: 50 | Sources: 134
 
 ## Entity Pages
 
@@ -72,6 +72,7 @@ Last updated: 2026-07-03 | Pages: 49 | Sources: 132
 - **CanMV K230 development board**: → [k230-soc](hardware_target/k230-soc.md)
 - **CanMV-K230**: → [k230-soc](hardware_target/k230-soc.md)
 - **CoreMark C908 0.8%**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
+- **DeepSeek on SG2042**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
 - **GAP9**: → [gap9](hardware_target/gap9.md)
 - **GAP9 SoC**: → [gap9](hardware_target/gap9.md)
 - **GCC 15 vs Clang 21 on BananaPi-F3 (RVV 1.0)**: → [gcc15-vs-clang21-banana-pi-f3-rvv10](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md)
@@ -162,6 +163,8 @@ Last updated: 2026-07-03 | Pages: 49 | Sources: 132
 - **RVV compiler evaluation 2026**: → [gcc15-vs-clang21-banana-pi-f3-rvv10](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md)
 - **SC23 Auto-Generated GEMM on C906 and C910**: → [auto-gemm-micro-kernel-c906-c910-benchmark](benchmark_result/auto-gemm-micro-kernel-c906-c910-benchmark.md)
 - **SG2042**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
+- **SG2042 LLM benchmark**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
+- **SG2042 LLM optimization**: → [v-seek-llm-inference-optimization-sg2042](optimization_recipe/v-seek-llm-inference-optimization-sg2042.md)
 - **SHL**: → [shl](entity/shl.md)
 - **SOPHON SG2042**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
 - **ShiHulan**: → [shl](entity/shl.md)
@@ -173,7 +176,9 @@ Last updated: 2026-07-03 | Pages: 49 | Sources: 132
 - **SiFive X390 Gen 2**: → [sifive-intelligence-2nd-gen](entity/sifive-intelligence-2nd-gen.md)
 - **SiFive XM Gen 2**: → [sifive-intelligence-2nd-gen](entity/sifive-intelligence-2nd-gen.md)
 - **SoCXin V851S**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
+- **Sophgo SG2042**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
 - **Sophon SG2042**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
+- **Sophon SG2042 SoC**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
 - **SpacemiT K1**: → [spacemit-k1](hardware_target/spacemit-k1.md)
 - **SpacemiT K1 AI Benchmark Report (2026-04-14)**: → [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
 - **SpacemiT K1 MUSE Pi Pro**: → [spacemit-k1](hardware_target/spacemit-k1.md)
@@ -194,6 +199,11 @@ Last updated: 2026-07-03 | Pages: 49 | Sources: 132
 - **Terapines ZCC**: → [zcc-compiler](entity/zcc-compiler.md)
 - **Torrent-1**: → [t1](hardware_target/t1.md)
 - **V extension**: → [riscv-v-extension](entity/riscv-v-extension.md)
+- **V-Seek LLM Inference Benchmark on Sophon SG2042**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
+- **V-Seek LLM Inference Optimization on Sophon SG2042**: → [v-seek-llm-inference-optimization-sg2042](optimization_recipe/v-seek-llm-inference-optimization-sg2042.md)
+- **V-Seek benchmark**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
+- **V-Seek optimization**: → [v-seek-llm-inference-optimization-sg2042](optimization_recipe/v-seek-llm-inference-optimization-sg2042.md)
+- **V-Seek recipe**: → [v-seek-llm-inference-optimization-sg2042](optimization_recipe/v-seek-llm-inference-optimization-sg2042.md)
 - **V851S**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
 - **V851SE**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
 - **V851s**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
@@ -282,6 +292,7 @@ Last updated: 2026-07-03 | Pages: 49 | Sources: 132
 
 
 
+
 ## Optimization Pages
 
 | Page | Type | Summary | Tags | Sources | Inbound |
@@ -289,7 +300,7 @@ Last updated: 2026-07-03 | Pages: 49 | Sources: 132
 | [auto-gemm-micro-kernel-c906-c910-benchmark.md](benchmark_result/auto-gemm-micro-kernel-c906-c910-benchmark.md) | benchmark_result | Auto-Generated GEMM Micro-Kernels on C906 and C910 |  | 2 | 0 |
 | [baby-llama2-milkv-duo-benchmark.md](benchmark_result/baby-llama2-milkv-duo-benchmark.md) | benchmark_result | Baby LLama2 Benchmark on Milk-V Duo |  | 2 | 2 |
 | [bpi-f3-rvv-llm-benchmark.md](benchmark_result/bpi-f3-rvv-llm-benchmark.md) | benchmark_result | BananaPi BPI-F3 LLM Inference (RVV optimized) |  | 2 | 0 |
-| [gcc-tuning-c908-canmv-k230.md](benchmark_result/gcc-tuning-c908-canmv-k230.md) | benchmark_result | GCC Tuning Benchmark on XuanTie C908 |  | 4 | 4 |
+| [gcc-tuning-c908-canmv-k230.md](benchmark_result/gcc-tuning-c908-canmv-k230.md) | benchmark_result | GCC Tuning Benchmark on XuanTie C908 |  | 4 | 5 |
 | [gcc15-vs-clang21-banana-pi-f3-rvv10.md](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md) | benchmark_result | GCC 15 vs Clang 21 on BananaPi-F3 (RVV 1.0) | RVV, compiler, GCC, Clang | 2 | 0 |
 | [iree-riscv-benchmark-milkv-jupiter.md](benchmark_result/iree-riscv-benchmark-milkv-jupiter.md) | benchmark_result | IREE RISC-V Microkernel Benchmark on MILK-V Jupiter |  | 2 | 0 |
 | [maestro-gesture-recognition.md](benchmark_result/maestro-gesture-recognition.md) | benchmark_result | Maestro gesture recognition benchmark |  | 2 | 0 |
@@ -301,16 +312,17 @@ Last updated: 2026-07-03 | Pages: 49 | Sources: 132
 | [k230-soc.md](hardware_target/k230-soc.md) | hardware_target | K230 |  | 8 | 0 |
 | [maestro.md](hardware_target/maestro.md) | hardware_target | Maestro |  | 2 | 1 |
 | [opennanhu-v5.md](hardware_target/opennanhu-v5.md) | hardware_target | OpenNanhu-V5 |  | 2 | 0 |
-| [sophon-sg2042.md](hardware_target/sophon-sg2042.md) | hardware_target | SOPHON SG2042 |  | 4 | 0 |
+| [sophon-sg2042.md](hardware_target/sophon-sg2042.md) | hardware_target | SOPHON SG2042 |  | 6 | 0 |
 | [spacemit-k1.md](hardware_target/spacemit-k1.md) | hardware_target | SpacemiT K1 |  | 4 | 2 |
-| [spacemit-x60-hardware-target.md](hardware_target/spacemit-x60-hardware-target.md) | hardware_target | SpacemiT X60 | RISC-V, GCC tuning, SpacemiT, in-order, RVV 1.0 | 2 | 1 |
+| [spacemit-x60-hardware-target.md](hardware_target/spacemit-x60-hardware-target.md) | hardware_target | SpacemiT X60 | RISC-V, GCC tuning, SpacemiT, in-order, RVV 1.0 | 2 | 2 |
 | [t1.md](hardware_target/t1.md) | hardware_target | T1 |  | 2 | 0 |
 | [v851s-yuzukilizard.md](hardware_target/v851s-yuzukilizard.md) | hardware_target | Allwinner V851S / Yuzukilizard | allwinner, v851s, yuzukilizard, risc-v, npu | 8 | 0 |
-| [xuantie-c906-hardware-target.md](hardware_target/xuantie-c906-hardware-target.md) | hardware_target | XuanTie C906 |  | 2 | 3 |
+| [xuantie-c906-hardware-target.md](hardware_target/xuantie-c906-hardware-target.md) | hardware_target | XuanTie C906 |  | 2 | 4 |
 | [xuantie-c908.md](hardware_target/xuantie-c908.md) | hardware_target | XuanTie C908 |  | 10 | 1 |
 | [c908-wino-gemm-optimization.md](optimization_recipe/c908-wino-gemm-optimization.md) | optimization_recipe | C908 Winograd and GEMM Optimization in SHL |  | 2 | 11 |
 | [iree-riscv-microkernel-support.md](optimization_recipe/iree-riscv-microkernel-support.md) | optimization_recipe | IREE RISC-V Microkernel Support |  | 2 | 2 |
 | [mlir-xdsl-rvv-codegen-pipeline.md](optimization_recipe/mlir-xdsl-rvv-codegen-pipeline.md) | optimization_recipe | MLIR-xDSL RVV Code Generation Pipeline |  | 2 | 5 |
+| [v-seek-llm-inference-optimization-sg2042.md](optimization_recipe/v-seek-llm-inference-optimization-sg2042.md) | optimization_recipe | V-Seek LLM Inference Optimization on Sophon SG2042 |  | 2 | 0 |
 
 ## Hub Hierarchy
 
@@ -345,6 +357,7 @@ Last updated: 2026-07-03 | Pages: 49 | Sources: 132
 - [c908-wino-gemm-optimization](optimization_recipe/c908-wino-gemm-optimization.md)
 - [iree-riscv-microkernel-support](optimization_recipe/iree-riscv-microkernel-support.md)
 - [mlir-xdsl-rvv-codegen-pipeline](optimization_recipe/mlir-xdsl-rvv-codegen-pipeline.md)
+- [v-seek-llm-inference-optimization-sg2042](optimization_recipe/v-seek-llm-inference-optimization-sg2042.md)
 
 ### Benchmark Evidence
 
@@ -359,6 +372,7 @@ Last updated: 2026-07-03 | Pages: 49 | Sources: 132
 - [maestro-gesture-recognition](benchmark_result/maestro-gesture-recognition.md)
 - [mlir-xdsl-gemm-benchmark-k230-banana-pi](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md)
 - [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
+
 
 
 

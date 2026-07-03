@@ -993,3 +993,37 @@ GGML Quantization refers to the block-based quantization system implemented in t
 
 - https://deepwiki.com/ggml-org/llama.cpp/7.3-quantization-techniques
 merge_draft_body -->
+
+## [2026-07-03] merge_pending | sophon-sg2042.md
+target_page: sophon-sg2042.md
+canonical_name: SOPHON SG2042
+colliding_name: Sophon SG2042
+source: https://arxiv.org/abs/2503.17422
+status: pending_review
+<!-- merge_draft_body
+# Sophon SG2042
+
+Sophon SG2042 is a 64-core RISC-V processor designed for server-class workloads, developed by Sophgo (later Sophon). It is the first commercially available many-core RISC-V CPU with vector processing capabilities, targeting flexible and cost-effective inference and reasoning workloads for large language models. The SG2042 features a complex memory hierarchy with Non-Uniform Memory Access (NUMA) and is equipped with 128GB of DRAM in the Milk-V Pioneer development board. Its vector processing units are supported by the Xuantie fork of GCC 10.4, which is required for compiling optimized kernels that fully exploit the hardware. The platform also supports mainstream toolchains such as GCC 13.2 and Clang 19 for the overall inference framework (llama.cpp). The SG2042's microarchitecture is built around Xuantie technology, as evidenced by the compiler toolchain, though the specific core model is not publicly documented in the source. This platform serves as a testbed for the V-Seek LLM inference optimization framework.
+
+## Key Claims
+
+- The Sophon SG2042 is the first commercially available many-core RISC-V CPU with vector processing capabilities.
+- It features 64 cores and 128GB DRAM in the Milk-V Pioneer board.
+- The vector units require Xuantie GCC 10.4 for compilation; the overall framework can use GCC 13.2 or Clang 19.
+- The platform has a NUMA memory hierarchy that affects LLM inference performance.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V with vector extensions (exact version not specified in source)
+- Vector/matrix/accelerator support: vector processing units (no VLEN or DLEN specified)
+- Memory/cache/TLB/DMA: 128GB DRAM, NUMA architecture; cache hierarchy not detailed
+- Compiler/toolchain support: Xuantie GCC 10.4 (vector kernel support), GCC 13.2, Clang 19
+
+## Relationships
+
+No specific relationship to the visible context pages ([[xuantie-c906-hardware-target]], [[spacemit-x60-hardware-target]], [[gcc-tuning-c908-canmv-k230]]) can be established from the current source material; the SG2042 is a many-core server-class CPU while the visible pages cover embedded cores and scalar tuning.
+
+## Sources
+
+- https://arxiv.org/abs/2503.17422
+merge_draft_body -->
