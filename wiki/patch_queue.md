@@ -1927,3 +1927,10 @@ No specific relationship to visible context pages.
 
 - https://www.rt-rk.com/gcc-tuning-for-spacemit-x60-building-an-in-order-dual-issue-scheduler-model-part-ii/
 merge_draft_body -->
+
+## [2026-07-03] pending | spacemit-x60-hardware-target.md
+target_page: spacemit-x60-hardware-target.md
+target_section: Key Claims
+source: https://camel-cdr.github.io/rvv-bench-results/articles/vector-utf.html
+status: pending_review
+proposed_update: Add a Key Claim: 'Achieved 8x speedup for UTF-8 to UTF-16 conversion using RVV vectorization on the X60 core (measured on Banana Pi BPI-F3).' Source: camel-cdr's RVV benchmark article (https://camel-cdr.github.io/rvv-bench-results/articles/vector-utf.html).

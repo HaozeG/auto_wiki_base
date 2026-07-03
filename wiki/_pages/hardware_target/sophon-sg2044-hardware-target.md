@@ -32,7 +32,7 @@ type: hardware_target
 created: '2026-07-03'
 updated: '2026-07-03'
 cold_start: true
-inbound_links: 4
+inbound_links: 5
 outbound_links:
 - target: xuantie-c906-hardware-target
   reason: Both the SG2044's C920v2 core and the XuanTie C906 are T-Head XuanTie cores;

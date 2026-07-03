@@ -33,7 +33,7 @@ type: hardware_target
 created: '2026-07-03'
 updated: '2026-07-03'
 cold_start: true
-inbound_links: 2
+inbound_links: 3
 outbound_links:
 - target: xuantie-c906-hardware-target
   reason: Both are commercial RISC-V cores with vector processing capabilities; however,

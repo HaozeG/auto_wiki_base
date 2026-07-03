@@ -36,7 +36,7 @@ type: optimization_recipe
 created: '2026-07-03'
 updated: '2026-07-03'
 cold_start: true
-inbound_links: 11
+inbound_links: 12
 outbound_links:
 - target: shl
   reason: SHL is the library implementing these optimization techniques for the XuanTie

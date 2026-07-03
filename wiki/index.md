@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-03 | Pages: 80 | Sources: 214
+Last updated: 2026-07-03 | Pages: 82 | Sources: 218
 
 ## Entity Pages
 
@@ -22,7 +22,9 @@ Last updated: 2026-07-03 | Pages: 80 | Sources: 214
 | [monte-cimone-cluster.md](entity/monte-cimone-cluster.md) | Monte Cimone |  | 2 | 0 |
 | [nncase.md](entity/nncase.md) | nncase |  | 6 | 0 |
 | [nuclei-system-technology.md](entity/nuclei-system-technology.md) | Nuclei System Technology |  | 2 | 0 |
+| [opencv-rvv-entity.md](entity/opencv-rvv-entity.md) | OpenCV (RISC-V Vector Optimization) |  | 2 | 0 |
 | [opengemm.md](entity/opengemm.md) | OpenGeMM | GeMM accelerator, RISC-V, open-source hardware, Chisel, accelerator generator | 4 | 0 |
+| [qimeng-tensorop.md](entity/qimeng-tensorop.md) | QiMeng-TensorOp |  | 2 | 0 |
 | [riscv-international-technical-committees.md](entity/riscv-international-technical-committees.md) | RISC-V International Technical Committees |  | 2 | 0 |
 | [riscv-matrix-extension-specification.md](entity/riscv-matrix-extension-specification.md) | RISC-V Matrix Extension Specification | risc-v, isa, matrix, extension | 10 | 0 |
 | [riscv-v-extension.md](entity/riscv-v-extension.md) | RISC-V V Extension |  | 4 | 0 |
@@ -204,6 +206,10 @@ Last updated: 2026-07-03 | Pages: 80 | Sources: 214
 - **Nuclei NA900 processor**: → [nuclei-na900-hardware-target](hardware_target/nuclei-na900-hardware-target.md)
 - **Nuclei System Technology**: → [nuclei-system-technology](entity/nuclei-system-technology.md)
 - **OpenC906**: → [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
+- **OpenCV (RISC-V Vector Optimization)**: → [opencv-rvv-entity](entity/opencv-rvv-entity.md)
+- **OpenCV RISC-V**: → [opencv-rvv-entity](entity/opencv-rvv-entity.md)
+- **OpenCV RISC-V support**: → [opencv-rvv-entity](entity/opencv-rvv-entity.md)
+- **OpenCV RVV**: → [opencv-rvv-entity](entity/opencv-rvv-entity.md)
 - **OpenGeMM**: → [opengemm](entity/opengemm.md)
 - **OpenGeMM Accelerator Generator**: → [opengemm](entity/opengemm.md)
 - **OpenGeMM platform**: → [opengemm](entity/opengemm.md)
@@ -218,6 +224,7 @@ Last updated: 2026-07-03 | Pages: 80 | Sources: 214
 - **Q4_0**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
 - **Q4_1**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
 - **Q8_0**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
+- **QiMeng-TensorOp**: → [qimeng-tensorop](entity/qimeng-tensorop.md)
 - **RISC-V Certification Steering Committee**: → [riscv-international-technical-committees](entity/riscv-international-technical-committees.md)
 - **RISC-V Horizontal Committees**: → [riscv-international-technical-committees](entity/riscv-international-technical-committees.md)
 - **RISC-V IME Extension**: → [integrated-matrix-extension](entity/integrated-matrix-extension.md)
@@ -464,6 +471,7 @@ Last updated: 2026-07-03 | Pages: 80 | Sources: 214
 
 
 
+
 ## Optimization Pages
 
 | Page | Type | Summary | Tags | Sources | Inbound |
@@ -482,7 +490,7 @@ Last updated: 2026-07-03 | Pages: 80 | Sources: 214
 | [sophon-sg2042-npb-performance-benchmark-result.md](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md) | benchmark_result | SG2042 NAS Parallel Benchmark Performance |  | 4 | 0 |
 | [spacemit-k1-benchmark-2026-04-14.md](benchmark_result/spacemit-k1-benchmark-2026-04-14.md) | benchmark_result | SpacemiT K1 AI Benchmark Report (2026-04-14) |  | 2 | 0 |
 | [andes-ax45mpv-hardware-target.md](hardware_target/andes-ax45mpv-hardware-target.md) | hardware_target | AndesCore AX45MPV |  | 2 | 4 |
-| [andes-nx27v-hardware-target.md](hardware_target/andes-nx27v-hardware-target.md) | hardware_target | AndesCore NX27V |  | 2 | 2 |
+| [andes-nx27v-hardware-target.md](hardware_target/andes-nx27v-hardware-target.md) | hardware_target | AndesCore NX27V |  | 2 | 3 |
 | [chiplet-based-risc-v-soc.md](hardware_target/chiplet-based-risc-v-soc.md) | hardware_target | Chiplet-Based RISC-V SoC |  | 2 | 0 |
 | [et-soc-1-hardware-target.md](hardware_target/et-soc-1-hardware-target.md) | hardware_target | ET-SoC-1 |  | 2 | 1 |
 | [gap9.md](hardware_target/gap9.md) | hardware_target | GAP9 |  | 2 | 3 |
@@ -492,19 +500,19 @@ Last updated: 2026-07-03 | Pages: 80 | Sources: 214
 | [opennanhu-v5.md](hardware_target/opennanhu-v5.md) | hardware_target | OpenNanhu-V5 |  | 2 | 0 |
 | [semidynamics-all-in-one-ai-ip.md](hardware_target/semidynamics-all-in-one-ai-ip.md) | hardware_target | Semidynamics All-In-One AI IP |  | 2 | 1 |
 | [sophon-sg2042.md](hardware_target/sophon-sg2042.md) | hardware_target | SOPHON SG2042 |  | 12 | 0 |
-| [sophon-sg2044-hardware-target.md](hardware_target/sophon-sg2044-hardware-target.md) | hardware_target | Sophon SG2044 |  | 2 | 4 |
+| [sophon-sg2044-hardware-target.md](hardware_target/sophon-sg2044-hardware-target.md) | hardware_target | Sophon SG2044 |  | 2 | 5 |
 | [spacemit-k1.md](hardware_target/spacemit-k1.md) | hardware_target | SpacemiT K1 |  | 4 | 4 |
 | [spacemit-k3-hardware-target.md](hardware_target/spacemit-k3-hardware-target.md) | hardware_target | SpacemiT K3 | RISC-V, SpacemiT, AI CPU, big.LITTLE, RVV 1.0 | 2 | 0 |
 | [spacemit-x60-hardware-target.md](hardware_target/spacemit-x60-hardware-target.md) | hardware_target | SpacemiT X60 | RISC-V, GCC tuning, SpacemiT, in-order, RVV 1.0 | 2 | 7 |
 | [starfive-jh7110-hardware-target.md](hardware_target/starfive-jh7110-hardware-target.md) | hardware_target | StarFive JH-7110 |  | 2 | 0 |
 | [t1.md](hardware_target/t1.md) | hardware_target | T1 |  | 2 | 0 |
 | [v851s-yuzukilizard.md](hardware_target/v851s-yuzukilizard.md) | hardware_target | Allwinner V851S / Yuzukilizard | allwinner, v851s, yuzukilizard, risc-v, npu | 8 | 0 |
-| [xuantie-c906-hardware-target.md](hardware_target/xuantie-c906-hardware-target.md) | hardware_target | XuanTie C906 |  | 2 | 7 |
+| [xuantie-c906-hardware-target.md](hardware_target/xuantie-c906-hardware-target.md) | hardware_target | XuanTie C906 |  | 2 | 8 |
 | [xuantie-c908.md](hardware_target/xuantie-c908.md) | hardware_target | XuanTie C908 |  | 14 | 1 |
-| [c908-wino-gemm-optimization.md](optimization_recipe/c908-wino-gemm-optimization.md) | optimization_recipe | C908 Winograd and GEMM Optimization in SHL |  | 2 | 11 |
+| [c908-wino-gemm-optimization.md](optimization_recipe/c908-wino-gemm-optimization.md) | optimization_recipe | C908 Winograd and GEMM Optimization in SHL |  | 2 | 12 |
 | [hhb-onnxruntime-yolox-deployment-xuantie-c920.md](optimization_recipe/hhb-onnxruntime-yolox-deployment-xuantie-c920.md) | optimization_recipe | HHB-onnxruntime YOLOX Deployment on Xuantie C920 |  | 2 | 0 |
 | [iree-riscv-microkernel-support.md](optimization_recipe/iree-riscv-microkernel-support.md) | optimization_recipe | IREE RISC-V Microkernel Support |  | 2 | 2 |
-| [mlir-xdsl-rvv-codegen-pipeline.md](optimization_recipe/mlir-xdsl-rvv-codegen-pipeline.md) | optimization_recipe | MLIR-xDSL RVV Code Generation Pipeline |  | 2 | 5 |
+| [mlir-xdsl-rvv-codegen-pipeline.md](optimization_recipe/mlir-xdsl-rvv-codegen-pipeline.md) | optimization_recipe | MLIR-xDSL RVV Code Generation Pipeline |  | 2 | 6 |
 | [q4x-quantization-llamacpp-rvv.md](optimization_recipe/q4x-quantization-llamacpp-rvv.md) | optimization_recipe | Q4X Quantization for LLM Inference on RISC‑V Vector CPUs | quantization, codebook, llama.cpp, RVV | 2 | 1 |
 | [spacemit-x60-gcc-tuning.md](optimization_recipe/spacemit-x60-gcc-tuning.md) | optimization_recipe | SpacemiT X60 GCC Tuning | RISC-V, GCC, SpacemiT, pipeline, in-order | 4 | 0 |
 | [v-seek-llm-inference-optimization-sg2042.md](optimization_recipe/v-seek-llm-inference-optimization-sg2042.md) | optimization_recipe | V-Seek LLM Inference Optimization on Sophon SG2042 |  | 2 | 0 |
@@ -571,6 +579,7 @@ Last updated: 2026-07-03 | Pages: 80 | Sources: 214
 - [semidynamics-all-in-one-llama2-7b-tensor-utilization](benchmark_result/semidynamics-all-in-one-llama2-7b-tensor-utilization.md)
 - [sophon-sg2042-npb-performance-benchmark-result](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md)
 - [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
+
 
 
 

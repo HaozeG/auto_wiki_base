@@ -34,13 +34,13 @@ Subtypes are **specializations of `entity`**, never new top-level types: a subty
 [system_state]
 graph_maturity: false
 cold_start_page_count: 0
-orphan_fraction: 0.75
+orphan_fraction: 0.7561
 median_inbound_links: 0.0
-mean_inbound_links: 0.8625
+mean_inbound_links: 0.9024
 linking_debt: 0
 retrospective_lint_done: false
-clustering_coefficient: 0.0738
-avg_path_length: 3.668
+clustering_coefficient: 0.0991
+avg_path_length: 3.6329
 connected_components: 40
 ```
 
