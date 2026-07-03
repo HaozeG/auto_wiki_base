@@ -37,6 +37,8 @@ sources:
 - https://arxiv.org/html/2406.12394v1
 - raw/cache/5b1c2c5ef89a99ef.md
 - https://arxiv.org/abs/2406.12394
+- raw/cache/76977c56a6102e86.md
+- https://github.com/sophgo/sophgo-doc/blob/main/SG2042/TRM/source/system.rst
 source_url: https://milkv.io/docs/pioneer/getting-started/processor
 fetched_at: '2026-07-03T14:18:06.914938+00:00'
 type: hardware_target

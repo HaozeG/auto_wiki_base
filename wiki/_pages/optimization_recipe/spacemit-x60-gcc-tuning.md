@@ -4,6 +4,10 @@ aliases:
 - spacemit-x60 gcc tuning
 - GCC tuning for SpacemiT X60
 - GCC tuning for SpacemiT X60 RISC-V Core
+- GCC Vector Scheduling for SpacemiT X60
+- SpacemiT X60 GCC vector tuning
+- X60 LMUL cost scaling
+- Dynamic LMUL scaling for SpacemiT X60
 subtype: null
 tags:
 - RISC-V
@@ -33,6 +37,8 @@ scorecard:
 sources:
 - raw/cache/8b6f2fcad88939f5.md
 - https://www.rt-rk.com/gcc-tuning-for-spacemit-x60-building-an-in-order-dual-issue-scheduler-model-part-i/
+- raw/cache/110413a720fff850.md
+- https://www.rt-rk.com/gcc-tuning-for-spacemit-x60-building-an-in-order-dual-issue-scheduler-model-part-ii/
 source_url: https://www.rt-rk.com/gcc-tuning-for-spacemit-x60-building-an-in-order-dual-issue-scheduler-model-part-i/
 fetched_at: '2026-07-03T18:08:22.289988+00:00'
 type: optimization_recipe

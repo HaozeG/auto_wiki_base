@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-03 | Pages: 76 | Sources: 202
+Last updated: 2026-07-03 | Pages: 77 | Sources: 208
 
 ## Entity Pages
 
@@ -28,6 +28,7 @@ Last updated: 2026-07-03 | Pages: 76 | Sources: 202
 | [rv-sparse-project.md](entity/rv-sparse-project.md) | rv-sparse |  | 2 | 0 |
 | [rvv-dialect-mlir.md](entity/rvv-dialect-mlir.md) | RVV Dialect (MLIR) | MLIR, RVV, RISC-V, dialect, compiler | 2 | 0 |
 | [rvv-intrinsic-api.md](entity/rvv-intrinsic-api.md) | RISC-V Vector Extension Intrinsic API |  | 2 | 0 |
+| [rvv-unified-permutation-unit.md](entity/rvv-unified-permutation-unit.md) | RVV Unified Permutation Unit |  | 2 | 0 |
 | [semidynamics-tensor-unit.md](entity/semidynamics-tensor-unit.md) | Semidynamics Tensor Unit |  | 2 | 0 |
 | [semidynamics.md](entity/semidynamics.md) | Semidynamics | RISC-V, AI, AIPU, European | 2 | 0 |
 | [shl.md](entity/shl.md) | SHL |  | 4 | 1 |
@@ -82,8 +83,9 @@ Last updated: 2026-07-03 | Pages: 76 | Sources: 202
 - **C906 C910 Auto-Generated GEMM Benchmark**: → [auto-gemm-micro-kernel-c906-c910-benchmark](benchmark_result/auto-gemm-micro-kernel-c906-c910-benchmark.md)
 - **C908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **C908 GCC scheduler model**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
+- **C908 GCC tuning**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
 - **C908 GCC tuning benchmark**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
-- **C908 scheduler model**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
+- **C908 scheduler model**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **C908V**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **CHIPS**: → [chips-alliance-entity](entity/chips-alliance-entity.md)
 - **CHIPS Alliance**: → [chips-alliance-entity](entity/chips-alliance-entity.md)
@@ -101,6 +103,7 @@ Last updated: 2026-07-03 | Pages: 76 | Sources: 202
 - **Common Hardware for Interfaces, Processors and Systems Alliance**: → [chips-alliance-entity](entity/chips-alliance-entity.md)
 - **CoreMark C908 0.8%**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
 - **DeepSeek on SG2042**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
+- **Dynamic LMUL scaling for SpacemiT X60**: → [spacemit-x60-gcc-tuning](optimization_recipe/spacemit-x60-gcc-tuning.md)
 - **ET-SOC-1**: → [et-soc-1-hardware-target](hardware_target/et-soc-1-hardware-target.md)
 - **ET-SoC-1**: → [et-soc-1-hardware-target](hardware_target/et-soc-1-hardware-target.md)
 - **Esperanto AI**: → [esperanto-technologies](entity/esperanto-technologies.md)
@@ -116,6 +119,10 @@ Last updated: 2026-07-03 | Pages: 76 | Sources: 202
 - **GCC 15 vs Clang 21 Auto-vectorization on SpacemiT X60**: → [gcc15-clang21-autovec-benchmark-spacemit-x60](benchmark_result/gcc15-clang21-autovec-benchmark-spacemit-x60.md)
 - **GCC 15 vs Clang 21 on BananaPi-F3 (RVV 1.0)**: → [gcc15-vs-clang21-banana-pi-f3-rvv10](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md)
 - **GCC Tuning Benchmark on XuanTie C908**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
+- **GCC Tuning for XuanTie C908**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
+- **GCC Tuning for XuanTie C908 (CanMV-K230)**: → [xuantie-c908](hardware_target/xuantie-c908.md)
+- **GCC Vector Scheduling for SpacemiT X60**: → [spacemit-x60-gcc-tuning](optimization_recipe/spacemit-x60-gcc-tuning.md)
+- **GCC XuanTie C908 scheduler model**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **GCC tuning for SpacemiT X60**: → [spacemit-x60-gcc-tuning](optimization_recipe/spacemit-x60-gcc-tuning.md)
 - **GCC tuning for SpacemiT X60 RISC-V Core**: → [spacemit-x60-gcc-tuning](optimization_recipe/spacemit-x60-gcc-tuning.md)
 - **GCC15 Clang21 RVV benchmark**: → [gcc15-clang21-autovec-benchmark-spacemit-x60](benchmark_result/gcc15-clang21-autovec-benchmark-spacemit-x60.md)
@@ -237,8 +244,11 @@ Last updated: 2026-07-03 | Pages: 76 | Sources: 202
 - **RVV Intrinsic API**: → [rvv-intrinsic-api](entity/rvv-intrinsic-api.md)
 - **RVV MLIR Dialect**: → [rvv-dialect-mlir](entity/rvv-dialect-mlir.md)
 - **RVV MLIR ukernel**: → [iree-rvv-mlir-ukernel](entity/iree-rvv-mlir-ukernel.md)
+- **RVV Unified Permutation Unit**: → [rvv-unified-permutation-unit](entity/rvv-unified-permutation-unit.md)
+- **RVV VPU permutation unit**: → [rvv-unified-permutation-unit](entity/rvv-unified-permutation-unit.md)
 - **RVV compiler auto-vectorization comparison**: → [gcc15-clang21-autovec-benchmark-spacemit-x60](benchmark_result/gcc15-clang21-autovec-benchmark-spacemit-x60.md)
 - **RVV compiler evaluation 2026**: → [gcc15-vs-clang21-banana-pi-f3-rvv10](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md)
+- **RVV unified permutation microarchitecture**: → [rvv-unified-permutation-unit](entity/rvv-unified-permutation-unit.md)
 - **SC23 Auto-Generated GEMM on C906 and C910**: → [auto-gemm-micro-kernel-c906-c910-benchmark](benchmark_result/auto-gemm-micro-kernel-c906-c910-benchmark.md)
 - **SG2042**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
 - **SG2042 HPC benchmarking**: → [sophon-sg2042-npb-performance-benchmark-result](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md)
@@ -287,6 +297,7 @@ Last updated: 2026-07-03 | Pages: 76 | Sources: 202
 - **SpacemiT RISC-V IME**: → [integrated-matrix-extension](entity/integrated-matrix-extension.md)
 - **SpacemiT X60**: → [spacemit-x60-hardware-target](hardware_target/spacemit-x60-hardware-target.md)
 - **SpacemiT X60 GCC Tuning**: → [spacemit-x60-gcc-tuning](optimization_recipe/spacemit-x60-gcc-tuning.md)
+- **SpacemiT X60 GCC vector tuning**: → [spacemit-x60-gcc-tuning](optimization_recipe/spacemit-x60-gcc-tuning.md)
 - **SpacemiT X60 core**: → [spacemit-x60-hardware-target](hardware_target/spacemit-x60-hardware-target.md)
 - **Spacemit K1**: → [spacemit-k1](hardware_target/spacemit-k1.md)
 - **StarFive JH-7110**: → [starfive-jh7110-hardware-target](hardware_target/starfive-jh7110-hardware-target.md)
@@ -315,6 +326,7 @@ Last updated: 2026-07-03 | Pages: 76 | Sources: 202
 - **Whisper**: → [whisper-risc-v-iss-entity](entity/whisper-risc-v-iss-entity.md)
 - **Whisper ISS**: → [whisper-risc-v-iss-entity](entity/whisper-risc-v-iss-entity.md)
 - **X60**: → [spacemit-x60-hardware-target](hardware_target/spacemit-x60-hardware-target.md)
+- **X60 LMUL cost scaling**: → [spacemit-x60-gcc-tuning](optimization_recipe/spacemit-x60-gcc-tuning.md)
 - **XT**: → [xuantie](entity/xuantie.md)
 - **XUANTIE-RV/xtai-benchmark**: → [xuantie-ai-benchmark-suite](entity/xuantie-ai-benchmark-suite.md)
 - **XiangShan**: → [xiangshan-overview](entity/xiangshan-overview.md)
@@ -326,6 +338,8 @@ Last updated: 2026-07-03 | Pages: 76 | Sources: 202
 - **XuanTie C906**: → [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
 - **XuanTie C908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **XuanTie C908 GCC Tuning**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
+- **XuanTie C908 scheduler model**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
+- **XuanTie C908 tuning**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **XuanTie GNU Compiler Toolchain**: → [xuantie-gnu-toolchain](entity/xuantie-gnu-toolchain.md)
 - **XuanTie GNU Toolchain**: → [xuantie-gnu-toolchain](entity/xuantie-gnu-toolchain.md)
 - **XuanTie MME**: → [xuantie-mme](entity/xuantie-mme.md)
@@ -370,6 +384,7 @@ Last updated: 2026-07-03 | Pages: 76 | Sources: 202
 - **spacemit-x60 gcc tuning**: → [spacemit-x60-gcc-tuning](optimization_recipe/spacemit-x60-gcc-tuning.md)
 - **tenstorrent/whisper**: → [whisper-risc-v-iss-entity](entity/whisper-risc-v-iss-entity.md)
 - **ukernel**: → [iree-microkernel-library](entity/iree-microkernel-library.md)
+- **unified vector permutation unit**: → [rvv-unified-permutation-unit](entity/rvv-unified-permutation-unit.md)
 - **vector index-multiply-accumulate**: → [vindexmac](entity/vindexmac.md)
 - **vindexmac**: → [vindexmac](entity/vindexmac.md)
 - **vindexmac instruction**: → [vindexmac](entity/vindexmac.md)
@@ -393,6 +408,7 @@ Last updated: 2026-07-03 | Pages: 76 | Sources: 202
 - **香山**: → [xiangshan-overview](entity/xiangshan-overview.md)
 - **sophon-sg2042-hardware-target**: mentioned in [npb-characterization-sg2042](benchmark_result/npb-characterization-sg2042.md) — *no dedicated page*
 - **xuantie-c908-gcc-tuning**: mentioned in [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md) — *no dedicated page*
+
 
 
 
@@ -463,7 +479,7 @@ Last updated: 2026-07-03 | Pages: 76 | Sources: 202
 | [maestro.md](hardware_target/maestro.md) | hardware_target | Maestro |  | 2 | 1 |
 | [opennanhu-v5.md](hardware_target/opennanhu-v5.md) | hardware_target | OpenNanhu-V5 |  | 2 | 0 |
 | [semidynamics-all-in-one-ai-ip.md](hardware_target/semidynamics-all-in-one-ai-ip.md) | hardware_target | Semidynamics All-In-One AI IP |  | 2 | 1 |
-| [sophon-sg2042.md](hardware_target/sophon-sg2042.md) | hardware_target | SOPHON SG2042 |  | 10 | 0 |
+| [sophon-sg2042.md](hardware_target/sophon-sg2042.md) | hardware_target | SOPHON SG2042 |  | 12 | 0 |
 | [sophon-sg2044-hardware-target.md](hardware_target/sophon-sg2044-hardware-target.md) | hardware_target | Sophon SG2044 |  | 2 | 4 |
 | [spacemit-k1.md](hardware_target/spacemit-k1.md) | hardware_target | SpacemiT K1 |  | 4 | 4 |
 | [spacemit-k3-hardware-target.md](hardware_target/spacemit-k3-hardware-target.md) | hardware_target | SpacemiT K3 | RISC-V, SpacemiT, AI CPU, big.LITTLE, RVV 1.0 | 2 | 0 |
@@ -477,8 +493,8 @@ Last updated: 2026-07-03 | Pages: 76 | Sources: 202
 | [hhb-onnxruntime-yolox-deployment-xuantie-c920.md](optimization_recipe/hhb-onnxruntime-yolox-deployment-xuantie-c920.md) | optimization_recipe | HHB-onnxruntime YOLOX Deployment on Xuantie C920 |  | 2 | 0 |
 | [iree-riscv-microkernel-support.md](optimization_recipe/iree-riscv-microkernel-support.md) | optimization_recipe | IREE RISC-V Microkernel Support |  | 2 | 2 |
 | [mlir-xdsl-rvv-codegen-pipeline.md](optimization_recipe/mlir-xdsl-rvv-codegen-pipeline.md) | optimization_recipe | MLIR-xDSL RVV Code Generation Pipeline |  | 2 | 5 |
-| [q4x-quantization-llamacpp-rvv.md](optimization_recipe/q4x-quantization-llamacpp-rvv.md) | optimization_recipe | Q4X Quantization for LLM Inference on RISC‑V Vector CPUs | quantization, codebook, llama.cpp, RVV | 2 | 0 |
-| [spacemit-x60-gcc-tuning.md](optimization_recipe/spacemit-x60-gcc-tuning.md) | optimization_recipe | SpacemiT X60 GCC Tuning | RISC-V, GCC, SpacemiT, pipeline, in-order | 2 | 0 |
+| [q4x-quantization-llamacpp-rvv.md](optimization_recipe/q4x-quantization-llamacpp-rvv.md) | optimization_recipe | Q4X Quantization for LLM Inference on RISC‑V Vector CPUs | quantization, codebook, llama.cpp, RVV | 2 | 1 |
+| [spacemit-x60-gcc-tuning.md](optimization_recipe/spacemit-x60-gcc-tuning.md) | optimization_recipe | SpacemiT X60 GCC Tuning | RISC-V, GCC, SpacemiT, pipeline, in-order | 4 | 0 |
 | [v-seek-llm-inference-optimization-sg2042.md](optimization_recipe/v-seek-llm-inference-optimization-sg2042.md) | optimization_recipe | V-Seek LLM Inference Optimization on Sophon SG2042 |  | 2 | 0 |
 
 ## Hub Hierarchy
@@ -542,6 +558,7 @@ Last updated: 2026-07-03 | Pages: 76 | Sources: 202
 - [semidynamics-all-in-one-llama2-7b-tensor-utilization](benchmark_result/semidynamics-all-in-one-llama2-7b-tensor-utilization.md)
 - [sophon-sg2042-npb-performance-benchmark-result](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md)
 - [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
+
 
 
 

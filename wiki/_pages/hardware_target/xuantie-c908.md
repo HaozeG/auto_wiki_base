@@ -9,6 +9,10 @@ aliases:
 - xt-c908
 - C908V
 - T-Head C908
+- GCC Tuning for XuanTie C908 (CanMV-K230)
+- XuanTie C908 tuning
+- C908 scheduler model
+- GCC XuanTie C908 scheduler model
 subtype: null
 type: hardware_target
 tags: []

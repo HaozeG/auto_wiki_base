@@ -9,6 +9,9 @@ aliases:
 - xt-c908 GCC tuning
 - C908 scheduler model
 - RISC-V XuanTie C908 tuning
+- GCC Tuning for XuanTie C908
+- XuanTie C908 scheduler model
+- C908 GCC tuning
 subtype: null
 tags: []
 hardware_targets:

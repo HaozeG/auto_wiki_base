@@ -1762,3 +1762,168 @@ No specific relationship to visible context pages in the wiki.
 
 - https://github.com/XUANTIE-RV/riscv-matrix-extension-spec/
 merge_draft_body -->
+
+## [2026-07-03] merge_pending | sophon-sg2042.md
+target_page: sophon-sg2042.md
+canonical_name: SOPHON SG2042
+colliding_name: Sophon SG2042
+source: https://github.com/sophgo/sophgo-doc/blob/main/SG2042/TRM/source/system.rst
+status: pending_review
+<!-- merge_draft_body
+# Sophon SG2042
+
+Sophon SG2042 is a 64-core RISC-V SoC designed by Sophgo, featuring a network-on-chip (NoC) mesh architecture that partitions four CPU cores into one cluster, with a total of 16 clusters forming the full 64-core array. The system includes 16 System Level Cache (SLC) tiles, each 4 MiB in size (totaling 64 MiB), shared by all cores. Four DRAM controllers are located at the left and right edges of the mesh, accessible by all bus masters. The SoC supports a dual-socket configuration via two CCIX ports, each bound to a PCIe controller, enabling direct chip-to-chip connectivity. A separate System CoProcessor (SCP) outside the mesh handles platform initialization, including PCIe topology setup, DRAM configuration via I2C-based SPD reading, mesh configuration, and loading the RISC-V zero-stage bootloader. The memory subsystem implements RISC-V Sv39 virtual address translation with 40-bit physical addressing, supporting up to 1 TiB of address space in little-endian format.
+
+## Key Claims
+
+- 64 RISC-V CPU cores arranged as 16 clusters of 4 CPUs, connected via a NoC mesh.
+- Each cluster has a 4 MiB SLC tile; 16 SLC tiles provide 64 MiB of shared last-level cache.
+- Four DRAM controllers accessible by all bus masters on the mesh.
+- Dual-socket operation through CCIX ports (CCIX0 bound to PCIe0, CCIX1 bound to PCIe1).
+- SCP (System CoProcessor) is an out-of-mesh CPU subsystem responsible for boot-time initialization (PCIe, DRAM, mesh, CCIX, loading zsbl.bin).
+- Memory addressing: Sv39 virtual, 40-bit physical, 1 TiB linear space, little-endian.
+- Boot sequence: SCP boots from bootrom (SPI flash or SD card), then releases all 64 RISC-V cores.
+- Bootrom loads SCP firmware from SPI flash at a given offset or from an SD card with MBR partition table and FAT32 file system (firmware named fip.bin).
+- Zero-stage bootloader (zsbl.bin) is the first code executed by RISC-V cores.
+- Boot strap pins BOOT_SEL[7:0] control boot device selection, SCP console, and test mode.
+
+## Optimization-Relevant Details
+
+- **ISA/profile**: RISC-V (64-bit), Sv39 virtual memory, 40-bit physical addressing.
+- **Vector/matrix/accelerator support**: Not specified in this source; may be covered in other sections of the TRM.
+- **Memory/cache/TLB/DMA**: 4 MiB SLC per cluster shared by all cores; DRAM controllers; PCI master nodes handle DMA transactions.
+- **Compiler/toolchain support**: Not specified in this source.
+
+## Relationships
+
+- No specific relationship to visible context pages ([[andes-ax45mpv-hardware-target]] is a different vendor's RISC-V core IP without shared design details known from this source).
+
+## Sources
+
+- https://github.com/sophgo/sophgo-doc/blob/main/SG2042/TRM/source/system.rst
+merge_draft_body -->
+
+## [2026-07-03] merge_pending | xuantie-c908.md
+target_page: xuantie-c908.md
+canonical_name: XuanTie C908
+colliding_name: GCC Tuning for XuanTie C908 (CanMV-K230)
+source: https://gcc.gnu.org/pipermail/gcc-patches/2026-June/719234.html
+status: pending_review
+<!-- merge_draft_body
+# GCC Tuning for XuanTie C908 (CanMV-K230)
+
+The GCC tuning patch for the XuanTie C908 core on the CanMV-K230-V1.1 board introduces a scalar scheduler model that models integer, load/store, multiply, divide, and floating-point pipeline resources based on the XuanTie C908 R1S0 User Manual. This patch only models scalar scheduling; vector scheduling is left for future work. The tuning was tested using CoreMark and custom instruction throughput tests (unrolled loops with groups of instructions such as add and fadd operating on independent registers). On this hardware, the tuning yields a 0.8% CoreMark improvement and cycle-count improvements of 5% to 17% in throughput tests. Long-latency reservations are clamped to 7 cycles following the existing RISC-V scheduler modelling approach. The benchmark measurements used aligned memory access, 20 warm-up runs, and 200 measured executions.
+
+## Key Claims
+
+- The GCC tuning patch provides a 0.8% CoreMark score improvement on the CanMV-K230-V1.1 board with the XuanTie C908 core.
+- Custom instruction throughput tests (unrolled loops with independent registers) show cycle-count improvements of 5% to 17%.
+- The scheduler model clamps long-latency reservations to 7 cycles, consistent with the existing RISC-V scheduling approach introduced in GCC commit 8265192.
+- Only scalar scheduling is modeled; vector unit scheduling is deferred to a future patch (xt-c908v).
+
+## Measurement Context
+
+- Hardware version: XuanTie C908 R1S0 core on CanMV-K230-V1.1 board
+- Software/toolchain version: GCC with patch applied (riscv-cores.def, riscv-opts.h, riscv.cc, riscv.md, xt-c908.md)
+- Workload shape: CoreMark; unrolled loops with groups of independent scalar integer and floating-point operations (e.g., add, fadd)
+- Metric: CoreMark score improvement (0.8%), cycle-count improvement (5%–17%)
+- Method: 20 warm-up runs, 200 measured executions, aligned memory access
+- Evidence strength: measured
+
+## Relationships
+
+- [[xuantie-c906-hardware-target]]: Both the XuanTie C908 and C906 are in-order single-issue RISC-V cores from T-Head; however, the C906 includes a 128-bit SIMD vector unit while the C908 lacks vector extensions and relies purely on scalar performance, as reflected in the C908 tuning which does not model vector scheduling.
+- [[spacemit-x60-hardware-target]]: Both the XuanTie C908 and SpacemiT X60 have GCC tuning patches that model in-order scalar pipelines to improve instruction scheduling; however, the X60 tuning additionally models a dual-issue pipeline and RVV 1.0 vector unit, while the C908 tuning is purely scalar single-issue.
+
+## Sources
+
+- https://gcc.gnu.org/pipermail/gcc-patches/2026-June/719234.html
+merge_draft_body -->
+
+## [2026-07-03] merge_pending | gcc-tuning-c908-canmv-k230.md
+target_page: gcc-tuning-c908-canmv-k230.md
+canonical_name: GCC Tuning Benchmark on XuanTie C908
+colliding_name: GCC Tuning for XuanTie C908
+source: https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg406313.html
+status: pending_review
+<!-- merge_draft_body
+# GCC Tuning for XuanTie C908
+
+The GCC tuning for the XuanTie C908 core is a patch that introduces a scalar scheduler model for the GCC RISC-V backend, based on the XuanTie C908 R1S0 User Manual. The model describes the scalar integer, load/store, multiply, divide, and floating-point pipeline resources and is designed to improve instruction scheduling on the in-order single-issue pipeline of the C908 core. Vector scheduling is explicitly left for future work (xt-c908v). The tuning was tested on a CanMV-K230-V1.1 board using CoreMark and specialized instruction throughput tests that measure the efficiency of scheduling unrolled loops. The patch was developed by Milan Tripkovic and accepted into GCC trunk by Jeffrey Law on June 3, 2026.
+
+## Key Claims
+
+- The scheduler model covers scalar integer, load/store, multiply, divide, and floating-point pipeline resources, with long-latency reservations clamped to 7 cycles following the existing RISC-V scheduler approach.
+- On a CanMV-K230-V1.1 board, the tuning yields approximately 0.8% improvement in CoreMark score.
+- Instruction throughput tests (unrolled loops with groups of instructions using independent registers) show cycle-count improvements of 5% to 17%.
+- The patch requires the XuanTie C908 R1S0 User Manual for pipeline resource definitions; vector scheduling is not modeled in this patch.
+- The measurement methodology uses 20 warm-up runs followed by 200 measured runs with aligned memory access.
+
+## Transformation
+
+- **Prerequisites:** XuanTie C908 R1S0 User Manual, GCC source tree, understanding of C908 pipeline resources.
+- **Steps:** Add a new tune structure and pipeline model to the GCC RISC-V backend by modifying `riscv-cores.def`, `riscv-opts.h`, `riscv.cc`, and `riscv.md`, and creating a new file `xt-c908.md` with the reservation descriptions.
+- **Expected effect:** Improved instruction scheduling for scalar code on the XuanTie C908 core, reducing pipeline stalls and improving throughput on in-order execution.
+- **Failure modes:** The tuning does not model vector scheduling, so vector workloads will not see direct benefits; future work (xt-c908v) is needed for vector support.
+- **Measurements:** CoreMark improvement ~0.8%; instruction throughput tests show 5–17% cycle-count reduction compared to the generic schedule model.
+
+## Relationships
+
+- [[xuantie-c906-hardware-target]]: Both the XuanTie C908 and XuanTie C906 are in-order single-issue RISC-V cores from T-Head; the C906 includes a 128-bit SIMD vector unit while the C908 has no vector extension and relies solely on scalar performance as modeled in this GCC tuning.
+- [[spacemit-x60-hardware-target]]: Both the XuanTie C908 and SpacemiT X60 have GCC tuning patches that model in-order scalar pipelines to improve instruction scheduling; however, the X60 tuning additionally models dual-issue capability and RVV 1.0 vector support, while the C908 tuning is purely scalar.
+
+## Sources
+
+- https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg406313.html
+merge_draft_body -->
+
+## [2026-07-03] pending | xuantie-c906-hardware-target.md
+target_page: xuantie-c906-hardware-target.md
+target_section: Relationships
+source: https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg406313.html
+status: pending_review
+proposed_update: Update the outbound link from 'gcc-tuning-c908-canmv-k230' to 'gcc-tuning-xuantie-c908' and adjust the reason text to reference the new optimization_recipe page.
+
+## [2026-07-03] pending | spacemit-x60-hardware-target.md
+target_page: spacemit-x60-hardware-target.md
+target_section: Relationships
+source: https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg406313.html
+status: pending_review
+proposed_update: Update the outbound link from 'gcc-tuning-c908-canmv-k230' to 'gcc-tuning-xuantie-c908' and adjust the reason text to reference the new optimization_recipe page.
+
+## [2026-07-03] merge_pending | spacemit-x60-gcc-tuning.md
+target_page: spacemit-x60-gcc-tuning.md
+canonical_name: SpacemiT X60 GCC Tuning
+colliding_name: GCC Vector Scheduling for SpacemiT X60
+source: https://www.rt-rk.com/gcc-tuning-for-spacemit-x60-building-an-in-order-dual-issue-scheduler-model-part-ii/
+status: pending_review
+<!-- merge_draft_body
+# GCC Vector Scheduling for SpacemiT X60
+
+This optimization recipe describes the implementation of a dynamic LMUL-based cost scaling model for vector instructions in the GCC scheduler targeting the SpacemiT X60 processor. The SpacemiT X60 has an in-order dual-issue scalar pipeline with two vector execution units (VXU0 and VXU1), but the tuning model initially models only a single vector unit (VXU0) as a stable baseline, splitting operations internally as one wider unit. Unlike scalar instructions with fixed latencies, vector instruction costs vary with the Length Multiplier (LMUL) and Selected Element Width (SEW). The primary transformation replaces a static latency assumption (e.g., LMUL=1) with dynamic cost scaling based on the effective LMUL at scheduling time, implemented through the `riscv_sched_adjust_cost` hook. Scaling is enabled by the `-madjust-lmul-cost` flag, implicitly activated with `-mtune=spacemit-x60`. The pipeline occupancy reservation in the DFA is capped at 7 cycles to prevent "DFA blowup," a compiler internal state explosion, without compromising optimization quality. Validation was performed using LLVM test-suite benchmarks and custom RVV instruction-level microbenchmarks from the camel-cdr/rvv-bench repository on a Banana Pi BPI-F3 board, with latency models derived from llvm-mca simulations and the existing SpacemiT X60 LLVM scheduling model.
+
+## Key Claims
+
+- The SpacemiT X60 vector scheduling model uses a single DFA unit `spacemit_x60_vxu0` to represent the vector pipeline, despite the hardware having two VXU units.
+- Instruction latency is scaled purely by LMUL (not SEW) in this initial implementation, using the `riscv_sched_adjust_cost` hook reading the `vlmul_type` attribute.
+- The DFA reservation for vector instructions is clamped to a maximum of 7 cycles to avoid state explosion in the scheduler automaton.
+- The optimization is activated by the `-madjust-lmul-cost` flag, which is part of the `-mtune=spacemit-x60` tuning.
+- The cost model is derived from llvm-mca simulations on the SpacemiT X60 LLVM model and validated with RVV microbenchmarks on a Banana Pi BPI-F3 board.
+- A stress test benchmark (`stress_vcompress_heavy`) exercising mixed LMUL levels (m1, m2, m4) demonstrates the improvement of dynamic LMUL scaling over a fixed-latency baseline.
+
+## Transformation
+
+- **Prerequisites**: GCC with RISC-V backend support for the SpacemiT X60 tuning; LLVM model for the same core used as a cross-reference for latency values; a Banana Pi BPI-F3 or equivalent board for validation.
+- **Steps**: 1) Define the vector execution unit as a DFA CPU unit (`spacemit_x60_vxu0`) in the machine description. 2) Set instruction reservations with a clamped 7-cycle occupancy for all vector types. 3) Implement the `riscv_sched_adjust_cost` hook to scale base latency by the effective LMUL factor (e.g., 2x for LMUL=2, 4x for LMUL=4, down to 0.125x for LMUL=MF8). 4) Enable the scaling hook with `-madjust-lmul-cost` tied to `-mtune=spacemit-x60`.
+- **Expected effect**: The compiler scheduler makes more informed decisions for wide vector register groupings, reducing pipeline bubbles and improving instruction throughput compared to a fixed-latency model.
+- **Failure modes**: Without the 7-cycle DFA clamp, the automaton could grow excessively large (DFA blowup), degrading compilation time with negligible scheduling benefit for long-latency operations. If LMUL scaling is not active, the scheduler may over- or underestimate vector instruction costs, leading to suboptimal instruction reordering.
+- **Measurements**: Validation used the LLVM test-suite and custom stress tests (e.g., `stress_vcompress_heavy`). The key metric is throughput improvement for vector-heavy workloads; specific numeric results are not included in the source. The model is classified as "derived" because latency values originate from llvm-mca simulations, not direct hardware measurements.
+
+## Relationships
+
+No specific relationship to visible context pages.
+
+## Sources
+
+- https://www.rt-rk.com/gcc-tuning-for-spacemit-x60-building-an-in-order-dual-issue-scheduler-model-part-ii/
+merge_draft_body -->
