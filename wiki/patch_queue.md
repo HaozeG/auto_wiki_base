@@ -1118,3 +1118,56 @@ target_section: Key Claims
 source: https://github.com/pulp-platform/gap9-shield
 status: pending_review
 proposed_update: The GAP9 page states an 8-core architecture, but the GAP9Shield README describes a 9-core RISC-V cluster (likely 8 general-purpose cores + 1 NE16 accelerator core). Consider clarifying the core count and noting the NE16 accelerator. Also consider adding a reference to the GAP9Shield module and its integrated components.
+
+## [2026-07-03] merge_pending | gcc-tuning-c908-canmv-k230.md
+target_page: gcc-tuning-c908-canmv-k230.md
+canonical_name: GCC Tuning Benchmark on XuanTie C908
+colliding_name: XuanTie C908 GCC Tuning
+source: https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg406313.html
+status: pending_review
+<!-- merge_draft_body
+# XuanTie C908 GCC Tuning
+
+The XuanTie C908 GCC tuning patch adds a scalar scheduler model for the T-Head XuanTie C908 RISC-V core to the GCC compiler backend, enabling instruction scheduling that reduces pipeline stalls on this in-order single-issue core. The tuning is based on the XuanTie C908 R1S0 User Manual and models the scalar integer, load/store, multiply, divide, and floating-point pipeline resources. It was validated on a CanMV-K230-V1.1 board using CoreMark and custom instruction throughput loops (groups of adds and fadds), yielding a 0.8% CoreMark improvement and 5–17% cycle-count improvements on the throughput tests. The patch does not model vector scheduling, leaving that for future work (xt-c908v). Long-latency reservations are clamped to 7 cycles following the existing RISC-V scheduler modelling approach.
+
+## Key Claims
+
+- The tuning models scalar pipeline resources for the XuanTie C908: integer, load/store, multiply, divide, and floating-point.
+- Vector scheduling is not included; reserved for future xt-c908v model.
+- Tested on CanMV-K230-V1.1 board with CoreMark and instruction throughput loops.
+- Approximately 0.8% CoreMark improvement measured.
+- Instruction throughput tests show 5–17% cycle-count improvements.
+- Long-latency reservations clamped to 7 cycles.
+- Patches applied to GCC trunk as of 2026-06-03.
+
+## Transformation
+
+- Prerequisites: GCC source tree, XuanTie C908 User Manual for pipeline details.
+- Steps: Add cpu tuning entry in riscv-cores.def, microarchitecture type in riscv-opts.h, tune structure in riscv.cc, and include the xt-c908.md file in riscv.md. The xt-c908.md file defines the scheduler automaton and instruction reservations.
+- Expected effect: Reduced pipeline stalls for scalar code, leading to better instruction throughput on XuanTie C908 cores. The patch reports 0.8% CoreMark improvement and 5-17% improvement on instruction throughput loops.
+- Failure modes: If the scheduler model does not accurately reflect hardware, it may cause suboptimal scheduling. However, it is based on the user manual and validated with measurements. The model does not cover vector instructions; compiling vector code without future tuning may not benefit.
+- Measurements: CoreMark: 0.8% improvement. Instruction throughput loops (add, fadd): 5-17% cycle-count improvement. Method: 20 warm-up runs, 200 measured runs, aligned memory.
+
+## Relationships
+
+- [[xuantie-c906-hardware-target]]: Both the XuanTie C906 and C908 are in-order single-issue RISC-V cores from T-Head; the C906 includes a 128-bit SIMD vector unit while the C908 relies on scalar performance, and this tuning patch addresses the C908's scalar pipeline.
+- [[spacemit-x60-hardware-target]]: Both the XuanTie C908 and SpacemiT X60 have GCC tuning patches that model in-order scalar pipelines; however, the X60 tuning additionally models a vector unit (RVV 1.0) and dual-issue capability, while the C908 tuning is purely scalar and single-issue.
+
+## Sources
+
+- https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg406313.html
+merge_draft_body -->
+
+## [2026-07-03] pending | xuantie-c906-hardware-target.md
+target_page: xuantie-c906-hardware-target.md
+target_section: Relationships
+source: https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg406313.html
+status: pending_review
+proposed_update: Update outbound_links target from 'gcc-tuning-c908-canmv-k230' to 'xuantie-c908-gcc-tuning' and refine relationship reason to note that the GCC tuning patch models the C908 scalar pipeline, while the C906 uses a custom 128-bit SIMD unit. The current reason is still valid but the target filename must match the new optimization recipe page.
+
+## [2026-07-03] pending | spacemit-x60-hardware-target.md
+target_page: spacemit-x60-hardware-target.md
+target_section: Relationships
+source: https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg406313.html
+status: pending_review
+proposed_update: Update outbound_links target from 'gcc-tuning-c908-canmv-k230' to 'xuantie-c908-gcc-tuning' and refine relationship reason to emphasize that both GCC tuning patches model in-order scalar pipelines but the X60 tuning also includes dual-issue and RVV 1.0 vector support, while the C908 tuning is purely scalar and single-issue.

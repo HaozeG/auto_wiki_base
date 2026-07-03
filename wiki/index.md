@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-03 | Pages: 54 | Sources: 144
+Last updated: 2026-07-03 | Pages: 54 | Sources: 146
 
 ## Entity Pages
 
@@ -69,6 +69,7 @@ Last updated: 2026-07-03 | Pages: 54 | Sources: 144
 - **C908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **C908 GCC scheduler model**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
 - **C908 GCC tuning benchmark**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
+- **C908 scheduler model**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
 - **C908V**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **CanMV K230**: → [k230-soc](hardware_target/k230-soc.md)
 - **CanMV K230 development board**: → [k230-soc](hardware_target/k230-soc.md)
@@ -157,6 +158,7 @@ Last updated: 2026-07-03 | Pages: 54 | Sources: 144
 - **RISC-V Vector Extension Dialect**: → [rvv-dialect-mlir](entity/rvv-dialect-mlir.md)
 - **RISC-V Vector Extension Intrinsic API**: → [rvv-intrinsic-api](entity/rvv-intrinsic-api.md)
 - **RISC-V Vector Intrinsic API**: → [rvv-intrinsic-api](entity/rvv-intrinsic-api.md)
+- **RISC-V XuanTie C908 tuning**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
 - **RISC-V matrix extension spec**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RISCV IME**: → [integrated-matrix-extension](entity/integrated-matrix-extension.md)
 - **RISE RP014**: → [rise-project-rp014-llamacpp-ggml-rvv](entity/rise-project-rp014-llamacpp-ggml-rvv.md)
@@ -274,6 +276,7 @@ Last updated: 2026-07-03 | Pages: 54 | Sources: 144
 - **xdsl**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
 - **xdslproject**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
 - **xt-c908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
+- **xt-c908 GCC tuning**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
 - **xt-c908 tuning**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
 - **xtai-benchmark**: → [xuantie-ai-benchmark-suite](entity/xuantie-ai-benchmark-suite.md)
 - **xuantie-c908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
@@ -311,6 +314,7 @@ Last updated: 2026-07-03 | Pages: 54 | Sources: 144
 
 
 
+
 ## Optimization Pages
 
 | Page | Type | Summary | Tags | Sources | Inbound |
@@ -318,7 +322,7 @@ Last updated: 2026-07-03 | Pages: 54 | Sources: 144
 | [auto-gemm-micro-kernel-c906-c910-benchmark.md](benchmark_result/auto-gemm-micro-kernel-c906-c910-benchmark.md) | benchmark_result | Auto-Generated GEMM Micro-Kernels on C906 and C910 |  | 2 | 0 |
 | [baby-llama2-milkv-duo-benchmark.md](benchmark_result/baby-llama2-milkv-duo-benchmark.md) | benchmark_result | Baby LLama2 Benchmark on Milk-V Duo |  | 2 | 2 |
 | [bpi-f3-rvv-llm-benchmark.md](benchmark_result/bpi-f3-rvv-llm-benchmark.md) | benchmark_result | BananaPi BPI-F3 LLM Inference (RVV optimized) |  | 2 | 0 |
-| [gcc-tuning-c908-canmv-k230.md](benchmark_result/gcc-tuning-c908-canmv-k230.md) | benchmark_result | GCC Tuning Benchmark on XuanTie C908 |  | 4 | 5 |
+| [gcc-tuning-c908-canmv-k230.md](benchmark_result/gcc-tuning-c908-canmv-k230.md) | benchmark_result | GCC Tuning Benchmark on XuanTie C908 |  | 6 | 5 |
 | [gcc15-vs-clang21-banana-pi-f3-rvv10.md](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md) | benchmark_result | GCC 15 vs Clang 21 on BananaPi-F3 (RVV 1.0) | RVV, compiler, GCC, Clang | 2 | 0 |
 | [iree-riscv-benchmark-milkv-jupiter.md](benchmark_result/iree-riscv-benchmark-milkv-jupiter.md) | benchmark_result | IREE RISC-V Microkernel Benchmark on MILK-V Jupiter |  | 2 | 0 |
 | [maestro-gesture-recognition.md](benchmark_result/maestro-gesture-recognition.md) | benchmark_result | Maestro gesture recognition benchmark |  | 2 | 0 |
@@ -396,6 +400,7 @@ Last updated: 2026-07-03 | Pages: 54 | Sources: 144
 - [maestro-gesture-recognition](benchmark_result/maestro-gesture-recognition.md)
 - [mlir-xdsl-gemm-benchmark-k230-banana-pi](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md)
 - [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
+
 
 
 

@@ -6,6 +6,9 @@ aliases:
 - XuanTie C908 GCC Tuning
 - C908 GCC scheduler model
 - xt-c908 tuning
+- xt-c908 GCC tuning
+- C908 scheduler model
+- RISC-V XuanTie C908 tuning
 subtype: null
 tags: []
 hardware_targets:
@@ -37,6 +40,8 @@ sources:
 - https://gcc.gnu.org/pipermail/gcc-patches/2026-June/719208.html
 - raw/cache/1369a5b7d9302dfe.md
 - https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg406284.html
+- raw/cache/a02cf74402ee2d7e.md
+- https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg406313.html
 source_url: https://gcc.gnu.org/pipermail/gcc-patches/2026-June/719208.html
 fetched_at: '2026-07-03T13:30:30.422521+00:00'
 type: benchmark_result

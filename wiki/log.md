@@ -265,3 +265,13 @@ audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/
 theme_profile: RISC-V AI accelerator | workflow_first
 coverage_gaps:
   - missing_page_type:workload_kernel
+
+## [2026-07-03] research | T-Head XuanTie SHL heterogeneous library HHB toolchain
+session_id: c8f639b4
+candidates_evaluated: 7
+pages_written: 1
+pipeline_rejection_rate: 14%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/riscv-phase2/wiki/audit/research_c8f639b4_2026-07-03.json
+theme_profile: RISC-V AI accelerator | workflow_first
+coverage_gaps:
+  - missing_page_type:workload_kernel
