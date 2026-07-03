@@ -3,6 +3,8 @@ canonical_name: XuanTie GNU Compiler Toolchain
 aliases:
 - Xuantie GNU Toolchain
 - xuantie-gnu-toolchain
+- XuanTie GNU Toolchain
+- Xuantie GNU cross-compiler
 subtype: null
 tags: []
 scorecard:

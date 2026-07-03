@@ -3,6 +3,9 @@ canonical_name: GCC Tuning Benchmark on XuanTie C908
 aliases:
 - C908 GCC tuning benchmark
 - CoreMark C908 0.8%
+- XuanTie C908 GCC Tuning
+- C908 GCC scheduler model
+- xt-c908 tuning
 subtype: null
 tags: []
 hardware_targets:
@@ -32,6 +35,8 @@ scorecard:
 sources:
 - raw/cache/84a65460eb9d8421.md
 - https://gcc.gnu.org/pipermail/gcc-patches/2026-June/719208.html
+- raw/cache/1369a5b7d9302dfe.md
+- https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg406284.html
 source_url: https://gcc.gnu.org/pipermail/gcc-patches/2026-June/719208.html
 fetched_at: '2026-07-03T13:30:30.422521+00:00'
 type: benchmark_result

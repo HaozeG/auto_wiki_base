@@ -2,6 +2,10 @@
 canonical_name: Integrated Matrix Extension
 aliases:
 - IME
+- RISC-V IME Extension
+- SpacemiT RISC-V IME
+- RISCV IME
+- Intelligent Matrix Engine
 subtype: null
 tags: []
 scorecard:
@@ -13,6 +17,8 @@ scorecard:
 sources:
 - raw/cache/5ac8eb56f1f5ccd7.md
 - https://riscv.atlassian.net/wiki/spaces/IMEX/pages/598867969/IME+Ratification+Plan
+- raw/cache/f08fc9741536d1a3.md
+- https://deepwiki.com/spacemit-com/riscv-ime-extension-spec
 source_url: https://riscv.atlassian.net/wiki/spaces/IMEX/pages/598867969/IME+Ratification+Plan
 fetched_at: '2026-07-03T13:49:52.970234+00:00'
 type: entity

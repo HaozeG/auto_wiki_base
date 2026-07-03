@@ -704,3 +704,185 @@ The RISC-V Matrix Extension is an ISA extension for RISC-V processors that intro
 
 - https://github.com/XUANTIE-RV/riscv-matrix-extension-spec/blob/master/demos/README.md
 merge_draft_body -->
+
+## [2026-07-03] merge_pending | xuantie-c908.md
+target_page: xuantie-c908.md
+canonical_name: XuanTie C908
+colliding_name: XuanTie C908
+source: https://github.com/FreeRTOS/FreeRTOS-Community-Supported-Demos/blob/main/RISC-V_XUANTIE_C908_GCC/README.md
+status: pending_review
+<!-- merge_draft_body
+# XuanTie C908
+
+The XuanTie C908 is a 64-bit RISC-V processor core developed by Alibaba's T-Head Semiconductor, designed as a higher-performance successor to the C906. It is used in SoCs such as the Canaan Kendryte K230, which powers development boards like the CanMV-K230-V1.1 and XIAOHUI EVB. The core supports optional floating-point and vector extensions selected via the GCC `-mcpu=c908v` flag, or a scalar-only configuration via `-mcpu=c908`. The FreeRTOS community-supported port for the C908 defines memory-mapped interrupt controllers: PLIC base at `0x08000000` and CLINT base at `0x0c000000`. The port supports a configurable number of cores (1 to 4) with a default of 1, an interrupt stack size of 8192 bytes, and an initial task stack of 4096 bytes. The board-specific configuration selects `CONFIG_BOARD_XIAOHUI_EVB` as the target hardware. The C908 requires the medium-any code model (`-mcmodel=medany`) for compilation and is supported by the GCC toolchain with the `-Os` size optimization recommended.
+
+## Key Claims
+
+- The XuanTie C908 is a 64-bit RISC-V core from T-Head with optional floating-point and vector extensions (RVV 1.0 implied by the `-mcpu=c908v` flag).
+- The FreeRTOS port for C908 maps PLIC at `0x08000000` and CLINT at `0x0c000000`.
+- The port uses a configurable core count (1–4) with `configNUMBER_OF_CORES`.
+- The default board target is `XIAOHUI_EVB`.
+- Compilation requires `-mcmodel=medany` and `-Os` is recommended.
+- The port includes custom assembly files for context switching (`cpu_task_sw.S`) and a `portmacro.h` with port-specific macros.
+- The C908 is the CPU in the CanMV-K230 board, which is also the hardware target for GCC tuning benchmarks.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V 64-bit (implied RV64GC with optional V extension)
+- Vector/matrix/accelerator support: Optional via `-mcpu=c908v` (RVV)
+- Memory/cache/TLB/DMA: Not specified in this source, but known from K230: 32KB L1 I-cache, 32KB L1 D-cache, 128KB L2 cache (from other K230 documentation)
+- Compiler/toolchain support: GCC with `-mcpu=c908` or `-mcpu=c908v`; FreeRTOS port available
+
+## Relationships
+
+- [[xuantie-c906-hardware-target]]: Both the XuanTie C908 and C906 are 64-bit RISC-V cores from Alibaba T-Head; the C908 adds optional RVV vector support and targets the CanMV-K230 board, while the C906 uses a custom 128-bit SIMD vector unit and is found in the Allwinner D1.
+- [[gcc-tuning-c908-canmv-k230]]: The FreeRTOS port and the GCC tuning benchmark target the same XuanTie C908 hardware on the CanMV-K230 board; the benchmark validates the scheduler model for which this hardware provides the microarchitectural constraints.
+- [[spacemit-x60-hardware-target]]: Both the XuanTie C908 and SpacemiT X60 are in-order RISC-V cores with optional RVV 1.0 support; the C908 is single-issue while the X60 is dual-issue, and they originate from different vendors (T-Head vs. SpacemiT).
+
+## Sources
+
+- https://github.com/FreeRTOS/FreeRTOS-Community-Supported-Demos/blob/main/RISC-V_XUANTIE_C908_GCC/README.md
+merge_draft_body -->
+
+## [2026-07-03] merge_pending | xuantie-c908.md
+target_page: xuantie-c908.md
+canonical_name: XuanTie C908
+colliding_name: XuanTie C908
+source: https://gcc.gnu.org/pipermail/gcc-patches/2026-June/719208.html
+status: pending_review
+<!-- merge_draft_body
+# XuanTie C908
+
+XuanTie C908 is a 64-bit RISC-V processor core designed by Alibaba's T-Head Semiconductor Co., Ltd., targeting embedded and edge applications. It implements a scalar in-order pipeline (pipeline depth not publicly documented) and lacks a vector extension, distinguishing it from other XuanTie family members such as the C906 which includes a 128-bit SIMD vector unit. The C908 is the central core in the CanMV-K230 development board (K230 SoC) and is supported by the GCC compiler through a dedicated tuning and scheduler model patch that models scalar integer, load/store, multiply, divide, and floating-point pipeline resources. The scheduler model is based on the XuanTie C908 R1S0 User Manual and was validated on a CanMV-K230-V1.1 board, achieving a 0.8% improvement in CoreMark score and 5–17% cycle-count reductions on instruction throughput tests using independent register groups.
+
+## Key Claims
+
+- XuanTie C908 is a 64-bit RISC-V core without vector extension, using a scalar in-order pipeline.
+- The core powers the CanMV-K230 development board (K230 SoC).
+- A GCC patch (2026-06-03) adds a scheduler model covering scalar integer, load/store, multiply, divide, and floating-point pipeline resources based on the C908 R1S0 User Manual.
+- Benchmark results on CanMV-K230-V1.1 show a 0.8% CoreMark improvement and 5–17% cycle-count improvement on instruction throughput loops.
+- Long-latency reservations are clamped to 7 cycles following existing RISC-V scheduler modelling practice.
+- Measurement methodology: 20 warm-up runs, 200 measured runs, aligned memory access.
+- The patch initially omitted vector instruction types because the C908 does not support the vector extension; Jeffrey Law noted that all instruction types must still be covered with dummy reservations to avoid compiler errors.
+
+## Optimization-Relevant Details
+
+- ISA/profile: 64-bit RISC-V scalar (no vector extension supported).
+- Vector/matrix/accelerator support: None.
+- Memory/cache/TLB/DMA: Not specified in the source.
+- Compiler/toolchain support: GCC (patch submitted June 2026, pre-trunk).
+
+## Relationships
+
+- [[xuantie-c906-hardware-target]]: Both the XuanTie C906 and C908 are 64-bit RISC-V in-order single-issue cores from T-Head; the C906 includes a 128-bit SIMD vector unit while the C908 lacks vector support and uses only scalar scheduling.
+- [[gcc-tuning-c908-canmv-k230]]: The GCC tuning page documents the benchmark results of the scheduler model described here; the scheduler model defines the pipeline resources whose performance was measured.
+- [[spacemit-x60-hardware-target]]: Both the C908 and SpacemiT X60 are RISC-V cores with in-order scalar pipelines and dedicated GCC tuning patches; however, the X60 is dual-issue and supports RVV 1.0, whereas the C908 is single-issue and lacks vector support.
+
+## Sources
+
+- https://gcc.gnu.org/pipermail/gcc-patches/2026-June/719208.html
+merge_draft_body -->
+
+## [2026-07-03] merge_pending | xuantie-gnu-toolchain.md
+target_page: xuantie-gnu-toolchain.md
+canonical_name: XuanTie GNU Compiler Toolchain
+colliding_name: XuanTie GNU Toolchain
+source: https://github.com/XUANTIE-RV/xuantie-gnu-toolchain/
+status: pending_review
+<!-- merge_draft_body
+# XuanTie GNU Toolchain
+
+The XuanTie GNU Toolchain is a cross-compiler suite for RISC-V architectures, maintained by the XUANTIE-RV organization, specifically supporting Alibaba/T-Head XuanTie processor cores. It provides both a generic ELF/Newlib toolchain for bare-metal or RTOS environments and a Linux-ELF/glibc toolchain for Linux-based systems. The toolchain supports building for RV32 and RV64 base architectures with standard extensions including atomic (A), multiplication and division (M), single-precision float (F), double-precision float (D), and compressed instructions (C). It can be configured with various ABIs (ilp32, ilp32d, ilp32f, lp64, lp64f, lp64d) and architecture variants like rv32gc and rv64gc. Prebuilt binaries are available through the Open Chip Community portal, and the source is hosted on GitHub. Build dependencies are documented for Ubuntu, Fedora, CentOS, Arch Linux, and macOS; the process downloads about 200 MiB of upstream sources and requires approximately 8 GiB of disk space.
+
+## Key Claims
+
+- The toolchain offers two build modes: Newlib (bare-metal) and glibc (Linux), selected via `make` or `make linux` after configuration.
+- It supports architecture strings rv32i/rv64i with standard extensions (A, M, F, D, C, or G for MAFD).
+- Supported ABIs include ilp32, ilp32d, ilp32f, lp64, lp64f, and lp64d.
+- Multilib builds (enabled with `--enable-multilib`) produce a single compiler capable of targeting both 32-bit and 64-bit with common `-march`/`-mabi` options.
+- Build dependencies are listed for Ubuntu, Fedora/CentOS/RHEL, Arch Linux, and macOS (via Homebrew).
+- Prebuilt toolchains can be downloaded from the OCC resource center at https://www.xrvm.cn/community/download.
+- Troubleshooting guidance: use an empty install directory to prevent hard-float/soft-float conflicts; a case-sensitive filesystem is required for glibc builds on macOS; CentOS/RHEL users may need devtoolset-7 for current GNU tools.
+
+## Relationships
+
+- [[xuantie-c906-hardware-target]]: The XuanTie GNU Toolchain provides the GCC compiler used to compile code for the XuanTie C906, supporting its custom instruction extensions and 128-bit SIMD vector unit.
+- [[gcc-tuning-c908-canmv-k230]]: The GCC tuning patches for the XuanTie C908 are built upon the XuanTie GNU Toolchain, and the benchmark results demonstrate the scheduler model validated using this compiler.
+
+## Sources
+
+- https://github.com/XUANTIE-RV/xuantie-gnu-toolchain/
+merge_draft_body -->
+
+## [2026-07-03] merge_pending | gcc-tuning-c908-canmv-k230.md
+target_page: gcc-tuning-c908-canmv-k230.md
+canonical_name: GCC Tuning Benchmark on XuanTie C908
+colliding_name: XuanTie C908 GCC Tuning
+source: https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg406284.html
+status: pending_review
+<!-- merge_draft_body
+# XuanTie C908 GCC Tuning
+
+The XuanTie C908 GCC tuning patch, submitted in June 2026 by Milan Tripkovic, defines a scheduler model for the XuanTie C908 RISC-V core within the GCC compiler backend. The model describes scalar integer, load/store, multiply, divide, and floating-point pipeline resources based on the XuanTie C908 R1S0 User Manual. It is the first GCC tuning specifically for the C908 core and targets in-order scalar scheduling only, leaving vector scheduling for future work (xt-c908v). The tuning was tested on a CanMV-K230-V1.1 board and resulted in a 0.8% CoreMark improvement and 5-17% cycle-count improvements on instruction throughput loops. The patch also introduced clamping of long-latency reservations to 7 cycles, following the existing RISC-V scheduler modelling approach. During review, Jeffrey Law noted that all instruction types must have reservations in the GCC RISC-V backend and recommended adding dummy reservations for unused types, similar to the SpacemiT X60 tuning, to avoid compilation failures (ICE).
+
+## Key Claims
+
+- The GCC scheduler model for XuanTie C908 models scalar integer, load/store, multiply, divide, and FP pipeline resources based on the XuanTie C908 R1S0 User Manual.
+- Scalar-only scheduling implementation; vector scheduling is deferred to a future xt-c908v model.
+- Tested on CanMV-K230-V1.1 board with 20 warm-up runs followed by 200 measured runs using aligned memory access.
+- CoreMark improvement: 0.8%; instruction throughput loop cycle-count improvements: 5% to 17%.
+- Long-latency reservations are clamped to 7 cycles, following the existing RISC-V scheduler modelling approach introduced by commit 8265192.
+- Reviewer identified that missing instruction type reservations cause an ICE during scheduling; the fix requires covering all insn types, including dummy reservations for types not relevant to the C908 microarchitecture.
+
+## Transformation
+
+- **Prerequisites**: XuanTie C908 core (R1S0 revision); GCC source tree for RISC-V backend; access to a CanMV-K230-V1.1 board for testing.
+- **Steps**:
+  1. Add a new `riscv_microarchitecture_type` entry for `xt-c908` in `riscv-opts.h` and a corresponding `RISCV_TUNE` entry in `riscv-cores.def` with `PIPELINE_MODEL` and `TUNE_INFO`.
+  2. Define the new tune structure in `riscv.cc`.
+  3. Create `xt-c908.md` with define_insn_reservation rules for scalar pipeline resources.
+  4. Include `xt-c908.md` in `riscv.md`.
+  5. Ensure every `insn` type has a reservation (including dummy reservations for unused types like vector crypto instructions) using the pipeline-checker script.
+- **Expected effect**: Reduced pipeline stalls for in-order scalar code, yielding 0.8% CoreMark improvement and 5-17% cycle-count improvements on throughput-intensive unrolled loops.
+- **Failure modes**: Missing insn-type reservations cause an ICE during instruction scheduling; all types defined in the GCC backend must have corresponding reservation rules (even if they are dummy single-cycle reservations).
+- **Measurements**: The benchmark methodology used 20 warm-up iterations and 200 measured iterations with aligned memory access. Results are reported as measured evidence.
+
+## Relationships
+
+- [[gcc-tuning-c908-canmv-k230]]: This optimization recipe describes the GCC tuning patch that produced the benchmark results reported in that page; the benchmark result provides the performance validation for the scheduler model defined here.
+- [[xuantie-c906-hardware-target]]: Both the XuanTie C906 and C908 are T-Head in-order single-issue RISC-V cores with GCC tuning; however, the C906 includes a 128-bit SIMD vector unit while the C908 is entirely scalar and lacks any vector extension, making their scheduler models fundamentally different.
+- [[spacemit-x60-hardware-target]]: Both the XuanTie C908 and SpacemiT X60 have GCC tuning patches that model in-order scalar pipelines using the same RISC-V backend infrastructure and both required dummy reservations for unsupported instruction types; however, the X60 tuning additionally models dual-issue capabilities and an RVV 1.0 vector unit.
+
+## Sources
+
+- https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg406284.html
+merge_draft_body -->
+
+## [2026-07-03] merge_pending | integrated-matrix-extension.md
+target_page: integrated-matrix-extension.md
+canonical_name: Integrated Matrix Extension
+colliding_name: RISC-V IME Extension
+source: https://deepwiki.com/spacemit-com/riscv-ime-extension-spec
+status: pending_review
+<!-- merge_draft_body
+# RISC-V IME Extension
+
+The RISC-V Intelligent Matrix Engine (IME) extension is a high-performance matrix multiplication and convolution acceleration proposal designed by SpacemiT. It extends the standard RISC-V Vector (RVV) by introducing a suite of matrix multiply-accumulate (MAC) operations that reuse existing vector registers and associated CSRs, enabling high-throughput dot-product capabilities with minimal hardware overhead. The extension supports vector lengths (VLEN) from 128 bits to 4096 bits, providing compatibility across a wide range of implementations while maintaining almost binary compatibility. By reusing vector resources, the IME extension aims to deliver more than a tenfold performance improvement for AI applications such as matrix multiplication and convolution at a very small hardware cost. The specification is authored in AsciiDoctor and follows standard RISC-V documentation conventions; the project is open-source on GitHub and organized for easy building and contribution.
+
+## Key Claims
+
+- Reuses vector registers and CSRs, minimizing hardware overhead compared to dedicated matrix units.
+- Supports VLEN from 128 bits to 4096 bits for broad implementation compatibility.
+- Achieves >10x performance improvement for AI matrix multiplication and convolution workloads.
+- Designed for almost binary compatibility across different VLEN configurations.
+- Authored in AsciiDoctor, open-source under SpacemiT on GitHub.
+
+## Relationships
+
+No specific relationship to visible context pages in this wiki. The IME extension is a new ISA extension specification not yet represented in the existing page set.
+
+## Sources
+
+- https://github.com/spacemit-com/riscv-ime-extension-spec
+- https://deepwiki.com/spacemit-com/riscv-ime-extension-spec
+merge_draft_body -->

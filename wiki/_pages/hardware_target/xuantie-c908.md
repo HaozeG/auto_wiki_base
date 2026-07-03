@@ -7,6 +7,8 @@ aliases:
 - T-HEAD XuanTie C908
 - xuantie-c908
 - xt-c908
+- C908V
+- T-Head C908
 subtype: null
 type: hardware_target
 tags: []
@@ -19,6 +21,8 @@ sources:
 - https://riscv.org/blog/xuantie-c908-accelerates-ai-with-software-and-hardware-fusion/
 - raw/cache/84a65460eb9d8421.md
 - https://gcc.gnu.org/pipermail/gcc-patches/2026-June/719208.html
+- raw/cache/17dddb797b6e11ae.md
+- https://github.com/FreeRTOS/FreeRTOS-Community-Supported-Demos/blob/main/RISC-V_XUANTIE_C908_GCC/README.md
 hardware_targets:
 - XuanTie C908
 toolchains:

@@ -1,12 +1,12 @@
 # Wiki Index
 
-Last updated: 2026-07-03 | Pages: 34 | Sources: 94
+Last updated: 2026-07-03 | Pages: 34 | Sources: 100
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
-| [integrated-matrix-extension.md](entity/integrated-matrix-extension.md) | Integrated Matrix Extension |  | 2 | 0 |
+| [integrated-matrix-extension.md](entity/integrated-matrix-extension.md) | Integrated Matrix Extension |  | 4 | 0 |
 | [iree-rvv-mlir-ukernel.md](entity/iree-rvv-mlir-ukernel.md) | IREE MLIR-based uKernel for RVV | RISC-V, RVV, IREE, MLIR, uKernel, Matmul | 2 | 0 |
 | [mlir-compiler-infrastructure.md](entity/mlir-compiler-infrastructure.md) | MLIR | compiler, LLVM, intermediate representation | 2 | 0 |
 | [riscv-matrix-extension-specification.md](entity/riscv-matrix-extension-specification.md) | RISC-V Matrix Extension Specification | risc-v, isa, matrix, extension | 8 | 0 |
@@ -40,7 +40,9 @@ Last updated: 2026-07-03 | Pages: 34 | Sources: 94
 - **BananaPi-F3 GCC Clang comparison**: → [gcc15-vs-clang21-banana-pi-f3-rvv10](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md)
 - **C906**: → [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
 - **C908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
+- **C908 GCC scheduler model**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
 - **C908 GCC tuning benchmark**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
+- **C908V**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **CanMV K230**: → [k230-soc](hardware_target/k230-soc.md)
 - **CanMV K230 development board**: → [k230-soc](hardware_target/k230-soc.md)
 - **CanMV-K230**: → [k230-soc](hardware_target/k230-soc.md)
@@ -54,6 +56,7 @@ Last updated: 2026-07-03 | Pages: 34 | Sources: 94
 - **IREE MLIR-based uKernel for RVV**: → [iree-rvv-mlir-ukernel](entity/iree-rvv-mlir-ukernel.md)
 - **IREE RVV uKernel**: → [iree-rvv-mlir-ukernel](entity/iree-rvv-mlir-ukernel.md)
 - **Integrated Matrix Extension**: → [integrated-matrix-extension](entity/integrated-matrix-extension.md)
+- **Intelligent Matrix Engine**: → [integrated-matrix-extension](entity/integrated-matrix-extension.md)
 - **K1**: → [spacemit-k1](hardware_target/spacemit-k1.md)
 - **K1 AI Benchmark 2026-04-14**: → [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
 - **K1 SpacemiT Benchmark Report v3**: → [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
@@ -83,6 +86,7 @@ Last updated: 2026-07-03 | Pages: 34 | Sources: 94
 - **OpenNanhu-V5**: → [opennanhu-v5](hardware_target/opennanhu-v5.md)
 - **OpenXiangShan**: → [xiangshan-overview](entity/xiangshan-overview.md)
 - **Python-native SSA Compiler Framework**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
+- **RISC-V IME Extension**: → [integrated-matrix-extension](entity/integrated-matrix-extension.md)
 - **RISC-V Matrix Extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RISC-V Matrix Extension Proposal V0.6.0**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RISC-V Matrix Extension Specification**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
@@ -90,6 +94,7 @@ Last updated: 2026-07-03 | Pages: 34 | Sources: 94
 - **RISC-V Vector Extension Intrinsic API**: → [rvv-intrinsic-api](entity/rvv-intrinsic-api.md)
 - **RISC-V Vector Intrinsic API**: → [rvv-intrinsic-api](entity/rvv-intrinsic-api.md)
 - **RISC-V matrix extension spec**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
+- **RISCV IME**: → [integrated-matrix-extension](entity/integrated-matrix-extension.md)
 - **RV Matrix Extension v0.4.0**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RV matrix extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RVM extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
@@ -115,12 +120,14 @@ Last updated: 2026-07-03 | Pages: 34 | Sources: 94
 - **SpacemiT K1 AI Benchmark Report (2026-04-14)**: → [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
 - **SpacemiT K1 MUSE Pi Pro**: → [spacemit-k1](hardware_target/spacemit-k1.md)
 - **SpacemiT Key Stone K1**: → [spacemit-k1](hardware_target/spacemit-k1.md)
+- **SpacemiT RISC-V IME**: → [integrated-matrix-extension](entity/integrated-matrix-extension.md)
 - **SpacemiT X60**: → [spacemit-x60-hardware-target](hardware_target/spacemit-x60-hardware-target.md)
 - **SpacemiT X60 core**: → [spacemit-x60-hardware-target](hardware_target/spacemit-x60-hardware-target.md)
 - **Spacemit K1**: → [spacemit-k1](hardware_target/spacemit-k1.md)
 - **Structure of Heterogeneous Library**: → [shl](entity/shl.md)
 - **T-HEAD XuanTie C908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **T-Head C906**: → [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
+- **T-Head C908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **T-Head Matrix Extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **T-Head XuanTie**: → [xuantie](entity/xuantie.md)
 - **T-Head XuanTie C908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
@@ -141,7 +148,9 @@ Last updated: 2026-07-03 | Pages: 34 | Sources: 94
 - **XuanTie AI Benchmark Suite**: → [xuantie-ai-benchmark-suite](entity/xuantie-ai-benchmark-suite.md)
 - **XuanTie C906**: → [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
 - **XuanTie C908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
+- **XuanTie C908 GCC Tuning**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
 - **XuanTie GNU Compiler Toolchain**: → [xuantie-gnu-toolchain](entity/xuantie-gnu-toolchain.md)
+- **XuanTie GNU Toolchain**: → [xuantie-gnu-toolchain](entity/xuantie-gnu-toolchain.md)
 - **XuanTie MME**: → [xuantie-mme](entity/xuantie-mme.md)
 - **XuanTie MME instruction set**: → [xuantie-mme](entity/xuantie-mme.md)
 - **XuanTie Matrix Multiply Extension**: → [xuantie-mme](entity/xuantie-mme.md)
@@ -149,6 +158,7 @@ Last updated: 2026-07-03 | Pages: 34 | Sources: 94
 - **Xuantie C906**: → [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
 - **Xuantie C908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **Xuantie GNU Toolchain**: → [xuantie-gnu-toolchain](entity/xuantie-gnu-toolchain.md)
+- **Xuantie GNU cross-compiler**: → [xuantie-gnu-toolchain](entity/xuantie-gnu-toolchain.md)
 - **Xuantie Matrix Extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **Xuantie RV Matrix Extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **Xuantie-RV Matrix Extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
@@ -168,6 +178,7 @@ Last updated: 2026-07-03 | Pages: 34 | Sources: 94
 - **xdsl**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
 - **xdslproject**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
 - **xt-c908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
+- **xt-c908 tuning**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
 - **xtai-benchmark**: → [xuantie-ai-benchmark-suite](entity/xuantie-ai-benchmark-suite.md)
 - **xuantie-c908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **xuantie-gnu-toolchain**: → [xuantie-gnu-toolchain](entity/xuantie-gnu-toolchain.md)
@@ -193,12 +204,13 @@ Last updated: 2026-07-03 | Pages: 34 | Sources: 94
 
 
 
+
 ## Optimization Pages
 
 | Page | Type | Summary | Tags | Sources | Inbound |
 |------|------|---------|------|---------|---------|
 | [baby-llama2-milkv-duo-benchmark.md](benchmark_result/baby-llama2-milkv-duo-benchmark.md) | benchmark_result | Baby LLama2 Benchmark on Milk-V Duo |  | 2 | 2 |
-| [gcc-tuning-c908-canmv-k230.md](benchmark_result/gcc-tuning-c908-canmv-k230.md) | benchmark_result | GCC Tuning Benchmark on XuanTie C908 |  | 2 | 3 |
+| [gcc-tuning-c908-canmv-k230.md](benchmark_result/gcc-tuning-c908-canmv-k230.md) | benchmark_result | GCC Tuning Benchmark on XuanTie C908 |  | 4 | 3 |
 | [gcc15-vs-clang21-banana-pi-f3-rvv10.md](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md) | benchmark_result | GCC 15 vs Clang 21 on BananaPi-F3 (RVV 1.0) | RVV, compiler, GCC, Clang | 2 | 0 |
 | [maestro-gesture-recognition.md](benchmark_result/maestro-gesture-recognition.md) | benchmark_result | Maestro gesture recognition benchmark |  | 2 | 0 |
 | [mlir-xdsl-gemm-benchmark-k230-banana-pi.md](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md) | benchmark_result | MLIR-xDSL GEMM Benchmark on K230 and BananaPi F3 |  | 2 | 1 |
@@ -213,7 +225,7 @@ Last updated: 2026-07-03 | Pages: 34 | Sources: 94
 | [t1.md](hardware_target/t1.md) | hardware_target | T1 |  | 2 | 0 |
 | [v851s-yuzukilizard.md](hardware_target/v851s-yuzukilizard.md) | hardware_target | Allwinner V851S / Yuzukilizard | allwinner, v851s, yuzukilizard, risc-v, npu | 8 | 0 |
 | [xuantie-c906-hardware-target.md](hardware_target/xuantie-c906-hardware-target.md) | hardware_target | XuanTie C906 |  | 2 | 0 |
-| [xuantie-c908.md](hardware_target/xuantie-c908.md) | hardware_target | XuanTie C908 |  | 8 | 1 |
+| [xuantie-c908.md](hardware_target/xuantie-c908.md) | hardware_target | XuanTie C908 |  | 10 | 1 |
 | [c908-wino-gemm-optimization.md](optimization_recipe/c908-wino-gemm-optimization.md) | optimization_recipe | C908 Winograd and GEMM Optimization in SHL |  | 2 | 8 |
 | [mlir-xdsl-rvv-codegen-pipeline.md](optimization_recipe/mlir-xdsl-rvv-codegen-pipeline.md) | optimization_recipe | MLIR-xDSL RVV Code Generation Pipeline |  | 2 | 2 |
 
@@ -258,6 +270,7 @@ Last updated: 2026-07-03 | Pages: 34 | Sources: 94
 - [maestro-gesture-recognition](benchmark_result/maestro-gesture-recognition.md)
 - [mlir-xdsl-gemm-benchmark-k230-banana-pi](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md)
 - [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
+
 
 
 
