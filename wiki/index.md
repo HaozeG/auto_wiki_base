@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-03 | Pages: 23 | Sources: 56
+Last updated: 2026-07-03 | Pages: 25 | Sources: 64
 
 ## Entity Pages
 
@@ -12,6 +12,7 @@ Last updated: 2026-07-03 | Pages: 23 | Sources: 56
 | [rvv-dialect-mlir.md](entity/rvv-dialect-mlir.md) | RVV Dialect (MLIR) | MLIR, RVV, RISC-V, dialect, compiler | 2 | 0 |
 | [rvv-intrinsic-api.md](entity/rvv-intrinsic-api.md) | RISC-V Vector Extension Intrinsic API |  | 2 | 0 |
 | [shl.md](entity/shl.md) | SHL |  | 4 | 1 |
+| [xiangshan-overview.md](entity/xiangshan-overview.md) | XiangShan |  | 6 | 0 |
 | [xuantie-ai-benchmark-suite.md](entity/xuantie-ai-benchmark-suite.md) | XuanTie AI Benchmark Suite |  | 2 | 3 |
 | [xuantie-gnu-toolchain.md](entity/xuantie-gnu-toolchain.md) | XuanTie GNU Compiler Toolchain |  | 2 | 0 |
 | [xuantie-mme.md](entity/xuantie-mme.md) | XuanTie MME |  | 2 | 0 |
@@ -55,6 +56,8 @@ Last updated: 2026-07-03 | Pages: 23 | Sources: 56
 - **MLIR-xDSL RVV Code Generation Pipeline**: → [mlir-xdsl-rvv-codegen-pipeline](optimization_recipe/mlir-xdsl-rvv-codegen-pipeline.md)
 - **MME**: → [xuantie-mme](entity/xuantie-mme.md)
 - **Matrix Extension Specification**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
+- **OpenNanhu-V5**: → [opennanhu-v5](hardware_target/opennanhu-v5.md)
+- **OpenXiangShan**: → [xiangshan-overview](entity/xiangshan-overview.md)
 - **RISC-V Matrix Extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RISC-V Matrix Extension Specification**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RISC-V Vector Extension Dialect**: → [rvv-dialect-mlir](entity/rvv-dialect-mlir.md)
@@ -87,6 +90,10 @@ Last updated: 2026-07-03 | Pages: 23 | Sources: 56
 - **X60**: → [spacemit-x60-hardware-target](hardware_target/spacemit-x60-hardware-target.md)
 - **XT**: → [xuantie](entity/xuantie.md)
 - **XUANTIE-RV/xtai-benchmark**: → [xuantie-ai-benchmark-suite](entity/xuantie-ai-benchmark-suite.md)
+- **XiangShan**: → [xiangshan-overview](entity/xiangshan-overview.md)
+- **XiangShan Nanhu**: → [opennanhu-v5](hardware_target/opennanhu-v5.md)
+- **XiangShan processor**: → [xiangshan-overview](entity/xiangshan-overview.md)
+- **XiangShan project**: → [xiangshan-overview](entity/xiangshan-overview.md)
 - **XuanTie**: → [xuantie](entity/xuantie.md)
 - **XuanTie AI Benchmark Suite**: → [xuantie-ai-benchmark-suite](entity/xuantie-ai-benchmark-suite.md)
 - **XuanTie C908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
@@ -108,7 +115,9 @@ Last updated: 2026-07-03 | Pages: 23 | Sources: 56
 - **xtai-benchmark**: → [xuantie-ai-benchmark-suite](entity/xuantie-ai-benchmark-suite.md)
 - **xuantie-c908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **xuantie-gnu-toolchain**: → [xuantie-gnu-toolchain](entity/xuantie-gnu-toolchain.md)
+- **香山**: → [xiangshan-overview](entity/xiangshan-overview.md)
 - **xuantie-c908-gcc-tuning**: mentioned in [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md) — *no dedicated page*
+
 
 
 
@@ -131,6 +140,7 @@ Last updated: 2026-07-03 | Pages: 23 | Sources: 56
 | [mlir-xdsl-gemm-benchmark-k230-banana-pi.md](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md) | benchmark_result | MLIR-xDSL GEMM Benchmark on K230 and BananaPi F3 |  | 2 | 0 |
 | [spacemit-k1-benchmark-2026-04-14.md](benchmark_result/spacemit-k1-benchmark-2026-04-14.md) | benchmark_result | SpacemiT K1 AI Benchmark Report (2026-04-14) |  | 2 | 0 |
 | [k230-soc.md](hardware_target/k230-soc.md) | hardware_target | K230 |  | 8 | 0 |
+| [opennanhu-v5.md](hardware_target/opennanhu-v5.md) | hardware_target | OpenNanhu-V5 |  | 2 | 0 |
 | [sophon-sg2042.md](hardware_target/sophon-sg2042.md) | hardware_target | SOPHON SG2042 |  | 4 | 0 |
 | [spacemit-k1.md](hardware_target/spacemit-k1.md) | hardware_target | SpacemiT K1 |  | 4 | 1 |
 | [spacemit-x60-hardware-target.md](hardware_target/spacemit-x60-hardware-target.md) | hardware_target | SpacemiT X60 | RISC-V, GCC tuning, SpacemiT, in-order, RVV 1.0 | 2 | 0 |
@@ -146,6 +156,7 @@ Last updated: 2026-07-03 | Pages: 23 | Sources: 56
 *Hardware/ISA targets: cores, SoCs, and accelerators by vendor.*
 
 - [k230-soc](hardware_target/k230-soc.md)
+- [opennanhu-v5](hardware_target/opennanhu-v5.md)
 - [sophon-sg2042](hardware_target/sophon-sg2042.md)
 - [spacemit-k1](hardware_target/spacemit-k1.md)
 - [spacemit-x60-hardware-target](hardware_target/spacemit-x60-hardware-target.md)
@@ -173,6 +184,7 @@ Last updated: 2026-07-03 | Pages: 23 | Sources: 56
 - [gcc15-vs-clang21-banana-pi-f3-rvv10](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md)
 - [mlir-xdsl-gemm-benchmark-k230-banana-pi](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md)
 - [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
+
 
 
 

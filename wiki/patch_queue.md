@@ -347,3 +347,67 @@ The Sophon SG2042 is the world's first publicly available, mass-produced 64-core
 - https://ar5iv.labs.arxiv.org/html/2309.00381
 - Brown, N., Jamieson, M., Lee, J., & Wang, P. (2023). Is RISC-V ready for HPC prime-time: Evaluating the 64-core Sophon SG2042 RISC-V CPU. arXiv:2309.00381.
 merge_draft_body -->
+
+## [2026-07-03] merge_pending | xiangshan-overview.md
+target_page: xiangshan-overview.md
+canonical_name: XiangShan
+colliding_name: XiangShan
+source: https://github.com/Ergou-ren/XiangShan_docs
+status: pending_review
+<!-- merge_draft_body
+# XiangShan
+
+XiangShan (香山) is an open-source high-performance RISC-V processor project developed by the Institute of Computing Technology, Chinese Academy of Sciences. The project employs agile development methodology to accelerate chip design, as documented in a MICRO 2022 publication. XiangShan has produced three named micro-architectures: Yanqihu (first stable version, developed since June 2020), Nanhu (second stable version), and Kunminghu (current version under development on the master branch). The design is written in Chisel and can generate Verilog code for simulation and synthesis. The repository includes submodules for a floating-point unit (fudian), an L2/L3 cache subsystem (huancun), and a difftest co-simulation framework (difftest). XiangShan provides official documentation at docs.xiangshan.cc, including a design document for Kunminghu V2R2 and a user guide, all licensed under CC-BY-4.0. Simulation is supported via Verilator with pre-built images for running programs such as CoreMark. The project also offers IDE support (bsp, IDEA) and a troubleshooting guide.
+
+## Key Claims
+
+- XiangShan is an open-source high-performance RISC-V processor project.
+- The first stable micro-architecture is Yanqihu (released June 2020).
+- The second stable micro-architecture is Nanhu.
+- The current development version is Kunminghu.
+- The project uses agile development methodology (MICRO 2022 paper).
+- Design is implemented in Chisel and generates Verilog.
+- Submodules: fudian (floating-point unit), huancun (L2/L3 cache), difftest (co-simulation framework).
+- Documentation is available at docs.xiangshan.cc, licensed under CC-BY-4.0.
+- Simulation can be performed with Verilator using pre-built images.
+- IDE support for bsp and IDEA is available.
+
+## Relationships
+
+No specific relationship to visible context pages.
+
+## Sources
+
+- https://github.com/Ergou-ren/XiangShan_docs
+merge_draft_body -->
+
+## [2026-07-03] merge_pending | xiangshan-overview.md
+target_page: xiangshan-overview.md
+canonical_name: XiangShan
+colliding_name: XiangShan
+source: https://deepwiki.com/OpenXiangShan/XiangShan
+status: pending_review
+<!-- merge_draft_body
+# XiangShan
+
+XiangShan is an open-source, high-performance out-of-order RISC-V processor implementation developed by the Institute of Computing Technology, Chinese Academy of Sciences (ICT CAS) and partners. It supports the RV64GCVH base extensions, which include the vector extension (V), and has been developed through multiple microarchitecture generations: Yanqihu (first stable release, on the yanqihu branch), Nanhu (second stable release, on the nanhu branch), and Kunminghu (current version under development on the master branch). The project was launched in June 2020 and employs an agile hardware design methodology using the Chisel hardware construction language. The verification and simulation infrastructure includes NEMU (a RISC-V emulator) and Verilator (an open-source Verilog simulator). XiangShan is reported to achieve the highest performance among open-source RISC-V processors to date, as stated in project documentation from 2023. The project has been presented at MICRO 2022 in a paper titled "Towards Developing High Performance RISC-V Processors Using Agile Methodology," which received all three available artifact evaluation badges.
+
+## Key Claims
+
+- XiangShan is an open-source RISC-V processor project initiated in June 2020 by ICT CAS and partners.
+- It implements an out-of-order execution pipeline supporting the RV64GCVH extension set.
+- Three microarchitecture generations exist: Yanqihu (stable), Nanhu (stable), and Kunminghu (in development).
+- The design uses Chisel for hardware construction and agile development methodology.
+- Simulation is supported through NEMU (functional emulator) and Verilator (Verilog simulator).
+- The project claims to achieve the highest performance among open-source RISC-V processors.
+- A paper describing the agile methodology was published at MICRO 2022 and earned artifact evaluation badges.
+
+## Relationships
+
+No specific relationship to visible context pages.
+
+## Sources
+
+- https://deepwiki.com/OpenXiangShan/XiangShan
+- https://github.com/OpenXiangShan/XiangShan
+merge_draft_body -->

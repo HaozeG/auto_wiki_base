@@ -115,3 +115,13 @@ audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/
 theme_profile: RISC-V AI accelerator | workflow_first
 coverage_gaps:
   - missing_page_type:workload_kernel
+
+## [2026-07-03] research | XiangShan RISC-V out-of-order processor vector
+session_id: 3d3fca67
+candidates_evaluated: 9
+pages_written: 2
+pipeline_rejection_rate: 22%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/riscv-phase2/wiki/audit/research_3d3fca67_2026-07-03.json
+theme_profile: RISC-V AI accelerator | workflow_first
+coverage_gaps:
+  - missing_page_type:workload_kernel
