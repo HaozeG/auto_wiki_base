@@ -39,19 +39,30 @@ _SCORECARD_REQUIRED = {"novelty_delta", "claim_density", "self_containedness",
                         "bridge_score", "hub_potential", "gap_fill_score",
                         "contradiction_potential", "weighted_total"}
 _PAGE_DRAFT_REQUIRED = {"page_type", "filename", "frontmatter", "content"}
-_PAGE_TYPES = {
-    "entity",
-    "synthesis",
-    "source_note",
-    "hardware_target",
-    "workload_kernel",
-    "optimization_recipe",
-    "benchmark_result",
-}
+
+# Always valid regardless of theme: the two canonical RAG-retrieval types, plus
+# source_note (a source-grounded staging kind used before a page is page-worthy).
+# Everything else must be a subtype the theme actually declared.
+_BASE_PAGE_TYPES = {"entity", "synthesis", "source_note"}
 
 
 def _valid_page_type(value: Any) -> bool:
     return isinstance(value, str) and re.fullmatch(r"[a-z][a-z0-9_]{1,63}", value) is not None
+
+
+def _valid_page_type_for_taxonomy(value: Any, allowed_page_types: set[str] | None) -> bool:
+    """
+    Format check, plus (when a taxonomy is supplied) membership check against
+    the theme's currently declared page types. `allowed_page_types` is expected
+    to already include any subtype registered earlier this session by the
+    taxonomy-evolution mechanism (tools/orchestrator.py) — this function has no
+    theme-specific knowledge of its own.
+    """
+    if not _valid_page_type(value):
+        return False
+    if allowed_page_types is None:
+        return True
+    return value in _BASE_PAGE_TYPES or value in allowed_page_types
 
 
 def _validate_candidate_list(data: dict) -> None:
@@ -68,7 +79,7 @@ def _validate_candidate_list(data: dict) -> None:
             raise ValueError(f"Candidate {i} invalid estimated_type: {c.get('estimated_type')}")
 
 
-def _validate_eval_result(data: dict) -> None:
+def _validate_eval_result(data: dict, allowed_page_types: set[str] | None = None) -> None:
     missing = _EVAL_RESULT_REQUIRED - data.keys()
     if missing:
         raise ValueError(f"EvalResult missing fields: {missing}")
@@ -83,7 +94,7 @@ def _validate_eval_result(data: dict) -> None:
             missing_d = _PAGE_DRAFT_REQUIRED - draft.keys()
             if missing_d:
                 raise ValueError(f"PageDraft missing fields: {missing_d}")
-            if not _valid_page_type(draft.get("page_type")):
+            if not _valid_page_type_for_taxonomy(draft.get("page_type"), allowed_page_types):
                 raise ValueError(f"Invalid page_type: {draft.get('page_type')}")
             if not isinstance(draft.get("frontmatter"), dict):
                 raise TypeError("PageDraft.frontmatter must be a dict")
@@ -129,6 +140,28 @@ def _validate_synthesis_result(data: dict) -> None:
             raise ValueError("SynthesisResult.page_draft.frontmatter.connected_entities must name >= 2 entities")
 
 
+_SUBTYPE_PROPOSAL_REQUIRED = {
+    "decision", "rejection_reason", "subtype_name", "label",
+    "description", "structured_fields", "parent_hub_ids",
+}
+
+
+def _validate_subtype_proposal(data: dict) -> None:
+    missing = _SUBTYPE_PROPOSAL_REQUIRED - data.keys()
+    if missing:
+        raise ValueError(f"SubtypeProposal missing fields: {missing}")
+    if data["decision"] not in ("approve", "reject"):
+        raise ValueError(f"Invalid decision: {data['decision']}")
+    if data["decision"] == "approve":
+        if not _valid_page_type(data.get("subtype_name")):
+            raise ValueError(f"Invalid subtype_name: {data.get('subtype_name')}")
+        if not isinstance(data.get("label"), str) or not data["label"].strip():
+            raise ValueError("SubtypeProposal.label must be a non-empty string")
+        parent_ids = data.get("parent_hub_ids")
+        if not isinstance(parent_ids, list) or not (1 <= len(parent_ids) <= 2):
+            raise ValueError("SubtypeProposal.parent_hub_ids must have 1 or 2 entries")
+
+
 def _validate_profile_list(data: dict) -> None:
     profiles = data.get("profiles")
     if not isinstance(profiles, list) or not profiles:
@@ -147,16 +180,25 @@ _SCHEMA_VALIDATORS = {
     "MergeResult": _validate_merge_result,
     "ProfileList": _validate_profile_list,
     "SynthesisResult": _validate_synthesis_result,
+    "SubtypeProposal": _validate_subtype_proposal,
 }
 
 
-def validate_and_parse(raw_response: str, schema: str) -> dict | None:
+def validate_and_parse(
+    raw_response: str, schema: str, allowed_page_types: set[str] | None = None
+) -> dict | None:
     """
     Extract JSON from raw_response, validate against named schema.
     Returns parsed dict on success, None on any failure.
     Never raises.
 
     schema: one of "CandidateList", "EvalResult"
+    allowed_page_types: only consulted for "EvalResult" — when supplied, each
+        page_draft.page_type must be a base type (entity/synthesis/source_note)
+        or a member of this set, else the whole response fails validation.
+        Callers pass the theme's current page_type_taxonomy keys, including any
+        subtype registered earlier this session by the taxonomy-evolution
+        mechanism. Omit (None) to fall back to format-only checking.
     """
     try:
         json_str = extract_json_block(raw_response)
@@ -167,7 +209,10 @@ def validate_and_parse(raw_response: str, schema: str) -> dict | None:
         validator = _SCHEMA_VALIDATORS.get(schema)
         if validator is None:
             raise ValueError(f"Unknown schema: {schema}")
-        validator(data)
+        if schema == "EvalResult":
+            validator(data, allowed_page_types=allowed_page_types)
+        else:
+            validator(data)
         return data
     except Exception as e:
         logger.warning("validate_and_parse: validation failed — %s", e)

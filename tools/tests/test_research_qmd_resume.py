@@ -1,4 +1,5 @@
 import json
+import re
 import sys
 import types
 from pathlib import Path
@@ -941,6 +942,165 @@ def test_rebuild_index_populates_concept_gaps_from_dangling_outbound_links(tmp_p
     assert "some_unwritten_concept" in gaps
 
 
+def test_rebuild_index_does_not_accumulate_blank_lines_across_repeated_calls(tmp_path):
+    """Regression: _replace_section's trim-back loop decremented end_idx past
+    trailing blanks but then used all_lines[end_idx:] as the tail, which still
+    *started* at those same blank lines rather than past them -- every rebuild
+    call added its own blank line on top of an untouched, never-actually-
+    trimmed run, growing the gap between two sections by ~1-2 lines per call
+    (confirmed live: 47+ accumulated blank lines in a long-running wiki's
+    index.md between Concept Index and Optimization Pages). Calling rebuild
+    repeatedly must be idempotent, not compounding."""
+    pages_dir = tmp_path / "wiki" / "_pages"
+    entity_dir = pages_dir / "entity"
+    entity_dir.mkdir(parents=True)
+    (entity_dir / "alpha.md").write_text(
+        "---\ntype: entity\ncanonical_name: Alpha\nsources: []\ninbound_links: 0\n---\n\n# Alpha\n\nBody.\n",
+        encoding="utf-8",
+    )
+    hw_dir = pages_dir / "hardware_target"
+    hw_dir.mkdir(parents=True)
+    (hw_dir / "beta.md").write_text(
+        "---\ntype: hardware_target\ncanonical_name: Beta\nsources: []\ninbound_links: 0\n---\n\n# Beta\n\nBody.\n",
+        encoding="utf-8",
+    )
+    index = tmp_path / "wiki" / "index.md"
+    index.write_text(
+        "# Wiki Index\n\nLast updated: 2020-01-01 | Pages: 0 | Sources: 0\n\n"
+        "## Entity Pages\n\n| Page | Summary | Tags | Sources | Inbound |\n"
+        "|------|---------|------|---------|---------|\n\n"
+        "## Synthesis Pages\n\n| Page | Connected Entities | Status | Inbound |\n"
+        "|------|--------------------|--------|---------|\n\n"
+        "## Concept Index\n",
+        encoding="utf-8",
+    )
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_INDEX_MD", index):
+        orchestrator.rebuild_index_from_frontmatter()
+        first_pass = index.read_text(encoding="utf-8")
+        for _ in range(3):
+            orchestrator.rebuild_index_from_frontmatter()
+        stable_pass = index.read_text(encoding="utf-8")
+
+    assert first_pass == stable_pass
+    assert "\n\n\n" not in stable_pass
+
+
+def test_rebuild_index_renders_hub_hierarchy_from_theme_profile(tmp_path):
+    """Phase 2: deliberate hub concepts, declared in [theme_profile].hub_hierarchy
+    at theme setup, are a *derived* index view -- grouping existing pages by
+    subtype under the hub's label -- not a forced synthesis page (which would
+    violate its own "connected_entities non-empty" rejection criteria at cold
+    start). A hub with zero matching pages yet still renders, honestly, as
+    empty rather than being silently omitted."""
+    pages_dir = tmp_path / "wiki" / "_pages"
+    hw_dir = pages_dir / "hardware_target"
+    hw_dir.mkdir(parents=True)
+    (hw_dir / "chip-a.md").write_text(
+        "---\ntype: hardware_target\ncanonical_name: Chip A\nsources: []\ninbound_links: 0\n---\n\n# Chip A\n\nBody.\n",
+        encoding="utf-8",
+    )
+    (hw_dir / "chip-b.md").write_text(
+        "---\ntype: hardware_target\ncanonical_name: Chip B\nsources: []\ninbound_links: 0\n---\n\n# Chip B\n\nBody.\n",
+        encoding="utf-8",
+    )
+    index = tmp_path / "wiki" / "index.md"
+    index.write_text(
+        "# Wiki Index\n\nLast updated: 2020-01-01 | Pages: 0 | Sources: 0\n\n"
+        "## Entity Pages\n\n| Page | Summary | Tags | Sources | Inbound |\n"
+        "|------|---------|------|---------|---------|\n\n"
+        "## Synthesis Pages\n\n| Page | Connected Entities | Status | Inbound |\n"
+        "|------|--------------------|--------|---------|\n\n"
+        "## Concept Index\n\n\n"
+        "## Optimization Pages\n\n| Page | Type | Summary | Tags | Sources | Inbound |\n"
+        "|------|------|---------|------|---------|---------|\n",
+        encoding="utf-8",
+    )
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text(
+        "```yaml\n[theme_profile]\ntheme: RISC-V AI accelerator\nhub_hierarchy:\n"
+        "- hub_id: vendor_core_families\n  label: Vendor RISC-V Core Families\n"
+        "  subtype: hardware_target\n  description: Cores and SoCs by vendor.\n"
+        "- hub_id: workload_landscape\n  label: Workload and Kernel Landscape\n"
+        "  subtype: workload_kernel\n  description: Kernel shapes and baselines.\n```\n",
+        encoding="utf-8",
+    )
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_INDEX_MD", index), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md):
+        orchestrator.rebuild_index_from_frontmatter()
+
+    text = index.read_text(encoding="utf-8")
+    assert "## Hub Hierarchy" in text
+    assert "### Vendor RISC-V Core Families" in text
+    assert "[chip-a](hardware_target/chip-a.md)" in text
+    assert "[chip-b](hardware_target/chip-b.md)" in text
+
+
+def test_rebuild_index_renders_two_parent_sub_hub_nested_under_both(tmp_path):
+    """Part B: a sub-hub declaring two parent_hub_ids (a bridging subcategory)
+    renders once under EACH parent's ### heading, as a #### sub-section --
+    the visible expression of "introduce new subcategory under two parent
+    categories when necessary". Membership is tag-based, not a new
+    type/subtype value, so no page needs reclassifying."""
+    pages_dir = tmp_path / "wiki" / "_pages"
+    hw_dir = pages_dir / "hardware_target"
+    hw_dir.mkdir(parents=True)
+    (hw_dir / "chip-a.md").write_text(
+        "---\ntype: hardware_target\ncanonical_name: Chip A\ntags: [quantized-gemm]\n"
+        "sources: []\ninbound_links: 0\n---\n\n# Chip A\n\nBody.\n",
+        encoding="utf-8",
+    )
+    index = tmp_path / "wiki" / "index.md"
+    index.write_text(
+        "# Wiki Index\n\nLast updated: 2020-01-01 | Pages: 0 | Sources: 0\n\n"
+        "## Entity Pages\n\n| Page | Summary | Tags | Sources | Inbound |\n"
+        "|------|---------|------|---------|---------|\n\n"
+        "## Synthesis Pages\n\n| Page | Connected Entities | Status | Inbound |\n"
+        "|------|--------------------|--------|---------|\n\n"
+        "## Concept Index\n\n\n"
+        "## Optimization Pages\n\n| Page | Type | Summary | Tags | Sources | Inbound |\n"
+        "|------|------|---------|------|---------|---------|\n",
+        encoding="utf-8",
+    )
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text(
+        "```yaml\n[theme_profile]\ntheme: RISC-V AI accelerator\nhub_hierarchy:\n"
+        "- hub_id: vendor_core_families\n  label: Vendor RISC-V Core Families\n"
+        "  subtype: hardware_target\n  description: Cores and SoCs by vendor.\n"
+        "- hub_id: workload_landscape\n  label: Workload and Kernel Landscape\n"
+        "  subtype: workload_kernel\n  description: Kernel shapes and baselines.\n"
+        "- hub_id: quantized_gemm_cores\n  label: Quantized GEMM Cores\n"
+        "  tag: quantized-gemm\n  parent_hub_ids: [vendor_core_families, workload_landscape]\n"
+        "  description: Bridging sub-hub.\n```\n",
+        encoding="utf-8",
+    )
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_INDEX_MD", index), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md):
+        orchestrator.rebuild_index_from_frontmatter()
+        text_first_pass = index.read_text(encoding="utf-8")
+        # Idempotency: guard against the earlier compounding blank-line bug --
+        # a second rebuild on already-rebuilt content must not grow the file.
+        orchestrator.rebuild_index_from_frontmatter()
+        text_second_pass = index.read_text(encoding="utf-8")
+
+    assert text_first_pass == text_second_pass
+    assert text_first_pass.count("#### Quantized GEMM Cores") == 2
+    assert "### Vendor RISC-V Core Families" in text_first_pass
+    assert "### Workload and Kernel Landscape" in text_first_pass
+    # appears nested under both parents, in each case listing the tagged page.
+    # Sections start at a line beginning with exactly "### " (not "#### ").
+    sections = re.split(r"\n(?=### [^#])", text_first_pass)
+    for section in sections:
+        if section.lstrip("#").lstrip().startswith(("Vendor RISC-V Core Families", "Workload and Kernel Landscape")):
+            assert "#### Quantized GEMM Cores" in section
+            assert "[chip-a](hardware_target/chip-a.md)" in section.split("#### Quantized GEMM Cores")[1]
+
+
 def test_synthesis_gap_clusters_finds_uncovered_tag_and_excludes_covered(tmp_path):
     pages_dir = tmp_path / "wiki" / "_pages"
     entity_dir = pages_dir / "entity"
@@ -1000,6 +1160,270 @@ def test_synthesis_gap_clusters_includes_subtype_pages_not_just_literal_entity_t
     tag, uncovered = clusters[0]
     assert tag == "RISC-V"
     assert sorted(uncovered) == ["chip_a", "chip_b", "chip_c"]
+
+
+def test_hub_member_pages_resolves_declared_subtype_membership(tmp_path):
+    pages_dir = tmp_path / "wiki" / "_pages"
+    hw_dir = pages_dir / "hardware_target"
+    hw_dir.mkdir(parents=True)
+    (hw_dir / "chip-a.md").write_text("---\ntype: hardware_target\n---\n\n# Chip A\n", encoding="utf-8")
+    entity_dir = pages_dir / "entity"
+    entity_dir.mkdir(parents=True)
+    (entity_dir / "unrelated.md").write_text("---\ntype: entity\n---\n\n# Unrelated\n", encoding="utf-8")
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text(
+        "```yaml\n[theme_profile]\nhub_hierarchy:\n"
+        "- hub_id: vendor_core_families\n  subtype: hardware_target\n```\n",
+        encoding="utf-8",
+    )
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md):
+        assert orchestrator._hub_member_pages() == {"chip-a"}
+
+
+def test_hub_promotion_candidates_finds_cluster_within_declared_hub(tmp_path):
+    """Phase 2c: a tag cluster within a declared hub's subtype, large enough
+    to warrant its own sub-hub, is surfaced for human review -- never
+    auto-applied (same principle as retrospective lint's MERGE/DELETE)."""
+    pages_dir = tmp_path / "wiki" / "_pages"
+    hw_dir = pages_dir / "hardware_target"
+    hw_dir.mkdir(parents=True)
+    for name in ("xuantie-c906", "xuantie-c908", "xuantie-c910"):
+        (hw_dir / f"{name}.md").write_text(
+            f"---\ntype: hardware_target\ntags: [xuantie, risc-v]\n---\n\n# {name}\n",
+            encoding="utf-8",
+        )
+    (hw_dir / "sifive-x280.md").write_text(
+        "---\ntype: hardware_target\ntags: [sifive, risc-v]\n---\n\n# SiFive X280\n",
+        encoding="utf-8",
+    )
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text(
+        "```yaml\n[theme_profile]\nhub_hierarchy:\n"
+        "- hub_id: vendor_core_families\n  label: Vendor RISC-V Core Families\n"
+        "  subtype: hardware_target\n```\n"
+        "```yaml\n[research_config]\nsynthesis_gap_min_cluster_size: 3\n```\n",
+        encoding="utf-8",
+    )
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md):
+        candidates = orchestrator._hub_promotion_candidates()
+
+    xuantie_candidates = [c for c in candidates if c["tag"] == "xuantie"]
+    assert len(xuantie_candidates) == 1
+    c = xuantie_candidates[0]
+    assert c["parent_hub_id"] == "vendor_core_families"
+    assert sorted(c["member_pages"]) == ["xuantie-c906", "xuantie-c908", "xuantie-c910"]
+    # "risc-v" is shared by all 4 pages, including sifive-x280 -- also a
+    # valid, separate cluster candidate under the same hub.
+    assert any(c["tag"] == "risc-v" and len(c["member_pages"]) == 4 for c in candidates)
+    # "sifive" alone only has 1 page -- below threshold, not proposed.
+    assert not any(c["tag"] == "sifive" for c in candidates)
+
+
+def test_hub_promotion_candidates_detects_cross_hub_cluster(tmp_path):
+    """Part D detection: a tag whose tagged pages split across exactly two
+    declared hubs' subtypes (not one) is surfaced as a bridging candidate
+    with parent_hub_ids carrying both hub_ids -- the "two parent categories"
+    case, not an accident."""
+    pages_dir = tmp_path / "wiki" / "_pages"
+    hw_dir = pages_dir / "hardware_target"
+    wl_dir = pages_dir / "workload_kernel"
+    hw_dir.mkdir(parents=True)
+    wl_dir.mkdir(parents=True)
+    for name, folder in [("chip-a", hw_dir), ("chip-b", hw_dir), ("kernel-a", wl_dir)]:
+        page_type = "hardware_target" if folder is hw_dir else "workload_kernel"
+        folder_path = folder / f"{name}.md"
+        folder_path.write_text(
+            f"---\ntype: {page_type}\ntags: [quantized-gemm]\n---\n\n# {name}\n",
+            encoding="utf-8",
+        )
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text(
+        "```yaml\n[theme_profile]\nhub_hierarchy:\n"
+        "- hub_id: vendor_core_families\n  label: Vendor RISC-V Core Families\n"
+        "  subtype: hardware_target\n"
+        "- hub_id: workload_landscape\n  label: Workload and Kernel Landscape\n"
+        "  subtype: workload_kernel\n```\n"
+        "```yaml\n[research_config]\nsynthesis_gap_min_cluster_size: 3\n```\n",
+        encoding="utf-8",
+    )
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md):
+        candidates = orchestrator._hub_promotion_candidates()
+
+    cross_hub = [c for c in candidates if c["tag"] == "quantized-gemm"]
+    assert len(cross_hub) == 1
+    c = cross_hub[0]
+    assert sorted(c["parent_hub_ids"]) == ["vendor_core_families", "workload_landscape"]
+    assert sorted(c["member_pages"]) == ["chip-a", "chip-b", "kernel-a"]
+
+
+def test_run_taxonomy_evolution_persists_only_when_both_signals_agree(tmp_path):
+    """Part D gate: persistence requires BOTH the objective (elevated
+    centrality) and subjective (subagent approval) signals. Objective-only
+    (patched False) must not persist even with a subagent that would approve."""
+    pages_dir = tmp_path / "wiki" / "_pages"
+    hw_dir = pages_dir / "hardware_target"
+    hw_dir.mkdir(parents=True)
+    for name in ("chip-a", "chip-b", "chip-c"):
+        (hw_dir / f"{name}.md").write_text(
+            f"---\ntype: hardware_target\ntags: [quantized-gemm]\ncanonical_name: {name}\n"
+            f"sources: []\n---\n\n# {name}\n\nBody text.\n",
+            encoding="utf-8",
+        )
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text(
+        "```yaml\n[theme_profile]\ntheme: t\norganization_choice: workflow_first\n"
+        "organization_name: Workflow-first\nhub_hierarchy:\n"
+        "- hub_id: vendor_core_families\n  label: Vendor RISC-V Core Families\n"
+        "  subtype: hardware_target\n  description: d\n```\n"
+        "```yaml\n[research_config]\nsynthesis_gap_min_cluster_size: 3\n"
+        "max_new_subtypes_per_session: 2\n```\n",
+        encoding="utf-8",
+    )
+    research_config = {
+        # Built directly rather than via orchestrator._load_claude_md_block(),
+        # which reads the *default* _CLAUDE_MD path -- not yet patched to
+        # this fixture at this point in the test. Found live: in the original
+        # dev repo that default path happened to have a real theme_profile
+        # with a matching vendor_core_families hub, so this line silently
+        # read production CLAUDE.md instead of the fixture and the test
+        # passed for the wrong reason; in a clean checkout (no theme_profile
+        # on disk) it returns {} and the test fails for real.
+        "theme_profile": {
+            "theme": "t",
+            "organization_choice": "workflow_first",
+            "organization_name": "Workflow-first",
+            "hub_hierarchy": [{
+                "hub_id": "vendor_core_families",
+                "label": "Vendor RISC-V Core Families",
+                "subtype": "hardware_target",
+                "description": "d",
+            }],
+        },
+        "page_type_taxonomy": {"hardware_target": {}},
+        "synthesis_gap_min_cluster_size": 3,
+        "max_new_subtypes_per_session": 2,
+    }
+
+    approving_subagent = MagicMock(return_value=json.dumps({
+        "decision": "approve",
+        "rejection_reason": None,
+        "subtype_name": "quantized_gemm_cores",
+        "label": "Quantized GEMM Cores",
+        "description": "d",
+        "structured_fields": [],
+        "parent_hub_ids": ["vendor_core_families"],
+    }))
+
+    log_md = tmp_path / "wiki" / "log.md"
+    log_md.write_text("", encoding="utf-8")
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md), \
+         patch.object(orchestrator, "_LOG_MD", log_md), \
+         patch.object(orchestrator.graph_topology, "cluster_is_structurally_distinct", return_value=False):
+        persisted = orchestrator._run_taxonomy_evolution(research_config, call_subagent=approving_subagent)
+
+    assert persisted == []
+    assert "quantized_gemm_cores" not in claude_md.read_text(encoding="utf-8")
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md), \
+         patch.object(orchestrator, "_LOG_MD", log_md), \
+         patch.object(orchestrator.graph_topology, "cluster_is_structurally_distinct", return_value=True):
+        persisted = orchestrator._run_taxonomy_evolution(research_config, call_subagent=approving_subagent)
+
+    assert persisted == ["quantized_gemm_cores"]
+    text = claude_md.read_text(encoding="utf-8")
+    assert "quantized_gemm_cores" in text
+    assert "taxonomy_evolution" not in text  # log goes to wiki/log.md, not CLAUDE.md
+    # Regression guard: persistence must not blank sibling [theme_profile]
+    # fields it isn't touching -- found live when _persist_new_subtype
+    # incorrectly routed an already-on-disk profile back through
+    # _serializable_theme_profile(), which expects the pre-serialization
+    # (id/name) shape and blanks organization_choice/organization_name for
+    # an on-disk (organization_choice/organization_name already-keyed) profile.
+    assert "organization_choice: workflow_first" in text
+    assert "organization_name: Workflow-first" in text
+
+
+def test_run_taxonomy_evolution_respects_rate_limit(tmp_path):
+    """Part D guardrail: persistence stops once max_new_subtypes_per_session
+    is reached, even if more candidates would otherwise qualify."""
+    pages_dir = tmp_path / "wiki" / "_pages"
+    hw_dir = pages_dir / "hardware_target"
+    hw_dir.mkdir(parents=True)
+    for tag in ("tag-one", "tag-two"):
+        for i in range(3):
+            (hw_dir / f"{tag}-{i}.md").write_text(
+                f"---\ntype: hardware_target\ntags: [{tag}]\ncanonical_name: {tag}-{i}\n"
+                f"sources: []\n---\n\n# {tag}-{i}\n\nBody text.\n",
+                encoding="utf-8",
+            )
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text(
+        "```yaml\n[theme_profile]\ntheme: t\nhub_hierarchy:\n"
+        "- hub_id: vendor_core_families\n  label: Vendor RISC-V Core Families\n"
+        "  subtype: hardware_target\n  description: d\n```\n",
+        encoding="utf-8",
+    )
+    research_config = {
+        # See the sibling dual-signal-gate test above for why this is built
+        # directly rather than loaded via orchestrator._load_claude_md_block().
+        "theme_profile": {
+            "theme": "t",
+            "hub_hierarchy": [{
+                "hub_id": "vendor_core_families",
+                "label": "Vendor RISC-V Core Families",
+                "subtype": "hardware_target",
+                "description": "d",
+            }],
+        },
+        "page_type_taxonomy": {"hardware_target": {}},
+        "synthesis_gap_min_cluster_size": 3,
+        "max_new_subtypes_per_session": 1,
+    }
+
+    calls = {"n": 0}
+
+    def approving_subagent(subagent_type, manifest, cfg):
+        calls["n"] += 1
+        return json.dumps({
+            "decision": "approve",
+            "rejection_reason": None,
+            "subtype_name": f"subtype_{calls['n']}",
+            "label": "L",
+            "description": "d",
+            "structured_fields": [],
+            "parent_hub_ids": ["vendor_core_families"],
+        })
+
+    log_md = tmp_path / "wiki" / "log.md"
+    log_md.write_text("", encoding="utf-8")
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md), \
+         patch.object(orchestrator, "_LOG_MD", log_md), \
+         patch.object(orchestrator.graph_topology, "cluster_is_structurally_distinct", return_value=True):
+        persisted = orchestrator._run_taxonomy_evolution(research_config, call_subagent=approving_subagent)
+
+    assert len(persisted) == 1
+
+
+def test_hub_promotion_candidates_empty_when_no_hub_hierarchy_declared(tmp_path):
+    pages_dir = tmp_path / "wiki" / "_pages"
+    pages_dir.mkdir(parents=True)
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text("```yaml\n[theme_profile]\ntheme: x\n```\n", encoding="utf-8")
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md):
+        assert orchestrator._hub_promotion_candidates() == []
 
 
 def test_generate_synthesis_candidate_writes_page_and_respects_budget(tmp_path):
@@ -1444,6 +1868,12 @@ def test_mocked_research_run_writes_benchmark_and_updates_hardware_page(tmp_path
              "required_measurement_fields": [
                  "hardware_targets", "workloads", "metrics", "measurement_context"
              ],
+             "page_type_taxonomy": {
+                 "entity": {"description": "general concept"},
+                 "synthesis": {"description": "cross-page comparison"},
+                 "hardware_target": {"description": "hardware/ISA target"},
+                 "benchmark_result": {"description": "measured or reported result"},
+             },
          }), \
          patch.object(orchestrator, "QmdRunner", return_value=EmptyQmdRunner()), \
          patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
@@ -1544,3 +1974,144 @@ def test_bridge_candidates_for_manifest_swallows_errors(tmp_path):
     with patch.object(orchestrator, "_WIKI_PAGES_DIR", tmp_path), \
          patch.object(orchestrator.graph_topology, "find_bridge_candidates", side_effect=boom):
         assert orchestrator._bridge_candidates_for_manifest() == []
+
+
+_LONG_FIRST_PARAGRAPH = (
+    "This is a self-contained entity page describing a fictional RISC-V test "
+    "component used only to exercise the patch-application pipeline in a unit "
+    "test. It has a first paragraph that is deliberately long enough to satisfy "
+    "the entity_first_paragraph word-count bounds enforced by eval_summary.py's "
+    "deterministic pipeline gate, since that gate runs as a real subprocess "
+    "against this fixture just like it would against any real drafted or "
+    "merged page. The paragraph names the component, states what it is for, "
+    "and includes some concrete numbers such as 4 cores and 2 GHz just in case "
+    "density checks also apply here, without referencing any other page for "
+    "its own meaning, and without any dangling reference pattern of the kind "
+    "the self-containedness check would otherwise flag as a failure."
+)
+
+
+def _write_page_for_patch_test(pages_dir, subdir, stem, body_extra=""):
+    d = pages_dir / subdir
+    d.mkdir(parents=True, exist_ok=True)
+    frontmatter.write_page(
+        d / f"{stem}.md",
+        {"type": "entity", "canonical_name": stem.title(), "sources": ["raw/cache/fixture.md"], "inbound_links": 0},
+        f"\n# {stem.title()}\n\n{_LONG_FIRST_PARAGRAPH}{body_extra}\n\n"
+        "## Key Claims\n\n- Existing claim one.\n- Existing claim two.\n- Existing claim three.\n\n"
+        "## Relationships\n\nNo specific relationships to pages in the current wiki context.\n\n"
+        "## Sources\n\n- existing source\n",
+    )
+    return d / f"{stem}.md"
+
+
+def test_apply_one_pending_calls_content_merge_with_target_section_and_proposed_update(tmp_path):
+    pages_dir = tmp_path / "wiki" / "_pages"
+    _write_page_for_patch_test(pages_dir, "entity", "widget")
+
+    seen_manifest = {}
+
+    def fake_call_subagent(subagent_type, manifest, research_config):
+        seen_manifest.update(manifest)
+        assert subagent_type == "content_merge"
+        merged = manifest["existing_content"] + "\n\n- New claim from proposed_update.\n"
+        return json.dumps({"merged_content": merged, "merge_notes": "added claim"})
+
+    block = (
+        "## [2026-07-03] pending | widget.md\n"
+        "target_page: widget.md\n"
+        "target_section: Key Claims\n"
+        "source: https://example.com/widget-spec\n"
+        "status: approved\n"
+        "proposed_update: Add a claim that Widget supports frobnication.\n"
+    )
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir):
+        ok, new_block = orchestrator._apply_one_pending(block, fake_call_subagent, {})
+
+    assert ok
+    assert "status: applied" in new_block
+    assert seen_manifest["new_draft"] is None
+    assert seen_manifest["target_section"] == "Key Claims"
+    assert seen_manifest["proposed_update"] == "Add a claim that Widget supports frobnication."
+    assert seen_manifest["source"] == "https://example.com/widget-spec"
+    written = (pages_dir / "entity" / "widget.md").read_text(encoding="utf-8")
+    assert "New claim from proposed_update" in written
+
+
+def test_apply_one_pending_fails_when_page_not_found(tmp_path):
+    pages_dir = tmp_path / "wiki" / "_pages"
+    pages_dir.mkdir(parents=True)
+    block = (
+        "## [2026-07-03] pending | missing.md\n"
+        "target_page: missing.md\n"
+        "target_section: Key Claims\n"
+        "source: https://example.com\n"
+        "status: approved\n"
+        "proposed_update: Add something.\n"
+    )
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir):
+        ok, new_block = orchestrator._apply_one_pending(block, lambda *a: "{}", {})
+    assert not ok
+    assert "apply_failed (page not found)" in new_block
+
+
+def test_apply_patch_queue_routes_both_merge_pending_and_pending_blocks(tmp_path):
+    """Regression: apply_patch_queue() previously only ever recognized
+    merge_pending headers -- every plain "pending" block was silently passed
+    through untouched regardless of its approval status, so 18+ queued,
+    human-approved section-update proposals had no automated apply path at
+    all. Both kinds must now be processed when status: approved."""
+    pages_dir = tmp_path / "wiki" / "_pages"
+    log_md = tmp_path / "wiki" / "log.md"
+    log_md.parent.mkdir(parents=True, exist_ok=True)
+    log_md.write_text("# Wiki Log\n", encoding="utf-8")
+    index_md = tmp_path / "wiki" / "index.md"
+    index_md.write_text(
+        "# Wiki Index\n\nLast updated: 2020-01-01 | Pages: 0 | Sources: 0\n\n"
+        "## Entity Pages\n\n| Page | Summary | Tags | Sources | Inbound |\n"
+        "|------|---------|------|---------|---------|\n\n"
+        "## Synthesis Pages\n\n| Page | Connected Entities | Status | Inbound |\n"
+        "|------|--------------------|--------|---------|\n\n## Concept Index\n",
+        encoding="utf-8",
+    )
+    _write_page_for_patch_test(pages_dir, "entity", "alpha")
+    _write_page_for_patch_test(pages_dir, "entity", "beta")
+
+    queue_path = tmp_path / "wiki" / "patch_queue.md"
+    queue_path.write_text(
+        "# Wiki Patch Queue\n\n"
+        "## [2026-07-03] merge_pending | alpha.md\n"
+        "target_page: alpha.md\n"
+        "canonical_name: Alpha\n"
+        "source: https://example.com/alpha\n"
+        "status: approved\n"
+        "<!-- merge_draft_body\n# Alpha\n\nMerged alpha body.\nmerge_draft_body -->\n\n"
+        "## [2026-07-03] pending | beta.md\n"
+        "target_page: beta.md\n"
+        "target_section: Key Claims\n"
+        "source: https://example.com/beta\n"
+        "status: approved\n"
+        "proposed_update: Add a claim about beta.\n\n"
+        "## [2026-07-03] pending | beta.md\n"
+        "target_page: beta.md\n"
+        "target_section: Key Claims\n"
+        "source: https://example.com/beta2\n"
+        "status: pending_review\n"
+        "proposed_update: Not yet approved, must be skipped.\n",
+        encoding="utf-8",
+    )
+
+    def fake_call_subagent(subagent_type, manifest, research_config):
+        merged = manifest["existing_content"] + "\n\n- Applied.\n"
+        return json.dumps({"merged_content": merged, "merge_notes": None})
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_LOG_MD", log_md), \
+         patch.object(orchestrator, "_INDEX_MD", index_md):
+        result = orchestrator.apply_patch_queue(call_subagent=fake_call_subagent)
+
+    assert result == {"applied": 2, "skipped": 1, "failed": 0}
+    queue_text = queue_path.read_text(encoding="utf-8")
+    assert queue_text.count("status: applied") == 2
+    assert "status: pending_review" in queue_text  # the unapproved one untouched

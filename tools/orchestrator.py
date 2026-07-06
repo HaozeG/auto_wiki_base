@@ -59,6 +59,7 @@ from subagent_prompts import (
     EVALUATION_SYSTEM_PROMPT,
     KEYWORD_RECOMMENDER_SYSTEM_PROMPT,
     PROFILE_ARCHITECT_SYSTEM_PROMPT,
+    SUBTYPE_PROPOSAL_SYSTEM_PROMPT,
     SYNTHESIS_SYSTEM_PROMPT,
 )
 from validate_output import extract_json_block, validate_and_parse
@@ -133,6 +134,7 @@ def _load_research_config() -> dict:
     config.setdefault("keyword_recommender_model", None)
     config.setdefault("recent_audit_sessions_for_discovery", 10)
     config.setdefault("repeat_url_suppression", True)
+    config.setdefault("max_new_subtypes_per_session", 2)
     config.setdefault("domain_stopwords", [])
     config.setdefault("preferred_source_types", [
         "official documentation",
@@ -287,6 +289,12 @@ def _serializable_theme_profile(profile: dict) -> dict:
         "source_preferences": profile.get("source_preferences", []),
         "coverage_priorities": profile.get("coverage_priorities", []),
         "lint_priorities": profile.get("lint_priorities", []),
+        # Deliberate top-level hub concepts (optional; absent for themes/
+        # profiles that don't declare any). Grouping key for the "Hub
+        # Hierarchy" section in rebuild_index_from_frontmatter() — see
+        # domain_analysis._risc_v_hub_hierarchy() docstring for why this is
+        # a derived index view, not a forced page-creation step.
+        "hub_hierarchy": profile.get("hub_hierarchy", []),
     }
 
 
@@ -698,6 +706,305 @@ def _check_synthesis_gaps() -> list[str]:
             f"(e.g. {sample}{'...' if len(uncovered) > 3 else ''})"
         )
     return gaps
+
+
+def _hub_promotion_candidates(min_cluster_size: int | None = None) -> list[dict]:
+    """Phase 2c: propose promoting a tag cluster *within* a declared top-level
+    hub into a named sub-hub nested under it, once the cluster grows to
+    `synthesis_gap_min_cluster_size` (reused, same threshold as
+    _synthesis_gap_clusters — a cluster large enough to deserve its own
+    synthesis page is also large enough to deserve its own sub-hub label).
+
+    This is the "continuously build subtype hierarchy along the exploration"
+    mechanism: hub_hierarchy in [theme_profile] declares only the top level
+    at theme setup; finer structure (e.g. "XuanTie C9-series cores" under
+    "Vendor RISC-V Core Families") emerges from real page-tag clustering as
+    the wiki grows, surfaced here for human review during routine lint —
+    never auto-applied, same principle as retrospective lint's MERGE/DELETE
+    gate. Returns [{parent_hub_id, parent_label, tag, member_pages}], not
+    persisted anywhere until a human confirms and a real synthesis page
+    materializes the sub-hub (mirrors 2a/2b: no forced page creation).
+
+    Also detects clusters spanning exactly two declared hubs (a tag whose
+    tagged pages split across two hubs' subtypes rather than sitting inside
+    one) -- these candidates carry `parent_hub_ids` with two entries instead
+    of one. See dynamic-taxonomy-evolution design: a bridging sub-hub is a
+    deliberate small-world bridge, not an accident."""
+    hub_hierarchy = _load_claude_md_block("theme_profile").get("hub_hierarchy") or []
+    if not hub_hierarchy:
+        return []
+    threshold = min_cluster_size or int(
+        _load_claude_md_block("research_config").get("synthesis_gap_min_cluster_size", 3) or 3
+    )
+
+    pages_by_subtype: dict[str, list[Path]] = {}
+    for p in _WIKI_PAGES_DIR.rglob("*.md"):
+        fm, _ = frontmatter.parse_page(p)
+        pages_by_subtype.setdefault(fm.get("type", "entity"), []).append(p)
+
+    covered: set[str] = set()
+    for p in _WIKI_PAGES_DIR.rglob("*.md"):
+        fm, _ = frontmatter.parse_page(p)
+        if fm.get("type") == "synthesis":
+            covered.update(fm.get("connected_entities", []))
+
+    candidates = []
+    for hub in hub_hierarchy:
+        subtype = hub.get("subtype", "")
+        members = pages_by_subtype.get(subtype, [])
+        if len(members) < threshold:
+            continue
+        tag_to_pages: dict[str, list[str]] = {}
+        for p in members:
+            fm, _ = frontmatter.parse_page(p)
+            for tag in fm.get("tags", []) or []:
+                tag_to_pages.setdefault(tag, []).append(p.stem)
+        for tag, stems in sorted(tag_to_pages.items(), key=lambda x: -len(x[1])):
+            uncovered = [s for s in stems if s not in covered]
+            if len(uncovered) >= threshold:
+                hub_id = hub.get("hub_id", "")
+                candidates.append({
+                    "parent_hub_id": hub_id,
+                    "parent_hub_ids": [hub_id],
+                    "parent_label": hub.get("label", ""),
+                    "tag": tag,
+                    "member_pages": uncovered,
+                })
+
+    # Cross-hub detection: a tag whose tagged pages split across exactly two
+    # declared hubs' subtypes is itself a small-world bridge candidate -- a
+    # deliberate sub-hub nested under both parents ("introduce new subcategory
+    # under two parent categories when necessary"), not an accident to avoid.
+    # Kept as a second pass rather than folded into the loop above because it
+    # needs the union of *all* hub subtypes' pages per tag, not one hub's.
+    tag_to_hub_pages: dict[str, dict[str, list[str]]] = {}
+    for hub in hub_hierarchy:
+        subtype = hub.get("subtype", "")
+        hub_id = hub.get("hub_id", "")
+        if not subtype or not hub_id:
+            continue
+        for p in pages_by_subtype.get(subtype, []):
+            fm, _ = frontmatter.parse_page(p)
+            for tag in fm.get("tags", []) or []:
+                tag_to_hub_pages.setdefault(tag, {}).setdefault(hub_id, []).append(p.stem)
+
+    hub_label_by_id = {h.get("hub_id", ""): h.get("label", "") for h in hub_hierarchy}
+    for tag, by_hub in tag_to_hub_pages.items():
+        if len(by_hub) != 2:
+            continue
+        all_stems = [s for stems in by_hub.values() for s in stems]
+        uncovered = [s for s in all_stems if s not in covered]
+        if len(uncovered) >= threshold:
+            parent_ids = sorted(by_hub.keys())
+            candidates.append({
+                "parent_hub_id": parent_ids[0],
+                "parent_hub_ids": parent_ids,
+                "parent_label": " + ".join(hub_label_by_id.get(h, h) for h in parent_ids),
+                "tag": tag,
+                "member_pages": uncovered,
+            })
+    return candidates
+
+
+def _check_hub_promotions() -> list[str]:
+    """Human-readable sub-hub promotion candidates for the routine lint log
+    (same pairing as _synthesis_gap_clusters/_check_synthesis_gaps)."""
+    lines = []
+    for c in _hub_promotion_candidates():
+        sample = ", ".join(c["member_pages"][:3])
+        more = "..." if len(c["member_pages"]) > 3 else ""
+        lines.append(
+            f"hub='{c['parent_label']}' tag='{c['tag']}': {len(c['member_pages'])} pages "
+            f"could form a sub-hub (e.g. {sample}{more})"
+        )
+    return lines
+
+
+def _propose_subtype_for_cluster(
+    candidate: dict, research_config: dict, call_subagent=None
+) -> dict | None:
+    """Subjective half of the dynamic-taxonomy-evolution dual-signal gate.
+    Asks a lightweight subagent whether a detected tag cluster (from
+    _hub_promotion_candidates, already past the rarity threshold) is a
+    genuine subcategory. Returns the parsed SubtypeProposal dict only on
+    decision=='approve'; any failure, malformed output, or reject is treated
+    the same way -- None, i.e. don't persist, defer to lint -- since this
+    mechanism must fail toward the conservative side, same as every other
+    subagent gate in this harness."""
+    theme_profile = research_config.get("theme_profile", {}) or {}
+    hub_by_id = {h.get("hub_id", ""): h for h in (theme_profile.get("hub_hierarchy") or [])}
+    parent_ids = candidate.get("parent_hub_ids") or (
+        [candidate["parent_hub_id"]] if candidate.get("parent_hub_id") else []
+    )
+    parent_hubs = [
+        {
+            "hub_id": hid,
+            "label": hub_by_id.get(hid, {}).get("label", hid),
+            "description": hub_by_id.get(hid, {}).get("description", ""),
+        }
+        for hid in parent_ids if hid in hub_by_id
+    ]
+    if not parent_hubs:
+        return None
+
+    member_pages_info = []
+    for stem in candidate.get("member_pages", [])[:12]:
+        page = _find_page_by_filename(stem)
+        if not page:
+            continue
+        fm, body = frontmatter.parse_page(page)
+        member_pages_info.append({
+            "filename": stem,
+            "canonical_name": fm.get("canonical_name", stem),
+            "tags": fm.get("tags", []) or [],
+            "summary": _page_summary(body),
+        })
+    if not member_pages_info:
+        return None
+
+    manifest = {
+        "theme": theme_profile.get("theme", ""),
+        "parent_hubs": parent_hubs,
+        "tag": candidate.get("tag", ""),
+        "member_pages": member_pages_info,
+        "existing_subtypes": sorted((research_config.get("page_type_taxonomy") or {}).keys()),
+    }
+    try:
+        raw = (call_subagent or _call_subagent)("subtype_proposal", manifest, research_config)
+    except Exception as e:
+        logger.warning("taxonomy evolution: subtype_proposal call failed for tag=%s: %s",
+                       candidate.get("tag"), e)
+        return None
+    data = validate_and_parse(raw, "SubtypeProposal")
+    if data is None or data.get("decision") != "approve":
+        return None
+    return data
+
+
+def _persist_new_subtype(proposal: dict, candidate: dict) -> None:
+    """Persist an approved SubtypeProposal into [theme_profile] via the same
+    atomic YAML round-trip discipline as every other CLAUDE.md write in this
+    codebase (parse -> mutate -> re-serialize via _replace_or_insert_yaml_block,
+    never string splicing). Adds:
+      - a page_types entry, so a future eval subagent MAY legitimately draft
+        this subtype going forward (Part C's taxonomy-membership check reads
+        this same [theme_profile] block, so persistence here is what makes
+        the type usable, not just documented);
+      - a hub_hierarchy sub-hub entry with `tag` (not `subtype`) membership,
+        so *existing* member pages are grouped without being reclassified.
+
+    Found live: _load_claude_md_block("theme_profile") returns the ALREADY
+    on-disk-serialized shape (organization_choice/organization_name keys),
+    not the pre-serialization shape _serializable_theme_profile() expects
+    (id/name keys, as produced by select_theme_profile()). Routing an
+    on-disk profile back through _serializable_theme_profile() blanks
+    organization_choice/organization_name (profile.get("id","") is always
+    "" for an on-disk profile) -- confirmed via a live end-to-end run where
+    a real subagent approval persisted correctly except for that field. Only
+    page_types/hub_hierarchy are mutated here, so the on-disk dict is
+    written back as-is, not re-derived from the pre-serialization shape.
+    """
+    profile = _load_claude_md_block("theme_profile")
+    if not profile:
+        return
+    subtype_name = proposal["subtype_name"]
+
+    page_types = dict(profile.get("page_types") or {})
+    page_types[subtype_name] = {
+        "description": proposal.get("description", ""),
+        "structured_fields": proposal.get("structured_fields") or [],
+    }
+    profile["page_types"] = page_types
+
+    hub_hierarchy = list(profile.get("hub_hierarchy") or [])
+    hub_hierarchy.append({
+        "hub_id": subtype_name,
+        "label": proposal.get("label", subtype_name),
+        "tag": candidate.get("tag", ""),
+        "parent_hub_ids": proposal.get("parent_hub_ids") or candidate.get("parent_hub_ids") or [],
+        "description": proposal.get("description", ""),
+    })
+    profile["hub_hierarchy"] = hub_hierarchy
+
+    text = _CLAUDE_MD.read_text(encoding="utf-8")
+    text = _replace_or_insert_yaml_block(text, "theme_profile", profile)
+    _CLAUDE_MD.write_text(text, encoding="utf-8")
+
+
+def _append_taxonomy_evolution_log(subtype_name: str, proposal: dict, candidate: dict) -> None:
+    """Every autonomous taxonomy change is logged so an unattended decision is
+    still fully auditable after the fact -- matches the existing
+    ingest/lint/transition log entry conventions in wiki/log.md."""
+    today = _now_date()
+    parent_ids = proposal.get("parent_hub_ids") or candidate.get("parent_hub_ids") or []
+    members = candidate.get("member_pages", [])
+    entry = (
+        f"\n## [{today}] taxonomy_evolution | {subtype_name}\n"
+        f"label: {proposal.get('label', subtype_name)}\n"
+        f"parent_hub_ids: {parent_ids}\n"
+        f"tag: {candidate.get('tag', '')}\n"
+        f"member_pages: {members}\n"
+        f"subjective_signal: approve (subtype_proposal subagent)\n"
+        f"objective_signal: cluster centrality elevated above graph median\n"
+    )
+    with open(_LOG_MD, "a", encoding="utf-8") as f:
+        f.write(entry)
+
+
+def _run_taxonomy_evolution(research_config: dict, call_subagent=None) -> list[str]:
+    """Part D: autonomous subtype proposal + persistence. Run once per research
+    session, after this session's page writes are reflected in the on-disk
+    graph, so betweenness centrality reflects the current state.
+
+    Detection (_hub_promotion_candidates) is already bounded by the reused
+    synthesis_gap_min_cluster_size rarity floor. Persistence additionally
+    requires BOTH signals to agree -- objective graph centrality
+    (graph_topology.cluster_is_structurally_distinct) AND a subjective
+    subagent judgment (_propose_subtype_for_cluster) -- mirroring
+    retrospective lint's RESTRUCTURE rule: agreement between a real metric
+    and an LLM's judgment is a harder, less gameable bar than either alone.
+    A single-signal hit is not persisted; it remains visible via
+    _check_hub_promotions()/lint routine for a human to consider by hand.
+
+    Hard-capped by max_new_subtypes_per_session (default 2) so autonomous
+    creation stays bounded -- same circuit-breaker shape as max_linking_debt.
+    This function is theme-agnostic: it only ever reads the theme's declared
+    hub_hierarchy/page_type_taxonomy and measured graph structure, never a
+    hardcoded subtype name.
+    """
+    max_new = int(research_config.get("max_new_subtypes_per_session", 2) or 0)
+    if max_new <= 0:
+        return []
+    candidates = _hub_promotion_candidates()
+    if not candidates:
+        return []
+    existing_subtypes = set((research_config.get("page_type_taxonomy") or {}).keys())
+    persisted: list[str] = []
+    for candidate in candidates:
+        if len(persisted) >= max_new:
+            break
+        member_pages = candidate.get("member_pages", [])
+        try:
+            objective_signal = graph_topology.cluster_is_structurally_distinct(
+                _WIKI_PAGES_DIR, member_pages
+            )
+        except Exception as e:
+            logger.warning("taxonomy evolution: centrality check failed for tag=%s: %s",
+                           candidate.get("tag"), e)
+            continue
+        if not objective_signal:
+            continue  # at most one signal fired -- defer to lint, don't persist
+        proposal = _propose_subtype_for_cluster(candidate, research_config, call_subagent)
+        if proposal is None:
+            continue  # subjective signal didn't fire either -- defer to lint
+        subtype_name = proposal.get("subtype_name")
+        if not subtype_name or subtype_name in existing_subtypes:
+            continue
+        _persist_new_subtype(proposal, candidate)
+        _append_taxonomy_evolution_log(subtype_name, proposal, candidate)
+        existing_subtypes.add(subtype_name)
+        persisted.append(subtype_name)
+    return persisted
 
 
 def _extract_section(body: str, heading: str) -> str:
@@ -1138,6 +1445,9 @@ def _call_subagent(subagent_type: str, manifest: dict, research_config: dict) ->
     elif subagent_type == "synthesis":
         system = SYNTHESIS_SYSTEM_PROMPT
         max_tokens = research_config.get("max_eval_subagent_tokens", 6000)
+    elif subagent_type == "subtype_proposal":
+        system = SUBTYPE_PROPOSAL_SYSTEM_PROMPT
+        max_tokens = research_config.get("max_eval_subagent_tokens", 6000)
     else:
         system = EVALUATION_SYSTEM_PROMPT
         max_tokens = research_config.get("max_eval_subagent_tokens", 6000)
@@ -1297,6 +1607,25 @@ def _canonical_label(page_path: Path) -> str:
     return str(fm.get("canonical_name") or page_path.stem)
 
 
+def _hub_member_pages() -> set[str]:
+    """Phase 2d: stems of pages belonging to any subtype declared as a
+    top-level hub in [theme_profile].hub_hierarchy — see
+    graph_topology.find_bridge_candidates' hub_pages docstring for why this
+    is a subtype-membership set, not a per-page is_hub flag."""
+    hub_hierarchy = _load_claude_md_block("theme_profile").get("hub_hierarchy") or []
+    if not hub_hierarchy:
+        return set()
+    hub_subtypes = {h.get("subtype", "") for h in hub_hierarchy if h.get("subtype")}
+    if not hub_subtypes:
+        return set()
+    members: set[str] = set()
+    for p in _WIKI_PAGES_DIR.rglob("*.md"):
+        fm, _ = frontmatter.parse_page(p)
+        if fm.get("type", "entity") in hub_subtypes:
+            members.add(p.stem)
+    return members
+
+
 def _bridge_candidates_for_manifest(max_candidates: int = 5) -> list[dict]:
     """Distant connected-component pairs (see graph_topology.find_bridge_candidates),
     with human-readable topic labels, for the keyword recommender manifest —
@@ -1304,7 +1633,9 @@ def _bridge_candidates_for_manifest(max_candidates: int = 5) -> list[dict]:
     topologically distant clusters as candidate research angles, rather than
     only linking pages that already exist after the fact."""
     try:
-        raw = graph_topology.find_bridge_candidates(_WIKI_PAGES_DIR, max_candidates=max_candidates)
+        raw = graph_topology.find_bridge_candidates(
+            _WIKI_PAGES_DIR, max_candidates=max_candidates, hub_pages=_hub_member_pages()
+        )
     except Exception as e:
         logger.warning("bridge-candidate detection failed: %s", e)
         return []
@@ -1632,6 +1963,19 @@ def rebuild_index_from_frontmatter() -> None:
     resolved_concepts: dict[str, str] = {}   # display name -> "[stem](folder/stem.md)"
     page_stems: dict[str, tuple[str, str]] = {}  # stem -> (folder, filename)
     mentions: dict[str, tuple[str, str, str]] = {}  # target -> (folder, filename, first mentioning page link)
+    # Hub Hierarchy inputs: pages grouped by their subtype (subagents write
+    # the literal subtype into `type`, e.g. type: hardware_target, not
+    # type: entity/subtype: hardware_target -- see the "type" vs "subtype"
+    # note in Phase 1's audit). Grouped against [theme_profile].hub_hierarchy
+    # at render time, not stored per-page -- see domain_analysis.py's
+    # _risc_v_hub_hierarchy() docstring for why this is a derived view.
+    pages_by_subtype: dict[str, list[str]] = {}
+    # Sub-hub membership (Part B/D of dynamic-taxonomy-evolution) is tag-based,
+    # not a new `type`/`subtype` value per page -- avoids reclassifying
+    # existing pages and keeps sub-hub grouping independent of the page-type
+    # taxonomy Part C enforces. Populated alongside pages_by_subtype so both
+    # groupings come from a single frontmatter pass.
+    pages_by_tag: dict[str, list[str]] = {}
 
     for path in sorted(_WIKI_PAGES_DIR.rglob("*.md")):
         fm, body = frontmatter.parse_page(path)
@@ -1640,6 +1984,10 @@ def rebuild_index_from_frontmatter() -> None:
         page_type = fm.get("type", "entity")
         folder = path.parent.name
         filename = path.name
+        link = f"[{path.stem}]({folder}/{filename})"
+        pages_by_subtype.setdefault(page_type, []).append(link)
+        for tag in fm.get("tags", []) or []:
+            pages_by_tag.setdefault(str(tag), []).append(link)
         tags = ", ".join(fm.get("tags", []) or [])
         sources = fm.get("sources", []) or []
         source_count = str(len(sources))
@@ -1739,7 +2087,20 @@ def rebuild_index_from_frontmatter() -> None:
 
     def _replace_section(text: str, header: str, lines: list[str]) -> str:
         """Replace a plain bullet-list section (no table header) with `lines`,
-        up to the next '## ' heading or EOF."""
+        up to the next '## ' heading or EOF.
+
+        Found live: a since-removed "trim to exactly one blank line" loop
+        decremented end_idx to walk back over trailing blank lines, but then
+        used `all_lines[end_idx:]` as the preserved tail -- which still
+        *starts* at the first of those same blank lines, not past them. Every
+        rebuild call re-added its own single trailing blank on top of the
+        untouched, never-actually-trimmed original run, so the blank-line
+        count between two sections grew by ~1-2 lines every single research
+        session (confirmed: 100+ accumulated blank lines in a long-running
+        wiki's index.md). The forward scan below already stops exactly at the
+        next '## ' heading (or EOF) with no leading blanks to trim -- new_block
+        supplies the single blank line on its own, so no trim-back is needed.
+        """
         all_lines = text.split("\n")
         try:
             header_idx = all_lines.index(header)
@@ -1749,14 +2110,60 @@ def rebuild_index_from_frontmatter() -> None:
         end_idx = header_idx + 1
         while end_idx < len(all_lines) and not all_lines[end_idx].startswith("## "):
             end_idx += 1
-        # Trim to exactly one blank line before the next heading (or EOF).
-        while end_idx > header_idx + 1 and all_lines[end_idx - 1].strip() == "":
-            end_idx -= 1
         new_block = [header, ""] + lines + [""]
         new_lines = all_lines[:header_idx] + new_block + all_lines[end_idx:]
         return "\n".join(new_lines)
 
     text = _replace_section(text, "## Concept Index", concept_index_lines)
+
+    hub_hierarchy = _load_claude_md_block("theme_profile").get("hub_hierarchy") or []
+    if hub_hierarchy:
+        # Top-level hubs declare `subtype` (existing Phase 2a/2b shape) and
+        # have no parent_hub_ids. Sub-hubs (Part B/D) declare `tag` instead of
+        # `subtype` and carry parent_hub_ids (1 entry = nested under one
+        # parent, 2 = a bridging sub-hub rendered under both -- the visible
+        # expression of "introduce new subcategory under two parent
+        # categories when necessary").
+        top_level = [h for h in hub_hierarchy if not h.get("parent_hub_ids")]
+        sub_hubs = [h for h in hub_hierarchy if h.get("parent_hub_ids")]
+
+        def _hub_block(hub: dict, heading_level: str) -> list[str]:
+            label = hub.get("label", hub.get("hub_id", "?"))
+            if hub.get("tag"):
+                children = pages_by_tag.get(hub["tag"], [])
+            else:
+                children = pages_by_subtype.get(hub.get("subtype", ""), [])
+            lines = [f"{heading_level} {label}", ""]
+            if hub.get("description"):
+                lines.append(f"*{hub['description']}*")
+                lines.append("")
+            if children:
+                lines.extend(f"- {c}" for c in sorted(set(children)))
+            else:
+                lines.append("*(no pages under this hub yet)*")
+            lines.append("")
+            return lines
+
+        hub_lines: list[str] = []
+        for hub in top_level:
+            hub_lines.extend(_hub_block(hub, "###"))
+            hub_id = hub.get("hub_id", "")
+            for sub in sub_hubs:
+                if hub_id in (sub.get("parent_hub_ids") or []):
+                    hub_lines.extend(_hub_block(sub, "####"))
+        # Sub-hubs whose declared parent no longer exists in hub_hierarchy
+        # still get surfaced (never silently dropped), just at top level.
+        orphaned_subs = [
+            sub for sub in sub_hubs
+            if not any(pid in {h.get("hub_id", "") for h in top_level}
+                       for pid in (sub.get("parent_hub_ids") or []))
+        ]
+        for sub in orphaned_subs:
+            hub_lines.extend(_hub_block(sub, "###"))
+
+        if hub_lines and hub_lines[-1] == "":
+            hub_lines.pop()
+        text = _replace_section(text, "## Hub Hierarchy", hub_lines)
 
     page_count = len(list(_WIKI_PAGES_DIR.rglob("*.md")))
     text = re.sub(r"Last updated: \S+", f"Last updated: {_now_date()}", text)
@@ -2535,19 +2942,14 @@ def _set_patch_status(block: str, new_status: str) -> str:
                   block, count=1, flags=re.MULTILINE)
 
 
-def _apply_one_merge(block: str, call_subagent, research_config: dict) -> tuple[bool, str]:
-    entry = _parse_merge_block(block)
-    target = entry.get("target_page")
-    page = _find_page_by_filename(target) if target else None
-    if page is None:
-        return False, _set_patch_status(block, "apply_failed (page not found)")
-    fm, body = frontmatter.parse_page(page)
-    manifest = {
-        "existing_content": body.strip(),
-        "new_draft": (entry.get("new_body") or "").strip(),
-        "canonical_name": entry.get("canonical_name") or fm.get("canonical_name"),
-        "source": entry.get("source"),
-    }
+def _run_content_merge_and_write(
+    block: str, page: Path, fm: dict, body: str, manifest: dict, call_subagent, research_config: dict,
+) -> tuple[bool, str]:
+    """Shared finishing path for both merge_pending (full pre-drafted body)
+    and pending (section-update description) patches: call the content_merge
+    subagent, gate the result through the same deterministic pipeline every
+    other write goes through, then atomically rewrite the single target page.
+    """
     try:
         raw = call_subagent("content_merge", manifest, research_config)
     except Exception as exc:  # noqa: BLE001 — never crash the queue
@@ -2557,7 +2959,6 @@ def _apply_one_merge(block: str, call_subagent, research_config: dict) -> tuple[
     if result is None:
         return False, _set_patch_status(block, "apply_failed (invalid merge output)")
     merged = result["merged_content"]
-    # Deterministic pipeline gate — same gate as any other write.
     page_type = fm.get("type", "entity")
     passes, _ = _run_eval_pipeline({"page_type": page_type, "frontmatter": fm, "content": merged})
     if not passes:
@@ -2574,8 +2975,69 @@ def _apply_one_merge(block: str, call_subagent, research_config: dict) -> tuple[
     return True, _set_patch_status(block, "applied")
 
 
+def _apply_one_merge(block: str, call_subagent, research_config: dict) -> tuple[bool, str]:
+    entry = _parse_merge_block(block)
+    target = entry.get("target_page")
+    page = _find_page_by_filename(target) if target else None
+    if page is None:
+        return False, _set_patch_status(block, "apply_failed (page not found)")
+    fm, body = frontmatter.parse_page(page)
+    manifest = {
+        "existing_content": body.strip(),
+        "new_draft": (entry.get("new_body") or "").strip(),
+        "target_section": None,
+        "proposed_update": None,
+        "canonical_name": entry.get("canonical_name") or fm.get("canonical_name"),
+        "source": entry.get("source"),
+    }
+    return _run_content_merge_and_write(block, page, fm, body, manifest, call_subagent, research_config)
+
+
+def _parse_pending_block(block: str) -> dict:
+    """Parse a plain ``pending`` (non-merge) patch_queue.md block — a targeted
+    section-update description (no pre-drafted merge_draft_body), e.g.
+    "Add a section describing X, sourced from Y." """
+    return {
+        "target_page": _patch_block_field(block, "target_page"),
+        "target_section": _patch_block_field(block, "target_section"),
+        "source": _patch_block_field(block, "source"),
+        "status": _patch_block_field(block, "status"),
+        "proposed_update": _patch_block_field(block, "proposed_update"),
+    }
+
+
+def _apply_one_pending(block: str, call_subagent, research_config: dict) -> tuple[bool, str]:
+    """Apply a plain ``pending`` section-update patch. Unlike merge_pending
+    (a full body already drafted from the new source), these only carry a
+    natural-language description of what to add — the content_merge subagent
+    generates the actual section content from that description, grounded only
+    in what it describes, same self-containedness/sourcing rules as any other
+    draft. Gated by the same deterministic pipeline and approval status as
+    merge_pending; this closes the gap where 18+ queued, human-reviewable
+    proposals had no automated apply path at all (found live: apply_patch_queue
+    only ever processed merge_pending blocks, silently passing every plain
+    ``pending`` entry through untouched regardless of its status)."""
+    entry = _parse_pending_block(block)
+    target = entry.get("target_page")
+    page = _find_page_by_filename(target) if target else None
+    if page is None:
+        return False, _set_patch_status(block, "apply_failed (page not found)")
+    fm, body = frontmatter.parse_page(page)
+    manifest = {
+        "existing_content": body.strip(),
+        "new_draft": None,
+        "target_section": entry.get("target_section"),
+        "proposed_update": entry.get("proposed_update"),
+        "canonical_name": fm.get("canonical_name"),
+        "source": entry.get("source"),
+    }
+    return _run_content_merge_and_write(block, page, fm, body, manifest, call_subagent, research_config)
+
+
 def apply_patch_queue(call_subagent=_call_subagent) -> dict:
-    """Apply human-approved merge_pending patches.
+    """Apply human-approved patches — both ``merge_pending`` (full pre-drafted
+    body, an identity-resolution collision) and plain ``pending`` (a targeted
+    section-update description) entries.
 
     A patch is applied only when its ``status`` is ``approved`` (the human edits
     ``pending_review`` -> ``approved`` in patch_queue.md). Each approved patch runs
@@ -2592,7 +3054,11 @@ def apply_patch_queue(call_subagent=_call_subagent) -> dict:
     out_blocks: list[str] = []
     for block in blocks:
         header = block.split("\n", 1)[0]
-        if "merge_pending" not in header:
+        if "merge_pending" in header:
+            apply_fn = _apply_one_merge
+        elif "] pending |" in header:
+            apply_fn = _apply_one_pending
+        else:
             out_blocks.append(block)
             continue
         status = _patch_block_field(block, "status")
@@ -2600,7 +3066,7 @@ def apply_patch_queue(call_subagent=_call_subagent) -> dict:
             skipped += 1
             out_blocks.append(block)
             continue
-        ok, new_block = _apply_one_merge(block, call_subagent, research_config)
+        ok, new_block = apply_fn(block, call_subagent, research_config)
         applied += int(ok)
         failed += int(not ok)
         out_blocks.append(new_block)
@@ -2963,7 +3429,8 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
             session_state.transition(entry, "eval_rejected", error=str(e))
             continue
 
-        eval_result = validate_and_parse(raw_eval, "EvalResult")
+        allowed_page_types = set(research_config.get("page_type_taxonomy", {}) or {})
+        eval_result = validate_and_parse(raw_eval, "EvalResult", allowed_page_types=allowed_page_types)
         audit.record_response(ev_idx, raw_eval, schema_valid=(eval_result is not None))
         quota.record_candidate_evaluated()
         if eval_result is None:
@@ -3090,6 +3557,9 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
                 written_filenames = list(set(written_filenames) | {synthesis_filename})
 
     _run_graph_stats()
+    new_subtypes = _run_taxonomy_evolution(research_config)
+    if new_subtypes:
+        print(f"[{session_id}] Taxonomy evolution: persisted new subtype(s): {new_subtypes}")
     rebuild_index_from_frontmatter()
 
     session_state.status = "complete"
