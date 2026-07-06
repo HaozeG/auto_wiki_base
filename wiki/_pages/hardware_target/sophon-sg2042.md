@@ -39,11 +39,15 @@ sources:
 - https://arxiv.org/abs/2406.12394
 - raw/cache/76977c56a6102e86.md
 - https://github.com/sophgo/sophgo-doc/blob/main/SG2042/TRM/source/system.rst
+- raw/cache/04daa5f8f10c7be0.md
+- https://browser.geekbench.com/v5/cpu/21586331
+- raw/cache/f4ce8d173e27b53c.md
+- https://www.researchgate.net/publication/381517668_Performance_characterisation_of_the_64-core_SG2042_RISC-V_CPU_for_HPC
 source_url: https://milkv.io/docs/pioneer/getting-started/processor
 fetched_at: '2026-07-03T14:18:06.914938+00:00'
 type: hardware_target
 created: '2026-07-03'
-updated: '2026-07-03'
+updated: '2026-07-06'
 cold_start: true
 inbound_links: 0
 outbound_links:

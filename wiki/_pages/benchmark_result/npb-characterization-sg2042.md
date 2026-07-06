@@ -3,6 +3,8 @@ canonical_name: NAS Parallel Benchmark characterization of Sophon SG2042
 aliases:
 - NPB on SG2042
 - SG2042 NPB performance
+- SG2042 NPB Benchmark Characterization
+- SG2042 performance characterisation
 subtype: null
 tags: []
 hardware_targets:
@@ -32,11 +34,13 @@ scorecard:
 sources:
 - raw/cache/b8ccce9b3180873d.md
 - https://arxiv.org/html/2406.12394v1
+- raw/cache/f4ce8d173e27b53c.md
+- https://www.researchgate.net/publication/381517668_Performance_characterisation_of_the_64-core_SG2042_RISC-V_CPU_for_HPC
 source_url: https://arxiv.org/html/2406.12394v1
 fetched_at: '2026-07-03T18:04:35.239892+00:00'
 type: benchmark_result
 created: '2026-07-03'
-updated: '2026-07-03'
+updated: '2026-07-06'
 cold_start: true
 inbound_links: 0
 outbound_links:

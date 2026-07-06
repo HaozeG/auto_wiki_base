@@ -50,6 +50,8 @@ sources:
 - https://bruno.verachten.fr/2026/03/12/benchmarking-llama.cpp-on-spacemit-k3-risc-v-ai-cores-vs-standard-rvv-part-4/
 - raw/cache/cc037e7fa5f7e3f8.md
 - https://github.com/rcarmo/llama-cpp-spacemit-k3/blob/master/README.md
+- raw/cache/6ed1f6b02116b03a.md
+- https://www.cnx-software.com/2026/01/23/spacemit-k3-16-core-risc-v-soc-system-information-and-early-benchmarks/
 source_url: https://dev.to/gounthar/benchmarking-llamacpp-on-spacemit-k3-risc-v-ai-cores-vs-standard-rvv-part-4-10mc
 fetched_at: '2026-07-03T16:13:21.390248+00:00'
 type: hardware_target

@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-06 | Pages: 92 | Sources: 244
+Last updated: 2026-07-06 | Pages: 92 | Sources: 250
 
 ## Entity Pages
 
@@ -293,8 +293,10 @@ Last updated: 2026-07-06 | Pages: 92 | Sources: 244
 - **SG2042 LLM benchmark**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
 - **SG2042 LLM optimization**: → [v-seek-llm-inference-optimization-sg2042](optimization_recipe/v-seek-llm-inference-optimization-sg2042.md)
 - **SG2042 NAS Parallel Benchmark Performance**: → [sophon-sg2042-npb-performance-benchmark-result](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md)
+- **SG2042 NPB Benchmark Characterization**: → [npb-characterization-sg2042](benchmark_result/npb-characterization-sg2042.md)
 - **SG2042 NPB performance**: → [npb-characterization-sg2042](benchmark_result/npb-characterization-sg2042.md)
 - **SG2042 NPB results**: → [sophon-sg2042-npb-performance-benchmark-result](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md)
+- **SG2042 performance characterisation**: → [npb-characterization-sg2042](benchmark_result/npb-characterization-sg2042.md)
 - **SG2044**: → [sophon-sg2044-hardware-target](hardware_target/sophon-sg2044-hardware-target.md)
 - **SG2380**: → [sophon-sg2380-hardware-target](hardware_target/sophon-sg2380-hardware-target.md)
 - **SHL**: → [shl](entity/shl.md)
@@ -496,7 +498,7 @@ Last updated: 2026-07-06 | Pages: 92 | Sources: 244
 | [iree-riscv-benchmark-milkv-jupiter.md](benchmark_result/iree-riscv-benchmark-milkv-jupiter.md) | benchmark_result | IREE RISC-V Microkernel Benchmark on MILK-V Jupiter |  | 2 | 0 |
 | [maestro-gesture-recognition.md](benchmark_result/maestro-gesture-recognition.md) | benchmark_result | Maestro gesture recognition benchmark |  | 2 | 0 |
 | [mlir-xdsl-gemm-benchmark-k230-banana-pi.md](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md) | benchmark_result | MLIR-xDSL GEMM Benchmark on K230 and BananaPi F3 |  | 2 | 4 |
-| [npb-characterization-sg2042.md](benchmark_result/npb-characterization-sg2042.md) | benchmark_result | NAS Parallel Benchmark characterization of Sophon SG2042 |  | 2 | 0 |
+| [npb-characterization-sg2042.md](benchmark_result/npb-characterization-sg2042.md) | benchmark_result | NAS Parallel Benchmark characterization of Sophon SG2042 |  | 4 | 0 |
 | [semidynamics-all-in-one-llama2-7b-tensor-utilization.md](benchmark_result/semidynamics-all-in-one-llama2-7b-tensor-utilization.md) | benchmark_result | Semidynamics All-In-One LLaMA-2 7B Tensor Utilization |  | 2 | 0 |
 | [sophon-sg2042-npb-performance-benchmark-result.md](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md) | benchmark_result | SG2042 NAS Parallel Benchmark Performance |  | 4 | 0 |
 | [spacemit-k1-benchmark-2026-04-14.md](benchmark_result/spacemit-k1-benchmark-2026-04-14.md) | benchmark_result | SpacemiT K1 AI Benchmark Report (2026-04-14) |  | 2 | 0 |
@@ -510,11 +512,11 @@ Last updated: 2026-07-06 | Pages: 92 | Sources: 244
 | [nuclei-na900-hardware-target.md](hardware_target/nuclei-na900-hardware-target.md) | hardware_target | Nuclei NA900 |  | 2 | 0 |
 | [opennanhu-v5.md](hardware_target/opennanhu-v5.md) | hardware_target | OpenNanhu-V5 |  | 2 | 0 |
 | [semidynamics-all-in-one-ai-ip.md](hardware_target/semidynamics-all-in-one-ai-ip.md) | hardware_target | Semidynamics All-In-One AI IP |  | 2 | 1 |
-| [sophon-sg2042.md](hardware_target/sophon-sg2042.md) | hardware_target | SOPHON SG2042 |  | 12 | 0 |
+| [sophon-sg2042.md](hardware_target/sophon-sg2042.md) | hardware_target | SOPHON SG2042 |  | 16 | 0 |
 | [sophon-sg2044-hardware-target.md](hardware_target/sophon-sg2044-hardware-target.md) | hardware_target | Sophon SG2044 |  | 2 | 8 |
 | [sophon-sg2380-hardware-target.md](hardware_target/sophon-sg2380-hardware-target.md) | hardware_target | Sophon SG2380 |  | 6 | 0 |
 | [spacemit-k1.md](hardware_target/spacemit-k1.md) | hardware_target | SpacemiT K1 |  | 4 | 4 |
-| [spacemit-k3-hardware-target.md](hardware_target/spacemit-k3-hardware-target.md) | hardware_target | SpacemiT K3 | RISC-V, SpacemiT, AI CPU, big.LITTLE, RVV 1.0 | 6 | 1 |
+| [spacemit-k3-hardware-target.md](hardware_target/spacemit-k3-hardware-target.md) | hardware_target | SpacemiT K3 | RISC-V, SpacemiT, AI CPU, big.LITTLE, RVV 1.0 | 8 | 1 |
 | [spacemit-x60-hardware-target.md](hardware_target/spacemit-x60-hardware-target.md) | hardware_target | SpacemiT X60 | RISC-V, GCC tuning, SpacemiT, in-order, RVV 1.0 | 2 | 8 |
 | [starfive-jh7110-hardware-target.md](hardware_target/starfive-jh7110-hardware-target.md) | hardware_target | StarFive JH-7110 |  | 2 | 0 |
 | [t1.md](hardware_target/t1.md) | hardware_target | T1 |  | 2 | 0 |

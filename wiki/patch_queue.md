@@ -2168,3 +2168,146 @@ No specific relationship to the visible context pages ([[q4x-quantization-llamac
 
 - https://github.com/rcarmo/llama-cpp-spacemit-k3/blob/master/README.md
 merge_draft_body -->
+
+## [2026-07-06] merge_pending | sophon-sg2042.md
+target_page: sophon-sg2042.md
+canonical_name: SOPHON SG2042
+colliding_name: Sophon SG2042
+source: https://browser.geekbench.com/v5/cpu/21586331
+status: pending_review
+<!-- merge_draft_body
+# Sophon SG2042
+
+The Sophon SG2042 is a 64-core server-grade RISC-V CPU developed by Sophon Technology, based on the XuanTie C920 cores designed by T-Head (an Alibaba Group company). It operates at 2 GHz and implements the RV64GCV instruction set architecture, which includes the base scalar extensions along with the RISC-V Vector Extension (V). The chip is organised into clusters of four cores each, and features four DDR4-3200 memory controllers with 32 lanes of PCI-Express Gen4 for high-bandwidth I/O. The SG2042 targets high-performance computing workloads and represents a milestone as a high-core-count RISC-V processor for server applications. A Geekbench 5 benchmark run on Linux RISC-V reported a single-core score of 181 and a multi-core score of 3132.
+
+## Key Claims
+
+- 64 RISC-V processor cores running at 2 GHz.
+- Cores are based on the XuanTie C920 microarchitecture from T-Head.
+- Implements the RV64GCV ISA (includes RISC-V Vector Extension).
+- Organized in clusters of four cores.
+- Equipped with four DDR4-3200 memory controllers.
+- Provides 32 lanes of PCI-Express Gen4.
+- Geekbench 5.4.0 Preview results on Linux RISC-V: 181 single-core score, 3132 multi-core score.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RV64GCV (with RISC-V Vector Extension, version unspecified)
+- Vector/matrix/accelerator support: RISC-V Vector (V) extension; no further accelerator details from available sources
+- Memory/cache/TLB/DMA: Four DDR4-3200 memory controllers; cache hierarchy and TLB details not provided in available snippets
+- Compiler/toolchain support: Not specified in available sources (Geekbench 5.4.0 Preview was used for benchmark)
+
+## Relationships
+
+No specific relationship to visible context pages in the current wiki.
+
+## Sources
+
+- Geekbench browser page for SOPHON SG2042 (riscv) - reported single-core score 181, multi-core score 3132 with Geekbench 5.4.0 Preview on Linux RISC-V.
+- Performance characterisation of the 64-core SG2042 RISC-V CPU for HPC (arXiv:2406.12394) - describes NPB benchmark characterisation, core cluster organisation, memory controllers, PCIe lanes.
+- Sophon SG2042 specification snippet from SOPHON SG2042 | Milk-V page confirming 64-core server chip.
+merge_draft_body -->
+
+## [2026-07-06] merge_pending | sophon-sg2042.md
+target_page: sophon-sg2042.md
+canonical_name: SOPHON SG2042
+colliding_name: Sophon SG2042
+source: https://www.researchgate.net/publication/381517668_Performance_characterisation_of_the_64-core_SG2042_RISC-V_CPU_for_HPC
+status: pending_review
+<!-- merge_draft_body
+# Sophon SG2042
+
+The Sophon SG2042 is a 64-core RISC-V CPU designed for high-performance computing (HPC) workloads, first released in summer 2023. It is the first mass-produced, commodity-available high-core-count RISC-V processor aimed at HPC applications, integrating 64 T-Head XuanTie C920 high-performance out-of-order cores. The SG2042 targets computationally intensive workloads and has been benchmarked against x86-64 and AArch64 CPUs using the NAS Parallel Benchmark (NPB) suite. Performance evaluation shows that the SG2042 consistently outperforms all other RISC-V solutions by a factor of 2.6 to 16.7 at the single-core level. However, when compared against x86-64 and AArch64 CPUs, the SG2042 performs well on compute-bound algorithms but suffers decreased relative performance on memory-bandwidth- or latency-bound algorithms, with the memory subsystem identified as the primary bottleneck. The CPU is fabricated by Sophon and represents a significant step toward RISC-V adoption in high-performance environments.
+
+## Key Claims
+
+- The SG2042 is a 64-core RISC-V CPU designed for high-performance workloads, first mass-produced of its kind.
+- Integrates T-Head XuanTie C920 cores, which are high-performance out-of-order cores.
+- In single-core NPB benchmarks, the SG2042 outperforms all other RISC-V CPUs by 2.6x to 16.7x.
+- The memory subsystem is the greatest performance bottleneck, especially for memory-bound algorithms.
+- Relative to x86-64 and AArch64, the SG2042 is competitive on compute-bound algorithms but lags on memory-bound ones.
+
+## Relationships
+
+No specific relationships to existing wiki pages can be established from the available source context. The SG2042 is a distinct hardware target not yet represented in the wiki.
+
+## Sources
+
+- arXiv:2406.12394 ("Performance characterisation of the 64-core SG2042 RISC-V CPU for HPC", Brown and Jamieson, June 2024)
+merge_draft_body -->
+
+## [2026-07-06] merge_pending | npb-characterization-sg2042.md
+target_page: npb-characterization-sg2042.md
+canonical_name: NAS Parallel Benchmark characterization of Sophon SG2042
+colliding_name: SG2042 NPB Benchmark Characterization
+source: https://www.researchgate.net/publication/381517668_Performance_characterisation_of_the_64-core_SG2042_RISC-V_CPU_for_HPC
+status: pending_review
+<!-- merge_draft_body
+# SG2042 NPB Benchmark Characterization
+
+The Sophon SG2042 64-core RISC-V CPU was characterized using the NASA NAS Parallel Benchmark (NPB) suite in a June 2024 study by Brown and Jamieson (EPCC, University of Edinburgh). The benchmarks compare the SG2042 against other RISC-V CPUs, x86-64 (Xeon Platinum 8170), and AArch64 systems. Single-core results show that the SG2042 outperforms all other RISC-V solutions by a factor of 2.6 to 16.7. Multi-core NPB tests with OpenMP and MPI parallelization reveal that the SG2042 performs competitively on compute-bound algorithms but shows decreased relative performance on memory-bandwidth- or latency-bound workloads, with the memory subsystem identified as the primary bottleneck. The study uses NPB pseudo-applications including the MG (Multi-Grid) benchmark. The measurement method involves running the NPB suite with various configurations and comparing against established HPC CPUs. The evidence strength is measured, as the data comes from direct experimentation.
+
+## Key Claims
+
+- SG2042 delivers 2.6x to 16.7x single-core performance improvement over other RISC-V CPUs.
+- On compute-bound NPB benchmarks, the SG2042 performs comparatively well against x86-64 and AArch64 CPUs.
+- On memory-bandwidth- or latency-bound benchmarks, relative performance degrades significantly.
+- The SG2042's memory subsystem is the greatest performance bottleneck for HPC workloads.
+
+## Measurement Context
+
+- Hardware version: Sophon SG2042 with T-Head XuanTie C920 cores, 64 cores.
+- Software/toolchain version: NAS Parallel Benchmark suite, OpenMP, MPI; no specific compiler version reported.
+- Workload shape: NPB pseudo-applications (MG, others unspecified).
+- Metric: Single-core performance improvement factor; qualitative comparison of compute-bound vs memory-bound.
+- Method: Direct benchmarking using NPB suite; single-core and multi-core runs; comparison against Xeon Platinum 8170 and an AArch64 CPU.
+- Evidence strength: measured (preprint, experimental results).
+
+## Relationships
+
+No specific relationships to existing wiki pages can be established from the available source context. The SG2042 hardware target is documented in a separate hardware target page.
+
+## Sources
+
+- arXiv:2406.12394 ("Performance characterisation of the 64-core SG2042 RISC-V CPU for HPC", Brown and Jamieson, June 2024)
+merge_draft_body -->
+
+## [2026-07-06] merge_pending | spacemit-k3-hardware-target.md
+target_page: spacemit-k3-hardware-target.md
+canonical_name: SpacemiT K3
+colliding_name: SpacemiT K3
+source: https://www.cnx-software.com/2026/01/23/spacemit-k3-16-core-risc-v-soc-system-information-and-early-benchmarks/
+status: pending_review
+<!-- merge_draft_body
+# SpacemiT K3
+
+SpacemiT K3 is a 16-core RISC-V system-on-chip (SoC) developed by SpacemiT, based on the company's custom X100 processor cores and compliant with the RVA23 profile. The SoC operates at up to 2.5 GHz (observed at 2400 MHz in early benchmarks) and includes 32 GB of RAM, a 128 GB NVMe solid-state drive, a 64 GB UFS 2.2 flash device, and two Gigabit Ethernet ports. It runs Ubuntu 26.04 with Linux kernel 6.12. The graphics subsystem uses the saturn-edp driver for embedded DisplayPort output but lacks hardware 3D acceleration (software rendering only). The SoC is designed for server and possibly laptop applications, as evidenced by the eDP interface and the provision of remote-access for benchmarking.
+
+## Key Claims
+
+- 16-core configuration based on SpacemiT X100 cores.
+- RVA23-compliant, meeting the hardware requirements for Ubuntu 25.10 and later.
+- Operates at up to 2400 MHz in observed benchmarks (advertised 2.5 GHz).
+- 32 GB system memory (available: 31.38 GiB).
+- 128 GB NVMe SSD and 64 GB UFS 2.2 flash storage.
+- Two Gigabit Ethernet ports (one active with dwmac_spacemit_ethqos driver).
+- Embedded DisplayPort (eDP) interface via saturn-edp driver.
+- No hardware GPU acceleration (softpipe renderer only).
+- Temperature sensors are present but report erroneous high values (~413°C CPU); other thermal zones report plausible temperatures around 60–65°C.
+- Available as a remote-access server for benchmarking.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RVA23 (RISC-V 64-bit, rv64imafdcv likely from X100 core)
+- Vector/matrix/accelerator support: Not specified in source; no dedicated AI accelerator mentioned.
+- Memory/cache/TLB/DMA: 10 MiB L2 cache, 32 GB RAM, NVMe and UFS storage, eDP display, Gigabit Ethernet.
+- Compiler/toolchain support: Linux kernel 6.12, Ubuntu 26.04, inxi 3.3.40.
+
+## Relationships
+
+- [[andes-ax45mpv-hardware-target]]: Both are high-performance RISC-V targets with vector processing capabilities; Andes AX45MPV is a licensable core IP available for SoC integration, while SpacemiT K3 is a complete SoC that integrates custom X100 cores and provides a system for benchmarking.
+
+## Sources
+
+- https://www.cnx-software.com/2026/01/23/spacemit-k3-16-core-risc-v-soc-system-information-and-early-benchmarks/
+merge_draft_body -->
