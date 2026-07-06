@@ -118,6 +118,106 @@ class TestValidateAndParse:
         assert result is not None
         assert result["decision"] == "reject"
 
+    def test_eval_result_undeclared_page_type_rejected_when_taxonomy_given(self):
+        """Part C: a page_type not in the theme's declared page_type_taxonomy
+        is a hard rejection when a taxonomy is supplied, closing the gap where
+        _valid_page_type only checked format, never theme membership."""
+        raw = """{
+            "decision": "approve",
+            "rejection_reason": null,
+            "scorecard": {
+                "novelty_delta": 0.8, "claim_density": 0.7, "self_containedness": 0.9,
+                "bridge_score": 0.5, "hub_potential": 0.4, "gap_fill_score": 0.6,
+                "contradiction_potential": 0.2, "weighted_total": 0.65
+            },
+            "page_drafts": [
+                {
+                    "page_type": "invented_subtype",
+                    "filename": "example",
+                    "frontmatter": {"type": "invented_subtype"},
+                    "content": "# Example\\n\\nContent here."
+                }
+            ],
+            "pages_to_update": [],
+            "contradictions_found": []
+        }"""
+        assert validate_and_parse(raw, "EvalResult", allowed_page_types={"hardware_target"}) is None
+
+    def test_eval_result_declared_subtype_accepted(self):
+        """A subtype that IS a member of the supplied taxonomy still passes."""
+        raw = """{
+            "decision": "approve",
+            "rejection_reason": null,
+            "scorecard": {
+                "novelty_delta": 0.8, "claim_density": 0.7, "self_containedness": 0.9,
+                "bridge_score": 0.5, "hub_potential": 0.4, "gap_fill_score": 0.6,
+                "contradiction_potential": 0.2, "weighted_total": 0.65
+            },
+            "page_drafts": [
+                {
+                    "page_type": "hardware_target",
+                    "filename": "example",
+                    "frontmatter": {"type": "hardware_target"},
+                    "content": "# Example\\n\\nContent here."
+                }
+            ],
+            "pages_to_update": [],
+            "contradictions_found": []
+        }"""
+        result = validate_and_parse(raw, "EvalResult", allowed_page_types={"hardware_target"})
+        assert result is not None
+
+    def test_eval_result_base_types_always_valid_regardless_of_taxonomy(self):
+        """entity/synthesis/source_note are always valid even if the caller's
+        taxonomy set doesn't happen to list them explicitly."""
+        raw = """{
+            "decision": "approve",
+            "rejection_reason": null,
+            "scorecard": {
+                "novelty_delta": 0.8, "claim_density": 0.7, "self_containedness": 0.9,
+                "bridge_score": 0.5, "hub_potential": 0.4, "gap_fill_score": 0.6,
+                "contradiction_potential": 0.2, "weighted_total": 0.65
+            },
+            "page_drafts": [
+                {
+                    "page_type": "entity",
+                    "filename": "example",
+                    "frontmatter": {"type": "entity"},
+                    "content": "# Example\\n\\nContent here."
+                }
+            ],
+            "pages_to_update": [],
+            "contradictions_found": []
+        }"""
+        result = validate_and_parse(raw, "EvalResult", allowed_page_types=set())
+        assert result is not None
+
+    def test_eval_result_page_type_format_only_when_no_taxonomy_supplied(self):
+        """Omitting allowed_page_types (None) falls back to the pre-existing
+        format-only check -- backward compatible for callers that don't pass
+        a taxonomy."""
+        raw = """{
+            "decision": "approve",
+            "rejection_reason": null,
+            "scorecard": {
+                "novelty_delta": 0.8, "claim_density": 0.7, "self_containedness": 0.9,
+                "bridge_score": 0.5, "hub_potential": 0.4, "gap_fill_score": 0.6,
+                "contradiction_potential": 0.2, "weighted_total": 0.65
+            },
+            "page_drafts": [
+                {
+                    "page_type": "anything_shaped_like_a_type",
+                    "filename": "example",
+                    "frontmatter": {"type": "anything_shaped_like_a_type"},
+                    "content": "# Example\\n\\nContent here."
+                }
+            ],
+            "pages_to_update": [],
+            "contradictions_found": []
+        }"""
+        result = validate_and_parse(raw, "EvalResult")
+        assert result is not None
+
     def test_invalid_decision_returns_none(self):
         raw = """{
             "decision": "maybe",
@@ -175,6 +275,59 @@ class TestValidateAndParse:
         result = validate_and_parse(raw, "SynthesisResult")
         assert result is not None
         assert result["decision"] == "reject"
+
+    def test_valid_subtype_proposal_approve(self):
+        raw = """{
+            "decision": "approve",
+            "rejection_reason": null,
+            "subtype_name": "quantized_gemm_cores",
+            "label": "Quantized GEMM Cores",
+            "description": "Cores specialized for quantized GEMM inference.",
+            "structured_fields": ["hardware_targets", "datatypes"],
+            "parent_hub_ids": ["vendor_core_families", "workload_landscape"]
+        }"""
+        result = validate_and_parse(raw, "SubtypeProposal")
+        assert result is not None
+        assert result["decision"] == "approve"
+        assert len(result["parent_hub_ids"]) == 2
+
+    def test_subtype_proposal_reject_decision_does_not_require_fields(self):
+        raw = """{
+            "decision": "reject",
+            "rejection_reason": "shared tag only, no coherent category",
+            "subtype_name": null,
+            "label": null,
+            "description": null,
+            "structured_fields": null,
+            "parent_hub_ids": null
+        }"""
+        result = validate_and_parse(raw, "SubtypeProposal")
+        assert result is not None
+        assert result["decision"] == "reject"
+
+    def test_subtype_proposal_rejects_three_parent_hub_ids(self):
+        raw = """{
+            "decision": "approve",
+            "rejection_reason": null,
+            "subtype_name": "x",
+            "label": "X",
+            "description": "d",
+            "structured_fields": [],
+            "parent_hub_ids": ["a", "b", "c"]
+        }"""
+        assert validate_and_parse(raw, "SubtypeProposal") is None
+
+    def test_subtype_proposal_rejects_invalid_subtype_name(self):
+        raw = """{
+            "decision": "approve",
+            "rejection_reason": null,
+            "subtype_name": "Not Snake Case!",
+            "label": "X",
+            "description": "d",
+            "structured_fields": [],
+            "parent_hub_ids": ["a"]
+        }"""
+        assert validate_and_parse(raw, "SubtypeProposal") is None
 
 
 class TestQuotaManager:

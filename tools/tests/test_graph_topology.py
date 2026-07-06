@@ -100,6 +100,24 @@ def test_find_bridge_candidates_empty_when_single_component(tmp_path):
     assert graph_topology.find_bridge_candidates(pages_dir) == []
 
 
+def test_find_bridge_candidates_prefers_declared_hub_over_inferred_anchor(tmp_path):
+    # Cluster A: a-b-c (b highest degree, would be the inferred anchor);
+    # "declared_hub" is a lower-degree member of the same component but is
+    # in hub_pages -- a deliberate designation should win over inferred
+    # degree/tag heuristics.
+    pages_dir = tmp_path / "_pages"
+    _write(pages_dir, "entity", "a", [{"target": "b", "reason": "r"}])
+    _write(pages_dir, "entity", "b", [{"target": "c", "reason": "r"}, {"target": "declared_hub", "reason": "r"}])
+    _write(pages_dir, "entity", "c", [])
+    _write(pages_dir, "entity", "declared_hub", [])
+    _write(pages_dir, "entity", "x", [{"target": "y", "reason": "r"}])
+    _write(pages_dir, "entity", "y", [])
+
+    candidates = graph_topology.find_bridge_candidates(pages_dir, hub_pages={"declared_hub"})
+    assert len(candidates) == 1
+    assert candidates[0]["page_a"] == "declared_hub"
+
+
 def test_check_for_goodharting_flags_orphan_drop_without_path_improvement():
     before = {
         "topologically_orphaned_fraction": 0.75,

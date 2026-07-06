@@ -11,3 +11,6 @@ __pycache__/
 .pytest_cache/
 *.egg-info/
 .venv/
+validation_batch.log
+validation_batch_stdout.log
+replication_run.log
