@@ -744,45 +744,6 @@ The XuanTie C908 is a 64-bit RISC-V processor core developed by Alibaba's T-Head
 - https://github.com/FreeRTOS/FreeRTOS-Community-Supported-Demos/blob/main/RISC-V_XUANTIE_C908_GCC/README.md
 merge_draft_body -->
 
-## [2026-07-03] merge_pending | xuantie-c908.md
-target_page: xuantie-c908.md
-canonical_name: XuanTie C908
-colliding_name: XuanTie C908
-source: https://gcc.gnu.org/pipermail/gcc-patches/2026-June/719208.html
-status: pending_review
-<!-- merge_draft_body
-# XuanTie C908
-
-XuanTie C908 is a 64-bit RISC-V processor core designed by Alibaba's T-Head Semiconductor Co., Ltd., targeting embedded and edge applications. It implements a scalar in-order pipeline (pipeline depth not publicly documented) and lacks a vector extension, distinguishing it from other XuanTie family members such as the C906 which includes a 128-bit SIMD vector unit. The C908 is the central core in the CanMV-K230 development board (K230 SoC) and is supported by the GCC compiler through a dedicated tuning and scheduler model patch that models scalar integer, load/store, multiply, divide, and floating-point pipeline resources. The scheduler model is based on the XuanTie C908 R1S0 User Manual and was validated on a CanMV-K230-V1.1 board, achieving a 0.8% improvement in CoreMark score and 5–17% cycle-count reductions on instruction throughput tests using independent register groups.
-
-## Key Claims
-
-- XuanTie C908 is a 64-bit RISC-V core without vector extension, using a scalar in-order pipeline.
-- The core powers the CanMV-K230 development board (K230 SoC).
-- A GCC patch (2026-06-03) adds a scheduler model covering scalar integer, load/store, multiply, divide, and floating-point pipeline resources based on the C908 R1S0 User Manual.
-- Benchmark results on CanMV-K230-V1.1 show a 0.8% CoreMark improvement and 5–17% cycle-count improvement on instruction throughput loops.
-- Long-latency reservations are clamped to 7 cycles following existing RISC-V scheduler modelling practice.
-- Measurement methodology: 20 warm-up runs, 200 measured runs, aligned memory access.
-- The patch initially omitted vector instruction types because the C908 does not support the vector extension; Jeffrey Law noted that all instruction types must still be covered with dummy reservations to avoid compiler errors.
-
-## Optimization-Relevant Details
-
-- ISA/profile: 64-bit RISC-V scalar (no vector extension supported).
-- Vector/matrix/accelerator support: None.
-- Memory/cache/TLB/DMA: Not specified in the source.
-- Compiler/toolchain support: GCC (patch submitted June 2026, pre-trunk).
-
-## Relationships
-
-- [[xuantie-c906-hardware-target]]: Both the XuanTie C906 and C908 are 64-bit RISC-V in-order single-issue cores from T-Head; the C906 includes a 128-bit SIMD vector unit while the C908 lacks vector support and uses only scalar scheduling.
-- [[gcc-tuning-c908-canmv-k230]]: The GCC tuning page documents the benchmark results of the scheduler model described here; the scheduler model defines the pipeline resources whose performance was measured.
-- [[spacemit-x60-hardware-target]]: Both the C908 and SpacemiT X60 are RISC-V cores with in-order scalar pipelines and dedicated GCC tuning patches; however, the X60 is dual-issue and supports RVV 1.0, whereas the C908 is single-issue and lacks vector support.
-
-## Sources
-
-- https://gcc.gnu.org/pipermail/gcc-patches/2026-June/719208.html
-merge_draft_body -->
-
 ## [2026-07-03] merge_pending | xuantie-gnu-toolchain.md
 target_page: xuantie-gnu-toolchain.md
 canonical_name: XuanTie GNU Compiler Toolchain
@@ -1236,43 +1197,6 @@ No specific relationship to pages in the current wiki context.
 - https://github.com/kendryte/nncase
 merge_draft_body -->
 
-## [2026-07-03] merge_pending | k230-soc.md
-target_page: k230-soc.md
-canonical_name: K230
-colliding_name: K230
-source: https://owhinata.github.io/canmv-k230/en/
-status: pending_review
-<!-- merge_draft_body
-# K230
-
-The K230 is an AI-capable SoC developed by Canaan (Kendryte) featuring two Xuantie C908 RISC-V 64-bit cores in a heterogeneous configuration, a KPU (neural network accelerator) supporting INT8/INT16 inference, and 512 MB LPDDR3 RAM. The dual-core architecture assigns a big core (CPU1) clocked at 1.6 GHz running RT-Smart for AI inference and media processing, while the little core (CPU0) runs Linux 5.10.4 at 800 MHz for system control, networking, and user interaction, communicating via a shared filesystem (/sharefs). The board variant CanMV K230 v1.1 includes Broadcom WiFi (2.4 GHz only) and USB serial at 115200 baud. Models in ONNX or TFLite format are compiled to the kmodel format using the nncase compiler; operators unsupported by the KPU (e.g., softmax) are executed efficiently on the big core using RISC-V Vector Extension 1.0 with 128-bit vectors. The SoC targets embedded AI applications including computer vision and media processing on RISC-V platforms.
-
-## Key Claims
-
-- Heterogeneous dual-core Xuantie C908: big core at 1.6 GHz (RT-Smart), little core at 800 MHz (Linux 5.10.4).
-- Each core implements RISC-V Vector Extension 1.0 with 128-bit vectors.
-- Integrated KPU supports INT8/INT16 inference using compiled kmodel format.
-- Model compilation pipeline: ONNX/TFLite → nncase → kmodel.
-- Unsupported KPU operators (e.g., softmax) fall back to big-core RVV execution.
-- 512 MB LPDDR3 memory, Broadcom 2.4 GHz WiFi, USB serial at 115200 baud.
-- Board variant: CanMV K230 v1.1.
-
-## Optimization-Relevant Details
-
-- ISA/profile: RVV 1.0 with 128-bit vector length (VLEN).
-- Vector/matrix/accelerator support: Xuantie C908 vector processing unit (128-bit), KPU for INT8/INT16 tensor operations.
-- Memory/cache/TLB/DMA: 512 MB LPDDR3; L1 cache and TLB details not specified in source.
-- Compiler/toolchain support: nncase compiler for model conversion, TFLite and ONNX as source formats, Linux 5.10.4 SDK.
-
-## Relationships
-
-- [[andes-ax45mpv-hardware-target]]: Both the K230's Xuantie C908 and the AndesCore AX45MPV implement RISC-V vector extensions; however, the C908 implements RVV 1.0 with 128-bit vectors as a small embedded core, while the AX45MPV supports up to 1024-bit VLEN/DLEN as a multicore IP core targeting high-throughput workloads.
-
-## Sources
-
-- https://owhinata.github.io/canmv-k230/en/
-merge_draft_body -->
-
 ## [2026-07-03] merge_pending | sophon-sg2042.md
 target_page: sophon-sg2042.md
 canonical_name: SOPHON SG2042
@@ -1389,20 +1313,6 @@ source: https://vlsifacts.com/esperantos-et-soc-1-chip-integrates-more-than-1000
 status: pending_review
 proposed_update: Replace the first paragraph with a more detailed self-contained description: 'The ET-SoC-1 (Esperanto Technologies Supercomputer-on-Chip 1) is a RISC-V AI inference accelerator chip fabricated on TSMC's 7nm process, integrating 1088 energy-efficient ET-Minion 64-bit in-order RISC-V cores each with a vector/tensor unit, 4 high-performance ET-Maxion 64-bit out-of-order RISC-V cores, and 1 RISC-V service processor. With 24 billion transistors on a 570 mm² die, it delivers peak compute rates of 100 to 200 TOPS while consuming typically less than 20 watts. It is designed for energy-efficient ML recommendation inference in large data centers and is packaged on a Glacier Point v2 accelerator card that houses up to six chips, providing up to 192 GB of DRAM with 822 GB/s bandwidth.'
 
-## [2026-07-03] pending | et-soc-1-hardware-target.md
-target_page: et-soc-1-hardware-target.md
-target_section: key_claims
-source: https://vlsifacts.com/esperantos-et-soc-1-chip-integrates-more-than-1000-risc-v-cores-for-energy-efficient-ml-recommendation/
-status: pending_review
-proposed_update: Add the following specific claims to the Key Claims list: 'Integrates 1088 ET-Minion 64-bit in-order RISC-V cores (500 MHz to 1.5 GHz) and 4 ET-Maxion 64-bit out-of-order RISC-V cores (500 MHz to 2 GHz).', 'Contains 24 billion transistors on a 570 mm² die.', 'Peak compute rates of 100 to 200 TOPS.', 'Typical power consumption less than 20 watts.', 'Inclusion of over 160 million bytes of on-die SRAM for caches and scratchpad.', 'Memory interfaces include low-power LPDDR4x DRAM and eMMC FLASH; PCIe x8 Gen4 and other common I/O interfaces.', 'Glacier Point v2 accelerator card integrates up to six chips, offering up to 192 GB DRAM and 822 GB/s bandwidth.', 'Claims 123x better performance per watt for ML Recommendation and 25.7x better performance per watt for Image Classification compared to an unspecified baseline.'
-
-## [2026-07-03] pending | et-soc-1-hardware-target.md
-target_page: et-soc-1-hardware-target.md
-target_section: optimization_details
-source: https://vlsifacts.com/esperantos-et-soc-1-chip-integrates-more-than-1000-risc-v-cores-for-energy-efficient-ml-recommendation/
-status: pending_review
-proposed_update: Update Optimization-Relevant Details: 'Vector/matrix/accelerator support: Each ET-Minion core includes a vector/tensor unit (specific ISA extensions not detailed).', 'Memory/cache/TLB/DMA: Over 160 MB on-die SRAM for caches and scratchpad; interfaces to LPDDR4x DRAM and eMMC FLASH; PCIe x8 Gen4.', 'Compiler/toolchain support: Not specified in this source.'
-
 ## [2026-07-03] pending | spacemit-x60-hardware-target.md
 target_page: spacemit-x60-hardware-target.md
 target_section: Optimization-Relevant Details
@@ -1467,47 +1377,6 @@ No specific relationship to visible context pages.
 ## Sources
 
 - https://github.com/chipsalliance
-merge_draft_body -->
-
-## [2026-07-03] merge_pending | xuantie-c908.md
-target_page: xuantie-c908.md
-canonical_name: XuanTie C908
-colliding_name: XuanTie C908
-source: https://riscv.org/blog/xuantie-c908-accelerates-ai-with-software-and-hardware-fusion/
-status: pending_review
-<!-- merge_draft_body
-# XuanTie C908
-
-The XuanTie C908 is a RISC-V processor core released by T-Head Semiconductor (Alibaba Group) that implements the RISC-V Vector Extension (RVV) 1.0 and targets AI inference workloads in visual AI, intelligent interaction, and other advanced technologies. It operates at a frequency of up to 2 GHz and supports configurable vector register bit widths of 128 or 256 bits (VLEN). The core's vector execution unit handles FP16, BFP16, FP32, INT8, INT32, and INT64 integer operations, and additionally provides INT8 and INT4 vector dot product instructions for quantized neural network inference. The micro-architecture includes instruction fusion technology to improve instruction throughput and reduce pipeline stalls. The XuanTie C908 is the successor to the XuanTie C906 and delivers significantly higher AI performance through both hardware enhancements (vector dot product extensions, wider vector options) and software optimization via the Structure of Heterogeneous Library (SHL) and the Heterogeneous Honey Badger (HHB) deployment tool. The core is compliant with the standard RISC-V vector extension 1.0, ensuring compatibility with the broader RISC-V software ecosystem.
-
-## Key Claims
-
-- Implements RVV 1.0 with 128/256-bit configurable VLEN.
-- Supports INT8/INT4 vector dot product operations.
-- Features instruction fusion technology for improved instruction-level parallelism.
-- Vector unit supports FP16, BFP16, FP32, INT8, INT32, INT64 operations.
-- Operates at up to 2 GHz.
-- SHL library provides inference acceleration with fp32, fp16, and int8 data types.
-- HHB deployment tool supports int8 asymmetric quantization and fp16 quantization.
-- Provides 3.75 to 4.57 times AI performance improvement over the previous generation XuanTie C906 (@vlen128).
-- With int8 vector dot product instructions, achieves 3.35x speedup on MobileNet relative to baseline without dot product.
-- Expanding VLEN to 256 yields an additional 1.55x–1.68x speedup.
-
-## Optimization-Relevant Details
-
-- ISA/profile: RISC-V with RVV 1.0
-- Vector/matrix/accelerator support: 128/256-bit VLEN, INT8/INT4 dot product, FP16/BFP16/FP32 vector
-- Memory/cache/TLB/DMA: High-speed cache technology (details not specified in source)
-- Compiler/toolchain support: SHL (Structure of Heterogeneous Library), HHB (Heterogeneous Honey Badger)
-
-## Relationships
-
-- [[c908-wino-gemm-optimization]]: The XuanTie C908 is the hardware target for the Winograd and GEMM optimization techniques implemented in the SHL library, which uses the core's vector dot product instructions and register blocking scheme for convolution acceleration.
-- [[mlir-xdsl-rvv-codegen-pipeline]]: Both target RVV 1.0 hardware, but the MLIR-xDSL pipeline aims at portable compiler-driven code generation for RISC-V platforms while the C908's SHL optimizations are hand-tuned library routines specific to the XuanTie C908 microarchitecture.
-
-## Sources
-
-- https://riscv.org/blog/xuantie-c908-accelerates-ai-with-software-and-hardware-fusion/
 merge_draft_body -->
 
 ## [2026-07-03] pending | c908-wino-gemm-optimization.md
@@ -1654,79 +1523,6 @@ xDSL is an open-source Python-native compiler framework that provides MLIR-based
 - https://xdsl.readthedocs.io/stable/marimo/
 merge_draft_body -->
 
-## [2026-07-03] merge_pending | sophon-sg2042.md
-target_page: sophon-sg2042.md
-canonical_name: SOPHON SG2042
-colliding_name: Sophon SG2042
-source: https://arxiv.org/html/2406.12394v1
-status: pending_review
-<!-- merge_draft_body
-# Sophon SG2042
-
-The Sophon SG2042 is a 64-core RISC-V CPU designed for high-performance workloads, produced by Sophon (SOPHGO) and first released in summer 2023. It is organized in clusters of four XuanTie C920 cores, each a 64-bit out-of-order superscalar processor implementing RV64GCV with the RVV v0.7.1 vector extension supporting a 128-bit vector width. The SG2042 features a 12-stage pipeline, 64KB L1 instruction and data cache per core, 1MB L2 cache shared per four-core cluster, and a 64MB L3 system cache shared across all cores. It contains four DDR4-3200 memory controllers and 32 lanes of PCI-E Gen4, and is available in the Milk-V Pioneer Box with 128GB of DDR4 RAM. The C920 core's RVV v0.7.1 is not supported by mainline GCC or LLVM, requiring T-Head's XuanTie GCC (20210618 release, GCC 8.4) for auto-vectorization. The SG2042 is the first mass-produced high-core-count RISC-V CPU and targets HPC workloads, but its memory subsystem is identified as the primary performance bottleneck.
-
-## Key Claims
-
-- The SG2042 has 64 XuanTie C920 cores running at 2GHz, organized in quad-core clusters.
-- Implements RV64GCV with RVV v0.7.1, 128-bit vector width.
-- Memory hierarchy: 64KB L1 I/D per core, 1MB L2 per cluster, 64MB L3 shared.
-- Four DDR4-3200 memory controllers, 32 lanes PCI-E Gen4.
-- Requires XuanTie GCC (GCC 8.4 from 20210618 release) for vectorization; mainline compilers do not support RVV v0.7.1.
-- Outperforms other commodity RISC-V CPUs by 2.6x to 16.7x at single-core level in NPB suite.
-- Performs well on compute-bound algorithms but is memory bandwidth/latency bound relative to x86-64 and AArch64 CPUs.
-
-## Optimization-Relevant Details
-
-- ISA/profile: RV64GCV with RVV v0.7.1 (draft)
-- Vector/matrix/accelerator support: 128-bit vector unit per core, RVV v0.7.1
-- Memory/cache/TLB/DMA: 64KB L1 I/D, 1MB L2 (per 4-core cluster), 64MB L3, DDR4-3200, 32x PCIe Gen4
-- Compiler/toolchain support: XuanTie GCC (GCC 8.4 from 20210618 release) required for RVV; mainline GCC/LLVM do not support RVV v0.7.1
-
-## Relationships
-
-- [[sophon-sg2044-hardware-target]]: The SG2044 is the successor to the SG2042, employing C920v2 cores with RVV v1.0 and an enhanced memory subsystem; the SG2042 uses C920v1 cores with RVV v0.7.1 and its memory subsystem is identified as the primary performance bottleneck.
-- [[xuantie-c906-hardware-target]]: The XuanTie C906 is an in-order single-issue RISC-V core with a custom 128-bit SIMD unit, while the SG2042 uses out-of-order C920 cores with RVV v0.7.1; both are T-Head cores but target different performance segments.
-
-## Sources
-
-- https://arxiv.org/html/2406.12394v1
-merge_draft_body -->
-
-## [2026-07-03] merge_pending | sophon-sg2042.md
-target_page: sophon-sg2042.md
-canonical_name: SOPHON SG2042
-colliding_name: Sophon SG2042
-source: https://arxiv.org/abs/2406.12394
-status: pending_review
-<!-- merge_draft_body
-# Sophon SG2042
-
-The Sophon SG2042 is a 64-core RISC-V CPU designed for high performance workloads, first released in summer 2023. It is the first mass-produced, commodity-available high-core-count RISC-V processor targeting HPC applications. Each core is a T-Head XuanTie C920, a 64-bit high-performance design, organized in clusters of four cores running at 2 GHz. The processor supports the RISC-V ISA with the standard extensions (G, C, V) and is built for high throughput. Initial performance characterization using the NASA NAS Parallel Benchmark suite shows that the SG2042 delivers a 2.6× to 16.7× single-core performance improvement over other commodity RISC-V CPUs. Against x86-64 and AArch64 CPUs common in HPC, it performs competitively on compute-bound algorithms but falls behind on memory bandwidth- or latency-bound workloads, identifying the memory subsystem as the primary bottleneck. The SG2042 represents a significant milestone for RISC-V in HPC, providing a platform for open-ISA supercomputing research.
-
-## Key Claims
-
-- The SG2042 is the first mass-produced 64-core RISC-V CPU for HPC, released in summer 2023.
-- Cores are T-Head XuanTie C920, 64-bit, 2 GHz, organized in 4-core clusters.
-- Single-core performance improvement of 2.6× to 16.7× over other RISC-V CPUs, as measured by the NAS Parallel Benchmark suite.
-- Performs well on compute-bound algorithms relative to x86-64 and AArch64 HPC CPUs.
-- Memory subsystem (bandwidth and latency) is the greatest performance bottleneck.
-
-## Optimization-Relevant Details
-
-- ISA/profile: RISC-V with standard extensions (G, C, V); no vendor-specific matrix extensions documented.
-- Vector/matrix/accelerator support: Supports RISC-V Vector Extension (RVV) 1.0 per XuanTie C920 specification (not detailed in this source).
-- Memory/cache/TLB/DMA: 64-core design with memory subsystem bottleneck; no detailed cache hierarchy provided in the source.
-- Compiler/toolchain support: Not specified; general GCC/LLVM RISC-V toolchains apply.
-
-## Relationships
-
-No specific relationships to existing wiki pages can be derived from the source material. The SG2042 is a distinct hardware target not directly related to the Milk-V Jupiter or its Q4X quantization optimization.
-
-## Sources
-
-- Brown, N. and Jamieson, M. (2024). "Performance characterisation of the 64-core SG2042 RISC-V CPU for HPC." arXiv:2406.12394. https://arxiv.org/abs/2406.12394
-merge_draft_body -->
-
 ## [2026-07-03] pending | spacemit-x60-hardware-target.md
 target_page: spacemit-x60-hardware-target.md
 target_section: Relationships
@@ -1802,94 +1598,6 @@ Sophon SG2042 is a 64-core RISC-V SoC designed by Sophgo, featuring a network-on
 
 - https://github.com/sophgo/sophgo-doc/blob/main/SG2042/TRM/source/system.rst
 merge_draft_body -->
-
-## [2026-07-03] merge_pending | xuantie-c908.md
-target_page: xuantie-c908.md
-canonical_name: XuanTie C908
-colliding_name: GCC Tuning for XuanTie C908 (CanMV-K230)
-source: https://gcc.gnu.org/pipermail/gcc-patches/2026-June/719234.html
-status: pending_review
-<!-- merge_draft_body
-# GCC Tuning for XuanTie C908 (CanMV-K230)
-
-The GCC tuning patch for the XuanTie C908 core on the CanMV-K230-V1.1 board introduces a scalar scheduler model that models integer, load/store, multiply, divide, and floating-point pipeline resources based on the XuanTie C908 R1S0 User Manual. This patch only models scalar scheduling; vector scheduling is left for future work. The tuning was tested using CoreMark and custom instruction throughput tests (unrolled loops with groups of instructions such as add and fadd operating on independent registers). On this hardware, the tuning yields a 0.8% CoreMark improvement and cycle-count improvements of 5% to 17% in throughput tests. Long-latency reservations are clamped to 7 cycles following the existing RISC-V scheduler modelling approach. The benchmark measurements used aligned memory access, 20 warm-up runs, and 200 measured executions.
-
-## Key Claims
-
-- The GCC tuning patch provides a 0.8% CoreMark score improvement on the CanMV-K230-V1.1 board with the XuanTie C908 core.
-- Custom instruction throughput tests (unrolled loops with independent registers) show cycle-count improvements of 5% to 17%.
-- The scheduler model clamps long-latency reservations to 7 cycles, consistent with the existing RISC-V scheduling approach introduced in GCC commit 8265192.
-- Only scalar scheduling is modeled; vector unit scheduling is deferred to a future patch (xt-c908v).
-
-## Measurement Context
-
-- Hardware version: XuanTie C908 R1S0 core on CanMV-K230-V1.1 board
-- Software/toolchain version: GCC with patch applied (riscv-cores.def, riscv-opts.h, riscv.cc, riscv.md, xt-c908.md)
-- Workload shape: CoreMark; unrolled loops with groups of independent scalar integer and floating-point operations (e.g., add, fadd)
-- Metric: CoreMark score improvement (0.8%), cycle-count improvement (5%–17%)
-- Method: 20 warm-up runs, 200 measured executions, aligned memory access
-- Evidence strength: measured
-
-## Relationships
-
-- [[xuantie-c906-hardware-target]]: Both the XuanTie C908 and C906 are in-order single-issue RISC-V cores from T-Head; however, the C906 includes a 128-bit SIMD vector unit while the C908 lacks vector extensions and relies purely on scalar performance, as reflected in the C908 tuning which does not model vector scheduling.
-- [[spacemit-x60-hardware-target]]: Both the XuanTie C908 and SpacemiT X60 have GCC tuning patches that model in-order scalar pipelines to improve instruction scheduling; however, the X60 tuning additionally models a dual-issue pipeline and RVV 1.0 vector unit, while the C908 tuning is purely scalar single-issue.
-
-## Sources
-
-- https://gcc.gnu.org/pipermail/gcc-patches/2026-June/719234.html
-merge_draft_body -->
-
-## [2026-07-03] merge_pending | gcc-tuning-c908-canmv-k230.md
-target_page: gcc-tuning-c908-canmv-k230.md
-canonical_name: GCC Tuning Benchmark on XuanTie C908
-colliding_name: GCC Tuning for XuanTie C908
-source: https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg406313.html
-status: pending_review
-<!-- merge_draft_body
-# GCC Tuning for XuanTie C908
-
-The GCC tuning for the XuanTie C908 core is a patch that introduces a scalar scheduler model for the GCC RISC-V backend, based on the XuanTie C908 R1S0 User Manual. The model describes the scalar integer, load/store, multiply, divide, and floating-point pipeline resources and is designed to improve instruction scheduling on the in-order single-issue pipeline of the C908 core. Vector scheduling is explicitly left for future work (xt-c908v). The tuning was tested on a CanMV-K230-V1.1 board using CoreMark and specialized instruction throughput tests that measure the efficiency of scheduling unrolled loops. The patch was developed by Milan Tripkovic and accepted into GCC trunk by Jeffrey Law on June 3, 2026.
-
-## Key Claims
-
-- The scheduler model covers scalar integer, load/store, multiply, divide, and floating-point pipeline resources, with long-latency reservations clamped to 7 cycles following the existing RISC-V scheduler approach.
-- On a CanMV-K230-V1.1 board, the tuning yields approximately 0.8% improvement in CoreMark score.
-- Instruction throughput tests (unrolled loops with groups of instructions using independent registers) show cycle-count improvements of 5% to 17%.
-- The patch requires the XuanTie C908 R1S0 User Manual for pipeline resource definitions; vector scheduling is not modeled in this patch.
-- The measurement methodology uses 20 warm-up runs followed by 200 measured runs with aligned memory access.
-
-## Transformation
-
-- **Prerequisites:** XuanTie C908 R1S0 User Manual, GCC source tree, understanding of C908 pipeline resources.
-- **Steps:** Add a new tune structure and pipeline model to the GCC RISC-V backend by modifying `riscv-cores.def`, `riscv-opts.h`, `riscv.cc`, and `riscv.md`, and creating a new file `xt-c908.md` with the reservation descriptions.
-- **Expected effect:** Improved instruction scheduling for scalar code on the XuanTie C908 core, reducing pipeline stalls and improving throughput on in-order execution.
-- **Failure modes:** The tuning does not model vector scheduling, so vector workloads will not see direct benefits; future work (xt-c908v) is needed for vector support.
-- **Measurements:** CoreMark improvement ~0.8%; instruction throughput tests show 5–17% cycle-count reduction compared to the generic schedule model.
-
-## Relationships
-
-- [[xuantie-c906-hardware-target]]: Both the XuanTie C908 and XuanTie C906 are in-order single-issue RISC-V cores from T-Head; the C906 includes a 128-bit SIMD vector unit while the C908 has no vector extension and relies solely on scalar performance as modeled in this GCC tuning.
-- [[spacemit-x60-hardware-target]]: Both the XuanTie C908 and SpacemiT X60 have GCC tuning patches that model in-order scalar pipelines to improve instruction scheduling; however, the X60 tuning additionally models dual-issue capability and RVV 1.0 vector support, while the C908 tuning is purely scalar.
-
-## Sources
-
-- https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg406313.html
-merge_draft_body -->
-
-## [2026-07-03] pending | xuantie-c906-hardware-target.md
-target_page: xuantie-c906-hardware-target.md
-target_section: Relationships
-source: https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg406313.html
-status: pending_review
-proposed_update: Update the outbound link from 'gcc-tuning-c908-canmv-k230' to 'gcc-tuning-xuantie-c908' and adjust the reason text to reference the new optimization_recipe page.
-
-## [2026-07-03] pending | spacemit-x60-hardware-target.md
-target_page: spacemit-x60-hardware-target.md
-target_section: Relationships
-source: https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg406313.html
-status: pending_review
-proposed_update: Update the outbound link from 'gcc-tuning-c908-canmv-k230' to 'gcc-tuning-xuantie-c908' and adjust the reason text to reference the new optimization_recipe page.
 
 ## [2026-07-03] merge_pending | spacemit-x60-gcc-tuning.md
 target_page: spacemit-x60-gcc-tuning.md
