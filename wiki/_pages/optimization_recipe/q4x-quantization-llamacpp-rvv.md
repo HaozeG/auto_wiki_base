@@ -38,7 +38,7 @@ type: optimization_recipe
 created: '2026-07-03'
 updated: '2026-07-03'
 cold_start: true
-inbound_links: 1
+inbound_links: 2
 ---
 
 # Q4X Quantization for LLM Inference on RISC‑V Vector CPUs

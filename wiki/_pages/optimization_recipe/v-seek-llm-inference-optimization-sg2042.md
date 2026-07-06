@@ -44,7 +44,7 @@ type: optimization_recipe
 created: '2026-07-03'
 updated: '2026-07-03'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 ---
 
 # V-Seek LLM Inference Optimization on Sophon SG2042

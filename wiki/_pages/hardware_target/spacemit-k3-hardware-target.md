@@ -9,6 +9,10 @@ aliases:
 - llama.cpp inference on SpacemiT K3
 - SpacemiT K3 LLM benchmark
 - llama.cpp K3 benchmark
+- Llama.cpp SpaceMIT K3 Gemma 4 QAT MTP Benchmarks
+- llama-cpp-spacemit-k3
+- SpaceMIT K3 Gemma 4 benchmarks
+- Milk-V Jupiter 2 Gemma 4 benchmarks
 subtype: null
 tags:
 - RISC-V
@@ -44,6 +48,8 @@ sources:
 - https://dev.to/gounthar/benchmarking-llamacpp-on-spacemit-k3-risc-v-ai-cores-vs-standard-rvv-part-4-10mc
 - raw/cache/673f92af34a7ba79.md
 - https://bruno.verachten.fr/2026/03/12/benchmarking-llama.cpp-on-spacemit-k3-risc-v-ai-cores-vs-standard-rvv-part-4/
+- raw/cache/cc037e7fa5f7e3f8.md
+- https://github.com/rcarmo/llama-cpp-spacemit-k3/blob/master/README.md
 source_url: https://dev.to/gounthar/benchmarking-llamacpp-on-spacemit-k3-risc-v-ai-cores-vs-standard-rvv-part-4-10mc
 fetched_at: '2026-07-03T16:13:21.390248+00:00'
 type: hardware_target

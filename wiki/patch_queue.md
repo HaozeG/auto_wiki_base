@@ -2129,3 +2129,42 @@ The extension defines pseudo instructions (`th.vmmv.m`, `th.vneg.v`, `th.vncvt.x
 
 - https://github.com/XUANTIE-RV/thead-extension-spec/blob/master/xtheadvector.adoc
 merge_draft_body -->
+
+## [2026-07-06] merge_pending | spacemit-k3-hardware-target.md
+target_page: spacemit-k3-hardware-target.md
+canonical_name: SpacemiT K3
+colliding_name: Llama.cpp SpaceMIT K3 Gemma 4 QAT MTP Benchmarks
+source: https://github.com/rcarmo/llama-cpp-spacemit-k3/blob/master/README.md
+status: pending_review
+<!-- merge_draft_body
+# Llama.cpp SpaceMIT K3 Gemma 4 QAT MTP Benchmarks
+
+Benchmark results for running Gemma 4 QAT models (E2B, E4B, 12B, 26B A4B) with Multi-Token Prediction (MTP) on a Milk-V Jupiter 2 board (SpacemiT K3 SoC). All measurements were collected using a custom llama.cpp fork with the SpaceMIT CPU backend and TurboQuant optimizations enabled. The hardware platform uses 8 A100/IME2 preferred cores with TCM (block size 393216) and f16 KV cache. Two benchmark scenarios are reported: a cold-start server benchmark with a synthetic agent prompt (complex coding plan) and a llama-bench sweep across thread counts and ubatch sizes. The results demonstrate practical local LLM inference capability on a RISC-V native board with measured prefill rates up to 120.9 tok/s (Gemma 4 E2B) and generation rates up to 13.36 tok/s. MTP acceptance rates range from 0.306 to 0.429 depending on model size. The 26B A4B model achieves ~8.36 tok/s at 16K context, which is the sweet spot before memory exhaustion at 64K.
+
+## Key Claims
+
+- Gemma 4 E2B QAT (Q4_K_XL): cold prefill 93.14 tok/s, generation 12.93 tok/s, MTP acceptance 0.306, coherence pass.
+- Gemma 4 E4B QAT: cold prefill 55.37 tok/s, generation 8.52 tok/s, MTP acceptance 0.336.
+- Gemma 4 12B QAT: cold prefill 20.72 tok/s, generation 4.32 tok/s, MTP acceptance 0.429.
+- Gemma 4 26B A4B QAT: best tg 8.36 tok/s at ctx=16K/f16 KV; OOM at 64K.
+- llama-bench best: E2B prefill 120.90 tok/s (t=8 ub=256 f16), generation 13.36 tok/s (t=8 ub=512 f16).
+- Thread count 8 performs best; t=12 causes TCM contention.
+- f16 KV cache consistently outperforms q8_0 by ~1.8 tok/s on generation.
+
+## Measurement Context
+
+- Hardware version: SpacemiT K3 board (Milk-V Jupiter 2) with A100/IME2 cores, TCM block size 393216, memory backend HPAGE.
+- Software/toolchain version: llama.cpp fork with spacemit backend (build flags: -DGGML_CPU_RISCV64_SPACEMIT=ON -DGGML_RV_ZBA=ON -DGGML_RV_ZFH=ON -DGGML_RV_ZVFH=ON).
+- Workload shape: Server benchmark uses synthetic agent prompt (system + user) generating structured output of ~800-900 tokens with temperature=0.2, no max_tokens limit. Llama-bench sweep measures prefill and generation with varying ubatch sizes (256, 512, 1024).
+- Metric: Prefill tokens per second, generation tokens per second, MTP acceptance rate (fraction of draft tokens accepted), coherence grade (pass/fail based on stop reason and content quality).
+- Method: Cold startup measurements from llama-server after tcm-cleanup; warm request measurements with prompt-cache hit. Llama-bench runs 96 configurations.
+- Evidence strength: measured (from live runs on the specific hardware).
+
+## Relationships
+
+No specific relationship to the visible context pages ([[q4x-quantization-llamacpp-rvv]], [[v-seek-llm-inference-optimization-sg2042]]) can be established from the source material; the benchmark targets a different hardware platform (Spacemit K3 vs Jupiter/SG2042) and a different quantization technique (QAT with MTP vs codebook-based Q4X or V-Seek). Future pages on SpaceMIT K3 hardware or the kernel optimizations could strengthen these links.
+
+## Sources
+
+- https://github.com/rcarmo/llama-cpp-spacemit-k3/blob/master/README.md
+merge_draft_body -->

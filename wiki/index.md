@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-06 | Pages: 91 | Sources: 242
+Last updated: 2026-07-06 | Pages: 92 | Sources: 244
 
 ## Entity Pages
 
@@ -183,6 +183,7 @@ Last updated: 2026-07-06 | Pages: 91 | Sources: 242
 - **Key Stone K1**: → [spacemit-k1](hardware_target/spacemit-k1.md)
 - **LLM inference in C/C++**: → [llama-cpp](entity/llama-cpp.md)
 - **Llama.cpp GGML RVV Optimization**: → [rise-project-rp014-llamacpp-ggml-rvv](entity/rise-project-rp014-llamacpp-ggml-rvv.md)
+- **Llama.cpp SpaceMIT K3 Gemma 4 QAT MTP Benchmarks**: → [spacemit-k3-hardware-target](hardware_target/spacemit-k3-hardware-target.md)
 - **MCv2**: → [monte-cimone-cluster](entity/monte-cimone-cluster.md)
 - **MLIR**: → [mlir-compiler-infrastructure](entity/mlir-compiler-infrastructure.md)
 - **MLIR project**: → [mlir-compiler-infrastructure](entity/mlir-compiler-infrastructure.md)
@@ -201,6 +202,8 @@ Last updated: 2026-07-06 | Pages: 91 | Sources: 242
 - **Maestro ultrasound gesture recognition**: → [maestro-gesture-recognition](benchmark_result/maestro-gesture-recognition.md)
 - **Matrix Extension Specification**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **Milk-V Jupiter 2**: → [spacemit-k3-hardware-target](hardware_target/spacemit-k3-hardware-target.md)
+- **Milk-V Jupiter 2 Gemma 4 benchmarks**: → [spacemit-k3-hardware-target](hardware_target/spacemit-k3-hardware-target.md)
+- **Milk-V Jupiter 2 Gemma 4 server config**: → [llamacpp-spacemit-k3-gemma4-qat-mtp-config](optimization_recipe/llamacpp-spacemit-k3-gemma4-qat-mtp-config.md)
 - **MilkV Jupiter 2**: → [spacemit-k3-hardware-target](hardware_target/spacemit-k3-hardware-target.md)
 - **Monte Cimone**: → [monte-cimone-cluster](entity/monte-cimone-cluster.md)
 - **Monte Cimone v2**: → [monte-cimone-cluster](entity/monte-cimone-cluster.md)
@@ -328,6 +331,8 @@ Last updated: 2026-07-06 | Pages: 91 | Sources: 242
 - **Sophon SG2380**: → [sophon-sg2380-hardware-target](hardware_target/sophon-sg2380-hardware-target.md)
 - **SpMV-RVV**: → [spmv-rvv-benchmark](entity/spmv-rvv-benchmark.md)
 - **SpMV-RVV benchmark**: → [spmv-rvv-benchmark](entity/spmv-rvv-benchmark.md)
+- **SpaceMIT K3 Gemma 4 QAT MTP Configuration**: → [llamacpp-spacemit-k3-gemma4-qat-mtp-config](optimization_recipe/llamacpp-spacemit-k3-gemma4-qat-mtp-config.md)
+- **SpaceMIT K3 Gemma 4 benchmarks**: → [spacemit-k3-hardware-target](hardware_target/spacemit-k3-hardware-target.md)
 - **SpacemiT**: → [spacemit-entity](entity/spacemit-entity.md)
 - **SpacemiT IME2 llama.cpp optimization**: → [spacemit-ime2-llama-cpp-optimization](optimization_recipe/spacemit-ime2-llama-cpp-optimization.md)
 - **SpacemiT K1**: → [spacemit-k1](hardware_target/spacemit-k1.md)
@@ -344,6 +349,7 @@ Last updated: 2026-07-06 | Pages: 91 | Sources: 242
 - **SpacemiT X60 core**: → [spacemit-x60-hardware-target](hardware_target/spacemit-x60-hardware-target.md)
 - **SpacemiT llama.cpp fork**: → [spacemit-ime2-llama-cpp-optimization](optimization_recipe/spacemit-ime2-llama-cpp-optimization.md)
 - **Spacemit K1**: → [spacemit-k1](hardware_target/spacemit-k1.md)
+- **Spacemit K3 llama.cpp tuning**: → [llamacpp-spacemit-k3-gemma4-qat-mtp-config](optimization_recipe/llamacpp-spacemit-k3-gemma4-qat-mtp-config.md)
 - **StarFive JH-7110**: → [starfive-jh7110-hardware-target](hardware_target/starfive-jh7110-hardware-target.md)
 - **Structure of Heterogeneous Library**: → [shl](entity/shl.md)
 - **SweRV-ISS (derived)**: → [whisper-risc-v-iss-entity](entity/whisper-risc-v-iss-entity.md)
@@ -421,7 +427,9 @@ Last updated: 2026-07-06 | Pages: 91 | Sources: 242
 - **kendryte/nncase**: → [nncase](entity/nncase.md)
 - **laspp/SpMV-RVV**: → [spmv-rvv-benchmark](entity/spmv-rvv-benchmark.md)
 - **llama-cpp**: → [llama-cpp](entity/llama-cpp.md)
+- **llama-cpp-spacemit-k3**: → [spacemit-k3-hardware-target](hardware_target/spacemit-k3-hardware-target.md)
 - **llama.cpp**: → [llama-cpp](entity/llama-cpp.md)
+- **llama.cpp Gemma 4 QAT MTP on SpaceMIT K3**: → [llamacpp-spacemit-k3-gemma4-qat-mtp-config](optimization_recipe/llamacpp-spacemit-k3-gemma4-qat-mtp-config.md)
 - **llama.cpp K3 benchmark**: → [spacemit-k3-hardware-target](hardware_target/spacemit-k3-hardware-target.md)
 - **llama.cpp Quantization Methods**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
 - **llama.cpp inference on SpacemiT K3**: → [spacemit-k3-hardware-target](hardware_target/spacemit-k3-hardware-target.md)
@@ -506,7 +514,7 @@ Last updated: 2026-07-06 | Pages: 91 | Sources: 242
 | [sophon-sg2044-hardware-target.md](hardware_target/sophon-sg2044-hardware-target.md) | hardware_target | Sophon SG2044 |  | 2 | 8 |
 | [sophon-sg2380-hardware-target.md](hardware_target/sophon-sg2380-hardware-target.md) | hardware_target | Sophon SG2380 |  | 6 | 0 |
 | [spacemit-k1.md](hardware_target/spacemit-k1.md) | hardware_target | SpacemiT K1 |  | 4 | 4 |
-| [spacemit-k3-hardware-target.md](hardware_target/spacemit-k3-hardware-target.md) | hardware_target | SpacemiT K3 | RISC-V, SpacemiT, AI CPU, big.LITTLE, RVV 1.0 | 4 | 1 |
+| [spacemit-k3-hardware-target.md](hardware_target/spacemit-k3-hardware-target.md) | hardware_target | SpacemiT K3 | RISC-V, SpacemiT, AI CPU, big.LITTLE, RVV 1.0 | 6 | 1 |
 | [spacemit-x60-hardware-target.md](hardware_target/spacemit-x60-hardware-target.md) | hardware_target | SpacemiT X60 | RISC-V, GCC tuning, SpacemiT, in-order, RVV 1.0 | 2 | 8 |
 | [starfive-jh7110-hardware-target.md](hardware_target/starfive-jh7110-hardware-target.md) | hardware_target | StarFive JH-7110 |  | 2 | 0 |
 | [t1.md](hardware_target/t1.md) | hardware_target | T1 |  | 2 | 0 |
@@ -519,11 +527,12 @@ Last updated: 2026-07-06 | Pages: 91 | Sources: 242
 | [c908-wino-gemm-optimization.md](optimization_recipe/c908-wino-gemm-optimization.md) | optimization_recipe | C908 Winograd and GEMM Optimization in SHL |  | 2 | 12 |
 | [hhb-onnxruntime-yolox-deployment-xuantie-c920.md](optimization_recipe/hhb-onnxruntime-yolox-deployment-xuantie-c920.md) | optimization_recipe | HHB-onnxruntime YOLOX Deployment on Xuantie C920 |  | 2 | 0 |
 | [iree-riscv-microkernel-support.md](optimization_recipe/iree-riscv-microkernel-support.md) | optimization_recipe | IREE RISC-V Microkernel Support |  | 2 | 2 |
+| [llamacpp-spacemit-k3-gemma4-qat-mtp-config.md](optimization_recipe/llamacpp-spacemit-k3-gemma4-qat-mtp-config.md) | optimization_recipe | SpaceMIT K3 Gemma 4 QAT MTP Configuration |  | 2 | 0 |
 | [mlir-xdsl-rvv-codegen-pipeline.md](optimization_recipe/mlir-xdsl-rvv-codegen-pipeline.md) | optimization_recipe | MLIR-xDSL RVV Code Generation Pipeline |  | 2 | 6 |
-| [q4x-quantization-llamacpp-rvv.md](optimization_recipe/q4x-quantization-llamacpp-rvv.md) | optimization_recipe | Q4X Quantization for LLM Inference on RISC‑V Vector CPUs | quantization, codebook, llama.cpp, RVV | 2 | 1 |
+| [q4x-quantization-llamacpp-rvv.md](optimization_recipe/q4x-quantization-llamacpp-rvv.md) | optimization_recipe | Q4X Quantization for LLM Inference on RISC‑V Vector CPUs | quantization, codebook, llama.cpp, RVV | 2 | 2 |
 | [spacemit-ime2-llama-cpp-optimization.md](optimization_recipe/spacemit-ime2-llama-cpp-optimization.md) | optimization_recipe | SpacemiT IME2 llama.cpp optimization |  | 2 | 0 |
 | [spacemit-x60-gcc-tuning.md](optimization_recipe/spacemit-x60-gcc-tuning.md) | optimization_recipe | SpacemiT X60 GCC Tuning | RISC-V, GCC, SpacemiT, pipeline, in-order | 4 | 0 |
-| [v-seek-llm-inference-optimization-sg2042.md](optimization_recipe/v-seek-llm-inference-optimization-sg2042.md) | optimization_recipe | V-Seek LLM Inference Optimization on Sophon SG2042 |  | 2 | 0 |
+| [v-seek-llm-inference-optimization-sg2042.md](optimization_recipe/v-seek-llm-inference-optimization-sg2042.md) | optimization_recipe | V-Seek LLM Inference Optimization on Sophon SG2042 |  | 2 | 1 |
 
 ## Hub Hierarchy
 
@@ -569,6 +578,7 @@ Last updated: 2026-07-06 | Pages: 91 | Sources: 242
 - [c908-wino-gemm-optimization](optimization_recipe/c908-wino-gemm-optimization.md)
 - [hhb-onnxruntime-yolox-deployment-xuantie-c920](optimization_recipe/hhb-onnxruntime-yolox-deployment-xuantie-c920.md)
 - [iree-riscv-microkernel-support](optimization_recipe/iree-riscv-microkernel-support.md)
+- [llamacpp-spacemit-k3-gemma4-qat-mtp-config](optimization_recipe/llamacpp-spacemit-k3-gemma4-qat-mtp-config.md)
 - [mlir-xdsl-rvv-codegen-pipeline](optimization_recipe/mlir-xdsl-rvv-codegen-pipeline.md)
 - [q4x-quantization-llamacpp-rvv](optimization_recipe/q4x-quantization-llamacpp-rvv.md)
 - [spacemit-ime2-llama-cpp-optimization](optimization_recipe/spacemit-ime2-llama-cpp-optimization.md)
