@@ -892,6 +892,17 @@ def _persist_new_subtype(proposal: dict, candidate: dict) -> None:
         the type usable, not just documented);
       - a hub_hierarchy sub-hub entry with `tag` (not `subtype`) membership,
         so *existing* member pages are grouped without being reclassified.
+
+    Found live: _load_claude_md_block("theme_profile") returns the ALREADY
+    on-disk-serialized shape (organization_choice/organization_name keys),
+    not the pre-serialization shape _serializable_theme_profile() expects
+    (id/name keys, as produced by select_theme_profile()). Routing an
+    on-disk profile back through _serializable_theme_profile() blanks
+    organization_choice/organization_name (profile.get("id","") is always
+    "" for an on-disk profile) -- confirmed via a live end-to-end run where
+    a real subagent approval persisted correctly except for that field. Only
+    page_types/hub_hierarchy are mutated here, so the on-disk dict is
+    written back as-is, not re-derived from the pre-serialization shape.
     """
     profile = _load_claude_md_block("theme_profile")
     if not profile:
@@ -916,7 +927,7 @@ def _persist_new_subtype(proposal: dict, candidate: dict) -> None:
     profile["hub_hierarchy"] = hub_hierarchy
 
     text = _CLAUDE_MD.read_text(encoding="utf-8")
-    text = _replace_or_insert_yaml_block(text, "theme_profile", _serializable_theme_profile(profile))
+    text = _replace_or_insert_yaml_block(text, "theme_profile", profile)
     _CLAUDE_MD.write_text(text, encoding="utf-8")
 
 

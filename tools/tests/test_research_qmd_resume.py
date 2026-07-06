@@ -1277,7 +1277,8 @@ def test_run_taxonomy_evolution_persists_only_when_both_signals_agree(tmp_path):
         )
     claude_md = tmp_path / "CLAUDE.md"
     claude_md.write_text(
-        "```yaml\n[theme_profile]\ntheme: t\nhub_hierarchy:\n"
+        "```yaml\n[theme_profile]\ntheme: t\norganization_choice: workflow_first\n"
+        "organization_name: Workflow-first\nhub_hierarchy:\n"
         "- hub_id: vendor_core_families\n  label: Vendor RISC-V Core Families\n"
         "  subtype: hardware_target\n  description: d\n```\n"
         "```yaml\n[research_config]\nsynthesis_gap_min_cluster_size: 3\n"
@@ -1323,6 +1324,14 @@ def test_run_taxonomy_evolution_persists_only_when_both_signals_agree(tmp_path):
     text = claude_md.read_text(encoding="utf-8")
     assert "quantized_gemm_cores" in text
     assert "taxonomy_evolution" not in text  # log goes to wiki/log.md, not CLAUDE.md
+    # Regression guard: persistence must not blank sibling [theme_profile]
+    # fields it isn't touching -- found live when _persist_new_subtype
+    # incorrectly routed an already-on-disk profile back through
+    # _serializable_theme_profile(), which expects the pre-serialization
+    # (id/name) shape and blanks organization_choice/organization_name for
+    # an on-disk (organization_choice/organization_name already-keyed) profile.
+    assert "organization_choice: workflow_first" in text
+    assert "organization_name: Workflow-first" in text
 
 
 def test_run_taxonomy_evolution_respects_rate_limit(tmp_path):
