@@ -45,7 +45,7 @@ type: optimization_recipe
 created: '2026-07-03'
 updated: '2026-07-06'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 outbound_links:
 - target: spacemit-x60-hardware-target
   reason: This tuning recipe implements the GCC scheduling model for the SpacemiT

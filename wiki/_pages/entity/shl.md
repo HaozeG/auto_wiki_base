@@ -31,7 +31,7 @@ outbound_links:
 
 # SHL
 
-SHL (Structure of Heterogeneous Library, also known by its Chinese name ShiHulan) is a high-performance heterogeneous computing library developed by T-HEAD, the semiconductor design division of Alibaba Group, for the XuanTie CPU platform. SHL provides optimized binary libraries for neural network inference using the CSI-NN2 neural network library API, supporting both reference C implementations and assembly optimizations for XuanTie CPUs. It supports symmetric and asymmetric quantization, 8-bit, 16-bit, and FP16 data types, and is compatible with both NCHW and NHWC tensor formats. The library is designed to work with the HHB toolchain, which quantizes and compiles neural networks; SHL is then called automatically during inference. SHL covers different architectures including CPU, DSP, NPU, and GPU, and provides a reference heterogeneous schedule implementation. It uses a per-layer API for CPU and DSP execution and a graph execution mode for NPU and GPU, with a modular architecture that includes Vector Instruction OPT and Driver Wrapper modules. In principle, SHL only provides reference implementations for XuanTie CPU targets, while optimization for each NPU target platform is left to the respective vendor. This design allows SHL to serve as a unified library that can be extended for heterogeneous computing across different T-HEAD processors.
+SHL (Structure of Heterogeneous Library, also known by its Chinese name ShiHulan, version 2.2.x) is a high-performance heterogeneous computing library developed by T-HEAD, the semiconductor design division of Alibaba Group, for the XuanTie CPU platform. SHL provides optimized binary libraries for neural network inference using the CSI-NN2 neural network library API, supporting both reference C implementations and assembly optimizations for XuanTie CPUs. It supports symmetric and asymmetric quantization, 8-bit, 16-bit, and FP16 data types, and is compatible with both NCHW and NHWC tensor formats. The library is designed to work with the HHB toolchain, which quantizes and compiles neural networks; SHL is then called automatically during inference. SHL covers different architectures including CPU, DSP, NPU, and GPU, and provides a reference heterogeneous schedule implementation. It uses a per-layer API for CPU and DSP execution and a graph execution mode for NPU and GPU, with a modular architecture that includes Vector Instruction OPT and Driver Wrapper modules. In principle, SHL only provides reference implementations for XuanTie CPU targets, while optimization for each NPU target platform is left to the respective vendor. This design allows SHL to serve as a unified library that can be extended for heterogeneous computing across different T-HEAD processors.
 
 ## Key Claims
 
@@ -45,11 +45,40 @@ SHL (Structure of Heterogeneous Library, also known by its Chinese name ShiHulan
 - Modular architecture includes Vector Instruction OPT, Driver Wrapper, and Reference Runtime modules.
 - Buildable from source via git clone and make targets (x86 reference, C906 optimization).
 - SHL only provides reference implementations for XuanTie CPU; NPU optimizations are vendor-specific.
+- Provides optimized inference acceleration for XuanTie C908, supporting fp32/fp16/int8 datatypes and leveraging the processor's pipeline, instruction fusion, and high-speed cache technology.
+
+### Features
+
+- Reference C implementation.
+- Assembly optimization for XuanTie CPU.
+- Symmetric and asymmetric quantization.
+- Support for 8-bit, 16-bit, and float16 data types.
+- NCHW and NHWC tensor layouts.
+- Automatic API calling via HHB.
+- Coverage of CPU and NPU architectures.
+
+## Usage
+
+### Building from source for XuanTie C906
+
+1. Install T-HEAD RISC-V GCC 2.6.
+2. Clone CSI-NN2.
+3. Compile and install nn2_c906.
+
+### Quick start example
+
+To run mobilenetv1 with float16 on a C906-based board (e.g., D1), follow the build steps above and then execute the provided example.
+
+## Acknowledgements
+
+SHL references Caffe, TensorFlow, ncnn, MNN, Tengine, CMSIS_5, ONNX, and XNNPACK.
 
 ## Relationships
 
 - [[xuantie-ai-benchmark-suite]]: SHL is referenced as a toolchain in the XuanTie AI Benchmark Suite, providing optimized neural network operators for XuanTie CPUs.
 - [[c908-wino-gemm-optimization]]: SHL is the library that implements the Winograd and GEMM optimization techniques described on that page for the XuanTie C908.
+- [[MLPerf tiny]]: SHL is used to run MLPerf tiny benchmarks.
+- [[HHVB toolchain]]: SHL integrates with the HHVB toolchain documentation.
 
 ## Sources
 

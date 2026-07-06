@@ -106,6 +106,10 @@ The XuanTie C908 is used in the Canaan Kendryte K230 SoC, which powers developme
 - [[shl]]: SHL provides optimized neural network inference kernels for the XuanTie C908, leveraging its pipeline, instruction fusion, and cache to deliver performance across fp32, fp16, and int8 datatypes. SHL includes assembly-optimized convolution implementations (im2col+GEMM and Winograd).
 - [[c908-wino-gemm-optimization]]: Shares the XuanTie C908 hardware target but focuses on SHL software library optimizations; note that the optimization recipe assumes RVV 1.0 support, while the GCC tuning model for the base C908 does not include vector scheduling – the core can be configured with or without a VPU, so these are complementary rather than contradictory.
 
+## Benchmarking
+
+The [XuanTie AI Benchmark Suite (xtai-benchmark)](https://github.com/XUANTIE-RV/xtai-benchmark) provides precompiled benchmark binaries for the C908, compiled via HHB, covering BERT, EfficientNet, and MobileNetV2 with various quantizations.
+
 ## Sources
 
 - [XuanTie C908 Blog Post](https://riscv.org/blog/xuantie-c908-high-performance-risc-v-processor-catered-to-aiot-industry-chang-liu-alibaba-cloud/)

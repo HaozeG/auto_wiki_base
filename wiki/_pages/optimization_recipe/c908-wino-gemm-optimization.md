@@ -34,7 +34,7 @@ source_url: https://riscv.org/blog/xuantie-c908-accelerates-ai-with-software-and
 fetched_at: '2026-07-03T13:28:59.802023+00:00'
 type: optimization_recipe
 created: '2026-07-03'
-updated: '2026-07-03'
+updated: '2026-07-06'
 cold_start: true
 inbound_links: 16
 outbound_links:
@@ -56,6 +56,8 @@ The Structure of Heterogeneous Library (SHL) implements optimized convolution al
 - Advanced instruction fusion technology is incorporated to fully optimize performance.
 - The optimized operators list includes conv2d, depthwiseconv2d, maxpool2d, avgpool2d, global_maxpool2d, global_avgpool2d, fullyconnected, relu, relu6, leaky_relu, prelu, sigmoid, softmax, concat, pad, elementwise_add, elementwise_mul, sum.
 
+**Contradiction note:** A GCC tuning patch submitted in June 2026 explicitly states that the C908 core does not support the vector extension (RVV), contradicting the assumption of RVV 1.0 support listed in the prerequisites and constraints (VLEN 128) of this optimization recipe. This may affect the validity of optimization techniques that rely on vector instructions (e.g., vle vector loads). The recipe should either restrict its applicability to a hypothetical SVE-like implementation or note that it targets a different C908 variant. (Source: https://gcc.gnu.org/pipermail/gcc-patches/2026-June/719208.html)
+
 ## Transformation
 
 - Prerequisites: XuanTie C908 processor with RVV 1.0 support; SHL library; understanding of convolution algorithm (im2col or Winograd).
@@ -67,6 +69,7 @@ The Structure of Heterogeneous Library (SHL) implements optimized convolution al
 ## Relationships
 
 - [[shl]]: SHL is the library implementing these optimization techniques for the XuanTie C908.
+- [[xuantie-c908-ai-inference-benchmark]]: This page provides the quantitative performance results (MobileNet speedups, VLEN 256 scaling, comparison with C906) that result from the optimization recipes described here; the benchmark uses SHL and HHB on the XuanTie C908 target.
 
 ## Sources
 

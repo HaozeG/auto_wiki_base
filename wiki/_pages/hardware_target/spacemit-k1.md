@@ -67,7 +67,8 @@ The SpacemiT K1 (also referred to as Key Stone K1) is an 8-core RISC-V applicati
 
 ## Relationships
 
-No specific relationship to visible context pages. The SpacemiT K1 is a different hardware target than the XuanTie C908, with distinct vector length, toolchain support, and peripheral architecture.
+- The BPI-F3 LLM inference benchmark with RVV-optimized llama.cpp validates the practical performance of the SpacemiT K1 RVV 1.0 extensions on representative LLM workloads (see [[bpi-f3-rvv-llm-benchmark]]).
+- No specific relationship to visible context pages. The SpacemiT K1 is a different hardware target than the XuanTie C908, with distinct vector length, toolchain support, and peripheral architecture.
 
 ## Sources
 

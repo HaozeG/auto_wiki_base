@@ -18,7 +18,7 @@ source_url: https://github.com/XUANTIE-RV/xtai-benchmark
 fetched_at: '2026-07-03T13:17:10.119298+00:00'
 type: entity
 created: '2026-07-03'
-updated: '2026-07-03'
+updated: '2026-07-06'
 cold_start: true
 inbound_links: 3
 outbound_links:
@@ -41,6 +41,7 @@ The XuanTie AI Benchmark Suite (xtai-benchmark) is an open-source GitHub reposit
 ## Relationships
 
 - [[xuantie-c908]]: The benchmark suite provides precompiled model binaries specifically targeting the XuanTie C908 core, leveraging the HHB toolchain for inference deployment.
+- [[xuantie-gnu-compiler-toolchain]]: The XuanTie GNU Compiler Toolchain provides the cross-compiler used to build the precompiled model binaries in this benchmark suite.
 
 ## Sources
 

@@ -26,23 +26,27 @@ source_url: https://arxiv.org/html/2407.13706v1
 fetched_at: '2026-07-03T14:43:04.554332+00:00'
 type: hardware_target
 created: '2026-07-03'
-updated: '2026-07-03'
+updated: '2026-07-06'
 cold_start: true
 inbound_links: 4
 ---
 
 # GAP9
 
-The GAP9 is the latest Parallel-Ultra-Low-Power (PULP) processor from GreenWaves Technologies, designed for ultra-low-power edge AI and digital signal processing applications. It features an 8-core RISC-V architecture capable of up to 150GOPS, making it suitable for on-device inference tasks such as object detection, localization, and mapping. The SoC integrates a MIPI CSI2 interface to support high-definition cameras, a significant improvement over its predecessor GAP8. GAP9 is the core component of the GAP9Shield module for nano-drones, where it enables real-time AI workloads within a power envelope below 100 mW and latencies as low as 17 ms for object detection (YOLO). The processor is part of the PULP family and builds on open-source RISC-V ISA, providing a programmable platform for energy-constrained autonomous systems.
+The GAP9 is the latest Parallel-Ultra-Low-Power (PULP) processor from GreenWaves Technologies, designed for ultra-low-power edge AI and digital signal processing applications. It features a 9-core RISC-V cluster (8 general-purpose cores + 1 NE16 neural accelerator) capable of up to 150GOPS, making it suitable for on-device inference tasks such as object detection, localization, and mapping. The SoC integrates a MIPI CSI2 interface to support high-definition cameras, a significant improvement over its predecessor GAP8. GAP9 is the core component of the GAP9Shield module for nano-drones, where it enables real-time AI workloads within a power envelope below 100 mW and latencies as low as 17 ms for object detection (YOLO). The processor is part of the PULP family and builds on open-source RISC-V ISA, providing a programmable platform for energy-constrained autonomous systems.
 
 ## Key Claims
 
 - GAP9 achieves a peak performance of 150GOPS, as stated in the GAP9Shield paper.
+- GAP9 features a 9-core compute cluster, consisting of 8 general-purpose RISC-V cores and 1 NE16 neural accelerator, as documented in the GAP9Shield module's README.
+- The GAP9 is the central processor of the GAP9Shield module, which integrates sensors, peripherals, and a camera interface optimized for nano-drone AI workloads.
 - The SoC can run object detection (YOLO), localization, and mapping with a power envelope below 100 mW.
 - Object detection latency is as low as 17 ms using YOLO on QVGA resolution.
 - The GAP9Shield module, when compared to the Crazyflie AI-deck with GAP8, provides a 20% higher RGB image sample rate (7 FPS vs 5.8 FPS) and a 20% weight reduction.
 - GAP9 supports streaming VGA images at 4 FPS and 3-channel RGB QVGA images at 7 FPS.
 - The SoC integrates a MIPI CSI2 interface for high-definition camera connectivity.
+- GAP9 offers the best energy efficiency within microcontroller-class power budgets when running a 336M MAC segmentation model (PicoSAM2), as benchmarked against STM32N6 and IMX500 (2026 IEEE I2MTC paper).
+- MATCH compilation framework achieves 2.15x inference latency improvement over DORY on GAP9, measured on the MLPerf Tiny suite (source: arXiv 2410.08855).
 
 ## Optimization-Relevant Details
 
@@ -58,3 +62,5 @@ No specific relationship to visible context pages.
 ## Sources
 
 - https://arxiv.org/html/2407.13706v1 (GAP9Shield paper)
+- https://arxiv.org/abs/2603.08725 (2026 IEEE I2MTC paper)
+- https://github.com/pulp-platform/gap9-shield (GAP9Shield README)

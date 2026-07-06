@@ -528,7 +528,7 @@ Last updated: 2026-07-06 | Pages: 100 | Sources: 266
 | [auto-gemm-micro-kernel-c906-c910-benchmark.md](benchmark_result/auto-gemm-micro-kernel-c906-c910-benchmark.md) | benchmark_result | Auto-Generated GEMM Micro-Kernels on C906 and C910 |  | 2 | 1 |
 | [baby-llama2-milkv-duo-benchmark.md](benchmark_result/baby-llama2-milkv-duo-benchmark.md) | benchmark_result | Baby LLama2 Benchmark on Milk-V Duo |  | 2 | 2 |
 | [band-matrix-blas-riscv-openblas-benchmark.md](benchmark_result/band-matrix-blas-riscv-openblas-benchmark.md) | benchmark_result | Band Matrix BLAS OpenBLAS RISC-V Benchmark |  | 2 | 0 |
-| [bpi-f3-rvv-llm-benchmark.md](benchmark_result/bpi-f3-rvv-llm-benchmark.md) | benchmark_result | BananaPi BPI-F3 LLM Inference (RVV optimized) |  | 2 | 0 |
+| [bpi-f3-rvv-llm-benchmark.md](benchmark_result/bpi-f3-rvv-llm-benchmark.md) | benchmark_result | BananaPi BPI-F3 LLM Inference (RVV optimized) |  | 2 | 1 |
 | [gcc-tuning-c908-canmv-k230.md](benchmark_result/gcc-tuning-c908-canmv-k230.md) | benchmark_result | GCC Tuning Benchmark on XuanTie C908 |  | 6 | 7 |
 | [gcc15-clang21-autovec-benchmark-spacemit-x60.md](benchmark_result/gcc15-clang21-autovec-benchmark-spacemit-x60.md) | benchmark_result | GCC 15 vs Clang 21 Auto-vectorization on SpacemiT X60 | SpacemiT X60, GCC 15, Clang 21, LLVM 21, RVV 1.0 | 2 | 0 |
 | [gcc15-vs-clang21-banana-pi-f3-rvv10.md](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md) | benchmark_result | GCC 15 vs Clang 21 on BananaPi-F3 (RVV 1.0) | RVV, compiler, GCC, Clang | 2 | 0 |
@@ -572,7 +572,7 @@ Last updated: 2026-07-06 | Pages: 100 | Sources: 266
 | [q4x-quantization-llamacpp-rvv.md](optimization_recipe/q4x-quantization-llamacpp-rvv.md) | optimization_recipe | Q4X Quantization for LLM Inference on RISC‑V Vector CPUs | quantization, codebook, llama.cpp, RVV | 2 | 2 |
 | [rvv-llama-inference-optimization-banana-pi-bpi-f3.md](optimization_recipe/rvv-llama-inference-optimization-banana-pi-bpi-f3.md) | optimization_recipe | RVV LLM Inference Optimization on BananaPi BPI-F3 |  | 2 | 0 |
 | [spacemit-ime2-llama-cpp-optimization.md](optimization_recipe/spacemit-ime2-llama-cpp-optimization.md) | optimization_recipe | SpacemiT IME2 llama.cpp optimization |  | 2 | 1 |
-| [spacemit-x60-gcc-tuning.md](optimization_recipe/spacemit-x60-gcc-tuning.md) | optimization_recipe | SpacemiT X60 GCC Tuning | RISC-V, GCC, SpacemiT, pipeline, in-order | 4 | 0 |
+| [spacemit-x60-gcc-tuning.md](optimization_recipe/spacemit-x60-gcc-tuning.md) | optimization_recipe | SpacemiT X60 GCC Tuning | RISC-V, GCC, SpacemiT, pipeline, in-order | 4 | 1 |
 | [v-seek-llm-inference-optimization-sg2042.md](optimization_recipe/v-seek-llm-inference-optimization-sg2042.md) | optimization_recipe | V-Seek LLM Inference Optimization on Sophon SG2042 |  | 2 | 1 |
 
 ## Hub Hierarchy

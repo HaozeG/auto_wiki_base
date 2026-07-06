@@ -35,7 +35,7 @@ source_url: https://blog.csdn.net/tugouxp/article/details/122068912
 fetched_at: '2026-07-03T14:51:12.335228+00:00'
 type: hardware_target
 created: '2026-07-03'
-updated: '2026-07-03'
+updated: '2026-07-06'
 cold_start: true
 inbound_links: 14
 outbound_links:
@@ -72,7 +72,7 @@ XuanTie C906 is a low-cost 64-bit RISC-V processor core developed by Alibaba's T
 
 ## Relationships
 
-- [[gcc-tuning-c908-canmv-k230]]: Both the XuanTie C906 and C908 are in-order single-issue RISC-V cores from T-Head; the C906 includes a 128-bit SIMD vector unit while the C908 lacks a vector extension and relies on scalar performance.
+- [[xuantie-c908-gcc-tuning]]: Both the XuanTie C906 and C908 are in-order single-issue RISC-V cores from T-Head; the GCC tuning patch models the C908 scalar pipeline, while the C906 uses a custom 128-bit SIMD unit.
 - [[spacemit-x60-hardware-target]]: Both are 64-bit RISC-V cores targeting embedded applications; however, the C906 uses a custom SIMD vector unit rather than RVV 1.0, and is single-issue compared to the X60's dual-issue scalar pipeline.
 
 ## Sources

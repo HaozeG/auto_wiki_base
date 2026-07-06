@@ -4,14 +4,14 @@
 target_page: xuantie-c908.md
 target_section: Benchmarking
 source: https://github.com/XUANTIE-RV/xtai-benchmark
-status: approved
+status: applied
 proposed_update: Add a section describing the XuanTie AI Benchmark Suite (xtai-benchmark), which provides precompiled benchmark binaries for the C908 (BERT, EfficientNet, MobileNetV2 with various quantizations) via HHB. Source: https://github.com/XUANTIE-RV/xtai-benchmark
 
 ## [2026-07-03] pending | xuantie-ai-benchmark-suite.md
 target_page: xuantie-ai-benchmark-suite.md
 target_section: Relationships
 source: https://github.com/XUANTIE-RV/xuantie-gnu-toolchain/
-status: approved
+status: applied
 proposed_update: Add a relationship entry linking to the XuanTie GNU Compiler Toolchain: 'The XuanTie GNU Compiler Toolchain provides the cross-compiler used to build the precompiled model binaries in this benchmark suite.'
 
 ## [2026-07-03] merge_pending | xuantie-c908.md
@@ -56,14 +56,14 @@ merge_draft_body -->
 target_page: shl.md
 target_section: Key Claims
 source: https://csi-nn2.opensource.alibaba.com/zh/blog/C908+accelerates+AI
-status: approved
+status: applied
 proposed_update: Add a key claim: SHL provides optimized inference acceleration for XuanTie C908, supporting fp32/fp16/int8 datatypes and leveraging the processor's pipeline, instruction fusion, and high-speed cache technology. This is sourced from the same blog post.
 
 ## [2026-07-03] pending | shl.md
 target_page: shl.md
 target_section: content
 source: https://zhangwm-pt.github.io/shl/md_README.html
-status: approved
+status: applied
 proposed_update: Merge the detailed information from the SHL README into the existing entity page. Specifically: (1) Expand the opening paragraph to mention version SHL 2.2.x and that the interface uses CSI-NN2 API. (2) Add a 'Features' subsection under Key Claims covering reference C implementation, assembly optimization for XuanTie CPU, symmetric and asymmetric quantization, support for 8-bit, 16-bit, and float16 data types, NCHW and NHWC layouts, automatic API calling via HHB, and coverage of CPU and NPU architectures. (3) Add a 'Usage' section containing build instructions from source for XuanTie C906 (including installing T-HEAD RISC-V GCC 2.6, cloning CSI-NN2, compiling and installing nn2_c906) and a quick-start example for running mobilenetv1 f16 on a C906-based board like the D1. (4) Add an 'Acknowledgements' subsection noting that SHL references Caffe, TensorFlow, ncnn, MNN, Tengine, CMSIS_5, ONNX, and XNNPACK. (5) Add a relationship to MLPerf tiny (from the candidate's mention of 'SHL to run MLPerf tiny') and to HHVB toolchain documentation. All updates should be grounded in the candidate's source_grounded_snippets.
 
 ## [2026-07-03] merge_pending | xuantie-c908.md
@@ -170,7 +170,7 @@ merge_draft_body -->
 target_page: c908-wino-gemm-optimization.md
 target_section: Key Claims or Prerequisites
 source: https://gcc.gnu.org/pipermail/gcc-patches/2026-June/719208.html
-status: approved
+status: applied
 proposed_update: Add a contradiction note: the GCC tuning patch submitted in June 2026 explicitly states that the C908 core does not support the vector extension (RVV), contradicting the assumption of RVV 1.0 support listed in the prerequisites and constraints (VLEN 128) of this optimization recipe. This may affect the validity of optimization techniques that rely on vector instructions (e.g., vle vector loads). The recipe should either restrict its applicability to a hypothetical SVE-like implementation or note that it targets a different C908 variant.
 
 ## [2026-07-03] merge_pending | k230-soc.md
@@ -925,7 +925,7 @@ merge_draft_body -->
 target_page: spacemit-k1.md
 target_section: Relationships
 source: https://link.springer.com/chapter/10.1007/978-981-96-9869-1_43
-status: approved
+status: applied
 proposed_update: Add relationship link to [[bpi-f3-rvv-llm-benchmark]]: 'The BPI-F3 LLM inference benchmark with RVV-optimized llama.cpp validates the practical performance of the SpacemiT K1 RVV 1.0 extensions on representative LLM workloads.'
 
 ## [2026-07-03] merge_pending | llamacpp-quantization-methods.md
@@ -993,7 +993,7 @@ merge_draft_body -->
 target_page: et-soc-1-hardware-target.md
 target_section: all
 source: https://github.com/10x-Engineers/et-soc1-docs/blob/main/01_esperanto_soc_overview.md
-status: approved
+status: applied
 proposed_update: Overwrite the page with detailed architectural information from official Esperanto ET-SoC-1 documentation (10x-Engineers/et-soc1-docs). Add precise core counts: 1,088 ET-Minion 64-bit RISC-V dual-threaded in-order scalar cores with custom vector/tensor units, 4 ET-Maxion 64-bit RISC-V single-threaded superscalar out-of-order cores, and 1 ET-Minion-based Service Processor. Include memory hierarchy: 140 MB on-die SRAM distributed across chip, each 1 MB block configurable as local L2 cache, part of chip-wide L3, or globally accessible scratchpad. Add PCI Express Gen4 x8 interface delivering peak throughput 128 Gbps. Add sixteen 16-bit LPDDR4X controllers at 4,266 MT/s (133 GB/s). Describe SoC hierarchy: Neighborhood (8 ET-Minion cores + 32 KB shared I-cache), Shire (4 Neighborhoods, 4 MB shared L2/L3 cache, mesh stop interface), 34 Minion Shires (1,088 cores total) plus PCI Shire and I/O Shire (ET-Maxion cores, Service Processor, Root of Trust, USB, I2C, SPI, UARTs). Add ET-Minion privileged architecture deviations: performance counters moved to shared PMU, minstret/mcycle always return 0, satp CSR shared between harts, mtvec/stvec alignment to 4 KB, WFI behavior. Update constraints field with: '1,093 RISC-V cores (1,088 Minion + 4 Maxion + 1 service)', '140 MB on-die SRAM', 'PCIe Gen4 x8 128 Gbps', 'LPDDR4X 16-channel 4,266 MT/s', 'TSMC 7nm'. Add source URL https://github.com/10x-Engineers/et-soc1-docs/blob/main/01_esperanto_soc_overview.md.
 
 ## [2026-07-03] merge_pending | xuantie-c908.md
@@ -1038,7 +1038,7 @@ merge_draft_body -->
 target_page: gap9.md
 target_section: Key Claims
 source: https://arxiv.org/abs/2603.08725
-status: approved
+status: applied
 proposed_update: Add a claim from arXiv:2603.08725: GAP9 offers the best energy efficiency within microcontroller-class power budgets when running a 336M MAC segmentation model (PicoSAM2), as benchmarked against STM32N6 and IMX500. This is a comparative finding from a 2026 IEEE I2MTC paper.
 
 ## [2026-07-03] merge_pending | gap9shield.md
@@ -1077,7 +1077,7 @@ merge_draft_body -->
 target_page: gap9.md
 target_section: Key Claims
 source: https://github.com/pulp-platform/gap9-shield
-status: approved
+status: applied
 proposed_update: The GAP9 page states an 8-core architecture, but the GAP9Shield README describes a 9-core RISC-V cluster (likely 8 general-purpose cores + 1 NE16 accelerator core). Consider clarifying the core count and noting the NE16 accelerator. Also consider adding a reference to the GAP9Shield module and its integrated components.
 
 ## [2026-07-03] merge_pending | gcc-tuning-c908-canmv-k230.md
@@ -1123,14 +1123,14 @@ merge_draft_body -->
 target_page: xuantie-c906-hardware-target.md
 target_section: Relationships
 source: https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg406313.html
-status: approved
+status: applied
 proposed_update: Update outbound_links target from 'gcc-tuning-c908-canmv-k230' to 'xuantie-c908-gcc-tuning' and refine relationship reason to note that the GCC tuning patch models the C908 scalar pipeline, while the C906 uses a custom 128-bit SIMD unit. The current reason is still valid but the target filename must match the new optimization recipe page.
 
 ## [2026-07-03] pending | spacemit-x60-hardware-target.md
 target_page: spacemit-x60-hardware-target.md
 target_section: Relationships
 source: https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg406313.html
-status: approved
+status: applied
 proposed_update: Update outbound_links target from 'gcc-tuning-c908-canmv-k230' to 'xuantie-c908-gcc-tuning' and refine relationship reason to emphasize that both GCC tuning patches model in-order scalar pipelines but the X60 tuning also includes dual-issue and RVV 1.0 vector support, while the C908 tuning is purely scalar and single-issue.
 
 ## [2026-07-03] merge_pending | nncase.md
@@ -1310,14 +1310,14 @@ merge_draft_body -->
 target_page: et-soc-1-hardware-target.md
 target_section: opening_paragraph
 source: https://vlsifacts.com/esperantos-et-soc-1-chip-integrates-more-than-1000-risc-v-cores-for-energy-efficient-ml-recommendation/
-status: approved
+status: applied
 proposed_update: Replace the first paragraph with a more detailed self-contained description: 'The ET-SoC-1 (Esperanto Technologies Supercomputer-on-Chip 1) is a RISC-V AI inference accelerator chip fabricated on TSMC's 7nm process, integrating 1088 energy-efficient ET-Minion 64-bit in-order RISC-V cores each with a vector/tensor unit, 4 high-performance ET-Maxion 64-bit out-of-order RISC-V cores, and 1 RISC-V service processor. With 24 billion transistors on a 570 mm² die, it delivers peak compute rates of 100 to 200 TOPS while consuming typically less than 20 watts. It is designed for energy-efficient ML recommendation inference in large data centers and is packaged on a Glacier Point v2 accelerator card that houses up to six chips, providing up to 192 GB of DRAM with 822 GB/s bandwidth.'
 
 ## [2026-07-03] pending | spacemit-x60-hardware-target.md
 target_page: spacemit-x60-hardware-target.md
 target_section: Optimization-Relevant Details
 source: https://arxiv.org/abs/2605.10860
-status: approved
+status: applied
 proposed_update: Add a bullet point under Optimization-Relevant Details about the RVV predication overhead and stride load performance bottlenecks identified in the GCC 15/Clang 21 auto-vectorization study (arXiv:2605.10860). These are issues not yet fully captured by current compiler cost models and affect in-order RVV 1.0 implementations such as the X60.
 
 ## [2026-07-03] merge_pending | riscv-v-extension.md
@@ -1383,7 +1383,7 @@ merge_draft_body -->
 target_page: c908-wino-gemm-optimization.md
 target_section: Relationships
 source: https://riscv.org/blog/xuantie-c908-accelerates-ai-with-software-and-hardware-fusion/
-status: approved
+status: applied
 proposed_update: Add a relationship to the XuanTie C908 AI inference benchmark page: '[[xuantie-c908-ai-inference-benchmark]]: This page provides the quantitative performance results (MobileNet speedups, VLEN 256 scaling, comparison with C906) that result from the optimization recipes described here; the benchmark uses SHL and HHB on the XuanTie C908 target.'
 
 ## [2026-07-03] merge_pending | xuantie-c908.md
@@ -1527,7 +1527,7 @@ merge_draft_body -->
 target_page: spacemit-x60-hardware-target.md
 target_section: Relationships
 source: https://www.rt-rk.com/gcc-tuning-for-spacemit-x60-building-an-in-order-dual-issue-scheduler-model-part-i/
-status: approved
+status: applied
 proposed_update: Add a relationship entry linking to the new optimization_recipe page: 'Describes the GCC tuning recipe that implements the instruction scheduling model documented in [[spacemit-x60-gcc-tuning]].'
 
 ## [2026-07-03] merge_pending | riscv-matrix-extension-specification.md
@@ -1640,7 +1640,7 @@ merge_draft_body -->
 target_page: spacemit-x60-hardware-target.md
 target_section: Key Claims
 source: https://camel-cdr.github.io/rvv-bench-results/articles/vector-utf.html
-status: approved
+status: applied
 proposed_update: Add a Key Claim: 'Achieved 8x speedup for UTF-8 to UTF-16 conversion using RVV vectorization on the X60 core (measured on Banana Pi BPI-F3).' Source: camel-cdr's RVV benchmark article (https://camel-cdr.github.io/rvv-bench-results/articles/vector-utf.html).
 
 ## [2026-07-06] merge_pending | sophon-sg2380-hardware-target.md
@@ -1752,7 +1752,7 @@ merge_draft_body -->
 target_page: spacemit-x60-hardware-target.md
 target_section: Key Claims
 source: https://spacemit.com/
-status: approved
+status: applied
 proposed_update: Add claim: 'The SpacemiT X60 core demonstrated a 16% performance improvement in LLVM compiler-optimized code, as presented at the North America RISC-V Summit (October 2025) by Igalia engineer Mikhail (source: spacemit.com press release).' Include mention of the talk titled "Unlocking 15% More Performance: A Case Study in LLVM Optimization for RISC-V", noting the discrepancy between 15% and 16%.
 
 ## [2026-07-06] merge_pending | sophon-sg2380-hardware-target.md
@@ -2024,7 +2024,7 @@ merge_draft_body -->
 target_page: gap9.md
 target_section: Key Claims
 source: https://arxiv.org/html/2410.08855
-status: approved
+status: applied
 proposed_update: Add claim: MATCH compilation framework achieves 2.15x inference latency improvement over DORY on GAP9, measured on the MLPerf Tiny suite (source: arXiv 2410.08855).
 
 ## [2026-07-06] merge_pending | riscv-v-extension.md

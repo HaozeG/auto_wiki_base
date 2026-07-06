@@ -40,7 +40,7 @@ source_url: https://www.rt-rk.com/gcc-tuning-for-spacemit-x60-building-an-in-ord
 fetched_at: '2026-07-03T14:14:12.383377+00:00'
 type: hardware_target
 created: '2026-07-03'
-updated: '2026-07-03'
+updated: '2026-07-06'
 cold_start: true
 inbound_links: 11
 outbound_links:
@@ -53,7 +53,7 @@ outbound_links:
 
 # SpacemiT X60
 
-The SpacemiT X60 is a 64-bit RISC-V core implementing the RVA22 profile, designed by SpacemiT Technology for the K1 SoC used in development boards and consumer devices such as the Banana Pi BPI-F3, Milk-V Jupiter, and DeepComputing DC-ROMA Laptop II. It features an 8-stage dual-issue in-order scalar pipeline, a 256-bit vector unit supporting RVV 1.0, 32KB L1 instruction and data caches per core, and a 1MB L2 cache shared across the cluster. The core targets a balance of performance and power efficiency, and its microarchitecture is explicitly modeled in the GCC RISC-V backend to enable instruction scheduling that avoids pipeline stalls. The GCC tuning model defines execution resources such as two integer ALU units (ALU0 and ALU1) for dual-issue, two load/store units (LSU0 and LSU1), a vector unit (VXU0), and floating-point units (FPALU and FDIVSQRT). Instruction latencies are specified (e.g., 5-cycle loads, 3-cycle stores, 1-cycle ALU operations, 20-cycle 64-bit integer division) and asymmetric bottlenecks such as the shared ALU0 for division and branches are explicitly modeled. This compiler-level description is essential because the in-order hardware does not reorder instructions; scheduling decisions made by GCC directly affect throughput and pipeline utilization.
+The SpacemiT X60 is a 64-bit RISC-V core implementing the RVA22 profile, designed by SpacemiT Technology for the K1 SoC used in development boards and consumer devices such as the Banana Pi BPI-F3, Milk-V Jupiter, and DeepComputing DC-ROMA Laptop II. It features an 8-stage dual-issue in-order scalar pipeline, a 256-bit vector unit supporting RVV 1.0, 32KB L1 instruction and data caches per core, and a 1MB L2 cache shared across the cluster. The core targets a balance of performance and power efficiency, and its microarchitecture is explicitly modeled in the GCC RISC-V backend to enable instruction scheduling that avoids pipeline stalls. The GCC tuning model defines execution resources such as two integer ALU units (ALU0 and ALU1) for dual-issue, two load/store units (LSU0 and LSU1), a vector unit (VXU0), and floating-point units (FPALU and FDIVSQRT). Instruction latencies are specified (e.g., 5-cycle loads, 3-cycle stores, 1-cycle ALU operations, 4-cycle floating-point arithmetic, 20-cycle 64-bit integer division) and asymmetric bottlenecks such as the shared ALU0 for division and branches are explicitly modeled. This compiler-level description is essential because the in-order hardware does not reorder instructions; scheduling decisions made by GCC directly affect throughput and pipeline utilization.
 
 ## Key Claims
 
@@ -64,6 +64,8 @@ The SpacemiT X60 is a 64-bit RISC-V core implementing the RVA22 profile, designe
 - Integer division and branches share ALU0, creating an asymmetric bottleneck; the scheduler must avoid issuing a branch while a division occupies ALU0.
 - Without specific tuning, GCC defaults to a generic cost model that fails to utilize dual-issue capabilities and full vector width.
 - The tuning does not currently define bypass mechanisms (forwarding), which could further reduce effective latencies for Read-After-Write hazards.
+- Achieved 8x speedup for UTF-8 to UTF-16 conversion using RVV vectorization on the X60 core (measured on Banana Pi BPI-F3).
+- The SpacemiT X60 core demonstrated a 16% performance improvement in LLVM compiler-optimized code, as presented at the North America RISC-V Summit (October 2025) by Igalia engineer Mikhail (source: spacemit.com press release). The talk was titled "Unlocking 15% More Performance: A Case Study in LLVM Optimization for RISC-V", noting the discrepancy between 15% and 16%.
 
 ## Optimization-Relevant Details
 
@@ -71,11 +73,15 @@ The SpacemiT X60 is a 64-bit RISC-V core implementing the RVA22 profile, designe
 - Vector/matrix/accelerator support: RVV 1.0, VLEN 256/128-bit, x2 execution width
 - Memory/cache/TLB/DMA: 32KB L1 I-cache, 32KB L1 D-cache per core; 1MB L2 cache cluster shared
 - Compiler/toolchain support: GCC (tune "spacemit_x60" in riscv-cores.def and machine description file spacemit-x60.md)
+- RVV predication overhead and stride load performance bottlenecks have been identified in a [GCC 15/Clang 21 auto-vectorization study](https://arxiv.org/abs/2605.10860); these issues are not yet fully captured by current compiler cost models and affect in-order RVV 1.0 implementations such as the X60.
 
 ## Relationships
 
-- [[gcc-tuning-c908-canmv-k230]]: Both the XuanTie C908 and SpacemiT X60 have GCC tuning patches that model in-order scalar pipelines to improve instruction scheduling; however, the X60 tuning additionally models a vector unit (RVV 1.0) and dual-issue capability, while the C908 tuning is purely scalar and targets a different microarchitecture.
+- [[xuantie-c908-gcc-tuning]]: Both the XuanTie C908 and SpacemiT X60 have GCC tuning patches that model in-order scalar pipelines but the X60 tuning also includes dual-issue and RVV 1.0 vector support, while the C908 tuning is purely scalar and single-issue.
+- [[spacemit-x60-gcc-tuning]]: Describes the GCC tuning recipe that implements the instruction scheduling model documented in [[spacemit-x60-gcc-tuning]].
 
 ## Sources
 
 - https://www.rt-rk.com/gcc-tuning-for-spacemit-x60-building-an-in-order-dual-issue-scheduler-model-part-i/
+- https://arxiv.org/abs/2605.10860
+- https://camel-cdr.github.io/rvv-bench-results/articles/vector-utf.html
