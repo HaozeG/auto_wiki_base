@@ -941,6 +941,51 @@ def test_rebuild_index_populates_concept_gaps_from_dangling_outbound_links(tmp_p
     assert "some_unwritten_concept" in gaps
 
 
+def test_rebuild_index_does_not_accumulate_blank_lines_across_repeated_calls(tmp_path):
+    """Regression: _replace_section's trim-back loop decremented end_idx past
+    trailing blanks but then used all_lines[end_idx:] as the tail, which still
+    *started* at those same blank lines rather than past them -- every rebuild
+    call added its own blank line on top of an untouched, never-actually-
+    trimmed run, growing the gap between two sections by ~1-2 lines per call
+    (confirmed live: 47+ accumulated blank lines in a long-running wiki's
+    index.md between Concept Index and Optimization Pages). Calling rebuild
+    repeatedly must be idempotent, not compounding."""
+    pages_dir = tmp_path / "wiki" / "_pages"
+    entity_dir = pages_dir / "entity"
+    entity_dir.mkdir(parents=True)
+    (entity_dir / "alpha.md").write_text(
+        "---\ntype: entity\ncanonical_name: Alpha\nsources: []\ninbound_links: 0\n---\n\n# Alpha\n\nBody.\n",
+        encoding="utf-8",
+    )
+    hw_dir = pages_dir / "hardware_target"
+    hw_dir.mkdir(parents=True)
+    (hw_dir / "beta.md").write_text(
+        "---\ntype: hardware_target\ncanonical_name: Beta\nsources: []\ninbound_links: 0\n---\n\n# Beta\n\nBody.\n",
+        encoding="utf-8",
+    )
+    index = tmp_path / "wiki" / "index.md"
+    index.write_text(
+        "# Wiki Index\n\nLast updated: 2020-01-01 | Pages: 0 | Sources: 0\n\n"
+        "## Entity Pages\n\n| Page | Summary | Tags | Sources | Inbound |\n"
+        "|------|---------|------|---------|---------|\n\n"
+        "## Synthesis Pages\n\n| Page | Connected Entities | Status | Inbound |\n"
+        "|------|--------------------|--------|---------|\n\n"
+        "## Concept Index\n",
+        encoding="utf-8",
+    )
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_INDEX_MD", index):
+        orchestrator.rebuild_index_from_frontmatter()
+        first_pass = index.read_text(encoding="utf-8")
+        for _ in range(3):
+            orchestrator.rebuild_index_from_frontmatter()
+        stable_pass = index.read_text(encoding="utf-8")
+
+    assert first_pass == stable_pass
+    assert "\n\n\n" not in stable_pass
+
+
 def test_rebuild_index_renders_hub_hierarchy_from_theme_profile(tmp_path):
     """Phase 2: deliberate hub concepts, declared in [theme_profile].hub_hierarchy
     at theme setup, are a *derived* index view -- grouping existing pages by

@@ -1845,7 +1845,20 @@ def rebuild_index_from_frontmatter() -> None:
 
     def _replace_section(text: str, header: str, lines: list[str]) -> str:
         """Replace a plain bullet-list section (no table header) with `lines`,
-        up to the next '## ' heading or EOF."""
+        up to the next '## ' heading or EOF.
+
+        Found live: a since-removed "trim to exactly one blank line" loop
+        decremented end_idx to walk back over trailing blank lines, but then
+        used `all_lines[end_idx:]` as the preserved tail -- which still
+        *starts* at the first of those same blank lines, not past them. Every
+        rebuild call re-added its own single trailing blank on top of the
+        untouched, never-actually-trimmed original run, so the blank-line
+        count between two sections grew by ~1-2 lines every single research
+        session (confirmed: 100+ accumulated blank lines in a long-running
+        wiki's index.md). The forward scan below already stops exactly at the
+        next '## ' heading (or EOF) with no leading blanks to trim -- new_block
+        supplies the single blank line on its own, so no trim-back is needed.
+        """
         all_lines = text.split("\n")
         try:
             header_idx = all_lines.index(header)
@@ -1855,9 +1868,6 @@ def rebuild_index_from_frontmatter() -> None:
         end_idx = header_idx + 1
         while end_idx < len(all_lines) and not all_lines[end_idx].startswith("## "):
             end_idx += 1
-        # Trim to exactly one blank line before the next heading (or EOF).
-        while end_idx > header_idx + 1 and all_lines[end_idx - 1].strip() == "":
-            end_idx -= 1
         new_block = [header, ""] + lines + [""]
         new_lines = all_lines[:header_idx] + new_block + all_lines[end_idx:]
         return "\n".join(new_lines)

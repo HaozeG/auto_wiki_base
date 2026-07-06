@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-03 | Pages: 82 | Sources: 218
+Last updated: 2026-07-06 | Pages: 82 | Sources: 218
 
 ## Entity Pages
 
@@ -426,53 +426,6 @@ Last updated: 2026-07-03 | Pages: 82 | Sources: 218
 - **sophon-sg2042-hardware-target**: mentioned in [npb-characterization-sg2042](benchmark_result/npb-characterization-sg2042.md) — *no dedicated page*
 - **xuantie-c908-gcc-tuning**: mentioned in [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md) — *no dedicated page*
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## Optimization Pages
 
 | Page | Type | Summary | Tags | Sources | Inbound |
@@ -580,48 +533,3 @@ Last updated: 2026-07-03 | Pages: 82 | Sources: 218
 - [semidynamics-all-in-one-llama2-7b-tensor-utilization](benchmark_result/semidynamics-all-in-one-llama2-7b-tensor-utilization.md)
 - [sophon-sg2042-npb-performance-benchmark-result](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md)
 - [spacemit-k1-benchmark-2026-04-14](benchmark_result/spacemit-k1-benchmark-2026-04-14.md)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
