@@ -1715,3 +1715,144 @@ def test_bridge_candidates_for_manifest_swallows_errors(tmp_path):
     with patch.object(orchestrator, "_WIKI_PAGES_DIR", tmp_path), \
          patch.object(orchestrator.graph_topology, "find_bridge_candidates", side_effect=boom):
         assert orchestrator._bridge_candidates_for_manifest() == []
+
+
+_LONG_FIRST_PARAGRAPH = (
+    "This is a self-contained entity page describing a fictional RISC-V test "
+    "component used only to exercise the patch-application pipeline in a unit "
+    "test. It has a first paragraph that is deliberately long enough to satisfy "
+    "the entity_first_paragraph word-count bounds enforced by eval_summary.py's "
+    "deterministic pipeline gate, since that gate runs as a real subprocess "
+    "against this fixture just like it would against any real drafted or "
+    "merged page. The paragraph names the component, states what it is for, "
+    "and includes some concrete numbers such as 4 cores and 2 GHz just in case "
+    "density checks also apply here, without referencing any other page for "
+    "its own meaning, and without any dangling reference pattern of the kind "
+    "the self-containedness check would otherwise flag as a failure."
+)
+
+
+def _write_page_for_patch_test(pages_dir, subdir, stem, body_extra=""):
+    d = pages_dir / subdir
+    d.mkdir(parents=True, exist_ok=True)
+    frontmatter.write_page(
+        d / f"{stem}.md",
+        {"type": "entity", "canonical_name": stem.title(), "sources": ["raw/cache/fixture.md"], "inbound_links": 0},
+        f"\n# {stem.title()}\n\n{_LONG_FIRST_PARAGRAPH}{body_extra}\n\n"
+        "## Key Claims\n\n- Existing claim one.\n- Existing claim two.\n- Existing claim three.\n\n"
+        "## Relationships\n\nNo specific relationships to pages in the current wiki context.\n\n"
+        "## Sources\n\n- existing source\n",
+    )
+    return d / f"{stem}.md"
+
+
+def test_apply_one_pending_calls_content_merge_with_target_section_and_proposed_update(tmp_path):
+    pages_dir = tmp_path / "wiki" / "_pages"
+    _write_page_for_patch_test(pages_dir, "entity", "widget")
+
+    seen_manifest = {}
+
+    def fake_call_subagent(subagent_type, manifest, research_config):
+        seen_manifest.update(manifest)
+        assert subagent_type == "content_merge"
+        merged = manifest["existing_content"] + "\n\n- New claim from proposed_update.\n"
+        return json.dumps({"merged_content": merged, "merge_notes": "added claim"})
+
+    block = (
+        "## [2026-07-03] pending | widget.md\n"
+        "target_page: widget.md\n"
+        "target_section: Key Claims\n"
+        "source: https://example.com/widget-spec\n"
+        "status: approved\n"
+        "proposed_update: Add a claim that Widget supports frobnication.\n"
+    )
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir):
+        ok, new_block = orchestrator._apply_one_pending(block, fake_call_subagent, {})
+
+    assert ok
+    assert "status: applied" in new_block
+    assert seen_manifest["new_draft"] is None
+    assert seen_manifest["target_section"] == "Key Claims"
+    assert seen_manifest["proposed_update"] == "Add a claim that Widget supports frobnication."
+    assert seen_manifest["source"] == "https://example.com/widget-spec"
+    written = (pages_dir / "entity" / "widget.md").read_text(encoding="utf-8")
+    assert "New claim from proposed_update" in written
+
+
+def test_apply_one_pending_fails_when_page_not_found(tmp_path):
+    pages_dir = tmp_path / "wiki" / "_pages"
+    pages_dir.mkdir(parents=True)
+    block = (
+        "## [2026-07-03] pending | missing.md\n"
+        "target_page: missing.md\n"
+        "target_section: Key Claims\n"
+        "source: https://example.com\n"
+        "status: approved\n"
+        "proposed_update: Add something.\n"
+    )
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir):
+        ok, new_block = orchestrator._apply_one_pending(block, lambda *a: "{}", {})
+    assert not ok
+    assert "apply_failed (page not found)" in new_block
+
+
+def test_apply_patch_queue_routes_both_merge_pending_and_pending_blocks(tmp_path):
+    """Regression: apply_patch_queue() previously only ever recognized
+    merge_pending headers -- every plain "pending" block was silently passed
+    through untouched regardless of its approval status, so 18+ queued,
+    human-approved section-update proposals had no automated apply path at
+    all. Both kinds must now be processed when status: approved."""
+    pages_dir = tmp_path / "wiki" / "_pages"
+    log_md = tmp_path / "wiki" / "log.md"
+    log_md.parent.mkdir(parents=True, exist_ok=True)
+    log_md.write_text("# Wiki Log\n", encoding="utf-8")
+    index_md = tmp_path / "wiki" / "index.md"
+    index_md.write_text(
+        "# Wiki Index\n\nLast updated: 2020-01-01 | Pages: 0 | Sources: 0\n\n"
+        "## Entity Pages\n\n| Page | Summary | Tags | Sources | Inbound |\n"
+        "|------|---------|------|---------|---------|\n\n"
+        "## Synthesis Pages\n\n| Page | Connected Entities | Status | Inbound |\n"
+        "|------|--------------------|--------|---------|\n\n## Concept Index\n",
+        encoding="utf-8",
+    )
+    _write_page_for_patch_test(pages_dir, "entity", "alpha")
+    _write_page_for_patch_test(pages_dir, "entity", "beta")
+
+    queue_path = tmp_path / "wiki" / "patch_queue.md"
+    queue_path.write_text(
+        "# Wiki Patch Queue\n\n"
+        "## [2026-07-03] merge_pending | alpha.md\n"
+        "target_page: alpha.md\n"
+        "canonical_name: Alpha\n"
+        "source: https://example.com/alpha\n"
+        "status: approved\n"
+        "<!-- merge_draft_body\n# Alpha\n\nMerged alpha body.\nmerge_draft_body -->\n\n"
+        "## [2026-07-03] pending | beta.md\n"
+        "target_page: beta.md\n"
+        "target_section: Key Claims\n"
+        "source: https://example.com/beta\n"
+        "status: approved\n"
+        "proposed_update: Add a claim about beta.\n\n"
+        "## [2026-07-03] pending | beta.md\n"
+        "target_page: beta.md\n"
+        "target_section: Key Claims\n"
+        "source: https://example.com/beta2\n"
+        "status: pending_review\n"
+        "proposed_update: Not yet approved, must be skipped.\n",
+        encoding="utf-8",
+    )
+
+    def fake_call_subagent(subagent_type, manifest, research_config):
+        merged = manifest["existing_content"] + "\n\n- Applied.\n"
+        return json.dumps({"merged_content": merged, "merge_notes": None})
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_LOG_MD", log_md), \
+         patch.object(orchestrator, "_INDEX_MD", index_md):
+        result = orchestrator.apply_patch_queue(call_subagent=fake_call_subagent)
+
+    assert result == {"applied": 2, "skipped": 1, "failed": 0}
+    queue_text = queue_path.read_text(encoding="utf-8")
+    assert queue_text.count("status: applied") == 2
+    assert "status: pending_review" in queue_text  # the unapproved one untouched

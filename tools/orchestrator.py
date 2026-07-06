@@ -2672,19 +2672,14 @@ def _set_patch_status(block: str, new_status: str) -> str:
                   block, count=1, flags=re.MULTILINE)
 
 
-def _apply_one_merge(block: str, call_subagent, research_config: dict) -> tuple[bool, str]:
-    entry = _parse_merge_block(block)
-    target = entry.get("target_page")
-    page = _find_page_by_filename(target) if target else None
-    if page is None:
-        return False, _set_patch_status(block, "apply_failed (page not found)")
-    fm, body = frontmatter.parse_page(page)
-    manifest = {
-        "existing_content": body.strip(),
-        "new_draft": (entry.get("new_body") or "").strip(),
-        "canonical_name": entry.get("canonical_name") or fm.get("canonical_name"),
-        "source": entry.get("source"),
-    }
+def _run_content_merge_and_write(
+    block: str, page: Path, fm: dict, body: str, manifest: dict, call_subagent, research_config: dict,
+) -> tuple[bool, str]:
+    """Shared finishing path for both merge_pending (full pre-drafted body)
+    and pending (section-update description) patches: call the content_merge
+    subagent, gate the result through the same deterministic pipeline every
+    other write goes through, then atomically rewrite the single target page.
+    """
     try:
         raw = call_subagent("content_merge", manifest, research_config)
     except Exception as exc:  # noqa: BLE001 — never crash the queue
@@ -2694,7 +2689,6 @@ def _apply_one_merge(block: str, call_subagent, research_config: dict) -> tuple[
     if result is None:
         return False, _set_patch_status(block, "apply_failed (invalid merge output)")
     merged = result["merged_content"]
-    # Deterministic pipeline gate — same gate as any other write.
     page_type = fm.get("type", "entity")
     passes, _ = _run_eval_pipeline({"page_type": page_type, "frontmatter": fm, "content": merged})
     if not passes:
@@ -2711,8 +2705,69 @@ def _apply_one_merge(block: str, call_subagent, research_config: dict) -> tuple[
     return True, _set_patch_status(block, "applied")
 
 
+def _apply_one_merge(block: str, call_subagent, research_config: dict) -> tuple[bool, str]:
+    entry = _parse_merge_block(block)
+    target = entry.get("target_page")
+    page = _find_page_by_filename(target) if target else None
+    if page is None:
+        return False, _set_patch_status(block, "apply_failed (page not found)")
+    fm, body = frontmatter.parse_page(page)
+    manifest = {
+        "existing_content": body.strip(),
+        "new_draft": (entry.get("new_body") or "").strip(),
+        "target_section": None,
+        "proposed_update": None,
+        "canonical_name": entry.get("canonical_name") or fm.get("canonical_name"),
+        "source": entry.get("source"),
+    }
+    return _run_content_merge_and_write(block, page, fm, body, manifest, call_subagent, research_config)
+
+
+def _parse_pending_block(block: str) -> dict:
+    """Parse a plain ``pending`` (non-merge) patch_queue.md block — a targeted
+    section-update description (no pre-drafted merge_draft_body), e.g.
+    "Add a section describing X, sourced from Y." """
+    return {
+        "target_page": _patch_block_field(block, "target_page"),
+        "target_section": _patch_block_field(block, "target_section"),
+        "source": _patch_block_field(block, "source"),
+        "status": _patch_block_field(block, "status"),
+        "proposed_update": _patch_block_field(block, "proposed_update"),
+    }
+
+
+def _apply_one_pending(block: str, call_subagent, research_config: dict) -> tuple[bool, str]:
+    """Apply a plain ``pending`` section-update patch. Unlike merge_pending
+    (a full body already drafted from the new source), these only carry a
+    natural-language description of what to add — the content_merge subagent
+    generates the actual section content from that description, grounded only
+    in what it describes, same self-containedness/sourcing rules as any other
+    draft. Gated by the same deterministic pipeline and approval status as
+    merge_pending; this closes the gap where 18+ queued, human-reviewable
+    proposals had no automated apply path at all (found live: apply_patch_queue
+    only ever processed merge_pending blocks, silently passing every plain
+    ``pending`` entry through untouched regardless of its status)."""
+    entry = _parse_pending_block(block)
+    target = entry.get("target_page")
+    page = _find_page_by_filename(target) if target else None
+    if page is None:
+        return False, _set_patch_status(block, "apply_failed (page not found)")
+    fm, body = frontmatter.parse_page(page)
+    manifest = {
+        "existing_content": body.strip(),
+        "new_draft": None,
+        "target_section": entry.get("target_section"),
+        "proposed_update": entry.get("proposed_update"),
+        "canonical_name": fm.get("canonical_name"),
+        "source": entry.get("source"),
+    }
+    return _run_content_merge_and_write(block, page, fm, body, manifest, call_subagent, research_config)
+
+
 def apply_patch_queue(call_subagent=_call_subagent) -> dict:
-    """Apply human-approved merge_pending patches.
+    """Apply human-approved patches — both ``merge_pending`` (full pre-drafted
+    body, an identity-resolution collision) and plain ``pending`` (a targeted
+    section-update description) entries.
 
     A patch is applied only when its ``status`` is ``approved`` (the human edits
     ``pending_review`` -> ``approved`` in patch_queue.md). Each approved patch runs
@@ -2729,7 +2784,11 @@ def apply_patch_queue(call_subagent=_call_subagent) -> dict:
     out_blocks: list[str] = []
     for block in blocks:
         header = block.split("\n", 1)[0]
-        if "merge_pending" not in header:
+        if "merge_pending" in header:
+            apply_fn = _apply_one_merge
+        elif "] pending |" in header:
+            apply_fn = _apply_one_pending
+        else:
             out_blocks.append(block)
             continue
         status = _patch_block_field(block, "status")
@@ -2737,7 +2796,7 @@ def apply_patch_queue(call_subagent=_call_subagent) -> dict:
             skipped += 1
             out_blocks.append(block)
             continue
-        ok, new_block = _apply_one_merge(block, call_subagent, research_config)
+        ok, new_block = apply_fn(block, call_subagent, research_config)
         applied += int(ok)
         failed += int(not ok)
         out_blocks.append(new_block)
