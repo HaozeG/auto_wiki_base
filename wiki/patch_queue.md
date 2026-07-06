@@ -2091,3 +2091,41 @@ The Sophgo SG2380 is a 16-core RISC-V SoC based on SiFive Performance P670 cores
 
 - https://www.cnx-software.com/2023/10/21/sophgo-sg2380-16-core-sifive-p670-risc-v-processor-20-tops-ai-accelerator/
 merge_draft_body -->
+
+## [2026-07-06] merge_pending | xuantie.md
+target_page: xuantie.md
+canonical_name: XuanTie
+colliding_name: XTheadVector
+source: https://github.com/XUANTIE-RV/thead-extension-spec/blob/master/xtheadvector.adoc
+status: pending_review
+<!-- merge_draft_body
+# XTheadVector
+
+XTheadVector is a non-standard RISC-V vector extension developed by T-Head (XuanTie) for their CPU cores. Version 1.0 of the extension is frozen and stable. XTheadVector is not compatible with the standard RISC-V V extension due to intentional encoding overlaps with V version 0.7.1, and it defines its own instruction prefixes (th.) and CSR prefixes (th.) to avoid conflict with the standard extension. The extension provides 32 vector registers and six unprivileged CSRs (th.vstart, th.vxsat, th.vxrm, th.vl, th.vtype, th.vlenb) that overlap with the corresponding V extension registers. Tools are required to report an error if both XTheadVector and V extensions are enabled simultaneously. The extension is available on XuanTie CPUs with vendor ID 0x5b7, misa bit 21 set, and implementation ID 0, which currently identifies the C906V, C920, and R920 processors.
+
+## Key Claims
+
+- XTheadVector v1.0 is a stable, non-standard RISC-V vector extension that uses an encoding space overlapping with the V extension v0.7.1, making the two extensions mutually exclusive in toolchains.
+- The extension adds 32 vector registers and six CSRs prefixed with `th.` instead of the standard `v` prefix.
+- All instructions are prefixed with `th.` to distinguish them from standard V instructions.
+- Compared to V v0.7.1, XTheadVector adds VLENB CSR, renames CSRs with `th.` prefix, and promotes Zvlsseg to a mandatory part rather than a subextension.
+- Compared to V v1.0, XTheadVector lacks vsetivli, whole register moves, fractional LMUL, vlm/vsm, and configurable vta/vma (fixed to TAMU). It also has different load/store instruction encodings and strict register overlap rules for narrowing and comparison operations.
+- Availability is gated by vendor ID 0x5b7, misa.V set, and mimpid == 0 (implementation ID zero), identifying C906V, C920, and R920 cores.
+
+The extension defines pseudo instructions (`th.vmmv.m`, `th.vneg.v`, `th.vncvt.x.x.v`, `th.vfneg.v`, `th.vfabs.v`) to improve compatibility with RVV 1.0 source code.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V vector extension derived from V v0.7.1 with modifications; uses `th.` prefix for instructions and CSRs
+- Vector/matrix/accelerator support: 32 vector registers, CSRs for vector length (th.vl), vector type (th.vtype), and vector length in bytes (th.vlenb)
+- Memory/cache/TLB/DMA: Not specified in source
+- Compiler/toolchain support: Intrinsics header documented (include::xtheadvector/intrinsics.adoc[]), pseudo instructions defined for source-level compatibility with RVV 1.0; no specific toolchain versions mentioned
+
+## Relationships
+
+- [[andes-ax45mpv-hardware-target]]: XTheadVector is a non-standard RISC-V vector extension that conflicts with the standard V extension used by the Andes AX45MPV core, as its encoding overlaps with V v0.7.1 and uses different CSR/instruction naming conventions, making the two incompatible in a single toolchain.
+
+## Sources
+
+- https://github.com/XUANTIE-RV/thead-extension-spec/blob/master/xtheadvector.adoc
+merge_draft_body -->

@@ -4,6 +4,10 @@ aliases:
 - T-Head XuanTie
 - XuanTie processor
 - XT
+- XTheadVector
+- XuanTie Vector Extension
+- TH Vector
+- xtheadvector
 subtype: null
 tags: []
 scorecard:
@@ -15,11 +19,13 @@ scorecard:
 sources:
 - raw/cache/2219974cd9dd0df6.md
 - https://www.xrvm.cn/
+- raw/cache/bb714ae7abde63e5.md
+- https://github.com/XUANTIE-RV/thead-extension-spec/blob/master/xtheadvector.adoc
 source_url: https://www.xrvm.cn/
 fetched_at: '2026-07-03T13:18:48.558457+00:00'
 type: entity
 created: '2026-07-03'
-updated: '2026-07-03'
+updated: '2026-07-06'
 cold_start: true
 inbound_links: 0
 outbound_links:

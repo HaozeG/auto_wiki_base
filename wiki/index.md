@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-06 | Pages: 87 | Sources: 234
+Last updated: 2026-07-06 | Pages: 91 | Sources: 242
 
 ## Entity Pages
 
@@ -22,6 +22,7 @@ Last updated: 2026-07-06 | Pages: 87 | Sources: 234
 | [monte-cimone-cluster.md](entity/monte-cimone-cluster.md) | Monte Cimone |  | 2 | 0 |
 | [nncase.md](entity/nncase.md) | nncase |  | 6 | 0 |
 | [nuclei-system-technology.md](entity/nuclei-system-technology.md) | Nuclei System Technology |  | 2 | 0 |
+| [openblas.md](entity/openblas.md) | OpenBLAS |  | 2 | 0 |
 | [opencv-rvv-entity.md](entity/opencv-rvv-entity.md) | OpenCV (RISC-V Vector Optimization) |  | 2 | 0 |
 | [opengemm.md](entity/opengemm.md) | OpenGeMM | GeMM accelerator, RISC-V, open-source hardware, Chisel, accelerator generator | 4 | 0 |
 | [qimeng-tensorop.md](entity/qimeng-tensorop.md) | QiMeng-TensorOp |  | 2 | 0 |
@@ -47,7 +48,7 @@ Last updated: 2026-07-06 | Pages: 87 | Sources: 234
 | [xuantie-gnu-toolchain.md](entity/xuantie-gnu-toolchain.md) | XuanTie GNU Compiler Toolchain |  | 2 | 0 |
 | [xuantie-mme.md](entity/xuantie-mme.md) | XuanTie MME |  | 2 | 0 |
 | [xuantie-zero-stage-boot-entity.md](entity/xuantie-zero-stage-boot-entity.md) | XuanTie Zero Stage Boot | XuanTie, boot firmware, RISC-V | 2 | 0 |
-| [xuantie.md](entity/xuantie.md) | XuanTie |  | 2 | 0 |
+| [xuantie.md](entity/xuantie.md) | XuanTie |  | 4 | 0 |
 | [zcc-compiler.md](entity/zcc-compiler.md) | ZCC |  | 2 | 0 |
 | [zvfh-isa-extension.md](entity/zvfh-isa-extension.md) | ZVFH | RISC-V, ISA extension, FP16, vector | 2 | 0 |
 
@@ -76,6 +77,7 @@ Last updated: 2026-07-06 | Pages: 87 | Sources: 234
 - **AndesCore NX27V**: → [andes-nx27v-hardware-target](hardware_target/andes-nx27v-hardware-target.md)
 - **Apache TVM**: → [apache-tvm](entity/apache-tvm.md)
 - **Auto-Generated GEMM Micro-Kernels on C906 and C910**: → [auto-gemm-micro-kernel-c906-c910-benchmark](benchmark_result/auto-gemm-micro-kernel-c906-c910-benchmark.md)
+- **BLAS band matrix optimization on RISC-V**: → [band-matrix-blas-riscv-openblas-benchmark](benchmark_result/band-matrix-blas-riscv-openblas-benchmark.md)
 - **BPI-F3 RVV LLM benchmark**: → [bpi-f3-rvv-llm-benchmark](benchmark_result/bpi-f3-rvv-llm-benchmark.md)
 - **BPI-F3 RVV llama.cpp**: → [bpi-f3-rvv-llm-benchmark](benchmark_result/bpi-f3-rvv-llm-benchmark.md)
 - **Baby LLama2 Benchmark on Milk-V Duo**: → [baby-llama2-milkv-duo-benchmark](benchmark_result/baby-llama2-milkv-duo-benchmark.md)
@@ -84,6 +86,7 @@ Last updated: 2026-07-06 | Pages: 87 | Sources: 234
 - **Baby LLama2 optimization C906**: → [baby-llama2-milkv-duo-benchmark](benchmark_result/baby-llama2-milkv-duo-benchmark.md)
 - **BananaPi BPI-F3 LLM Inference (RVV optimized)**: → [bpi-f3-rvv-llm-benchmark](benchmark_result/bpi-f3-rvv-llm-benchmark.md)
 - **BananaPi-F3 GCC Clang comparison**: → [gcc15-vs-clang21-banana-pi-f3-rvv10](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md)
+- **Band Matrix BLAS OpenBLAS RISC-V Benchmark**: → [band-matrix-blas-riscv-openblas-benchmark](benchmark_result/band-matrix-blas-riscv-openblas-benchmark.md)
 - **Bianbu K3**: → [spacemit-k3-hardware-target](hardware_target/spacemit-k3-hardware-target.md)
 - **C906**: → [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
 - **C906 C910 Auto-Generated GEMM Benchmark**: → [auto-gemm-micro-kernel-c906-c910-benchmark](benchmark_result/auto-gemm-micro-kernel-c906-c910-benchmark.md)
@@ -93,6 +96,8 @@ Last updated: 2026-07-06 | Pages: 87 | Sources: 234
 - **C908 GCC tuning benchmark**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
 - **C908 scheduler model**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **C908V**: → [xuantie-c908](hardware_target/xuantie-c908.md)
+- **C910V2**: → [xuantie-c910v2-hardware-target](hardware_target/xuantie-c910v2-hardware-target.md)
+- **C920V2**: → [xuantie-c920v2-hardware-target](hardware_target/xuantie-c920v2-hardware-target.md)
 - **CHIPS**: → [chips-alliance-entity](entity/chips-alliance-entity.md)
 - **CHIPS Alliance**: → [chips-alliance-entity](entity/chips-alliance-entity.md)
 - **CHIPS Alliance - GitHub**: → [chips-alliance-entity](entity/chips-alliance-entity.md)
@@ -211,6 +216,8 @@ Last updated: 2026-07-06 | Pages: 87 | Sources: 234
 - **Nuclei NA900 processor**: → [nuclei-na900-hardware-target](hardware_target/nuclei-na900-hardware-target.md)
 - **Nuclei System Technology**: → [nuclei-system-technology](entity/nuclei-system-technology.md)
 - **Oasis**: → [sophon-sg2380-hardware-target](hardware_target/sophon-sg2380-hardware-target.md)
+- **OpenBLAS**: → [openblas](entity/openblas.md)
+- **OpenBLAS band matrix RISC-V speedup**: → [band-matrix-blas-riscv-openblas-benchmark](benchmark_result/band-matrix-blas-riscv-openblas-benchmark.md)
 - **OpenC906**: → [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
 - **OpenCV (RISC-V Vector Optimization)**: → [opencv-rvv-entity](entity/opencv-rvv-entity.md)
 - **OpenCV RISC-V**: → [opencv-rvv-entity](entity/opencv-rvv-entity.md)
@@ -265,6 +272,8 @@ Last updated: 2026-07-06 | Pages: 87 | Sources: 234
 - **RVM extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RVME**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RVV**: → [riscv-v-extension](entity/riscv-v-extension.md)
+- **RVV 0.7.1 BLAS band matrix**: → [band-matrix-blas-riscv-openblas-benchmark](benchmark_result/band-matrix-blas-riscv-openblas-benchmark.md)
+- **RVV 1.0 BLAS band matrix**: → [band-matrix-blas-riscv-openblas-benchmark](benchmark_result/band-matrix-blas-riscv-openblas-benchmark.md)
 - **RVV Bench**: → [riscv-v-extension](entity/riscv-v-extension.md)
 - **RVV Dialect (MLIR)**: → [rvv-dialect-mlir](entity/rvv-dialect-mlir.md)
 - **RVV Intrinsic API**: → [rvv-intrinsic-api](entity/rvv-intrinsic-api.md)
@@ -345,6 +354,7 @@ Last updated: 2026-07-06 | Pages: 87 | Sources: 234
 - **T-Head XuanTie**: → [xuantie](entity/xuantie.md)
 - **T-Head XuanTie C908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **T1**: → [t1](hardware_target/t1.md)
+- **TH Vector**: → [xuantie](entity/xuantie.md)
 - **TH1520 YOLOX tutorial**: → [hhb-onnxruntime-yolox-deployment-xuantie-c920](optimization_recipe/hhb-onnxruntime-yolox-deployment-xuantie-c920.md)
 - **TVM**: → [apache-tvm](entity/apache-tvm.md)
 - **Terapines ZCC**: → [zcc-compiler](entity/zcc-compiler.md)
@@ -366,6 +376,7 @@ Last updated: 2026-07-06 | Pages: 87 | Sources: 234
 - **X60**: → [spacemit-x60-hardware-target](hardware_target/spacemit-x60-hardware-target.md)
 - **X60 LMUL cost scaling**: → [spacemit-x60-gcc-tuning](optimization_recipe/spacemit-x60-gcc-tuning.md)
 - **XT**: → [xuantie](entity/xuantie.md)
+- **XTheadVector**: → [xuantie](entity/xuantie.md)
 - **XUANTIE-RV/xtai-benchmark**: → [xuantie-ai-benchmark-suite](entity/xuantie-ai-benchmark-suite.md)
 - **XiangShan**: → [xiangshan-overview](entity/xiangshan-overview.md)
 - **XiangShan Nanhu**: → [opennanhu-v5](hardware_target/opennanhu-v5.md)
@@ -378,11 +389,14 @@ Last updated: 2026-07-06 | Pages: 87 | Sources: 234
 - **XuanTie C908 GCC Tuning**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
 - **XuanTie C908 scheduler model**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
 - **XuanTie C908 tuning**: → [xuantie-c908](hardware_target/xuantie-c908.md)
+- **XuanTie C910V2**: → [xuantie-c910v2-hardware-target](hardware_target/xuantie-c910v2-hardware-target.md)
+- **XuanTie C920V2**: → [xuantie-c920v2-hardware-target](hardware_target/xuantie-c920v2-hardware-target.md)
 - **XuanTie GNU Compiler Toolchain**: → [xuantie-gnu-toolchain](entity/xuantie-gnu-toolchain.md)
 - **XuanTie GNU Toolchain**: → [xuantie-gnu-toolchain](entity/xuantie-gnu-toolchain.md)
 - **XuanTie MME**: → [xuantie-mme](entity/xuantie-mme.md)
 - **XuanTie MME instruction set**: → [xuantie-mme](entity/xuantie-mme.md)
 - **XuanTie Matrix Multiply Extension**: → [xuantie-mme](entity/xuantie-mme.md)
+- **XuanTie Vector Extension**: → [xuantie](entity/xuantie.md)
 - **XuanTie Zero Stage Boot**: → [xuantie-zero-stage-boot-entity](entity/xuantie-zero-stage-boot-entity.md)
 - **XuanTie processor**: → [xuantie](entity/xuantie.md)
 - **Xuantie C906**: → [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
@@ -445,7 +459,10 @@ Last updated: 2026-07-06 | Pages: 87 | Sources: 234
 - **xt-c908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **xt-c908 GCC tuning**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
 - **xt-c908 tuning**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
+- **xt-c910v2**: → [xuantie-c910v2-hardware-target](hardware_target/xuantie-c910v2-hardware-target.md)
+- **xt-c920v2**: → [xuantie-c920v2-hardware-target](hardware_target/xuantie-c920v2-hardware-target.md)
 - **xtai-benchmark**: → [xuantie-ai-benchmark-suite](entity/xuantie-ai-benchmark-suite.md)
+- **xtheadvector**: → [xuantie](entity/xuantie.md)
 - **xuantie-c908**: → [xuantie-c908](hardware_target/xuantie-c908.md)
 - **xuantie-gnu-toolchain**: → [xuantie-gnu-toolchain](entity/xuantie-gnu-toolchain.md)
 - **zero_stage_boot**: → [xuantie-zero-stage-boot-entity](entity/xuantie-zero-stage-boot-entity.md)
@@ -463,6 +480,7 @@ Last updated: 2026-07-06 | Pages: 87 | Sources: 234
 |------|------|---------|------|---------|---------|
 | [auto-gemm-micro-kernel-c906-c910-benchmark.md](benchmark_result/auto-gemm-micro-kernel-c906-c910-benchmark.md) | benchmark_result | Auto-Generated GEMM Micro-Kernels on C906 and C910 |  | 2 | 0 |
 | [baby-llama2-milkv-duo-benchmark.md](benchmark_result/baby-llama2-milkv-duo-benchmark.md) | benchmark_result | Baby LLama2 Benchmark on Milk-V Duo |  | 2 | 2 |
+| [band-matrix-blas-riscv-openblas-benchmark.md](benchmark_result/band-matrix-blas-riscv-openblas-benchmark.md) | benchmark_result | Band Matrix BLAS OpenBLAS RISC-V Benchmark |  | 2 | 0 |
 | [bpi-f3-rvv-llm-benchmark.md](benchmark_result/bpi-f3-rvv-llm-benchmark.md) | benchmark_result | BananaPi BPI-F3 LLM Inference (RVV optimized) |  | 2 | 0 |
 | [gcc-tuning-c908-canmv-k230.md](benchmark_result/gcc-tuning-c908-canmv-k230.md) | benchmark_result | GCC Tuning Benchmark on XuanTie C908 |  | 6 | 5 |
 | [gcc15-clang21-autovec-benchmark-spacemit-x60.md](benchmark_result/gcc15-clang21-autovec-benchmark-spacemit-x60.md) | benchmark_result | GCC 15 vs Clang 21 Auto-vectorization on SpacemiT X60 | SpacemiT X60, GCC 15, Clang 21, LLVM 21, RVV 1.0 | 2 | 0 |
@@ -474,7 +492,7 @@ Last updated: 2026-07-06 | Pages: 87 | Sources: 234
 | [semidynamics-all-in-one-llama2-7b-tensor-utilization.md](benchmark_result/semidynamics-all-in-one-llama2-7b-tensor-utilization.md) | benchmark_result | Semidynamics All-In-One LLaMA-2 7B Tensor Utilization |  | 2 | 0 |
 | [sophon-sg2042-npb-performance-benchmark-result.md](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md) | benchmark_result | SG2042 NAS Parallel Benchmark Performance |  | 4 | 0 |
 | [spacemit-k1-benchmark-2026-04-14.md](benchmark_result/spacemit-k1-benchmark-2026-04-14.md) | benchmark_result | SpacemiT K1 AI Benchmark Report (2026-04-14) |  | 2 | 0 |
-| [andes-ax45mpv-hardware-target.md](hardware_target/andes-ax45mpv-hardware-target.md) | hardware_target | AndesCore AX45MPV |  | 2 | 4 |
+| [andes-ax45mpv-hardware-target.md](hardware_target/andes-ax45mpv-hardware-target.md) | hardware_target | AndesCore AX45MPV |  | 2 | 5 |
 | [andes-nx27v-hardware-target.md](hardware_target/andes-nx27v-hardware-target.md) | hardware_target | AndesCore NX27V |  | 2 | 4 |
 | [chiplet-based-risc-v-soc.md](hardware_target/chiplet-based-risc-v-soc.md) | hardware_target | Chiplet-Based RISC-V SoC |  | 2 | 0 |
 | [et-soc-1-hardware-target.md](hardware_target/et-soc-1-hardware-target.md) | hardware_target | ET-SoC-1 |  | 2 | 1 |
@@ -485,7 +503,7 @@ Last updated: 2026-07-06 | Pages: 87 | Sources: 234
 | [opennanhu-v5.md](hardware_target/opennanhu-v5.md) | hardware_target | OpenNanhu-V5 |  | 2 | 0 |
 | [semidynamics-all-in-one-ai-ip.md](hardware_target/semidynamics-all-in-one-ai-ip.md) | hardware_target | Semidynamics All-In-One AI IP |  | 2 | 1 |
 | [sophon-sg2042.md](hardware_target/sophon-sg2042.md) | hardware_target | SOPHON SG2042 |  | 12 | 0 |
-| [sophon-sg2044-hardware-target.md](hardware_target/sophon-sg2044-hardware-target.md) | hardware_target | Sophon SG2044 |  | 2 | 6 |
+| [sophon-sg2044-hardware-target.md](hardware_target/sophon-sg2044-hardware-target.md) | hardware_target | Sophon SG2044 |  | 2 | 8 |
 | [sophon-sg2380-hardware-target.md](hardware_target/sophon-sg2380-hardware-target.md) | hardware_target | Sophon SG2380 |  | 6 | 0 |
 | [spacemit-k1.md](hardware_target/spacemit-k1.md) | hardware_target | SpacemiT K1 |  | 4 | 4 |
 | [spacemit-k3-hardware-target.md](hardware_target/spacemit-k3-hardware-target.md) | hardware_target | SpacemiT K3 | RISC-V, SpacemiT, AI CPU, big.LITTLE, RVV 1.0 | 4 | 1 |
@@ -493,9 +511,11 @@ Last updated: 2026-07-06 | Pages: 87 | Sources: 234
 | [starfive-jh7110-hardware-target.md](hardware_target/starfive-jh7110-hardware-target.md) | hardware_target | StarFive JH-7110 |  | 2 | 0 |
 | [t1.md](hardware_target/t1.md) | hardware_target | T1 |  | 2 | 0 |
 | [v851s-yuzukilizard.md](hardware_target/v851s-yuzukilizard.md) | hardware_target | Allwinner V851S / Yuzukilizard | allwinner, v851s, yuzukilizard, risc-v, npu | 8 | 0 |
-| [vicuna-2-0-hardware-target.md](hardware_target/vicuna-2-0-hardware-target.md) | hardware_target | Vicuna 2.0 | RISC-V, vector co-processor, embedded, CV-X-IF | 2 | 0 |
-| [xuantie-c906-hardware-target.md](hardware_target/xuantie-c906-hardware-target.md) | hardware_target | XuanTie C906 |  | 2 | 9 |
+| [vicuna-2-0-hardware-target.md](hardware_target/vicuna-2-0-hardware-target.md) | hardware_target | Vicuna 2.0 | RISC-V, vector co-processor, embedded, CV-X-IF | 2 | 1 |
+| [xuantie-c906-hardware-target.md](hardware_target/xuantie-c906-hardware-target.md) | hardware_target | XuanTie C906 |  | 2 | 10 |
 | [xuantie-c908.md](hardware_target/xuantie-c908.md) | hardware_target | XuanTie C908 |  | 14 | 1 |
+| [xuantie-c910v2-hardware-target.md](hardware_target/xuantie-c910v2-hardware-target.md) | hardware_target | XuanTie C910V2 |  | 2 | 1 |
+| [xuantie-c920v2-hardware-target.md](hardware_target/xuantie-c920v2-hardware-target.md) | hardware_target | XuanTie C920V2 |  | 2 | 1 |
 | [c908-wino-gemm-optimization.md](optimization_recipe/c908-wino-gemm-optimization.md) | optimization_recipe | C908 Winograd and GEMM Optimization in SHL |  | 2 | 12 |
 | [hhb-onnxruntime-yolox-deployment-xuantie-c920.md](optimization_recipe/hhb-onnxruntime-yolox-deployment-xuantie-c920.md) | optimization_recipe | HHB-onnxruntime YOLOX Deployment on Xuantie C920 |  | 2 | 0 |
 | [iree-riscv-microkernel-support.md](optimization_recipe/iree-riscv-microkernel-support.md) | optimization_recipe | IREE RISC-V Microkernel Support |  | 2 | 2 |
@@ -533,6 +553,8 @@ Last updated: 2026-07-06 | Pages: 87 | Sources: 234
 - [vicuna-2-0-hardware-target](hardware_target/vicuna-2-0-hardware-target.md)
 - [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
 - [xuantie-c908](hardware_target/xuantie-c908.md)
+- [xuantie-c910v2-hardware-target](hardware_target/xuantie-c910v2-hardware-target.md)
+- [xuantie-c920v2-hardware-target](hardware_target/xuantie-c920v2-hardware-target.md)
 
 ### Workload and Kernel Landscape
 
@@ -559,6 +581,7 @@ Last updated: 2026-07-06 | Pages: 87 | Sources: 234
 
 - [auto-gemm-micro-kernel-c906-c910-benchmark](benchmark_result/auto-gemm-micro-kernel-c906-c910-benchmark.md)
 - [baby-llama2-milkv-duo-benchmark](benchmark_result/baby-llama2-milkv-duo-benchmark.md)
+- [band-matrix-blas-riscv-openblas-benchmark](benchmark_result/band-matrix-blas-riscv-openblas-benchmark.md)
 - [bpi-f3-rvv-llm-benchmark](benchmark_result/bpi-f3-rvv-llm-benchmark.md)
 - [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
 - [gcc15-clang21-autovec-benchmark-spacemit-x60](benchmark_result/gcc15-clang21-autovec-benchmark-spacemit-x60.md)
