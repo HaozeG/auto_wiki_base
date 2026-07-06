@@ -1286,7 +1286,25 @@ def test_run_taxonomy_evolution_persists_only_when_both_signals_agree(tmp_path):
         encoding="utf-8",
     )
     research_config = {
-        "theme_profile": orchestrator._load_claude_md_block("theme_profile"),
+        # Built directly rather than via orchestrator._load_claude_md_block(),
+        # which reads the *default* _CLAUDE_MD path -- not yet patched to
+        # this fixture at this point in the test. Found live: in this repo's
+        # actual production CLAUDE.md (a real RISC-V research wiki), that
+        # default path happens to declare a matching vendor_core_families
+        # hub, so this line silently read production CLAUDE.md instead of
+        # the fixture and the test passed for the wrong reason; in a clean
+        # checkout (no theme_profile on disk) it returns {} and fails for real.
+        "theme_profile": {
+            "theme": "t",
+            "organization_choice": "workflow_first",
+            "organization_name": "Workflow-first",
+            "hub_hierarchy": [{
+                "hub_id": "vendor_core_families",
+                "label": "Vendor RISC-V Core Families",
+                "subtype": "hardware_target",
+                "description": "d",
+            }],
+        },
         "page_type_taxonomy": {"hardware_target": {}},
         "synthesis_gap_min_cluster_size": 3,
         "max_new_subtypes_per_session": 2,
@@ -1355,7 +1373,17 @@ def test_run_taxonomy_evolution_respects_rate_limit(tmp_path):
         encoding="utf-8",
     )
     research_config = {
-        "theme_profile": orchestrator._load_claude_md_block("theme_profile"),
+        # See the sibling dual-signal-gate test above for why this is built
+        # directly rather than loaded via orchestrator._load_claude_md_block().
+        "theme_profile": {
+            "theme": "t",
+            "hub_hierarchy": [{
+                "hub_id": "vendor_core_families",
+                "label": "Vendor RISC-V Core Families",
+                "subtype": "hardware_target",
+                "description": "d",
+            }],
+        },
         "page_type_taxonomy": {"hardware_target": {}},
         "synthesis_gap_min_cluster_size": 3,
         "max_new_subtypes_per_session": 1,
