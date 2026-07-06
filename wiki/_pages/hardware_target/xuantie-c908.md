@@ -41,7 +41,7 @@ constraints:
 - 2 GHz
 - 52.8 mW/GHz per core
 created: '2022-11-03'
-updated: '2026-07-03'
+updated: '2026-07-06'
 cold_start: true
 inbound_links: 1
 scorecard:
@@ -58,6 +58,8 @@ fetched_at: '2026-07-03T13:14:57.990457+00:00'
 
 The XuanTie C908 is a mid-range RISC-V processor core developed by T-Head Semiconductor (Alibaba Cloud). It implements the RV64GCB[V] instruction set and is compatible with the RVA22 profile. The core features a 9-stage dual-issue in-order pipeline with branch prediction technologies including a state-of-the-art Branch History Table, Branch Target Buffer, and Return Address Stack, and it utilizes instruction fusion technology to fuse multiple instructions into a single execution. Designed for AIoT applications such as intelligent interaction and AR/VR, the C908 includes an optional Vector Processing Unit (VPU) supporting the RISC-V Vector Extension 1.0 specification. The VPU handles various vector floating-point and integer data formats including INT4, BF16, and half-precision IEEE-754 floating-point. The core uses a two-level cache system with hardware cache coherency and optional ECC, supporting multi-cluster configurations (1 to 4 cores per cluster). The bus interface supports AXI4/ACE protocol with a Device Coherence Port (DCP) and a Low Latency Port (LLP). The C908 can run at up to 2 GHz TSMC 12nm process with dynamic power consumption of 52.8 mW/GHz per core. It also supports the RV32 COMPAT mode for running 32-bit applications.
 
+Adopting a hardware-software co-design methodology, the C908 integrates dedicated AI instructions (including an int8 vector dot product instruction) and is supported by the SHL (ShiHulan) heterogeneous computing library and the HHB toolchain for neural network quantization and compilation. In MLPerf Tiny v0.7 inference benchmarks, the C908 achieved up to 3.5 times the performance of its predecessor, the XuanTie C906. A variant, the XuanTie C908X, further extends vector capabilities with dedicated AI instructions for terminal, edge, and infrastructure applications.
+
 ## Key Claims
 
 - Implements RV64GCB[V] instruction set and is compatible with the RVA22 profile.
@@ -69,18 +71,27 @@ The XuanTie C908 is a mid-range RISC-V processor core developed by T-Head Semico
 - Enhanced Physical Memory Protection (ePMP) with up to 64 regions.
 - Platform-Level Interrupt Controller (PLIC) configurable up to 1023 interrupt sources.
 - AI software tools: HHB neural network inference deployment tool and SHL high-performance heterogeneous computing library.
+- Hardware-software co-design for AI acceleration.
+- Dedicated int8 vector dot product instructions improve MobileNet inference by 3.35x.
+- SHL provides optimized inference kernels for fp32, fp16, and int8 datatypes.
+- C908 outperforms C906 by up to 3.5x in MLPerf Tiny v0.7 inference benchmarks.
+- C908X variant adds further dedicated AI instructions for edge and infrastructure deployments.
+- The GitHub repository xtai-benchmark provides tools for evaluating AI performance on RISC-V including C908.
 
 ## Optimization-Relevant Details
 
-- ISA/profile: RV64GCB[V] (compatible with RVA22); RV32GCB[V] for User mode; extends with Vector 1.0, Bitmanip 1.0, CMO, Svinval.
-- Vector/matrix/accelerator support: Optional VPU with RVV 1.0, vector dot product instruction extension, INT4 data type.
-- Memory/cache/TLB/DMA: Two-level cache with hardware coherency, Sv39/Sv48 virtual address, AXI4/ACE bus with DCP and LLP interfaces.
-- Compiler/toolchain support: HHB deployment tool, SHL library for optimized kernel implementations.
+- ISA/profile: RV64GCB[V] (compatible with RVA22); RV32GCB[V] for User mode; extends with Vector 1.0, Bitmanip 1.0, CMO, Svinval; dedicated AI instructions (int8 vector dot product).
+- Vector/matrix/accelerator support: Optional VPU with RVV 1.0, vector dot product instruction extension, INT4 data type; C908X adds more AI-specific vector instructions.
+- Memory/cache/TLB/DMA: Two-level cache with hardware coherency, Sv39/Sv48 virtual address, AXI4/ACE bus with DCP and LLP interfaces; high-speed cache technology.
+- Compiler/toolchain support: HHB deployment tool for quantization and compilation; SHL library for optimized inference kernels on fp32, fp16, int8.
 
 ## Relationships
 
-No specific relationship to visible context pages.
+- [[shl]]: SHL provides optimized neural network inference kernels for the XuanTie C908, leveraging its pipeline, instruction fusion, and cache to deliver performance across fp32, fp16, and int8 datatypes.
 
 ## Sources
 
 - [XuanTie C908 Blog Post](https://riscv.org/blog/xuantie-c908-high-performance-risc-v-processor-catered-to-aiot-industry-chang-liu-alibaba-cloud/)
+- Alibaba T-HEAD blog post (December 20, 2022): "XuanTie C908 Accelerates AI with Software and Hardware Fusion"
+- Supplementary search snippets and DDG context.
+- xtai-benchmark GitHub repository: https://github.com/XUANTIE-RV/xtai-benchmark

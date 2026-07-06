@@ -19,7 +19,7 @@ target_page: xuantie-c908.md
 canonical_name: XuanTie C908
 colliding_name: XuanTie C908
 source: https://csi-nn2.opensource.alibaba.com/zh/blog/C908+accelerates+AI
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # XuanTie C908
 
