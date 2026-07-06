@@ -243,6 +243,17 @@ Maturity is judged on the **connectivity distribution**, not the mean (a few hub
 
 **Linking debt (autonomous loop).** Track `linking_debt` = pages created this session still at 0 inbound. When it exceeds `max_linking_debt` (`[research_config]`), stop creating new pages and switch to linking/upserting existing ones until the debt clears, so connectivity never falls behind generation.
 
+**Dynamic taxonomy evolution (autonomous loop).** At the end of each research session, once a tag cluster grows large enough (reusing `synthesis_gap_min_cluster_size`, the same rarity floor used for synthesis-gap detection) — either within one declared `hub_hierarchy` entry or spanning exactly two (a bridging sub-hub) — the harness may propose and persist a new sub-hub nested under one or two existing parent hubs, without waiting for a human to hand-edit this file. Persistence requires **both** an objective signal (the cluster's real betweenness centrality is elevated relative to the graph's median) and a subjective signal (a subtype-proposal subagent judges the cluster a genuine organizing concept) to agree — the same dual-signal bar retrospective lint's RESTRUCTURE rule uses. A single-signal hit is not persisted; it stays visible as a candidate for human review. Bounded by `max_new_subtypes_per_session` (`[research_config]`) — once hit, detection keeps running for the lint report but persistence stops for the rest of the session, same circuit-breaker shape as `max_linking_debt`. New sub-hubs group existing pages by **tag**, not by reassigning `type`/`subtype` — no page is reclassified. Every persisted change is logged:
+```
+## [YYYY-MM-DD] taxonomy_evolution | <subtype_name>
+label: <human-readable label>
+parent_hub_ids: [<hub_id>, ...]
+tag: <shared tag driving the cluster>
+member_pages: [<filename>, ...]
+subjective_signal: approve (subtype_proposal subagent)
+objective_signal: cluster centrality elevated above graph median
+```
+
 ---
 
 ## Query Protocol
@@ -538,6 +549,7 @@ hub_hierarchy:
 max_candidates_per_session: 20
 max_new_pages_per_session: 10
 max_linking_debt: 5                  # autonomous loop stops creating when this many session pages remain at 0 inbound
+max_new_subtypes_per_session: 2      # dynamic taxonomy evolution: autonomous subtype persistence stops for the rest of the session once this many new subtypes have been persisted (detection/lint reporting continues regardless)
 max_eval_subagent_tokens: 16000      # higher than a first-pass 3000 default: the eval subagent runs on a thinking model that needs headroom for its reasoning trace before the JSON verdict — do not lower this back down without switching the eval subagent's model
 max_discovery_subagent_tokens: 3000
 max_retries_on_fetch_failure: 2

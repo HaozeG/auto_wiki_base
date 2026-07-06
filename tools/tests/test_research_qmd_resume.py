@@ -1,4 +1,5 @@
 import json
+import re
 import sys
 import types
 from pathlib import Path
@@ -1036,8 +1037,68 @@ def test_rebuild_index_renders_hub_hierarchy_from_theme_profile(tmp_path):
     assert "### Vendor RISC-V Core Families" in text
     assert "[chip-a](hardware_target/chip-a.md)" in text
     assert "[chip-b](hardware_target/chip-b.md)" in text
-    assert "### Workload and Kernel Landscape" in text
-    assert "*(no pages under this hub yet)*" in text  # honest, not omitted
+
+
+def test_rebuild_index_renders_two_parent_sub_hub_nested_under_both(tmp_path):
+    """Part B: a sub-hub declaring two parent_hub_ids (a bridging subcategory)
+    renders once under EACH parent's ### heading, as a #### sub-section --
+    the visible expression of "introduce new subcategory under two parent
+    categories when necessary". Membership is tag-based, not a new
+    type/subtype value, so no page needs reclassifying."""
+    pages_dir = tmp_path / "wiki" / "_pages"
+    hw_dir = pages_dir / "hardware_target"
+    hw_dir.mkdir(parents=True)
+    (hw_dir / "chip-a.md").write_text(
+        "---\ntype: hardware_target\ncanonical_name: Chip A\ntags: [quantized-gemm]\n"
+        "sources: []\ninbound_links: 0\n---\n\n# Chip A\n\nBody.\n",
+        encoding="utf-8",
+    )
+    index = tmp_path / "wiki" / "index.md"
+    index.write_text(
+        "# Wiki Index\n\nLast updated: 2020-01-01 | Pages: 0 | Sources: 0\n\n"
+        "## Entity Pages\n\n| Page | Summary | Tags | Sources | Inbound |\n"
+        "|------|---------|------|---------|---------|\n\n"
+        "## Synthesis Pages\n\n| Page | Connected Entities | Status | Inbound |\n"
+        "|------|--------------------|--------|---------|\n\n"
+        "## Concept Index\n\n\n"
+        "## Optimization Pages\n\n| Page | Type | Summary | Tags | Sources | Inbound |\n"
+        "|------|------|---------|------|---------|---------|\n",
+        encoding="utf-8",
+    )
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text(
+        "```yaml\n[theme_profile]\ntheme: RISC-V AI accelerator\nhub_hierarchy:\n"
+        "- hub_id: vendor_core_families\n  label: Vendor RISC-V Core Families\n"
+        "  subtype: hardware_target\n  description: Cores and SoCs by vendor.\n"
+        "- hub_id: workload_landscape\n  label: Workload and Kernel Landscape\n"
+        "  subtype: workload_kernel\n  description: Kernel shapes and baselines.\n"
+        "- hub_id: quantized_gemm_cores\n  label: Quantized GEMM Cores\n"
+        "  tag: quantized-gemm\n  parent_hub_ids: [vendor_core_families, workload_landscape]\n"
+        "  description: Bridging sub-hub.\n```\n",
+        encoding="utf-8",
+    )
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_INDEX_MD", index), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md):
+        orchestrator.rebuild_index_from_frontmatter()
+        text_first_pass = index.read_text(encoding="utf-8")
+        # Idempotency: guard against the earlier compounding blank-line bug --
+        # a second rebuild on already-rebuilt content must not grow the file.
+        orchestrator.rebuild_index_from_frontmatter()
+        text_second_pass = index.read_text(encoding="utf-8")
+
+    assert text_first_pass == text_second_pass
+    assert text_first_pass.count("#### Quantized GEMM Cores") == 2
+    assert "### Vendor RISC-V Core Families" in text_first_pass
+    assert "### Workload and Kernel Landscape" in text_first_pass
+    # appears nested under both parents, in each case listing the tagged page.
+    # Sections start at a line beginning with exactly "### " (not "#### ").
+    sections = re.split(r"\n(?=### [^#])", text_first_pass)
+    for section in sections:
+        if section.lstrip("#").lstrip().startswith(("Vendor RISC-V Core Families", "Workload and Kernel Landscape")):
+            assert "#### Quantized GEMM Cores" in section
+            assert "[chip-a](hardware_target/chip-a.md)" in section.split("#### Quantized GEMM Cores")[1]
 
 
 def test_synthesis_gap_clusters_finds_uncovered_tag_and_excludes_covered(tmp_path):
@@ -1160,6 +1221,161 @@ def test_hub_promotion_candidates_finds_cluster_within_declared_hub(tmp_path):
     assert any(c["tag"] == "risc-v" and len(c["member_pages"]) == 4 for c in candidates)
     # "sifive" alone only has 1 page -- below threshold, not proposed.
     assert not any(c["tag"] == "sifive" for c in candidates)
+
+
+def test_hub_promotion_candidates_detects_cross_hub_cluster(tmp_path):
+    """Part D detection: a tag whose tagged pages split across exactly two
+    declared hubs' subtypes (not one) is surfaced as a bridging candidate
+    with parent_hub_ids carrying both hub_ids -- the "two parent categories"
+    case, not an accident."""
+    pages_dir = tmp_path / "wiki" / "_pages"
+    hw_dir = pages_dir / "hardware_target"
+    wl_dir = pages_dir / "workload_kernel"
+    hw_dir.mkdir(parents=True)
+    wl_dir.mkdir(parents=True)
+    for name, folder in [("chip-a", hw_dir), ("chip-b", hw_dir), ("kernel-a", wl_dir)]:
+        page_type = "hardware_target" if folder is hw_dir else "workload_kernel"
+        folder_path = folder / f"{name}.md"
+        folder_path.write_text(
+            f"---\ntype: {page_type}\ntags: [quantized-gemm]\n---\n\n# {name}\n",
+            encoding="utf-8",
+        )
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text(
+        "```yaml\n[theme_profile]\nhub_hierarchy:\n"
+        "- hub_id: vendor_core_families\n  label: Vendor RISC-V Core Families\n"
+        "  subtype: hardware_target\n"
+        "- hub_id: workload_landscape\n  label: Workload and Kernel Landscape\n"
+        "  subtype: workload_kernel\n```\n"
+        "```yaml\n[research_config]\nsynthesis_gap_min_cluster_size: 3\n```\n",
+        encoding="utf-8",
+    )
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md):
+        candidates = orchestrator._hub_promotion_candidates()
+
+    cross_hub = [c for c in candidates if c["tag"] == "quantized-gemm"]
+    assert len(cross_hub) == 1
+    c = cross_hub[0]
+    assert sorted(c["parent_hub_ids"]) == ["vendor_core_families", "workload_landscape"]
+    assert sorted(c["member_pages"]) == ["chip-a", "chip-b", "kernel-a"]
+
+
+def test_run_taxonomy_evolution_persists_only_when_both_signals_agree(tmp_path):
+    """Part D gate: persistence requires BOTH the objective (elevated
+    centrality) and subjective (subagent approval) signals. Objective-only
+    (patched False) must not persist even with a subagent that would approve."""
+    pages_dir = tmp_path / "wiki" / "_pages"
+    hw_dir = pages_dir / "hardware_target"
+    hw_dir.mkdir(parents=True)
+    for name in ("chip-a", "chip-b", "chip-c"):
+        (hw_dir / f"{name}.md").write_text(
+            f"---\ntype: hardware_target\ntags: [quantized-gemm]\ncanonical_name: {name}\n"
+            f"sources: []\n---\n\n# {name}\n\nBody text.\n",
+            encoding="utf-8",
+        )
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text(
+        "```yaml\n[theme_profile]\ntheme: t\nhub_hierarchy:\n"
+        "- hub_id: vendor_core_families\n  label: Vendor RISC-V Core Families\n"
+        "  subtype: hardware_target\n  description: d\n```\n"
+        "```yaml\n[research_config]\nsynthesis_gap_min_cluster_size: 3\n"
+        "max_new_subtypes_per_session: 2\n```\n",
+        encoding="utf-8",
+    )
+    research_config = {
+        "theme_profile": orchestrator._load_claude_md_block("theme_profile"),
+        "page_type_taxonomy": {"hardware_target": {}},
+        "synthesis_gap_min_cluster_size": 3,
+        "max_new_subtypes_per_session": 2,
+    }
+
+    approving_subagent = MagicMock(return_value=json.dumps({
+        "decision": "approve",
+        "rejection_reason": None,
+        "subtype_name": "quantized_gemm_cores",
+        "label": "Quantized GEMM Cores",
+        "description": "d",
+        "structured_fields": [],
+        "parent_hub_ids": ["vendor_core_families"],
+    }))
+
+    log_md = tmp_path / "wiki" / "log.md"
+    log_md.write_text("", encoding="utf-8")
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md), \
+         patch.object(orchestrator, "_LOG_MD", log_md), \
+         patch.object(orchestrator.graph_topology, "cluster_is_structurally_distinct", return_value=False):
+        persisted = orchestrator._run_taxonomy_evolution(research_config, call_subagent=approving_subagent)
+
+    assert persisted == []
+    assert "quantized_gemm_cores" not in claude_md.read_text(encoding="utf-8")
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md), \
+         patch.object(orchestrator, "_LOG_MD", log_md), \
+         patch.object(orchestrator.graph_topology, "cluster_is_structurally_distinct", return_value=True):
+        persisted = orchestrator._run_taxonomy_evolution(research_config, call_subagent=approving_subagent)
+
+    assert persisted == ["quantized_gemm_cores"]
+    text = claude_md.read_text(encoding="utf-8")
+    assert "quantized_gemm_cores" in text
+    assert "taxonomy_evolution" not in text  # log goes to wiki/log.md, not CLAUDE.md
+
+
+def test_run_taxonomy_evolution_respects_rate_limit(tmp_path):
+    """Part D guardrail: persistence stops once max_new_subtypes_per_session
+    is reached, even if more candidates would otherwise qualify."""
+    pages_dir = tmp_path / "wiki" / "_pages"
+    hw_dir = pages_dir / "hardware_target"
+    hw_dir.mkdir(parents=True)
+    for tag in ("tag-one", "tag-two"):
+        for i in range(3):
+            (hw_dir / f"{tag}-{i}.md").write_text(
+                f"---\ntype: hardware_target\ntags: [{tag}]\ncanonical_name: {tag}-{i}\n"
+                f"sources: []\n---\n\n# {tag}-{i}\n\nBody text.\n",
+                encoding="utf-8",
+            )
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text(
+        "```yaml\n[theme_profile]\ntheme: t\nhub_hierarchy:\n"
+        "- hub_id: vendor_core_families\n  label: Vendor RISC-V Core Families\n"
+        "  subtype: hardware_target\n  description: d\n```\n",
+        encoding="utf-8",
+    )
+    research_config = {
+        "theme_profile": orchestrator._load_claude_md_block("theme_profile"),
+        "page_type_taxonomy": {"hardware_target": {}},
+        "synthesis_gap_min_cluster_size": 3,
+        "max_new_subtypes_per_session": 1,
+    }
+
+    calls = {"n": 0}
+
+    def approving_subagent(subagent_type, manifest, cfg):
+        calls["n"] += 1
+        return json.dumps({
+            "decision": "approve",
+            "rejection_reason": None,
+            "subtype_name": f"subtype_{calls['n']}",
+            "label": "L",
+            "description": "d",
+            "structured_fields": [],
+            "parent_hub_ids": ["vendor_core_families"],
+        })
+
+    log_md = tmp_path / "wiki" / "log.md"
+    log_md.write_text("", encoding="utf-8")
+
+    with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md), \
+         patch.object(orchestrator, "_LOG_MD", log_md), \
+         patch.object(orchestrator.graph_topology, "cluster_is_structurally_distinct", return_value=True):
+        persisted = orchestrator._run_taxonomy_evolution(research_config, call_subagent=approving_subagent)
+
+    assert len(persisted) == 1
 
 
 def test_hub_promotion_candidates_empty_when_no_hub_hierarchy_declared(tmp_path):
@@ -1615,6 +1831,12 @@ def test_mocked_research_run_writes_benchmark_and_updates_hardware_page(tmp_path
              "required_measurement_fields": [
                  "hardware_targets", "workloads", "metrics", "measurement_context"
              ],
+             "page_type_taxonomy": {
+                 "entity": {"description": "general concept"},
+                 "synthesis": {"description": "cross-page comparison"},
+                 "hardware_target": {"description": "hardware/ISA target"},
+                 "benchmark_result": {"description": "measured or reported result"},
+             },
          }), \
          patch.object(orchestrator, "QmdRunner", return_value=EmptyQmdRunner()), \
          patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
