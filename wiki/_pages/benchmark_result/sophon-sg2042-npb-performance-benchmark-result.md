@@ -42,7 +42,7 @@ source_url: https://arxiv.org/html/2406.12394v1
 fetched_at: '2026-07-03T16:53:59.296103+00:00'
 type: benchmark_result
 created: '2026-07-03'
-updated: '2026-07-03'
+updated: '2026-07-06'
 cold_start: true
 inbound_links: 0
 outbound_links:
@@ -67,8 +67,8 @@ This benchmark result reports the performance evaluation of the Sophon SG2042 RI
 ## Measurement Context
 
 - Hardware version: Sophon SG2042, 2 GHz, 64 cores, Milk-V Pioneer Box with 128 GB DDR4 (four DDR4-3200 controllers).
-- Software/toolchain version: XuanTie GCC 20210618 (GCC 8.4), optimization level 3.
-- Workload shape: NAS Parallel Benchmark (NPB) suite (specific kernel names and problem sizes not detailed in the available source excerpt).
+- Software/toolchain version: XuanTie GCC 20210618 (GCC 8.4), optimization level 3. NPB suite version not specified.
+- Workload shape: NAS Parallel Benchmark (NPB) suite, including kernels Integer Sort (IS), Multi Grid (MG), Embarrassingly Parallel (EP), Conjugate Gradient (CG), Fast Fourier Transform (FT), and pseudo-applications. Problem sizes not detailed in the available source excerpt.
 - Metric: Performance improvement ratio (2.6x-16.7x for single-core vs other RISC-V); qualitative characterization for compute-bound vs memory-bound relative to x86-64/AArch64.
 - Method: Average of five runs, exclusive machine access per run.
 - Evidence strength: measured (the paper describes controlled benchmarking experiments on physical hardware).
@@ -80,4 +80,4 @@ This benchmark result reports the performance evaluation of the Sophon SG2042 RI
 
 ## Sources
 
-- https://arxiv.org/html/2406.12394v1
+- https://arxiv.org/html/2406.12394v1 (full HTML paper); also available at https://arxiv.org/abs/2406.12394

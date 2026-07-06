@@ -51,7 +51,7 @@ outbound_links:
 
 # NAS Parallel Benchmark characterization of Sophon SG2042
 
-The NAS Parallel Benchmark (NPB) suite was used to characterize the performance of the Sophon SG2042 64-core RISC-V CPU in the Milk-V Pioneer Box with 128GB DDR4 RAM, running at 2GHz and compiled with XuanTie GCC 20210618 (GCC 8.4) at optimization level 3. The SG2042 was compared against other CPUs implementing RISC-V, x86-64, and AArch64 ISAs, including CPUs used in production supercomputers. Results were averaged over five runs with exclusive machine access. The study found that the SG2042 consistently outperformed all other RISC-V solutions, delivering between 2.6x and 16.7x performance improvement at the single-core level. When compared against x86-64 and AArch64 CPUs, the SG2042 performed comparatively well on computationally bound algorithms but its relative performance decreased on memory bandwidth- or latency-bound algorithms, highlighting the memory subsystem as the greatest bottleneck.
+The NAS Parallel Benchmark (NPB) suite was used to characterize the performance of the Sophon SG2042 64-core RISC-V CPU in the Milk-V Pioneer Box with 128GB DDR4 RAM, running at 2GHz and compiled with XuanTie GCC 20210618 (GCC 8.4) at optimization level 3. The SG2042 uses T-Head XuanTie C920 cores. The study, by Brown and Jamieson (EPCC, University of Edinburgh, June 2024), compares the SG2042 against other CPUs implementing RISC-V, x86-64 (Xeon Platinum 8170), and AArch64 ISAs. Results were averaged over five runs with exclusive machine access. Single-core results show that the SG2042 outperforms all other RISC-V solutions by a factor of 2.6 to 16.7. Multi-core NPB tests with OpenMP and MPI parallelization reveal that the SG2042 performs competitively on compute-bound algorithms but shows decreased relative performance on memory-bandwidth- or latency-bound workloads, with the memory subsystem identified as the primary bottleneck. The study uses NPB pseudo-applications including the MG (Multi-Grid) benchmark.
 
 ## Key Claims
 
@@ -62,12 +62,12 @@ The NAS Parallel Benchmark (NPB) suite was used to characterize the performance 
 
 ## Measurement Context
 
-- Hardware version: Sophon SG2042 in Milk-V Pioneer Box, 128GB DDR4, 2GHz
-- Software/toolchain version: XuanTie GCC 20210618 (GCC 8.4), -O3
-- Workload shape: NAS Parallel Benchmark (NPB) suite (individual benchmark shapes not specified in source)
+- Hardware version: Sophon SG2042 in Milk-V Pioneer Box, 64-core T-Head XuanTie C920, 128GB DDR4, 2GHz
+- Software/toolchain version: XuanTie GCC 20210618 (GCC 8.4), -O3; NAS Parallel Benchmark suite with OpenMP and MPI
+- Workload shape: NPB pseudo-applications (including MG - Multi-Grid; other benchmark shapes not fully specified)
 - Metric: Single-core performance improvement factor (2.6-16.7x); relative performance on compute-bound vs memory-bound algorithms
-- Method: Five runs averaged, exclusive machine usage
-- Evidence strength: measured
+- Method: Five runs averaged, exclusive machine usage; single-core and multi-core runs; comparison against other RISC-V, Xeon Platinum 8170 (x86-64), and an AArch64 CPU
+- Evidence strength: measured (preprint with experimental results)
 
 ## Relationships
 
@@ -75,4 +75,4 @@ The NAS Parallel Benchmark (NPB) suite was used to characterize the performance 
 
 ## Sources
 
-- https://arxiv.org/html/2406.12394v1
+- arXiv:2406.12394 ("Performance characterisation of the 64-core SG2042 RISC-V CPU for HPC", Brown and Jamieson, June 2024) — also available at https://arxiv.org/html/2406.12394v1

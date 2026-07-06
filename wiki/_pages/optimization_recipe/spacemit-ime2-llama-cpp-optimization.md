@@ -38,7 +38,7 @@ type: optimization_recipe
 created: '2026-07-06'
 updated: '2026-07-06'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 outbound_links:
 - target: spacemit-k3-hardware-target
   reason: Describes the hardware platform and its IME2 matrix instructions

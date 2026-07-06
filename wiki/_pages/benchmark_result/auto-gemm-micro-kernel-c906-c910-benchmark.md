@@ -38,7 +38,7 @@ type: benchmark_result
 created: '2026-07-03'
 updated: '2026-07-03'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 outbound_links:
 - target: mlir-xdsl-gemm-benchmark-k230-banana-pi
   reason: Both benchmarks evaluate automatically generated GEMM kernels on RISC-V

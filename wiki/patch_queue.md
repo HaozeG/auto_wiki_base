@@ -4,14 +4,14 @@
 target_page: xuantie-c908.md
 target_section: Benchmarking
 source: https://github.com/XUANTIE-RV/xtai-benchmark
-status: pending_review
+status: approved
 proposed_update: Add a section describing the XuanTie AI Benchmark Suite (xtai-benchmark), which provides precompiled benchmark binaries for the C908 (BERT, EfficientNet, MobileNetV2 with various quantizations) via HHB. Source: https://github.com/XUANTIE-RV/xtai-benchmark
 
 ## [2026-07-03] pending | xuantie-ai-benchmark-suite.md
 target_page: xuantie-ai-benchmark-suite.md
 target_section: Relationships
 source: https://github.com/XUANTIE-RV/xuantie-gnu-toolchain/
-status: pending_review
+status: approved
 proposed_update: Add a relationship entry linking to the XuanTie GNU Compiler Toolchain: 'The XuanTie GNU Compiler Toolchain provides the cross-compiler used to build the precompiled model binaries in this benchmark suite.'
 
 ## [2026-07-03] merge_pending | xuantie-c908.md
@@ -56,14 +56,14 @@ merge_draft_body -->
 target_page: shl.md
 target_section: Key Claims
 source: https://csi-nn2.opensource.alibaba.com/zh/blog/C908+accelerates+AI
-status: pending_review
+status: approved
 proposed_update: Add a key claim: SHL provides optimized inference acceleration for XuanTie C908, supporting fp32/fp16/int8 datatypes and leveraging the processor's pipeline, instruction fusion, and high-speed cache technology. This is sourced from the same blog post.
 
 ## [2026-07-03] pending | shl.md
 target_page: shl.md
 target_section: content
 source: https://zhangwm-pt.github.io/shl/md_README.html
-status: pending_review
+status: approved
 proposed_update: Merge the detailed information from the SHL README into the existing entity page. Specifically: (1) Expand the opening paragraph to mention version SHL 2.2.x and that the interface uses CSI-NN2 API. (2) Add a 'Features' subsection under Key Claims covering reference C implementation, assembly optimization for XuanTie CPU, symmetric and asymmetric quantization, support for 8-bit, 16-bit, and float16 data types, NCHW and NHWC layouts, automatic API calling via HHB, and coverage of CPU and NPU architectures. (3) Add a 'Usage' section containing build instructions from source for XuanTie C906 (including installing T-HEAD RISC-V GCC 2.6, cloning CSI-NN2, compiling and installing nn2_c906) and a quick-start example for running mobilenetv1 f16 on a C906-based board like the D1. (4) Add an 'Acknowledgements' subsection noting that SHL references Caffe, TensorFlow, ncnn, MNN, Tengine, CMSIS_5, ONNX, and XNNPACK. (5) Add a relationship to MLPerf tiny (from the candidate's mention of 'SHL to run MLPerf tiny') and to HHVB toolchain documentation. All updates should be grounded in the candidate's source_grounded_snippets.
 
 ## [2026-07-03] merge_pending | xuantie-c908.md
@@ -71,7 +71,7 @@ target_page: xuantie-c908.md
 canonical_name: XuanTie C908
 colliding_name: xuantie-c908
 source: https://riscv.org/blog/xuantie-c908-accelerates-ai-with-software-and-hardware-fusion/
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # XuanTie C908
 
@@ -109,7 +109,7 @@ target_page: shl.md
 canonical_name: SHL
 colliding_name: SHL
 source: https://github.com/XUANTIE-RV/riscv-matrix-extension-spec/blob/master/doc/shl/introduce.adoc
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # SHL
 
@@ -140,7 +140,7 @@ target_page: xuantie-c908.md
 canonical_name: XuanTie C908
 colliding_name: XuanTie C908
 source: https://gcc.gnu.org/pipermail/gcc-patches/2026-June/719208.html
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # XuanTie C908 (GCC Tuning)
 
@@ -170,7 +170,7 @@ merge_draft_body -->
 target_page: c908-wino-gemm-optimization.md
 target_section: Key Claims or Prerequisites
 source: https://gcc.gnu.org/pipermail/gcc-patches/2026-June/719208.html
-status: pending_review
+status: approved
 proposed_update: Add a contradiction note: the GCC tuning patch submitted in June 2026 explicitly states that the C908 core does not support the vector extension (RVV), contradicting the assumption of RVV 1.0 support listed in the prerequisites and constraints (VLEN 128) of this optimization recipe. This may affect the validity of optimization techniques that rely on vector instructions (e.g., vle vector loads). The recipe should either restrict its applicability to a hypothetical SVE-like implementation or note that it targets a different C908 variant.
 
 ## [2026-07-03] merge_pending | k230-soc.md
@@ -178,7 +178,7 @@ target_page: k230-soc.md
 canonical_name: K230
 colliding_name: CanMV K230
 source: https://deepwiki.com/kendryte/k230_canmv_docs
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # CanMV K230
 
@@ -205,7 +205,7 @@ target_page: k230-soc.md
 canonical_name: K230
 colliding_name: Kendryte K230
 source: https://owhinata.github.io/canmv-k230/en/
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # Kendryte K230
 
@@ -241,7 +241,7 @@ target_page: k230-soc.md
 canonical_name: K230
 colliding_name: K230
 source: https://www.kendryte.com/en/proDetail/230
-status: pending_review
+status: apply_failed (pipeline rejected)
 <!-- merge_draft_body
 # Kendryte K230
 
@@ -279,7 +279,7 @@ target_page: spacemit-k1.md
 canonical_name: SpacemiT K1
 colliding_name: SpacemiT K1
 source: https://docs.banana-pi.org/en/BPI-F3/SpacemiT_K1
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # SpacemiT K1
 
@@ -316,7 +316,7 @@ target_page: sophon-sg2042.md
 canonical_name: SOPHON SG2042
 colliding_name: Sophon SG2042
 source: https://ar5iv.labs.arxiv.org/html/2309.00381
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # Sophon SG2042
 
@@ -353,7 +353,7 @@ target_page: xiangshan-overview.md
 canonical_name: XiangShan
 colliding_name: XiangShan
 source: https://github.com/Ergou-ren/XiangShan_docs
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # XiangShan
 
@@ -386,7 +386,7 @@ target_page: xiangshan-overview.md
 canonical_name: XiangShan
 colliding_name: XiangShan
 source: https://deepwiki.com/OpenXiangShan/XiangShan
-status: pending_review
+status: apply_failed (pipeline rejected)
 <!-- merge_draft_body
 # XiangShan
 
@@ -417,7 +417,7 @@ target_page: baby-llama2-milkv-duo-benchmark.md
 canonical_name: Baby LLama2 Benchmark on Milk-V Duo
 colliding_name: Baby LLama2 Optimization for Milk-V Duo
 source: https://github.com/chamchamgo/rvspoc-s2311-llama2
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # Baby LLama2 Optimization for Milk-V Duo
 
@@ -466,7 +466,7 @@ target_page: xdsl-compiler-toolkit.md
 canonical_name: xDSL
 colliding_name: xDSL
 source: https://github.com/xdslproject
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # xDSL
 
@@ -494,7 +494,7 @@ target_page: v851s-yuzukilizard.md
 canonical_name: Allwinner V851S
 colliding_name: Allwinner V851S
 source: https://github.com/Jebumon/v851s
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # Allwinner V851S
 
@@ -536,7 +536,7 @@ target_page: v851s-yuzukilizard.md
 canonical_name: Allwinner V851S
 colliding_name: Allwinner V851s
 source: https://github.com/Jebumon/v851s/blob/master/README.md
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # Allwinner V851s
 
@@ -575,7 +575,7 @@ target_page: v851s-yuzukilizard.md
 canonical_name: Allwinner V851S
 colliding_name: Allwinner V851s
 source: https://linux-sunxi.org/V851s
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # Allwinner V851s
 
@@ -615,7 +615,7 @@ target_page: riscv-matrix-extension-specification.md
 canonical_name: RISC-V Matrix Extension Specification
 colliding_name: RISC-V Matrix Extension Specification
 source: https://github.com/XUANTIE-RV/riscv-matrix-extension-spec
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # RISC-V Matrix Extension Specification
 
@@ -648,7 +648,7 @@ target_page: riscv-matrix-extension-specification.md
 canonical_name: RISC-V Matrix Extension Specification
 colliding_name: RISC-V Matrix Extension Specification
 source: https://github.com/XUANTIE-RV/riscv-matrix-extension-spec/tree/v0.4.0
-status: pending_review
+status: apply_failed (pipeline rejected)
 <!-- merge_draft_body
 # RISC-V Matrix Extension Specification
 
@@ -680,7 +680,7 @@ target_page: riscv-matrix-extension-specification.md
 canonical_name: RISC-V Matrix Extension Specification
 colliding_name: RISC-V Matrix Extension
 source: https://github.com/XUANTIE-RV/riscv-matrix-extension-spec/blob/master/demos/README.md
-status: pending_review
+status: apply_failed (pipeline rejected)
 <!-- merge_draft_body
 # RISC-V Matrix Extension
 
@@ -710,7 +710,7 @@ target_page: xuantie-c908.md
 canonical_name: XuanTie C908
 colliding_name: XuanTie C908
 source: https://github.com/FreeRTOS/FreeRTOS-Community-Supported-Demos/blob/main/RISC-V_XUANTIE_C908_GCC/README.md
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # XuanTie C908
 
@@ -749,7 +749,7 @@ target_page: xuantie-gnu-toolchain.md
 canonical_name: XuanTie GNU Compiler Toolchain
 colliding_name: XuanTie GNU Toolchain
 source: https://github.com/XUANTIE-RV/xuantie-gnu-toolchain/
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # XuanTie GNU Toolchain
 
@@ -780,7 +780,7 @@ target_page: gcc-tuning-c908-canmv-k230.md
 canonical_name: GCC Tuning Benchmark on XuanTie C908
 colliding_name: XuanTie C908 GCC Tuning
 source: https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg406284.html
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # XuanTie C908 GCC Tuning
 
@@ -824,7 +824,7 @@ target_page: integrated-matrix-extension.md
 canonical_name: Integrated Matrix Extension
 colliding_name: RISC-V IME Extension
 source: https://deepwiki.com/spacemit-com/riscv-ime-extension-spec
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # RISC-V IME Extension
 
@@ -853,7 +853,7 @@ target_page: opengemm.md
 canonical_name: OpenGeMM
 colliding_name: OpenGeMM
 source: https://www.researchgate.net/publication/385823001_OpenGeMM_A_High-Utilization_GeMM_Accelerator_Generator_with_Lightweight_RISC-V_Control_and_Tight_Memory_Coupling
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # OpenGeMM
 
@@ -883,7 +883,7 @@ target_page: iree-rvv-mlir-ukernel.md
 canonical_name: IREE MLIR-based uKernel for RVV
 colliding_name: IREE MLIR Ukernels for RVV
 source: https://github.com/iree-org/iree/issues/22720
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # IREE MLIR Ukernels for RVV
 
@@ -925,7 +925,7 @@ merge_draft_body -->
 target_page: spacemit-k1.md
 target_section: Relationships
 source: https://link.springer.com/chapter/10.1007/978-981-96-9869-1_43
-status: pending_review
+status: approved
 proposed_update: Add relationship link to [[bpi-f3-rvv-llm-benchmark]]: 'The BPI-F3 LLM inference benchmark with RVV-optimized llama.cpp validates the practical performance of the SpacemiT K1 RVV 1.0 extensions on representative LLM workloads.'
 
 ## [2026-07-03] merge_pending | llamacpp-quantization-methods.md
@@ -933,7 +933,7 @@ target_page: llamacpp-quantization-methods.md
 canonical_name: llama.cpp Quantization Methods
 colliding_name: GGML Quantization
 source: https://deepwiki.com/ggml-org/llama.cpp/7.3-quantization-techniques
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # GGML Quantization
 
@@ -960,7 +960,7 @@ target_page: sophon-sg2042.md
 canonical_name: SOPHON SG2042
 colliding_name: Sophon SG2042
 source: https://arxiv.org/abs/2503.17422
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # Sophon SG2042
 
@@ -993,7 +993,7 @@ merge_draft_body -->
 target_page: et-soc-1-hardware-target.md
 target_section: all
 source: https://github.com/10x-Engineers/et-soc1-docs/blob/main/01_esperanto_soc_overview.md
-status: pending_review
+status: approved
 proposed_update: Overwrite the page with detailed architectural information from official Esperanto ET-SoC-1 documentation (10x-Engineers/et-soc1-docs). Add precise core counts: 1,088 ET-Minion 64-bit RISC-V dual-threaded in-order scalar cores with custom vector/tensor units, 4 ET-Maxion 64-bit RISC-V single-threaded superscalar out-of-order cores, and 1 ET-Minion-based Service Processor. Include memory hierarchy: 140 MB on-die SRAM distributed across chip, each 1 MB block configurable as local L2 cache, part of chip-wide L3, or globally accessible scratchpad. Add PCI Express Gen4 x8 interface delivering peak throughput 128 Gbps. Add sixteen 16-bit LPDDR4X controllers at 4,266 MT/s (133 GB/s). Describe SoC hierarchy: Neighborhood (8 ET-Minion cores + 32 KB shared I-cache), Shire (4 Neighborhoods, 4 MB shared L2/L3 cache, mesh stop interface), 34 Minion Shires (1,088 cores total) plus PCI Shire and I/O Shire (ET-Maxion cores, Service Processor, Root of Trust, USB, I2C, SPI, UARTs). Add ET-Minion privileged architecture deviations: performance counters moved to shared PMU, minstret/mcycle always return 0, satp CSR shared between harts, mtvec/stvec alignment to 4 KB, WFI behavior. Update constraints field with: '1,093 RISC-V cores (1,088 Minion + 4 Maxion + 1 service)', '140 MB on-die SRAM', 'PCIe Gen4 x8 128 Gbps', 'LPDDR4X 16-channel 4,266 MT/s', 'TSMC 7nm'. Add source URL https://github.com/10x-Engineers/et-soc1-docs/blob/main/01_esperanto_soc_overview.md.
 
 ## [2026-07-03] merge_pending | xuantie-c908.md
@@ -1001,7 +1001,7 @@ target_page: xuantie-c908.md
 canonical_name: XuanTie C908
 colliding_name: XuanTie C908
 source: https://gcc.gnu.org/pipermail/gcc-patches/2026-June/719234.html
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # XuanTie C908
 
@@ -1038,7 +1038,7 @@ merge_draft_body -->
 target_page: gap9.md
 target_section: Key Claims
 source: https://arxiv.org/abs/2603.08725
-status: pending_review
+status: approved
 proposed_update: Add a claim from arXiv:2603.08725: GAP9 offers the best energy efficiency within microcontroller-class power budgets when running a 336M MAC segmentation model (PicoSAM2), as benchmarked against STM32N6 and IMX500. This is a comparative finding from a 2026 IEEE I2MTC paper.
 
 ## [2026-07-03] merge_pending | gap9shield.md
@@ -1046,7 +1046,7 @@ target_page: gap9shield.md
 canonical_name: GAP9Shield
 colliding_name: GAP9Shield
 source: https://github.com/pulp-platform/gap9-shield
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # GAP9Shield
 
@@ -1077,7 +1077,7 @@ merge_draft_body -->
 target_page: gap9.md
 target_section: Key Claims
 source: https://github.com/pulp-platform/gap9-shield
-status: pending_review
+status: approved
 proposed_update: The GAP9 page states an 8-core architecture, but the GAP9Shield README describes a 9-core RISC-V cluster (likely 8 general-purpose cores + 1 NE16 accelerator core). Consider clarifying the core count and noting the NE16 accelerator. Also consider adding a reference to the GAP9Shield module and its integrated components.
 
 ## [2026-07-03] merge_pending | gcc-tuning-c908-canmv-k230.md
@@ -1085,7 +1085,7 @@ target_page: gcc-tuning-c908-canmv-k230.md
 canonical_name: GCC Tuning Benchmark on XuanTie C908
 colliding_name: XuanTie C908 GCC Tuning
 source: https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg406313.html
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # XuanTie C908 GCC Tuning
 
@@ -1123,14 +1123,14 @@ merge_draft_body -->
 target_page: xuantie-c906-hardware-target.md
 target_section: Relationships
 source: https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg406313.html
-status: pending_review
+status: approved
 proposed_update: Update outbound_links target from 'gcc-tuning-c908-canmv-k230' to 'xuantie-c908-gcc-tuning' and refine relationship reason to note that the GCC tuning patch models the C908 scalar pipeline, while the C906 uses a custom 128-bit SIMD unit. The current reason is still valid but the target filename must match the new optimization recipe page.
 
 ## [2026-07-03] pending | spacemit-x60-hardware-target.md
 target_page: spacemit-x60-hardware-target.md
 target_section: Relationships
 source: https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg406313.html
-status: pending_review
+status: approved
 proposed_update: Update outbound_links target from 'gcc-tuning-c908-canmv-k230' to 'xuantie-c908-gcc-tuning' and refine relationship reason to emphasize that both GCC tuning patches model in-order scalar pipelines but the X60 tuning also includes dual-issue and RVV 1.0 vector support, while the C908 tuning is purely scalar and single-issue.
 
 ## [2026-07-03] merge_pending | nncase.md
@@ -1138,7 +1138,7 @@ target_page: nncase.md
 canonical_name: nncase
 colliding_name: nncase
 source: https://github.com/kendryte/k230_docs/blob/main/en/01_software/board/ai/K230_nncase_Development_Guide.md
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # nncase
 
@@ -1171,7 +1171,7 @@ target_page: nncase.md
 canonical_name: nncase
 colliding_name: nncase
 source: https://gitee.com/kendryte/nncase
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # nncase
 
@@ -1202,7 +1202,7 @@ target_page: sophon-sg2042.md
 canonical_name: SOPHON SG2042
 colliding_name: Sophon SG2042
 source: https://arxiv.org/html/2406.12394v1
-status: pending_review
+status: apply_failed (pipeline rejected)
 <!-- merge_draft_body
 # Sophon SG2042
 
@@ -1240,7 +1240,7 @@ target_page: sophon-sg2042.md
 canonical_name: SOPHON SG2042
 colliding_name: Sophon SG2042
 source: https://arxiv.org/abs/2406.12394
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # Sophon SG2042
 
@@ -1275,7 +1275,7 @@ target_page: sophon-sg2042-npb-performance-benchmark-result.md
 canonical_name: SG2042 NAS Parallel Benchmark Performance
 colliding_name: NPB Performance of the Sophon SG2042
 source: https://arxiv.org/abs/2406.12394
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # NPB Performance of the Sophon SG2042
 
@@ -1310,14 +1310,14 @@ merge_draft_body -->
 target_page: et-soc-1-hardware-target.md
 target_section: opening_paragraph
 source: https://vlsifacts.com/esperantos-et-soc-1-chip-integrates-more-than-1000-risc-v-cores-for-energy-efficient-ml-recommendation/
-status: pending_review
+status: approved
 proposed_update: Replace the first paragraph with a more detailed self-contained description: 'The ET-SoC-1 (Esperanto Technologies Supercomputer-on-Chip 1) is a RISC-V AI inference accelerator chip fabricated on TSMC's 7nm process, integrating 1088 energy-efficient ET-Minion 64-bit in-order RISC-V cores each with a vector/tensor unit, 4 high-performance ET-Maxion 64-bit out-of-order RISC-V cores, and 1 RISC-V service processor. With 24 billion transistors on a 570 mm² die, it delivers peak compute rates of 100 to 200 TOPS while consuming typically less than 20 watts. It is designed for energy-efficient ML recommendation inference in large data centers and is packaged on a Glacier Point v2 accelerator card that houses up to six chips, providing up to 192 GB of DRAM with 822 GB/s bandwidth.'
 
 ## [2026-07-03] pending | spacemit-x60-hardware-target.md
 target_page: spacemit-x60-hardware-target.md
 target_section: Optimization-Relevant Details
 source: https://arxiv.org/abs/2605.10860
-status: pending_review
+status: approved
 proposed_update: Add a bullet point under Optimization-Relevant Details about the RVV predication overhead and stride load performance bottlenecks identified in the GCC 15/Clang 21 auto-vectorization study (arXiv:2605.10860). These are issues not yet fully captured by current compiler cost models and affect in-order RVV 1.0 implementations such as the X60.
 
 ## [2026-07-03] merge_pending | riscv-v-extension.md
@@ -1325,7 +1325,7 @@ target_page: riscv-v-extension.md
 canonical_name: RISC-V V Extension
 colliding_name: CORE-V
 source: https://github.com/openhwgroup/core-v-cores
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # CORE-V Family
 
@@ -1356,7 +1356,7 @@ target_page: chips-alliance-entity.md
 canonical_name: CHIPS Alliance
 colliding_name: CHIPS Alliance
 source: https://github.com/chipsalliance
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # CHIPS Alliance
 
@@ -1383,7 +1383,7 @@ merge_draft_body -->
 target_page: c908-wino-gemm-optimization.md
 target_section: Relationships
 source: https://riscv.org/blog/xuantie-c908-accelerates-ai-with-software-and-hardware-fusion/
-status: pending_review
+status: approved
 proposed_update: Add a relationship to the XuanTie C908 AI inference benchmark page: '[[xuantie-c908-ai-inference-benchmark]]: This page provides the quantitative performance results (MobileNet speedups, VLEN 256 scaling, comparison with C906) that result from the optimization recipes described here; the benchmark uses SHL and HHB on the XuanTie C908 target.'
 
 ## [2026-07-03] merge_pending | xuantie-c908.md
@@ -1391,7 +1391,7 @@ target_page: xuantie-c908.md
 canonical_name: XuanTie C908
 colliding_name: XuanTie C908
 source: https://www.cnx-software.com/2022/11/04/t-head-xuantie-c908-risc-v-core-targets-aiot-applications/
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # XuanTie C908
 
@@ -1436,7 +1436,7 @@ target_page: xdsl-compiler-toolkit.md
 canonical_name: xDSL
 colliding_name: xDSL
 source: https://xdsl.dev/
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # xDSL
 
@@ -1465,7 +1465,7 @@ target_page: xdsl-compiler-toolkit.md
 canonical_name: xDSL
 colliding_name: xDSL
 source: https://github.com/xdslproject/xdsl
-status: pending_review
+status: apply_failed (pipeline rejected)
 <!-- merge_draft_body
 # xDSL
 
@@ -1498,7 +1498,7 @@ target_page: xdsl-compiler-toolkit.md
 canonical_name: xDSL
 colliding_name: xDSL
 source: https://xdsl.readthedocs.io/stable/marimo/
-status: pending_review
+status: apply_failed (pipeline rejected)
 <!-- merge_draft_body
 # xDSL
 
@@ -1527,7 +1527,7 @@ merge_draft_body -->
 target_page: spacemit-x60-hardware-target.md
 target_section: Relationships
 source: https://www.rt-rk.com/gcc-tuning-for-spacemit-x60-building-an-in-order-dual-issue-scheduler-model-part-i/
-status: pending_review
+status: approved
 proposed_update: Add a relationship entry linking to the new optimization_recipe page: 'Describes the GCC tuning recipe that implements the instruction scheduling model documented in [[spacemit-x60-gcc-tuning]].'
 
 ## [2026-07-03] merge_pending | riscv-matrix-extension-specification.md
@@ -1535,7 +1535,7 @@ target_page: riscv-matrix-extension-specification.md
 canonical_name: RISC-V Matrix Extension Specification
 colliding_name: RISC-V Matrix Extension Specification
 source: https://github.com/XUANTIE-RV/riscv-matrix-extension-spec/
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # RISC-V Matrix Extension Specification
 
@@ -1564,7 +1564,7 @@ target_page: sophon-sg2042.md
 canonical_name: SOPHON SG2042
 colliding_name: Sophon SG2042
 source: https://github.com/sophgo/sophgo-doc/blob/main/SG2042/TRM/source/system.rst
-status: pending_review
+status: apply_failed (pipeline rejected)
 <!-- merge_draft_body
 # Sophon SG2042
 
@@ -1604,7 +1604,7 @@ target_page: spacemit-x60-gcc-tuning.md
 canonical_name: SpacemiT X60 GCC Tuning
 colliding_name: GCC Vector Scheduling for SpacemiT X60
 source: https://www.rt-rk.com/gcc-tuning-for-spacemit-x60-building-an-in-order-dual-issue-scheduler-model-part-ii/
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # GCC Vector Scheduling for SpacemiT X60
 
@@ -1640,7 +1640,7 @@ merge_draft_body -->
 target_page: spacemit-x60-hardware-target.md
 target_section: Key Claims
 source: https://camel-cdr.github.io/rvv-bench-results/articles/vector-utf.html
-status: pending_review
+status: approved
 proposed_update: Add a Key Claim: 'Achieved 8x speedup for UTF-8 to UTF-16 conversion using RVV vectorization on the X60 core (measured on Banana Pi BPI-F3).' Source: camel-cdr's RVV benchmark article (https://camel-cdr.github.io/rvv-bench-results/articles/vector-utf.html).
 
 ## [2026-07-06] merge_pending | sophon-sg2380-hardware-target.md
@@ -1648,7 +1648,7 @@ target_page: sophon-sg2380-hardware-target.md
 canonical_name: Sophon SG2380
 colliding_name: SOPHON SG2380
 source: https://ee.ofweek.com/2024-04/ART-8320315-8220-30631334.html
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # SOPHON SG2380
 
@@ -1685,7 +1685,7 @@ target_page: riscv-v-extension.md
 canonical_name: RISC-V V Extension
 colliding_name: RVV Bench
 source: https://github.com/camel-cdr/rvv-bench
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # RVV Bench
 
@@ -1714,7 +1714,7 @@ target_page: spacemit-k3-hardware-target.md
 canonical_name: SpacemiT K3
 colliding_name: SpacemiT K3
 source: https://bruno.verachten.fr/2026/03/12/benchmarking-llama.cpp-on-spacemit-k3-risc-v-ai-cores-vs-standard-rvv-part-4/
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # SpacemiT K3
 
@@ -1752,7 +1752,7 @@ merge_draft_body -->
 target_page: spacemit-x60-hardware-target.md
 target_section: Key Claims
 source: https://spacemit.com/
-status: pending_review
+status: approved
 proposed_update: Add claim: 'The SpacemiT X60 core demonstrated a 16% performance improvement in LLVM compiler-optimized code, as presented at the North America RISC-V Summit (October 2025) by Igalia engineer Mikhail (source: spacemit.com press release).' Include mention of the talk titled "Unlocking 15% More Performance: A Case Study in LLVM Optimization for RISC-V", noting the discrepancy between 15% and 16%.
 
 ## [2026-07-06] merge_pending | sophon-sg2380-hardware-target.md
@@ -1760,7 +1760,7 @@ target_page: sophon-sg2380-hardware-target.md
 canonical_name: Sophon SG2380
 colliding_name: Sophgo SG2380
 source: https://www.cnx-software.com/2023/10/21/sophgo-sg2380-16-core-sifive-p670-risc-v-processor-20-tops-ai-accelerator/
-status: pending_review
+status: apply_failed (pipeline rejected)
 <!-- merge_draft_body
 # Sophgo SG2380
 
@@ -1805,7 +1805,7 @@ target_page: xuantie.md
 canonical_name: XuanTie
 colliding_name: XTheadVector
 source: https://github.com/XUANTIE-RV/thead-extension-spec/blob/master/xtheadvector.adoc
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # XTheadVector
 
@@ -1843,7 +1843,7 @@ target_page: spacemit-k3-hardware-target.md
 canonical_name: SpacemiT K3
 colliding_name: Llama.cpp SpaceMIT K3 Gemma 4 QAT MTP Benchmarks
 source: https://github.com/rcarmo/llama-cpp-spacemit-k3/blob/master/README.md
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # Llama.cpp SpaceMIT K3 Gemma 4 QAT MTP Benchmarks
 
@@ -1882,7 +1882,7 @@ target_page: sophon-sg2042.md
 canonical_name: SOPHON SG2042
 colliding_name: Sophon SG2042
 source: https://browser.geekbench.com/v5/cpu/21586331
-status: pending_review
+status: apply_failed (pipeline rejected)
 <!-- merge_draft_body
 # Sophon SG2042
 
@@ -1921,7 +1921,7 @@ target_page: sophon-sg2042.md
 canonical_name: SOPHON SG2042
 colliding_name: Sophon SG2042
 source: https://www.researchgate.net/publication/381517668_Performance_characterisation_of_the_64-core_SG2042_RISC-V_CPU_for_HPC
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # Sophon SG2042
 
@@ -1949,7 +1949,7 @@ target_page: npb-characterization-sg2042.md
 canonical_name: NAS Parallel Benchmark characterization of Sophon SG2042
 colliding_name: SG2042 NPB Benchmark Characterization
 source: https://www.researchgate.net/publication/381517668_Performance_characterisation_of_the_64-core_SG2042_RISC-V_CPU_for_HPC
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # SG2042 NPB Benchmark Characterization
 
@@ -1985,7 +1985,7 @@ target_page: spacemit-k3-hardware-target.md
 canonical_name: SpacemiT K3
 colliding_name: SpacemiT K3
 source: https://www.cnx-software.com/2026/01/23/spacemit-k3-16-core-risc-v-soc-system-information-and-early-benchmarks/
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # SpacemiT K3
 
@@ -2024,7 +2024,7 @@ merge_draft_body -->
 target_page: gap9.md
 target_section: Key Claims
 source: https://arxiv.org/html/2410.08855
-status: pending_review
+status: approved
 proposed_update: Add claim: MATCH compilation framework achieves 2.15x inference latency improvement over DORY on GAP9, measured on the MLPerf Tiny suite (source: arXiv 2410.08855).
 
 ## [2026-07-06] merge_pending | riscv-v-extension.md
@@ -2032,7 +2032,7 @@ target_page: riscv-v-extension.md
 canonical_name: RISC-V V Extension
 colliding_name: RISC-V
 source: https://en.wikipedia.org/wiki/RISC-V
-status: pending_review
+status: applied
 <!-- merge_draft_body
 # RISC-V
 
