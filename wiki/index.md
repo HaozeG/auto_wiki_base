@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-06 | Pages: 85 | Sources: 230
+Last updated: 2026-07-06 | Pages: 87 | Sources: 234
 
 ## Entity Pages
 
@@ -49,6 +49,7 @@ Last updated: 2026-07-06 | Pages: 85 | Sources: 230
 | [xuantie-zero-stage-boot-entity.md](entity/xuantie-zero-stage-boot-entity.md) | XuanTie Zero Stage Boot | XuanTie, boot firmware, RISC-V | 2 | 0 |
 | [xuantie.md](entity/xuantie.md) | XuanTie |  | 2 | 0 |
 | [zcc-compiler.md](entity/zcc-compiler.md) | ZCC |  | 2 | 0 |
+| [zvfh-isa-extension.md](entity/zvfh-isa-extension.md) | ZVFH | RISC-V, ISA extension, FP16, vector | 2 | 0 |
 
 ## Synthesis Pages
 
@@ -252,6 +253,7 @@ Last updated: 2026-07-06 | Pages: 85 | Sources: 230
 - **RISC-V Vector benchmark**: → [riscv-v-extension](entity/riscv-v-extension.md)
 - **RISC-V Working Groups**: → [riscv-international-technical-committees](entity/riscv-international-technical-committees.md)
 - **RISC-V XuanTie C908 tuning**: → [gcc-tuning-c908-canmv-k230](benchmark_result/gcc-tuning-c908-canmv-k230.md)
+- **RISC-V ZVFH**: → [zvfh-isa-extension](entity/zvfh-isa-extension.md)
 - **RISC-V matrix extension spec**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RISC-V technical governance**: → [riscv-international-technical-committees](entity/riscv-international-technical-committees.md)
 - **RISCV IME**: → [integrated-matrix-extension](entity/integrated-matrix-extension.md)
@@ -356,6 +358,9 @@ Last updated: 2026-07-06 | Pages: 85 | Sources: 230
 - **V851S**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
 - **V851SE**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
 - **V851s**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
+- **Vector FP16 extension**: → [zvfh-isa-extension](entity/zvfh-isa-extension.md)
+- **Vicuna 2.0**: → [vicuna-2-0-hardware-target](hardware_target/vicuna-2-0-hardware-target.md)
+- **Vicuna 2.0 core**: → [vicuna-2-0-hardware-target](hardware_target/vicuna-2-0-hardware-target.md)
 - **Whisper**: → [whisper-risc-v-iss-entity](entity/whisper-risc-v-iss-entity.md)
 - **Whisper ISS**: → [whisper-risc-v-iss-entity](entity/whisper-risc-v-iss-entity.md)
 - **X60**: → [spacemit-x60-hardware-target](hardware_target/spacemit-x60-hardware-target.md)
@@ -393,6 +398,8 @@ Last updated: 2026-07-06 | Pages: 85 | Sources: 230
 - **ZCC**: → [zcc-compiler](entity/zcc-compiler.md)
 - **ZCC 4.x**: → [zcc-compiler](entity/zcc-compiler.md)
 - **ZSB**: → [xuantie-zero-stage-boot-entity](entity/xuantie-zero-stage-boot-entity.md)
+- **ZVFH**: → [zvfh-isa-extension](entity/zvfh-isa-extension.md)
+- **Zvfh**: → [zvfh-isa-extension](entity/zvfh-isa-extension.md)
 - **block-based quantization in llama.cpp**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
 - **camel-cdr/rvv-bench**: → [riscv-v-extension](entity/riscv-v-extension.md)
 - **chipsalliance**: → [chips-alliance-entity](entity/chips-alliance-entity.md)
@@ -426,6 +433,7 @@ Last updated: 2026-07-06 | Pages: 85 | Sources: 230
 - **vector index-multiply-accumulate**: → [vindexmac](entity/vindexmac.md)
 - **vindexmac**: → [vindexmac](entity/vindexmac.md)
 - **vindexmac instruction**: → [vindexmac](entity/vindexmac.md)
+- **vproc/vicuna2_core**: → [vicuna-2-0-hardware-target](hardware_target/vicuna-2-0-hardware-target.md)
 - **xDSL**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
 - **xDSL Python Compiler Framework**: → [xdsl-compiler-toolkit](entity/xdsl-compiler-toolkit.md)
 - **xDSL RVV lowerings**: → [mlir-xdsl-rvv-codegen-pipeline](optimization_recipe/mlir-xdsl-rvv-codegen-pipeline.md)
@@ -481,10 +489,11 @@ Last updated: 2026-07-06 | Pages: 85 | Sources: 230
 | [sophon-sg2380-hardware-target.md](hardware_target/sophon-sg2380-hardware-target.md) | hardware_target | Sophon SG2380 |  | 6 | 0 |
 | [spacemit-k1.md](hardware_target/spacemit-k1.md) | hardware_target | SpacemiT K1 |  | 4 | 4 |
 | [spacemit-k3-hardware-target.md](hardware_target/spacemit-k3-hardware-target.md) | hardware_target | SpacemiT K3 | RISC-V, SpacemiT, AI CPU, big.LITTLE, RVV 1.0 | 4 | 1 |
-| [spacemit-x60-hardware-target.md](hardware_target/spacemit-x60-hardware-target.md) | hardware_target | SpacemiT X60 | RISC-V, GCC tuning, SpacemiT, in-order, RVV 1.0 | 2 | 7 |
+| [spacemit-x60-hardware-target.md](hardware_target/spacemit-x60-hardware-target.md) | hardware_target | SpacemiT X60 | RISC-V, GCC tuning, SpacemiT, in-order, RVV 1.0 | 2 | 8 |
 | [starfive-jh7110-hardware-target.md](hardware_target/starfive-jh7110-hardware-target.md) | hardware_target | StarFive JH-7110 |  | 2 | 0 |
 | [t1.md](hardware_target/t1.md) | hardware_target | T1 |  | 2 | 0 |
 | [v851s-yuzukilizard.md](hardware_target/v851s-yuzukilizard.md) | hardware_target | Allwinner V851S / Yuzukilizard | allwinner, v851s, yuzukilizard, risc-v, npu | 8 | 0 |
+| [vicuna-2-0-hardware-target.md](hardware_target/vicuna-2-0-hardware-target.md) | hardware_target | Vicuna 2.0 | RISC-V, vector co-processor, embedded, CV-X-IF | 2 | 0 |
 | [xuantie-c906-hardware-target.md](hardware_target/xuantie-c906-hardware-target.md) | hardware_target | XuanTie C906 |  | 2 | 9 |
 | [xuantie-c908.md](hardware_target/xuantie-c908.md) | hardware_target | XuanTie C908 |  | 14 | 1 |
 | [c908-wino-gemm-optimization.md](optimization_recipe/c908-wino-gemm-optimization.md) | optimization_recipe | C908 Winograd and GEMM Optimization in SHL |  | 2 | 12 |
@@ -521,6 +530,7 @@ Last updated: 2026-07-06 | Pages: 85 | Sources: 230
 - [starfive-jh7110-hardware-target](hardware_target/starfive-jh7110-hardware-target.md)
 - [t1](hardware_target/t1.md)
 - [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
+- [vicuna-2-0-hardware-target](hardware_target/vicuna-2-0-hardware-target.md)
 - [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
 - [xuantie-c908](hardware_target/xuantie-c908.md)
 
