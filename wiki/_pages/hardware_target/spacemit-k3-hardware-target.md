@@ -4,6 +4,11 @@ aliases:
 - K3
 - SpacemiT K3 SoC
 - Bianbu K3
+- MilkV Jupiter 2
+- Milk-V Jupiter 2
+- llama.cpp inference on SpacemiT K3
+- SpacemiT K3 LLM benchmark
+- llama.cpp K3 benchmark
 subtype: null
 tags:
 - RISC-V
@@ -37,13 +42,15 @@ scorecard:
 sources:
 - raw/cache/c87de398f6c8a898.md
 - https://dev.to/gounthar/benchmarking-llamacpp-on-spacemit-k3-risc-v-ai-cores-vs-standard-rvv-part-4-10mc
+- raw/cache/673f92af34a7ba79.md
+- https://bruno.verachten.fr/2026/03/12/benchmarking-llama.cpp-on-spacemit-k3-risc-v-ai-cores-vs-standard-rvv-part-4/
 source_url: https://dev.to/gounthar/benchmarking-llamacpp-on-spacemit-k3-risc-v-ai-cores-vs-standard-rvv-part-4-10mc
 fetched_at: '2026-07-03T16:13:21.390248+00:00'
 type: hardware_target
 created: '2026-07-03'
-updated: '2026-07-03'
+updated: '2026-07-06'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 outbound_links:
 - target: spacemit-x60-hardware-target
   reason: The X100 general-purpose core in the K3 is the successor to the X60 core

@@ -1934,3 +1934,160 @@ target_section: Key Claims
 source: https://camel-cdr.github.io/rvv-bench-results/articles/vector-utf.html
 status: pending_review
 proposed_update: Add a Key Claim: 'Achieved 8x speedup for UTF-8 to UTF-16 conversion using RVV vectorization on the X60 core (measured on Banana Pi BPI-F3).' Source: camel-cdr's RVV benchmark article (https://camel-cdr.github.io/rvv-bench-results/articles/vector-utf.html).
+
+## [2026-07-06] merge_pending | sophon-sg2380-hardware-target.md
+target_page: sophon-sg2380-hardware-target.md
+canonical_name: Sophon SG2380
+colliding_name: SOPHON SG2380
+source: https://ee.ofweek.com/2024-04/ART-8320315-8220-30631334.html
+status: pending_review
+<!-- merge_draft_body
+# SOPHON SG2380
+
+SOPHON SG2380 (codename Oasis) is a high-performance RISC-V SoC designed for AI PC (AIPC) applications, jointly developed by SOPHON with SiFive and Imagination Technologies. It integrates 16 SiFive RISC-V P670 processor cores in a big.LITTLE configuration (12 big cores and 4 little cores), paired with an Imagination AXT-16-512 GPU supporting Vulkan 1.3, OpenGL ES 3.3/2.0/1.1, and OpenCL 3.0, and a dedicated SOPHON TPU (tensor processing unit) delivering 32 TOPS at INT8 and 16 TFLOPs at FP16 precision. The SoC features a 256-bit DDR memory interface supporting up to 128 GB of memory with 200 GB/s bandwidth, along with PCIe Gen4 and USB 3.2 Gen2 connectivity. It is designed to run generative AI workloads such as LLaMA-2 13B locally, enabling natural language processing, image generation, and text generation tasks on device.
+
+## Key Claims
+
+- 16-core SiFive RISC-V P670 processor (12 big + 4 little cores) for balanced performance and efficiency.
+- Imagination AXT-16-512 GPU with support for Vulkan 1.3, OpenGL ES 3.3/2.0/1.1, and OpenCL 3.0.
+- SOPHON TPU providing 32 TOPS (INT8) and 16 TFLOPs (FP16) for AI acceleration.
+- 256-bit DDR interface supporting up to 128 GB of memory with 200 GB/s bandwidth.
+- Connectivity includes PCIe Gen4 and USB 3.2 Gen2.
+- Video decode resolution up to 8192x4320.
+- Capable of running LLaMA-2 13B model locally for GenAI tasks.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RISC-V (likely RV64GCV with custom TPU instructions; the P670 cores implement RISC-V standard extensions)
+- Vector/matrix/accelerator support: SOPHON TPU for matrix multiplication (INT8/FP16); SiFive X280 (included in TPU cluster) provides RVV 1.0 vector processing
+- Memory/cache/TLB/DMA: 256-bit DDR interface up to 128 GB, 200 GB/s; specific cache hierarchy and TLB details not disclosed in source
+- Compiler/toolchain support: Not specified in the source
+
+## Relationships
+
+- No specific relationship to visible context pages: [[andes-ax45mpv-hardware-target]] is a different vendor's core IP (Andes Technology) targeting a different market (data-intensive computing) and does not share a common architecture, vendor, or ecosystem with the SOPHON SG2380.
+
+## Sources
+
+- https://ee.ofweek.com/2024-04/ART-8320315-8220-30631334.html (OFweek article, 2024-04-10)
+merge_draft_body -->
+
+## [2026-07-06] merge_pending | riscv-v-extension.md
+target_page: riscv-v-extension.md
+canonical_name: RISC-V V Extension
+colliding_name: RVV Bench
+source: https://github.com/camel-cdr/rvv-bench
+status: pending_review
+<!-- merge_draft_body
+# RVV Bench
+
+RVV Bench is a collection of RISC-V Vector (RVV) benchmarks hosted on GitHub under the camel-cdr organization. The project provides a standardized benchmarking suite designed to help developers write portably performant RVV code by offering a set of algorithm benchmarks (located in ./bench/) and instruction cycle count measurements (located in ./instructions/). The benchmarks cover various implementations of common algorithms, while the instruction cycle counter measures the cycle count of RVV instructions by unrolling and looping repeatedly. The repository includes a bench-all.sh script for easy execution and configurable parameters for runtime and precision. Benchmark results are published separately on a companion results page at https://camel-cdr.github.io/rvv-bench-results. The tool requires appropriate Linux kernel settings for performance counter access via /proc/sys/kernel/perf_user_access and /proc/sys/kernel/perf_event_paranoid, and supports both RVV and XTheadVector (deprecated) instruction sets. Licensed under MIT, the project welcomes contributions of new benchmarks and measurement results from different CPUs.
+
+## Key Claims
+
+- RVV Bench provides a collection of RVV benchmarks for writing performant portable RVV code.
+- It includes both algorithm benchmarks and instruction cycle count measurements for RVV instructions.
+- Benchmark results are published externally at https://camel-cdr.github.io/rvv-bench-results.
+- The tool depends on Linux perf event access and configurable kernel parameters (perf_event_paranoid <= 2, perf_user_access must be enabled).
+- It supports both standard RVV and XTheadVector (with a separate directory, though maintained as deprecated).
+- The project is licensed under the MIT license and accepts contributions via GitHub issues or pull requests.
+
+## Relationships
+
+No specific relationships to visible wiki context pages are established from the source material. The RVV Bench framework is a general-purpose benchmarking tool and does not directly connect to the Q4X quantization recipe page or any other existing page in the current wiki context.
+
+## Sources
+
+- https://github.com/camel-cdr/rvv-bench
+merge_draft_body -->
+
+## [2026-07-06] merge_pending | spacemit-k3-hardware-target.md
+target_page: spacemit-k3-hardware-target.md
+canonical_name: SpacemiT K3
+colliding_name: SpacemiT K3
+source: https://bruno.verachten.fr/2026/03/12/benchmarking-llama.cpp-on-spacemit-k3-risc-v-ai-cores-vs-standard-rvv-part-4/
+status: pending_review
+<!-- merge_draft_body
+# SpacemiT K3
+
+SpacemiT K3 is an 8-core RISC-V SoC developed by SpacemiT, integrating eight X100 general-purpose cores operating at up to 2.4 GHz and eight A100 AI accelerator cores at 2.0 GHz, with a shared 8MB L2 cache. It supports the RVA23 profile and the RISC-V Vector Extension 1.0 (RVV 1.0). The X100 cores implement a 256-bit vector length while the A100 cores implement a 1024-bit vector length. The SoC also includes a 60 TOPS AI compute engine and supports extensions such as Zfh, Zvfh, Zfbfmin, Zvfbfmin, Zvfbfwma, and vector cryptography (Zvkng, Zvksg, Zvbc). The chip is used in the Milk-V Jupiter 2 single-board computer and has garnered attention for its dual-core-class architecture combining general-purpose and AI-accelerator cores.
+
+## Key Claims
+
+- Eight X100 cores at up to 2.4 GHz with RVV 1.0 and 256-bit VLEN.
+- Eight A100 cores at up to 2.0 GHz with RVV 1.0 and 1024-bit VLEN.
+- Shared 8MB L2 cache.
+- RVA23 profile compliance.
+- 60 TOPS peak AI compute (IME2 matrix instructions).
+- Supports FP16/BF16 compute via Zvfh, Zfbfmin extensions.
+- Vendor-specific IME2 matrix instructions not publicly documented.
+- Powers the Milk-V Jupiter 2 SBC.
+
+## Optimization-Relevant Details
+
+- ISA/profile: RVA23 with RVV 1.0
+- Vector/matrix/accelerator support: X100: 256-bit VLEN, A100: 1024-bit VLEN, IME2 matrix instructions (vendor-only)
+- Memory/cache/TLB/DMA: 8MB shared L2 cache
+- Compiler/toolchain support: llama.cpp (standard and vendor fork)
+
+## Relationships
+
+- [[llama.cpp-on-spacemit-k3-benchmark]]: Records benchmark results on this hardware for LLM inference workloads.
+- [[spacemit-ime2-llama-cpp-optimization]]: Describes the vendor IME2 optimization recipe that unlocks A100 performance on this hardware.
+
+## Sources
+
+- https://bruno.verachten.fr/2026/03/12/benchmarking-llama.cpp-on-spacemit-k3-risc-v-ai-cores-vs-standard-rvv-part-4/
+merge_draft_body -->
+
+## [2026-07-06] pending | spacemit-x60-hardware-target.md
+target_page: spacemit-x60-hardware-target.md
+target_section: Key Claims
+source: https://spacemit.com/
+status: pending_review
+proposed_update: Add claim: 'The SpacemiT X60 core demonstrated a 16% performance improvement in LLVM compiler-optimized code, as presented at the North America RISC-V Summit (October 2025) by Igalia engineer Mikhail (source: spacemit.com press release).' Include mention of the talk titled "Unlocking 15% More Performance: A Case Study in LLVM Optimization for RISC-V", noting the discrepancy between 15% and 16%.
+
+## [2026-07-06] merge_pending | sophon-sg2380-hardware-target.md
+target_page: sophon-sg2380-hardware-target.md
+canonical_name: Sophon SG2380
+colliding_name: Sophgo SG2380
+source: https://www.cnx-software.com/2023/10/21/sophgo-sg2380-16-core-sifive-p670-risc-v-processor-20-tops-ai-accelerator/
+status: pending_review
+<!-- merge_draft_body
+# Sophgo SG2380
+
+The Sophgo SG2380 is a 16-core RISC-V SoC based on SiFive Performance P670 cores with a maximum clock frequency of 2.5 GHz, designed for desktop and edge computing applications. It integrates an Imagination AXT-16-512 GPU for 3D graphics, a video processing unit supporting 4Kp60 decoding of H.265, H.264, AV1, and VP9, and a dual AI accelerator system consisting of an 8-core SiFive Intelligence X280 and a Sophgo TPU coprocessor delivering up to 20 TOPS of INT8 inference performance. The SoC supports up to 64GB of 128-bit LPDDR4/DDR4 memory, UFS 3.2 and SATA 3.0 storage, and includes interfaces such as PCIe Gen3, USB 3.2, HDMI 2.0, and dual MIPI CSI. The SG2380 achieves full RISC-V RVA22 profile compliance and is the first platform to be featured on the Oasis mini-ITX motherboard, with availability expected in the second half of 2024.
+
+## Key Claims
+
+- 16-core SiFive P670 (RV64GCVH) @ up to 2.5 GHz with RISC-V Vector v1.0, Vector Crypto.
+- Cluster configuration: 12x performance cores @ 2.5 GHz, 4x efficiency cores @ 1.6 GHz.
+- Full RISC-V RVA22 profile compliance.
+- Imagination AXT-16-512 GPU: 0.5 TFLOPS, Vulkan 1.3, OpenGL 3.0 support.
+- VPU: 4Kp60 decode of H.265, H.264, AV1, VP9; no hardware encoder.
+- AI: 8-core SiFive Intelligence X280 (BF16/FP16/FP32/FP64/INT8-64) + Sophgo TPU up to 20 TOPS INT8 via VCIX interface, compatible with OpenXLA/IREE.
+- Memory: Up to 64GB via 128-bit DDR, LPDDR4/LPDDR4x 3733Mbps, DDR4 3200Mbps.
+- Storage: UFS 3.2, SATA 3.0, QSPI NOR/NAND.
+- Video output: eDP 1.2, DP 1.2, HDMI 2.0, MIPI DSI; dual output up to 4Kp60.
+- Networking: Gigabit Ethernet via RGMII.
+- USB: 1x USB 3.2 Gen1 (5 Gbps) with DP Alt Mode and Power Delivery, 1x USB 3.2 Gen1, 2x USB 2.0.
+- PCIe: Gen3 with 8+4+2+1+1 lanes.
+- Security: AES/DES/SHA256, TRNG, secure boot, SiFive WorldGuard, 32Kb OTP.
+- TDP: 5 – 30 Watts.
+- Oasis motherboard: mini-ITX, up to 64GB LPDDR5 5500MT/s, 2x 2.5GbE, M.2 slots, PCIe x16 (x8 signal).
+
+## Optimization-Relevant Details
+
+- **ISA/profile:** RVA22, rv64imafdcvh (implied from P670), RVV 1.0 with Vector Crypto.
+- **Vector/matrix/accelerator:** RVV 1.0 (vector length not specified, but typical P670 VLEN=128 or 256); SiFive Intelligence X280 for vector compute; Sophgo TPU via VCIX for matrix operations.
+- **Memory/cache/TLB:** Up to 64GB DDR/LPDDR4; cache details not provided.
+- **Compiler/toolchain support:** IREE/OpenXLA compatible; GCC and LLVM expected based on RISC-V standard toolchain support.
+
+## Relationships
+
+- [[iree-riscv-microkernel-support]]: The Sophgo SG2380 SoC is an intended hardware target for the IREE RISC-V microkernel optimization recipe, as its Sophgo TPU coprocessor supports OpenXLA/IREE and the SiFive P670 cores comply with the RVA22 profile targeted by the IREE microkernels.
+
+## Sources
+
+- https://www.cnx-software.com/2023/10/21/sophgo-sg2380-16-core-sifive-p670-risc-v-processor-20-tops-ai-accelerator/
+merge_draft_body -->
