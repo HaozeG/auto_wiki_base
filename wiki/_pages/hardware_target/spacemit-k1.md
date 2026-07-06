@@ -28,7 +28,7 @@ constraints:
 - LPDDR4X-3200 16 GB
 - Linux 6.6.63
 cold_start: true
-inbound_links: 4
+inbound_links: 5
 scorecard:
   novelty_delta: 0.9
   claim_density: 0.9

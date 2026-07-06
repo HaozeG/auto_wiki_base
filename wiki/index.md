@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-06 | Pages: 94 | Sources: 254
+Last updated: 2026-07-06 | Pages: 96 | Sources: 256
 
 ## Entity Pages
 
@@ -65,6 +65,7 @@ Last updated: 2026-07-06 | Pages: 94 | Sources: 254
 - **10x-IREE Llama-3.2-1B Benchmark**: → [iree-riscv-benchmark-milkv-jupiter](benchmark_result/iree-riscv-benchmark-milkv-jupiter.md)
 - **2509.18355**: → [chiplet-based-risc-v-soc](hardware_target/chiplet-based-risc-v-soc.md)
 - **AX45MPV**: → [andes-ax45mpv-hardware-target](hardware_target/andes-ax45mpv-hardware-target.md)
+- **Accelerating LLM Inference on RISC-V Edge Devices via Vector Extension Optimization**: → [rvv-llama-inference-optimization-banana-pi-bpi-f3](optimization_recipe/rvv-llama-inference-optimization-banana-pi-bpi-f3.md)
 - **All-In-One AI IP**: → [semidynamics-all-in-one-ai-ip](hardware_target/semidynamics-all-in-one-ai-ip.md)
 - **Allwinner V851S**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
 - **Allwinner V851S SoC**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
@@ -81,6 +82,7 @@ Last updated: 2026-07-06 | Pages: 94 | Sources: 254
 - **Auto-Generated GEMM Micro-Kernels on C906 and C910**: → [auto-gemm-micro-kernel-c906-c910-benchmark](benchmark_result/auto-gemm-micro-kernel-c906-c910-benchmark.md)
 - **BLAS band matrix optimization on RISC-V**: → [band-matrix-blas-riscv-openblas-benchmark](benchmark_result/band-matrix-blas-riscv-openblas-benchmark.md)
 - **BPI-F3 RVV LLM benchmark**: → [bpi-f3-rvv-llm-benchmark](benchmark_result/bpi-f3-rvv-llm-benchmark.md)
+- **BPI-F3 RVV LLM speedup**: → [rvv-llama-inference-optimization-banana-pi-bpi-f3](optimization_recipe/rvv-llama-inference-optimization-banana-pi-bpi-f3.md)
 - **BPI-F3 RVV llama.cpp**: → [bpi-f3-rvv-llm-benchmark](benchmark_result/bpi-f3-rvv-llm-benchmark.md)
 - **Baby LLama2 Benchmark on Milk-V Duo**: → [baby-llama2-milkv-duo-benchmark](benchmark_result/baby-llama2-milkv-duo-benchmark.md)
 - **Baby LLama2 Milk-V Duo 24 tok/s**: → [baby-llama2-milkv-duo-benchmark](benchmark_result/baby-llama2-milkv-duo-benchmark.md)
@@ -283,12 +285,14 @@ Last updated: 2026-07-06 | Pages: 94 | Sources: 254
 - **RVV Bench**: → [riscv-v-extension](entity/riscv-v-extension.md)
 - **RVV Dialect (MLIR)**: → [rvv-dialect-mlir](entity/rvv-dialect-mlir.md)
 - **RVV Intrinsic API**: → [rvv-intrinsic-api](entity/rvv-intrinsic-api.md)
+- **RVV LLM Inference Optimization on BananaPi BPI-F3**: → [rvv-llama-inference-optimization-banana-pi-bpi-f3](optimization_recipe/rvv-llama-inference-optimization-banana-pi-bpi-f3.md)
 - **RVV MLIR Dialect**: → [rvv-dialect-mlir](entity/rvv-dialect-mlir.md)
 - **RVV MLIR ukernel**: → [iree-rvv-mlir-ukernel](entity/iree-rvv-mlir-ukernel.md)
 - **RVV Unified Permutation Unit**: → [rvv-unified-permutation-unit](entity/rvv-unified-permutation-unit.md)
 - **RVV VPU permutation unit**: → [rvv-unified-permutation-unit](entity/rvv-unified-permutation-unit.md)
 - **RVV compiler auto-vectorization comparison**: → [gcc15-clang21-autovec-benchmark-spacemit-x60](benchmark_result/gcc15-clang21-autovec-benchmark-spacemit-x60.md)
 - **RVV compiler evaluation 2026**: → [gcc15-vs-clang21-banana-pi-f3-rvv10](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md)
+- **RVV llama.cpp optimization BPI-F3**: → [rvv-llama-inference-optimization-banana-pi-bpi-f3](optimization_recipe/rvv-llama-inference-optimization-banana-pi-bpi-f3.md)
 - **RVV unified permutation microarchitecture**: → [rvv-unified-permutation-unit](entity/rvv-unified-permutation-unit.md)
 - **SC23 Auto-Generated GEMM on C906 and C910**: → [auto-gemm-micro-kernel-c906-c910-benchmark](benchmark_result/auto-gemm-micro-kernel-c906-c910-benchmark.md)
 - **SG2042**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
@@ -380,6 +384,10 @@ Last updated: 2026-07-06 | Pages: 94 | Sources: 254
 - **V851SE**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
 - **V851s**: → [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
 - **Vector FP16 extension**: → [zvfh-isa-extension](entity/zvfh-isa-extension.md)
+- **Ventana V2**: → [ventana-veyron-v2-hardware-target](hardware_target/ventana-veyron-v2-hardware-target.md)
+- **Ventana Veyron V2**: → [ventana-veyron-v2-hardware-target](hardware_target/ventana-veyron-v2-hardware-target.md)
+- **Veyron V2**: → [ventana-veyron-v2-hardware-target](hardware_target/ventana-veyron-v2-hardware-target.md)
+- **Veyron V2 chiplet**: → [ventana-veyron-v2-hardware-target](hardware_target/ventana-veyron-v2-hardware-target.md)
 - **Vicuna 2.0**: → [vicuna-2-0-hardware-target](hardware_target/vicuna-2-0-hardware-target.md)
 - **Vicuna 2.0 core**: → [vicuna-2-0-hardware-target](hardware_target/vicuna-2-0-hardware-target.md)
 - **Whisper**: → [whisper-risc-v-iss-entity](entity/whisper-risc-v-iss-entity.md)
@@ -509,7 +517,7 @@ Last updated: 2026-07-06 | Pages: 94 | Sources: 254
 | [semidynamics-all-in-one-llama2-7b-tensor-utilization.md](benchmark_result/semidynamics-all-in-one-llama2-7b-tensor-utilization.md) | benchmark_result | Semidynamics All-In-One LLaMA-2 7B Tensor Utilization |  | 2 | 0 |
 | [sophon-sg2042-npb-performance-benchmark-result.md](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md) | benchmark_result | SG2042 NAS Parallel Benchmark Performance |  | 4 | 0 |
 | [spacemit-k1-benchmark-2026-04-14.md](benchmark_result/spacemit-k1-benchmark-2026-04-14.md) | benchmark_result | SpacemiT K1 AI Benchmark Report (2026-04-14) |  | 2 | 0 |
-| [andes-ax45mpv-hardware-target.md](hardware_target/andes-ax45mpv-hardware-target.md) | hardware_target | AndesCore AX45MPV |  | 2 | 6 |
+| [andes-ax45mpv-hardware-target.md](hardware_target/andes-ax45mpv-hardware-target.md) | hardware_target | AndesCore AX45MPV |  | 2 | 7 |
 | [andes-nx27v-hardware-target.md](hardware_target/andes-nx27v-hardware-target.md) | hardware_target | AndesCore NX27V |  | 2 | 4 |
 | [chiplet-based-risc-v-soc.md](hardware_target/chiplet-based-risc-v-soc.md) | hardware_target | Chiplet-Based RISC-V SoC |  | 2 | 0 |
 | [et-soc-1-hardware-target.md](hardware_target/et-soc-1-hardware-target.md) | hardware_target | ET-SoC-1 |  | 2 | 1 |
@@ -522,12 +530,13 @@ Last updated: 2026-07-06 | Pages: 94 | Sources: 254
 | [sophon-sg2042.md](hardware_target/sophon-sg2042.md) | hardware_target | SOPHON SG2042 |  | 16 | 0 |
 | [sophon-sg2044-hardware-target.md](hardware_target/sophon-sg2044-hardware-target.md) | hardware_target | Sophon SG2044 |  | 2 | 8 |
 | [sophon-sg2380-hardware-target.md](hardware_target/sophon-sg2380-hardware-target.md) | hardware_target | Sophon SG2380 |  | 6 | 0 |
-| [spacemit-k1.md](hardware_target/spacemit-k1.md) | hardware_target | SpacemiT K1 |  | 4 | 4 |
+| [spacemit-k1.md](hardware_target/spacemit-k1.md) | hardware_target | SpacemiT K1 |  | 4 | 5 |
 | [spacemit-k3-hardware-target.md](hardware_target/spacemit-k3-hardware-target.md) | hardware_target | SpacemiT K3 | RISC-V, SpacemiT, AI CPU, big.LITTLE, RVV 1.0 | 8 | 1 |
 | [spacemit-x60-hardware-target.md](hardware_target/spacemit-x60-hardware-target.md) | hardware_target | SpacemiT X60 | RISC-V, GCC tuning, SpacemiT, in-order, RVV 1.0 | 2 | 8 |
 | [starfive-jh7110-hardware-target.md](hardware_target/starfive-jh7110-hardware-target.md) | hardware_target | StarFive JH-7110 |  | 2 | 0 |
 | [t1.md](hardware_target/t1.md) | hardware_target | T1 |  | 2 | 0 |
 | [v851s-yuzukilizard.md](hardware_target/v851s-yuzukilizard.md) | hardware_target | Allwinner V851S / Yuzukilizard | allwinner, v851s, yuzukilizard, risc-v, npu | 8 | 0 |
+| [ventana-veyron-v2-hardware-target.md](hardware_target/ventana-veyron-v2-hardware-target.md) | hardware_target | Ventana Veyron V2 |  | 2 | 0 |
 | [vicuna-2-0-hardware-target.md](hardware_target/vicuna-2-0-hardware-target.md) | hardware_target | Vicuna 2.0 | RISC-V, vector co-processor, embedded, CV-X-IF | 2 | 1 |
 | [xuantie-c906-hardware-target.md](hardware_target/xuantie-c906-hardware-target.md) | hardware_target | XuanTie C906 |  | 2 | 10 |
 | [xuantie-c908.md](hardware_target/xuantie-c908.md) | hardware_target | XuanTie C908 |  | 14 | 1 |
@@ -539,6 +548,7 @@ Last updated: 2026-07-06 | Pages: 94 | Sources: 254
 | [llamacpp-spacemit-k3-gemma4-qat-mtp-config.md](optimization_recipe/llamacpp-spacemit-k3-gemma4-qat-mtp-config.md) | optimization_recipe | SpaceMIT K3 Gemma 4 QAT MTP Configuration |  | 2 | 0 |
 | [mlir-xdsl-rvv-codegen-pipeline.md](optimization_recipe/mlir-xdsl-rvv-codegen-pipeline.md) | optimization_recipe | MLIR-xDSL RVV Code Generation Pipeline |  | 2 | 6 |
 | [q4x-quantization-llamacpp-rvv.md](optimization_recipe/q4x-quantization-llamacpp-rvv.md) | optimization_recipe | Q4X Quantization for LLM Inference on RISC‑V Vector CPUs | quantization, codebook, llama.cpp, RVV | 2 | 2 |
+| [rvv-llama-inference-optimization-banana-pi-bpi-f3.md](optimization_recipe/rvv-llama-inference-optimization-banana-pi-bpi-f3.md) | optimization_recipe | RVV LLM Inference Optimization on BananaPi BPI-F3 |  | 2 | 0 |
 | [spacemit-ime2-llama-cpp-optimization.md](optimization_recipe/spacemit-ime2-llama-cpp-optimization.md) | optimization_recipe | SpacemiT IME2 llama.cpp optimization |  | 2 | 0 |
 | [spacemit-x60-gcc-tuning.md](optimization_recipe/spacemit-x60-gcc-tuning.md) | optimization_recipe | SpacemiT X60 GCC Tuning | RISC-V, GCC, SpacemiT, pipeline, in-order | 4 | 0 |
 | [v-seek-llm-inference-optimization-sg2042.md](optimization_recipe/v-seek-llm-inference-optimization-sg2042.md) | optimization_recipe | V-Seek LLM Inference Optimization on Sophon SG2042 |  | 2 | 1 |
@@ -568,6 +578,7 @@ Last updated: 2026-07-06 | Pages: 94 | Sources: 254
 - [starfive-jh7110-hardware-target](hardware_target/starfive-jh7110-hardware-target.md)
 - [t1](hardware_target/t1.md)
 - [v851s-yuzukilizard](hardware_target/v851s-yuzukilizard.md)
+- [ventana-veyron-v2-hardware-target](hardware_target/ventana-veyron-v2-hardware-target.md)
 - [vicuna-2-0-hardware-target](hardware_target/vicuna-2-0-hardware-target.md)
 - [xuantie-c906-hardware-target](hardware_target/xuantie-c906-hardware-target.md)
 - [xuantie-c908](hardware_target/xuantie-c908.md)
@@ -590,6 +601,7 @@ Last updated: 2026-07-06 | Pages: 94 | Sources: 254
 - [llamacpp-spacemit-k3-gemma4-qat-mtp-config](optimization_recipe/llamacpp-spacemit-k3-gemma4-qat-mtp-config.md)
 - [mlir-xdsl-rvv-codegen-pipeline](optimization_recipe/mlir-xdsl-rvv-codegen-pipeline.md)
 - [q4x-quantization-llamacpp-rvv](optimization_recipe/q4x-quantization-llamacpp-rvv.md)
+- [rvv-llama-inference-optimization-banana-pi-bpi-f3](optimization_recipe/rvv-llama-inference-optimization-banana-pi-bpi-f3.md)
 - [spacemit-ime2-llama-cpp-optimization](optimization_recipe/spacemit-ime2-llama-cpp-optimization.md)
 - [spacemit-x60-gcc-tuning](optimization_recipe/spacemit-x60-gcc-tuning.md)
 - [v-seek-llm-inference-optimization-sg2042](optimization_recipe/v-seek-llm-inference-optimization-sg2042.md)

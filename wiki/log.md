@@ -515,3 +515,13 @@ audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/
 theme_profile: RISC-V AI accelerator | workflow_first
 coverage_gaps:
   - missing_page_type:workload_kernel
+
+## [2026-07-06] research | Ventana Veyron V2 RISC-V datacenter chip
+session_id: f14fcbcf
+candidates_evaluated: 9
+pages_written: 2
+pipeline_rejection_rate: 11%
+audit_file: /home/gaohaoze/personal/full_stack/auto_wiki_base/.claude/worktrees/riscv-phase2/wiki/audit/research_f14fcbcf_2026-07-06.json
+theme_profile: RISC-V AI accelerator | workflow_first
+coverage_gaps:
+  - missing_page_type:workload_kernel
