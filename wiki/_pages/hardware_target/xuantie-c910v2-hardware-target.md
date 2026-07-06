@@ -33,7 +33,7 @@ type: hardware_target
 created: '2026-07-06'
 updated: '2026-07-06'
 cold_start: true
-inbound_links: 1
+inbound_links: 2
 outbound_links:
 - target: xuantie-c906-hardware-target
   reason: Both are T-Head XuanTie cores, but the C910V2 is a superscalar out-of-order
