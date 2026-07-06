@@ -12,6 +12,12 @@ aliases:
 - camel-cdr/rvv-bench
 - rvv-bench
 - RISC-V Vector benchmark
+- RISC-V
+- RISC V
+- risk-five
+- RV32
+- RV64
+- RV128
 subtype: null
 tags: []
 scorecard:
@@ -27,6 +33,8 @@ sources:
 - https://github.com/openhwgroup/core-v-cores
 - raw/cache/282a556eaea822f1.md
 - https://github.com/camel-cdr/rvv-bench
+- raw/cache/798e46c0b34cd5af.md
+- https://en.wikipedia.org/wiki/RISC-V
 source_url: https://opensecura.googlesource.com/docs/+/fabd959628cc5cfdeaed81c784222fa3d4869125/RiscVVectorSpecDoc.md
 fetched_at: '2026-07-03T15:51:28.357627+00:00'
 type: entity

@@ -33,7 +33,7 @@ type: hardware_target
 created: '2026-07-06'
 updated: '2026-07-06'
 cold_start: true
-inbound_links: 1
+inbound_links: 2
 outbound_links:
 - target: sophon-sg2044-hardware-target
   reason: The Sophon SG2044 SoC uses the XuanTie C920v2 core; this page documents

@@ -28,7 +28,7 @@ type: hardware_target
 created: '2026-07-03'
 updated: '2026-07-03'
 cold_start: true
-inbound_links: 3
+inbound_links: 4
 ---
 
 # GAP9

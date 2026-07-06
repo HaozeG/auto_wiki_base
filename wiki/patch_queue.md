@@ -2311,3 +2311,41 @@ SpacemiT K3 is a 16-core RISC-V system-on-chip (SoC) developed by SpacemiT, base
 
 - https://www.cnx-software.com/2026/01/23/spacemit-k3-16-core-risc-v-soc-system-information-and-early-benchmarks/
 merge_draft_body -->
+
+## [2026-07-06] pending | gap9.md
+target_page: gap9.md
+target_section: Key Claims
+source: https://arxiv.org/html/2410.08855
+status: pending_review
+proposed_update: Add claim: MATCH compilation framework achieves 2.15x inference latency improvement over DORY on GAP9, measured on the MLPerf Tiny suite (source: arXiv 2410.08855).
+
+## [2026-07-06] merge_pending | riscv-v-extension.md
+target_page: riscv-v-extension.md
+canonical_name: RISC-V V Extension
+colliding_name: RISC-V
+source: https://en.wikipedia.org/wiki/RISC-V
+status: pending_review
+<!-- merge_draft_body
+# RISC-V
+
+RISC-V (pronounced "risk-five") is a free and open standard instruction set architecture (ISA) based on reduced instruction set computer (RISC) principles, originally developed at the University of California, Berkeley starting in 2010. Unlike proprietary ISAs such as x86 and ARM, RISC-V specifications are released under permissive open-source licenses and can be implemented without paying royalties. The ISA supports 32-bit, 64-bit, and 128-bit address space variants, uses a load–store architecture with variable-length encoding (primarily 32-bit instructions with optional 16-bit compressed instructions via the C extension), and is little-endian by default. It defines a small base integer instruction set (RV32I, RV64I, RV128I) plus a growing set of standard extensions including M (integer multiplication and division), A (atomics with LR/SC and fetch-and-op), F (single-precision floating-point), D (double-precision floating-point), Q (quad-precision floating-point), C (compressed 16-bit instructions), B (bit manipulation), V (vector operations), and J (interpreted/JIT language support). Development and maintenance of the standard is managed by RISC-V International, a non-profit organization based in Switzerland with over 4,500 members as of 2025. RISC-V is widely adopted in microcontrollers and embedded systems and is increasingly targeted for higher-performance implementations in mobile, desktop, and server markets, supported by commercial SoCs from companies including SiFive, Andes Technology, SpacemiT, Alibaba, StarFive, and Espressif Systems.
+
+## Key Claims
+
+- RISC-V is an open-standard, royalty-free ISA based on RISC design principles, originally developed at UC Berkeley in 2010 and now maintained by RISC-V International.
+- The ISA defines base integer variants for 32-bit (RV32I), 64-bit (RV64I), and 128-bit (RV128I) address spaces, each with a minimal set of instructions.
+- Standard extensions cover multiplication (M), atomics (A), floating-point (F/D/Q), compressed instructions (C), bit manipulation (B), vector operations (V), and JIT support (J), among others.
+- The architecture uses a load–store design with variable-length encoding (instructions are always little-endian) and a compare-and-branch branching style.
+- RISC-V is supported by major Linux distributions and by compilers such as GCC and LLVM.
+- Commercial implementations are available from multiple vendors, covering microcontrollers to server-class processors.
+
+## Relationships
+
+- [[sophon-sg2044-hardware-target]]: The SG2044's XuanTie C920v2 cores implement the RISC-V ISA with the ratified Vector Extension version 1.0, using a 128-bit vector unit.
+- [[xuantie-c906-hardware-target]]: The XuanTie C906 core implements the RISC-V RV64IMA[FD]C[V] base architecture and adds 130 custom instruction extensions beyond the standard RISC-V set, while also using a 128-bit SIMD vector unit that is not standard RISC-V V.
+- [[spacemit-x60-hardware-target]]: The SpacemiT X60 core implements the RISC-V RVA22 profile with the ratified Vector Extension version 1.0 (VLEN 256/128-bit) and is targeted by GCC tuning that models its in-order dual-issue pipeline and vector unit.
+
+## Sources
+
+- https://en.wikipedia.org/wiki/RISC-V
+merge_draft_body -->

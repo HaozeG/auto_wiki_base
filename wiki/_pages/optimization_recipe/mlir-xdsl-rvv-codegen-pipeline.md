@@ -35,7 +35,7 @@ type: optimization_recipe
 created: '2026-07-03'
 updated: '2026-07-03'
 cold_start: true
-inbound_links: 6
+inbound_links: 8
 outbound_links:
 - target: c908-wino-gemm-optimization
   reason: Both pipelines target GEMM on RISC-V platforms, but the MLIR-xDSL approach

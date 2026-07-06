@@ -1,6 +1,6 @@
 # Wiki Index
 
-Last updated: 2026-07-06 | Pages: 96 | Sources: 256
+Last updated: 2026-07-06 | Pages: 100 | Sources: 266
 
 ## Entity Pages
 
@@ -12,11 +12,15 @@ Last updated: 2026-07-06 | Pages: 96 | Sources: 256
 | [gap9shield.md](entity/gap9shield.md) | GAP9Shield |  | 4 | 0 |
 | [hbm3-entity.md](entity/hbm3-entity.md) | HBM3 |  | 2 | 0 |
 | [hightec-edv-systeme-entity.md](entity/hightec-edv-systeme-entity.md) | HighTec EDV-Systeme | compiler, safety, riscv | 2 | 0 |
+| [htvm.md](entity/htvm.md) | HTVM | compiler, TinyML, heterogeneous, TVM, DORY, DIANA | 2 | 0 |
+| [instruction-accurate-simulator-autotuning-interface.md](entity/instruction-accurate-simulator-autotuning-interface.md) | Instruction-Accurate Simulator Autotuning Interface |  | 2 | 0 |
 | [integrated-matrix-extension.md](entity/integrated-matrix-extension.md) | Integrated Matrix Extension |  | 4 | 0 |
 | [iree-microkernel-library.md](entity/iree-microkernel-library.md) | IREE Microkernel Library |  | 2 | 0 |
+| [iree-riscv-cross-compilation.md](entity/iree-riscv-cross-compilation.md) | IREE |  | 2 | 0 |
 | [iree-rvv-mlir-ukernel.md](entity/iree-rvv-mlir-ukernel.md) | IREE MLIR-based uKernel for RVV | RISC-V, RVV, IREE, MLIR, uKernel, Matmul | 2 | 0 |
 | [llama-cpp.md](entity/llama-cpp.md) | llama.cpp | LLM inference, C/C++, GGML, local inference | 2 | 0 |
 | [llamacpp-quantization-methods.md](entity/llamacpp-quantization-methods.md) | llama.cpp Quantization Methods | quantization, llama.cpp, GGML, LLM inference, post-training quantization | 4 | 0 |
+| [match.md](entity/match.md) | MATCH | compilation, TVM, edge, DNN | 2 | 0 |
 | [meta-andes.md](entity/meta-andes.md) | meta-andes | RISC-V, BSP, Yocto, Andes Technology | 2 | 0 |
 | [mlir-compiler-infrastructure.md](entity/mlir-compiler-infrastructure.md) | MLIR | compiler, LLVM, intermediate representation | 2 | 0 |
 | [monte-cimone-cluster.md](entity/monte-cimone-cluster.md) | Monte Cimone |  | 2 | 0 |
@@ -29,7 +33,7 @@ Last updated: 2026-07-06 | Pages: 96 | Sources: 256
 | [riscv-international-entity.md](entity/riscv-international-entity.md) | RISC-V International |  | 2 | 0 |
 | [riscv-international-technical-committees.md](entity/riscv-international-technical-committees.md) | RISC-V International Technical Committees |  | 2 | 0 |
 | [riscv-matrix-extension-specification.md](entity/riscv-matrix-extension-specification.md) | RISC-V Matrix Extension Specification | risc-v, isa, matrix, extension | 10 | 0 |
-| [riscv-v-extension.md](entity/riscv-v-extension.md) | RISC-V V Extension |  | 6 | 0 |
+| [riscv-v-extension.md](entity/riscv-v-extension.md) | RISC-V V Extension |  | 8 | 0 |
 | [rise-project-rp014-llamacpp-ggml-rvv.md](entity/rise-project-rp014-llamacpp-ggml-rvv.md) | RP014 - Optimizing Llama.cpp and GGML for RVV | llama.cpp, GGML, RVV, RISC-V, quantization, optimization | 2 | 0 |
 | [rv-sparse-project.md](entity/rv-sparse-project.md) | rv-sparse |  | 2 | 0 |
 | [rvv-dialect-mlir.md](entity/rvv-dialect-mlir.md) | RVV Dialect (MLIR) | MLIR, RVV, RISC-V, dialect, compiler | 2 | 0 |
@@ -150,23 +154,31 @@ Last updated: 2026-07-06 | Pages: 96 | Sources: 256
 - **HBM3 specification**: → [hbm3-entity](entity/hbm3-entity.md)
 - **HHB-onnxruntime YOLOX Deployment on Xuantie C920**: → [hhb-onnxruntime-yolox-deployment-xuantie-c920](optimization_recipe/hhb-onnxruntime-yolox-deployment-xuantie-c920.md)
 - **HHB-onnxruntime YOLOX inference**: → [hhb-onnxruntime-yolox-deployment-xuantie-c920](optimization_recipe/hhb-onnxruntime-yolox-deployment-xuantie-c920.md)
+- **HTVM**: → [htvm](entity/htvm.md)
+- **HTVM compiler**: → [htvm](entity/htvm.md)
 - **High Bandwidth Memory 3**: → [hbm3-entity](entity/hbm3-entity.md)
 - **HighTec**: → [hightec-edv-systeme-entity](entity/hightec-edv-systeme-entity.md)
 - **HighTec EDV-Systeme**: → [hightec-edv-systeme-entity](entity/hightec-edv-systeme-entity.md)
 - **Hightec EDV-Systeme GmbH**: → [hightec-edv-systeme-entity](entity/hightec-edv-systeme-entity.md)
+- **Hybrid TVM**: → [htvm](entity/htvm.md)
 - **IME**: → [integrated-matrix-extension](entity/integrated-matrix-extension.md)
+- **IREE**: → [iree-riscv-cross-compilation](entity/iree-riscv-cross-compilation.md)
+- **IREE (RISC-V)**: → [iree-riscv-cross-compilation](entity/iree-riscv-cross-compilation.md)
 - **IREE MLIR Ukernels for RVV**: → [iree-rvv-mlir-ukernel](entity/iree-rvv-mlir-ukernel.md)
 - **IREE MLIR-based uKernel for RVV**: → [iree-rvv-mlir-ukernel](entity/iree-rvv-mlir-ukernel.md)
 - **IREE Microkernel Library**: → [iree-microkernel-library](entity/iree-microkernel-library.md)
 - **IREE RISC-V Llama Benchmark on MILK-V Jupiter**: → [iree-riscv-benchmark-milkv-jupiter](benchmark_result/iree-riscv-benchmark-milkv-jupiter.md)
 - **IREE RISC-V Microkernel Benchmark on MILK-V Jupiter**: → [iree-riscv-benchmark-milkv-jupiter](benchmark_result/iree-riscv-benchmark-milkv-jupiter.md)
 - **IREE RISC-V Microkernel Support**: → [iree-riscv-microkernel-support](optimization_recipe/iree-riscv-microkernel-support.md)
+- **IREE RISC-V cross-compilation**: → [iree-riscv-cross-compilation](entity/iree-riscv-cross-compilation.md)
 - **IREE RISC-V microkernel support**: → [iree-riscv-microkernel-support](optimization_recipe/iree-riscv-microkernel-support.md)
 - **IREE RISC-V mmt4d microkernels**: → [iree-riscv-microkernel-support](optimization_recipe/iree-riscv-microkernel-support.md)
 - **IREE RVV uKernel**: → [iree-rvv-mlir-ukernel](entity/iree-rvv-mlir-ukernel.md)
 - **IREE RVV ukernel**: → [iree-rvv-mlir-ukernel](entity/iree-rvv-mlir-ukernel.md)
 - **IREE microkernels**: → [iree-microkernel-library](entity/iree-microkernel-library.md)
 - **IREE ukernel library**: → [iree-microkernel-library](entity/iree-microkernel-library.md)
+- **ISS-based autotuning**: → [instruction-accurate-simulator-autotuning-interface](entity/instruction-accurate-simulator-autotuning-interface.md)
+- **Instruction-Accurate Simulator Autotuning Interface**: → [instruction-accurate-simulator-autotuning-interface](entity/instruction-accurate-simulator-autotuning-interface.md)
 - **Integrated Matrix Extension**: → [integrated-matrix-extension](entity/integrated-matrix-extension.md)
 - **Intelligent Matrix Engine**: → [integrated-matrix-extension](entity/integrated-matrix-extension.md)
 - **JH-7110**: → [starfive-jh7110-hardware-target](hardware_target/starfive-jh7110-hardware-target.md)
@@ -188,6 +200,7 @@ Last updated: 2026-07-06 | Pages: 96 | Sources: 256
 - **LLM inference in C/C++**: → [llama-cpp](entity/llama-cpp.md)
 - **Llama.cpp GGML RVV Optimization**: → [rise-project-rp014-llamacpp-ggml-rvv](entity/rise-project-rp014-llamacpp-ggml-rvv.md)
 - **Llama.cpp SpaceMIT K3 Gemma 4 QAT MTP Benchmarks**: → [spacemit-k3-hardware-target](hardware_target/spacemit-k3-hardware-target.md)
+- **MATCH**: → [match](entity/match.md)
 - **MCv2**: → [monte-cimone-cluster](entity/monte-cimone-cluster.md)
 - **MLIR**: → [mlir-compiler-infrastructure](entity/mlir-compiler-infrastructure.md)
 - **MLIR project**: → [mlir-compiler-infrastructure](entity/mlir-compiler-infrastructure.md)
@@ -209,6 +222,7 @@ Last updated: 2026-07-06 | Pages: 96 | Sources: 256
 - **Milk-V Jupiter 2 Gemma 4 benchmarks**: → [spacemit-k3-hardware-target](hardware_target/spacemit-k3-hardware-target.md)
 - **Milk-V Jupiter 2 Gemma 4 server config**: → [llamacpp-spacemit-k3-gemma4-qat-mtp-config](optimization_recipe/llamacpp-spacemit-k3-gemma4-qat-mtp-config.md)
 - **MilkV Jupiter 2**: → [spacemit-k3-hardware-target](hardware_target/spacemit-k3-hardware-target.md)
+- **Model-Aware TVM-based Compilation for Heterogeneous Edge Devices**: → [match](entity/match.md)
 - **Monte Cimone**: → [monte-cimone-cluster](entity/monte-cimone-cluster.md)
 - **Monte Cimone v2**: → [monte-cimone-cluster](entity/monte-cimone-cluster.md)
 - **Multi-Level Intermediate Representation**: → [mlir-compiler-infrastructure](entity/mlir-compiler-infrastructure.md)
@@ -245,6 +259,8 @@ Last updated: 2026-07-06 | Pages: 96 | Sources: 256
 - **Q4_1**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
 - **Q8_0**: → [llamacpp-quantization-methods](entity/llamacpp-quantization-methods.md)
 - **QiMeng-TensorOp**: → [qimeng-tensorop](entity/qimeng-tensorop.md)
+- **RISC V**: → [riscv-v-extension](entity/riscv-v-extension.md)
+- **RISC-V**: → [riscv-v-extension](entity/riscv-v-extension.md)
 - **RISC-V Certification Steering Committee**: → [riscv-international-technical-committees](entity/riscv-international-technical-committees.md)
 - **RISC-V Horizontal Committees**: → [riscv-international-technical-committees](entity/riscv-international-technical-committees.md)
 - **RISC-V IME Extension**: → [integrated-matrix-extension](entity/integrated-matrix-extension.md)
@@ -277,6 +293,9 @@ Last updated: 2026-07-06 | Pages: 96 | Sources: 256
 - **RP014 - Optimizing Llama.cpp and GGML for RVV**: → [rise-project-rp014-llamacpp-ggml-rvv](entity/rise-project-rp014-llamacpp-ggml-rvv.md)
 - **RV Matrix Extension v0.4.0**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RV matrix extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
+- **RV128**: → [riscv-v-extension](entity/riscv-v-extension.md)
+- **RV32**: → [riscv-v-extension](entity/riscv-v-extension.md)
+- **RV64**: → [riscv-v-extension](entity/riscv-v-extension.md)
 - **RVM extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RVME**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **RVV**: → [riscv-v-extension](entity/riscv-v-extension.md)
@@ -310,6 +329,7 @@ Last updated: 2026-07-06 | Pages: 96 | Sources: 256
 - **SOPHGO SG2044**: → [sophon-sg2044-hardware-target](hardware_target/sophon-sg2044-hardware-target.md)
 - **SOPHON SG2042**: → [sophon-sg2042](hardware_target/sophon-sg2042.md)
 - **SOPHON SG2380**: → [sophon-sg2380-hardware-target](hardware_target/sophon-sg2380-hardware-target.md)
+- **Score Predictor for Autotuning on Simulators**: → [instruction-accurate-simulator-autotuning-interface](entity/instruction-accurate-simulator-autotuning-interface.md)
 - **Semidynamics**: → [semidynamics](entity/semidynamics.md)
 - **Semidynamics AIPU**: → [semidynamics](entity/semidynamics.md)
 - **Semidynamics All-In-One**: → [semidynamics-all-in-one-ai-ip](hardware_target/semidynamics-all-in-one-ai-ip.md)
@@ -372,6 +392,7 @@ Last updated: 2026-07-06 | Pages: 96 | Sources: 256
 - **TH Vector**: → [xuantie](entity/xuantie.md)
 - **TH1520 YOLOX tutorial**: → [hhb-onnxruntime-yolox-deployment-xuantie-c920](optimization_recipe/hhb-onnxruntime-yolox-deployment-xuantie-c920.md)
 - **TVM**: → [apache-tvm](entity/apache-tvm.md)
+- **TVM gem5 Autotuning**: → [instruction-accurate-simulator-autotuning-interface](entity/instruction-accurate-simulator-autotuning-interface.md)
 - **Terapines ZCC**: → [zcc-compiler](entity/zcc-compiler.md)
 - **Torrent-1**: → [t1](hardware_target/t1.md)
 - **V extension**: → [riscv-v-extension](entity/riscv-v-extension.md)
@@ -458,6 +479,7 @@ Last updated: 2026-07-06 | Pages: 96 | Sources: 256
 - **nncase neural network compiler**: → [nncase](entity/nncase.md)
 - **riscv-matrix-extension**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
 - **riscv-matrix-extension-spec**: → [riscv-matrix-extension-specification](entity/riscv-matrix-extension-specification.md)
+- **risk-five**: → [riscv-v-extension](entity/riscv-v-extension.md)
 - **rv-sparse**: → [rv-sparse-project](entity/rv-sparse-project.md)
 - **rvspoc-s2311-llama2**: → [baby-llama2-milkv-duo-benchmark](benchmark_result/baby-llama2-milkv-duo-benchmark.md)
 - **rvv-bench**: → [riscv-v-extension](entity/riscv-v-extension.md)
@@ -512,7 +534,7 @@ Last updated: 2026-07-06 | Pages: 96 | Sources: 256
 | [gcc15-vs-clang21-banana-pi-f3-rvv10.md](benchmark_result/gcc15-vs-clang21-banana-pi-f3-rvv10.md) | benchmark_result | GCC 15 vs Clang 21 on BananaPi-F3 (RVV 1.0) | RVV, compiler, GCC, Clang | 2 | 0 |
 | [iree-riscv-benchmark-milkv-jupiter.md](benchmark_result/iree-riscv-benchmark-milkv-jupiter.md) | benchmark_result | IREE RISC-V Microkernel Benchmark on MILK-V Jupiter |  | 2 | 0 |
 | [maestro-gesture-recognition.md](benchmark_result/maestro-gesture-recognition.md) | benchmark_result | Maestro gesture recognition benchmark |  | 2 | 0 |
-| [mlir-xdsl-gemm-benchmark-k230-banana-pi.md](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md) | benchmark_result | MLIR-xDSL GEMM Benchmark on K230 and BananaPi F3 |  | 2 | 4 |
+| [mlir-xdsl-gemm-benchmark-k230-banana-pi.md](benchmark_result/mlir-xdsl-gemm-benchmark-k230-banana-pi.md) | benchmark_result | MLIR-xDSL GEMM Benchmark on K230 and BananaPi F3 |  | 2 | 5 |
 | [npb-characterization-sg2042.md](benchmark_result/npb-characterization-sg2042.md) | benchmark_result | NAS Parallel Benchmark characterization of Sophon SG2042 |  | 4 | 0 |
 | [semidynamics-all-in-one-llama2-7b-tensor-utilization.md](benchmark_result/semidynamics-all-in-one-llama2-7b-tensor-utilization.md) | benchmark_result | Semidynamics All-In-One LLaMA-2 7B Tensor Utilization |  | 2 | 0 |
 | [sophon-sg2042-npb-performance-benchmark-result.md](benchmark_result/sophon-sg2042-npb-performance-benchmark-result.md) | benchmark_result | SG2042 NAS Parallel Benchmark Performance |  | 4 | 0 |
@@ -521,7 +543,7 @@ Last updated: 2026-07-06 | Pages: 96 | Sources: 256
 | [andes-nx27v-hardware-target.md](hardware_target/andes-nx27v-hardware-target.md) | hardware_target | AndesCore NX27V |  | 2 | 4 |
 | [chiplet-based-risc-v-soc.md](hardware_target/chiplet-based-risc-v-soc.md) | hardware_target | Chiplet-Based RISC-V SoC |  | 2 | 0 |
 | [et-soc-1-hardware-target.md](hardware_target/et-soc-1-hardware-target.md) | hardware_target | ET-SoC-1 |  | 2 | 1 |
-| [gap9.md](hardware_target/gap9.md) | hardware_target | GAP9 |  | 2 | 3 |
+| [gap9.md](hardware_target/gap9.md) | hardware_target | GAP9 |  | 2 | 4 |
 | [k230-soc.md](hardware_target/k230-soc.md) | hardware_target | K230 |  | 8 | 0 |
 | [maestro.md](hardware_target/maestro.md) | hardware_target | Maestro |  | 2 | 1 |
 | [nuclei-na900-hardware-target.md](hardware_target/nuclei-na900-hardware-target.md) | hardware_target | Nuclei NA900 |  | 2 | 0 |
@@ -541,12 +563,12 @@ Last updated: 2026-07-06 | Pages: 96 | Sources: 256
 | [xuantie-c906-hardware-target.md](hardware_target/xuantie-c906-hardware-target.md) | hardware_target | XuanTie C906 |  | 2 | 10 |
 | [xuantie-c908.md](hardware_target/xuantie-c908.md) | hardware_target | XuanTie C908 |  | 14 | 1 |
 | [xuantie-c910v2-hardware-target.md](hardware_target/xuantie-c910v2-hardware-target.md) | hardware_target | XuanTie C910V2 |  | 2 | 2 |
-| [xuantie-c920v2-hardware-target.md](hardware_target/xuantie-c920v2-hardware-target.md) | hardware_target | XuanTie C920V2 |  | 2 | 1 |
-| [c908-wino-gemm-optimization.md](optimization_recipe/c908-wino-gemm-optimization.md) | optimization_recipe | C908 Winograd and GEMM Optimization in SHL |  | 2 | 12 |
+| [xuantie-c920v2-hardware-target.md](hardware_target/xuantie-c920v2-hardware-target.md) | hardware_target | XuanTie C920V2 |  | 2 | 2 |
+| [c908-wino-gemm-optimization.md](optimization_recipe/c908-wino-gemm-optimization.md) | optimization_recipe | C908 Winograd and GEMM Optimization in SHL |  | 2 | 13 |
 | [hhb-onnxruntime-yolox-deployment-xuantie-c920.md](optimization_recipe/hhb-onnxruntime-yolox-deployment-xuantie-c920.md) | optimization_recipe | HHB-onnxruntime YOLOX Deployment on Xuantie C920 |  | 2 | 0 |
 | [iree-riscv-microkernel-support.md](optimization_recipe/iree-riscv-microkernel-support.md) | optimization_recipe | IREE RISC-V Microkernel Support |  | 2 | 2 |
 | [llamacpp-spacemit-k3-gemma4-qat-mtp-config.md](optimization_recipe/llamacpp-spacemit-k3-gemma4-qat-mtp-config.md) | optimization_recipe | SpaceMIT K3 Gemma 4 QAT MTP Configuration |  | 2 | 0 |
-| [mlir-xdsl-rvv-codegen-pipeline.md](optimization_recipe/mlir-xdsl-rvv-codegen-pipeline.md) | optimization_recipe | MLIR-xDSL RVV Code Generation Pipeline |  | 2 | 6 |
+| [mlir-xdsl-rvv-codegen-pipeline.md](optimization_recipe/mlir-xdsl-rvv-codegen-pipeline.md) | optimization_recipe | MLIR-xDSL RVV Code Generation Pipeline |  | 2 | 8 |
 | [q4x-quantization-llamacpp-rvv.md](optimization_recipe/q4x-quantization-llamacpp-rvv.md) | optimization_recipe | Q4X Quantization for LLM Inference on RISC‑V Vector CPUs | quantization, codebook, llama.cpp, RVV | 2 | 2 |
 | [rvv-llama-inference-optimization-banana-pi-bpi-f3.md](optimization_recipe/rvv-llama-inference-optimization-banana-pi-bpi-f3.md) | optimization_recipe | RVV LLM Inference Optimization on BananaPi BPI-F3 |  | 2 | 0 |
 | [spacemit-ime2-llama-cpp-optimization.md](optimization_recipe/spacemit-ime2-llama-cpp-optimization.md) | optimization_recipe | SpacemiT IME2 llama.cpp optimization |  | 2 | 0 |
