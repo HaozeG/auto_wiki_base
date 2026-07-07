@@ -25,13 +25,16 @@ from pathlib import Path
 import yaml
 
 import frontmatter
+import identity
 from domain_analysis import validate_benchmark_claim
+from qmd_runner import _duplicate_tokens
 
 # ---------------------------------------------------------------------------
 # Config loading
 # ---------------------------------------------------------------------------
 
 _CLAUDE_MD_PATH = Path(__file__).parent.parent / "CLAUDE.md"
+_WIKI_PAGES_DIR = Path(__file__).parent.parent / "wiki" / "_pages"
 _PAGE_TYPES = {
     "entity",
     "synthesis",
@@ -105,6 +108,71 @@ def _extract_rag_summary(body: str) -> str:
     return content
 
 
+def _find_page_by_stem_or_alias(ref: str) -> identity.PageRef | None:
+    """Look up a connected_entities/outbound_links reference (usually a page
+    filename stem) against the live wiki, returning its PageRef (with the
+    real canonical_name) or None if it doesn't resolve to anything."""
+    ref = (ref or "").strip()
+    if not ref:
+        return None
+    for p in _WIKI_PAGES_DIR.rglob("*.md"):
+        if p.stem == ref:
+            fm, _ = frontmatter.parse_page(p)
+            return identity.PageRef(
+                canonical_name=str(fm.get("canonical_name") or p.stem),
+                filename=p.name,
+                path=p,
+            )
+    return None
+
+
+def _name_mentioned(name: str, text: str) -> bool:
+    """Fuzzy check: does at least half (min 1) of ``name``'s significant
+    tokens appear as whole words in ``text``? Token-overlap rather than an
+    exact-substring match so ordinary prose paraphrasing of a name doesn't
+    count as a miss — only a genuine omission does."""
+    toks = [t for t in _duplicate_tokens(name) if len(t) >= 4]
+    if not toks:
+        return False
+    text_lower = text.lower()
+    hits = sum(1 for t in toks if re.search(rf"\b{re.escape(t)}", text_lower))
+    return hits >= max(1, len(toks) // 2)
+
+
+def _find_dangling_outbound_links(fm: dict) -> list[str]:
+    """Return outbound_links[].target values that don't resolve to any known
+    page's canonical_name/alias/filename stem in the live wiki registry.
+
+    Soft signal, not a hard rejection: a page in a multi-draft batch may
+    legitimately reference a sibling draft that hasn't been written to disk
+    yet (see orchestrator.py's approved_drafts loop, which runs this pipeline
+    per-draft before any of them are written), which would otherwise look
+    like a false-positive dangling link. Found live during the v6 freeform
+    replication test: a page linked ``[[gap9]]`` in both its body and
+    outbound_links, but the real page is ``greenwaves-gap9`` — no page named
+    "gap9" exists anywhere in the wiki, and nothing caught it.
+
+    Deliberately checks exact filename-stem match only, the same resolution
+    ``graph_topology.py::build_graph`` actually uses to turn outbound_links
+    into graph edges — not identity.py's alias-aware ``resolve()``. "gap9" is
+    a registered *alias* of greenwaves-gap9.md, so an alias-aware check
+    would call it resolved even though Obsidian and graph_topology.py both
+    treat it as a broken link (neither follows frontmatter aliases when
+    resolving ``[[wikilinks]]``/outbound_links targets)."""
+    if not _WIKI_PAGES_DIR.exists():
+        return []
+    stems = {p.stem for p in _WIKI_PAGES_DIR.rglob("*.md")}
+    dangling = []
+    for link in fm.get("outbound_links") or []:
+        if not isinstance(link, dict):
+            continue
+        target = str(link.get("target") or "").strip()
+        if not target or target in stems:
+            continue
+        dangling.append(target)
+    return dangling
+
+
 # ---------------------------------------------------------------------------
 # Layer 1: Rule-based structural checks
 # ---------------------------------------------------------------------------
@@ -112,14 +180,16 @@ def _extract_rag_summary(body: str) -> str:
 def layer1_check(path: Path, page_type: str, verbose: bool = False) -> dict:
     """
     Deterministic structural checks.
-    Returns {"pass": bool, "violations": [str]}
+    Returns {"pass": bool, "violations": [str], "soft_violations": [str]}
     """
     config = _get_eval_config()
     dangling_patterns = config.get("dangling_patterns", [])
+    generic_reason_patterns = config.get("generic_relationship_reason_patterns", [])
     word_count_bounds = config.get("word_count_bounds", {})
 
     fm, body = parse_page(path)
     violations = []
+    soft_violations = []
 
     # Hard rejection: a second, embedded frontmatter block surviving after the
     # real one (subagent echo that the write-time stripper failed to catch).
@@ -143,6 +213,30 @@ def layer1_check(path: Path, page_type: str, verbose: bool = False) -> dict:
         wc_config = word_count_bounds.get("synthesis_rag_summary", {"min": 150, "max": 250})
         if not target_text:
             violations.append("MISSING_RAG_SUMMARY: synthesis page has no RAG Summary block")
+        else:
+            # Hard rejection (CLAUDE.md Synthesis Page spec): "Must name at
+            # least 2 connected entities explicitly." Checked here because
+            # validate_output.py only verifies the connected_entities
+            # frontmatter *list* has >= 2 entries, never that they're
+            # actually named in the RAG Summary text — a synthesis page
+            # (kv-cache-optimization-strategies-survey.md) shipped live with
+            # a RAG Summary that never mentioned any of its 3 connected
+            # entities, uncaught, during the v6 freeform replication test.
+            connected = fm.get("connected_entities") or []
+            named = 0
+            for entity in connected:
+                ref = _find_page_by_stem_or_alias(str(entity))
+                surfaces = [str(entity)]
+                if ref is not None:
+                    surfaces.append(ref.canonical_name)
+                if any(_name_mentioned(surface, target_text) for surface in surfaces):
+                    named += 1
+            if named < 2:
+                violations.append(
+                    f"RAG_SUMMARY_MISSING_ENTITY_NAMES: only {named} of "
+                    f"{len(connected)} connected_entities are named in the RAG "
+                    f"Summary text (minimum 2 required)"
+                )
 
     # Dangling reference check
     for pattern in dangling_patterns:
@@ -200,11 +294,41 @@ def layer1_check(path: Path, page_type: str, verbose: bool = False) -> dict:
                     + ", ".join(benchmark_result["invalid_evidence_strength"])
                 )
 
-    result = {"pass": len(violations) == 0, "violations": violations}
+    # Soft signal: internal links that don't resolve to any known page.
+    dangling_links = _find_dangling_outbound_links(fm)
+    if dangling_links:
+        soft_violations.append(
+            "DANGLING_LINK: outbound_links target(s) not found in the wiki: "
+            + ", ".join(dangling_links)
+        )
+
+    # Soft signal: empty tags undercut the organic-clustering mechanism
+    # (_synthesis_gap_clusters groups pages by tag) even though CLAUDE.md
+    # doesn't list an empty tags list as a hard-rejection criterion.
+    if not fm.get("tags"):
+        soft_violations.append("EMPTY_TAGS: frontmatter 'tags' list is empty")
+
+    # Soft signal: relationship reasons that read as generic tag/token
+    # overlap rather than a deliberate bridge (Graph Topology Philosophy).
+    generic_reasons = []
+    for link in fm.get("outbound_links") or []:
+        if not isinstance(link, dict):
+            continue
+        reason = str(link.get("reason") or "")
+        if any(re.search(p, reason, re.IGNORECASE) for p in generic_reason_patterns):
+            generic_reasons.append(f"{link.get('target', '?')}: '{reason}'")
+    if generic_reasons:
+        soft_violations.append(
+            "GENERIC_RELATIONSHIP_REASON: " + "; ".join(generic_reasons)
+        )
+
+    result = {"pass": len(violations) == 0, "violations": violations, "soft_violations": soft_violations}
     if verbose:
         print(f"[Layer 1] {'PASS' if result['pass'] else 'FAIL'}")
         for v in violations:
             print(f"  - {v}")
+        for v in soft_violations:
+            print(f"  (soft) {v}")
     return result
 
 
@@ -444,9 +568,16 @@ def run_pipeline(path: Path, page_type: str, verbose: bool = False) -> dict:
             print(f"FAIL [Layer 1]: {path}")
             for v in l1["violations"]:
                 print(f"  {v}")
+            for v in l1.get("soft_violations", []):
+                print(f"  (soft) {v}")
         result = {"layer1": l1, "final": "rejected", "rejection_layer": 1}
         print(json.dumps(result) if verbose else "", end="")
         return result
+
+    if not verbose and l1.get("soft_violations"):
+        print(f"PASS [Layer 1] with soft warnings: {path}")
+        for v in l1["soft_violations"]:
+            print(f"  (soft) {v}")
 
     l2 = layer2_check(path, page_type, verbose=verbose)
     l3 = layer3_check(path, page_type, verbose=verbose)
