@@ -671,12 +671,22 @@ def _synthesis_gap_clusters(min_cluster_size: int = 3) -> list[tuple[str, list[s
     are most consistently populated — this filter was the main reason
     synthesis-candidate generation never found a real cluster to work with.
     """
+    # Group case-insensitively (tags like 'RISC-V' and 'risc-v' are the same
+    # cluster) but keep whichever original casing shows up most often as the
+    # display label, so the log/manifest still reads naturally.
     tag_to_pages: dict[str, list[str]] = {}
+    tag_label_counts: dict[str, dict[str, int]] = {}
     for p in _WIKI_PAGES_DIR.rglob("*.md"):
         fm, _ = frontmatter.parse_page(p)
         if fm.get("type") != "synthesis":
             for tag in fm.get("tags", []) or []:
-                tag_to_pages.setdefault(tag, []).append(p.stem)
+                key = tag.casefold()
+                tag_to_pages.setdefault(key, []).append(p.stem)
+                counts = tag_label_counts.setdefault(key, {})
+                counts[tag] = counts.get(tag, 0) + 1
+    tag_labels = {
+        key: max(counts, key=counts.get) for key, counts in tag_label_counts.items()
+    }
 
     # Collect all entity pages already named in a synthesis connected_entities list
     covered: set[str] = set()
@@ -686,10 +696,10 @@ def _synthesis_gap_clusters(min_cluster_size: int = 3) -> list[tuple[str, list[s
             covered.update(fm.get("connected_entities", []))
 
     clusters = []
-    for tag, pages in sorted(tag_to_pages.items(), key=lambda x: -len(x[1])):
+    for key, pages in sorted(tag_to_pages.items(), key=lambda x: -len(x[1])):
         uncovered = [pg for pg in pages if pg not in covered]
         if len(uncovered) >= min_cluster_size:
-            clusters.append((tag, uncovered))
+            clusters.append((tag_labels[key], uncovered))
     return clusters
 
 
