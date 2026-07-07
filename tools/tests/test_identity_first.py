@@ -149,6 +149,20 @@ def test_normalizer_must_split(a, b):
     assert identity.normalize_canonical(a) != identity.normalize_canonical(b)
 
 
+@pytest.mark.parametrize("a,b", [
+    # camelCase/spacing variant of the same compound name (found live: two
+    # optimization_recipe pages generated from the identical source only
+    # differed in "Banana Pi" vs "BananaPi" spacing and survived as separate
+    # pages).
+    ("RVV Optimization for LLM Inference on Banana Pi BPI-F3",
+     "RVV-Optimized LLM Inference on BananaPi BPI-F3"),
+    # -ize/-ization verb-noun morphology of the same recipe.
+    ("GAP9 Quantization Recipe", "GAP9 Quantized Recipe"),
+])
+def test_normalizer_merges_spelling_and_morphology_variants(a, b):
+    assert identity.normalize_canonical(a) == identity.normalize_canonical(b)
+
+
 # ---------------------------------------------------------------------------
 # Part 2 — connectivity-based maturity
 # ---------------------------------------------------------------------------

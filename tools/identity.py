@@ -27,6 +27,36 @@ from pathlib import Path
 import frontmatter
 from qmd_runner import _duplicate_tokens, _tokens, normalize_title_subject
 
+_IZE_SUFFIXES = ("ization", "isation", "izing", "ising", "ized", "ised", "ize", "ise")
+
+
+def _split_camel_case(text: str) -> str:
+    """"BananaPi" -> "Banana Pi" so an unspaced and a spaced spelling of the
+    same compound name tokenize identically. Only applied here (not in
+    qmd_runner's shared ``_tokens``) because that function also compares a
+    proper-cased title against an already-lowercased filename-derived label
+    (``_match_label``) for the qmd similarity gate — splitting only the
+    cased side there breaks that asymmetric comparison. Two identity-
+    resolution pages that differed only in "Banana Pi" vs "BananaPi" spacing
+    survived as separate pages before this fix (found live during the v6
+    freeform replication test)."""
+    return re.sub(r"(?<=[a-z0-9])(?=[A-Z])", " ", text)
+
+
+def _stem_ize(tok: str) -> str:
+    """Collapse -ize/-ization verb-noun morphology to one root
+    ("optimization"/"optimized"/"optimize"/"optimizing" -> "optim") so two
+    pages about the same recipe in different grammatical forms resolve to
+    the same identity key — common in this wiki's optimization_recipe
+    subtype (also quantization/quantized, customization/customized).
+    Deliberately narrow (this suffix family only, plus a length floor) to
+    keep false-merge risk low, matching this module's "keep version/model
+    discriminators" design."""
+    for suf in _IZE_SUFFIXES:
+        if tok.endswith(suf) and len(tok) > len(suf) + 2:
+            return tok[: -len(suf)]
+    return tok
+
 
 def normalize_canonical(name: str, aliases: list[str] | None = None) -> str:
     """Return the normalized identity key for a concept name.
@@ -34,7 +64,7 @@ def normalize_canonical(name: str, aliases: list[str] | None = None) -> str:
     Folds vendor/family/boilerplate tokens but keeps version/model
     discriminators. Returns "" only for an empty input.
     """
-    base = normalize_title_subject(name or "")
+    base = normalize_title_subject(_split_camel_case(name or ""))
     toks = _duplicate_tokens(base)
     if not toks:
         # Name was entirely generic/boilerplate (e.g. "Vector Extension");
@@ -42,7 +72,7 @@ def normalize_canonical(name: str, aliases: list[str] | None = None) -> str:
         toks = _tokens(base)
     if not toks:
         return re.sub(r"\s+", " ", (name or "").strip().lower())
-    return " ".join(sorted(set(toks)))
+    return " ".join(sorted({_stem_ize(tok) for tok in toks}))
 
 
 @dataclass(frozen=True)
