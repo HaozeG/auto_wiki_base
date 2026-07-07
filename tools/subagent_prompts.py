@@ -328,7 +328,13 @@ Constraints:
 - If you decide to reject, set decision="reject" and explain in rejection_reason;
   do not produce page_drafts
 - RAG Summary blocks in synthesis drafts must be 150-250 words, self-contained,
-  and state the core synthetic claim in the first sentence
+  state the core synthetic claim in the first sentence, and explicitly name at
+  least 2 of frontmatter.connected_entities by their canonical name somewhere in
+  the summary text — not just list them in connected_entities. A summary that
+  only paraphrases a source's abstract without naming which wiki entities it
+  connects to (or connects to them only via a hedged "could apply to" / "might
+  benefit" aside in outbound_links, without ever naming them in the RAG Summary
+  itself) is not a real synthesis page and will be hard-rejected.
 - Entity page first paragraphs MUST be at least 80 words. If the provided
   resource_content is too thin to support that without adding outside knowledge,
   reject the candidate or use pages_to_update for a narrow existing-page update.
