@@ -451,6 +451,16 @@ word_count_bounds:
     min: 150
     max: 250
 
+# Soft signal (logged, not hard-rejected — see Constraints/Retrospective Lint):
+# a relationship "reason" that reduces to generic tag/token overlap rather
+# than a deliberate bridge (Graph Topology Philosophy: "few, deliberate, and
+# reasoned, not numerous and shallow"). Domain-agnostic patterns only —
+# extend per-theme the same way as dangling_patterns.
+generic_relationship_reason_patterns:
+  - "^(another|related|general|similar)\\b"
+  - "\\bshares\\b.{0,20}\\b(isa|architecture|ecosystem|platform)\\b"
+  - "^(same|similar) (kind of|type of|family of)"
+
 spacy_model: en_core_web_sm
 ```
 

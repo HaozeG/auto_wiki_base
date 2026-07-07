@@ -671,12 +671,22 @@ def _synthesis_gap_clusters(min_cluster_size: int = 3) -> list[tuple[str, list[s
     are most consistently populated — this filter was the main reason
     synthesis-candidate generation never found a real cluster to work with.
     """
+    # Group case-insensitively (tags like 'RISC-V' and 'risc-v' are the same
+    # cluster) but keep whichever original casing shows up most often as the
+    # display label, so the log/manifest still reads naturally.
     tag_to_pages: dict[str, list[str]] = {}
+    tag_label_counts: dict[str, dict[str, int]] = {}
     for p in _WIKI_PAGES_DIR.rglob("*.md"):
         fm, _ = frontmatter.parse_page(p)
         if fm.get("type") != "synthesis":
             for tag in fm.get("tags", []) or []:
-                tag_to_pages.setdefault(tag, []).append(p.stem)
+                key = tag.casefold()
+                tag_to_pages.setdefault(key, []).append(p.stem)
+                counts = tag_label_counts.setdefault(key, {})
+                counts[tag] = counts.get(tag, 0) + 1
+    tag_labels = {
+        key: max(counts, key=counts.get) for key, counts in tag_label_counts.items()
+    }
 
     # Collect all entity pages already named in a synthesis connected_entities list
     covered: set[str] = set()
@@ -686,10 +696,10 @@ def _synthesis_gap_clusters(min_cluster_size: int = 3) -> list[tuple[str, list[s
             covered.update(fm.get("connected_entities", []))
 
     clusters = []
-    for tag, pages in sorted(tag_to_pages.items(), key=lambda x: -len(x[1])):
+    for key, pages in sorted(tag_to_pages.items(), key=lambda x: -len(x[1])):
         uncovered = [pg for pg in pages if pg not in covered]
         if len(uncovered) >= min_cluster_size:
-            clusters.append((tag, uncovered))
+            clusters.append((tag_labels[key], uncovered))
     return clusters
 
 
@@ -3239,6 +3249,7 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
         1 for c in session_state.candidates
         if c.get("state") in {"skipped_similarity", "pipeline_rejected"}
     )
+    eval_api_failures = 0
     written_filenames = [
         name for c in session_state.candidates for name in c.get("written_files", [])
     ]
@@ -3427,6 +3438,7 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
             logger.error("Evaluation API call failed for %s: %s", url, e)
             audit.record_response(ev_idx, str(e), schema_valid=False)
             session_state.transition(entry, "eval_rejected", error=str(e))
+            eval_api_failures += 1
             continue
 
         allowed_page_types = set(research_config.get("page_type_taxonomy", {}) or {})
@@ -3579,6 +3591,18 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
     # predicate is now satisfied (the transition writer the design implied).
     _maybe_transition_maturity(session_id)
 
+    # Distinguish "genuinely nothing new to write" from "every evaluation call
+    # blew up before producing a verdict" (e.g. an exhausted API key/proxy
+    # balance) — found live during the v6 freeform replication test, where a
+    # 402 Insufficient Balance error was silently swallowed per-candidate and
+    # the driver loop kept starting fresh sessions for 13 iterations with zero
+    # chance of writing a page. A distinct status here lets a driver script's
+    # exit-code check (see run_research_session below) stop instead of
+    # looping to its iteration cap for nothing.
+    session_status = "complete"
+    if eval_api_failures > 0 and quota._candidates_evaluated == 0 and eval_api_failures >= 3:
+        session_status = "api_unavailable"
+
     summary = {
         "session_id": session_id,
         "candidates_found": len(session_state.candidates),
@@ -3586,7 +3610,7 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
         "pages_written": len(written_filenames),
         "pipeline_rejection_rate": f"{(pipeline_rejections / max(quota._candidates_evaluated, 1) * 100):.0f}%",
         "audit_log_path": str(audit.path),
-        "status": "complete",
+        "status": session_status,
     }
     print(f"[{session_id}] Session complete: {summary}")
     return summary

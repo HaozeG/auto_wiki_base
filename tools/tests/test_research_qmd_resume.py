@@ -1537,7 +1537,10 @@ def test_generate_synthesis_candidate_backfills_sources_for_real_eval_pipeline(t
     quota = QuotaManager(max_candidates=5, max_new_pages=5)
     audit = FullDummyAudit()
 
-    rag_summary = "GEMM optimization on RISC-V spans compiler-driven and hand-tuned approaches. " * 20
+    rag_summary = (
+        "GEMM optimization on RISC-V spans compiler-driven and hand-tuned approaches. " * 16
+        + "The Alpha and Beta approaches illustrate this tradeoff directly."
+    )
     synthesis_result = json.dumps({
         "decision": "approve",
         "rejection_reason": None,

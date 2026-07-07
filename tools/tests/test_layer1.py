@@ -5,11 +5,13 @@ These tests require no external dependencies beyond PyYAML.
 
 import sys
 from pathlib import Path
+from unittest.mock import patch
 
 import pytest
 
 # Allow importing from tools/
 sys.path.insert(0, str(Path(__file__).parent.parent))
+import eval_summary
 from eval_summary import layer1_check, parse_page, _extract_first_paragraph, _extract_rag_summary
 
 FIXTURES = Path(__file__).parent / "fixtures"
@@ -255,6 +257,175 @@ None.
         result = layer1_check(page, "synthesis")
         assert result["pass"] is False
         assert any("DANGLING_REF" in v for v in result["violations"])
+
+
+class TestLayer1SoftSignalsAndEntityNaming:
+    """Fixes found live during the v6 freeform replication test evaluation:
+    a dangling outbound_links target, a synthesis RAG Summary that never
+    named its connected entities, empty tags, and generic tag-overlap
+    relationship reasons — none of which were previously caught anywhere."""
+
+    def _wiki(self, tmp_path, pages: dict[str, str]) -> Path:
+        pages_dir = tmp_path / "wiki" / "_pages"
+        for rel_path, content in pages.items():
+            p = pages_dir / rel_path
+            p.parent.mkdir(parents=True, exist_ok=True)
+            p.write_text(content, encoding="utf-8")
+        return pages_dir
+
+    def test_dangling_outbound_link_is_soft_not_hard(self, tmp_path):
+        pages_dir = self._wiki(tmp_path, {
+            "hardware_target/greenwaves-gap9.md": (
+                "---\ntype: hardware_target\ncanonical_name: GreenWaves GAP9\n"
+                "sources: [https://example.com/gap9]\n---\n\n# GreenWaves GAP9\n\nBody.\n"
+            ),
+        })
+        page = tmp_path / "candidate.md"
+        page.write_text(
+            "---\ntype: entity\ncanonical_name: GAP9 MobileNet Benchmark\n"
+            "sources: [https://example.com/bench]\ntags: [gap9]\n"
+            "outbound_links:\n- target: gap9\n  reason: Hardware target for this benchmark\n"
+            "---\n\n"
+            "# GAP9 MobileNet Benchmark\n\n"
+            "The GAP9 MobileNet benchmark reports MobileNet V1 inference latency and power "
+            "consumption measured on the GreenWaves GAP9 RISC-V AI accelerator, a neural "
+            "network building block that runs on production silicon fabricated on a 22nm "
+            "FD-SOI process. Introduced as a comparative evaluation, it replaced earlier "
+            "informal benchmarking approaches with a repeatable measurement methodology at "
+            "an image resolution of 160 by 160 pixels with 0.25 channel scaling applied "
+            "throughout the convolutional layers of the network under test, reporting a "
+            "result of 12 milliseconds per frame at 806 microwatts of average power draw "
+            "during continuous always-on inference workloads on battery-powered devices.\n\n"
+            "## Key Claims\n\n- Claim one with a number: 12ms.\n- Claim two: 806uW.\n"
+            "- Claim three: 160x160 resolution.\n",
+            encoding="utf-8",
+        )
+        with patch.object(eval_summary, "_WIKI_PAGES_DIR", pages_dir):
+            result = layer1_check(page, "entity")
+        # "gap9" doesn't match the real page "greenwaves-gap9" -> soft, not hard.
+        assert result["pass"] is True
+        assert any("DANGLING_LINK" in v for v in result["soft_violations"])
+
+    def test_resolvable_outbound_link_is_not_flagged(self, tmp_path):
+        pages_dir = self._wiki(tmp_path, {
+            "hardware_target/greenwaves-gap9.md": (
+                "---\ntype: hardware_target\ncanonical_name: GreenWaves GAP9\n"
+                "sources: [https://example.com/gap9]\n---\n\n# GreenWaves GAP9\n\nBody.\n"
+            ),
+        })
+        page = tmp_path / "candidate.md"
+        page.write_text(
+            "---\ntype: benchmark_result\ncanonical_name: GAP9 MobileNet Benchmark\n"
+            "sources: [https://example.com/bench]\ntags: [gap9]\n"
+            "outbound_links:\n- target: greenwaves-gap9\n  reason: Hardware target for this benchmark\n"
+            "---\n\n"
+            "# GAP9 MobileNet Benchmark\n\n"
+            "This benchmark reports MobileNet V1 inference latency and power consumption "
+            "measured on the GreenWaves GAP9 RISC-V AI accelerator, running production "
+            "silicon fabricated on a 22nm FD-SOI process at an image resolution of 160 "
+            "by 160 pixels with 0.25 channel scaling applied throughout the convolutional "
+            "layers of the network under test, reporting a result of 12 milliseconds per "
+            "frame at 806 microwatts of average power draw during continuous inference.\n\n"
+            "## Key Claims\n\n- Claim one with a number: 12ms.\n- Claim two: 806uW.\n"
+            "- Claim three: 160x160 resolution.\n",
+            encoding="utf-8",
+        )
+        with patch.object(eval_summary, "_WIKI_PAGES_DIR", pages_dir):
+            result = layer1_check(page, "benchmark_result")
+        assert not any("DANGLING_LINK" in v for v in result["soft_violations"])
+
+    def test_empty_tags_is_soft(self, tmp_path):
+        page = tmp_path / "candidate.md"
+        page.write_text(
+            "---\ntype: entity\ncanonical_name: Some Entity\n"
+            "sources: [https://example.com/x]\ntags: []\n---\n\n"
+            "# Some Entity\n\n"
+            "A self-contained definition with enough words to clear the minimum "
+            "paragraph length threshold required by the entity page template, "
+            "describing what it is and why it matters in concrete detail across "
+            "several independent sentences that together add up to well past "
+            "eighty words in total length so the separate word-count check does "
+            "not also fire here unexpectedly and confuse this specific assertion "
+            "about the tags field alone, since that would make the test ambiguous "
+            "about which particular violation is actually being exercised here.\n\n"
+            "## Key Claims\n\n- Claim one with a number: 42.\n- Claim two: BERT.\n"
+            "- Claim three: 99%.\n",
+            encoding="utf-8",
+        )
+        with patch.object(eval_summary, "_WIKI_PAGES_DIR", tmp_path / "wiki" / "_pages"):
+            result = layer1_check(page, "entity")
+        assert result["pass"] is True
+        assert any("EMPTY_TAGS" in v for v in result["soft_violations"])
+
+    def test_generic_relationship_reason_is_soft(self, tmp_path):
+        page = tmp_path / "candidate.md"
+        page.write_text(
+            "---\ntype: entity\ncanonical_name: Some Entity\n"
+            "sources: [https://example.com/x]\ntags: [x]\n"
+            "outbound_links:\n- target: other_entity\n"
+            "  reason: Another RISC-V-based AI accelerator\n---\n\n"
+            "# Some Entity\n\n"
+            "A self-contained definition with enough words to clear the minimum "
+            "paragraph length threshold required by the entity page template, "
+            "describing what it is and why it matters in concrete detail across "
+            "several independent sentences that together add up to well past "
+            "eighty words in total length so the separate word-count check does "
+            "not also fire here unexpectedly and confuse this specific assertion "
+            "about the relationship-reason field alone, since that would make the "
+            "test ambiguous about which particular violation is being exercised.\n\n"
+            "## Key Claims\n\n- Claim one with a number: 42.\n- Claim two: BERT.\n"
+            "- Claim three: 99%.\n",
+            encoding="utf-8",
+        )
+        with patch.object(eval_summary, "_WIKI_PAGES_DIR", tmp_path / "wiki" / "_pages"):
+            result = layer1_check(page, "entity")
+        assert result["pass"] is True
+        assert any("GENERIC_RELATIONSHIP_REASON" in v for v in result["soft_violations"])
+
+    def test_synthesis_rag_summary_must_name_connected_entities(self, tmp_path):
+        pages_dir = self._wiki(tmp_path, {
+            "entity/fai-ara240-m.md": (
+                "---\ntype: entity\ncanonical_name: FAI-Ara240-M\n"
+                "sources: [https://example.com/a]\n---\n\n# FAI-Ara240-M\n\nBody.\n"
+            ),
+            "entity/tenstorrent-grayskull-e75.md": (
+                "---\ntype: entity\ncanonical_name: Tenstorrent Grayskull e75\n"
+                "sources: [https://example.com/b]\n---\n\n# Tenstorrent Grayskull e75\n\nBody.\n"
+            ),
+        })
+        filler = "This survey reviews KV cache optimization strategies for LLM inference. " * 10
+        page = tmp_path / "synth.md"
+        page.write_text(
+            "---\ntype: synthesis\n"
+            "connected_entities: [fai-ara240-m, tenstorrent-grayskull-e75]\n"
+            "synthesis_status: draft\n---\n\n"
+            f"# Test Synthesis\n\n## RAG Summary\n\n{filler}\n\n"
+            "## Full Synthesis\n\nContent.\n\n## Open Questions\n\nNone.\n\n"
+            "## Connected Pages\n\nNone.\n",
+            encoding="utf-8",
+        )
+        with patch.object(eval_summary, "_WIKI_PAGES_DIR", pages_dir):
+            result = layer1_check(page, "synthesis")
+        assert result["pass"] is False
+        assert any("RAG_SUMMARY_MISSING_ENTITY_NAMES" in v for v in result["violations"])
+
+        # Now with both entities actually named -> passes this check.
+        filler2 = (
+            "This survey reviews KV cache optimization strategies relevant to the "
+            "FAI-Ara240-M and Tenstorrent Grayskull e75 accelerators for LLM inference. " * 10
+        )
+        page.write_text(
+            "---\ntype: synthesis\n"
+            "connected_entities: [fai-ara240-m, tenstorrent-grayskull-e75]\n"
+            "synthesis_status: draft\n---\n\n"
+            f"# Test Synthesis\n\n## RAG Summary\n\n{filler2[:1400]}\n\n"
+            "## Full Synthesis\n\nContent.\n\n## Open Questions\n\nNone.\n\n"
+            "## Connected Pages\n\nNone.\n",
+            encoding="utf-8",
+        )
+        with patch.object(eval_summary, "_WIKI_PAGES_DIR", pages_dir):
+            result = layer1_check(page, "synthesis")
+        assert not any("RAG_SUMMARY_MISSING_ENTITY_NAMES" in v for v in result["violations"])
 
 
 class TestGraphStats:
