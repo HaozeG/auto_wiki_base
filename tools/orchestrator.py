@@ -3249,6 +3249,7 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
         1 for c in session_state.candidates
         if c.get("state") in {"skipped_similarity", "pipeline_rejected"}
     )
+    eval_api_failures = 0
     written_filenames = [
         name for c in session_state.candidates for name in c.get("written_files", [])
     ]
@@ -3437,6 +3438,7 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
             logger.error("Evaluation API call failed for %s: %s", url, e)
             audit.record_response(ev_idx, str(e), schema_valid=False)
             session_state.transition(entry, "eval_rejected", error=str(e))
+            eval_api_failures += 1
             continue
 
         allowed_page_types = set(research_config.get("page_type_taxonomy", {}) or {})
@@ -3589,6 +3591,18 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
     # predicate is now satisfied (the transition writer the design implied).
     _maybe_transition_maturity(session_id)
 
+    # Distinguish "genuinely nothing new to write" from "every evaluation call
+    # blew up before producing a verdict" (e.g. an exhausted API key/proxy
+    # balance) — found live during the v6 freeform replication test, where a
+    # 402 Insufficient Balance error was silently swallowed per-candidate and
+    # the driver loop kept starting fresh sessions for 13 iterations with zero
+    # chance of writing a page. A distinct status here lets a driver script's
+    # exit-code check (see run_research_session below) stop instead of
+    # looping to its iteration cap for nothing.
+    session_status = "complete"
+    if eval_api_failures > 0 and quota._candidates_evaluated == 0 and eval_api_failures >= 3:
+        session_status = "api_unavailable"
+
     summary = {
         "session_id": session_id,
         "candidates_found": len(session_state.candidates),
@@ -3596,7 +3610,7 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
         "pages_written": len(written_filenames),
         "pipeline_rejection_rate": f"{(pipeline_rejections / max(quota._candidates_evaluated, 1) * 100):.0f}%",
         "audit_log_path": str(audit.path),
-        "status": "complete",
+        "status": session_status,
     }
     print(f"[{session_id}] Session complete: {summary}")
     return summary
