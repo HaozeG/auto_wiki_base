@@ -135,6 +135,7 @@ def _load_research_config() -> dict:
     config.setdefault("recent_audit_sessions_for_discovery", 10)
     config.setdefault("repeat_url_suppression", True)
     config.setdefault("max_new_subtypes_per_session", 2)
+    config.setdefault("max_evaluating_resume_retries", 2)
     config.setdefault("domain_stopwords", [])
     config.setdefault("preferred_source_types", [
         "official documentation",
@@ -3388,6 +3389,28 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
             break
         if entry.get("state") in {"skipped_similarity", "fetch_failed", "eval_rejected", "pipeline_rejected", "written"}:
             continue
+
+        if entry.get("state") == "evaluating":
+            # A candidate is only set to "evaluating" right before its fetch
+            # succeeds (see below); finding one already in this state at loop
+            # entry means a prior process was killed/crashed mid-candidate
+            # before recording a terminal outcome, not that work is still
+            # legitimately in flight. Retry it as normal, but only a bounded
+            # number of times: on a persistently flaky/unreachable source,
+            # every resume re-runs the same full fetch-retry sequence for
+            # this one candidate, which can consume most of a resume's time
+            # budget and starve every candidate behind it. After repeated
+            # interruptions, give up rather than let one bad URL block the
+            # rest of the session indefinitely.
+            stall_count = entry.get("resume_stall_count", 0) + 1
+            entry["resume_stall_count"] = stall_count
+            max_stalls = int(research_config.get("max_evaluating_resume_retries", 2) or 2)
+            if stall_count > max_stalls:
+                session_state.transition(
+                    entry, "fetch_failed",
+                    error=f"gave up after {stall_count} interrupted resume attempts",
+                )
+                continue
 
         candidate = entry["candidate"]
         url = candidate["url"]

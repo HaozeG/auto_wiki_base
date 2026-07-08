@@ -504,6 +504,125 @@ def test_early_exit_stops_after_escalation_keeps_failing(tmp_path):
     assert any(c["state"] == "discovered" for c in state.candidates)
 
 
+def _minimal_research_state_fixture(tmp_path, session_id, candidates, max_candidates=5):
+    pages_dir = tmp_path / "wiki" / "_pages"
+    pages_dir.mkdir(parents=True)
+    index = tmp_path / "wiki" / "index.md"
+    index.write_text(
+        "# Wiki Index\n\nLast updated: 2020-01-01 | Pages: 0 | Sources: 0\n\n"
+        "## Entity Pages\n\n| Page | Summary | Tags | Sources | Inbound |\n"
+        "|------|---------|------|---------|---------|\n\n"
+        "## Synthesis Pages\n\n| Page | Connected Entities | Status | Inbound |\n"
+        "|------|--------------------|--------|---------|\n",
+        encoding="utf-8",
+    )
+    log_path = tmp_path / "wiki" / "log.md"
+    log_path.write_text("", encoding="utf-8")
+    claude_md = tmp_path / "CLAUDE.md"
+    claude_md.write_text("```yaml\n[system_state]\ngraph_maturity: true\n```\n", encoding="utf-8")
+    state = ResearchSessionState.create(
+        session_id, "query",
+        {"max_candidates": max_candidates, "max_new_pages": 5, "depth": "shallow"},
+        tmp_path / "state",
+    )
+    state.set_candidates(candidates)
+    return state, pages_dir, index, log_path, claude_md
+
+
+def test_evaluating_candidate_retried_then_given_up_after_repeated_interruption(tmp_path):
+    """A candidate found in "evaluating" state at resume start means a prior
+    process was killed/crashed mid-candidate (see resume-path robustness gap
+    hit live during the 2026-07-08 test run: candidates stuck "evaluating"
+    aren't in resume's terminal skip-set, so a persistently unreachable URL
+    re-runs its full fetch-retry sequence on every single resume, consuming
+    most of the time budget and blocking every candidate behind it). It
+    should be retried, but only up to max_evaluating_resume_retries times
+    before being given up as fetch_failed."""
+    state, pages_dir, index, log_path, claude_md = _minimal_research_state_fixture(
+        tmp_path, "sess-stall", [
+            {"url": "https://example.com/stuck", "title": "Stuck Candidate"},
+        ],
+    )
+    # Simulate two prior resumes that were each interrupted mid-candidate.
+    entry = state.candidates[0]
+    entry["state"] = "evaluating"
+    entry["resume_stall_count"] = 2
+
+    fetch_calls = []
+
+    def fake_fetch(url, retries=2):
+        fetch_calls.append(url)
+        return "some content"
+
+    with patch.object(orchestrator, "_load_research_config", return_value={
+             "qmd_command": ["uv", "run", "--no-sync", "qmd"],
+             "research_state_dir": str(tmp_path / "state"),
+             "max_evaluating_resume_retries": 2,
+         }), \
+         patch.object(orchestrator, "QmdRunner", return_value=EmptyQmdRunner()), \
+         patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_INDEX_MD", index), \
+         patch.object(orchestrator, "_LOG_MD", log_path), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md), \
+         patch.object(orchestrator, "AuditLog", return_value=FullDummyAudit()), \
+         patch.object(orchestrator, "_check_synthesis_gaps", return_value=[]), \
+         patch.object(orchestrator, "_wiki_is_mature", return_value=True), \
+         patch.object(orchestrator, "_get_concept_gaps", return_value=[]), \
+         patch.object(orchestrator, "_fetch_smart", side_effect=fake_fetch):
+        result = orchestrator._run_research_state(state)
+
+    assert result["status"] == "complete"
+    assert entry["state"] == "fetch_failed"
+    assert "3 interrupted resume attempts" in entry["error"]
+    # Given up before ever re-attempting the fetch — the whole point is not
+    # to burn the time budget on a candidate that keeps getting interrupted.
+    assert fetch_calls == []
+
+
+def test_evaluating_candidate_retried_normally_before_retry_limit(tmp_path):
+    """Below max_evaluating_resume_retries, an "evaluating" candidate is
+    retried like any other pending candidate, not silently dropped."""
+    state, pages_dir, index, log_path, claude_md = _minimal_research_state_fixture(
+        tmp_path, "sess-stall-retry", [
+            {"url": "https://example.com/stuck", "title": "Stuck Candidate"},
+        ],
+    )
+    entry = state.candidates[0]
+    entry["state"] = "evaluating"
+    entry["resume_stall_count"] = 1
+
+    reject_eval = json.dumps({
+        "decision": "reject",
+        "rejection_reason": "not relevant",
+        "scorecard": {"weighted_total": 0.1},
+        "page_drafts": [],
+        "pages_to_update": [],
+        "contradictions_found": [],
+    })
+
+    with patch.object(orchestrator, "_load_research_config", return_value={
+             "qmd_command": ["uv", "run", "--no-sync", "qmd"],
+             "research_state_dir": str(tmp_path / "state"),
+             "max_evaluating_resume_retries": 2,
+         }), \
+         patch.object(orchestrator, "QmdRunner", return_value=EmptyQmdRunner()), \
+         patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
+         patch.object(orchestrator, "_INDEX_MD", index), \
+         patch.object(orchestrator, "_LOG_MD", log_path), \
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md), \
+         patch.object(orchestrator, "AuditLog", return_value=FullDummyAudit()), \
+         patch.object(orchestrator, "_check_synthesis_gaps", return_value=[]), \
+         patch.object(orchestrator, "_wiki_is_mature", return_value=True), \
+         patch.object(orchestrator, "_get_concept_gaps", return_value=[]), \
+         patch.object(orchestrator, "_fetch_smart", return_value="some content about the candidate"), \
+         patch.object(orchestrator, "_call_subagent", return_value=reject_eval):
+        result = orchestrator._run_research_state(state)
+
+    assert result["status"] == "complete"
+    assert entry["state"] == "eval_rejected"
+    assert entry["resume_stall_count"] == 2
+
+
 def test_keyword_manifest_includes_theme_and_previous_queries(monkeypatch):
     captured = {}
 

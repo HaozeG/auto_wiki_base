@@ -474,6 +474,7 @@ max_candidates_per_session: 20
 max_new_pages_per_session: 10
 max_linking_debt: 5                  # autonomous loop stops creating when this many session pages remain at 0 inbound
 max_new_subtypes_per_session: 2      # dynamic taxonomy evolution: autonomous subtype persistence stops for the rest of the session once this many new subtypes have been persisted (detection/lint reporting continues regardless)
+max_evaluating_resume_retries: 2     # a candidate found still in "evaluating" state at resume start means a prior process was killed/crashed mid-candidate, not that work is still in flight; retried up to this many times, then given up as fetch_failed so one persistently unreachable URL can't block every candidate behind it on every resume
 max_eval_subagent_tokens: 16000      # higher than a first-pass 3000 default: multi-page draft output needs headroom even on the non-reasoning flash-tier model eval runs on
 max_discovery_subagent_tokens: 3000
 max_retries_on_fetch_failure: 2
