@@ -38,6 +38,7 @@ import graph_stats
 import graph_topology
 import relationship_links
 import identity
+import web_fetch
 from audit import AuditLog
 from context_selector import select_context_pages
 from domain_analysis import (
@@ -1170,26 +1171,16 @@ def _generate_synthesis_candidate(
     return page_path.name
 
 
-def fetch_resource(url: str, retries: int = 2) -> str | None:
-    """Fetch URL content as text. Returns None on failure after retries."""
-    for attempt in range(retries + 1):
-        try:
-            req = urllib.request.Request(
-                url,
-                headers={"User-Agent": "Mozilla/5.0 (LLM-Wiki-Harness/1.0)"},
-            )
-            with urllib.request.urlopen(req, timeout=15) as resp:
-                raw = resp.read()
-                # Try UTF-8, fall back to latin-1
-                try:
-                    return raw.decode("utf-8")
-                except UnicodeDecodeError:
-                    return raw.decode("latin-1", errors="replace")
-        except Exception as e:
-            logger.warning("fetch_resource: attempt %d failed for %s — %s", attempt + 1, url, e)
-            if attempt < retries:
-                time.sleep(2)
-    return None
+def fetch_resource(url: str, retries: int = 2,
+                    breaker: "web_fetch.DomainCircuitBreaker | None" = None) -> str | None:
+    """Fetch URL content as text. Returns None on failure after retries.
+
+    Delegates to web_fetch.fetch_url for retry classification (don't retry
+    permanent 4xx errors, back off honoring Retry-After on 429) and an
+    optional per-host circuit breaker; see tools/web_fetch.py docstring for
+    why those were added. Signature/behavior otherwise unchanged so existing
+    callers that monkeypatch this function wholesale keep working."""
+    return web_fetch.fetch_url(url, retries=retries, breaker=breaker).content
 
 
 # ---------------------------------------------------------------------------
@@ -1381,8 +1372,15 @@ def _fetch_github(url: str) -> str | None:
     return None
 
 
-def _fetch_smart(url: str, retries: int = 2) -> str | None:
-    """Source-aware fetch: special handling for arXiv and GitHub, generic fallback."""
+def _fetch_smart(url: str, retries: int = 2,
+                  breaker: "web_fetch.DomainCircuitBreaker | None" = None) -> str | None:
+    """Source-aware fetch: special handling for arXiv and GitHub, generic fallback.
+
+    The circuit breaker is only applied to the generic path: it's a small,
+    fixed number of requests per candidate for the specialized arXiv/GitHub
+    probes, whereas the generic path is where a single flaky vendor/blog
+    domain showed up repeatedly across many different candidates in one
+    session (see web_fetch.py docstring)."""
     lower = url.lower()
     if "arxiv.org/abs/" in lower:
         result = _fetch_arxiv(url)
@@ -1392,7 +1390,10 @@ def _fetch_smart(url: str, retries: int = 2) -> str | None:
         result = _fetch_github(url)
         if result:
             return result
-    return fetch_resource(url, retries=retries)
+    content = fetch_resource(url, retries=retries, breaker=breaker)
+    if content is None:
+        content = web_fetch.fetch_wayback_snapshot(url)
+    return content
 
 
 def _snapshot_source(url: str, content: str) -> str | None:
@@ -3369,6 +3370,11 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
     # whichever page already had the most inbound_links) creates a
     # preferential-attachment loop — see context_selector.py's docstring.
     context_injection_counts: dict[str, int] = {}
+    # Per-session circuit breaker: a single flaky/blocking domain hit across
+    # several different candidates in one session (see web_fetch.py
+    # docstring) shouldn't pay the full retry+backoff cost on every one of
+    # them once it's already shown itself unreachable this session.
+    fetch_breaker = web_fetch.DomainCircuitBreaker()
 
     for entry in session_state.candidates:
         if quota.any_exceeded():
@@ -3462,7 +3468,8 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
         print(f"[{session_id}] Evaluating: {url}")
         snippet = candidate.get("snippet", "")
         content = _fetch_smart(
-            url, retries=research_config.get("max_retries_on_fetch_failure", 2)
+            url, retries=research_config.get("max_retries_on_fetch_failure", 2),
+            breaker=fetch_breaker,
         )
         content = _content_or_enriched_snippet(content, candidate.get("title", ""), snippet, url)
         if not content:
