@@ -38,6 +38,7 @@ import graph_stats
 import graph_topology
 import relationship_links
 import identity
+import web_fetch
 from audit import AuditLog
 from context_selector import select_context_pages
 from domain_analysis import (
@@ -135,6 +136,7 @@ def _load_research_config() -> dict:
     config.setdefault("recent_audit_sessions_for_discovery", 10)
     config.setdefault("repeat_url_suppression", True)
     config.setdefault("max_new_subtypes_per_session", 2)
+    config.setdefault("max_evaluating_resume_retries", 2)
     config.setdefault("domain_stopwords", [])
     config.setdefault("preferred_source_types", [
         "official documentation",
@@ -1099,16 +1101,17 @@ def _generate_synthesis_candidate(
     if len(manifest["cluster_pages"]) < 2:
         return None
     ev_idx = audit.record_invocation("synthesis", manifest)
+    synthesis_usage: dict = {}
     try:
         time.sleep(MIN_SECONDS_BETWEEN_CALLS)
         quota.record_api_call()
-        raw = _call_subagent("synthesis", manifest, research_config)
+        raw = _call_subagent("synthesis", manifest, research_config, usage_out=synthesis_usage)
     except Exception as e:
         logger.warning("Synthesis subagent call failed for tag=%r: %s", tag, e)
-        audit.record_response(ev_idx, str(e), schema_valid=False)
+        audit.record_response(ev_idx, str(e), schema_valid=False, usage=synthesis_usage or None)
         return None
     result = validate_and_parse(raw, "SynthesisResult")
-    audit.record_response(ev_idx, raw, schema_valid=(result is not None))
+    audit.record_response(ev_idx, raw, schema_valid=(result is not None), usage=synthesis_usage or None)
     if result is None or result.get("decision") != "approve":
         reason = (result or {}).get("rejection_reason") or "malformed_or_rejected"
         audit.record_skip(ev_idx, f"synthesis_reject: {reason}")
@@ -1168,26 +1171,16 @@ def _generate_synthesis_candidate(
     return page_path.name
 
 
-def fetch_resource(url: str, retries: int = 2) -> str | None:
-    """Fetch URL content as text. Returns None on failure after retries."""
-    for attempt in range(retries + 1):
-        try:
-            req = urllib.request.Request(
-                url,
-                headers={"User-Agent": "Mozilla/5.0 (LLM-Wiki-Harness/1.0)"},
-            )
-            with urllib.request.urlopen(req, timeout=15) as resp:
-                raw = resp.read()
-                # Try UTF-8, fall back to latin-1
-                try:
-                    return raw.decode("utf-8")
-                except UnicodeDecodeError:
-                    return raw.decode("latin-1", errors="replace")
-        except Exception as e:
-            logger.warning("fetch_resource: attempt %d failed for %s — %s", attempt + 1, url, e)
-            if attempt < retries:
-                time.sleep(2)
-    return None
+def fetch_resource(url: str, retries: int = 2,
+                    breaker: "web_fetch.DomainCircuitBreaker | None" = None) -> str | None:
+    """Fetch URL content as text. Returns None on failure after retries.
+
+    Delegates to web_fetch.fetch_url for retry classification (don't retry
+    permanent 4xx errors, back off honoring Retry-After on 429) and an
+    optional per-host circuit breaker; see tools/web_fetch.py docstring for
+    why those were added. Signature/behavior otherwise unchanged so existing
+    callers that monkeypatch this function wholesale keep working."""
+    return web_fetch.fetch_url(url, retries=retries, breaker=breaker).content
 
 
 # ---------------------------------------------------------------------------
@@ -1379,8 +1372,15 @@ def _fetch_github(url: str) -> str | None:
     return None
 
 
-def _fetch_smart(url: str, retries: int = 2) -> str | None:
-    """Source-aware fetch: special handling for arXiv and GitHub, generic fallback."""
+def _fetch_smart(url: str, retries: int = 2,
+                  breaker: "web_fetch.DomainCircuitBreaker | None" = None) -> str | None:
+    """Source-aware fetch: special handling for arXiv and GitHub, generic fallback.
+
+    The circuit breaker is only applied to the generic path: it's a small,
+    fixed number of requests per candidate for the specialized arXiv/GitHub
+    probes, whereas the generic path is where a single flaky vendor/blog
+    domain showed up repeatedly across many different candidates in one
+    session (see web_fetch.py docstring)."""
     lower = url.lower()
     if "arxiv.org/abs/" in lower:
         result = _fetch_arxiv(url)
@@ -1390,7 +1390,10 @@ def _fetch_smart(url: str, retries: int = 2) -> str | None:
         result = _fetch_github(url)
         if result:
             return result
-    return fetch_resource(url, retries=retries)
+    content = fetch_resource(url, retries=retries, breaker=breaker)
+    if content is None:
+        content = web_fetch.fetch_wayback_snapshot(url)
+    return content
 
 
 def _snapshot_source(url: str, content: str) -> str | None:
@@ -1415,7 +1418,61 @@ def _snapshot_source(url: str, content: str) -> str | None:
 # Subagent API call
 # ---------------------------------------------------------------------------
 
-def _call_subagent(subagent_type: str, manifest: dict, research_config: dict) -> str:
+def _usage_to_dict(usage_obj) -> dict:
+    """Convert an SDK usage object to a plain dict without assuming which
+    fields it has — the compat endpoint behind ANTHROPIC_BASE_URL may name or
+    omit cache-related counters differently than real Anthropic."""
+    if usage_obj is None:
+        return {}
+    if hasattr(usage_obj, "model_dump"):
+        try:
+            return usage_obj.model_dump()
+        except Exception:  # noqa: BLE001
+            pass
+    if hasattr(usage_obj, "__dict__"):
+        return {k: v for k, v in vars(usage_obj).items() if not k.startswith("_")}
+    return {}
+
+
+def _split_manifest_stable(manifest: dict) -> tuple[dict, dict]:
+    """Split an evaluation-style manifest into (stable, variable) parts so the
+    stable part can be sent as a physically separate, byte-identical-across-calls
+    prefix. Only fields that are genuinely constant for the life of one harness
+    run belong in `stable` — see CLAUDE.md Research Configuration notes on why
+    wiki_context (relevant_pages/concept_gaps/depth) must stay variable.
+    scorecard_config is left whole in `variable`: its weights/thresholds are a
+    few hundred bytes, not worth the risk of the subagent seeing that key
+    split across two blocks (with `variant` looking sourced from elsewhere)."""
+    stable: dict = {}
+    variable: dict = dict(manifest)
+    if "domain_config" in variable:
+        stable["domain_config"] = variable.pop("domain_config")
+    if "page_templates" in variable:
+        stable["page_templates"] = variable.pop("page_templates")
+    return stable, variable
+
+
+def _manifest_content_blocks(manifest: dict) -> list[dict]:
+    """Build user-message content blocks with the session-constant part of the
+    manifest as a separate, cache-marked prefix block. Two independent wins:
+    physically stable-first bytes for backends with automatic prefix caching
+    (e.g. DeepSeek), and an explicit cache_control breakpoint for backends that
+    require one (Anthropic). A backend that honors neither just sees two text
+    blocks concatenated, so this is safe either way."""
+    stable, variable = _split_manifest_stable(manifest)
+    blocks = []
+    if stable:
+        blocks.append({
+            "type": "text",
+            "text": json.dumps(stable, sort_keys=True),
+            "cache_control": {"type": "ephemeral"},
+        })
+    blocks.append({"type": "text", "text": json.dumps(variable)})
+    return blocks
+
+
+def _call_subagent(subagent_type: str, manifest: dict, research_config: dict,
+                    usage_out: dict | None = None) -> str:
     """
     Make a single Anthropic API call with the given manifest as user content.
     Returns the raw response string.
@@ -1467,9 +1524,11 @@ def _call_subagent(subagent_type: str, manifest: dict, research_config: dict) ->
     message = client.messages.create(
         model=model,
         max_tokens=max_tokens,
-        system=system,
-        messages=[{"role": "user", "content": json.dumps(manifest)}],
+        system=[{"type": "text", "text": system, "cache_control": {"type": "ephemeral"}}],
+        messages=[{"role": "user", "content": _manifest_content_blocks(manifest)}],
     )
+    if usage_out is not None:
+        usage_out.update(_usage_to_dict(getattr(message, "usage", None)))
     if message.stop_reason == "max_tokens":
         logger.warning(
             "_call_subagent: hit max_tokens (%d) — output truncated. "
@@ -1486,14 +1545,18 @@ def _call_subagent(subagent_type: str, manifest: dict, research_config: dict) ->
 
 
 def _keyword_recommender_model(research_config: dict) -> str:
+    # Recommending N search-query strings with reasons is not harder than the
+    # eval/synthesis/merge subagent tasks, which all run on the cheap "Haiku"
+    # tier below — default there too instead of the opus/"thinking" tier.
+    # research_config["keyword_recommender_model"] stays the override knob if
+    # a stronger model turns out to be needed.
     model = (
         research_config.get("keyword_recommender_model")
-        or os.environ.get("ANTHROPIC_MODEL")
-        or os.environ.get("ANTHROPIC_DEFAULT_OPUS_MODEL")
-        or os.environ.get("ANTHROPIC_DEFAULT_SONNET_MODEL")
-        or "claude-opus-4-5-20251101"
+        or os.environ.get("ANTHROPIC_DEFAULT_HAIKU_MODEL")
+        or os.environ.get("CLAUDE_CODE_SUBAGENT_MODEL")
+        or "claude-haiku-4-5-20251001"
     )
-    return _clean_model_name(str(model)) or "claude-opus-4-5-20251101"
+    return _clean_model_name(str(model)) or "claude-haiku-4-5-20251001"
 
 
 def _normalize_keyword_plan(data: dict, max_keywords: int, model: str, source: str) -> dict:
@@ -1555,7 +1618,27 @@ def _fallback_keyword_plan(query: str, concept_gaps: list[str], max_keywords: in
     )
 
 
-def _call_keyword_recommender(manifest: dict, research_config: dict) -> dict:
+def _keyword_manifest_content_blocks(manifest: dict) -> list[dict]:
+    """Same stable/variable split idea as _manifest_content_blocks, but for the
+    keyword-recommender manifest: only repo_research_theme and
+    preferred_source_types are constant for the life of a session — base_query,
+    concept_gaps, gap_manifest, and discovery history all vary per call."""
+    stable_keys = ("repo_research_theme", "preferred_source_types")
+    stable = {k: manifest[k] for k in stable_keys if k in manifest}
+    variable = {k: v for k, v in manifest.items() if k not in stable_keys}
+    blocks = []
+    if stable:
+        blocks.append({
+            "type": "text",
+            "text": json.dumps(stable, sort_keys=True),
+            "cache_control": {"type": "ephemeral"},
+        })
+    blocks.append({"type": "text", "text": json.dumps(variable)})
+    return blocks
+
+
+def _call_keyword_recommender(manifest: dict, research_config: dict,
+                               usage_out: dict | None = None) -> dict:
     model = _keyword_recommender_model(research_config)
     max_keywords = int(manifest.get("max_keywords", 5) or 5)
     try:
@@ -1579,9 +1662,15 @@ def _call_keyword_recommender(manifest: dict, research_config: dict) -> dict:
         message = client.messages.create(
             model=model,
             max_tokens=max_tokens,
-            system=KEYWORD_RECOMMENDER_SYSTEM_PROMPT,
-            messages=[{"role": "user", "content": json.dumps(manifest)}],
+            system=[{
+                "type": "text",
+                "text": KEYWORD_RECOMMENDER_SYSTEM_PROMPT,
+                "cache_control": {"type": "ephemeral"},
+            }],
+            messages=[{"role": "user", "content": _keyword_manifest_content_blocks(manifest)}],
         )
+        if usage_out is not None:
+            usage_out.update(_usage_to_dict(getattr(message, "usage", None)))
         if getattr(message, "stop_reason", None) == "max_tokens":
             logger.warning(
                 "keyword recommender hit max_tokens (%d); thinking may have truncated JSON",
@@ -1688,9 +1777,11 @@ def _build_keyword_plan(query: str, research_config: dict, depth: str,
     # no way to inspect what it actually saw. Optional: tests and other
     # internal callers of _build_keyword_plan don't always have an AuditLog.
     inv_idx = audit.record_invocation("keyword_recommender", manifest) if audit else None
-    plan = _call_keyword_recommender(manifest, research_config)
+    usage_info: dict = {}
+    plan = _call_keyword_recommender(manifest, research_config, usage_out=usage_info)
     if audit and inv_idx is not None:
-        audit.record_response(inv_idx, json.dumps(plan, ensure_ascii=False), schema_valid=True)
+        audit.record_response(inv_idx, json.dumps(plan, ensure_ascii=False), schema_valid=True,
+                               usage=usage_info or None)
     return plan
 
 
@@ -3279,6 +3370,11 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
     # whichever page already had the most inbound_links) creates a
     # preferential-attachment loop — see context_selector.py's docstring.
     context_injection_counts: dict[str, int] = {}
+    # Per-session circuit breaker: a single flaky/blocking domain hit across
+    # several different candidates in one session (see web_fetch.py
+    # docstring) shouldn't pay the full retry+backoff cost on every one of
+    # them once it's already shown itself unreachable this session.
+    fetch_breaker = web_fetch.DomainCircuitBreaker()
 
     for entry in session_state.candidates:
         if quota.any_exceeded():
@@ -3299,6 +3395,28 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
             break
         if entry.get("state") in {"skipped_similarity", "fetch_failed", "eval_rejected", "pipeline_rejected", "written"}:
             continue
+
+        if entry.get("state") == "evaluating":
+            # A candidate is only set to "evaluating" right before its fetch
+            # succeeds (see below); finding one already in this state at loop
+            # entry means a prior process was killed/crashed mid-candidate
+            # before recording a terminal outcome, not that work is still
+            # legitimately in flight. Retry it as normal, but only a bounded
+            # number of times: on a persistently flaky/unreachable source,
+            # every resume re-runs the same full fetch-retry sequence for
+            # this one candidate, which can consume most of a resume's time
+            # budget and starve every candidate behind it. After repeated
+            # interruptions, give up rather than let one bad URL block the
+            # rest of the session indefinitely.
+            stall_count = entry.get("resume_stall_count", 0) + 1
+            entry["resume_stall_count"] = stall_count
+            max_stalls = int(research_config.get("max_evaluating_resume_retries", 2) or 2)
+            if stall_count > max_stalls:
+                session_state.transition(
+                    entry, "fetch_failed",
+                    error=f"gave up after {stall_count} interrupted resume attempts",
+                )
+                continue
 
         candidate = entry["candidate"]
         url = candidate["url"]
@@ -3350,7 +3468,8 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
         print(f"[{session_id}] Evaluating: {url}")
         snippet = candidate.get("snippet", "")
         content = _fetch_smart(
-            url, retries=research_config.get("max_retries_on_fetch_failure", 2)
+            url, retries=research_config.get("max_retries_on_fetch_failure", 2),
+            breaker=fetch_breaker,
         )
         content = _content_or_enriched_snippet(content, candidate.get("title", ""), snippet, url)
         if not content:
@@ -3430,20 +3549,21 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
 
         ev_idx = audit.record_invocation("evaluation", eval_manifest)
         session_state.transition(entry, "evaluating", audit_invocation_idx=ev_idx, qmd_matches=qmd_matches)
+        eval_usage: dict = {}
         try:
             time.sleep(MIN_SECONDS_BETWEEN_CALLS)
             quota.record_api_call()
-            raw_eval = _call_subagent("evaluation", eval_manifest, research_config)
+            raw_eval = _call_subagent("evaluation", eval_manifest, research_config, usage_out=eval_usage)
         except Exception as e:
             logger.error("Evaluation API call failed for %s: %s", url, e)
-            audit.record_response(ev_idx, str(e), schema_valid=False)
+            audit.record_response(ev_idx, str(e), schema_valid=False, usage=eval_usage or None)
             session_state.transition(entry, "eval_rejected", error=str(e))
             eval_api_failures += 1
             continue
 
         allowed_page_types = set(research_config.get("page_type_taxonomy", {}) or {})
         eval_result = validate_and_parse(raw_eval, "EvalResult", allowed_page_types=allowed_page_types)
-        audit.record_response(ev_idx, raw_eval, schema_valid=(eval_result is not None))
+        audit.record_response(ev_idx, raw_eval, schema_valid=(eval_result is not None), usage=eval_usage or None)
         quota.record_candidate_evaluated()
         if eval_result is None:
             audit.record_skip(ev_idx, "malformed_eval_output")

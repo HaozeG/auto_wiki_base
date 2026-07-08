@@ -6,10 +6,11 @@ from dataclasses import dataclass, field
 # Hard caps that are not configurable per §12.8
 MAX_API_CALLS_PER_SESSION = 50
 # Ceiling for any subagent call. Per-model limits are set in research_config:
-#   eval subagent (deepseek-v4-flash via CLAUDE_CODE_SUBAGENT_MODEL) needs ~8–12k for
-#   multi-page draft output; keyword recommender (deepseek-v4-pro[1m] via
-#   ANTHROPIC_DEFAULT_OPUS_MODEL) is a thinking model and needs budget for reasoning
-#   trace before emitting its small JSON output. 16000 gives comfortable headroom for both.
+#   eval subagent (deepseek-v4-flash via CLAUDE_CODE_SUBAGENT_MODEL) needs ~8-12k for
+#   multi-page draft output. Keyword recommender now defaults to the same
+#   flash-tier model (see _keyword_recommender_model in orchestrator.py) rather
+#   than a "thinking" model, so it no longer needs reasoning-trace headroom —
+#   see max_keyword_recommender_tokens in CLAUDE.md's [research_config].
 MAX_TOKENS_PER_SUBAGENT_OUTPUT = 16000
 MIN_SECONDS_BETWEEN_CALLS = 1.0
 
