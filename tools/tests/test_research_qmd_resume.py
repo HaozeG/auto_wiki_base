@@ -58,7 +58,7 @@ class FullDummyAudit(DummyAudit):
         self.invocations.append({"subagent_type": subagent_type, "manifest": manifest})
         return len(self.invocations) - 1
 
-    def record_response(self, idx, raw_response, schema_valid):
+    def record_response(self, idx, raw_response, schema_valid, usage=None):
         self.responses.append((idx, schema_valid))
 
     def record_skip(self, idx, reason):
@@ -201,7 +201,7 @@ def test_qmd_block_stops_before_discovery_or_eval(tmp_path):
     call_subagent.assert_not_called()
 
 
-def test_keyword_recommender_model_prefers_strong_env_and_preserves_thinking_suffix():
+def test_keyword_recommender_model_defaults_to_cheap_flash_tier():
     with patch.dict(
         "os.environ",
         {
@@ -213,10 +213,22 @@ def test_keyword_recommender_model_prefers_strong_env_and_preserves_thinking_suf
     ):
         model = orchestrator._keyword_recommender_model({})
 
+    # Recommending search queries is no harder than eval/synthesis, which
+    # already run on the cheap flash tier — no reason to default to the
+    # stronger/"thinking" ANTHROPIC_MODEL tier just for this role.
+    assert model == "deepseek-v4-flash"
+
+
+def test_keyword_recommender_model_override_preserves_thinking_suffix():
+    with patch.dict("os.environ", {}, clear=True):
+        model = orchestrator._keyword_recommender_model(
+            {"keyword_recommender_model": "deepseek-v4-pro[1m]"}
+        )
+
     assert model == "deepseek-v4-pro[1m]"
 
 
-def test_keyword_recommender_uses_anthropic_and_strong_model(monkeypatch):
+def test_keyword_recommender_uses_anthropic_and_cheap_default_model(monkeypatch):
     calls = {}
 
     class FakeMessages:
@@ -238,14 +250,18 @@ def test_keyword_recommender_uses_anthropic_and_strong_model(monkeypatch):
             self.messages = FakeMessages()
 
     monkeypatch.setitem(sys.modules, "anthropic", types.SimpleNamespace(Anthropic=FakeAnthropic))
-    with patch.dict("os.environ", {"ANTHROPIC_MODEL": "deepseek-v4-pro[1m]"}, clear=True):
+    with patch.dict(
+        "os.environ",
+        {"ANTHROPIC_MODEL": "deepseek-v4-pro[1m]", "ANTHROPIC_DEFAULT_HAIKU_MODEL": "deepseek-v4-flash"},
+        clear=True,
+    ):
         plan = orchestrator._call_keyword_recommender(
             {"base_query": "ProjectNimbus", "concept_gaps": [], "max_keywords": 3},
             {},
         )
 
-    assert calls["model"] == "deepseek-v4-pro[1m]"
-    assert calls["model"] != "deepseek-v4-flash"
+    assert calls["model"] == "deepseek-v4-flash"
+    assert calls["model"] != "deepseek-v4-pro[1m]"
     assert calls["max_tokens"] == 6000
     assert plan["source"] == "llm"
     assert plan["recommended_keywords"][0]["query"] == "ProjectNimbus latency benchmark"
@@ -491,7 +507,7 @@ def test_early_exit_stops_after_escalation_keeps_failing(tmp_path):
 def test_keyword_manifest_includes_theme_and_previous_queries(monkeypatch):
     captured = {}
 
-    def fake_call(manifest, research_config):
+    def fake_call(manifest, research_config, usage_out=None):
         captured.update(manifest)
         return {"recommended_keywords": [], "avoid_patterns": [], "model": "test", "source": "test"}
 
@@ -523,7 +539,7 @@ def test_keyword_plan_records_full_manifest_to_audit_when_provided(monkeypatch):
     "synthesis"/"evaluation" invocations already are."""
     from audit import AuditLog
 
-    def fake_call(manifest, research_config):
+    def fake_call(manifest, research_config, usage_out=None):
         return {"recommended_keywords": [{"query": "q", "reason": "r"}], "avoid_patterns": [],
                 "model": "test", "source": "test"}
 

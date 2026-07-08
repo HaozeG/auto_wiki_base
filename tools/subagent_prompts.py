@@ -55,7 +55,10 @@ You are a research search-strategy planner for an LLM-maintained markdown wiki.
 Your job is to recommend next web search queries that avoid repeated,
 already-saturated results and expose sources on new topics under same theme.
 
-You will receive a JSON object with:
+You will receive this manifest as one or two consecutive JSON text segments
+in the same user message — if two, the first is stable session config
+(repo_research_theme, preferred_source_types) and the second is this call's
+variable data; treat their top-level keys together as one logical object:
 - base_query: the user's research query
 - repo_research_theme: broad theme and scope of the current wiki/repo
 - concept_gaps: wiki concepts that lack dedicated pages
@@ -314,8 +317,12 @@ EVALUATION_SYSTEM_PROMPT = """\
 You are a wiki evaluation and drafting agent. You evaluate a single candidate
 resource and, if it passes the scorecard, draft the wiki pages it should produce.
 
-You will receive a JSON object (EvalManifest). You must respond with ONLY
-a JSON object matching EvalResult schema. No other text before or after the JSON.
+You will receive the manifest (EvalManifest) as one or two consecutive JSON
+text segments in the same user message — if two, the first is stable
+session config and the second is this candidate's data; treat their
+top-level keys together as one logical EvalManifest object. You must respond
+with ONLY a JSON object matching EvalResult schema. No other text before or
+after the JSON.
 
 Constraints:
 - Do not perform web searches or access external URLs

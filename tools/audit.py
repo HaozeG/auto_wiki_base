@@ -62,9 +62,19 @@ class AuditLog:
         self._flush()
         return len(self._invocations) - 1
 
-    def record_response(self, invocation_idx: int, raw_response: str, schema_valid: bool) -> None:
+    def record_response(self, invocation_idx: int, raw_response: str, schema_valid: bool,
+                         usage: dict | None = None) -> None:
         self._invocations[invocation_idx]["raw_response"] = raw_response
         self._invocations[invocation_idx]["schema_valid"] = schema_valid
+        if usage:
+            # Dumped as-is from message.usage — field names (and presence of
+            # cache_read/cache_creation counters) depend on whatever backend
+            # ANTHROPIC_BASE_URL points at, so don't assume Anthropic's schema.
+            self._invocations[invocation_idx]["usage"] = usage
+            totals = self._summary.setdefault("token_usage_totals", {})
+            for key, value in usage.items():
+                if isinstance(value, (int, float)) and not isinstance(value, bool):
+                    totals[key] = totals.get(key, 0) + value
         if not schema_valid:
             self._summary["schema_validation_failures"] += 1
         self._flush()

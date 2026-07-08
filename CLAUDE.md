@@ -474,13 +474,13 @@ max_candidates_per_session: 20
 max_new_pages_per_session: 10
 max_linking_debt: 5                  # autonomous loop stops creating when this many session pages remain at 0 inbound
 max_new_subtypes_per_session: 2      # dynamic taxonomy evolution: autonomous subtype persistence stops for the rest of the session once this many new subtypes have been persisted (detection/lint reporting continues regardless)
-max_eval_subagent_tokens: 16000      # higher than a first-pass 3000 default: the eval subagent runs on a thinking model that needs headroom for its reasoning trace before the JSON verdict — do not lower this back down without switching the eval subagent's model
+max_eval_subagent_tokens: 16000      # higher than a first-pass 3000 default: multi-page draft output needs headroom even on the non-reasoning flash-tier model eval runs on
 max_discovery_subagent_tokens: 3000
 max_retries_on_fetch_failure: 2
 discovery_search_queries_limit: 5
 keyword_recommendation_limit: 5
-max_keyword_recommender_tokens: 16000
-keyword_recommender_model: null
+max_keyword_recommender_tokens: 6000  # keyword_recommender_model now defaults to the same flash-tier model as eval (see _keyword_recommender_model), so it no longer needs the larger reasoning-trace headroom a "thinking" model required — raise this back up if keyword_recommender_model is overridden to a stronger/reasoning model
+keyword_recommender_model: null       # null resolves to the cheap flash tier (ANTHROPIC_DEFAULT_HAIKU_MODEL / CLAUDE_CODE_SUBAGENT_MODEL); set explicitly to use a stronger model
 recent_audit_sessions_for_discovery: 10
 repeat_url_suppression: true
 qmd_command: ["uv", "run", "--no-sync", "qmd"]
