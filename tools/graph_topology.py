@@ -293,6 +293,33 @@ def find_bridge_candidates(
     return candidates
 
 
+def cluster_is_structurally_distinct(
+    pages_dir: Path, member_pages: list[str], elevation_factor: float = 1.5
+) -> bool:
+    """Objective half of the dynamic-taxonomy-evolution dual-signal gate
+    (tools/orchestrator.py::_run_taxonomy_evolution). True when `member_pages`'
+    mean betweenness centrality exceeds the whole graph's median by at least
+    `elevation_factor` -- i.e. the cluster is structurally load-bearing, not
+    merely a set of pages that happen to share a tag. Paired with a subjective
+    subagent judgment so a new subcategory is only persisted when a real graph
+    metric and an LLM's judgment agree, the same "harder, less gameable bar
+    than either alone" principle CLAUDE.md's retrospective lint RESTRUCTURE
+    rule already uses."""
+    if not member_pages:
+        return False
+    stats = compute_topology_stats(pages_dir)
+    betweenness = stats.get("betweenness_centrality") or {}
+    if not betweenness:
+        return False
+    values = sorted(betweenness.values())
+    median = values[len(values) // 2]
+    member_values = [betweenness.get(p, 0.0) for p in member_pages]
+    mean_member = sum(member_values) / len(member_values)
+    if median <= 0:
+        return mean_member > 0
+    return mean_member >= median * elevation_factor
+
+
 def check_for_goodharting(before: dict, after: dict,
                            orphan_drop_threshold: float = 0.15,
                            path_length_improvement_threshold: float = 0.05) -> str | None:
