@@ -32,16 +32,16 @@ Subtypes are **specializations of `entity`**, never new top-level types: a subty
 
 ```yaml
 [system_state]
-orphan_fraction: 1.0            # total-degree-based (inbound + outbound) connectivity diagnostic
-median_total_links: 0.0         # total-degree-based connectivity diagnostic
-mean_total_links: 0.0           # secondary signal only (gameable by a few hub pages)
-median_inbound_links: 0.0       # informational only — citation concentration
-mean_inbound_links: 0.0         # informational only — citation concentration
+orphan_fraction: 0.2143
+median_total_links: 1.0
+mean_total_links: 1.4286
+median_inbound_links: 0.0
+mean_inbound_links: 0.6429
 linking_debt: 0
 retrospective_lint_done: false
-clustering_coefficient: ~
-avg_path_length: ~
-connected_components: ~
+clustering_coefficient: 0.0
+avg_path_length: 2.1556
+connected_components: 5
 ```
 
 There is no `graph_maturity` flag. An earlier revision computed one and gated write-time scorecard leniency and retrospective-lint eligibility on it; it was removed (see `graph_stats.py`'s module docstring for why graph degree kept being the wrong instrument no matter how it was normalized). Write-time evaluation always uses the cold-start scorecard now (Step 2 below); retrospective lint's only readiness gate is the explicit human `lint retrospective` command.
