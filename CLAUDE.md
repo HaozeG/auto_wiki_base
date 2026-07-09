@@ -466,6 +466,62 @@ spacy_model: en_core_web_sm
 
 ---
 
+## Theme Profile
+
+```yaml
+[theme_profile]
+theme: risc-v ai accelerator
+organization_choice: workflow_optimization_first
+organization_name: Workflow/Optimization-first
+page_types:
+  workload_kernel:
+    description: Kernel/workload shape, datatype, layout, sparsity, and baseline implementation
+    structured_fields:
+    - workloads
+    - datatypes
+    - constraints
+  optimization_recipe:
+    description: Transformation, prerequisites, expected effect, failure modes, and
+      measurements
+    structured_fields:
+    - hardware_targets
+    - workloads
+    - datatypes
+    - metrics
+    - toolchains
+  benchmark_result:
+    description: Measured or reported result with hardware/software versions and measurement
+      context
+    structured_fields:
+    - hardware_targets
+    - workloads
+    - datatypes
+    - metrics
+    - toolchains
+    - evidence_strength
+  concept:
+    description: Research concept, method, or term
+    structured_fields:
+    - description
+    - related_workloads
+    - applicable_hardware
+relationship_rules:
+- optimization_recipe applies to workload_kernel
+- benchmark_result evaluates optimization_recipe on hardware_target
+source_preferences:
+- research papers
+- technical blog posts
+- open source repositories
+coverage_priorities:
+- common AI kernels
+- state-of-the-art optimizations
+- quantization and sparsity techniques
+lint_priorities:
+- ensure datatype compatibility
+- check that constraints are specified
+hub_hierarchy: []
+```
+
 ## Research Configuration
 
 ```yaml
