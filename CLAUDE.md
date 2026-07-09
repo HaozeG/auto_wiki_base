@@ -32,16 +32,16 @@ Subtypes are **specializations of `entity`**, never new top-level types: a subty
 
 ```yaml
 [system_state]
-graph_maturity: false
+graph_maturity: true
 cold_start_page_count: 0
-orphan_fraction: 1.0          # fraction of pages with 0 inbound links — primary maturity signal
-median_inbound_links: 0       # median inbound across all pages — primary maturity signal
-mean_inbound_links: 0.0       # secondary signal only (gameable by a few hub pages)
-linking_debt: 0               # pages created this session still at 0 inbound (autonomous loop)
+orphan_fraction: 0.0
+median_inbound_links: 1.0
+mean_inbound_links: 2.1538
+linking_debt: 0
 retrospective_lint_done: false
-clustering_coefficient: ~   # informational small-world metric (tools/graph_topology.py); does not gate graph_maturity
-avg_path_length: ~          # avg shortest path within the largest connected component; null until enough outbound_links exist
-connected_components: ~     # count of disconnected topical clusters in the outbound_links graph
+clustering_coefficient: 0.1103
+avg_path_length: 2.5606
+connected_components: 2
 ```
 
 ---
