@@ -28,8 +28,8 @@ fetched_at: '2026-07-09T11:12:45.444855+00:00'
 type: entity
 created: '2026-07-09'
 updated: '2026-07-09'
-cold_start: true
-inbound_links: 1
+cold_start: false
+inbound_links: 2
 outbound_links:
 - target: tt-xla-performance-optimization-techniques
   reason: The QuietBox 2 leverages the Forge compiler toolchain and TT-Metalium low-level
@@ -42,6 +42,9 @@ outbound_links:
 - target: tt-forge
   reason: The QuietBox 2 ships with a pre-installed TT-Forge/XLA container wrapper
     used to compile models onto its Blackhole chips.
+- target: quietbox-vs-quietbox-2-workstation-lineup
+  reason: A comparison synthesis contrasting this workstation's specs and positioning
+    against the earlier Blackhole QuietBox.
 needs_summary_revision: false
 ---
 
@@ -76,6 +79,8 @@ TT-QuietBox 2 (also branded as QuietBox 2 or Blackhole) is a liquid-cooled AI wo
 
 - [[tt-metalium]]: The pre-installed TTNN Python library is the high-level operator API built on TT-Metalium.
 - [[tt-forge]]: The pre-installed TT-Forge/XLA container wrapper is used for compiling models onto the Quietbox 2's Blackhole chips.
+
+- [[quietbox-vs-quietbox-2-workstation-lineup]]: A comparison synthesis contrasting this workstation's specs and positioning against the earlier Blackhole QuietBox.
 
 ## Sources
 

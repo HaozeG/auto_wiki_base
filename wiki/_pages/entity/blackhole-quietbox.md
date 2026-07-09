@@ -21,7 +21,7 @@ type: entity
 created: '2026-07-09'
 updated: '2026-07-09'
 cold_start: false
-inbound_links: 1
+inbound_links: 2
 outbound_links:
 - target: tt-quietbox-2
   reason: TT-QuietBox 2 is the successor workstation to the Blackhole QuietBox, using

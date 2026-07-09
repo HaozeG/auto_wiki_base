@@ -112,3 +112,30 @@ compression_ratio; none show near-zero novelty or unsalvageable content.
   from QuietBox 2. Please confirm this reading is correct; if QuietBox 1
   turns out to be a misreported/pre-release configuration of the same QB2
   hardware, these two pages should be merged instead.
+
+## Applied (lint apply, 2026-07-09)
+
+Both RESTRUCTURE candidates executed:
+
+- `entity/blackhole.md`: the shared Tensix-tile architecture detail (MOP
+  expander, Wait Gate, 19-bit Matrix Unit, 32-lane SFPU, 16-bank L1 SRAM)
+  moved into `entity/tensix-core.md`, which already covered the compute-tile
+  internals. `blackhole.md`'s Architecture section now points to
+  `[[tensix-core]]` and keeps only chip/board-specific facts (grid dimensions,
+  P100A harvesting, host PCIe routing, die-level SiFive X280 cores). Both
+  pages re-evaluated through `eval_summary.py` (Layer 1/2 pass) after the
+  edit. `cold_start` set to `false`.
+- `entity/tt-quietbox-2.md`: created
+  `synthesis/quietbox-vs-quietbox-2-workstation-lineup.md` comparing it
+  against `blackhole-quietbox.md` (spec table, generational-cost-down
+  reading, and the deferred identity question carried into its Open
+  Questions section rather than silently resolved). Evaluated through
+  `eval_summary.py --type synthesis` (Layer 1/2 pass). `cold_start` set to
+  `false` on `tt-quietbox-2.md`; the new synthesis page starts `cold_start:
+  true` per the page-creation default.
+
+The deferred QuietBox-generation question above is **not** resolved by this
+pass — it is carried forward as an Open Question on the new synthesis page,
+since no new primary-source evidence was found to settle it either way.
+Graph re-checked after all edits: 14 pages, `orphan_fraction: 0.0`,
+`median_inbound_links: 1.5`. `[system_state].retrospective_lint_done: true`.

@@ -24,8 +24,8 @@ fetched_at: '2026-07-09T09:56:51.857773+00:00'
 type: entity
 created: '2026-07-09'
 updated: '2026-07-09'
-cold_start: true
-inbound_links: 9
+cold_start: false
+inbound_links: 10
 needs_summary_revision: false
 ---
 
@@ -35,7 +35,7 @@ Blackhole is Tenstorrent's third-generation AI accelerator chip, manufactured on
 
 ## Architecture
 
-The Blackhole chip uses a shared Tensix tile architecture. The architecture employs a grid of Tensix tiles interconnected by two Networks-on-Chip (NoCs) that operate in opposite directions: noc0 originates at the top-left corner and allows packets to move downward or to the right, while noc1 originates at the bottom-right corner and allows movement upward or to the left. This bidirectional separation of read (noc0) and write (noc1) traffic avoids head-of-line blocking. Communication with the host is routed through the PCIe tile (PCIe 0 on the P100A, PCIe 1 on the P150B). The P100A variant harvests two rightmost columns of Tensix tiles and one DRAM bank (4 GB) due to binning, with the fused-off coordinates varying per board. On the P150B the grid is 17 columns × 12 rows; on the P100A it is 14 columns × 12 rows. Each Tensix tile features a dual Network-on-Chip (NoC) with X/Y major routing, five Baby RISC-V cores, a Matrix Unit with 19-bit precision, a Vector Unit with 32-lane FP32, and 1464 KiB of L1 RAM. The architecture also includes a MOP expander. The instruction set documentation is available at https://deepwiki.com/tenstorrent/tt-isa-documentation. The chip integrates 140 Tensix++ compute cores (120 enabled on shipping cards), sixteen SiFive Intelligence X280 RISC-V cores for general-purpose processing, 32 GB of GDDR6 memory, a Gen5 PCI Express interface, and ten 400 Gbps Ethernet links on a single die. This allows the Blackhole to function as a standalone AI computer, capable of running machine learning workloads without host CPU intervention for many tasks. Multicast writes (broadcasting to multiple tiles simultaneously) are imperative for performance when uploading firmware or kernel binaries to many cores; unicast writes to every core sequentially would incur considerable slowdown.
+Blackhole's tile-level compute unit is the [[tensix-core]], shared with Wormhole and Grayskull — see that page for the RISC-V control cores, matrix/vector unit precision, L1 SRAM organization, and MOP expander. This section covers what is specific to the Blackhole chip and its board variants. The chip integrates a grid of Tensix tiles interconnected by two Networks-on-Chip (NoCs) that operate in opposite directions: noc0 originates at the top-left corner and allows packets to move downward or to the right, while noc1 originates at the bottom-right corner and allows movement upward or to the left. This bidirectional separation of read (noc0) and write (noc1) traffic avoids head-of-line blocking. Communication with the host is routed through the PCIe tile (PCIe 0 on the P100A, PCIe 1 on the P150B). On the P150B the grid is 17 columns × 12 rows; on the P100A it is 14 columns × 12 rows, with the P100A harvesting two rightmost columns of Tensix tiles and one DRAM bank (4 GB) due to binning (fused-off coordinates vary per board). The instruction set documentation is available at https://deepwiki.com/tenstorrent/tt-isa-documentation. Beyond the Tensix mesh, the die integrates sixteen SiFive Intelligence X280 RISC-V cores for general-purpose processing, 32 GB of GDDR6 memory, a Gen5 PCI Express interface, and ten 400 Gbps Ethernet links, letting Blackhole function as a standalone AI computer capable of running machine learning workloads without host CPU intervention for many tasks. Multicast writes (broadcasting to multiple tiles simultaneously) are imperative for performance when uploading firmware or kernel binaries to many cores; unicast writes to every core sequentially would incur considerable slowdown.
 
 ## Key Claims
 

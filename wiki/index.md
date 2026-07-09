@@ -1,26 +1,27 @@
 # Wiki Index
 
-Last updated: 2026-07-09 | Pages: 13 | Sources: 46
+Last updated: 2026-07-09 | Pages: 14 | Sources: 46
 
 ## Entity Pages
 
 | Page | Summary | Tags | Sources | Inbound |
 |------|---------|------|---------|---------|
-| [blackhole-quietbox.md](entity/blackhole-quietbox.md) | Blackhole QuietBox |  | 2 | 1 |
-| [blackhole.md](entity/blackhole.md) | Blackhole |  | 4 | 9 |
+| [blackhole-quietbox.md](entity/blackhole-quietbox.md) | Blackhole QuietBox |  | 2 | 2 |
+| [blackhole.md](entity/blackhole.md) | Blackhole |  | 4 | 10 |
 | [tensix-core.md](entity/tensix-core.md) | Tensix Core |  | 6 | 4 |
 | [tenstorrent-memory-model.md](entity/tenstorrent-memory-model.md) | Tenstorrent Memory Model |  | 2 | 1 |
 | [tenstorrent.md](entity/tenstorrent.md) | Tenstorrent |  | 2 | 1 |
 | [tt-forge-onnx.md](entity/tt-forge-onnx.md) | TT-Forge-ONNX |  | 2 | 1 |
 | [tt-forge.md](entity/tt-forge.md) | TT-Forge |  | 10 | 1 |
 | [tt-metalium.md](entity/tt-metalium.md) | TT-Metalium |  | 6 | 1 |
-| [tt-quietbox-2.md](entity/tt-quietbox-2.md) | TT-QuietBox 2 |  | 6 | 1 |
+| [tt-quietbox-2.md](entity/tt-quietbox-2.md) | TT-QuietBox 2 |  | 6 | 2 |
 | [wormhole.md](entity/wormhole.md) | Wormhole |  | 8 | 2 |
 
 ## Synthesis Pages
 
 | Page | Connected Entities | Status | Inbound |
 |------|--------------------|--------|---------|
+| [quietbox-vs-quietbox-2-workstation-lineup.md](synthesis/quietbox-vs-quietbox-2-workstation-lineup.md) | blackhole-quietbox, tt-quietbox-2, blackhole | draft | 1 |
 | [wormhole-vs-blackhole-architecture.md](synthesis/wormhole-vs-blackhole-architecture.md) | Blackhole, Wormhole | draft | 1 |
 
 ## Concept Index
