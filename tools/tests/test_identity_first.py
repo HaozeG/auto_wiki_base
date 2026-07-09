@@ -164,11 +164,14 @@ def test_normalizer_merges_spelling_and_morphology_variants(a, b):
 
 
 # ---------------------------------------------------------------------------
-# Part 2 — connectivity-based maturity
+# Part 2 — connectivity stats (no maturity verdict; see graph_stats.py module
+# docstring for why the graph_maturity flag itself was removed)
 # ---------------------------------------------------------------------------
 
-def test_maturity_predicate_orphan_heavy_graph(tmp_path):
-    # 8 orphans + 2 hubs: high mean, but median 0 and orphan_fraction 0.8 → NOT mature
+def test_mean_inbound_links_is_gameable_by_a_few_hubs(tmp_path):
+    # 8 orphans + 2 hubs: mean is lifted well past a naive threshold even
+    # though most pages (8/10) have zero inbound links -- this divergence is
+    # exactly why mean_inbound_links was dropped as a maturity signal.
     d = tmp_path / "_pages"
     d.mkdir()
     for i in range(8):
@@ -176,13 +179,12 @@ def test_maturity_predicate_orphan_heavy_graph(tmp_path):
     _write(d / "hub1.md", "type: entity\ninbound_links: 20\n")
     _write(d / "hub2.md", "type: entity\ninbound_links: 20\n")
     stats = graph_stats.compute_stats(d)
-    assert stats["mean_inbound_links"] > 2.0          # old predicate would say MATURE
+    assert stats["mean_inbound_links"] > 2.0
     assert stats["orphan_fraction"] == 0.8
     assert stats["median_inbound_links"] == 0.0
-    assert stats["mature"] is False                   # new predicate: NOT mature
 
 
-def test_maturity_predicate_connected_graph(tmp_path):
+def test_well_connected_graph_has_low_orphan_fraction(tmp_path):
     d = tmp_path / "_pages"
     d.mkdir()
     for i in range(10):
@@ -190,7 +192,6 @@ def test_maturity_predicate_connected_graph(tmp_path):
     stats = graph_stats.compute_stats(d)
     assert stats["orphan_fraction"] == 0.0
     assert stats["median_inbound_links"] >= 1
-    assert stats["mature"] is True
 
 
 # ---------------------------------------------------------------------------

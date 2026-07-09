@@ -10,7 +10,7 @@ You are the maintainer of this wiki. You create pages, update them on ingest, ma
 
 The wiki's target shape is a **small-world network**: high clustering (tightly connected topical neighborhoods) combined with low average path length (few hops between any two pages, even across distant topics) — the "six degrees of separation" property (Watts–Strogatz). This is design philosophy, not a mechanism; implementation is intentionally flexible and may evolve.
 
-- **Clustering** should emerge organically from topical similarity. qmd search/BM25 similarity between pages is the natural signal for "this neighborhood is well-connected." Tools like `networkx` (clustering coefficient, average shortest path length) are candidate ways to measure this quantitatively — a richer alternative to the current count-based maturity gate (`orphan_fraction`/`median_inbound_links`), which a single heuristic linking pass can satisfy without improving real structure.
+- **Clustering** should emerge organically from topical similarity. qmd search/BM25 similarity between pages is the natural signal for "this neighborhood is well-connected." Tools like `networkx` (clustering coefficient, average shortest path length) are candidate ways to measure this quantitatively — a richer alternative to plain count-based connectivity stats (`orphan_fraction`/`median_total_links`), which a single heuristic linking pass can satisfy without improving real structure. (An earlier revision tried collapsing these counts into a `graph_maturity` pass/fail flag; it was removed after three different formulas — mean-inbound, median-inbound, total-degree — each failed to separate a nascent wiki from an established one. See `graph_stats.py`'s module docstring.)
 - **Path-length reduction is a research-time concern, not a post-hoc linking pass.** The intended mechanism is to surface orphaned or topologically-distant pages as *context for the discovery/research step itself*, so that newly generated pages are chosen to bridge distant clusters — not to mechanically insert links between pages that already exist after the fact. Reactively wiring up existing orphans by shallow token/tag overlap satisfies the connectivity metric without adding genuine bridging value — a Goodhart failure to avoid repeating.
 - **Bridges should be few, deliberate, and reasoned**, not numerous and shallow. A bridge earns its place by measurably shortening the path between two genuinely distant clusters, not by sharing a generic tag or token.
 - **Every link or relationship should carry a reason**, kept alongside the edge so it is searchable and analyzable later (e.g. "related via shared RVV 1.0 support" vs. an unlabeled link). Obsidian body syntax stays plain `[[page]]` per the Constraints section below; structured edge metadata, if promoted beyond prose Relationships bullets, belongs in frontmatter, not body markup.
@@ -32,17 +32,19 @@ Subtypes are **specializations of `entity`**, never new top-level types: a subty
 
 ```yaml
 [system_state]
-graph_maturity: false
-cold_start_page_count: 0
-orphan_fraction: 1.0          # fraction of pages with 0 inbound links — primary maturity signal
-median_inbound_links: 0       # median inbound across all pages — primary maturity signal
-mean_inbound_links: 0.0       # secondary signal only (gameable by a few hub pages)
-linking_debt: 0               # pages created this session still at 0 inbound (autonomous loop)
+orphan_fraction: 1.0            # total-degree-based (inbound + outbound) connectivity diagnostic
+median_total_links: 0.0         # total-degree-based connectivity diagnostic
+mean_total_links: 0.0           # secondary signal only (gameable by a few hub pages)
+median_inbound_links: 0.0       # informational only — citation concentration
+mean_inbound_links: 0.0         # informational only — citation concentration
+linking_debt: 0
 retrospective_lint_done: false
-clustering_coefficient: ~   # informational small-world metric (tools/graph_topology.py); does not gate graph_maturity
-avg_path_length: ~          # avg shortest path within the largest connected component; null until enough outbound_links exist
-connected_components: ~     # count of disconnected topical clusters in the outbound_links graph
+clustering_coefficient: ~
+avg_path_length: ~
+connected_components: ~
 ```
+
+There is no `graph_maturity` flag. An earlier revision computed one and gated write-time scorecard leniency and retrospective-lint eligibility on it; it was removed (see `graph_stats.py`'s module docstring for why graph degree kept being the wrong instrument no matter how it was normalized). Write-time evaluation always uses the cold-start scorecard now (Step 2 below); retrospective lint's only readiness gate is the explicit human `lint retrospective` command.
 
 ---
 
@@ -196,7 +198,7 @@ Determine what the source primarily warrants:
 
 ### Step 2 — Score Each Planned Page
 
-Apply the cold-start scorecard while `[system_state].graph_maturity = false`:
+Apply this scorecard to every write-time candidate:
 
 ```yaml
 active_dimensions: [novelty_delta, claim_density, self_containedness, temporal_stability]
@@ -204,7 +206,7 @@ hard_rejection_threshold: 0.2   # only self_containedness triggers hard rejectio
 soft_log_threshold: 0.3         # others below this: log but don't reject
 ```
 
-After graph maturity, use the entity or synthesis scorecard variants (see `[eval_thresholds]`).
+The stricter entity/synthesis scorecard variants in `[eval_thresholds]` are reserved for Retrospective Lint (`eval_summary.py` reads them directly there) — write-time evaluation does not branch on wiki size or age.
 
 ### Step 3 — Execute Writes
 
@@ -212,7 +214,7 @@ For each page that passes its scorecard:
 1. Create or update the page file in `wiki/_pages/entity/` or `wiki/_pages/synthesis/`
 2. Update `inbound_links` count on any page that gains a new reference from this page
 3. Update `wiki/index.md` (add row to the correct table, update Concept Index)
-4. Run: `python tools/graph_stats.py wiki/_pages/` and update `[system_state]` connectivity fields (`orphan_fraction`, `median_inbound_links`, `mean_inbound_links`)
+4. Run: `python tools/graph_stats.py wiki/_pages/` and update `[system_state]` connectivity fields (`orphan_fraction`, `median_total_links`, `mean_total_links`, plus informational `median_inbound_links`/`mean_inbound_links`)
 5. Write/refresh frontmatter only by atomic YAML round-trip (parse → mutate → re-serialize), never by string/delimiter splicing
 
 ### Step 4 — Log Entry
@@ -227,19 +229,7 @@ pages_deferred: [list with reason]
 cold_start: true
 ```
 
-### Maturity Transition
-
-Maturity is judged on the **connectivity distribution**, not the mean (a few hub pages can lift the mean over threshold while most pages have zero inbound links). After each ingest, if `graph_stats.py` reports `orphan_fraction < 0.2` **and** `median_inbound_links >= 1`, and `[system_state].graph_maturity` is still `false`:
-1. Set `graph_maturity: true` in `[system_state]`
-2. Log:
-   ```
-   ## [YYYY-MM-DD] transition | cold_start → mature
-   pages_at_transition: N
-   orphan_fraction: 0.XX
-   median_inbound_links: X
-   mean_inbound_links: X.XX
-   ```
-3. Do NOT immediately run retrospective lint — wait for explicit `lint retrospective` command.
+### Autonomous-Loop Backpressure
 
 **Linking debt (autonomous loop).** Track `linking_debt` = pages created this session still at 0 inbound. When it exceeds `max_linking_debt` (`[research_config]`), stop creating new pages and switch to linking/upserting existing ones until the debt clears, so connectivity never falls behind generation.
 
@@ -286,7 +276,7 @@ Lint is a **health check and safety net, not the primary quality gate.** Duplica
 ### Routine Lint (`lint routine`)
 
 Check the wiki for:
-- Orphan pages (no inbound links after wiki is mature)
+- Orphan pages (zero total links — no inbound and no outbound)
 - Stale claims (Synthesis pages with `temporal_stability: low` older than 90 days)
 - Missing cross-references (entity mentioned in 3+ pages but no dedicated entity page)
 - Synthesis pages with empty `open_questions` section
@@ -304,7 +294,7 @@ deferred_for_human: [list with reason]
 
 ### Retrospective Lint (`lint retrospective`)
 
-Only runs when `[system_state].graph_maturity = true`. For every page with `cold_start: true`:
+Triggered only by the explicit `lint retrospective` command below — that human decision is the readiness gate; there is no automatic wiki-size or graph-maturity precondition (see System State for why an auto-computed maturity flag was removed). For every page with `cold_start: true`:
 
 1. Run: `python tools/eval_summary.py <page_path> --type <entity|synthesis> --verbose`
 2. Compute structural metrics against the current graph:
@@ -475,6 +465,8 @@ max_new_pages_per_session: 10
 max_linking_debt: 5                  # autonomous loop stops creating when this many session pages remain at 0 inbound
 max_new_subtypes_per_session: 2      # dynamic taxonomy evolution: autonomous subtype persistence stops for the rest of the session once this many new subtypes have been persisted (detection/lint reporting continues regardless)
 max_evaluating_resume_retries: 2     # a candidate found still in "evaluating" state at resume start means a prior process was killed/crashed mid-candidate, not that work is still in flight; retried up to this many times, then given up as fetch_failed so one persistently unreachable URL can't block every candidate behind it on every resume
+injection_decay_beta: 0.9             # per-candidate-evaluation EWMA decay for context-injection history (tools/injection_history.py): effective memory window ~= 1/(1-beta) = 10 candidate-evaluation ticks. Deliberately decayed per event, not wall-clock time or wiki page count — both couple the estimator to operator cadence rather than to how often a page is actually being injected (see module docstring for the two failure modes ruled out)
+injection_fair_share_multiplier: 3.0  # a page is deprioritized as context once its decayed share of injection events (count / total_ticks) exceeds this many times its fair share (1 / current page count) — a normalized, exposure-independent replacement for the old flat per-session injection_cap: counts persist to wiki/research_state/injection_history.json so many short sessions back-to-back can't each reset a fresh per-session cap and let an early hub get cited without bound across sessions
 max_eval_subagent_tokens: 16000      # higher than a first-pass 3000 default: multi-page draft output needs headroom even on the non-reasoning flash-tier model eval runs on
 max_discovery_subagent_tokens: 3000
 max_retries_on_fetch_failure: 2
@@ -523,3 +515,6 @@ page_type_taxonomy:
 - **Patch queue.** `pages_to_update` proposals are written to `wiki/patch_queue.md` for review instead of being appended directly to target pages.
 - **Research resume state.** Runtime checkpoints live under `wiki/research_state/` and are intentionally ignored by git. Use `research --resume <session_id>` to continue a stopped session and `research --list-sessions` to inspect available checkpoints.
 - **Language handling.** The dangling reference patterns above cover Chinese and English. Extend `[eval_config].dangling_patterns` for other languages.
+- **Fetch egress hygiene.** `web_fetch.fetch_url` rejects non-http(s) schemes and loopback/private/link-local hosts before making any request (SSRF guard against malicious/compromised search results), and sanitizes all successfully fetched content — escaping `[[`/`]]` (wikilink injection) and bare `---`/`...` lines (YAML frontmatter-splice injection) and capping size — before it reaches any draft or cache write. This applies uniformly since `fetch_wayback_snapshot` also routes through `fetch_url`.
+- **Source citations always cite the local snapshot.** `orchestrator._apply_provenance` sets frontmatter `sources` deterministically and `orchestrator._fix_sources_section_body` deterministically rewrites each draft's body `## Sources` section to cite `raw/cache/<hash>.md` instead of the bare live URL — the drafting subagent is never shown the snapshot path (only `candidate.url`/`title`), so it cannot reliably satisfy this on its own no matter how the prompt is worded; it's fixed mechanically after the subagent call returns, the same pattern as the frontmatter fix.
+- **Retrieval quality benchmark.** `python tools/retrieval_benchmark.py <queries.json> [--top N]` measures qmd search quality (top-1 accuracy, recall@N, MRR) against a labeled `[{"query": ..., "expected": [page_stem, ...]}, ...]` set — the harness's other tools (`eval_summary.py`, `graph_stats.py`, `graph_topology.py`) score page/graph quality but never measured whether qmd actually surfaces the right page for a query. A starter query set lives at `tools/tests/fixtures/retrieval_benchmark_queries.json`; extend it as pages are added so the benchmark stays meaningful. Diagnostic only — always exits 0, not a write-time gate.

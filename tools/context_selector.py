@@ -27,6 +27,7 @@ import re
 import sys
 from pathlib import Path
 
+import injection_history
 from frontmatter import split_frontmatter
 from qmd_runner import QmdRunner
 
@@ -170,8 +171,9 @@ def get_topic_hit_count(query_text: str, min_score: float = 0.5,
 def select_context_pages(resource_content: str, max_tokens: int = 4000,
                          qmd_runner: QmdRunner | None = None,
                          structured_terms: dict | None = None,
-                         injection_counts: dict[str, int] | None = None,
-                         injection_cap: int = 3) -> list[dict]:
+                         injection_counts: dict[str, float] | None = None,
+                         injection_total_ticks: float = 0.0,
+                         fair_share_multiplier: float = 3.0) -> list[dict]:
     """
     Select wiki pages relevant to resource_content, within max_tokens budget.
 
@@ -179,8 +181,10 @@ def select_context_pages(resource_content: str, max_tokens: int = 4000,
     1. Shell out: qmd search <resource_content[:500]> -c _pages -n 20 --format json
     2. Parse ranked results with real similarity scores (no inbound_links nudge —
        see module docstring)
-    3. Deprioritize (not exclude) pages that have already hit `injection_cap`
-       injections this session, per `injection_counts`
+    3. Deprioritize (not exclude) pages whose decayed share of past injection
+       events (`injection_counts`/`injection_total_ticks`, see
+       injection_history.py) exceeds `fair_share_multiplier` times their fair
+       share of all pages
     4. Greedily include pages until token budget reached
     5. Return list of {filename, type, content} dicts
 
@@ -223,19 +227,29 @@ def select_context_pages(resource_content: str, max_tokens: int = 4000,
 
     ranked_paths.sort(key=lambda x: x[1], reverse=True)
 
-    # Deprioritize (stable-partition, don't drop) pages already at/over the
-    # per-session injection cap — keeps them eligible as a last resort if
-    # nothing else is topically relevant, but stops them from crowding out
-    # other candidates purely because they were shown before. Only reorder
-    # within the positive-score prefix: zero-score filler pages must stay
-    # last regardless of cap state, or they'd trip the "stop at first
-    # zero-score page" rule below before a legitimately relevant but capped
-    # page ever gets a chance.
-    if injection_counts:
+    # Deprioritize (stable-partition, don't drop) pages whose decayed share of
+    # past injection events is disproportionate to their fair share of all
+    # pages — keeps them eligible as a last resort if nothing else is
+    # topically relevant, but stops them from crowding out other candidates
+    # purely because they were shown before (see injection_history.py for why
+    # this is a share, not a raw per-session count). Only reorder within the
+    # positive-score prefix: zero-score filler pages must stay last regardless
+    # of over-representation, or they'd trip the "stop at first zero-score
+    # page" rule below before a legitimately relevant but over-shown page ever
+    # gets a chance.
+    if injection_counts and injection_total_ticks > 0:
         positive = [rp for rp in ranked_paths if rp[1] > 0]
         zero = [rp for rp in ranked_paths if rp[1] <= 0]
-        under_cap = [rp for rp in positive if injection_counts.get(rp[0].stem, 0) < injection_cap]
-        at_cap = [rp for rp in positive if injection_counts.get(rp[0].stem, 0) >= injection_cap]
+        page_count = len(all_pages)
+
+        def _overrepresented(stem: str) -> bool:
+            return injection_history.is_overrepresented(
+                injection_counts, injection_total_ticks, stem, page_count,
+                multiplier=fair_share_multiplier,
+            )
+
+        under_cap = [rp for rp in positive if not _overrepresented(rp[0].stem)]
+        at_cap = [rp for rp in positive if _overrepresented(rp[0].stem)]
         ranked_paths = under_cap + at_cap + zero
 
     selected: list[dict] = []

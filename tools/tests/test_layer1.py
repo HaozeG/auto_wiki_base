@@ -435,7 +435,6 @@ class TestGraphStats:
         stats = compute_stats(fixtures_dir)
         assert stats["mean_inbound_links"] == 2.0
         assert stats["page_count"] == 3
-        assert stats["above_maturity_threshold"] is False  # 2.0 is NOT > 2.0
 
     def test_empty_directory(self, tmp_path):
         from graph_stats import compute_stats

@@ -489,7 +489,6 @@ def test_early_exit_stops_after_escalation_keeps_failing(tmp_path):
          patch.object(orchestrator, "_CLAUDE_MD", claude_md), \
          patch.object(orchestrator, "AuditLog", return_value=FullDummyAudit()), \
          patch.object(orchestrator, "_check_synthesis_gaps", return_value=[]), \
-         patch.object(orchestrator, "_wiki_is_mature", return_value=True), \
          patch.object(orchestrator, "_get_concept_gaps", return_value=[]), \
          patch.object(orchestrator, "_fetch_smart", return_value="some content about the candidate"), \
          patch.object(orchestrator, "_call_subagent", return_value=reject_eval):
@@ -566,7 +565,6 @@ def test_evaluating_candidate_retried_then_given_up_after_repeated_interruption(
          patch.object(orchestrator, "_CLAUDE_MD", claude_md), \
          patch.object(orchestrator, "AuditLog", return_value=FullDummyAudit()), \
          patch.object(orchestrator, "_check_synthesis_gaps", return_value=[]), \
-         patch.object(orchestrator, "_wiki_is_mature", return_value=True), \
          patch.object(orchestrator, "_get_concept_gaps", return_value=[]), \
          patch.object(orchestrator, "_fetch_smart", side_effect=fake_fetch):
         result = orchestrator._run_research_state(state)
@@ -612,7 +610,6 @@ def test_evaluating_candidate_retried_normally_before_retry_limit(tmp_path):
          patch.object(orchestrator, "_CLAUDE_MD", claude_md), \
          patch.object(orchestrator, "AuditLog", return_value=FullDummyAudit()), \
          patch.object(orchestrator, "_check_synthesis_gaps", return_value=[]), \
-         patch.object(orchestrator, "_wiki_is_mature", return_value=True), \
          patch.object(orchestrator, "_get_concept_gaps", return_value=[]), \
          patch.object(orchestrator, "_fetch_smart", return_value="some content about the candidate"), \
          patch.object(orchestrator, "_call_subagent", return_value=reject_eval):
@@ -1710,15 +1707,15 @@ def test_generate_synthesis_candidate_backfills_sources_for_real_eval_pipeline(t
     assert fm.get("sources")  # backfilled, not empty
 
 
-def test_maybe_transition_maturity_only_touches_patched_claude_md(tmp_path):
-    """Regression test: _maybe_transition_maturity() is called from inside
-    _run_research_state() and writes connectivity stats to _CLAUDE_MD (and, on
-    a cold_start -> mature transition, appends to _LOG_MD). Two other tests in
-    this file call _run_research_state() directly and only patched
-    _WIKI_PAGES_DIR, not _CLAUDE_MD/_LOG_MD — so it silently recomputed stats
+def test_refresh_connectivity_stats_only_touches_patched_claude_md(tmp_path):
+    """Regression test: _refresh_connectivity_stats() is called from inside
+    _run_research_state() and writes connectivity stats to _CLAUDE_MD. Two
+    other tests in this file call _run_research_state() directly and only
+    patched _WIKI_PAGES_DIR, not _CLAUDE_MD — so it silently recomputed stats
     from a throwaway tmp_path page set and wrote them into the real project
-    CLAUDE.md and wiki/log.md on every test run. Assert the function only
-    ever touches the paths it's given.
+    CLAUDE.md on every test run. Assert the function only ever touches the
+    paths it's given. (There is no graph_maturity flag/transition to log
+    anymore — see graph_stats.py module docstring for why it was removed.)
     """
     pages_dir = tmp_path / "wiki" / "_pages" / "entity"
     pages_dir.mkdir(parents=True)
@@ -1727,42 +1724,33 @@ def test_maybe_transition_maturity_only_touches_patched_claude_md(tmp_path):
     )
     claude_md = tmp_path / "CLAUDE.md"
     claude_md.write_text(
-        "```yaml\n[system_state]\ngraph_maturity: false\n```\n", encoding="utf-8"
+        "```yaml\n[system_state]\norphan_fraction: 1.0\n```\n", encoding="utf-8"
     )
-    log_md = tmp_path / "log.md"
-    log_md.write_text("# Log\n", encoding="utf-8")
 
     with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
-         patch.object(orchestrator, "_CLAUDE_MD", claude_md), \
-         patch.object(orchestrator, "_LOG_MD", log_md):
-        orchestrator._maybe_transition_maturity("sess-test")
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md):
+        orchestrator._refresh_connectivity_stats()
 
     text = claude_md.read_text(encoding="utf-8")
     assert "orphan_fraction: 0.0" in text or "orphan_fraction: 0" in text
-    # This single-page fixture is mature (orphan_fraction 0, median 1), so the
-    # cold_start -> mature transition fires and appends to the patched log.
-    assert "transition | cold_start" in log_md.read_text(encoding="utf-8")
-    # Additive small-world topology fields (Phase 3b) are also refreshed, but
-    # do not gate the transition above — a single-page, edgeless fixture has
-    # no outbound_links, so clustering_coefficient is 0 and avg_path_length
-    # stays null (undefined for a single isolated node).
+    # Additive small-world topology fields (Phase 3b) are also refreshed — a
+    # single-page, edgeless fixture has no outbound_links, so
+    # clustering_coefficient is 0 and avg_path_length stays null (undefined
+    # for a single isolated node).
     assert "clustering_coefficient: 0.0" in text
     assert "avg_path_length" in text
 
 
-def test_maybe_transition_maturity_survives_graph_topology_failure(tmp_path, monkeypatch):
-    """graph_topology stats are informational-only per the Phase 3b scope
-    guardrail: a failure there must not block the authoritative orphan_fraction/
-    median_inbound_links maturity transition."""
+def test_refresh_connectivity_stats_survives_graph_topology_failure(tmp_path, monkeypatch):
+    """graph_topology stats are informational-only: a failure there must not
+    block writing the orphan_fraction/median_total_links connectivity stats."""
     pages_dir = tmp_path / "wiki" / "_pages" / "entity"
     pages_dir.mkdir(parents=True)
     (pages_dir / "a.md").write_text(
         "---\ntype: entity\ninbound_links: 1\n---\n\n# A\n", encoding="utf-8"
     )
     claude_md = tmp_path / "CLAUDE.md"
-    claude_md.write_text("```yaml\n[system_state]\ngraph_maturity: false\n```\n", encoding="utf-8")
-    log_md = tmp_path / "log.md"
-    log_md.write_text("# Log\n", encoding="utf-8")
+    claude_md.write_text("```yaml\n[system_state]\norphan_fraction: 1.0\n```\n", encoding="utf-8")
 
     def boom(*args, **kwargs):
         raise RuntimeError("networkx blew up")
@@ -1770,11 +1758,10 @@ def test_maybe_transition_maturity_survives_graph_topology_failure(tmp_path, mon
     monkeypatch.setattr(orchestrator.graph_topology, "compute_topology_stats", boom)
 
     with patch.object(orchestrator, "_WIKI_PAGES_DIR", pages_dir), \
-         patch.object(orchestrator, "_CLAUDE_MD", claude_md), \
-         patch.object(orchestrator, "_LOG_MD", log_md):
-        orchestrator._maybe_transition_maturity("sess-test")  # must not raise
+         patch.object(orchestrator, "_CLAUDE_MD", claude_md):
+        orchestrator._refresh_connectivity_stats()  # must not raise
 
-    assert "graph_maturity: true" in claude_md.read_text(encoding="utf-8")
+    assert "orphan_fraction: 0.0" in claude_md.read_text(encoding="utf-8")
 
 
 def test_approved_resume_writes_once_and_written_resume_skips(tmp_path):
@@ -1899,7 +1886,6 @@ def test_eval_result_with_null_pages_to_update_does_not_crash(tmp_path):
          patch.object(orchestrator, "_CLAUDE_MD", claude_md), \
          patch.object(orchestrator, "AuditLog", return_value=FullDummyAudit()), \
          patch.object(orchestrator, "_check_synthesis_gaps", return_value=[]), \
-         patch.object(orchestrator, "_wiki_is_mature", return_value=True), \
          patch.object(orchestrator, "_get_concept_gaps", return_value=[]), \
          patch.object(orchestrator, "_fetch_smart", return_value="RISC-V Matrix Extension spec content."), \
          patch.object(orchestrator, "_run_eval_pipeline", return_value=(True, {
@@ -2021,7 +2007,6 @@ def test_mocked_research_run_writes_benchmark_and_updates_hardware_page(tmp_path
          patch.object(orchestrator, "AuditLog", return_value=audit), \
          patch.object(orchestrator, "_run_graph_stats"), \
          patch.object(orchestrator, "_check_synthesis_gaps", return_value=[]), \
-         patch.object(orchestrator, "_wiki_is_mature", return_value=True), \
          patch.object(orchestrator, "_get_concept_gaps", return_value=[]), \
          patch.object(orchestrator, "_fetch_smart", return_value="ProjectNimbus X9 reports 42 TOPS on GEMM with LLVM 18.1 throughput."), \
          patch.object(orchestrator, "_run_eval_pipeline", return_value=(True, {

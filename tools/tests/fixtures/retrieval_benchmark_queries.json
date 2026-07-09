@@ -1,0 +1,58 @@
+[
+  {
+    "query": "SiFive Intelligence X280 RISC-V vector processor",
+    "expected": ["sifive-intelligence-x280"]
+  },
+  {
+    "query": "512-bit vector register length AI extension core",
+    "expected": ["sifive-intelligence-x280"]
+  },
+  {
+    "query": "Ara2 open-source RVV 1.0 vector processor ETH Zurich",
+    "expected": ["ara2"]
+  },
+  {
+    "query": "multi-core vector cluster energy efficiency DP-GFLOPS",
+    "expected": ["ara2"]
+  },
+  {
+    "query": "commercial RISC-V vector processor with custom AI extensions vs open-source alternative",
+    "expected": ["sifive-intelligence-x280", "ara2"]
+  },
+  {
+    "query": "PULP Ara vector unit CVA6 RISC-V Vector Extension 1.0",
+    "expected": ["ara"]
+  },
+  {
+    "query": "RISC-V Attached Matrix Extension AME Integrated Matrix Extension IME",
+    "expected": ["risc-v-matrix-extensions"]
+  },
+  {
+    "query": "Gemmini systolic array accelerator generator Chipyard",
+    "expected": ["gemmini"]
+  },
+  {
+    "query": "Chipyard agile RISC-V SoC design framework Berkeley",
+    "expected": ["chipyard"]
+  },
+  {
+    "query": "XiangShan nexus-am abstract machine bare-metal runtime",
+    "expected": ["nexus-am"]
+  },
+  {
+    "query": "XiangShan GEM5 co-simulation performance model",
+    "expected": ["xs-gem5"]
+  },
+  {
+    "query": "T-Head XuanTie C908 AI software hardware fusion",
+    "expected": ["xuantie-c908"]
+  },
+  {
+    "query": "chipsalliance T1 vector processor Cray X1 lane chaining",
+    "expected": ["t1"]
+  },
+  {
+    "query": "SpacemiT Key Stone K1 RISC-V application processor SoC",
+    "expected": ["spacemit_key_stone_k1"]
+  }
+]

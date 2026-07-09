@@ -247,7 +247,7 @@ def find_bridge_candidates(
                 break
         return candidates
 
-    # Single connected component (graph_maturity territory): distant-component
+    # Single connected component (a well-established wiki): distant-component
     # bridging goes silent right when it matters most, since there's nothing
     # left to connect at the component level. Fall back to within-component
     # path-length reduction: surface the most topologically distant pairs
