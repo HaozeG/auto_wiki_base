@@ -480,12 +480,19 @@ def layer3_check(path: Path, page_type: str, verbose: bool = False) -> dict:
         return {"self_retrieved": True, "saturation": 0.0, "saturated": False,
                 "competitors": [], "pass": True}
 
+    # qmd's BM25 backend is SQLite FTS5, which treats ()"*^- as query-syntax
+    # operators. A title like "Single-Core Matmul (TT-Metalium)" is otherwise
+    # a valid plain-text query but silently returns zero results because of
+    # the unbalanced-looking parens, which used to make self-retrieval fail
+    # for every parenthesized title regardless of actual content quality.
+    fts5_query_text = re.sub(r'[()"*^]', " ", query_text)
+
     # Default harness path is BM25-only: vector/query paths require embeddings
     # and local model setup that may not exist in the current qmd environment.
     def _run_qmd_search() -> list | None:
         try:
             r = subprocess.run(
-                ["uv", "run", "--no-sync", "qmd", "search", query_text, "-c", "_pages", "-n", "5", "--format", "json"],
+                ["uv", "run", "--no-sync", "qmd", "search", fts5_query_text, "-c", "_pages", "-n", "5", "--format", "json"],
                 capture_output=True, text=True, timeout=30,
             )
         except (FileNotFoundError, subprocess.TimeoutExpired):
@@ -505,7 +512,7 @@ def layer3_check(path: Path, page_type: str, verbose: bool = False) -> dict:
             print("[Layer 3] SKIPPED (qmd not installed or timed out)")
         return {"skipped": True, "pass": True}
 
-    slug = path.stem
+    slug = path.stem.replace("-", "_")
     top_k = [_normalize_qmd_file(r.get("file", "")) for r in results[:5]]
     self_retrieved = slug in top_k
     competitors = [f for f in top_k if f != slug]

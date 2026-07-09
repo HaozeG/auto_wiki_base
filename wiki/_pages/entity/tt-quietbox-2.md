@@ -42,6 +42,7 @@ outbound_links:
 - target: tt-forge
   reason: The QuietBox 2 ships with a pre-installed TT-Forge/XLA container wrapper
     used to compile models onto its Blackhole chips.
+needs_summary_revision: false
 ---
 
 # TT-QuietBox 2

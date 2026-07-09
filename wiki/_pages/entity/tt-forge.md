@@ -33,7 +33,7 @@ fetched_at: '2026-07-09T10:03:31.716141+00:00'
 type: entity
 created: '2026-07-09'
 updated: '2026-07-09'
-cold_start: true
+cold_start: false
 inbound_links: 1
 outbound_links:
 - target: blackhole
@@ -44,6 +44,7 @@ outbound_links:
 - target: tt-forge-onnx
   reason: TT-Forge-ONNX is the TVM-based ONNX/TensorFlow/PaddlePaddle frontend sub-project
     within the TT-Forge compiler stack, complementing the TT-XLA PyTorch/JAX frontend.
+needs_summary_revision: false
 ---
 
 # TT-Forge

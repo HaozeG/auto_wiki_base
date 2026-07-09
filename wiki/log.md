@@ -75,3 +75,8 @@ pages_at_transition: 13
 orphan_fraction: 0.0
 median_inbound_links: 1.0
 mean_inbound_links: 2.1538
+
+## [2026-07-09] lint | retrospective
+issues_found: 3
+actions_taken: [cleared cold_start on 11/13 pages, fixed two Layer 3 self-retrieval bugs in tools/eval_summary.py (hyphen/underscore slug mismatch; qmd FTS5 parens in query text) that were spuriously flagging needs_summary_revision on 11/13 pages]
+deferred_for_human: [blackhole.md and tt-quietbox-2.md flagged RESTRUCTURE (dual-signal bridge_score+betweenness); blackhole-quietbox.md vs tt-quietbox-2.md generation-identity question — see wiki/retrospective_lint_report.md]

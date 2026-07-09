@@ -40,8 +40,9 @@ fetched_at: '2026-07-09T11:09:38.829308+00:00'
 type: optimization_recipe
 created: '2026-07-09'
 updated: '2026-07-09'
-cold_start: true
+cold_start: false
 inbound_links: 3
+needs_summary_revision: false
 ---
 
 # TT-XLA Performance Optimization Techniques

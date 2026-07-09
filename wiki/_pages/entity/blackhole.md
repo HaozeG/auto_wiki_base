@@ -26,6 +26,7 @@ created: '2026-07-09'
 updated: '2026-07-09'
 cold_start: true
 inbound_links: 9
+needs_summary_revision: false
 ---
 
 # Blackhole

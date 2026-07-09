@@ -21,13 +21,14 @@ fetched_at: '2026-07-09T11:10:14.430499+00:00'
 type: entity
 created: '2026-07-09'
 updated: '2026-07-09'
-cold_start: true
+cold_start: false
 inbound_links: 1
 outbound_links:
 - target: blackhole
   reason: Blackhole implements the same Tensix memory model; its Tensix tiles contain
     1464 KiB of L1 RAM per tile, consistent with the shared SRAM architecture described
     in this page
+needs_summary_revision: false
 ---
 
 # Tenstorrent Memory Model

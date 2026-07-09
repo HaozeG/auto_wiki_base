@@ -19,8 +19,9 @@ fetched_at: '2026-07-09T11:17:52.189503+00:00'
 type: entity
 created: '2026-07-09'
 updated: '2026-07-09'
-cold_start: true
+cold_start: false
 inbound_links: 1
+needs_summary_revision: false
 ---
 
 # TT-Forge-ONNX

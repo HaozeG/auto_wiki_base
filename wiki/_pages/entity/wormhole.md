@@ -29,12 +29,13 @@ fetched_at: '2026-07-09T09:56:51.857773+00:00'
 type: entity
 created: '2026-07-09'
 updated: '2026-07-09'
-cold_start: true
+cold_start: false
 inbound_links: 2
 outbound_links:
 - target: wormhole-vs-blackhole-architecture
   reason: The Wormhole-vs-Blackhole synthesis page provides a detailed architectural
     comparison between this chip and its Blackhole successor.
+needs_summary_revision: false
 ---
 
 # Wormhole

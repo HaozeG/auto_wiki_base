@@ -18,13 +18,14 @@ fetched_at: '2026-07-09T09:59:53.532794+00:00'
 type: synthesis
 created: '2026-07-09'
 updated: '2026-07-09'
-cold_start: true
+cold_start: false
 inbound_links: 1
 outbound_links:
 - target: wormhole
   reason: unlabeled
 - target: blackhole
   reason: unlabeled
+needs_summary_revision: false
 ---
 
 # Wormhole vs Blackhole Architecture Comparison

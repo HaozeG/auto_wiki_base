@@ -20,13 +20,14 @@ fetched_at: '2026-07-09T11:35:10.933640+00:00'
 type: entity
 created: '2026-07-09'
 updated: '2026-07-09'
-cold_start: true
+cold_start: false
 inbound_links: 1
 outbound_links:
 - target: tt-quietbox-2
   reason: TT-QuietBox 2 is the successor workstation to the Blackhole QuietBox, using
     a different host platform (Ryzen 9700X vs EPYC Siena) and lower launch price ($9,999
     vs $11,999) while sharing the same liquid-cooled four-Blackhole-chip design.
+needs_summary_revision: false
 ---
 
 # Blackhole QuietBox

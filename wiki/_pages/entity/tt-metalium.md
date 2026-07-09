@@ -27,7 +27,7 @@ fetched_at: '2026-07-09T10:01:57.311293+00:00'
 type: entity
 created: '2026-07-09'
 updated: '2026-07-09'
-cold_start: true
+cold_start: false
 inbound_links: 1
 outbound_links:
 - target: blackhole
@@ -39,6 +39,7 @@ outbound_links:
   reason: TT-Metalium's kernel programming model is built directly on Tenstorrent's
     (x, y, local_address) NoC-tuple memory addressing scheme, documented in detail
     on the Tenstorrent Memory Model page.
+needs_summary_revision: false
 ---
 
 # TT-Metalium

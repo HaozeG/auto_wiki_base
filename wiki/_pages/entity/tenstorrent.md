@@ -19,7 +19,7 @@ fetched_at: '2026-07-09T10:03:59.018648+00:00'
 type: entity
 created: '2026-07-09'
 updated: '2026-07-09'
-cold_start: true
+cold_start: false
 inbound_links: 1
 outbound_links:
 - target: blackhole
@@ -27,6 +27,7 @@ outbound_links:
     Tensix core architecture and is the latest generation chip in the Tenstorrent
     product lineup. The TT-Metal and TT-NN software stacks provide the programming
     interface for Blackhole hardware
+needs_summary_revision: false
 ---
 
 # Tenstorrent

@@ -34,8 +34,9 @@ fetched_at: '2026-07-09T11:12:47.748203+00:00'
 type: workload_kernel
 created: '2026-07-09'
 updated: '2026-07-09'
-cold_start: true
+cold_start: false
 inbound_links: 2
+needs_summary_revision: false
 ---
 
 # Single-Core Matmul (TT-Metalium)
