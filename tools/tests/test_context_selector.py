@@ -77,7 +77,7 @@ def test_fallback_rank_neutral_ignores_inbound_links(tmp_path):
     assert [p.stem for p, _ in ranked] == ["aaa-low-inbound", "zzz-high-inbound"]
 
 
-def test_injection_cap_deprioritizes_over_shown_page(tmp_path, monkeypatch):
+def test_fair_share_cap_deprioritizes_over_represented_page(tmp_path, monkeypatch):
     pages_dir = tmp_path / "_pages"
     _write(pages_dir, "entity", "overshown", inbound_links=0)
     _write(pages_dir, "entity", "fresh", inbound_links=0)
@@ -94,17 +94,22 @@ def test_injection_cap_deprioritizes_over_shown_page(tmp_path, monkeypatch):
 
     monkeypatch.setattr(context_selector, "_qmd_search", fake_search)
 
-    # ...but it has already hit the injection cap this session.
-    injection_counts = {"overshown": 3}
+    # ...but its decayed share of past injection events (9 out of the last 10
+    # ticks) is far above its fair share of these 2 pages (0.5), even after a
+    # generous 1.2x fair-share multiplier (threshold 0.6) — see
+    # injection_history.py for why this is a share, not a raw count vs cap.
+    injection_counts = {"overshown": 9.0}
     selected = context_selector.select_context_pages(
         "resource content",
         injection_counts=injection_counts,
-        injection_cap=3,
+        injection_total_ticks=10.0,
+        fair_share_multiplier=1.2,
         max_tokens=100000,
     )
 
     filenames = [s["filename"] for s in selected]
-    # "fresh" (lower topical score, but under cap) must be prioritized ahead
-    # of "overshown" (higher topical score, but at cap) — the whole point of
-    # the cap is to stop a page dominating every drafting context in a row.
+    # "fresh" (lower topical score, but not over-represented) must be
+    # prioritized ahead of "overshown" (higher topical score, but
+    # over-represented) — the whole point of the cap is to stop a page
+    # dominating every drafting context in a row.
     assert filenames.index("fresh.md") < filenames.index("overshown.md")

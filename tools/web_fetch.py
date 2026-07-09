@@ -18,9 +18,12 @@ Replaces a bare urlopen-with-flat-retry loop with three things a live
 
 from __future__ import annotations
 
+import ipaddress
 import json
 import logging
 import random
+import re
+import socket
 import time
 import urllib.error
 import urllib.parse
@@ -28,6 +31,70 @@ import urllib.request
 from dataclasses import dataclass
 
 logger = logging.getLogger(__name__)
+
+# Egress hygiene: the discovery loop follows URLs surfaced by web search
+# results, which are untrusted input. Two failure modes found by inspecting
+# claude-obsidian's equivalent hardening (this project had neither check):
+# 1. SSRF — a malicious/compromised search result pointing at a private,
+#    loopback, or link-local address (e.g. cloud metadata endpoints) with no
+#    scheme/host validation before the request is made.
+# 2. Injection via fetched content flowing into wiki drafts — a page body
+#    containing literal `[[...]]` creates unintended wikilinks, and a line
+#    that is exactly `---`/`...` can splice a second YAML document if the
+#    excerpt is ever embedded verbatim near frontmatter.
+_ALLOWED_SCHEMES = {"http", "https"}
+_MAX_CONTENT_BYTES = 200_000
+
+
+def _is_private_or_local_host(host: str) -> bool:
+    if not host:
+        return True
+    if host == "localhost" or host.endswith(".localhost"):
+        return True
+    try:
+        addr = ipaddress.ip_address(host)
+    except ValueError:
+        try:
+            infos = socket.getaddrinfo(host, None)
+        except socket.gaierror:
+            return False  # can't resolve; let the request itself fail naturally
+        return any(
+            ipaddress.ip_address(info[4][0]).is_private
+            or ipaddress.ip_address(info[4][0]).is_loopback
+            or ipaddress.ip_address(info[4][0]).is_link_local
+            for info in infos
+        )
+    return addr.is_private or addr.is_loopback or addr.is_link_local
+
+
+def is_safe_url(url: str) -> bool:
+    """Reject non-http(s) schemes and requests targeting loopback, private,
+    or link-local addresses (SSRF guard) before any request is made."""
+    parsed = urllib.parse.urlparse(url)
+    if parsed.scheme not in _ALLOWED_SCHEMES:
+        return False
+    host = (parsed.hostname or "").lower()
+    return not _is_private_or_local_host(host)
+
+
+_WIKILINK_OPEN_RE = re.compile(r"\[\[")
+_WIKILINK_CLOSE_RE = re.compile(r"\]\]")
+_FRONTMATTER_DELIM_RE = re.compile(r"^(-{3,}|\.{3,})\s*$", re.MULTILINE)
+
+
+def sanitize_fetched_content(content: str, max_bytes: int = _MAX_CONTENT_BYTES) -> str:
+    """Neutralize fetched-content injection risk before it flows into wiki
+    drafts: escape `[[`/`]]` (wikilink injection), escape bare `---`/`...`
+    lines (YAML frontmatter-splice injection), and cap size."""
+    text = _WIKILINK_OPEN_RE.sub(r"\\[\\[", content)
+    text = _WIKILINK_CLOSE_RE.sub(r"\\]\\]", text)
+    text = _FRONTMATTER_DELIM_RE.sub(
+        lambda m: "".join("\\" + c for c in m.group(1)), text
+    )
+    encoded = text.encode("utf-8")
+    if len(encoded) > max_bytes:
+        text = encoded[:max_bytes].decode("utf-8", errors="ignore")
+    return text
 
 _BROWSER_HEADERS = {
     "User-Agent": (
@@ -106,7 +173,14 @@ def _host_of(url: str) -> str:
 def fetch_url(url: str, retries: int = 2, timeout: int = 15,
                breaker: DomainCircuitBreaker | None = None) -> FetchResult:
     """Fetch a URL with retry classification and an optional per-host
-    circuit breaker. Never raises; failures come back as a FetchResult."""
+    circuit breaker. Never raises; failures come back as a FetchResult.
+
+    Rejects non-http(s) schemes and loopback/private/link-local hosts before
+    making any request (SSRF guard — see module docstring)."""
+    if not is_safe_url(url):
+        return FetchResult(None, "forbidden", url, 0,
+                            error=f"blocked unsafe URL scheme/host: {url}")
+
     host = _host_of(url)
     if breaker is not None and breaker.is_tripped(host):
         return FetchResult(None, "circuit_open", url, 0,
@@ -125,6 +199,7 @@ def fetch_url(url: str, retries: int = 2, timeout: int = 15,
                     content = raw.decode("utf-8")
                 except UnicodeDecodeError:
                     content = raw.decode("latin-1", errors="replace")
+                content = sanitize_fetched_content(content)
                 return FetchResult(content, "ok", resp.geturl() or url, attempts)
         except urllib.error.HTTPError as e:
             status = _status_label(e.code)

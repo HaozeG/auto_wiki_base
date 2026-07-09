@@ -36,6 +36,7 @@ sys.path.insert(0, str(_TOOLS_DIR))
 import frontmatter
 import graph_stats
 import graph_topology
+import injection_history
 import relationship_links
 import identity
 import web_fetch
@@ -137,6 +138,9 @@ def _load_research_config() -> dict:
     config.setdefault("repeat_url_suppression", True)
     config.setdefault("max_new_subtypes_per_session", 2)
     config.setdefault("max_evaluating_resume_retries", 2)
+    config.setdefault("injection_decay_beta", injection_history.DEFAULT_BETA)
+    config.setdefault("injection_fair_share_multiplier", injection_history.DEFAULT_FAIR_SHARE_MULTIPLIER)
+    config.setdefault("min_entity_pages_for_synthesis", 10)
     config.setdefault("domain_stopwords", [])
     config.setdefault("preferred_source_types", [
         "official documentation",
@@ -432,12 +436,6 @@ def _load_recent_discovery_history(research_config: dict) -> dict:
     }
 
 
-def _wiki_is_mature() -> bool:
-    text = _CLAUDE_MD.read_text(encoding="utf-8")
-    match = re.search(r"graph_maturity:\s*(true|false)", text)
-    return bool(match and match.group(1) == "true")
-
-
 def _load_system_state() -> dict:
     return _load_claude_md_block("system_state")
 
@@ -450,23 +448,35 @@ def _write_system_state(state: dict) -> None:
     _CLAUDE_MD.write_text(text, encoding="utf-8")
 
 
-def _maybe_transition_maturity(session_id: str) -> None:
-    """Refresh connectivity metrics in [system_state] and flip graph_maturity
-    when the connectivity predicate (orphan_fraction + median) is satisfied.
+def _refresh_connectivity_stats() -> None:
+    """Refresh informational connectivity/topology metrics in [system_state].
 
-    This is the writer the design always implied but that never existed:
-    previously nothing flipped graph_maturity, and the threshold was a gameable
-    mean. Now maturity is connectivity-based (see graph_stats.is_mature)."""
+    There used to be a `graph_maturity` flag flipped here once a connectivity
+    predicate was satisfied. Removed: three different formulas were tried
+    (mean_inbound_links -- gameable by a couple of hub pages; median_inbound_links
+    -- structurally could never reach 1 in a hub-and-spoke wiki, since most
+    pages cite rather than get cited, so it never flipped even at 100+ pages;
+    median_total_links -- flips almost immediately, the moment linking works
+    at all, so it doesn't separate nascent from established either). Graph
+    degree kept being the wrong instrument for "is this wiki mature" no matter
+    which direction/normalization was tried, and what the flag actually gated
+    (write-time scorecard leniency, retrospective-lint eligibility) didn't need
+    a computed flag: lint is already gated by the explicit human `lint
+    retrospective` command, and write-time evaluation now always uses the
+    lenient cold-start scorecard (see Step 2 in the Ingest Protocol). These
+    stats remain useful diagnostics -- just no longer wired to a pass/fail
+    verdict or a state transition to log."""
     stats = graph_stats.compute_stats(_WIKI_PAGES_DIR)
     state = _load_system_state()
     state["orphan_fraction"] = stats.get("orphan_fraction", 1.0)
+    state["median_total_links"] = stats.get("median_total_links", 0.0)
+    state["mean_total_links"] = stats.get("mean_total_links", 0.0)
+    # Inbound-only stats kept for visibility into citation concentration.
     state["median_inbound_links"] = stats.get("median_inbound_links", 0.0)
     state["mean_inbound_links"] = stats.get("mean_inbound_links", 0.0)
 
-    # Additive small-world topology metrics (Graph Topology Philosophy). Do not
-    # gate graph_maturity on these yet — see the Phase 3b scope guardrail in
-    # the harness improvement plan; they're informational until at least one
-    # real run has produced before/after numbers to calibrate thresholds.
+    # Additive small-world topology metrics (Graph Topology Philosophy) —
+    # informational only, same as above.
     try:
         topology = graph_topology.compute_topology_stats(_WIKI_PAGES_DIR)
         state["clustering_coefficient"] = topology.get("clustering_coefficient", 0.0)
@@ -475,24 +485,7 @@ def _maybe_transition_maturity(session_id: str) -> None:
     except Exception as e:
         logger.warning("graph_topology stats failed (non-fatal, informational only): %s", e)
 
-    transitioned = False
-    if not state.get("graph_maturity") and stats.get("mature"):
-        state["graph_maturity"] = True
-        transitioned = True
     _write_system_state(state)
-    if transitioned:
-        entry = (
-            f"## [{_now_date()}] transition | cold_start → mature\n"
-            f"session_id: {session_id}\n"
-            f"pages_at_transition: {stats.get('page_count', 0)}\n"
-            f"orphan_fraction: {stats.get('orphan_fraction')}\n"
-            f"median_inbound_links: {stats.get('median_inbound_links')}\n"
-            f"mean_inbound_links: {stats.get('mean_inbound_links')}\n"
-        )
-        if _LOG_MD.exists():
-            _LOG_MD.write_text(_LOG_MD.read_text(encoding="utf-8").rstrip() + "\n\n" + entry,
-                               encoding="utf-8")
-        print(f"[{session_id}] graph maturity transition: cold_start → mature")
 
 
 def _max_linking_debt(research_config: dict) -> int:
@@ -2446,7 +2439,7 @@ scorecard:
 
 ## Sources
 
-<Citations to source files.>
+<Citations to source files (the orchestrator fills in the local raw/ snapshot deterministically after drafting).>
 """
     synthesis_template = """\
 ---
@@ -2524,7 +2517,7 @@ scorecard:
 
 ## Sources
 
-<Citations to source URLs or raw files.>
+<Citations to source files (the orchestrator fills in the local raw/ snapshot deterministically after drafting).>
 """
     workload_kernel_template = """\
 ---
@@ -2569,7 +2562,7 @@ scorecard:
 
 ## Sources
 
-<Citations to source URLs or raw files.>
+<Citations to source files (the orchestrator fills in the local raw/ snapshot deterministically after drafting).>
 """
     optimization_recipe_template = """\
 ---
@@ -2617,7 +2610,7 @@ scorecard:
 
 ## Sources
 
-<Citations to source URLs or raw files.>
+<Citations to source files (the orchestrator fills in the local raw/ snapshot deterministically after drafting).>
 """
     benchmark_result_template = """\
 ---
@@ -2668,7 +2661,7 @@ scorecard:
 
 ## Sources
 
-<Citations to source URLs or raw files.>
+<Citations to source files (the orchestrator fills in the local raw/ snapshot deterministically after drafting).>
 """
     templates = {
         "entity": entity_template,
@@ -2963,6 +2956,37 @@ def _apply_provenance(draft: dict, entry: dict) -> None:
     fm.setdefault("fetched_at", entry.get("fetched_at"))
 
 
+_SOURCES_SECTION_RE = re.compile(r"(^##\s+Sources\s*\n)(.*?)(?=\n##\s|\Z)", re.MULTILINE | re.DOTALL)
+
+
+def _fix_sources_section_body(draft: dict, entry: dict) -> None:
+    """Deterministically rewrite the body's `## Sources` section to cite the
+    immutable local snapshot rather than a bare live URL.
+
+    CLAUDE.md's page template requires "Cite the snapshot, not a bare live
+    URL; the originating URL is recorded in `source_url`" — but the drafting
+    subagent is only ever shown candidate.url/title in the manifest, never
+    the snapshot path (that's computed and stored on `entry` after the
+    subagent call returns), so it can only ever cite the live URL in the
+    body no matter how the prompt is worded. Fixed mechanically here, the
+    same way _apply_provenance fixes frontmatter `sources`, rather than
+    relying on prompt-following for a requirement the subagent has no way
+    to satisfy."""
+    snapshot = entry.get("source_snapshot")
+    if not snapshot:
+        return
+    content = draft.get("content", "") or ""
+    title = (entry.get("candidate") or {}).get("title", "")
+    citation = f"- [{title}]({snapshot})" if title else f"- {snapshot}"
+
+    match = _SOURCES_SECTION_RE.search(content)
+    if match:
+        content = content[:match.start(2)] + citation + "\n" + content[match.end(2):]
+    else:
+        content = content.rstrip() + "\n\n## Sources\n\n" + citation + "\n"
+    draft["content"] = content
+
+
 def _queue_identity_upsert(
     draft: dict,
     ref: "identity.PageRef",
@@ -3248,6 +3272,7 @@ def _write_approved_entry(
     handled_any = False
     for draft in entry.get("drafts", []):
         _apply_provenance(draft, entry)
+        _fix_sources_section_body(draft, entry)
         canonical, aliases = _draft_canonical(draft)
         # Authoritative, deterministic identity check (overrides the subagent's
         # advisory identity_action). A collision hard-blocks page creation.
@@ -3364,12 +3389,25 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
             written_filenames, pipeline_rejections,
         )
 
-    # Per-session injection cap: how many times each page has been shown to
-    # the drafting subagent as wiki_context so far this session. Found live
-    # that unbounded injection of the same page (previously biased toward
-    # whichever page already had the most inbound_links) creates a
-    # preferential-attachment loop — see context_selector.py's docstring.
-    context_injection_counts: dict[str, int] = {}
+    # Fair-share injection cap: how disproportionately each page has been
+    # shown to the drafting subagent as wiki_context, relative to its fair
+    # share of all pages. Found live that unbounded injection of the same
+    # page (previously biased toward whichever page already had the most
+    # inbound_links) creates a preferential-attachment loop — see
+    # context_selector.py's docstring. Seeded from cross-session, per-event
+    # decayed history (see injection_history.py) rather than starting at {}
+    # every invocation -- otherwise many short sessions back-to-back each get
+    # a fresh cap and a genuine early hub can be cited without limit across
+    # sessions even though no single session ever exceeds its own cap.
+    injection_history_path = _research_state_dir(research_config) / "injection_history.json"
+    injection_beta = float(research_config.get("injection_decay_beta", injection_history.DEFAULT_BETA)
+                            or injection_history.DEFAULT_BETA)
+    injection_fair_share_multiplier = float(
+        research_config.get("injection_fair_share_multiplier",
+                             injection_history.DEFAULT_FAIR_SHARE_MULTIPLIER)
+        or injection_history.DEFAULT_FAIR_SHARE_MULTIPLIER
+    )
+    context_injection_counts, injection_total_ticks = injection_history.load_state(injection_history_path)
     # Per-session circuit breaker: a single flaky/blocking domain hit across
     # several different candidates in one session (see web_fetch.py
     # docstring) shouldn't pay the full retry+backoff cost on every one of
@@ -3502,12 +3540,22 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
             qmd_runner=qmd_runner,
             structured_terms=structured_terms,
             injection_counts=context_injection_counts,
-            injection_cap=int(research_config.get("context_injection_cap", 3) or 3),
+            injection_total_ticks=injection_total_ticks,
+            fair_share_multiplier=injection_fair_share_multiplier,
         )
-        for injected in injected_pages:
-            stem = Path(injected["filename"]).stem
-            context_injection_counts[stem] = context_injection_counts.get(stem, 0) + 1
-        is_cold_start = not _wiki_is_mature()
+        # One tick per candidate evaluated (see injection_history.py): every
+        # page's decayed count is discounted by injection_beta and
+        # total_ticks advances, whether or not this candidate injected any
+        # context, so a page's *share* stays exposure-independent.
+        injected_stems = [Path(injected["filename"]).stem for injected in injected_pages]
+        context_injection_counts, injection_total_ticks = injection_history.tick(
+            context_injection_counts, injection_total_ticks, injected_stems, beta=injection_beta
+        )
+        # Persist after every candidate (not just at session end) so the
+        # decayed history survives a session that exits early (quota
+        # exceeded, qmd blocked, crash) instead of only ever being written on
+        # a clean finish.
+        injection_history.save_state(injection_history_path, context_injection_counts, injection_total_ticks)
         eval_config = _load_claude_md_block("eval_thresholds")
         eval_manifest = {
             "candidate": {"url": url, "title": candidate.get("title", "")},
@@ -3527,7 +3575,6 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
                 "relevant_pages": injected_pages,
                 "concept_gaps": _get_concept_gaps(),
                 "gap_manifest": gap_manifest,
-                "graph_maturity": not is_cold_start,
                 "depth": effective_depth,
             },
             "domain_config": {
@@ -3539,7 +3586,12 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
                 "lint_priorities": research_config.get("lint_priorities", []),
             },
             "scorecard_config": {
-                "variant": "cold_start" if is_cold_start else candidate.get("estimated_type", "entity"),
+                # Always the lenient cold-start variant at write time (see Step 2
+                # in the Ingest Protocol). The stricter entity/synthesis scorecard
+                # variants in [eval_thresholds] are reserved for retrospective
+                # lint (eval_summary.py reads them directly there) -- write-time
+                # evaluation no longer branches on a computed maturity flag.
+                "variant": "cold_start",
                 "weights": eval_config,
                 "acceptance_threshold": 0.4,
                 "hard_rejection_threshold": 0.2,
@@ -3676,12 +3728,15 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
         print(f"[{session_id}] Synthesis gaps detected ({len(synthesis_gaps)}):")
         for gap in synthesis_gaps[:5]:
             print(f"  {gap}")
-        # Only after the wiki has graduated cold-start bootstrapping (entity
-        # pages take priority there per the ingest protocol) and only if this
-        # session still has page budget left, after entity candidates for
-        # this query are exhausted — one synthesis draft per session, so it
-        # doesn't compete with page-count-focused sessions for budget.
-        if _wiki_is_mature():
+        # Only after the wiki has enough entity pages to synthesize something
+        # real from (entity pages take priority during early bootstrapping per
+        # the ingest protocol) — a plain, transparent page-count threshold
+        # rather than a computed graph-degree "maturity" flag, which proved
+        # unreliable at gating anything (see _refresh_connectivity_stats).
+        entity_page_count = gap_manifest.get("page_type_counts", {}).get("entity", 0) \
+            if isinstance(gap_manifest, dict) else 0
+        min_entity_pages = int(research_config.get("min_entity_pages_for_synthesis", 10) or 10)
+        if entity_page_count >= min_entity_pages:
             synthesis_filename = _generate_synthesis_candidate(
                 session_state, quota, audit, research_config, session_written_stems
             )
@@ -3707,9 +3762,7 @@ def _run_research_state(session_state: ResearchSessionState) -> dict:
         theme_profile=research_config.get("theme_profile"),
         coverage_gaps=(gap_manifest.get("gap_types", []) if isinstance(gap_manifest, dict) else []),
     )
-    # Refresh connectivity metrics and flip graph_maturity if the connectivity
-    # predicate is now satisfied (the transition writer the design implied).
-    _maybe_transition_maturity(session_id)
+    _refresh_connectivity_stats()
 
     # Distinguish "genuinely nothing new to write" from "every evaluation call
     # blew up before producing a verdict" (e.g. an exhausted API key/proxy

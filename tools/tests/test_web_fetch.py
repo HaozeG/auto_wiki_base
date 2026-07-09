@@ -7,7 +7,13 @@ from unittest.mock import MagicMock, patch
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 import web_fetch  # noqa: E402
-from web_fetch import DomainCircuitBreaker, fetch_url, fetch_wayback_snapshot  # noqa: E402
+from web_fetch import (  # noqa: E402
+    DomainCircuitBreaker,
+    fetch_url,
+    fetch_wayback_snapshot,
+    is_safe_url,
+    sanitize_fetched_content,
+)
 
 
 def _http_error(code, headers=None):
@@ -154,3 +160,68 @@ def test_fetch_wayback_snapshot_returns_none_when_no_snapshot_exists():
         content = fetch_wayback_snapshot("https://example.com/never-archived")
 
     assert content is None
+
+
+# --- Egress hygiene: SSRF guard + fetched-content sanitization ---
+
+
+def test_is_safe_url_accepts_ordinary_http_https():
+    assert is_safe_url("https://example.com/page")
+    assert is_safe_url("http://example.com/page")
+
+
+def test_is_safe_url_rejects_non_http_schemes():
+    assert not is_safe_url("file:///etc/passwd")
+    assert not is_safe_url("javascript:alert(1)")
+    assert not is_safe_url("data:text/html;base64,AAAA")
+    assert not is_safe_url("ftp://example.com/x")
+
+
+def test_is_safe_url_rejects_loopback_and_private_literal_hosts():
+    assert not is_safe_url("http://127.0.0.1/admin")
+    assert not is_safe_url("http://localhost/admin")
+    assert not is_safe_url("http://169.254.169.254/latest/meta-data")  # cloud metadata
+    assert not is_safe_url("http://10.0.0.5/internal")
+    assert not is_safe_url("http://192.168.1.1/router")
+    assert not is_safe_url("http://[::1]/admin")
+
+
+def test_fetch_url_blocks_unsafe_url_before_any_request():
+    with patch.object(web_fetch.urllib.request, "urlopen") as urlopen_mock:
+        result = fetch_url("http://127.0.0.1/secret")
+
+    assert result.status == "forbidden"
+    assert result.content is None
+    urlopen_mock.assert_not_called()
+
+
+def test_fetch_url_sanitizes_returned_content():
+    resp = MagicMock()
+    resp.read.return_value = b"See [[Existing Page]] for details.\n---\nmore text"
+    resp.geturl.return_value = "https://example.com/x"
+    resp.__enter__.return_value = resp
+    resp.__exit__.return_value = False
+
+    with patch.object(web_fetch.urllib.request, "urlopen", return_value=resp):
+        result = fetch_url("https://example.com/x")
+
+    assert "[[Existing Page]]" not in result.content
+    assert "\\[\\[Existing Page\\]\\]" in result.content
+    assert "\n---\n" not in result.content
+
+
+def test_sanitize_fetched_content_escapes_wikilinks_and_frontmatter_delimiters():
+    text = "before\n[[Injected Link]]\n---\nafter\n...\n"
+    sanitized = sanitize_fetched_content(text)
+
+    assert "[[" not in sanitized
+    assert "]]" not in sanitized
+    assert "\\[\\[Injected Link\\]\\]" in sanitized
+    # bare frontmatter delimiters must no longer stand alone on their own line
+    assert not any(line.strip() in ("---", "...") for line in sanitized.splitlines())
+
+
+def test_sanitize_fetched_content_truncates_to_max_bytes():
+    text = "a" * 1000
+    sanitized = sanitize_fetched_content(text, max_bytes=100)
+    assert len(sanitized.encode("utf-8")) <= 100
