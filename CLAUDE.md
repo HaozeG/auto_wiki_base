@@ -456,6 +456,78 @@ spacy_model: en_core_web_sm
 
 ---
 
+## Theme Profile
+
+```yaml
+[theme_profile]
+theme: Hot Chips symposium chip architectures
+organization_choice: chip_domain
+organization_name: Chip Domain
+page_types:
+  processor_architecture:
+    description: A general-purpose processor chip architecture (CPU) presented at
+      Hot Chips.
+    structured_fields:
+    - hardware_targets
+    - workloads
+    - datatypes
+    - metrics
+    - toolchains
+    - constraints
+  gpu_architecture:
+    description: A graphics processing unit or GPU-like accelerator architecture.
+    structured_fields:
+    - hardware_targets
+    - workloads
+    - datatypes
+    - metrics
+    - toolchains
+    - constraints
+  ai_accelerator_architecture:
+    description: A specialized accelerator for artificial intelligence and machine
+      learning workloads.
+    structured_fields:
+    - hardware_targets
+    - workloads
+    - datatypes
+    - metrics
+    - toolchains
+    - constraints
+  network_processor_architecture:
+    description: A network processor or smartNIC chip architecture.
+    structured_fields:
+    - hardware_targets
+    - workloads
+    - datatypes
+    - metrics
+    - toolchains
+    - constraints
+  memory_architecture:
+    description: A memory device or memory controller architecture (e.g., HBM, CXL
+      controllers).
+    structured_fields:
+    - hardware_targets
+    - workloads
+    - datatypes
+    - metrics
+    - toolchains
+    - constraints
+relationship_rules:
+- each chip architecture may relate to a company or research group
+- compare similar chip types (e.g., GPUs from different vendors)
+source_preferences:
+- conference presentation
+- official documentation
+- white paper
+coverage_priorities:
+- cover all chip types presented in recent 5 years
+- prioritize chips with public benchmarks
+lint_priorities:
+- ensure each chip has a defined market domain
+- check for consistent performance metrics
+hub_hierarchy: []
+```
+
 ## Research Configuration
 
 ```yaml
