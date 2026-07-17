@@ -2,6 +2,9 @@
 canonical_name: AMD Instinct
 aliases:
 - AMD Radeon Instinct
+- AMD Instinct accelerators
+- Instinct
+- Radeon Instinct
 subtype: null
 tags:
 - GPU
@@ -17,13 +20,15 @@ scorecard:
 sources:
 - raw/cache/d24e455c1cd7f5a3.md
 - https://en.wikipedia.org/wiki/AMD_Instinct
+- raw/cache/98ad1ba7c7e63374.md
+- https://grokipedia.com/page/AMD_Instinct
 source_url: https://en.wikipedia.org/wiki/AMD_Instinct
 fetched_at: '2026-07-17T09:09:55.826848+00:00'
 type: entity
 created: '2026-07-17'
 updated: '2026-07-17'
 cold_start: true
-inbound_links: 1
+inbound_links: 2
 ---
 
 # AMD Instinct

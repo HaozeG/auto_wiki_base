@@ -6,6 +6,20 @@ aliases:
 - MI350X architecture
 - MI355X architecture
 - AMD CDNA4
+- AMD Instinct MI350
+- MI350
+- MI355X
+- AMD Instinct MI350 Series
+- MI350 Series
+- AMD MI350
+- MI350P
+- MI350X
+- CDNA4
+- AMD Instinct MI355X
+- MI350 series
+- AMD MI355X
+- AMD MI350 (CDNA 4)
+- AMD MI350 series
 subtype: null
 tags:
 - gpu-architecture
@@ -20,13 +34,27 @@ scorecard:
 sources:
 - raw/cache/45a88d7548d628ee.md
 - https://zhaifeiyue.github.io/papers/amd-cdna4-whitepaper/detail.html
+- raw/cache/321526d73cf105b3.md
+- https://www.crn.com/news/ai/2024/amd-says-instinct-mi325x-bests-nvidia-h200-vows-huge-uplift-with-mi350
+- raw/cache/7c92212f6dba1da6.md
+- https://www.amd.com/en/products/accelerators/instinct/mi350.html
+- raw/cache/200c0a86713325b3.md
+- https://rocm.docs.amd.com/en/latest/how-to/rocm-for-ai/inference-optimization/workload.html
+- raw/cache/26f1b36a2496b579.md
+- https://convergedigest.com/hot-chips-2025-amd-boosts-infinity-fabric/
+- raw/cache/c264d64d9f2ebaff.md
+- https://github.com/jhinpan/ROCmKernelWiki/blob/main/sources/docs/doc-cdna4-whitepaper.md
+- raw/cache/83dc6a4f2e8d7c63.md
+- https://rocm.blogs.amd.com/artificial-intelligence/mlperf-training-v5.1/README.html
+- raw/cache/0f34b7355979e93b.md
+- https://gangliao.me/blog/2026/amd-gpu-architecture-deep-dive/
 source_url: https://zhaifeiyue.github.io/papers/amd-cdna4-whitepaper/detail.html
 fetched_at: '2026-07-17T09:10:53.797272+00:00'
 type: entity
 created: '2026-07-17'
 updated: '2026-07-17'
 cold_start: true
-inbound_links: 2
+inbound_links: 4
 ---
 
 # AMD CDNA 4

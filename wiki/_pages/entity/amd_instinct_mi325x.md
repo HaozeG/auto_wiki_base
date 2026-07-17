@@ -2,6 +2,8 @@
 canonical_name: AMD Instinct MI325X
 aliases:
 - MI325X
+- AMD MI325X
+- Instinct MI325X
 subtype: null
 tags: []
 scorecard:
@@ -13,6 +15,18 @@ scorecard:
 sources:
 - raw/cache/d52a6b7c30059a40.md
 - https://www.amd.com/en/newsroom/press-releases/2024-6-2-amd-accelerates-pace-of-data-center-ai-innovation-.html
+- raw/cache/da8f193fc9740574.md
+- https://wccftech.com/amd-instinct-ai-accelerator-lineup-mi325x-refresh-q4-3nm-mi350-cdna-4-2025-cdna-mi400-cdna-next-2026/
+- raw/cache/321526d73cf105b3.md
+- https://www.crn.com/news/ai/2024/amd-says-instinct-mi325x-bests-nvidia-h200-vows-huge-uplift-with-mi350
+- raw/cache/f301103b9c088449.md
+- https://awesomeagents.ai/hardware/amd-mi325x/
+- raw/cache/0f86256d7c2197b4.md
+- https://www.gadgetpilipinas.net/2024/10/amd-instinct-mi325x-accelerator/
+- raw/cache/78ddb561e5d2b52a.md
+- https://www.amd.com/en/newsroom/press-releases/2024-10-10-amd-delivers-leadership-ai-performance-with-amd-in.html
+- raw/cache/26717dec5caff47d.md
+- https://it-online.co.za/2024/10/16/amd-looking-to-power-the-next-generation-of-genai/
 source_url: https://www.amd.com/en/newsroom/press-releases/2024-6-2-amd-accelerates-pace-of-data-center-ai-innovation-.html
 fetched_at: '2026-07-17T09:12:05.866707+00:00'
 type: entity
