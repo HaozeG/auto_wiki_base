@@ -2367,12 +2367,13 @@ def _run_eval_pipeline(draft: dict) -> tuple[bool, dict]:
             text=True,
         )
         passes = result.returncode == 0
+        detail = (result.stdout.strip() or result.stderr.strip()) if not passes else None
         return passes, {
             "layer1_pass": passes or "WORD_COUNT" not in result.stdout,
             "layer2_pass": True,
             "layer3_triggered": False,
             "final_decision": "approved" if passes else "rejected",
-            "rejection_detail": result.stdout.strip() if not passes else None,
+            "rejection_detail": detail,
         }
     finally:
         tmp_path.unlink(missing_ok=True)

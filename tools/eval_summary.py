@@ -35,14 +35,10 @@ from qmd_runner import _duplicate_tokens
 
 _CLAUDE_MD_PATH = Path(__file__).parent.parent / "CLAUDE.md"
 _WIKI_PAGES_DIR = Path(__file__).parent.parent / "wiki" / "_pages"
-_PAGE_TYPES = {
-    "entity",
-    "synthesis",
-    "hardware_target",
-    "workload_kernel",
-    "optimization_recipe",
-    "benchmark_result",
-}
+# Canonical types plus a couple of harness-internal kinds (source_note,
+# benchmark_result triggers the measurement-field check in layer1_check)
+# that aren't necessarily declared as theme subtypes.
+_BASE_PAGE_TYPES = {"entity", "synthesis", "source_note", "benchmark_result"}
 
 
 def _load_claude_md_block(block_name: str) -> dict:
@@ -56,6 +52,23 @@ def _load_claude_md_block(block_name: str) -> dict:
         return yaml.safe_load(match.group(1)) or {}
     except yaml.YAMLError:
         return {}
+
+
+def _page_types() -> set[str]:
+    """Base kinds plus whatever subtypes the active [theme_profile] declares.
+
+    The wiki is domain-agnostic (CLAUDE.md, "Theme Setup"): subtype names
+    like `hardware_target` or `ai_accelerator_architecture` are chosen per
+    theme by the profile-architect subagent, not fixed in code, so the
+    allowed --type values must be read from the live theme profile rather
+    than hardcoded to one theme's subtype names.
+    """
+    profile = _load_claude_md_block("theme_profile")
+    subtypes = set((profile.get("page_types") or {}).keys())
+    return _BASE_PAGE_TYPES | subtypes
+
+
+_PAGE_TYPES = _page_types()
 
 
 def _get_eval_config() -> dict:
