@@ -41,7 +41,7 @@ type: memory_architecture
 created: '2026-07-17'
 updated: '2026-07-17'
 cold_start: true
-inbound_links: 0
+inbound_links: 5
 ---
 
 # Alphawave Semi HBM Subsystem

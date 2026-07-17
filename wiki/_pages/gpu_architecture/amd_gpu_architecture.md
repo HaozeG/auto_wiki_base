@@ -36,7 +36,7 @@ type: gpu_architecture
 created: '2026-07-17'
 updated: '2026-07-17'
 cold_start: true
-inbound_links: 4
+inbound_links: 7
 ---
 
 # AMD GPU Architecture

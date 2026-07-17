@@ -7,6 +7,16 @@ aliases:
 - GB200 NVL72
 - GB200
 - NVIDIA GB200
+- Blackwell architecture
+- B200
+- NVIDIA Blackwell GPU Architecture
+- NVIDIA Blackwell GPU
+- RTX 5080
+- NVIDIA Blackwell Architecture
+- Blackwell GPU architecture
+- Blackwell B200
+- NVIDIA Blackwell B200
+- GB200 Grace Blackwell Superchip
 subtype: null
 tags: []
 scorecard:
@@ -22,6 +32,14 @@ sources:
 - https://www.servethehome.com/nvidia-blackwell-platform-at-hot-chips-2024/
 - raw/cache/3b0fa3d8db31f41d.md
 - https://glownet.io/nvidia-blackwell-capabilities/
+- raw/cache/8a8198e5532f8680.md
+- https://resources.nvidia.com/en-us-blackwell-architecture/blackwell-architecture-technical-brief
+- raw/cache/909eee89a00ce5f2.md
+- https://www.emergentmind.com/topics/nvidia-blackwell-gpus
+- raw/cache/4e3cfb5f66900140.md
+- https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/
+- raw/cache/92346b78e6442f9d.md
+- https://wccftech.com/nvidia-blackwell-ai-deep-dive-nv-hbi-fuse-two-ai-gpus-together-5th-gen-tensor-cores-5th-gen-nvlink-spectrum-x/
 source_url: https://blogs.nvidia.com/blog/hot-chips-2024/
 fetched_at: '2026-07-17T09:38:45.164832+00:00'
 type: entity

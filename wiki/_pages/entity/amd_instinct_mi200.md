@@ -36,7 +36,7 @@ type: entity
 created: '2026-07-17'
 updated: '2026-07-17'
 cold_start: true
-inbound_links: 0
+inbound_links: 1
 outbound_links:
 - target: amd_cdna
   reason: The AMD Instinct MI200 is the first product family to implement the CDNA2

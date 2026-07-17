@@ -1258,3 +1258,1133 @@ NVIDIA Blackwell is a GPU architecture developed by NVIDIA for data center-scale
 
 - [NVIDIA Blackwell GPU Technical Whitepaper Brief | Glownet](raw/cache/3b0fa3d8db31f41d.md)
 merge_draft_body -->
+
+## [2026-07-17] merge_pending | google_ironwood_tpu.md
+target_page: google_ironwood_tpu.md
+canonical_name: Google Ironwood TPU
+colliding_name: Google Ironwood TPU
+source: https://techcrunch.com/2025/04/09/google-unveils-ironwood-a-new-ai-accelerator-chip/
+status: pending_review
+<!-- merge_draft_body
+# Google Ironwood TPU
+
+Google Ironwood is a seventh-generation Tensor Processing Unit (TPU) developed by Google, announced at the Cloud Next conference in April 2025. It is the first TPU generation optimized specifically for inference workloads, designed to run AI models at scale. Ironwood delivers 4,614 TFLOPs of peak computing power per chip, each with 192GB of dedicated RAM and memory bandwidth approaching 7.4 Tbps. The chip features an enhanced SparseCore for processing the types of data common in advanced ranking and recommendation workloads, such as algorithms that suggest products or content. Ironwood is scheduled to launch for Google Cloud customers in late 2025, available in two cluster configurations: a 256-chip cluster and a 9,216-chip cluster, and it will be integrated into Google's AI Hypercomputer platform for modular computing clusters.
+
+## Key Claims
+
+- Seventh-generation TPU and the first from Google optimized for inference workloads.
+- Peak performance of 4,614 TFLOPs per chip.
+- 192GB of dedicated RAM with memory bandwidth up to 7.4 Tbps.
+- Enhanced SparseCore for ranking and recommendation workloads.
+- Designed for energy efficiency through minimized data movement and reduced latency on-chip.
+- Available in two cluster sizes: 256-chip and 9,216-chip configurations.
+- Scheduled for launch in 2025 for Google Cloud customers.
+- Part of the Google AI Hypercomputer integration for scalable deployment.
+
+## Relationships
+
+No specific relationship to visible context pages in the current wiki.
+
+## Sources
+
+- [Ironwood is Google's newest AI accelerator chip | TechCrunch](raw/cache/f7f559569bd5b8bf.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | google_ironwood_tpu.md
+target_page: google_ironwood_tpu.md
+canonical_name: Google Ironwood TPU
+colliding_name: TPU7x (Ironwood)
+source: https://docs.cloud.google.com/tpu/docs/tpu7x
+status: pending_review
+<!-- merge_draft_body
+# TPU7x (Ironwood)
+
+TPU7x (Ironwood) is the seventh-generation Tensor Processing Unit (TPU) from Google Cloud, designed for large-scale AI training and inference workloads. It is the first release in the Ironwood family and offers a 9,216-chip footprint per Pod, sharing architectural similarities with the TPU v5p generation. Each TPU7x chip integrates two TensorCores and four SparseCores, and is composed of two distinct chiplets—each featuring one TensorCore, two SparseCores, and 96 GB of HBM—connected by a die-to-die interface six times faster than a 1D ICI link. The chip delivers up to 2307 TFLOPS of BF16 peak compute per chip and 4614 TFLOPS of FP8 peak compute, with 192 GB of HBM per chip providing 7.38 TB/s of memory bandwidth. The system architecture employs a 3D torus interconnect topology and supports slice shapes scaling from small single-host configurations up to 9216-chip pods. The memory hierarchy includes high-bandwidth memory (HBM), on-chip vector memory (VMEM) with ultra-high bandwidth to the Matrix Multiply Unit (MXU), and host memory accessible via PCIe for offloading activations or optimizer states. The dual-chiplet architecture is exposed to frameworks such as JAX as two separate devices per chip, enabling reuse of existing software models with minimal changes.
+
+## Key Claims
+
+- TPU7x is the first Ironwood-family TPU, with a 9,216-chip Pod footprint; it shares design similarities with TPU v5p.
+- Each chip contains two TensorCores and four SparseCores, formed from two chiplets each with one TensorCore, two SparseCores, and 96 GB of HBM.
+- Peak compute per chip: 2307 TFLOPS (BF16) and 4614 TFLOPS (FP8).
+- HBM capacity per chip: 192 GiB; HBM bandwidth per chip: 7380 GBps.
+- Inter-chip interconnect (ICI) bandwidth per chip: 200 GBps per axis (bidirectional); data center network (DCN) bandwidth per chip: 100 Gbps.
+- The memory hierarchy comprises HBM, vector memory (VMEM) on-chip SRAM, and host memory via PCIe; VMEM provides higher bandwidth to the MXU than HBM and is a tunable parameter for custom Pallas kernels.
+- The dual-chiplet architecture uses a die-to-die (D2D) interface and exposes each chip as two devices in JAX, requiring a fourth dimension in topology specifications.
+- Supported slice topologies range from 2x2x1 (1/16th chip) to 8x16x16 (2048 chips); larger slices are composed of 4x4x4 cubes.
+- The 3D torus interconnect topology allows scaling to 9216 chips with bidirectional bandwidth of 200 GBps per axis.
+- Each TPU7x VM contains 4 chips with 224 vCPUs and 960 GB of RAM.
+- Frameworks: JAX exposes two devices per chip; compute can be specified per chiplet. GKE is a supported orchestration platform.
+
+## Relationships
+
+No specific relationship to visible context pages in the current wiki.
+
+## Sources
+
+- [TPU7x (Ironwood) | Google Cloud Documentation](raw/cache/c5d9854149044f40.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | google_ironwood_tpu.md
+target_page: google_ironwood_tpu.md
+canonical_name: Google Ironwood TPU
+colliding_name: TPU7x (Ironwood)
+source: https://docs.cloud.google.com/tpu/docs/ironwood-performance
+status: pending_review
+<!-- merge_draft_body
+# TPU7x (Ironwood)
+
+TPU7x (Ironwood) is a tensor processing unit developed by Google for accelerating artificial intelligence and machine learning workloads. Part of the Google Cloud TPU ecosystem, Ironwood features a multi-tiered memory hierarchy including 192 GB of high-bandwidth memory (HBM) per chip, and supports hardware-accelerated FP8 (8-bit floating point) data types capable of delivering up to 4614 TFLOPS peak theoretical performance per chip. It is designed for both training and inference of large-scale neural networks, leveraging techniques such as low-precision training, sharding, communication optimization, activation rematerialization, and custom accelerator kernels. The architecture is optimized for efficient data movement across its memory tiers and interconnect topology, and its performance tuning framework emphasizes arithmetic intensity analysis to determine whether a workload is compute-bound, memory-bound, or interconnect-bound.
+
+## Key Claims
+
+- TPU7x (Ironwood) provides built-in hardware acceleration for FP8 data types, achieving a peak theoretical performance of 4614 TFLOPS per chip.
+- FP8 training yields a performance improvement of approximately 1.3x over standard BF16 training while halving memory footprint for weights and activations.
+- Each TPU7x chip includes 192 GB of HBM, enabling larger models to fit without offloading to host memory.
+- FP8 reduces HBM pressure, increases effective batch size, and lowers memory bandwidth requirements.
+- Recommended FP8 quantization practices: start with per-tensor scaling, default to dynamic scaling, mix E4M3 (forward pass) and E5M2 (backward pass) formats, and use round-to-nearest-even (RNE) rounding.
+- MaxText supports FP8 training through the QWIX quantization library via the `use_qwix_quantization=true` flag.
+- Performance tuning should begin with an arithmetic intensity analysis to classify workloads as compute-bound, memory-bound, or interconnect-bound.
+- Sharding strategy should prioritize the simplest approach that meets memory constraints to minimize communication overhead.
+
+## Relationships
+
+- Shares the use of FP8 (8-bit floating point) datatypes for accelerating computation with [[amd_matrix_cores]], though TPU7x implements FP8 as a general-purpose data format for training and inference, while AMD Matrix Cores use FP8 specifically within matrix-core fused-multiply-add operations for non-TPU architectures.
+
+## Sources
+
+- [TPU7x (Ironwood) performance optimizations | Google Cloud ...](raw/cache/e2f0a899af98f5bc.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | google_ironwood_tpu.md
+target_page: google_ironwood_tpu.md
+canonical_name: Google Ironwood TPU
+colliding_name: Google TPU Ironwood
+source: https://www.nevsemi.com/blog/google-tpu-chip-ironwood-technology-explained
+status: pending_review
+<!-- merge_draft_body
+# Google TPU Ironwood
+
+The Google TPU Ironwood is Google's seventh-generation Tensor Processing Unit, a custom-designed ASIC for accelerating machine learning workloads. Announced in November 2025, Ironwood is the successor to the sixth-generation TPU Trillium and offers a fourfold improvement in both model training performance and inference throughput. Each chip features 192 GB of HBM3e memory with 7.4 TB/s bandwidth and achieves a peak computational performance of 4,614 TFLOPs in FP8 precision. A single Ironwood Superpod integrates 9,216 such chips, creating a large-scale AI supercomputer. Google's TPUs have evolved since the first generation in 2015, with each generation adding capabilities such as distributed training (v2), liquid cooling (v3), 3D torus interconnect (v4), and MLP core for Transformers (v6). Ironwood targets large-scale generative AI and enterprise AI deployments, addressing high cost and energy footprint of trillion-parameter models.
+
+## Key Claims
+
+- Ironwood is the seventh-generation Google TPU, commercialized in November 2025.
+- Compared with the sixth-generation TPU Trillium, Ironwood delivers a fourfold improvement in both model training performance and inference throughput.
+- Each Ironwood chip includes 192 GB of HBM3e memory with 7.4 TB/s bandwidth.
+- Peak computational performance of 4,614 TFLOPs in FP8 precision.
+- A single Ironwood Superpod integrates 9,216 TPU chips, collectively forming a high-capability AI supercomputer.
+- AI developer Anthropic is reportedly preparing to deploy one million TPUs (presumably Ironwood) to support its Claude model family.
+- Ironwood targets large-scale generative AI and enterprise-level AI deployments, aiming to reduce the high cost and energy footprint of operating trillion-parameter models.
+
+## Relationships
+
+No specific relationship to visible context pages in the current wiki.
+
+## Sources
+
+- [Google TPU Chip Ironwood Technology Explained - Nevsemi ...](raw/cache/86810d726576fc07.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | intel_clearwater_forest.md
+target_page: intel_clearwater_forest.md
+canonical_name: Intel Clearwater Forest
+colliding_name: Intel Clearwater Forest
+source: https://www.servethehome.com/intel-clearwater-forest-is-set-to-be-a-tech-breakthrough-server-chip/
+status: pending_review
+<!-- merge_draft_body
+# Intel Clearwater Forest
+
+Intel Clearwater Forest is an upcoming server processor architecture from Intel, positioned as the successor to the Sierra Forest all-E-core Xeon line. It is planned to be manufactured on Intel's 18A process node, incorporating RibbonFET gate-all-around transistors and PowerVia backside power delivery, which Intel estimates will yield approximately 6% efficiency improvement. Clearwater Forest will utilize advanced packaging technologies including Foveros Direct 3D with direct copper bonding between compute tiles and base dies, and EMIB 3.5D combining chip-to-chip bridges with 3D stacking. The architecture is expected to deliver high core counts by stacking compute dies atop SRAM and fabric base dies, with I/O and memory controllers fabricated on separate, more mature process nodes. While specific performance figures and core counts have not been disclosed, Intel has indicated that Clearwater Forest will significantly increase core density and power efficiency compared to current Xeon offerings.
+
+## Key Claims
+
+- Clearwater Forest will be Intel's first server processor on the 18A process node.
+- It uses RibbonFET (gate-all-around) transistors, replacing FinFET technology.
+- It uses PowerVia backside power delivery, with Intel estimating a ~6% improvement in efficiency.
+- The architecture uses Foveros Direct 3D packaging with direct copper bonding between compute tiles and base dies.
+- It incorporates EMIB 3.5D packaging, combining EMIB (chip-to-chip bridges) and Foveros Direct 3D.
+- Compute dies are placed on top of SRAM and fabric base dies to enable high core counts.
+- I/O and SRAM are manufactured on separate, more mature process nodes (not 18A) to improve yield and reduce cost.
+- Clearwater Forest is designed for high-density cloud-native server workloads.
+
+## Relationships
+
+No specific relationship to visible context pages in the current wiki.
+
+## Sources
+
+- [Intel Clearwater Forest is Set to be a Tech Breakthrough Server Chip](raw/cache/c1eec18a570c53bb.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | granite_rapids.md
+target_page: granite_rapids.md
+canonical_name: Granite Rapids
+colliding_name: Intel Xeon 6+ Clearwater Forest
+source: https://www.servethehome.com/intel-xeon-6-clearwater-forest-is-out/
+status: pending_review
+<!-- merge_draft_body
+# Intel Xeon 6+ Clearwater Forest
+
+Intel Xeon 6+ Clearwater Forest is a processor architecture from Intel, announced in July 2026. It features up to 288 E-cores built on the Intel 18A process node, utilizing PowerVia and RibbonFET technologies. The chip supports DDR5-8000 memory and includes up to 576 MB of last-level cache. Clearwater Forest targets cloud-native and telco workloads, succeeding the Sierra Forest Xeon 6700E and 6900E lines. It is part of the Xeon 6900 series AP platform and aims to compete with Arm-based cores in cloud environments. Intel claims significant performance and efficiency improvements over both Sierra Forest and the older Cascade Lake, including 30% higher performance per thread and up to 9:1 consolidation ratio versus Cascade Lake. The architecture uses a tiled design with 12 compute tiles, three active base tiles, two I/O tiles, and EMIB and Foveros Direct 3D packaging, reflecting Intel's ongoing move toward disaggregated processors.
+
+## Key Claims
+
+- Up to 288 E-cores per socket, built on Intel 18A process with PowerVia and RibbonFET.
+- DDR5-8000 memory support, up to 576 MB last-level cache.
+- 30% higher performance at same core count compared to Sierra Forest.
+- 60% better performance per watt compared to Sierra Forest.
+- 38% reduction in rack power consumption compared to Sierra Forest.
+- 30% greater average performance per thread compared to Cascade Lake.
+- 55% greater average performance per watt compared to Cascade Lake.
+- Up to 9:1 consolidation ratio versus Cascade Lake.
+- Tiled architecture: 12 compute tiles, 3 active base tiles, 2 I/O tiles, 12 EMIB tiles.
+- Supports Intel SGX and TDX for confidential computing.
+- Intel Application Energy Telemetry (AET) for per-application core energy reporting.
+
+## Relationships
+
+No specific relationship to visible context pages in the current wiki.
+
+## Sources
+
+- [Intel Xeon 6+ Clearwater Forest is Out - ServeTheHome](raw/cache/5d835c813913d071.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | nvidia_blackwell_platform.md
+target_page: nvidia_blackwell_platform.md
+canonical_name: NVIDIA Blackwell Platform
+colliding_name: Blackwell
+source: https://resources.nvidia.com/en-us-blackwell-architecture/blackwell-architecture-technical-brief
+status: pending_review
+<!-- merge_draft_body
+# Blackwell
+
+The NVIDIA Blackwell architecture is a graphics processing unit (GPU) microarchitecture developed by Nvidia as the successor to the Hopper and Ada Lovelace microarchitectures. Named after statistician and mathematician David Blackwell, the architecture was officially announced on March 18, 2024. Blackwell GPUs are built on the TSMC 4NP process and incorporate 208 billion transistors across two chiplet dies connected by a 10 TB/s NVLink interface. The architecture serves as the foundation for the Grace Blackwell GB200 superchip and the GB200 NVL72 rack-scale system, delivering up to 30 times more performance and 25 times greater energy efficiency for AI workloads compared to the prior generation.
+
+## Key Claims
+
+- Blackwell is the successor to the Hopper and Ada Lovelace GPU microarchitectures.
+- Named after mathematician David Blackwell (Rao-Blackwell theorem).
+- Comprises 208 billion transistors across two chiplet dies.
+- Built on TSMC 4NP process node.
+- Chiplet dies are connected via a 10 TB/s NVLink interface.
+- The architecture powers the Grace Blackwell GB200 superchip and GB200 NVL72 system.
+- Claims 30X performance improvement and 25X energy efficiency improvement over the preceding architecture (Hopper).
+- B200 data center GPU listed at $30,000–40,000 per module as of July 2025.
+
+## Relationships
+
+No specific relationship to visible context pages.
+
+## Sources
+
+- [NVIDIA Blackwell Architecture Technical Overview](raw/cache/8a8198e5532f8680.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | nvidia_nvlink_nvswitch.md
+target_page: nvidia_nvlink_nvswitch.md
+canonical_name: Nvidia NVLink and NVSwitch
+colliding_name: NVLink
+source: https://intuitionlabs.ai/articles/nvidia-nvlink-gpu-interconnect
+status: pending_review
+<!-- merge_draft_body
+# NVLink
+
+NVIDIA NVLink is a high-speed GPU interconnect architecture that provides significantly higher bandwidth than PCIe, enabling efficient multi-GPU communication and unified memory. Introduced in 2016 with the Pascal P100 GPU, NVLink delivers up to 5× the bandwidth of PCIe 3.0 x16 per link. It supports cache coherence and unified virtual addressing, allowing GPUs and CPUs to share memory as peers. The architecture scales from point-to-point links to large fabrics using NVSwitch, achieving hundreds of GB/s to TB/s of GPU-to-GPU bandwidth. NVLink has been used in supercomputers such as Summit and Sierra, and in large-scale AI clusters such as Microsoft's 4,608-GPU Azure deployment.
+
+## Key Claims
+
+- NVLink was introduced in 2016 with the NVIDIA Pascal P100 GPU.
+- NVLink provides up to 5× the bandwidth of PCIe 3.0 x16 per link.
+- An NVIDIA Tesla P100 achieves 160 GB/s bidirectional bandwidth over NVLink, compared to ~32 GB/s over PCIe Gen3 x16.
+- NVLink 1.0 (Pascal P100): 4 links per GPU, total bidirectional bandwidth 160 GB/s.
+- NVLink 2.0 (Volta V100): 6 links per GPU, total bidirectional bandwidth 300 GB/s; added cache coherence and unified virtual addressing.
+- NVLink 3.0 (Ampere A100): 6 links per GPU, total bidirectional bandwidth 600 GB/s.
+- NVLink 4.0 (Hopper H100): 12 links per GPU, total bidirectional bandwidth 900 GB/s; per-link speed 100 GB/s in each direction.
+- NVLink enables coherent shared memory across processors, deployed in Oak Ridge's Summit and Sierra supercomputers.
+- Microsoft deployed a 4,608-GPU NVLink-connected cluster in 2025 using NVLink 5, achieving 92.1 exaFLOPS of FP4 inference.
+- NVLink works with NVSwitch for intra-node all-to-all connectivity and can be extended for inter-node links.
+
+## Relationships
+
+No specific relationship to visible context pages in the current wiki.
+
+## Sources
+
+- [NVIDIA NVLink Explained: A Guide to the GPU Interconnect](raw/cache/1bb25d6ea84c0446.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | nvidia_blackwell_platform.md
+target_page: nvidia_blackwell_platform.md
+canonical_name: NVIDIA Blackwell Platform
+colliding_name: NVIDIA Blackwell GPU Architecture
+source: https://www.emergentmind.com/topics/nvidia-blackwell-gpus
+status: pending_review
+<!-- merge_draft_body
+# NVIDIA Blackwell GPU Architecture
+
+The NVIDIA Blackwell GPU Architecture is a modern GPU microarchitecture designed for scientific, engineering, and artificial intelligence inference and HPC workloads. It succeeds the Hopper architecture and introduces several key innovations including unified INT32/FP32 execution units that replace the prior separated integer and floating-point pipelines, fifth-generation tensor cores supporting ultra-low precision formats FP4, FP6, and FP8, and a refined memory hierarchy with a reduced L1/shared memory per streaming multiprocessor (128 KB vs. 256 KB on Hopper) and a monolithic 65 MB L2 cache. Blackwell is implemented in both consumer GPUs such as the RTX 5080 and in large datacenter variants like Blackwell Ultra. The architecture requires updated compiler heuristics and kernel tuning to fully exploit its new capabilities and mitigate tradeoffs such as reduced shared memory and unified L2 cache contention under heavy warp concurrency.
+
+## Key Claims
+
+- Unified INT32/FP32 execution units replace previously separated integer and floating-point pipelines; each unit can perform either operation per cycle but not both simultaneously.
+- Each streaming multiprocessor (SM) is divided into four sub-core units: integer, FP32, FP64, and tensor (matrix multiply-accumulate).
+- L1/shared memory per SM is reduced to 128 KB, compared to 256 KB on Hopper.
+- L2 cache is a monolithic 65 MB, whereas Hopper uses two partitions totaling 50 MB.
+- Fifth-generation tensor cores support FP4, FP6, and FP8 arithmetic via new PTX/SASS instructions (tcgen05, QMMA, OMMA).
+- True latency for INT32/FP32 instructions is approximately 4 cycles on both Blackwell and Hopper.
+- In dense GEMM benchmarks, Blackwell (RTX 5080) shows up to 4x lower sustained throughput than Hopper, likely due to compiler maturity and scheduling policies.
+- FP4 tensor core operation draws as little as 16.75 W, while peak power in GEMM tests can exceed 110 W.
+- Transformer inference workloads see power usage drop from ~58.8 W to 45 W when using FP8 kernels on Blackwell.
+- Compiler optimizations are necessary to handle the unified execution units and to generate correct code for new tensor core instructions.
+
+## Relationships
+
+- [[nvidia_hopper_architecture]]: Blackwell is the direct successor to the Hopper architecture; it modifies the SM design (unified execution units), reduces L1 per SM, increases L2 cache size, and adds FP4/FP6 tensor core support, while inheriting the CUDA programming model and basic warp execution model.
+- [[nvidia_blackwell_ultra]]: The Blackwell Ultra is a dual-reticle datacenter variant built on the same base Blackwell architecture as the consumer RTX 5080 covered here; while Blackwell Ultra targets large-scale AI training with 208B transistors and 15 PetaFLOPS NVFP4, the base Blackwell design (e.g., RTX 5080) uses a single die with lower memory capacity and different performance characteristics.
+
+## Sources
+
+- [NVIDIA Blackwell GPU Architecture - emergentmind.com](raw/cache/909eee89a00ce5f2.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | granite_rapids.md
+target_page: granite_rapids.md
+canonical_name: Granite Rapids
+colliding_name: Intel Xeon Next-Generation Platform
+source: https://newsroom.intel.com/artificial-intelligence/intel-unveils-future-generation-xeon
+status: pending_review
+<!-- merge_draft_body
+# Intel Xeon Next-Generation Platform
+
+Intel's next-generation Xeon platform, unveiled at Hot Chips 2023, introduces a dual-architecture strategy with two distinct processor families: Sierra Forest, featuring Efficient-cores (E-cores) for density-optimized cloud compute, and Granite Rapids, featuring Performance-cores (P-cores) for high-performance AI and general-purpose workloads. This platform marks a significant evolution in Intel's data center roadmap, leveraging a modular system-on-chip design, shared software stack, and advanced memory technologies including CXL 2.0 support and new multiplexed combined rank (MCR) DIMMs to address the growing demands of AI, cloud, and enterprise deployments.
+
+## Key Claims
+
+- Intel's next-generation Xeon platform introduces two distinct processor families for 2024: Sierra Forest (E-core) and Granite Rapids (P-core).
+- The platform uses a modular system-on-chip design for scalability across AI, cloud, and enterprise workloads.
+- Sierra Forest targets density-optimized compute with up to 144 cores per CPU and TDP as low as 200W.
+- Sierra Forest claims 2.5x better rack density and 2.4x higher performance per watt compared to 4th Gen Intel Xeon processors (architectural projections as of August 21, 2023).
+- Granite Rapids targets high-performance compute with enhanced AI capabilities, claiming 2-3x better performance for mixed AI workloads compared to 4th Gen Xeon (projected).
+- Granite Rapids features enhanced Intel AMX with support for new FP16 instructions.
+- The platform supports CXL 2.0 with backward compatibility to CXL 1.1 and up to 136 lanes of PCIe 5.0/CXL 2.0.
+- The new platform includes Intel Flat Memory for hardware-managed data movement between DDR5 and CXL memory.
+- Fastest DDR and new high-bandwidth multiplexed combined rank (MCR) DIMMs are supported.
+- Socket scalability ranges from 1-socket to 8-socket configurations.
+- 5th Gen Intel Xeon (Emerald Rapids) is on track for Q4 2023; Sierra Forest for H1 2024; Granite Rapids follows shortly after.
+
+## Relationships
+
+No specific relationship to visible context pages.
+
+## Sources
+
+- [Intel Unveils Future-Generation Xeon with Robust Performance and ...](raw/cache/06daa5137dc47860.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | oryon.md
+target_page: oryon.md
+canonical_name: Oryon
+colliding_name: Qualcomm Oryon Core
+source: https://chipsandcheese.com/p/hot-chips-2024-qualcomms-oryon-core
+status: pending_review
+<!-- merge_draft_body
+# Qualcomm Oryon Core
+
+The Qualcomm Oryon Core is a high-performance ARMv8-A CPU core designed by Qualcomm for use in the Snapdragon X Elite platform targeting laptops and edge devices. Presented at Hot Chips 2024, the Oryon core features an 8-wide decode pipeline fed by a TAGE (Tagged Geometric Length) branch predictor with an 80 KB conditional predictor storage budget, enabling high instruction throughput. The core implements a distributed scheduling model with large 64-entry reservation stations in the load/store unit, allowing for 64 outstanding loads before dispatch stalls. It includes a 96 KB multi-ported L1 data cache built from standard foundry bitcells, chosen to balance latency and clock speed. The memory subsystem employs unusually large TLBs, including a 224-entry DTLB and a very large L2 TLB that can handle up to 32768 4K page entries (or equivalent coverage via page fusion), with up to 20 concurrent page walks to minimize address translation latency. Both the scalar and vector execution engines have four data feeds from the load/store unit, enabling four loads per cycle. The core's 13-cycle branch misprediction penalty is not industry-leading but is balanced for the microarchitecture, and the wide fetch stage helps fill the pipeline quickly after mispredictions.
+
+## Key Claims
+
+- The branch predictor uses TAGE (Tagged Geometric Length) prediction with an 80 KB storage budget for the conditional predictor.
+- The core implements an 8-wide decode pipeline with 64 bytes per cycle instruction fetch.
+- The 13-cycle branch mispredict penalty is balanced for the microarchitecture; Zen 4's mispredict penalty ranges from 11 to 18 cycles.
+- A distributed scheduling model is used, with the load/store unit having 64-entry reservation stations (schedulers).
+- Microbenchmarks show 62 outstanding loads before dispatch stall at rename, indicating 64 total scheduler entries available to loads.
+- The L1 data cache is 96 KB, multi-ported, and made from standard foundry bitcells.
+- The DTLB has 224 entries, unusually large, designed to reduce address translation latency.
+- The L2 TLB is very large; testing shows an inflection point at 128 MB, corresponding to 32768 4K pages, either from many entries or page fusion.
+- The core can have 10 to 20 pending page walks concurrently, compared to 6 for Zen 4.
+- Both vector and scalar execution engines can handle four loads per cycle from the load/store unit.
+
+## Relationships
+
+No specific relationship to visible context pages in the current wiki.
+
+## Sources
+
+- [Hot Chips 2024: Qualcomm’s Oryon Core - by Chester Lam](raw/cache/b750a8e8016e8d62.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | oryon.md
+target_page: oryon.md
+canonical_name: Oryon
+colliding_name: Qualcomm Oryon
+source: https://www.servethehome.com/snapdragon-x-elite-qualcomm-oryon-cpu-design-and-architecture-hot-chips-2024-arm/
+status: pending_review
+<!-- merge_draft_body
+# Qualcomm Oryon
+
+The Qualcomm Oryon is a custom Arm architecture CPU core developed by Qualcomm from the Nuvia acquisition, first deployed in the Snapdragon X Elite SoC for Windows-on-Arm laptops. The core features a deep out-of-order pipeline with a 13-cycle branch mispredict latency, a 600+ entry reorder buffer, and a 6-wide integer, 4-wide vector (128-bit per pipe), and 4-wide load-store execution design. The memory subsystem includes a 12MB L2 cache per cluster operating at near-core frequency with 15-20 clock average latency, a 6MB system-level cache shared across SoC engines, and LPDDR5x memory with 135GB/s platform bandwidth. The Oryon core targets general-purpose computing with strong per-core performance, as demonstrated on Geekbench 6 and SPEC CPU2017 benchmarks.
+
+## Key Claims
+
+- Branch mispredict latency is 13 cycles, described as "balanced" by Qualcomm.
+- Decode pipeline can handle every instruction class in the Arm architecture.
+- Rename/dispatch: integer 6-wide, vector 4-wide (128-bit pipes), load-store 4-wide; supports almost every data type.
+- Physical register files contain approximately 400 entries.
+- Up to 200 in-flight load-store operations; mix of proprietary and industry prefetchers.
+- L2 cache capacity is 12MB; average latency 15-20 clocks at near-core frequency.
+- System-level cache is 6MB, shared by all SoC engines.
+- Memory bandwidth: single core can utilize ~100GB/s out of 135GB/s platform LPDDR5x bandwidth.
+- Per-core performance is notably better than that of Arm Neoverse N series or AmpereOne cores.
+- Security features are designed for notebook use (theft/loss scenarios).
+
+## Relationships
+
+No specific relationship to visible context pages.
+
+## Sources
+
+- [Snapdragon X Elite Qualcomm Oryon CPU Design and Architecture Hot Chips 2024](raw/cache/3e337307a4c4f507.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | snapdragon_x_elite.md
+target_page: snapdragon_x_elite.md
+canonical_name: Snapdragon X Elite
+colliding_name: Qualcomm Snapdragon X Elite
+source: https://cputronic.com/cpu/qualcomm-snapdragon-x-elite
+status: pending_review
+<!-- merge_draft_body
+# Qualcomm Snapdragon X Elite
+
+The Qualcomm Snapdragon X Elite (codename Oryon) is a 12-core ARM-based processor designed for laptop computers, manufactured on TSMC's 4nm process. It features a unified performance-core design with 12 Oryon P-cores all supporting multithreading, a base frequency of 3.8 GHz and turbo up to 4.2 GHz, a 42 MB L3 cache, and an integrated Adreno GPU. The processor supports TDP configurations from 23 W to 65 W, making it suitable for ultrabooks and workstations. It achieved Geekbench 6 scores of 2694 single-core and 13969 multi-core, placing it competitively against top x86 processors from Intel and AMD. The chip includes integrated 5G and Wi-Fi 7 support and offers battery life up to 20 hours for video playback.
+
+## Key Claims
+
+- Built on TSMC 4nm process with 12 Oryon performance cores, each supporting two threads.
+- Base clock 3.8 GHz, turbo up to 4.2 GHz.
+- 42 MB L3 cache.
+- TDP ranges from 23 W (ultrabook config) to 65 W (workstation config).
+- Geekbench 6 single-core score 2694, multi-core 13969.
+- Integrated Adreno GPU capable of 4K video and light gaming, not meant for AAA titles.
+- Battery life up to 20 hours for 1080p video playback, 12–14 hours office work.
+- 30–40% lower power consumption than comparable x86 chips.
+- Supports 5G and Wi-Fi 7 out of the box.
+- Compared to Apple M3 Max, offers higher multi-core Geekbench score (13969 vs 12800).
+- Compared to AMD Ryzen 9 7940HS, similar performance with lower TDP range.
+- Compared to Intel Core i9-13900H, longer battery life but lower single-thread performance.
+
+## Relationships
+
+No specific relationship to visible context pages in the current wiki.
+
+## Sources
+
+- [Qualcomm Snapdragon X Elite: Detailed Specifications... - CpuTronic](raw/cache/7115879833a0822b.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | nvidia_hopper_architecture.md
+target_page: nvidia_hopper_architecture.md
+canonical_name: NVIDIA Hopper Architecture
+colliding_name: NVIDIA Hopper GPU
+source: https://arxiv.org/abs/2501.12084
+status: pending_review
+<!-- merge_draft_body
+# NVIDIA Hopper GPU
+
+The NVIDIA Hopper GPU architecture is a high-performance graphics processing unit architecture designed for accelerating AI training, inference, and scientific computing workloads. Introduced in 2022, Hopper introduces several novel hardware features including fourth-generation Tensor Cores with FP8 support, a Tensor Memory Accelerator (TMA) for asynchronous data movement, Distributed Shared Memory (DSM) for inter-SM communication, and DPX instructions for dynamic programming. Hopper's memory subsystem features an L2 partitioned cache with improved global memory access compared to its predecessors Ampere and Ada Lovelace. The architecture is manufactured on a TSMC 4N process and serves as the foundation for NVIDIA's H100 and H200 data center GPUs. This page summarizes the microbenchmarking analysis performed by Luo et al. (2025) that dissects Hopper's performance characteristics across memory, tensor core, and instruction-level dimensions.
+
+## Key Claims
+
+- The asynchronous programming model supported by the Tensor Memory Accelerator (TMA) achieves a 1.5x speedup in matrix multiplication compared to traditional approaches.
+- FP8 precision delivers nearly double the performance of FP16 on Hopper's fourth-generation tensor cores for matrix operations.
+- DPX instructions accelerate a computational biology algorithm (Smith-Waterman) by at least 4.75x compared to scalar implementations.
+- The L2 partitioned cache and global memory subsystem show measurable latency and throughput improvements over Ampere and Ada Lovelace.
+- Distributed Shared Memory (DSM) enables inter-SM communication with specific latency and throughput characteristics.
+- The tensor cores support asynchronous wgmma (warp group matrix multiply-accumulate) instructions for efficient matrix operations.
+- The architecture includes fourth-generation tensor cores that benefit from FP8 precision and asynchronous instructions.
+
+## Relationships
+
+- [[nvidia_blackwell_ultra]]: The NVIDIA Hopper GPU is the direct predecessor of the Blackwell Ultra GPU. Blackwell Ultra builds upon Hopper's tensor core and memory subsystem advancements, increasing transistor count from approximately 80 billion to 208 billion and introducing the NVFP4 data format, while Hopper introduced FP8 and asynchronous TMA.
+
+## Sources
+
+- [[2501.12084] Dissecting the NVIDIA Hopper Architecture ...](raw/cache/04d6b461ade29969.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | nvidia_hopper_architecture.md
+target_page: nvidia_hopper_architecture.md
+canonical_name: NVIDIA Hopper Architecture
+colliding_name: Nvidia Hopper GPU
+source: https://arxiv.org/abs/2402.13499
+status: pending_review
+<!-- merge_draft_body
+# Nvidia Hopper GPU
+
+The Nvidia Hopper GPU is a graphics processing unit architecture introduced by Nvidia as the successor to the Ampere architecture. It introduces several novel features including tensor cores with FP8 support for AI workloads, a DPX instruction set optimized for dynamic programming, and distributed shared memory capabilities. A comprehensive benchmarking study by Luo et al. (2024) from the Hong Kong University of Science and Technology examines the microarchitectural characteristics of the Hopper GPU through latency and throughput comparisons across the Hopper, Ada, and Ampere architectures. This study is the first to demystify the tensor core performance and programming instruction sets unique to Hopper GPUs, offering insights into the novel GPU AI function units and programming features.
+
+## Key Claims
+
+- The Hopper GPU introduces tensor cores with FP8 support, a DPX instruction set for dynamic programming, and distributed shared memory.
+- A benchmarking study (Luo et al., 2024) conducts conventional latency and throughput benchmarks comparing Hopper, Ada, and Ampere architectures.
+- The same study discusses and benchmarks Hopper-specific features including DPX instructions, distributed shared memory, and FP8 tensor cores.
+- The microbenchmarking results provide a deeper understanding of the novel GPU AI function units and programming features unique to Hopper.
+- This work is the first to demystify the tensor core performance and programming instruction sets specific to the Hopper architecture.
+
+## Relationships
+
+- [[nvidia_blackwell_ultra]]: The Nvidia Hopper GPU is the direct predecessor to the Blackwell Ultra architecture, sharing the use of tensor cores, the CUDA toolchain, and targeting similar AI training and inference workloads.
+
+## Sources
+
+- [[2402.13499] Benchmarking and Dissecting the Nvidia Hopper ...](raw/cache/a1f77160184ba76d.md)
+merge_draft_body -->
+
+## [2026-07-17] pending | nvidia_hopper_architecture.md
+target_page: nvidia_hopper_architecture.md
+target_section: Key Claims
+source: https://developer.nvidia.com/blog/nvidia-hopper-architecture-in-depth/
+status: pending_review
+proposed_update: Add the following Key Claims based on the NVIDIA Hopper Architecture In-Depth blog post: - Fourth-generation Tensor Cores provide up to 6x speedup chip-to-chip over A100, with per-SM 2x MMA rate on equivalent data types and 4x rate on FP8 compared to 16-bit. - New DPX Instructions accelerate dynamic programming algorithms (Smith-Waterman, Floyd-Warshall) by up to 7x over A100. - New thread block cluster feature extends CUDA programming hierarchy to enable synchronization across multiple SMs. - Transformer Engine delivers up to 9x faster AI training and up to 30x faster AI inference on large language models. - NVLink Switch System connects up to 256 GPUs with 57.6 TB/s all-to-all bandwidth. - The Grace Hopper Superchip pairs H100 with Grace CPU via 900 GB/s chip-to-chip interconnect, providing 10x higher performance for large-model AI/HPC and up to 30x higher aggregate bandwidth versus today's fastest servers.
+
+## [2026-07-17] merge_pending | granite_rapids.md
+target_page: granite_rapids.md
+canonical_name: Granite Rapids
+colliding_name: Intel Granite Rapids
+source: https://wccftech.com/intel-next-gen-xeon-cpus-2024-granite-rapids-redwood-cove-p-cores-sierra-forest-sierra-glen-e-cores/
+status: pending_review
+<!-- merge_draft_body
+# Intel Granite Rapids
+
+Intel Granite Rapids is a family of server processors from Intel, designed as the P-core (performance-core) offering within the company's next-generation Xeon lineup for 2024. Optimized for compute-intensive and AI workloads, Granite Rapids utilizes the Intel 3 process node and features a modular architecture with separate compute and IO chiplets interconnected via the EmiB fabric. It supports up to eight-socket configurations, up to 12-channel DDR/MCR memory, 136 PCIe Gen 5 lanes, and CXL 2.0 with six UPI links. The compute die incorporates Redwood Cove cores, shared last-level cache, and a modular mesh fabric that enables low-latency chiplets access. Granite Rapids is positioned against AMD's Zen 4 cores and builds on Intel's commitment to offering both P-core and E-core Xeon families sharing a common platform and software stack.
+
+## Key Claims
+
+- Granite Rapids uses the Intel 3 process node and is optimized for compute-intensive and AI workloads.
+- It features modular compute and IO chiplets interconnected via the EmiB fabric.
+- Supports 1S to 8S socket scalability.
+- Supports up to 12-channel DDR/MCR memory (1-2DPC), up to 136 PCIe Gen 5 lanes, 6 UPI links, and CXL 2.0.
+- The compute die contains Redwood Cove cores with L2 cache, LLC+SF+CHA slice, and mesh fabric interface.
+- The modular mesh fabric enables logically monolithic mesh with direct access between agents, shared LLC partitioned into per-die sub-numa clusters, and EmiB technology for high-speed die-to-die fabric.
+- Aims for 2-3x better performance for mixed AI workloads, with enhanced Intel AMX and FP16 instructions.
+
+## Relationships
+
+- [[intel_sierra_forest]]: Both are families of next-gen Intel Xeon CPUs for 2024, sharing a common platform foundation and software stack. Granite Rapids targets P-core compute-intensive and AI workloads, while Sierra Forest targets E-core density-optimized and scale-out workloads.
+
+## Sources
+
+- [Intel Details Next-Gen Xeon CPUs For 2024: Granite Rapids With...](raw/cache/9adf13f4e7d491af.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | sierra_forest.md
+target_page: sierra_forest.md
+canonical_name: Sierra Forest
+colliding_name: Intel Sierra Forest
+source: https://wccftech.com/intel-next-gen-xeon-cpus-2024-granite-rapids-redwood-cove-p-cores-sierra-forest-sierra-glen-e-cores/
+status: pending_review
+<!-- merge_draft_body
+# Intel Sierra Forest
+
+Intel Sierra Forest is a family of server processors from Intel, representing the E-core (efficiency-core) offering in the company's next-generation Xeon lineup for 2024. Optimized for density-optimized computing and high efficiency in scale-out workloads, Sierra Forest utilizes the Intel 3 process node and features core tiles with 2-4 cores per module, each core single-threaded, reaching up to 144 cores per CPU. It supports 1S and 2S server configurations with TDP as low as 200W. The processor delivers 2.5x better rack density and 2.4x higher performance per watt compared to previous generations. Sierra Forest includes modern instruction set support with AVX and AI extensions, robust security and virtualization features, and foundational memory RAS. It shares a common platform and software stack with the P-core Granite Rapids family.
+
+## Key Claims
+
+- Sierra Forest uses the Intel 3 process node and is optimized for density-optimized, power-efficient scale-out workloads.
+- Core tile consists of 2-4 cores per module, each single-threaded, with shared L2 cache and shared frequency/voltage domain.
+- Top SKU offers up to 144 cores (36 core tiles × 4 cores) and 144 threads, with up to 144 MB L2 and 108 MB LLC.
+- Supports 1S and 2S server configurations, with TDP as low as 200W.
+- Claims 2.5x better rack density and 2.4x higher performance per watt.
+- Supports modern instruction set with robust security, virtualization, and AVX with AI extensions.
+- Includes foundational memory RAS features such as machine check and data cache ECC.
+- Shares a common platform and software stack with Granite Rapids (P-core Xeon family).
+
+## Relationships
+
+- [[intel_granite_rapids]]: Both are families of next-gen Intel Xeon CPUs for 2024, sharing a common platform foundation and software stack. Sierra Forest targets E-core density-optimized and scale-out workloads, while Granite Rapids targets P-core compute-intensive and AI workloads.
+
+## Sources
+
+- [Intel Details Next-Gen Xeon CPUs For 2024: Granite Rapids With...](raw/cache/9adf13f4e7d491af.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | granite_rapids.md
+target_page: granite_rapids.md
+canonical_name: Granite Rapids
+colliding_name: Granite Rapids
+source: https://www.techbloat.com/hot-chips-2023-intel-granite-rapids-and-sierra-forest-xeons.html
+status: pending_review
+<!-- merge_draft_body
+# Granite Rapids
+
+Granite Rapids is a family of Intel Xeon server processors announced at Hot Chips 2023, built using P-core architecture with Redwood Cove cores for maximum per-core performance. It is positioned alongside Sierra Forest as part of Intel's split Xeon roadmap, where Granite Rapids targets workloads requiring high single-threaded performance and compute density. The platform succeeds the Sapphire Rapids and Emerald Rapids generations, leveraging enhanced performance cores and platform advancements such as high memory bandwidth and extensive I/O capabilities to cater to data center, HPC, and AI workloads.
+
+## Key Claims
+
+- Uses Redwood Cove P-cores for maximum per-core performance.
+- Part of Intel's Xeon roadmap split, targeting workloads demanding high single-threaded performance.
+- Succeeds Sapphire Rapids and Emerald Rapids generations.
+- Manufactured on an advanced Intel process node (process node not specified in available sources).
+- Supports high memory bandwidth and extensive I/O capabilities.
+
+## Relationships
+
+No specific relationship to visible context pages.
+
+## Sources
+
+- [Hot Chips 2023: Intel Granite Rapids and Sierra Forest Xeons](raw/cache/2d7c6f8579aeaa96.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | sierra_forest.md
+target_page: sierra_forest.md
+canonical_name: Sierra Forest
+colliding_name: Sierra Forest
+source: https://www.techbloat.com/hot-chips-2023-intel-granite-rapids-and-sierra-forest-xeons.html
+status: pending_review
+<!-- merge_draft_body
+# Sierra Forest
+
+Sierra Forest is a family of Intel Xeon server processors announced at Hot Chips 2023, representing Intel's first E-core Xeon Scalable chip designed for data center use. The architecture utilizes Sierra Glen E-cores, focusing on high core density and power efficiency. Sierra Forest is manufactured on the EUV-based Intel 3 process node, marking the first Xeon to employ this advanced fabrication technology. The processor features up to 144 cores, targeting high-density scale-out workloads and cloud-native applications. By splitting the Xeon roadmap into P-core and E-core families, Intel aims to address diverse computing needs within the data center.
+
+## Key Claims
+
+- First E-core Xeon Scalable chip for data center use.
+- Uses Sierra Glen E-cores.
+- Manufactured on the EUV-based Intel 3 process node.
+- Features up to 144 cores.
+- Targets high-density scale-out workloads and power-efficient cloud applications.
+- Part of Intel's split Xeon roadmap alongside Granite Rapids.
+
+## Relationships
+
+No specific relationship to visible context pages.
+
+## Sources
+
+- [Hot Chips 2023: Intel Granite Rapids and Sierra Forest Xeons](raw/cache/2d7c6f8579aeaa96.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | sierra_forest.md
+target_page: sierra_forest.md
+canonical_name: Sierra Forest
+colliding_name: Intel Xeon (Sierra Forest and Granite Rapids)
+source: https://www.techpowerup.com/312952/intel-unveils-future-generation-xeon-with-robust-performance-and-efficiency-architectures
+status: pending_review
+<!-- merge_draft_body
+# Intel Xeon (Sierra Forest and Granite Rapids)
+
+At the 2023 Hot Chips conference, Intel unveiled its next-generation Xeon platform featuring two distinct processor architectures: Sierra Forest with Efficient-cores (E-cores) and Granite Rapids with Performance-cores (P-cores). The platform is built on a modular system-on-chip design that provides socket compatibility between the two variants, allowing customers to choose between density-optimized power-efficient compute (Sierra Forest) and high-performance compute for latency-sensitive workloads (Granite Rapids). Both architectures share the same IP, firmware, and software stack, simplifying deployment across cloud, enterprise, and AI workloads. The platform supports up to 144 E-cores per CPU (Sierra Forest) with TDP as low as 200W, and offers enhanced AI acceleration through Intel AMX with new FP16 instructions on Granite Rapids, along with significant memory bandwidth improvements via the inclusion of MCR DIMMs and Intel Flat Memory architecture for CXL memory tiering.
+
+## Key Claims
+
+- The Intel Xeon platform introduces two socket-compatible processor architectures: Sierra Forest (E-core) and Granite Rapids (P-core), sharing a common software stack.
+- Sierra Forest provides up to 144 E-cores per processor for high-density compute with TDP as low as 200 W.
+- Sierra Forest claims 2.5x better rack density and 2.4x higher performance per watt compared to previous generation.
+- Granite Rapids integrates enhanced Intel AMX with support for FP16 instructions, targeting AI workload acceleration.
+- Granite Rapids claims 2-3x better performance for mixed AI workloads over previous generations.
+- The platform supports up to 136 lanes of PCIe 5.0/CXL 2.0 and up to six UPI links.
+- New Intel Flat Memory enables hardware-managed data movement between DDR5 and CXL-attached memory, making total capacity visible to software.
+- Support for high-bandwidth MCR DIMMs complements standard DDR5 memory.
+- The platform supports socket scalability from one to eight sockets (Granite Rapids) and 1S/2S configurations for Sierra Forest.
+
+## Relationships
+
+- [[meta_vistara_cxl_bridge]]: Intel Xeon's support for CXL 2.0 and Flat Memory architecture enables hardware-managed memory tiering, a concept related to Meta's Vistara CXL bridge chip which attaches retired DDR4 modules as a low-cost capacity tier through the same underlying protocol, though Vistara targets specific reuse scenarios rather than general platform memory expansion.
+- [[alphawave_semi_hbm_subsystem]]: Intel Xeon Granite Rapids uses DDR5 and MCR DIMMs, whereas the Alphawave Semi HBM Subsystem provides HBM3/2E/2 connectivity for 2.5D/3D packages, representing contrasting memory hierarchy choices: higher capacity and lower cost for Xeon versus extreme bandwidth at higher cost for HBM in compute-intensive applications.
+- [[amd_gpu_architecture]]: Intel Xeon processors with AMX accelerators provide CPU-based AI inference, offering an alternative to GPU-accelerated AI on AMD GPU Architecture, particularly for workloads that benefit from lower latency and tighter integration with host memory.
+
+## Sources
+
+- [Intel Unveils Future-Generation Xeon with Robust Performance ...](raw/cache/1c0c0c2be8cd6488.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | sierra_forest.md
+target_page: sierra_forest.md
+canonical_name: Sierra Forest
+colliding_name: Intel Xeon 6700E Sierra Forest
+source: https://wccftech.com/intel-xeon-6700e-sierra-forest-cpus-144-e-cores-330w-tdp-more-efficient-vs-amd-epyc/
+status: pending_review
+<!-- merge_draft_body
+# Intel Xeon 6700E (Sierra Forest)
+
+The Intel Xeon 6700E, codenamed Sierra Forest, is a server processor family launched by Intel in June 2024 at Computex. It is part of the Xeon 6 family and utilizes only efficient (E) cores based on the Crestmont microarchitecture, fabricated on Intel's 3 process node. The Xeon 6700E series targets high-density compute and scale-out workloads such as web microservices, database analytics, cloud-native applications, networking, and edge computing. With up to 144 cores, the chips are designed to deliver improved performance per watt compared to previous Xeon generations and competing AMD EPYC Bergamo processors.
+
+## Key Claims
+
+- Launched at Computex 2024 with up to 144 cores (Xeon 6780E) and up to 330W TDP.
+- Based on Crestmont E-core architecture, single-threaded, 4 MB L2 per 4-core cluster, 6-wide decode/allocate, 8-wide retire.
+- Supports enhanced AVX2 (2x128), VNNI Int8, BF16/FP16, AES-256-bit encryption.
+- Memory support: up to 8-channel DDR5-6400 (1DPC) or DDR5-5600, up to 88 PCIe Gen5/CXL 2.0 lanes.
+- Platform: LGA 4710 socket, 1S and 2S configurations, built-in accelerators: 2 DSA, 2 IAA, 4 QAT, 4 DLB.
+- Performance claims: up to 4.2x faster than 2nd Gen Xeon, 2.6x perf/watt improvement, 34% more efficient versus AMD EPYC Bergamo.
+- SKU range: Xeon 6780E (144 cores, 330W), 6766E (144 cores, 250W), 6756E (128 cores, 225W), 6746E (112 cores, 250W), 6740E (96 cores, 250W), 6731E (96 cores, 250W), 6710E (64 cores, 205W).
+- Long-life availability (7+ years) for several SKUs.
+
+## Relationships
+
+- [[meta_vistara_cxl_bridge]]: The Xeon 6700E platform supports CXL 2.0 interconnect, which is the protocol used by Meta's Vistara CXL bridge chip to attach DDR4 memory as a capacity tier, enabling cost-effective memory expansion in data centers using Xeon-based servers.
+
+## Sources
+
+- [Intel Xeon 6700E "Sierra Forest" CPUs Launched: Up To 144 E ...](raw/cache/0b439e7095159e2e.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | google_ironwood_tpu.md
+target_page: google_ironwood_tpu.md
+canonical_name: Google Ironwood TPU
+colliding_name: Google TPU v7 Ironwood
+source: https://www.humai.blog/apple-m5-vs-nvidia-blackwell-vs-google-tpu-the-complete-post-ces-2025-ai-chip-comparison/
+status: pending_review
+<!-- merge_draft_body
+# Google TPU v7 Ironwood
+
+The Google TPU v7 Ironwood is a tensor processing unit designed by Google for AI workloads, unveiled at Cloud Next in April 2025 and publicly available in late 2025. It delivers 4,614 TFLOPS of FP8 performance with 192GB of HBM3e memory offering 7.2-7.4 TB/s bandwidth, putting Google within striking distance of NVIDIA on raw specifications. Ironwood features a 9.6 Tb/s Inter-Chip Interconnect and scales to 9,216 chips per superpod, achieving 42.5 exaFLOPS theoretical compute. It is available alongside the earlier TPU v6 Trillium and is supported by JAX and TensorFlow frameworks. The chip is positioned for large-scale cloud AI training and inference, with pricing expected to offer a significant performance-per-dollar advantage over competing NVIDIA offerings.
+
+## Key Claims
+
+- Unveiled at Cloud Next April 2025, publicly available.
+- 4,614 TFLOPS FP8 performance.
+- 192GB HBM3e memory with 7.2-7.4 TB/s bandwidth.
+- 9.6 Tb/s inter-chip interconnect.
+- Scales to 9,216 chips per superpod (42.5 exaFLOPS).
+- Supported by JAX and TensorFlow.
+- Expected to deliver 4x+ performance-per-dollar compared to prior generation (implied from pricing table in source).
+
+## Relationships
+
+- Both the Google TPU v7 Ironwood and the [[nvidia_blackwell_b200]] use 192GB HBM3e memory, though with different bandwidth (7.2-7.4 TB/s vs 8 TB/s). This shared technology reflects their common target of high-bandwidth memory for large-scale AI workloads.
+
+## Sources
+
+- [Apple M5 vs NVIDIA Blackwell vs Google TPU: The Complete...](raw/cache/be48c2942b36c9b4.md)
+merge_draft_body -->
+
+## [2026-07-17] pending | alphawave_semi_hbm_subsystem.md
+target_page: alphawave_semi_hbm_subsystem.md
+target_section: Key Claims
+source: https://awavesemi.com/press-release/alphawave-semi-spearheads-chiplet-based-custom-silicon-for-generative-ai-and-data-center-workloads-with-successful-3nm-tapeouts-of-hbm3-and-ucie-ip/
+status: pending_review
+proposed_update: Add claim about 3nm tapeout and updated HBM3 PHY data rate of 8.6 Gbps from Alphawave Semi's July 2023 press release. The existing page states 8.4 Gbps; this source reports 8.6 Gbps on TSMC 3nm with 16 channels and low power operation. Also note the PHY targets leading-edge high-performance memory interfaces for AI and HPC workloads.
+
+## [2026-07-17] merge_pending | nvidia_blackwell_b200.md
+target_page: nvidia_blackwell_b200.md
+canonical_name: NVIDIA Blackwell B200
+colliding_name: NVIDIA B200
+source: https://thegioimaychu.vn/blog/ai-hpc/so-sanh-cac-gpu-tensor-core-cua-nvidia-b200-b100-h200-h100-a100-p20268/
+status: pending_review
+<!-- merge_draft_body
+# NVIDIA B200
+
+The NVIDIA B200 is a flagship Tensor Core GPU based on the Blackwell architecture, introduced in 2025. It delivers 40 teraFLOPS of FP64 performance, 2.2 petaFLOPS of FP32 Tensor Core throughput, 4.5 petaFLOPS in FP16/BF16 Tensor Core, and 9 petaFLOPS in INT8 and FP8 Tensor Core modes. A notable capability is FP4 precision at 18 petaFLOPS. The GPU is equipped with 192 GB of HBM3e memory offering up to 8 TB/s bandwidth and supports up to 7 Multi-Instance GPU (MIG) partitions at 23 GB each. It features 7 NVDEC and 7 JPEG decoders, and an NVLink interconnect speed of 1.8 TB/s. The B200 is sold as part of NVIDIA's AI Enterprise platform and is designed for the most demanding AI training and inference workloads.
+
+## Key Claims
+
+- FP64 performance: 40 teraFLOPS
+- FP32 Tensor Core performance: 2.2 petaFLOPS
+- FP16/BF16 Tensor Core performance: 4.5 petaFLOPS
+- INT8 Tensor Core performance: 9 petaOPS
+- FP8 Tensor Core performance: 9 petaFLOPS
+- FP4 Tensor Core performance: 18 petaFLOPS
+- Memory: 192 GB HBM3e
+- Memory bandwidth: up to 8 TB/s
+- MIG support: up to 7 instances at 23 GB each
+- Decoders: 7 NVDEC, 7 JPEG
+- NVLink speed: 1.8 TB/s
+- Part of NVIDIA AI Enterprise
+
+## Relationships
+
+- [[nvidia_b100_tensor_core]]: Shares the Blackwell architecture with the B100, which offers slightly lower performance metrics and 141 GB HBM3e memory.
+- [[nvidia_h200_tensor_core]]: The B200 is the next-generation successor to the H200 (Hopper architecture), with more than double the FP16 Tensor Core performance and increased memory bandwidth.
+- [[nvidia_h100_tensor_core]]: The B200 outperforms the H100 in all Tensor Core precisions by a factor of 3–7×.
+- [[nvidia_a100_tensor_core]]: The A100 (Ampere architecture) was the first Tensor Core GPU with MIG; the B200 provides 2.5× the FP32 Tensor Core performance and 4.5× the memory bandwidth.
+
+## Sources
+
+- [So sánh các thế hệ GPU Tensor Core đầu bảng của NVIDIA: B200...](raw/cache/0dd8e54681229db2.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | nvidia_hopper_architecture.md
+target_page: nvidia_hopper_architecture.md
+canonical_name: NVIDIA Hopper Architecture
+colliding_name: NVIDIA H200
+source: https://thegioimaychu.vn/blog/ai-hpc/so-sanh-cac-gpu-tensor-core-cua-nvidia-b200-b100-h200-h100-a100-p20268/
+status: pending_review
+<!-- merge_draft_body
+# NVIDIA H200
+
+The NVIDIA H200 is a Tensor Core GPU based on the Hopper architecture, launched in 2024 as an enhanced version of the H100 with upgraded high-bandwidth memory. It delivers 34 teraFLOPS FP64, 19.5 teraFLOPS FP64 Tensor Core, 80 teraFLOPS FP32, 989 teraFLOPS FP32 Tensor Core, and 1,979 teraFLOPS (1.98 petaFLOPS) FP16/BF16 Tensor Core. INT8 Tensor Core performance is 3,958 teraOPS and FP8 Tensor Core is 3,958 teraFLOPS. The H200 includes 141 GB of HBM3e memory (up from 80 GB HBM3 in the H100) with 4.8 TB/s bandwidth, supports up to 7 MIG partitions at 16.5 GB each, 5 NVDEC and 5 JPEG decoders, and an NVLink interconnect of 900 GB/s. The H200 is targeted at large-scale AI training and HPC workloads.
+
+## Key Claims
+
+- FP64 performance: 34 teraFLOPS
+- FP64 Tensor Core performance: 19.5 teraFLOPS
+- FP32 performance: 80 teraFLOPS
+- FP32 Tensor Core performance: 989 teraFLOPS
+- FP16/BF16 Tensor Core performance: 1,979 teraFLOPS
+- INT8 Tensor Core performance: 3,958 teraOPS
+- FP8 Tensor Core performance: 3,958 teraFLOPS
+- Memory: 141 GB HBM3e
+- Memory bandwidth: 4.8 TB/s
+- MIG support: up to 7 instances at 16.5 GB each
+- Decoders: 5 NVDEC, 5 JPEG
+- NVLink speed: 900 GB/s
+
+## Relationships
+
+- [[nvidia_h100_tensor_core]]: The H200 is a mid-life update of the H100 with increased memory (141 GB HBM3e vs. 80 GB HBM3) and doubled memory bandwidth (4.8 vs. 2 TB/s).
+- [[nvidia_b200_tensor_core]]: The B200 (Blackwell) succeeds the H200 with roughly 2× the FP16 Tensor Core performance and 1.7× the memory bandwidth.
+- [[nvidia_b100_tensor_core]]: The B100 and H200 share identical memory capacity and bandwidth, but the B100 offers higher Tensor Core throughput at FP16/BF16 (3.5 vs. 1.98 petaFLOPS).
+
+## Sources
+
+- [So sánh các thế hệ GPU Tensor Core đầu bảng của NVIDIA: B200...](raw/cache/0dd8e54681229db2.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | nvidia_hopper_architecture.md
+target_page: nvidia_hopper_architecture.md
+canonical_name: NVIDIA Hopper Architecture
+colliding_name: NVIDIA H200
+source: https://convly.ai/ar/h100-vs-h200-for-ai/
+status: pending_review
+<!-- merge_draft_body
+# NVIDIA H200
+
+The NVIDIA H200 is a GPU accelerator introduced as an incremental update to the H100 within the Hopper architecture family, targeting generative AI and high-performance computing workloads. While retaining the identical compute core design—CUDA core count, Tensor Cores, and memory controller architecture—as the H100, the H200 replaces the HBM3 memory with the newer HBM3e, increasing total memory capacity from 80 GB to 141 GB and memory bandwidth from 3.35 TB/s to 4.8 TB/s. This memory-centric upgrade allows the H200 to load larger model parameters and larger batched datasets without modifying the compute pipeline, effectively extending the throughput of existing Hopper-based AI infrastructure. The H200 is delivered as part of the NVIDIA HGX H200 platform, which integrates multiple H200 GPUs for rack-scale deployment in data centers.
+
+## Key Claims
+
+- The H200 uses the same Hopper GPU compute architecture as the H100, including identical CUDA core and Tensor Core counts; only the memory subsystem differs.
+- The H200 upgrades memory from HBM3 to HBM3e, increasing memory capacity from 80 GB to 141 GB and memory bandwidth from 3.35 TB/s to 4.8 TB/s.
+- The increased memory capacity and bandwidth enable handling larger generative AI models (e.g., larger parameter sizes, larger batch sizes) without scaling cluster size.
+- The H200 is positioned for generative AI and HPC workloads, supported by the NVIDIA HGX H200 platform.
+- All other hardware specifications (compute performance per clock, interconnects, form factor) remain unchanged from the H100.
+
+## Relationships
+
+- [[alphawave_semi_hbm_subsystem]]: The H200's HBM3e memory is a later generation of the JEDEC High-Bandwidth Memory standard that the Alphawave Semi HBM Subsystem also supports (up to HBM3), though the H200 implements HBM3e directly on-package as part of the GPU, whereas the Alphawave subsystem is a standalone IP block for custom SoCs.
+
+## Sources
+
+- [NVIDIA H100 vs H200 for AI in 2026: Is the Memory... | Convly AI](raw/cache/220ce116aa2bb8a7.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | nvidia_blackwell_b200.md
+target_page: nvidia_blackwell_b200.md
+canonical_name: NVIDIA Blackwell B200
+colliding_name: NVIDIA B200
+source: https://www.gmicloud.ai/en/blog/nvidia-b200-inference-throughput
+status: pending_review
+<!-- merge_draft_body
+# NVIDIA B200
+
+The NVIDIA B200 is a Blackwell-generation data center GPU featuring 180 GB of HBM3e memory with 8.0 TB/s of memory bandwidth, representing a 1.67× increase over the H200's 4.80 TB/s. Designed for large language model inference, where throughput is often memory-bandwidth-bound, the B200 achieves a cost of two cents per thousand tokens on the independent InferenceX benchmark. Cloud pricing for the B200 SXM6 variant in June 2026 ranges from $3.70 per hour on neo-clouds to $14.24 per hour on AWS, a 3.8× price spread across providers. Memory bandwidth is the critical factor for LLM inference performance, making the B200's bandwidth advantage central to its value proposition.
+
+## Key Claims
+
+- The B200 is a Blackwell card with 180 GB of HBM3e and 8.0 TB/s memory bandwidth.
+- Memory bandwidth is 1.67× higher than the H200 (4.80 TB/s).
+- On the InferenceX benchmark, the B200 system achieves a cost of $0.02 per thousand tokens.
+- On-demand cloud pricing for B200 SXM6 ranges from $3.70/hr (neo-clouds) to $14.24/hr (AWS) as of June 2026.
+- Memory bandwidth is the critical factor for LLM inference on this architecture.
+
+## Relationships
+
+- [[meta_vistara_cxl_bridge]]: The B200 uses high-bandwidth HBM3e memory for maximum throughput, while Vistara repurposes low-cost DDR4 via CXL for capacity expansion; these are complementary memory strategies in AI server design.
+- [[amd_gpu_architecture]]: Both are data center GPU architectures optimized for throughput-oriented parallel workloads, though B200 targets LLM inference with dedicated transformer engine support.
+
+## Sources
+
+- [NVIDIA B200 for Inference: When Throughput Justifies the Price](raw/cache/2ab98716c4d0d6e2.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | intel_xeon_sapphire_rapids.md
+target_page: intel_xeon_sapphire_rapids.md
+canonical_name: Intel Xeon Sapphire Rapids
+colliding_name: Intel Sapphire Rapids-SP
+source: https://www.techbyte.it/hardware/intel-sapphire-rapids-sp-3-volte-piu-potente-rispetto-a-ice-lake/
+status: pending_review
+<!-- merge_draft_body
+# Intel Sapphire Rapids-SP
+
+Intel Sapphire Rapids-SP is a family of Xeon-based server processors designed for high-performance computing (HPC) and artificial intelligence (AI) workloads, introduced by Intel during the ISC 2022 conference. The processors employ a chiplet architecture consisting of four XCC (Xeon Compute Core) dies, each approximately 400mm², interconnected via EMIB (Embedded Multi-die Interconnect Bridge) technology. Two variants are planned: a standard version and an HBM version that integrates 64 GB of HBM2E memory (four 16 GB stacks) directly on package. The HBM variant package measures 5700mm², 28% larger than the standard package at 4446mm². Intel claims Sapphire Rapids-SP delivers up to 3× the performance of its predecessor, Ice Lake, with EMIB providing twice the bandwidth density and four times the energy efficiency over standard interconnects.
+
+## Key Claims
+
+- Sapphire Rapids-SP aims to be 3× more powerful than Ice Lake for HPC and AI workloads (source: Intel at ISC 2022).
+- Chiplet design: four XCC dies, each ~400mm², interconnected via EMIB.
+- Standard variant uses 10 EMIB interconnects; HBM variant uses 14.
+- EMIB features a pitch of 55 microns for interconnects and a core pitch of 100 microns.
+- HBM variant integrates four 8-Hi HBM2E stacks for a total of 64 GB of on-package memory.
+- Standard package size: 4446mm²; HBM package size: 5700mm² (28% larger).
+- EMIB claimed to provide 2× bandwidth density improvement and 4× energy efficiency vs. standard interconnects.
+
+## Relationships
+
+- Shares the HBM2E memory standard with [[alphawave_semi_hbm_subsystem]], though Sapphire Rapids-SP integrates HBM2E directly via EMIB within a CPU package, whereas Alphawave Semi provides a standalone HBM subsystem IP for ASIC designs.
+
+## Sources
+
+- [Intel Sapphire Rapids-SP sarà 3 volte più potente rispetto a Ice Lake...](raw/cache/63b4ff550b0b197a.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | intel_xeon_sapphire_rapids.md
+target_page: intel_xeon_sapphire_rapids.md
+canonical_name: Intel Xeon Sapphire Rapids
+colliding_name: Sapphire Rapids
+source: https://en.wikipedia.org/wiki/Sapphire_Rapids
+status: pending_review
+<!-- merge_draft_body
+# Sapphire Rapids
+
+Sapphire Rapids is the codename for Intel's fourth-generation Xeon Scalable server and workstation processors, launched on January 10, 2023. Based on the Golden Cove microarchitecture and fabricated on the Intel 7 process, it features up to 60 Golden Cove cores per socket in a chiplet design, which is a first for Intel's server and workstation processors. The architecture supports up to octa-channel DDR5-4800 ECC memory and, in the Xeon Max variants, includes 64 GB of on-package HBM2e memory as an L4 cache. Sapphire Rapids also integrates multiple on-chip accelerators including DSA (Data Streaming Accelerator), QAT (QuickAssist Technology), DLB (Dynamic Load Balancer), and IAA (In-Memory Analytics Accelerator), targeting a range of server, workstation, and embedded applications. It is part of Intel's Eagle Stream server platform and powers the Aurora exascale supercomputer at Argonne National Laboratory.
+
+## Key Claims
+
+- Launched on January 10, 2023, branded as Xeon Bronze/Silver/Gold/Platinum (Sapphire Rapids-SP) and Xeon Max Series (Sapphire Rapids-HBM), plus Xeon w3/w5/w7/w9 (Sapphire Rapids-WS).
+- Uses the Golden Cove microarchitecture on the Intel 7 process (formerly 10ESF).
+- First Intel server/workstation processor with a chiplet design, using up to 60 cores per socket.
+- Cache hierarchy: L1 80 KB per core (32 KB instruction + 48 KB data), L2 2 MB per core, L3 up to 112.5 MB (1.875 MB per core), L4 64 GB HBM2e (Xeon Max only).
+- Memory: up to octa-channel DDR5-4800 with ECC support, and 64 GB HBM2e on select models.
+- Integrated accelerators: Data Streaming Accelerator (DSA), QuickAssist Technology (QAT), Dynamic Load Balancer (DLB), In-Memory Analytics Accelerator (IAA).
+- Supports instruction set extensions including AVX-512, AVX-VNNI, AMX, AES-NI, and others.
+- Socket LGA 4677, part of the Eagle Stream platform.
+- Product code name SPR, CPUID 806F6, product code 80713.
+
+## Relationships
+
+- [[alphawave_semi_hbm_subsystem]]: Sapphire Rapids Xeon Max variants integrate 64 GB of on-package HBM2e memory, which conforms to the JEDEC HBM2E standard supported by the Alphawave Semi HBM Subsystem's controller and PHY IP. Both address high-bandwidth memory integration, though the Sapphire Rapids implementation is a fixed on-package solution while the Alphawave subsystem is a licensable IP for custom SoC designs.
+
+## Sources
+
+- [Sapphire Rapids - Wikipedia](raw/cache/8cbb8896ccf30234.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | golden_cove.md
+target_page: golden_cove.md
+canonical_name: Golden Cove
+colliding_name: Golden Cove
+source: https://chipsandcheese.com/p/popping-the-hood-on-golden-cove
+status: pending_review
+<!-- merge_draft_body
+# Golden Cove
+
+Golden Cove is the high-performance P-core microarchitecture used in Intel's Alder Lake processors, introduced in late 2021. It is the direct successor to Sunny Cove and targets peak single-threaded performance through a wider and deeper pipeline. Key enhancements include a 45% larger reorder buffer, a 4K-entry micro-op cache (up from 2.25K in Sunny Cove), six instruction decoders, and a multi-level branch target buffer with reduced penalty for misses. Golden Cove also features improved branch prediction, capable of recognizing longer patterns than Skylake, though still slightly behind AMD's Zen 3 in pattern length. The architecture supports AVX-512 instructions on the silicon, but Intel disabled them on desktop Alder Lake SKUs. Its BTB can handle up to 128 branches with roughly one taken branch per cycle, and returns are handled by a return stack that shows unusual behavior beyond two nested calls. The L1 data cache can perform 2×512-bit loads per cycle when AVX-512 is enabled. These changes made Alder Lake competitive with AMD's Zen 3 for both integer and floating-point workloads after several years of Intel dominance in desktop performance.
+
+## Key Claims
+
+- Golden Cove's reorder buffer is 45% larger than Sunny Cove's, increasing instruction reordering capacity.
+- The micro-op cache size increased from 2.25K entries (Sunny Cove) to 4K entries, matching Zen 3 in fetch bandwidth at 8 micro-ops per cycle.
+- The branch target buffer (BTB) is multi-level; missing in the first level costs 1 cycle penalty, compared to AMD's 3 cycles for an L2 BTB hit.
+- Branch prediction can recognize longer patterns than Skylake but shorter than Zen 3; with multiple branches, pattern length capacity is lower than both Zen 2 and Zen 3.
+- Golden Cove can deliver roughly one taken branch per cycle for up to 128 branches, a regression from Sunny Cove in this specific metric.
+- Return prediction lacks a clear capacity jump for up to 128 call/return pairs but is slower than Sunny Cove and Zen 2/3 when calls exceed two deep.
+- The architecture includes six instruction decoders to feed the wider pipeline.
+
+## Relationships
+
+No specific relationship to visible context pages in the current wiki.
+
+## Sources
+
+- [Popping the Hood on Golden Cove - Chips and Cheese](raw/cache/7fa9f612569e3589.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | gracemont.md
+target_page: gracemont.md
+canonical_name: Gracemont
+colliding_name: Intel Gracemont
+source: https://www.servethehome.com/intel-gracemont-architecture-day-2021/
+status: pending_review
+<!-- merge_draft_body
+# Intel Gracemont
+
+Intel Gracemont is a low-power x86 processor core architecture introduced by Intel as part of its Alder Lake hybrid processor lineup. Gracemont is the successor to the Tremont architecture and belongs to the Intel Atom lineage, though it delivers significantly higher performance than earlier Atom cores. Designed for efficiency rather than peak performance, Gracemont cores are optimized for low voltage and low power, making them suitable for background tasks and high-core-count configurations. Key architectural features include three-wide out-of-order decode, a 64KB L1 instruction cache, a 256-entry out-of-order window, 17 execution ports, and up to 4MB of L2 cache shared among four cores. The architecture also adds support for AVX2 and VNNI instructions, enabling basic AI inference acceleration. Intel claims that four Gracemont E-cores fit into approximately the same die area as one Skylake performance core, while delivering better performance at lower power.
+
+## Key Claims
+
+- Three-wide out-of-order decode with on-demand decoding capable of handling up to six uops into the queues.
+- 64KB L1 instruction cache (up from 32KB in the previous generation Tremont).
+- Increased branch target cache and prefetchers at all levels.
+- Out-of-order window increased to 256 entries.
+- 17 execution ports (up from 12 in the previous generation).
+- Up to 4MB of L2 cache shared among four cores; Intel can vary cache size based on SKU needs.
+- Supports AVX2 and VNNI instructions for AI inference.
+- Optimized for low voltage and low power rather than maximum performance.
+- Four E-cores fit into the same die area as one Skylake performance core (P-core).
+- Can deliver performance at lower power than Skylake, but not necessarily at the same maximum frequency.
+
+## Relationships
+
+No specific relationship to visible context pages.
+
+## Sources
+
+- [Intel Gracemont Low Power x86 Cores - ServeTheHome](raw/cache/09b5bae249c0b0e9.md)
+merge_draft_body -->
+
+## [2026-07-17] pending | power10.md
+target_page: power10.md
+target_section: Key Claims
+source: https://en.wikipedia.org/wiki/Power10
+status: pending_review
+proposed_update: Add details from Wikipedia: execution slices (eight per core, each with FPU, ALU, branch predictor, load-store unit, SIMD-engine), instruction queue sizes (512-entry shared instruction table, 128-entry load queue, 80-entry store queue), branch prediction accuracy doubled, two-hemisphere layout with 8 cores each sharing 64 MB L3 cache (total 128 MB before yield reduction), 8 crypto accelerators offloading AES and SHA-3. Also mention the IBM Power10 Enterprise E1080 server as the first system available.
+
+## [2026-07-17] merge_pending | nvidia_a100_tensor_core.md
+target_page: nvidia_a100_tensor_core.md
+canonical_name: NVIDIA A100
+colliding_name: NVIDIA A100 Tensor Core GPU
+source: https://jingchaozhang.github.io/A100-white-paper/
+status: pending_review
+<!-- merge_draft_body
+# NVIDIA A100 Tensor Core GPU
+
+The NVIDIA A100 Tensor Core GPU is a data center accelerator based on the Ampere architecture, introduced in 2020 as the successor to the V100. It features third-generation Tensor Cores supporting a wide range of data types including TF32, FP64, FP16, BF16, INT8, INT4, and binary, enabling mixed-precision matrix operations for AI training and inference. The A100 introduces TF32 operations that deliver 10x faster performance than FP32 FMA operations on V100, and when used with fine-grained structured sparsity, INT8 Tensor Core operations achieve 20x more performance than V100. The GPU supports Multi-Instance GPU (MIG) for spatial partitioning into up to seven isolated instances, each with dedicated memory, cache, and compute resources. For multi-GPU scaling, the A100 uses third-generation NVLink (600 GB/s per GPU) and NVSwitch (4.8 TB/s aggregate bandwidth) for high-speed GPU-to-GPU communication. The DGX A100 system incorporates eight A100 GPUs with six NVSwitch chips, Mellanox ConnectX-6 HDR InfiniBand/200GbE networking, and PCIe Gen4 connectivity to CPUs and NVMe storage.
+
+## Key Claims
+
+- TF32 Tensor Core operations on A100 run 10x faster than FP32 FMA operations on the previous generation V100.
+- Compared to V100, TF32 on A100 provides over 6x speedup for training BERT-Large.
+- With fine-grained structured sparsity and the 2:4 pattern, INT8 Tensor Core operations on A100 offer 20x more performance than V100, and FP16 operations are 5x faster.
+- MIG spatial partitioning provides fully isolated GPU memory, cache, and streaming multiprocessor resources per instance.
+- Six third-generation NVSwitch chips enable GPU-to-GPU communication at 600 GB/s per switch and 4.8 TB/s total aggregate bandwidth in both directions.
+- Third-generation NVLink provides 12 interconnects per GPU connecting to six NVSwitches (two links per switch).
+- DGX A100 includes eight single-port Mellanox ConnectX-6 200 Gb/s HDR InfiniBand ports (configurable as 200GbE) providing 3.2 Tb/s peak bandwidth.
+- PCIe Gen4 x16 buses provide 31.5 Gb/s per link for a total of 252 Gb/s per GPU access to network and storage.
+- Supported software includes TensorFlow, PyTorch, and MXNet via NGC Deep Learning Containers starting with release 20.06.
+
+## Relationships
+
+- [[nvidia_blackwell_b200]]: Both the A100 and B200 are NVIDIA data center GPU accelerators, but the A100 is based on the Ampere architecture while the B200 uses the newer Blackwell architecture. The B200 significantly improves upon A100 with higher memory bandwidth (8 TB/s vs ~2 TB/s), more transistors (208B vs 54B), and newer NVLink 5 interconnect.
+- [[amd_instinct_mi100]]: The A100 and AMD Instinct MI100 are contemporary data center GPU accelerators targeting HPC and AI workloads. Both support mixed-precision Tensor/Matrix Core operations, HBM2 memory, and PCIe Gen4, but the A100 features NVLink/NVSwitch for multi-GPU scaling while the MI100 uses Infinity Fabric.
+
+## Sources
+
+- [A100 White Paper - Jingchao's Website](raw/cache/69a6e0f6cd16cfa7.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | nvidia_a100_tensor_core.md
+target_page: nvidia_a100_tensor_core.md
+canonical_name: NVIDIA A100
+colliding_name: Nvidia A100
+source: https://www.nextbigfuture.com/2020/08/eight-nvidia-a100-next-generation-tensor-chips-for-5-petaflops-at-200000.html
+status: pending_review
+<!-- merge_draft_body
+# Nvidia A100
+
+The Nvidia A100 is a GPU architecture based on the Ampere microarchitecture, featuring third-generation Tensor Cores for artificial intelligence acceleration. Presented at Hot Chips 2020, the A100 is designed for data center AI workloads, offering significant performance improvements over its predecessor V100 and competing chips such as the Google TPU v3 and Huawei Ascend. The chip contains 54 billion transistors and can be partitioned into seven independent GPU instances to enable multi-tenant serving. In the DGX A100 system, eight A100 GPUs together deliver 5 petaflops of AI performance, with 320 GB of total GPU memory and 12.4 TB/s of aggregate memory bandwidth. According to NVIDIA, the A100 provides up to 20x higher performance over the prior generation and even outperforms the unreleased Google TPU v4 in most categories.
+
+## Key Claims
+
+- Third-generation Nvidia Tensor Core GPU, based on the Ampere architecture.
+- Delivers up to 20x higher performance than the prior generation V100.
+- Faster and more efficient than competing chips including the Google TPU v3, Huawei Ascend, and even the unreleased Google TPU v4 in most categories.
+- Contains 54 billion transistors.
+- Can be partitioned into seven GPU instances for multi-tenancy.
+- A DGX A100 system includes eight A100 GPUs, achieving 5 petaflops of AI performance.
+- The system provides 320 GB total GPU memory and 12.4 TB/s memory bandwidth.
+- Memory bandwidth reaches 12.4 TB/s per system.
+
+## Relationships
+
+- [[alphawave_semi_hbm_subsystem]]: The Nvidia A100 uses HBM2E memory, which complies with the same JEDEC HBM2E specification supported by the Alphawave Semi HBM Subsystem.
+
+## Sources
+
+- [Eight Nvidia A100 Next Generation Tensor Chips for 5 Petaflops at ...](raw/cache/fe3b2aec312d3932.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | nvidia_blackwell_platform.md
+target_page: nvidia_blackwell_platform.md
+canonical_name: NVIDIA Blackwell Platform
+colliding_name: NVIDIA Blackwell Architecture
+source: https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/
+status: pending_review
+<!-- merge_draft_body
+# NVIDIA Blackwell Architecture
+
+The NVIDIA Blackwell Architecture is a GPU microarchitecture designed for AI factories and generative AI workloads, manufactured on a custom TSMC 4NP process with 208 billion transistors. It employs a dual-reticle design where two reticle-limited dies are connected via a high-speed chip-to-chip interconnect providing 10 terabytes per second (TB/s) of bandwidth, forming a unified single GPU. The architecture introduces a second-generation Transformer Engine with micro-tensor scaling techniques that enable 4-bit floating point (FP4) AI computation, optimizing performance and accuracy. Blackwell also debuts NVIDIA Confidential Computing with hardware-based security, becoming the first GPU capable of TEE-I/O (Trusted Execution Environment I/O) to protect sensitive data and AI models during training and inference.
+
+## Key Claims
+
+- Manufactured on TSMC 4NP process with 208 billion transistors.
+- Uses a dual-reticle design with two dies connected via a 10 TB/s chip-to-chip interconnect.
+- Integrates a second-generation Transformer Engine with micro-tensor scaling for 4-bit floating point (FP4) AI.
+- Supports FP4 precision, doubling memory performance for next-generation models.
+- Includes NVIDIA Confidential Computing with hardware-based security; first TEE-I/O capable GPU.
+- Confidential Computing delivers nearly identical throughput compared to unencrypted modes.
+
+## Relationships
+
+- [[nvidia_blackwell_ultra]]: The NVIDIA Blackwell Ultra is a specific high-end implementation within the Blackwell Architecture, offering 2x attention-layer acceleration and 1.5x more AI compute FLOPS compared to base Blackwell GPUs.
+- [[nvidia_hopper_architecture]]: The Blackwell Architecture succeeds the Hopper Architecture, introducing the second-generation Transformer Engine, FP4 precision, and confidential computing capabilities.
+
+## Sources
+
+- [The Engine Behind AI Factories | NVIDIA Blackwell Architecture](raw/cache/4e3cfb5f66900140.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | nvidia_blackwell_platform.md
+target_page: nvidia_blackwell_platform.md
+canonical_name: NVIDIA Blackwell Platform
+colliding_name: NVIDIA Blackwell GPU
+source: https://wccftech.com/nvidia-blackwell-ai-deep-dive-nv-hbi-fuse-two-ai-gpus-together-5th-gen-tensor-cores-5th-gen-nvlink-spectrum-x/
+status: pending_review
+<!-- merge_draft_body
+# NVIDIA Blackwell GPU
+
+The NVIDIA Blackwell GPU is a high-performance graphics processing unit built on the NVIDIA Blackwell architecture, designed for AI training and inference workloads in large-scale data centers. The GPU uses a dual-reticle design that fuses two reticle-limited dies via the NVIDIA High-Bandwidth Interface (NV-HBI), providing 10 TB/s of bidirectional die-to-die interconnect bandwidth. Manufactured on the TSMC 4NP process node, the chip contains 208 billion transistors on a die area greater than 1600 mm². Blackwell introduces a fifth-generation Tensor Core architecture with micro-tensor scaled floating-point formats including FP4, FP6, and FP8, enabling up to 20 PetaFLOPS of FP4 AI compute. The GPU is equipped with 8-site HBM3e memory offering 8 TB/s of memory bandwidth and features fifth-generation NVLink with 1.8 TB/s bidirectional bandwidth, scaling to 576 GPUs. The architecture also includes a Transformer Engine, a Secure AI engine with full-performance encryption and Trusted Execution Environment (TEE), a RAS engine capable of 100% in-system self-test, and a decompression engine with 800 GB/s bandwidth. The NVIDIA GB200 NVL72 system combines 72 Blackwell GPUs with 36 Grace CPUs in a liquid-cooled, rack-scale solution.
+
+## Key Claims
+
+- The Blackwell GPU is a dual-die design using NV-HBI, a high-bandwidth die-to-die interconnect achieving 10 TB/s bidirectional bandwidth with low energy per bit and full coherence.
+- The GPU contains 208 billion transistors on TSMC 4NP with a die area exceeding 1600 mm².
+- Peak AI compute reaches 20 PetaFLOPS for FP4, with 2x speedup per clock per SM over Hopper for FP16/BF16/FP8, 2x for FP6 over Hopper FP8, and 4x for FP4 over Hopper FP8.
+- Memory subsystem uses 8-site HBM3e, providing 8 TB/s of memory bandwidth.
+- Fifth-generation NVLink provides 1.8 TB/s bidirectional bandwidth per GPU, scaling up to 576 GPUs using 18 NVLink links each at 100 GB/s.
+- The fourth-generation NVLink Switch chip (over 800 mm² on TSMC 4NP) extends NVLink to 72 GPUs with 7.2 TB/s all-to-all bidirectional bandwidth and SHARP in-network compute of 3.6 TFLOPs.
+- Blackwell includes NVIDIA Quasar Quantization, which converts low-precision FP4 to high-accuracy output with MMLU scores equivalent to BF16 on LLMs.
+- The GB200 NVL72 system integrates 72 Blackwell GPUs and 36 Grace CPUs in a liquid-cooled rack.
+- Over 400 optimized CUDA-X libraries support Blackwell for maximum performance across diverse application domains.
+
+## Relationships
+
+- [[nvidia_blackwell_ultra]]: The NVIDIA Blackwell Ultra GPU is a higher-performance variant of the Blackwell architecture, also using NV-HBI and fifth-generation Tensor Cores but with 160 SMs and 640 Tensor Cores compared to the standard Blackwell's configuration, and delivering 15 PetaFLOPS NVFP4 compute. Both share the same foundational dual-reticle design, TSMC 4NP process, and NV-HBI interconnect.
+- [[alphawave_semi_hbm_subsystem]]: Blackwell's HBM3e memory subsystem uses the same JEDEC-standard high-bandwidth memory interface as the Alphawave Semi HBM Subsystem, both targeting AI and HPC workloads with 2.5D/3D integration.
+
+## Sources
+
+- [NVIDIA Deep-Dives Into Blackwell Infrastructure: NV-HBI Used ... - Wccftech](raw/cache/92346b78e6442f9d.md)
+merge_draft_body -->
+
+## [2026-07-17] merge_pending | nvidia_blackwell_b200.md
+target_page: nvidia_blackwell_b200.md
+canonical_name: NVIDIA Blackwell B200
+colliding_name: NVIDIA Blackwell B200
+source: https://arxiv.org/abs/2512.02189v3
+status: pending_review
+<!-- merge_draft_body
+# NVIDIA Blackwell B200
+
+NVIDIA Blackwell B200 is a dual-chip GPU architecture introduced as the successor to the Hopper H100/H200 generation, incorporating fifth-generation tensor cores, a dedicated tensor memory (TMEM), and a hardware decompression engine (DE) to accelerate deep learning and high-performance computing workloads. The architecture supports a broad range of floating-point precisions including FP32, FP16, FP8, FP6, and FP4, and is designed to improve throughput and energy efficiency for mixed-precision training and inference. According to microbenchmarking studies, the B200 tensor core enhancements achieve 1.85x ResNet-50 and 1.55x GPT-1.3B mixed-precision training throughput over the H200, with 32% better energy efficiency.
+
+## Key Claims
+
+- Fifth-generation tensor cores with tensor memory (TMEM) and decompression engine (DE).
+- Dual-chip design for increased compute density.
+- Supports FP32, FP16, FP8, FP6, and FP4 floating-point precisions.
+- 1.85x ResNet-50 mixed-precision training throughput compared to H200.
+- 1.55x GPT-1.3B mixed-precision training throughput compared to H200.
+- 32% better energy efficiency than H200.
+- Open-source microbenchmark suite for Blackwell architecture analysis.
+
+## Relationships
+
+No specific relationship to visible context pages in the current wiki. The Blackwell B200 is a distinct GPU microarchitecture that does not share direct architectural features with the AMD GPU Architecture or Alphawave Semi HBM Subsystem pages currently present.
+
+## Sources
+
+- [Microbenchmarking NVIDIA's Blackwell Architecture: An in-depth ...](raw/cache/5b2f2622c26a524e.md)
+merge_draft_body -->

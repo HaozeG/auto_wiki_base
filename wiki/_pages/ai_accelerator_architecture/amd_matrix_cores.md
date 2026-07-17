@@ -47,7 +47,7 @@ type: ai_accelerator_architecture
 created: '2026-07-17'
 updated: '2026-07-17'
 cold_start: true
-inbound_links: 5
+inbound_links: 6
 ---
 
 # AMD Matrix Cores

@@ -32,16 +32,16 @@ Subtypes are **specializations of `entity`**, never new top-level types: a subty
 
 ```yaml
 [system_state]
-orphan_fraction: 0.5769
-median_total_links: 0.0
-mean_total_links: 1.3077
+orphan_fraction: 0.4394
+median_total_links: 1.0
+mean_total_links: 1.6667
 median_inbound_links: 0.0
-mean_inbound_links: 1.0
+mean_inbound_links: 0.9091
 linking_debt: 0
 retrospective_lint_done: false
-clustering_coefficient: 0.0
-avg_path_length: 1.5
-connected_components: 18
+clustering_coefficient: 0.1188
+avg_path_length: 3.58
+connected_components: 36
 ```
 
 There is no `graph_maturity` flag. An earlier revision computed one and gated write-time scorecard leniency and retrospective-lint eligibility on it; it was removed (see `graph_stats.py`'s module docstring for why graph degree kept being the wrong instrument no matter how it was normalized). Write-time evaluation always uses the cold-start scorecard now (Step 2 below); retrospective lint's only readiness gate is the explicit human `lint retrospective` command.
